@@ -1,0 +1,839 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Channel Strategy — SaaS Revenue System</title>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="../assets/shared.css"/>
+  <style>
+    .page-hero { background: #437A22; }
+    .channel-card {
+      background: var(--surface);
+      border: 1.5px solid var(--border);
+      border-radius: 10px;
+      overflow: hidden;
+      margin-bottom: 20px;
+    }
+    .channel-card-header {
+      padding: 14px 20px;
+      font-size: 16px;
+      font-weight: 700;
+      color: #fff;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .channel-card-header .ch-type {
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      opacity: 0.7;
+    }
+    .channel-card-body { padding: 20px; }
+    .channel-card-body p { font-size: 14px; line-height: 1.75; margin-bottom: 12px; }
+    .channel-card-body p:last-child { margin-bottom: 0; }
+    .ch-meta {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      gap: 1px;
+      background: var(--border);
+      border-top: 1px solid var(--border);
+    }
+    .ch-meta-item {
+      background: #fafaf8;
+      padding: 12px 16px;
+    }
+    .ch-meta-label {
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      margin-bottom: 4px;
+    }
+    .ch-meta-value {
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--text);
+    }
+    .decision-matrix {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 16px 0;
+    }
+    .decision-matrix th {
+      background: #437A22;
+      color: #fff;
+      padding: 10px 14px;
+      font-size: 12px;
+      font-weight: 700;
+      text-align: left;
+    }
+    .decision-matrix td {
+      padding: 12px 14px;
+      font-size: 13px;
+      line-height: 1.6;
+      border-bottom: 1px solid var(--border);
+      vertical-align: top;
+    }
+    .decision-matrix tr:nth-child(even) td { background: #fafaf8; }
+    .partner-tier-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      gap: 14px;
+      margin: 16px 0;
+    }
+    .tier-card {
+      border-radius: 8px;
+      padding: 16px;
+      border: 1.5px solid;
+    }
+    .tier-card.gold { border-color: #c8a800; background: #fffbec; }
+    .tier-card.silver { border-color: #8c8c9a; background: #f6f6f8; }
+    .tier-card.registered { border-color: var(--border); background: var(--surface); }
+    .tier-name { font-size: 14px; font-weight: 700; margin-bottom: 6px; }
+    .tier-card.gold .tier-name { color: #8a6f00; }
+    .tier-card.silver .tier-name { color: #5a5a66; }
+    .tier-requirements { font-size: 12px; line-height: 1.6; color: var(--text-muted); }
+    .tier-requirements li { padding: 2px 0; list-style: none; }
+    .tier-requirements li::before { content: '› '; }
+    .plg-funnel {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+      margin: 16px 0;
+      max-width: 480px;
+    }
+    .plg-stage {
+      padding: 14px 20px;
+      border-radius: 6px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .plg-stage-name { font-size: 14px; font-weight: 700; color: #fff; }
+    .plg-stage-desc { font-size: 12px; color: rgba(255,255,255,0.8); }
+    .plg-stage-rate { font-size: 13px; font-weight: 700; color: rgba(255,255,255,0.9); }
+    .conflict-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 16px 0;
+    }
+    .conflict-table th {
+      background: #437A22;
+      color: #fff;
+      padding: 10px 14px;
+      font-size: 12px;
+      text-align: left;
+    }
+    .conflict-table td {
+      padding: 12px 14px;
+      font-size: 13px;
+      border-bottom: 1px solid var(--border);
+      vertical-align: top;
+      line-height: 1.6;
+    }
+    .conflict-table tr:nth-child(even) td { background: #fafaf8; }
+  </style>
+</head>
+<body>
+<nav class="nav">
+  <span class="nav-logo">SaaS <span>Revenue System</span></span>
+  <span class="nav-sep">|</span>
+  <a href="../index.html" class="nav-back">← Home</a>
+  <span class="nav-sep">|</span>
+  <a href="../pages/phase3.html" class="nav-back">Phase 3: Sales Execution</a>
+  <span class="nav-sep">|</span>
+  <span class="nav-current">Channel Strategy</span>
+</nav>
+<div class="page-hero" style="background:#437A22">
+  <div class="hero-phase-label">Phase 3 — Sales Execution</div>
+  <div class="hero-title">Channel Strategy</div>
+  <div class="hero-subtitle">Direct, Partner, and Product-Led Paths to Market — Unit Economics, Partner Program Design, and When to Use Each</div>
+</div>
+<div class="content-wrap">
+  <div class="breadcrumb">
+    <a href="../index.html">Home</a><span class="sep">›</span>
+    <a href="../pages/phase3.html">Phase 3: Sales Execution</a><span class="sep">›</span>
+    <span class="current">Channel Strategy</span>
+  </div>
+
+  <h2 class="section-title">The 5 Channel Types</h2>
+  <p class="section-intro">Every SaaS company uses a combination of go-to-market channels. The question is not which channel is best — it is which channel mix matches your ACV, buyer journey, and market coverage needs at each stage of growth.</p>
+
+  <div class="channel-card">
+    <div class="channel-card-header" style="background:#1B474D">
+      <div>
+        <div class="ch-type">Channel 1</div>
+        <div>Direct Sales</div>
+      </div>
+    </div>
+    <div class="channel-card-body">
+      <p>The default channel for B2B SaaS. Your own sales reps prospect, qualify, demo, negotiate, and close. You own the buyer relationship, you control the message, and you capture 100% of the revenue. The trade-off: it is the most expensive channel per dollar of revenue, and it scales linearly — each additional dollar of revenue requires more headcount.</p>
+      <p>Direct sales is optimal when ACV exceeds $25K (the economics support dedicated reps), when the buying decision is complex and requires relationship-building, and when you are still learning your ICP and need to control every touchpoint to extract market intelligence.</p>
+    </div>
+    <div class="ch-meta">
+      <div class="ch-meta-item"><div class="ch-meta-label">Best ACV Range</div><div class="ch-meta-value">$25K – $500K+</div></div>
+      <div class="ch-meta-item"><div class="ch-meta-label">CAC Multiple</div><div class="ch-meta-value">1.0x (Baseline)</div></div>
+      <div class="ch-meta-item"><div class="ch-meta-label">Margin</div><div class="ch-meta-value">70–80% gross</div></div>
+    </div>
+  </div>
+
+  <div class="channel-card">
+    <div class="channel-card-header" style="background:#437A22">
+      <div>
+        <div class="ch-type">Channel 2</div>
+        <div>VAR / Reseller Partners</div>
+      </div>
+    </div>
+    <div class="channel-card-body">
+      <p>Value-Added Resellers (VARs) and resellers buy your product at a discount (typically 15-35% for SMB VARs, 20-40% for enterprise integrators) and sell it to their own customer base with their own margin. They may add professional services, integration work, or complementary products. You access a customer segment or geography you could not economically cover with direct sales.</p>
+      <p>VARs work best when (1) the buyer already has a trusted advisory relationship with the reseller, (2) your product is a component of a larger solution the VAR builds, and (3) you cannot cost-effectively hire direct reps for the territory or segment.</p>
+    </div>
+    <div class="ch-meta">
+      <div class="ch-meta-item"><div class="ch-meta-label">Best ACV Range</div><div class="ch-meta-value">$5K – $150K</div></div>
+      <div class="ch-meta-item"><div class="ch-meta-label">CAC Multiple</div><div class="ch-meta-value">0.4–0.7x</div></div>
+      <div class="ch-meta-item"><div class="ch-meta-label">Margin</div><div class="ch-meta-value">45–65% (net of discount)</div></div>
+    </div>
+  </div>
+
+  <div class="channel-card">
+    <div class="channel-card-header" style="background:#20808D">
+      <div>
+        <div class="ch-type">Channel 3</div>
+        <div>Technology Alliance / ISV Partners</div>
+      </div>
+    </div>
+    <div class="channel-card-body">
+      <p>Technology alliances are integrations or co-sell agreements with complementary SaaS vendors targeting the same buyer. Salesforce ISV partners, AWS Marketplace listings, and HubSpot App Marketplace integrations are examples. You don't pay a resale discount — instead you share pipeline, co-market, and co-sell. The deal remains yours to close.</p>
+      <p>Alliance partnerships are the highest-leverage, lowest-cost channel when done right. A listing in the Salesforce AppExchange gives you access to 150,000+ Salesforce customers who have proven budget and willingness to buy add-on SaaS. The challenge: you are competing for mindshare among hundreds of ISVs. Partner managers and co-marketing investment are required to make marketplace presence convert.</p>
+    </div>
+    <div class="ch-meta">
+      <div class="ch-meta-item"><div class="ch-meta-label">Best ACV Range</div><div class="ch-meta-value">$10K – $250K</div></div>
+      <div class="ch-meta-item"><div class="ch-meta-label">CAC Multiple</div><div class="ch-meta-value">0.5–0.8x</div></div>
+      <div class="ch-meta-item"><div class="ch-meta-label">Margin</div><div class="ch-meta-value">65–75% (minimal discount)</div></div>
+    </div>
+  </div>
+
+  <div class="channel-card">
+    <div class="channel-card-header" style="background:#6E522B">
+      <div>
+        <div class="ch-type">Channel 4</div>
+        <div>OEM / White-Label</div>
+      </div>
+    </div>
+    <div class="channel-card-body">
+      <p>OEM (Original Equipment Manufacturer) agreements embed your technology inside another company's product. You are invisible to the end customer — your partner brands and sells it. White-label is similar: your product is re-branded and sold by a larger company as their own offering. Revenue is typically a per-seat or revenue-share arrangement at 15-40% of the OEM partner's realized revenue.</p>
+      <p>OEM is a minority strategy — it works only when (1) your technology is deep infrastructure that complements a larger product, (2) direct access to the end customer is blocked or uneconomical, and (3) the volume of seats in the OEM partner's distribution justifies the lower per-unit economics. It is defensible only if switching costs are high; otherwise, the OEM partner will build the capability in-house once it's validated.</p>
+    </div>
+    <div class="ch-meta">
+      <div class="ch-meta-item"><div class="ch-meta-label">Best ACV Range</div><div class="ch-meta-value">Low per-seat, high volume</div></div>
+      <div class="ch-meta-item"><div class="ch-meta-label">CAC Multiple</div><div class="ch-meta-value">0.1–0.3x</div></div>
+      <div class="ch-meta-item"><div class="ch-meta-label">Margin</div><div class="ch-meta-value">30–50% (deep discount)</div></div>
+    </div>
+  </div>
+
+  <div class="channel-card">
+    <div class="channel-card-header" style="background:#964219">
+      <div>
+        <div class="ch-type">Channel 5</div>
+        <div>Product-Led Growth (PLG)</div>
+      </div>
+    </div>
+    <div class="channel-card-body">
+      <p>PLG is a go-to-market strategy where the product itself is the primary driver of acquisition, activation, and expansion. Users discover the product through a free trial, freemium tier, or viral sharing mechanism; they experience value before speaking to a salesperson; and they upgrade or invite colleagues based on product experience alone. Slack, Dropbox, Figma, and Notion are canonical PLG examples.</p>
+      <p>PLG dramatically reduces CAC by compressing the top of funnel and eliminating (or reducing) sales-assisted discovery for small deals. The challenge: PLG requires a product that delivers immediate standalone value, a frictionless onboarding experience, and a data infrastructure that identifies expansion signals (Product-Led Sales, or PLS).</p>
+    </div>
+    <div class="ch-meta">
+      <div class="ch-meta-item"><div class="ch-meta-label">Best ACV Range</div><div class="ch-meta-value">$0 – $25K (self-serve)<br/>$25K+ (PLS motion)</div></div>
+      <div class="ch-meta-item"><div class="ch-meta-label">CAC Multiple</div><div class="ch-meta-value">0.1–0.4x (vs. direct)</div></div>
+      <div class="ch-meta-item"><div class="ch-meta-label">Margin</div><div class="ch-meta-value">75–85% (lower S&M burden)</div></div>
+    </div>
+  </div>
+
+  <h2 class="section-title">Channel Decision Framework</h2>
+  <table class="decision-matrix">
+    <thead>
+      <tr>
+        <th>Condition</th>
+        <th>Recommended Channel Mix</th>
+        <th>Rationale</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>ACV &lt; $5K, high-volume self-serve</td>
+        <td>PLG primary + inbound direct secondary</td>
+        <td>Economics do not support direct reps; product must sell itself. CAC must be &lt;$500 to achieve payback in 12 months on sub-$5K ACV.</td>
+      </tr>
+      <tr>
+        <td>ACV $5K–$25K, broad mid-market</td>
+        <td>PLG + inside sales (PLS motion) + VAR for geographic coverage</td>
+        <td>Reps close PLG-qualified accounts; partners fill geographic gaps without headcount investment.</td>
+      </tr>
+      <tr>
+        <td>ACV $25K–$100K, named accounts</td>
+        <td>Direct enterprise + technology alliances + deal registration for VARs</td>
+        <td>Complexity and relationship requirements demand direct reps; alliances multiply coverage without diluting gross margin.</td>
+      </tr>
+      <tr>
+        <td>ACV $100K+, strategic enterprise</td>
+        <td>Direct enterprise (specialist reps) + GSI/consulting partnerships for implementation</td>
+        <td>Global Systems Integrators (Accenture, Deloitte, PwC) carry significant enterprise credibility and create implementation stickiness that protects NRR.</td>
+      </tr>
+      <tr>
+        <td>New geographic market entry</td>
+        <td>Distribution/reseller first, then direct overlay after year 2</td>
+        <td>Local partners de-risk market entry; use deal registration to protect partner economics while building direct capability.</td>
+      </tr>
+      <tr>
+        <td>Underserved SMB tail</td>
+        <td>Marketplace listing (Salesforce/HubSpot AppExchange) + self-serve</td>
+        <td>Leverage platform distribution to monetize a segment your direct team cannot economically cover.</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <h2 class="section-title">Partner Program Design</h2>
+  <div class="subsection">
+    <div class="subsection-title">Partner Tiering</div>
+    <p>Most mature partner programs use a 3-tier structure. Tiers define what the partner earns, what they're required to do, and what resources they receive. Tier thresholds are typically set so that fewer than 20% of partners reach the highest tier — scarcity drives partner investment.</p>
+    <div class="partner-tier-grid">
+      <div class="tier-card gold">
+        <div class="tier-name">Gold / Premier</div>
+        <ul class="tier-requirements">
+          <li>$X ARR sourced per year</li>
+          <li>Dedicated partner manager</li>
+          <li>Joint business plan</li>
+          <li>30-40% discount/margin</li>
+          <li>MDF access</li>
+          <li>Co-sell support from AEs</li>
+          <li>Early access to product roadmap</li>
+          <li>Named reference in marketing</li>
+        </ul>
+      </div>
+      <div class="tier-card silver">
+        <div class="tier-name">Silver / Select</div>
+        <ul class="tier-requirements">
+          <li>$Y ARR sourced per year</li>
+          <li>Pooled partner manager</li>
+          <li>Quarterly business review</li>
+          <li>20-30% discount/margin</li>
+          <li>Limited MDF access</li>
+          <li>Self-service co-sell tools</li>
+          <li>Access to partner portal</li>
+        </ul>
+      </div>
+      <div class="tier-card registered">
+        <div class="tier-name">Registered</div>
+        <ul class="tier-requirements">
+          <li>Baseline certification required</li>
+          <li>Deal registration only</li>
+          <li>15-20% discount/margin</li>
+          <li>No MDF</li>
+          <li>Self-serve resources only</li>
+          <li>Portal access</li>
+        </ul>
+      </div>
+    </div>
+    <div class="subsection-title">Deal Registration</div>
+    <p>Deal registration is the mechanism by which a partner claims ownership of an opportunity, triggering a protected discount for that deal. Without deal registration, partners fear your direct reps will poach their leads and undercut them on price. With deal registration, partners can confidently invest in an opportunity knowing their margin is protected.</p>
+    <p>Deal registration rules must be explicit: (1) registration window — how long after registration is the deal protected (typically 90-180 days)? (2) activity requirement — what does the partner have to do to keep the registration active? (3) conflict resolution — what happens if a direct rep is already in the account?</p>
+
+    <div class="subsection-title">Market Development Funds (MDF)</div>
+    <p>MDF is co-marketing budget you allocate to partners based on tier, performance, and strategic priority. The market standard is 2-5% of partner-sourced revenue from the prior period, paid as a marketing fund for the next period. MDF is only effective when:</p>
+    <ul class="bullet-list">
+      <li>Partners are required to submit a pre-approved marketing plan before funds are released</li>
+      <li>Proof of execution (event attendance, ad spend receipts, lead lists) is required for reimbursement</li>
+      <li>Lead data from MDF activities is shared back to you for pipeline tracking</li>
+      <li>You have a Partner Marketing Manager reviewing plan quality before approval</li>
+    </ul>
+    <p>MDF without accountability is a loss. Many companies eliminate MDF entirely after discovering that partners use it for executive dinners and branded merchandise with no pipeline impact.</p>
+  </div>
+
+  <h2 class="section-title">The Channel Conflict Problem</h2>
+  <div class="subsection">
+    <p>Channel conflict occurs when your direct sales team and a reseller partner are competing for the same opportunity. It is the single biggest barrier to partner program health. Partners who experience channel conflict — where your direct rep undercuts their deal or ignores their registration — will stop investing in you.</p>
+    <table class="conflict-table">
+      <thead>
+        <tr>
+          <th>Conflict Type</th>
+          <th>Cause</th>
+          <th>Prevention Mechanism</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Direct rep poaches registered partner deal</td>
+          <td>Rep quota pressure; partner not clearly tagged in CRM</td>
+          <td>CRM integration with deal registration portal; rep quota credit only if partner is NOT registered on account</td>
+        </tr>
+        <tr>
+          <td>Partner and direct rep both call same account</td>
+          <td>No named account list or territory exclusivity</td>
+          <td>Named account tiers: "direct-only" accounts excluded from partner deal registration eligibility</td>
+        </tr>
+        <tr>
+          <td>Partner undercuts direct pricing</td>
+          <td>Tiered discounts allow partners to win on price alone</td>
+          <td>Minimum price floors enforced contractually; partner discount expressed as fixed rebate, not as unlimited price flexibility</td>
+        </tr>
+        <tr>
+          <td>Multiple partners claim same deal</td>
+          <td>No first-registration rule</td>
+          <td>First-registered timestamp wins; both partners notified; escalation path for disputes</td>
+        </tr>
+      </tbody>
+    </table>
+    <div class="callout callout-warning">
+      <div class="callout-title">Rule of Thumb</div>
+      <p>If your top direct enterprise AEs are losing deals to your own partners, your rules of engagement are broken. Partners should be additive coverage for segments and geographies your direct team doesn't prioritize — not competitors for the same whale accounts.</p>
+    </div>
+  </div>
+
+  <h2 class="section-title">When NOT to Invest in Channel</h2>
+  <div class="subsection">
+    <p>Channel programs have significant ongoing costs: partner managers (1 PM per 15-20 active partners), partner portal technology, MDF, enablement materials, legal (partner agreements), and management attention. These fixed costs require a critical mass of partner-sourced revenue to justify.</p>
+    <ul class="bullet-list">
+      <li><strong>Pre-product-market fit:</strong> If you haven't proven the direct sales motion, partners cannot follow a playbook that doesn't exist yet. Partners need a clear ICP, a repeatable demo, and reference customers to lean on.</li>
+      <li><strong>Sub-$5M ARR:</strong> At early stage, channel economics rarely make sense — the overhead is disproportionate and you need to own every customer interaction to learn.</li>
+      <li><strong>ACV below $2,500:</strong> The math doesn't work. A 25% discount on a $2K ACV is $500 margin to the partner — not enough to sustain a meaningful sales motion on their side.</li>
+      <li><strong>Before your core message is locked:</strong> Partners can't position what you haven't figured out how to position. Every partner call becomes a confusing hand-wave. Get clear on your value prop first.</li>
+    </ul>
+  </div>
+
+  <h2 class="section-title">PLG Deep-Dive: The Product-Led Motion</h2>
+  <div class="subsection">
+    <p>Product-led growth is not just a pricing model — it is a fundamentally different GTM philosophy. In PLG, the product is the sales rep. Every UX decision, every onboarding flow, every notification is designed to move a user from awareness to value to expansion. Slack grew from 0 to $7B enterprise value in 4 years primarily through PLG.</p>
+    <div class="subsection-title">The PLG Funnel</div>
+    <div class="plg-funnel">
+      <div class="plg-stage" style="background:#437A22; width:100%">
+        <div>
+          <div class="plg-stage-name">Acquisition</div>
+          <div class="plg-stage-desc">Free trial / freemium signup — no sales friction</div>
+        </div>
+        <div class="plg-stage-rate">100%</div>
+      </div>
+      <div class="plg-stage" style="background:#4D8E27; width:88%">
+        <div>
+          <div class="plg-stage-name">Activation</div>
+          <div class="plg-stage-desc">User reaches "aha moment" — first core value action</div>
+        </div>
+        <div class="plg-stage-rate">20–40%</div>
+      </div>
+      <div class="plg-stage" style="background:#5C9E2C; width:75%">
+        <div>
+          <div class="plg-stage-name">Retention</div>
+          <div class="plg-stage-desc">Weekly/monthly active usage — habitual product use</div>
+        </div>
+        <div class="plg-stage-rate">30–60% of activated</div>
+      </div>
+      <div class="plg-stage" style="background:#6AAE31; width:60%">
+        <div>
+          <div class="plg-stage-name">Expansion</div>
+          <div class="plg-stage-desc">Invites teammates or upgrades — organic seat growth</div>
+        </div>
+        <div class="plg-stage-rate">k &gt; 0.3 viral coefficient</div>
+      </div>
+      <div class="plg-stage" style="background:#78BE36; width:45%">
+        <div>
+          <div class="plg-stage-name">Monetization</div>
+          <div class="plg-stage-desc">Upgrades to paid — self-serve or PLS-assisted</div>
+        </div>
+        <div class="plg-stage-rate">2–5% of signups (B2B)</div>
+      </div>
+    </div>
+    <div class="subsection-title">The PLS (Product-Led Sales) Motion</div>
+    <p>PLS is the bridge between PLG and traditional enterprise sales. When a product-qualified account (PQA) reaches a usage threshold that signals enterprise intent — e.g., 10+ seats on a free plan, a specific power feature used, or a company-wide domain signup — a PLS rep reaches out to convert the engaged team into a paid enterprise contract.</p>
+    <p>The PLS motion is 3-5x more efficient than cold outbound because (1) the prospect already knows and likes the product, (2) there are real usage data to reference in the outreach, and (3) the champion is already identified — it's the person who invited the team.</p>
+    <div class="formula-block">
+      <div class="formula-label">PQA Definition — Product-Qualified Account</div>
+      <div class="formula-main">PQA Score = (Seat Count × 3) + (Feature Depth Score × 2) + (Recency Score × 1)</div>
+      <div class="formula-note">Seat Count: # of active users in the free plan. Feature Depth: # of high-value features used. Recency: days since last login (inverted). Set PQA threshold at e.g. score ≥ 15 → trigger PLS outreach.</div>
+    </div>
+  </div>
+
+  <h2 class="section-title">Measuring Channel Effectiveness</h2>
+  <div class="subsection">
+    <div class="callout callout-definition">
+      <div class="callout-title">Key Distinction</div>
+      <p><strong>Partner-sourced pipeline:</strong> The partner found the lead — they own the initial relationship and brought the opportunity to you. Credit goes to the partner channel.<br/>
+      <strong>Partner-influenced pipeline:</strong> Your direct team was already working the account, but partner co-sell or partner reference accelerated or expanded the deal. The partner gets influence credit, not source credit.</p>
+    </div>
+    <div class="metric-grid">
+      <div class="metric-card">
+        <div class="m-label">Partner-Sourced %</div>
+        <div class="m-value">15–30%</div>
+        <div class="m-desc">Healthy mix for enterprise SaaS. Over-reliance on one channel creates fragility.</div>
+      </div>
+      <div class="metric-card">
+        <div class="m-label">Partner-Influenced %</div>
+        <div class="m-value">25–45%</div>
+        <div class="m-desc">Deals where partner touch accelerated close or expanded scope.</div>
+      </div>
+      <div class="metric-card">
+        <div class="m-label">Partner-Sourced Win Rate</div>
+        <div class="m-value">Typically Higher</div>
+        <div class="m-desc">Partner-sourced deals often win at higher rates because partner has pre-qualified the account relationship.</div>
+      </div>
+      <div class="metric-card">
+        <div class="m-label">Partner CAC Multiple</div>
+        <div class="m-value">0.4–0.7x</div>
+        <div class="m-desc">vs. direct sales baseline of 1.0x — after accounting for partner discounts and program costs.</div>
+      </div>
+      <div class="metric-card">
+        <div class="m-label">Active Partner Rate</div>
+        <div class="m-value">&gt;25%</div>
+        <div class="m-desc">Of all registered partners, % who sourced at least 1 deal in the trailing 12 months. Below 10% signals a "shelf-ware" partner program.</div>
+      </div>
+      <div class="metric-card">
+        <div class="m-label">Partner NPS</div>
+        <div class="m-value">&gt;30</div>
+        <div class="m-desc">Leading indicator of partner program health and future partner-sourced pipeline.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="related-section">
+    <div class="related-title">Related Sections</div>
+    <div class="related-links">
+      <a href="segmentation.html" class="related-link">Market Segmentation</a>
+      <a href="demand-generation.html" class="related-link">Demand Generation</a>
+      <a href="icp.html" class="related-link">ICP Definition</a>
+      <a href="pipeline-generation.html" class="related-link">Pipeline Generation</a>
+      <a href="cac-payback.html" class="related-link">CAC Payback Period</a>
+    </div>
+  </div>
+</div>
+<script data-pplx-inline-edit>
+(function () {
+  if (window === window.top) return;
+
+  const allowedParentOrigins = ["https://www.perplexity.ai","https://perplexity.ai","https://testing.perplexity.ai","https://staging.perplexity.ai","https://*.preview.i.perplexity.ai","http://localhost:3000","http://127.0.0.1:3000","http://localhost:5173","http://127.0.0.1:5173"];
+  const MAX_FONT_BYTES = 500 * 1024;
+  const MAX_TOTAL_FONT_BYTES = 2 * 1024 * 1024;
+  let scrollForwarding = false;
+  let scrollRaf = 0;
+  let trustedTopOrigin = null;
+
+  // Allow entries like "https://*.preview.i.perplexity.ai" — the wildcard
+  // matches a single DNS label (no dots), so "https://*.foo" cannot stretch
+  // across multiple labels.
+  function matchesAllowedOrigin(origin) {
+    if (!origin) return false;
+    for (const entry of allowedParentOrigins) {
+      if (!entry.includes("*")) {
+        if (entry === origin) return true;
+        continue;
+      }
+      const pattern = new RegExp(
+        "^" +
+          entry.replace(/[.+?^${}()|[\]\\]/g, "\\$&").replace(/\*/g, "[^.]+") +
+          "$",
+      );
+      if (pattern.test(origin)) return true;
+    }
+    return false;
+  }
+
+  // Trust decision: when the sender is same-origin-visible (event.origin is a
+  // real origin like https://www.perplexity.ai) we trust event.origin directly.
+  // When event.origin is "null" (opaque broker srcdoc), we fall back to the
+  // broker's stamped `parentOrigin` to identify the top window. The fallback
+  // is claim-only — we rely on the browser's native `targetOrigin` enforcement
+  // on the response path (see postToTrustedTop) to ensure replies can't be
+  // delivered to anyone but the actual top window of that claimed origin.
+  function getTrustedParentOrigin(event) {
+    const forwardedParentOrigin =
+      typeof event.data.parentOrigin === "string" ? event.data.parentOrigin : null;
+    const parentOrigin = event.origin === "null" ? forwardedParentOrigin : event.origin;
+    return matchesAllowedOrigin(parentOrigin) ? parentOrigin : null;
+  }
+
+  // All responses go to window.top with targetOrigin = the allowlisted origin.
+  // An attacker that iframes us inside their own null-origin broker can claim
+  // any parentOrigin they like, but the browser will drop the reply whenever
+  // the real top's origin doesn't match — so the screenshot never leaves.
+  function postToTrustedTop(message) {
+    if (!trustedTopOrigin) return;
+    try {
+      window.top.postMessage(message, trustedTopOrigin);
+    } catch (_error) {}
+  }
+
+  function inlineAll(original, clone) {
+    if (original.nodeType !== 1 || clone.nodeType !== 1) return;
+
+    try {
+      const computedStyle = getComputedStyle(original);
+      // cssText on a computed style is the serialized declaration in modern
+      // Chromium/Safari — a single read beats enumerating ~400 longhand
+      // properties. Firefox returns "" here, so we fall back on empty.
+      const serialized = computedStyle.cssText;
+      if (serialized) {
+        clone.style.cssText = serialized;
+      } else {
+        const parts = new Array(computedStyle.length);
+        for (let index = 0; index < computedStyle.length; index += 1) {
+          const property = computedStyle[index];
+          parts[index] = `${property}:${computedStyle.getPropertyValue(property)};`;
+        }
+        clone.style.cssText = parts.join("");
+      }
+    } catch (_error) {}
+
+    const originalChildren = original.children;
+    const clonedChildren = clone.children;
+    for (
+      let index = 0;
+      index < originalChildren.length && index < clonedChildren.length;
+      index += 1
+    ) {
+      inlineAll(originalChildren[index], clonedChildren[index]);
+    }
+  }
+
+  function extractFontUrl(srcValue) {
+    const matches = [
+      ...srcValue.matchAll(
+        /url\(["']?([^"')]+)["']?\)(?:\s*format\(["']?([^"')]+)["']?\))?/gi,
+      ),
+    ];
+    if (matches.length === 0) return null;
+    const woff2 = matches.find((m) => m[2] && m[2].toLowerCase().includes("woff2"));
+    if (woff2) return woff2[1];
+    const woff = matches.find((m) => m[2] && m[2].toLowerCase().includes("woff"));
+    if (woff) return woff[1];
+    return matches[0][1];
+  }
+
+  // Cache resolved font URL -> data URI across captures. Fonts on a page
+  // essentially never change, and a batch run emits multiple captures back to
+  // back — without this we'd refetch + re-base64 every time.
+  const fontDataUriCache = new Map();
+  const SRC_DECLARATION_RE = /src\s*:\s*[^;}]+/i;
+
+  async function fetchAsDataUri(url) {
+    if (fontDataUriCache.has(url)) return fontDataUriCache.get(url);
+    let dataUri = null;
+    try {
+      const response = await fetch(url, { mode: "cors", credentials: "omit" });
+      if (response.ok) {
+        const blob = await response.blob();
+        if (blob.size <= MAX_FONT_BYTES) {
+          dataUri = await new Promise((resolve) => {
+            const reader = new FileReader();
+            reader.onloadend = () =>
+              resolve(typeof reader.result === "string" ? reader.result : null);
+            reader.onerror = () => resolve(null);
+            reader.readAsDataURL(blob);
+          });
+        }
+      }
+    } catch (_error) {
+      dataUri = null;
+    }
+    fontDataUriCache.set(url, dataUri);
+    return dataUri;
+  }
+
+  function collectFontFaceRuleTexts() {
+    const rules = [];
+    for (const sheet of document.styleSheets) {
+      let cssRules;
+      try {
+        cssRules = sheet.cssRules;
+      } catch (_error) {
+        continue;
+      }
+      if (!cssRules) continue;
+      for (const rule of cssRules) {
+        const cssText = rule.cssText || "";
+        if (cssText.startsWith("@font-face")) rules.push(cssText);
+      }
+    }
+    return rules;
+  }
+
+  async function buildInlinedFontCss() {
+    const ruleTexts = collectFontFaceRuleTexts();
+    if (ruleTexts.length === 0) return null;
+
+    const resolved = ruleTexts.map((cssText) => {
+      if (!SRC_DECLARATION_RE.test(cssText)) return null;
+      const srcMatch = cssText.match(/src\s*:\s*([^;}]+)[;}]/i);
+      if (!srcMatch) return null;
+      const url = extractFontUrl(srcMatch[1]);
+      if (!url) return null;
+      try {
+        return { cssText, url: new URL(url, document.baseURI).href };
+      } catch (_error) {
+        return null;
+      }
+    });
+
+    const dataUris = await Promise.all(
+      resolved.map((entry) => (entry ? fetchAsDataUri(entry.url) : Promise.resolve(null))),
+    );
+
+    const inlined = [];
+    let totalBytes = 0;
+    for (let index = 0; index < resolved.length; index += 1) {
+      const entry = resolved[index];
+      const dataUri = dataUris[index];
+      if (!entry || !dataUri) continue;
+      const approxBytes = dataUri.length * 0.75;
+      if (totalBytes + approxBytes > MAX_TOTAL_FONT_BYTES) break;
+      totalBytes += approxBytes;
+      inlined.push(entry.cssText.replace(SRC_DECLARATION_RE, `src: url("${dataUri}")`));
+    }
+    return inlined.length > 0 ? inlined.join("\n") : null;
+  }
+
+  function stripExternal(clone) {
+    const images = clone.querySelectorAll("img");
+    for (let index = 0; index < images.length; index += 1) {
+      const src = images[index].getAttribute("src");
+      if (src && !src.startsWith("data:")) images[index].removeAttribute("src");
+    }
+
+    const elements = clone.querySelectorAll("*");
+    for (let index = 0; index < elements.length; index += 1) {
+      const style = elements[index].style.cssText;
+      if (style && style.includes("url(")) {
+        elements[index].style.cssText = style.replace(
+          /url\(["']?(?!data:)[^)"']*["']?\)/gi,
+          "none",
+        );
+      }
+    }
+  }
+
+  function emitScroll() {
+    scrollRaf = 0;
+    if (!scrollForwarding) return;
+    postToTrustedTop({
+      type: "INLINE_EDIT_SCROLL",
+      scrollX: window.scrollX,
+      scrollY: window.scrollY,
+    });
+  }
+
+  window.addEventListener(
+    "scroll",
+    function () {
+      if (!scrollForwarding || scrollRaf) return;
+      scrollRaf = requestAnimationFrame(emitScroll);
+    },
+    { passive: true, capture: true },
+  );
+
+  async function handleCaptureRequest(event) {
+    const requestId = event.data.requestId;
+    const scrollX = window.scrollX;
+    const scrollY = window.scrollY;
+    const width = window.innerWidth;
+    const height = window.innerHeight;
+
+    function postResult(dataUrl) {
+      postToTrustedTop({
+        type: "INLINE_EDIT_SCREENSHOT_RESULT",
+        requestId,
+        dataUrl,
+        scrollX,
+        scrollY,
+      });
+    }
+
+    try {
+      // Wait for any pending web fonts to resolve so both inline metrics and
+      // the @font-face inlining below see the same loaded faces.
+      if (document.fonts && document.fonts.ready) {
+        try {
+          await document.fonts.ready;
+        } catch (_error) {}
+      }
+
+      const clone = document.documentElement.cloneNode(true);
+      inlineAll(document.documentElement, clone);
+
+      const removedNodes = clone.querySelectorAll("script,link[rel=\"stylesheet\"],style");
+      for (let index = 0; index < removedNodes.length; index += 1) {
+        removedNodes[index].remove();
+      }
+
+      stripExternal(clone);
+
+      // Re-embed web fonts as data-URI @font-face rules so the SVG rasterizer
+      // can resolve them — external font URLs aren't fetched during
+      // foreignObject rendering, which would otherwise force a fallback face
+      // and change text metrics.
+      const inlinedFontCss = await buildInlinedFontCss();
+      if (inlinedFontCss) {
+        const styleEl = document.createElement("style");
+        styleEl.textContent = inlinedFontCss;
+        const head = clone.querySelector("head");
+        if (head) head.appendChild(styleEl);
+        else clone.insertBefore(styleEl, clone.firstChild);
+      }
+
+      const html = new XMLSerializer().serializeToString(clone);
+      const svg =
+        `<svg xmlns="http://www.w3.org/2000/svg" width="${width}" height="${height}">` +
+        '<foreignObject width="100%" height="100%">' +
+        `<div xmlns="http://www.w3.org/1999/xhtml" style="width:${width}px;height:${height}px;overflow:hidden">` +
+        `<div style="transform:translate(-${scrollX}px,-${scrollY}px);transform-origin:top left">` +
+        html +
+        "</div></div></foreignObject></svg>";
+      const svgUrl = `data:image/svg+xml;charset=utf-8,${encodeURIComponent(svg)}`;
+      const image = new Image();
+      image.onload = function () {
+        const canvas = document.createElement("canvas");
+        canvas.width = width;
+        canvas.height = height;
+        canvas.getContext("2d").drawImage(image, 0, 0);
+        postResult(canvas.toDataURL("image/png"));
+      };
+      image.onerror = function () {
+        postResult(null);
+      };
+      image.src = svgUrl;
+    } catch (_error) {
+      postResult(null);
+    }
+  }
+
+  window.addEventListener("message", function (event) {
+    if (!event.data) return;
+    // Only accept messages from the direct parent frame. Blocks sibling /
+    // unrelated-window postMessage senders that could otherwise reach us.
+    if (event.source !== window.parent) return;
+
+    const trustedParentOrigin = getTrustedParentOrigin(event);
+    if (!trustedParentOrigin) return;
+    trustedTopOrigin = trustedParentOrigin;
+
+    if (event.data.type === "INLINE_EDIT_SCROLL_START") {
+      scrollForwarding = true;
+      emitScroll();
+      return;
+    }
+
+    if (event.data.type === "INLINE_EDIT_SCROLL_STOP") {
+      scrollForwarding = false;
+      if (scrollRaf) cancelAnimationFrame(scrollRaf);
+      scrollRaf = 0;
+      return;
+    }
+
+    if (event.data.type !== "INLINE_EDIT_CAPTURE_REQUEST") return;
+
+    handleCaptureRequest(event);
+  });
+})();
+
+
+</script></body>
+</html>

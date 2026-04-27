@@ -1,0 +1,706 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Pipeline Attribution — SaaS Revenue System</title>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="../assets/shared.css"/>
+  <style>
+    .page-hero { background: #006494; }
+    .model-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+      margin: 20px 0;
+    }
+    .model-card {
+      background: var(--surface);
+      border: 1.5px solid var(--border);
+      border-radius: 10px;
+      overflow: hidden;
+    }
+    .model-card-header {
+      padding: 12px 16px;
+      background: #006494;
+      color: #fff;
+    }
+    .model-name { font-size: 15px; font-weight: 700; }
+    .model-abbrev { font-size: 11px; opacity: 0.7; font-weight: 700; letter-spacing: 1px; }
+    .model-card-body { padding: 16px; }
+    .model-visual {
+      display: flex;
+      gap: 4px;
+      margin: 10px 0;
+    }
+    .mv-touch {
+      flex: 1;
+      height: 32px;
+      border-radius: 4px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 11px;
+      font-weight: 700;
+      color: #fff;
+    }
+    .model-desc { font-size: 13px; line-height: 1.65; margin-bottom: 10px; }
+    .model-pros-cons { font-size: 12px; line-height: 1.6; }
+    .pro-label { color: #437A22; font-weight: 700; }
+    .con-label { color: #A13544; font-weight: 700; }
+    .tech-requirements {
+      background: var(--surface);
+      border: 1.5px solid var(--border);
+      border-radius: 10px;
+      padding: 20px;
+      margin: 16px 0;
+    }
+    .tech-req-title { font-size: 14px; font-weight: 700; margin-bottom: 14px; }
+    .tech-req-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+    }
+    .tech-req-item {
+      padding: 12px 14px;
+      background: #fafaf8;
+      border: 1px solid var(--border);
+      border-radius: 6px;
+    }
+    .tri-name { font-size: 13px; font-weight: 700; margin-bottom: 4px; }
+    .tri-desc { font-size: 12px; color: var(--text-muted); line-height: 1.5; }
+    .attribution-fight {
+      background: #fff8f0;
+      border-left: 4px solid #964219;
+      border-radius: 8px;
+      padding: 20px;
+      margin: 20px 0;
+    }
+    .af-title { font-size: 13px; font-weight: 700; letter-spacing: 0.5px; text-transform: uppercase; color: #964219; margin-bottom: 12px; }
+    .sourced-influenced {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+      margin: 16px 0;
+    }
+    .si-box {
+      border-radius: 8px;
+      padding: 16px;
+      border: 1.5px solid;
+    }
+    .si-box.sourced { background: #e6f4ea; border-color: #437A22; }
+    .si-box.influenced { background: #e8f4f8; border-color: #006494; }
+    .si-title { font-size: 13px; font-weight: 700; margin-bottom: 6px; }
+    .sourced .si-title { color: #437A22; }
+    .influenced .si-title { color: #006494; }
+    .si-desc { font-size: 13px; line-height: 1.65; }
+    .dashboard-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 16px 0;
+    }
+    .dashboard-table th { background: #006494; color: #fff; padding: 10px 14px; font-size: 12px; text-align: left; }
+    .dashboard-table td { padding: 12px 14px; font-size: 13px; border-bottom: 1px solid var(--border); line-height: 1.6; vertical-align: top; }
+    .dashboard-table tr:nth-child(even) td { background: #fafaf8; }
+    .stage-guide {
+      background: var(--surface);
+      border: 1.5px solid var(--border);
+      border-radius: 10px;
+      overflow: hidden;
+      margin: 20px 0;
+    }
+    .sg-row {
+      display: grid;
+      grid-template-columns: 180px 1fr;
+      border-bottom: 1px solid var(--border);
+    }
+    .sg-row:last-child { border-bottom: none; }
+    .sg-stage { padding: 14px 16px; font-size: 13px; font-weight: 700; background: #fafaf8; border-right: 1px solid var(--border); display: flex; align-items: center; }
+    .sg-recommendation { padding: 14px 16px; font-size: 13px; line-height: 1.65; }
+  </style>
+</head>
+<body>
+<nav class="nav">
+  <span class="nav-logo">SaaS <span>Revenue System</span></span>
+  <span class="nav-sep">|</span>
+  <a href="../index.html" class="nav-back">← Home</a>
+  <span class="nav-sep">|</span>
+  <a href="../pages/marketing.html" class="nav-back">Marketing</a>
+  <span class="nav-sep">|</span>
+  <span class="nav-current">Pipeline Attribution</span>
+</nav>
+<div class="page-hero" style="background:#006494">
+  <div class="hero-phase-label">Marketing</div>
+  <div class="hero-title">Pipeline Attribution</div>
+  <div class="hero-subtitle">Knowing What Actually Creates Revenue — Attribution Models, Technical Infrastructure, and Building a Dashboard That Drives Decisions</div>
+</div>
+<div class="content-wrap">
+  <div class="breadcrumb">
+    <a href="../index.html">Home</a><span class="sep">›</span>
+    <a href="../pages/marketing.html">Marketing</a><span class="sep">›</span>
+    <span class="current">Pipeline Attribution</span>
+  </div>
+
+  <h2 class="section-title">What Attribution Is and Why It Matters</h2>
+  <div class="subsection">
+    <p>Attribution is the process of assigning credit for pipeline creation and revenue to the marketing and sales activities that influenced a deal. It answers the question: <em>"If we close this $150K deal, which activities caused the buyer to enter our funnel, engage with our brand, and ultimately say yes?"</em></p>
+    <p>Attribution matters for three reasons. First, <strong>budget allocation:</strong> if you don't know which channels produce the most pipeline per dollar, you are allocating your marketing budget on gut feel. Second, <strong>channel optimization:</strong> attribution data tells you which channels are over-invested (high spend, low pipeline) and which are under-invested (low spend, high pipeline). Third, <strong>marketing/sales alignment:</strong> attribution creates a shared language for discussing how pipeline is created — preventing the marketing/sales blame game when pipeline is short.</p>
+    <div class="callout callout-warning">
+      <div class="callout-title">The Attribution Paradox</div>
+      <p>No attribution model is perfectly accurate. Every model is a simplification. The goal is not perfect attribution — it is a consistent, agreed-upon model that makes your channel decisions less wrong over time. Perfect is the enemy of useful.</p>
+    </div>
+  </div>
+
+  <h2 class="section-title">The Attribution Models</h2>
+  <p class="section-intro">Each model makes a different assumption about which buyer touchpoints matter most. The right model depends on your sales cycle length, channel complexity, and organizational maturity.</p>
+
+  <div class="model-grid">
+    <div class="model-card">
+      <div class="model-card-header">
+        <div class="model-abbrev">FT</div>
+        <div class="model-name">First-Touch Attribution</div>
+      </div>
+      <div class="model-card-body">
+        <div class="model-visual">
+          <div class="mv-touch" style="background:#006494; flex:4">100%</div>
+          <div class="mv-touch" style="background:#e0e0e0; flex:1">0%</div>
+          <div class="mv-touch" style="background:#e0e0e0; flex:1">0%</div>
+          <div class="mv-touch" style="background:#e0e0e0; flex:1">0%</div>
+        </div>
+        <div class="model-desc">100% of credit goes to the channel/campaign that first brought the buyer into your funnel — the first touch before any known conversion event.</div>
+        <div class="model-pros-cons">
+          <p><span class="pro-label">✓ Pros:</span> Simple; measures what drove awareness; useful for new logo acquisition attribution</p>
+          <p><span class="con-label">✗ Cons:</span> Ignores all nurture and conversion activity; overvalues top-of-funnel channels; misleading for long sales cycles</p>
+          <p><strong>Use when:</strong> You need to understand awareness-driving channels or have very short sales cycles (&lt;30 days)</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="model-card">
+      <div class="model-card-header">
+        <div class="model-abbrev">LT</div>
+        <div class="model-name">Last-Touch Attribution</div>
+      </div>
+      <div class="model-card-body">
+        <div class="model-visual">
+          <div class="mv-touch" style="background:#e0e0e0; flex:1">0%</div>
+          <div class="mv-touch" style="background:#e0e0e0; flex:1">0%</div>
+          <div class="mv-touch" style="background:#e0e0e0; flex:1">0%</div>
+          <div class="mv-touch" style="background:#006494; flex:4">100%</div>
+        </div>
+        <div class="model-desc">100% of credit goes to the last touchpoint before conversion (demo request, trial signup, or deal close).</div>
+        <div class="model-pros-cons">
+          <p><span class="pro-label">✓ Pros:</span> Simple; identifies conversion-driving channels; easy to implement</p>
+          <p><span class="con-label">✗ Cons:</span> Ignores the awareness and nurture journey; overvalues bottom-of-funnel channels; can cause underinvestment in brand/awareness</p>
+          <p><strong>Use when:</strong> Optimizing for bottom-funnel conversion, or as a sanity check alongside other models</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="model-card">
+      <div class="model-card-header">
+        <div class="model-abbrev">LINEAR</div>
+        <div class="model-name">Linear Multi-Touch</div>
+      </div>
+      <div class="model-card-body">
+        <div class="model-visual">
+          <div class="mv-touch" style="background:#2a7fa8; flex:1">25%</div>
+          <div class="mv-touch" style="background:#2a7fa8; flex:1">25%</div>
+          <div class="mv-touch" style="background:#2a7fa8; flex:1">25%</div>
+          <div class="mv-touch" style="background:#2a7fa8; flex:1">25%</div>
+        </div>
+        <div class="model-desc">Equal credit distributed across all tracked touchpoints in the buyer's journey. If 4 touches, each gets 25% of the revenue/pipeline value.</div>
+        <div class="model-pros-cons">
+          <p><span class="pro-label">✓ Pros:</span> Acknowledges all channels contribute; prevents undervaluing mid-funnel nurture</p>
+          <p><span class="con-label">✗ Cons:</span> Doesn't reflect the reality that some touchpoints matter more; can dilute the credit of high-impact activities</p>
+          <p><strong>Use when:</strong> Early-stage; good starting multi-touch model before you have data to weight touch importance</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="model-card">
+      <div class="model-card-header">
+        <div class="model-abbrev">U-SHAPE</div>
+        <div class="model-name">U-Shaped (40/20/40)</div>
+      </div>
+      <div class="model-card-body">
+        <div class="model-visual">
+          <div class="mv-touch" style="background:#006494; flex:4">40%</div>
+          <div class="mv-touch" style="background:#a0c4d8; flex:2">20%</div>
+          <div class="mv-touch" style="background:#a0c4d8; flex:2">20%</div>
+          <div class="mv-touch" style="background:#006494; flex:4">40%</div>
+        </div>
+        <div class="model-desc">40% credit to the first touch (awareness), 40% to the lead-conversion touch (the touch that converted the visitor to a known lead or MQL), and the remaining 20% distributed across all middle touches.</div>
+        <div class="model-pros-cons">
+          <p><span class="pro-label">✓ Pros:</span> Balances awareness and conversion; acknowledges middle-funnel without overweighting it</p>
+          <p><span class="con-label">✗ Cons:</span> Ignores post-MQL sales activities; better suited for marketing-only attribution than revenue attribution</p>
+          <p><strong>Use when:</strong> Marketing team wants to measure their contribution to MQL creation specifically</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="model-card">
+      <div class="model-card-header">
+        <div class="model-abbrev">W-SHAPE</div>
+        <div class="model-name">W-Shaped (30/30/30/10)</div>
+      </div>
+      <div class="model-card-body">
+        <div class="model-visual">
+          <div class="mv-touch" style="background:#006494; flex:3">30%</div>
+          <div class="mv-touch" style="background:#2a7fa8; flex:3">30%</div>
+          <div class="mv-touch" style="background:#2a7fa8; flex:3">30%</div>
+          <div class="mv-touch" style="background:#a0c4d8; flex:1">10%</div>
+        </div>
+        <div class="model-desc">30% to first touch, 30% to lead creation touch, 30% to opportunity creation touch, 10% distributed across all others. Three milestone moments plus middle nurture.</div>
+        <div class="model-pros-cons">
+          <p><span class="pro-label">✓ Pros:</span> Covers the full pre-close journey; rewards opportunity-creating activities (often a sales touchpoint); commonly used in enterprise SaaS</p>
+          <p><span class="con-label">✗ Cons:</span> Still ignores close-stage activities; requires 3 defined milestone events in CRM</p>
+          <p><strong>Use when:</strong> Series B+ with defined funnel stages; good default multi-touch model for growth-stage SaaS</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="model-card">
+      <div class="model-card-header">
+        <div class="model-abbrev">ML</div>
+        <div class="model-name">Data-Driven (Algorithmic)</div>
+      </div>
+      <div class="model-card-body">
+        <div class="model-visual">
+          <div class="mv-touch" style="background:#1B474D; flex:2">18%</div>
+          <div class="mv-touch" style="background:#1B474D; flex:4">35%</div>
+          <div class="mv-touch" style="background:#1B474D; flex:1">9%</div>
+          <div class="mv-touch" style="background:#1B474D; flex:5">38%</div>
+        </div>
+        <div class="model-desc">ML algorithm analyzes historical deal data to determine which touchpoints actually correlated with conversion and assigns dynamic weights. Google Analytics 4, Bizible (Marketo Measure), and Rockerbox offer versions of this.</div>
+        <div class="model-pros-cons">
+          <p><span class="pro-label">✓ Pros:</span> Most accurate; removes assumptions; evolves as your data grows; produces non-obvious insights</p>
+          <p><span class="con-label">✗ Cons:</span> Requires large data sample (500+ deals), complex implementation, black-box explainability</p>
+          <p><strong>Use when:</strong> Series C+, high deal volume, mature analytics infrastructure</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <h2 class="section-title">Choosing the Right Model for Your Stage</h2>
+  <div class="stage-guide">
+    <div class="sg-row">
+      <div class="sg-stage">Seed / Pre-Series A</div>
+      <div class="sg-recommendation">Use last-touch or first-touch only. You don't have the data volume or technical infrastructure for multi-touch. Focus on tracking what channel generated your first 50 customers — that pattern is your ICP signal.</div>
+    </div>
+    <div class="sg-row">
+      <div class="sg-stage">Series A–B (&lt;$10M ARR)</div>
+      <div class="sg-recommendation">Linear multi-touch is the right step up. Install UTM parameter discipline across all channels. Build CRM campaign tracking. Choose 3-5 key channels to measure. Establish "sourced" vs. "influenced" as separate categories.</div>
+    </div>
+    <div class="sg-row">
+      <div class="sg-stage">Series B–C ($10M–$50M ARR)</div>
+      <div class="sg-recommendation">Implement W-shaped or full-path attribution via Bizible (Marketo Measure) or Attribution.io. Integrate CRM + marketing automation + BI tool. Build channel-level pipeline report by segment (SMB/MM/Enterprise separately — attribution patterns differ dramatically by segment).</div>
+    </div>
+    <div class="sg-row">
+      <div class="sg-stage">Series C+ (&gt;$50M ARR)</div>
+      <div class="sg-recommendation">Move toward data-driven attribution if deal volume permits (500+ closed-won/lost per year). Invest in cookieless attribution methodology for post-2024 tracking. Separate pipeline sourced, pipeline influenced, and pipeline accelerated as three distinct attribution buckets.</div>
+    </div>
+  </div>
+
+  <h2 class="section-title">Technical Infrastructure Required</h2>
+  <div class="tech-requirements">
+    <div class="tech-req-title">Four Non-Negotiable Technical Requirements for Accurate Attribution</div>
+    <div class="tech-req-grid">
+      <div class="tech-req-item">
+        <div class="tri-name">UTM Parameter Discipline</div>
+        <div class="tri-desc">Every paid link, email link, partner link, and event link must carry consistent UTM parameters: utm_source, utm_medium, utm_campaign, utm_content, utm_term. Without this, Google Analytics shows "direct" traffic when the source is actually a newsletter, a LinkedIn ad, or a partner referral.</div>
+      </div>
+      <div class="tech-req-item">
+        <div class="tri-name">CRM Campaign Tracking</div>
+        <div class="tri-desc">Every marketing campaign must be created as a Campaign object in Salesforce/HubSpot with campaign members (contacts/leads) tracked on a Campaign Member record with a response status. This is the chain that links a marketing activity to a contact to an opportunity to revenue.</div>
+      </div>
+      <div class="tech-req-item">
+        <div class="tri-name">BI Integration</div>
+        <div class="tri-desc">Raw CRM + marketing automation data must flow into a BI tool (Tableau, Looker, Metabase) to produce cross-channel attribution reports. Salesforce's native reporting cannot handle multi-touch attribution across channels. Data warehouse (Snowflake, BigQuery) is the integration layer at scale.</div>
+      </div>
+      <div class="tech-req-item">
+        <div class="tri-name">Cookieless Attribution Planning</div>
+        <div class="tri-desc">Third-party cookies are dead for most browsers. Server-side tracking (via CDP: Segment, mParticle) and 1st-party data strategies are the replacement. Build a 1st-party data collection strategy (email capture, progressive profiling, authenticated web sessions) before your attribution data disappears.</div>
+      </div>
+    </div>
+  </div>
+
+  <h2 class="section-title">Pipeline Sourced vs. Pipeline Influenced</h2>
+  <div class="sourced-influenced">
+    <div class="si-box sourced">
+      <div class="si-title">Pipeline Sourced (Marketing-Sourced)</div>
+      <div class="si-desc">Marketing was the first touch that created the contact record and drove the initial conversion that led to the opportunity. The deal would not exist without that initial marketing touchpoint. This is the metric marketing "owns" in most organizations. Typically 30-50% of pipeline in well-run B2B SaaS companies.</div>
+    </div>
+    <div class="si-box influenced">
+      <div class="si-title">Pipeline Influenced (Marketing-Influenced)</div>
+      <div class="si-desc">Marketing touched the contact or account at some point in the buyer's journey — even if the deal was originally sourced by an SDR or AE via outbound. An event the prospect attended, a piece of content they downloaded, a webinar they watched — all count as marketing influence. Typically 50-80% of pipeline shows marketing influence when tracking is tight.</div>
+    </div>
+  </div>
+  <div class="callout callout-warning">
+    <div class="callout-title">The Attribution Fight — and How to Prevent It</div>
+    <div>The most common marketing/sales conflict is the attribution fight: marketing claims pipeline credit for deals that sales "actually won," while sales claims they found the deal through outbound and marketing just sent one email. This is organizational friction that kills collaboration. Prevention: agree on definitions before the quarter starts. Define "sourced" (first touch is marketing) vs. "influenced" (any marketing touch) vs. "outbound-sourced" (first touch is SDR/AE) in writing, get CRO and CMO to sign off, and enforce the definitions in the CRM data model. Disagreements become data questions, not political fights.</div>
+  </div>
+
+  <h2 class="section-title">Building an Attribution Dashboard</h2>
+  <table class="dashboard-table">
+    <thead>
+      <tr><th>Report / View</th><th>What It Shows</th><th>Decision It Drives</th></tr>
+    </thead>
+    <tbody>
+      <tr><td>Pipeline by Source Channel (Waterfall)</td><td>Total pipeline created in the period, broken down by first-touch channel. Trending over 4 quarters.</td><td>Which awareness channels are working? Where to invest for next-quarter pipeline?</td></tr>
+      <tr><td>Revenue by Source Channel</td><td>Closed-won revenue attributed to each channel. Compare to pipeline-by-source to see conversion rates by channel.</td><td>Are the channels creating high pipeline also creating high-quality pipeline that closes?</td></tr>
+      <tr><td>Channel-Level CAC</td><td>S&M spend on each channel divided by new customers acquired from that channel.</td><td>Which channels are most efficient? Where is CAC above the payback threshold?</td></tr>
+      <tr><td>Multi-Touch Influence Report</td><td>For each closed deal, all marketing touchpoints involved and their attributed value under the selected model.</td><td>Which channels appear most frequently in the path to close? Are there engagement patterns that predict wins?</td></tr>
+      <tr><td>Content-to-Pipeline Report</td><td>Content assets that were engaged with by contacts in pipeline. Pipeline value by content asset.</td><td>Which content is driving pipeline? Informs content production prioritization.</td></tr>
+      <tr><td>Campaign ROI Report</td><td>For each campaign: spend, pipeline sourced, pipeline influenced, revenue, CAC, pipeline ROI (pipeline / spend), revenue ROI (revenue / spend).</td><td>Which campaigns to repeat, scale, or cut? Where is the budget generating the highest return?</td></tr>
+      <tr><td>Time-to-Pipeline by Channel</td><td>Average days from first touch (by channel) to opportunity creation.</td><td>Which channels produce pipeline faster? Important for short-term pipeline recovery when you're below plan.</td></tr>
+    </tbody>
+  </table>
+
+  <div class="indicator-row">
+    <span class="indicator-tag ind-leading">Leading: New campaign launches, UTM coverage rate, intent signal volume</span>
+    <span class="indicator-tag ind-lagging">Lagging: Pipeline sourced %, channel-level CAC, campaign revenue ROI</span>
+  </div>
+
+  <div class="related-section">
+    <div class="related-title">Related Sections</div>
+    <div class="related-links">
+      <a href="demand-generation.html" class="related-link">Demand Generation</a>
+      <a href="abm.html" class="related-link">ABM</a>
+      <a href="mql-handoff.html" class="related-link">MQL Handoff</a>
+      <a href="funnel-architecture.html" class="related-link">Funnel Architecture</a>
+      <a href="cac-payback.html" class="related-link">CAC Payback</a>
+      <a href="tech-stack.html" class="related-link">Tech Stack</a>
+    </div>
+  </div>
+</div>
+<script data-pplx-inline-edit>
+(function () {
+  if (window === window.top) return;
+
+  const allowedParentOrigins = ["https://www.perplexity.ai","https://perplexity.ai","https://testing.perplexity.ai","https://staging.perplexity.ai","https://*.preview.i.perplexity.ai","http://localhost:3000","http://127.0.0.1:3000","http://localhost:5173","http://127.0.0.1:5173"];
+  const MAX_FONT_BYTES = 500 * 1024;
+  const MAX_TOTAL_FONT_BYTES = 2 * 1024 * 1024;
+  let scrollForwarding = false;
+  let scrollRaf = 0;
+  let trustedTopOrigin = null;
+
+  // Allow entries like "https://*.preview.i.perplexity.ai" — the wildcard
+  // matches a single DNS label (no dots), so "https://*.foo" cannot stretch
+  // across multiple labels.
+  function matchesAllowedOrigin(origin) {
+    if (!origin) return false;
+    for (const entry of allowedParentOrigins) {
+      if (!entry.includes("*")) {
+        if (entry === origin) return true;
+        continue;
+      }
+      const pattern = new RegExp(
+        "^" +
+          entry.replace(/[.+?^${}()|[\]\\]/g, "\\$&").replace(/\*/g, "[^.]+") +
+          "$",
+      );
+      if (pattern.test(origin)) return true;
+    }
+    return false;
+  }
+
+  // Trust decision: when the sender is same-origin-visible (event.origin is a
+  // real origin like https://www.perplexity.ai) we trust event.origin directly.
+  // When event.origin is "null" (opaque broker srcdoc), we fall back to the
+  // broker's stamped `parentOrigin` to identify the top window. The fallback
+  // is claim-only — we rely on the browser's native `targetOrigin` enforcement
+  // on the response path (see postToTrustedTop) to ensure replies can't be
+  // delivered to anyone but the actual top window of that claimed origin.
+  function getTrustedParentOrigin(event) {
+    const forwardedParentOrigin =
+      typeof event.data.parentOrigin === "string" ? event.data.parentOrigin : null;
+    const parentOrigin = event.origin === "null" ? forwardedParentOrigin : event.origin;
+    return matchesAllowedOrigin(parentOrigin) ? parentOrigin : null;
+  }
+
+  // All responses go to window.top with targetOrigin = the allowlisted origin.
+  // An attacker that iframes us inside their own null-origin broker can claim
+  // any parentOrigin they like, but the browser will drop the reply whenever
+  // the real top's origin doesn't match — so the screenshot never leaves.
+  function postToTrustedTop(message) {
+    if (!trustedTopOrigin) return;
+    try {
+      window.top.postMessage(message, trustedTopOrigin);
+    } catch (_error) {}
+  }
+
+  function inlineAll(original, clone) {
+    if (original.nodeType !== 1 || clone.nodeType !== 1) return;
+
+    try {
+      const computedStyle = getComputedStyle(original);
+      // cssText on a computed style is the serialized declaration in modern
+      // Chromium/Safari — a single read beats enumerating ~400 longhand
+      // properties. Firefox returns "" here, so we fall back on empty.
+      const serialized = computedStyle.cssText;
+      if (serialized) {
+        clone.style.cssText = serialized;
+      } else {
+        const parts = new Array(computedStyle.length);
+        for (let index = 0; index < computedStyle.length; index += 1) {
+          const property = computedStyle[index];
+          parts[index] = `${property}:${computedStyle.getPropertyValue(property)};`;
+        }
+        clone.style.cssText = parts.join("");
+      }
+    } catch (_error) {}
+
+    const originalChildren = original.children;
+    const clonedChildren = clone.children;
+    for (
+      let index = 0;
+      index < originalChildren.length && index < clonedChildren.length;
+      index += 1
+    ) {
+      inlineAll(originalChildren[index], clonedChildren[index]);
+    }
+  }
+
+  function extractFontUrl(srcValue) {
+    const matches = [
+      ...srcValue.matchAll(
+        /url\(["']?([^"')]+)["']?\)(?:\s*format\(["']?([^"')]+)["']?\))?/gi,
+      ),
+    ];
+    if (matches.length === 0) return null;
+    const woff2 = matches.find((m) => m[2] && m[2].toLowerCase().includes("woff2"));
+    if (woff2) return woff2[1];
+    const woff = matches.find((m) => m[2] && m[2].toLowerCase().includes("woff"));
+    if (woff) return woff[1];
+    return matches[0][1];
+  }
+
+  // Cache resolved font URL -> data URI across captures. Fonts on a page
+  // essentially never change, and a batch run emits multiple captures back to
+  // back — without this we'd refetch + re-base64 every time.
+  const fontDataUriCache = new Map();
+  const SRC_DECLARATION_RE = /src\s*:\s*[^;}]+/i;
+
+  async function fetchAsDataUri(url) {
+    if (fontDataUriCache.has(url)) return fontDataUriCache.get(url);
+    let dataUri = null;
+    try {
+      const response = await fetch(url, { mode: "cors", credentials: "omit" });
+      if (response.ok) {
+        const blob = await response.blob();
+        if (blob.size <= MAX_FONT_BYTES) {
+          dataUri = await new Promise((resolve) => {
+            const reader = new FileReader();
+            reader.onloadend = () =>
+              resolve(typeof reader.result === "string" ? reader.result : null);
+            reader.onerror = () => resolve(null);
+            reader.readAsDataURL(blob);
+          });
+        }
+      }
+    } catch (_error) {
+      dataUri = null;
+    }
+    fontDataUriCache.set(url, dataUri);
+    return dataUri;
+  }
+
+  function collectFontFaceRuleTexts() {
+    const rules = [];
+    for (const sheet of document.styleSheets) {
+      let cssRules;
+      try {
+        cssRules = sheet.cssRules;
+      } catch (_error) {
+        continue;
+      }
+      if (!cssRules) continue;
+      for (const rule of cssRules) {
+        const cssText = rule.cssText || "";
+        if (cssText.startsWith("@font-face")) rules.push(cssText);
+      }
+    }
+    return rules;
+  }
+
+  async function buildInlinedFontCss() {
+    const ruleTexts = collectFontFaceRuleTexts();
+    if (ruleTexts.length === 0) return null;
+
+    const resolved = ruleTexts.map((cssText) => {
+      if (!SRC_DECLARATION_RE.test(cssText)) return null;
+      const srcMatch = cssText.match(/src\s*:\s*([^;}]+)[;}]/i);
+      if (!srcMatch) return null;
+      const url = extractFontUrl(srcMatch[1]);
+      if (!url) return null;
+      try {
+        return { cssText, url: new URL(url, document.baseURI).href };
+      } catch (_error) {
+        return null;
+      }
+    });
+
+    const dataUris = await Promise.all(
+      resolved.map((entry) => (entry ? fetchAsDataUri(entry.url) : Promise.resolve(null))),
+    );
+
+    const inlined = [];
+    let totalBytes = 0;
+    for (let index = 0; index < resolved.length; index += 1) {
+      const entry = resolved[index];
+      const dataUri = dataUris[index];
+      if (!entry || !dataUri) continue;
+      const approxBytes = dataUri.length * 0.75;
+      if (totalBytes + approxBytes > MAX_TOTAL_FONT_BYTES) break;
+      totalBytes += approxBytes;
+      inlined.push(entry.cssText.replace(SRC_DECLARATION_RE, `src: url("${dataUri}")`));
+    }
+    return inlined.length > 0 ? inlined.join("\n") : null;
+  }
+
+  function stripExternal(clone) {
+    const images = clone.querySelectorAll("img");
+    for (let index = 0; index < images.length; index += 1) {
+      const src = images[index].getAttribute("src");
+      if (src && !src.startsWith("data:")) images[index].removeAttribute("src");
+    }
+
+    const elements = clone.querySelectorAll("*");
+    for (let index = 0; index < elements.length; index += 1) {
+      const style = elements[index].style.cssText;
+      if (style && style.includes("url(")) {
+        elements[index].style.cssText = style.replace(
+          /url\(["']?(?!data:)[^)"']*["']?\)/gi,
+          "none",
+        );
+      }
+    }
+  }
+
+  function emitScroll() {
+    scrollRaf = 0;
+    if (!scrollForwarding) return;
+    postToTrustedTop({
+      type: "INLINE_EDIT_SCROLL",
+      scrollX: window.scrollX,
+      scrollY: window.scrollY,
+    });
+  }
+
+  window.addEventListener(
+    "scroll",
+    function () {
+      if (!scrollForwarding || scrollRaf) return;
+      scrollRaf = requestAnimationFrame(emitScroll);
+    },
+    { passive: true, capture: true },
+  );
+
+  async function handleCaptureRequest(event) {
+    const requestId = event.data.requestId;
+    const scrollX = window.scrollX;
+    const scrollY = window.scrollY;
+    const width = window.innerWidth;
+    const height = window.innerHeight;
+
+    function postResult(dataUrl) {
+      postToTrustedTop({
+        type: "INLINE_EDIT_SCREENSHOT_RESULT",
+        requestId,
+        dataUrl,
+        scrollX,
+        scrollY,
+      });
+    }
+
+    try {
+      // Wait for any pending web fonts to resolve so both inline metrics and
+      // the @font-face inlining below see the same loaded faces.
+      if (document.fonts && document.fonts.ready) {
+        try {
+          await document.fonts.ready;
+        } catch (_error) {}
+      }
+
+      const clone = document.documentElement.cloneNode(true);
+      inlineAll(document.documentElement, clone);
+
+      const removedNodes = clone.querySelectorAll("script,link[rel=\"stylesheet\"],style");
+      for (let index = 0; index < removedNodes.length; index += 1) {
+        removedNodes[index].remove();
+      }
+
+      stripExternal(clone);
+
+      // Re-embed web fonts as data-URI @font-face rules so the SVG rasterizer
+      // can resolve them — external font URLs aren't fetched during
+      // foreignObject rendering, which would otherwise force a fallback face
+      // and change text metrics.
+      const inlinedFontCss = await buildInlinedFontCss();
+      if (inlinedFontCss) {
+        const styleEl = document.createElement("style");
+        styleEl.textContent = inlinedFontCss;
+        const head = clone.querySelector("head");
+        if (head) head.appendChild(styleEl);
+        else clone.insertBefore(styleEl, clone.firstChild);
+      }
+
+      const html = new XMLSerializer().serializeToString(clone);
+      const svg =
+        `<svg xmlns="http://www.w3.org/2000/svg" width="${width}" height="${height}">` +
+        '<foreignObject width="100%" height="100%">' +
+        `<div xmlns="http://www.w3.org/1999/xhtml" style="width:${width}px;height:${height}px;overflow:hidden">` +
+        `<div style="transform:translate(-${scrollX}px,-${scrollY}px);transform-origin:top left">` +
+        html +
+        "</div></div></foreignObject></svg>";
+      const svgUrl = `data:image/svg+xml;charset=utf-8,${encodeURIComponent(svg)}`;
+      const image = new Image();
+      image.onload = function () {
+        const canvas = document.createElement("canvas");
+        canvas.width = width;
+        canvas.height = height;
+        canvas.getContext("2d").drawImage(image, 0, 0);
+        postResult(canvas.toDataURL("image/png"));
+      };
+      image.onerror = function () {
+        postResult(null);
+      };
+      image.src = svgUrl;
+    } catch (_error) {
+      postResult(null);
+    }
+  }
+
+  window.addEventListener("message", function (event) {
+    if (!event.data) return;
+    // Only accept messages from the direct parent frame. Blocks sibling /
+    // unrelated-window postMessage senders that could otherwise reach us.
+    if (event.source !== window.parent) return;
+
+    const trustedParentOrigin = getTrustedParentOrigin(event);
+    if (!trustedParentOrigin) return;
+    trustedTopOrigin = trustedParentOrigin;
+
+    if (event.data.type === "INLINE_EDIT_SCROLL_START") {
+      scrollForwarding = true;
+      emitScroll();
+      return;
+    }
+
+    if (event.data.type === "INLINE_EDIT_SCROLL_STOP") {
+      scrollForwarding = false;
+      if (scrollRaf) cancelAnimationFrame(scrollRaf);
+      scrollRaf = 0;
+      return;
+    }
+
+    if (event.data.type !== "INLINE_EDIT_CAPTURE_REQUEST") return;
+
+    handleCaptureRequest(event);
+  });
+})();
+
+
+</script></body>
+</html>

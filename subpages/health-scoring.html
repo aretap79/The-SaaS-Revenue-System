@@ -1,0 +1,980 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Customer Health Scoring — SaaS Revenue System</title>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="../assets/shared.css"/>
+  <style>
+    .page-hero { background: #7A39BB; }
+    .signal-block {
+      background: var(--surface);
+      border: 1.5px solid var(--border);
+      border-radius: 10px;
+      padding: 20px 24px;
+      margin-bottom: 14px;
+      position: relative;
+    }
+    .signal-block .sb-header {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 10px;
+    }
+    .sb-weight {
+      font-size: 13px;
+      font-weight: 700;
+      padding: 4px 12px;
+      border-radius: 20px;
+      background: #ede7f6;
+      color: #7A39BB;
+      margin-left: auto;
+      white-space: nowrap;
+    }
+    .sb-icon {
+      width: 36px;
+      height: 36px;
+      border-radius: 8px;
+      background: #ede7f6;
+      color: #7A39BB;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 18px;
+      flex-shrink: 0;
+    }
+    .sb-title { font-size: 16px; font-weight: 700; color: var(--text); }
+    .signal-block p {
+      font-size: 14px;
+      line-height: 1.7;
+      color: var(--text);
+      margin-bottom: 10px;
+    }
+    .signal-block p:last-child { margin-bottom: 0; }
+    .signal-block .sb-metrics {
+      background: var(--bg);
+      border-radius: 6px;
+      padding: 10px 14px;
+      margin-top: 10px;
+    }
+    .signal-block .sb-metrics .sm-label {
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      margin-bottom: 6px;
+    }
+    .signal-block .sb-metrics ul {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+    }
+    .signal-block .sb-metrics ul li {
+      font-size: 13px;
+      padding: 2px 0 2px 18px;
+      position: relative;
+      color: var(--text);
+      line-height: 1.6;
+    }
+    .signal-block .sb-metrics ul li::before {
+      content: '▸';
+      position: absolute;
+      left: 0;
+      color: #7A39BB;
+      font-size: 11px;
+    }
+    .traffic-light {
+      border-radius: 12px;
+      padding: 20px 24px;
+      margin-bottom: 16px;
+    }
+    .tl-green { background: #f0fff4; border: 2px solid #437A22; }
+    .tl-yellow { background: #fffbf0; border: 2px solid #B7751A; }
+    .tl-red { background: #fff8f9; border: 2px solid #A13544; }
+    .traffic-light .tl-header {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 12px;
+    }
+    .tl-dot {
+      width: 20px;
+      height: 20px;
+      border-radius: 50%;
+      flex-shrink: 0;
+    }
+    .dot-green { background: #437A22; }
+    .dot-yellow { background: #B7751A; }
+    .dot-red { background: #A13544; }
+    .traffic-light .tl-label {
+      font-size: 18px;
+      font-weight: 700;
+    }
+    .tl-green .tl-label { color: #437A22; }
+    .tl-yellow .tl-label { color: #B7751A; }
+    .tl-red .tl-label { color: #A13544; }
+    .traffic-light p { font-size: 14px; line-height: 1.7; margin-bottom: 8px; color: var(--text); }
+    .traffic-light p:last-child { margin-bottom: 0; }
+    .traffic-light .tl-action {
+      font-size: 13px;
+      font-weight: 700;
+      margin-top: 8px;
+      padding: 8px 12px;
+      border-radius: 6px;
+    }
+    .tl-green .tl-action { background: rgba(67,122,34,0.1); color: #437A22; }
+    .tl-yellow .tl-action { background: rgba(183,117,26,0.1); color: #B7751A; }
+    .tl-red .tl-action { background: rgba(161,53,68,0.1); color: #A13544; }
+    .save-play {
+      background: linear-gradient(135deg, #fff8f9, #fce8e6);
+      border: 2px solid #A13544;
+      border-radius: 10px;
+      padding: 20px 24px;
+      margin: 16px 0;
+    }
+    .save-play h4 { font-size: 16px; font-weight: 700; color: #A13544; margin-bottom: 10px; }
+    .save-play p { font-size: 14px; line-height: 1.7; margin-bottom: 10px; color: var(--text); }
+    .save-play p:last-child { margin-bottom: 0; }
+    .tool-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      padding: 12px 0;
+      border-bottom: 1px solid var(--border);
+      gap: 12px;
+    }
+    .tool-row:last-child { border-bottom: none; }
+    .tool-row .tr-name { font-size: 15px; font-weight: 700; min-width: 130px; }
+    .tool-row .tr-target { font-size: 12px; color: #7A39BB; font-weight: 700; white-space: nowrap; }
+    .tool-row .tr-desc { font-size: 13px; color: var(--text); flex: 1; line-height: 1.55; }
+    .score-viz {
+      display: flex;
+      height: 40px;
+      border-radius: 8px;
+      overflow: hidden;
+      margin: 16px 0;
+      border: 1.5px solid var(--border);
+    }
+    .sv-red { background: #A13544; flex: 40; display: flex; align-items: center; justify-content: center; color: #fff; font-size: 12px; font-weight: 700; }
+    .sv-yellow { background: #B7751A; flex: 30; display: flex; align-items: center; justify-content: center; color: #fff; font-size: 12px; font-weight: 700; }
+    .sv-green { background: #437A22; flex: 30; display: flex; align-items: center; justify-content: center; color: #fff; font-size: 12px; font-weight: 700; }
+    .weight-bar {
+      display: flex;
+      gap: 10px;
+      align-items: center;
+      padding: 8px 0;
+      border-bottom: 1px solid var(--border);
+    }
+    .weight-bar:last-child { border-bottom: none; }
+    .wb-label { font-size: 13px; font-weight: 600; min-width: 160px; color: var(--text); }
+    .wb-track { flex: 1; height: 8px; background: var(--bg); border-radius: 4px; overflow: hidden; }
+    .wb-fill { height: 100%; border-radius: 4px; background: #7A39BB; }
+    .wb-pct { font-size: 12px; font-weight: 700; color: #7A39BB; min-width: 40px; text-align: right; }
+    .expansion-block {
+      background: linear-gradient(135deg, #f3eaff, #e8d5ff);
+      border: 1.5px solid #7A39BB;
+      border-radius: 10px;
+      padding: 20px 24px;
+      margin: 16px 0;
+    }
+    .expansion-block h4 { font-size: 16px; font-weight: 700; color: #7A39BB; margin-bottom: 10px; }
+    .expansion-block p { font-size: 14px; line-height: 1.7; margin-bottom: 10px; color: var(--text); }
+    .expansion-block p:last-child { margin-bottom: 0; }
+    @media(max-width:768px){
+      .sv-red, .sv-yellow, .sv-green { font-size: 10px; }
+      .wb-label { min-width: 120px; font-size: 12px; }
+    }
+  </style>
+</head>
+<body>
+<nav class="nav">
+  <span class="nav-logo">SaaS <span>Revenue System</span></span>
+  <span class="nav-sep">|</span>
+  <a href="../index.html" class="nav-back">← Home</a>
+  <span class="nav-sep">|</span>
+  <a href="../pages/customer-success.html" class="nav-back">Customer Success</a>
+  <span class="nav-sep">|</span>
+  <span class="nav-current">Health Scoring</span>
+</nav>
+<div class="page-hero" style="background:#7A39BB">
+  <div class="hero-phase-label">Customer Success</div>
+  <div class="hero-title">Customer Health Scoring — The Early Warning System for Churn and Expansion</div>
+  <div class="hero-subtitle">A health score is a predictive model that tells you which customers are thriving, which are at risk, and where to focus your CS team's time.</div>
+</div>
+<div class="content-wrap">
+  <div class="breadcrumb">
+    <a href="../index.html">Home</a><span class="sep">›</span>
+    <a href="../pages/customer-success.html">Customer Success</a><span class="sep">›</span>
+    <span class="current">Health Scoring</span>
+  </div>
+
+  <!-- WHAT A HEALTH SCORE IS -->
+  <h2 class="section-title">What a Customer Health Score Is</h2>
+  <p class="section-intro">A customer health score is a single composite number — typically on a 0-100 scale — that aggregates multiple customer signals into a single, actionable indicator of a customer's likelihood to renew, expand, or churn. It is the Customer Success equivalent of a credit score: it synthesizes disparate data points into a prediction that enables prioritized action.</p>
+
+  <div class="callout callout-definition">
+    <div class="callout-title">The Health Score Objective</div>
+    <p>The goal of a health score is to predict churn and expansion 90-180 days before they happen — giving CS teams enough lead time to intervene before a renewal conversation, save a deteriorating relationship, or accelerate an expansion opportunity. A health score that only identifies at-risk customers 30 days before renewal is too late for meaningful intervention. Leading indicators — product usage trends, engagement velocity, support escalation rates — must be weighted heavily enough to generate early signals.</p>
+  </div>
+
+  <div class="subsection">
+    <div class="subsection-title">Why One Score Instead of Many Metrics</div>
+    <p>CSMs cannot track 50 individual metrics for 100+ accounts simultaneously. The health score aggregates the noise into a signal that enables triage: Green accounts get proactive expansion conversations. Yellow accounts get targeted intervention to identify and resolve the specific risk. Red accounts trigger save plays. Without a single synthesized score, CSM attention is distributed by gut feel — which is always biased toward the loudest, most recently contacted accounts, not necessarily the most at-risk ones.</p>
+    <p>The single score doesn't replace underlying data — CSMs still need to drill into individual signal categories to understand why a score is yellow or red. But the score is the notification system that prompts them to look in the first place.</p>
+  </div>
+
+  <!-- INPUTS -->
+  <h2 class="section-title">The Inputs to a Health Score</h2>
+  <p class="section-intro">Health scores should be built from six categories of customer signals. Each category has different data sources, different predictive power for churn vs. expansion, and different recommended weighting. The weightings below are starting points — calibrate against your actual churn and expansion data (see Validation section).</p>
+
+  <div class="signal-block">
+    <div class="sb-header">
+      <div class="sb-icon">📊</div>
+      <div class="sb-title">Product Usage Signals</div>
+      <div class="sb-weight">Weight: 30-40%</div>
+    </div>
+    <p>Product usage is typically the single strongest predictor of churn in SaaS. Customers who don't use the product will not renew. The specific metrics that matter most vary by product type, but the key principle is to measure adoption at both breadth (are users using core features?) and depth (are users completing the key workflows that deliver value?).</p>
+    <p><strong>DAU/MAU Ratio:</strong> Daily Active Users divided by Monthly Active Users measures engagement intensity. A DAU/MAU ratio above 0.3 (30%) is typically healthy for a business-critical tool; below 0.1 is concerning. This metric alone has strong predictive power for churn — customers with DAU/MAU below 0.1 churn at 3-4x the rate of customers above 0.3 in most SaaS products.</p>
+    <p><strong>Feature Adoption Breadth vs. Depth:</strong> Breadth is the number of core features used as a % of available features. Depth is frequency and completeness of key workflows. A customer using 3 of 10 core features is at higher churn risk than one using 8 of 10, even if login frequency is similar. Map your product's "success path" — the sequence of features that highly retentive customers adopt — and track position on that path for each account.</p>
+    <p><strong>Time-to-Value (TTV):</strong> How quickly did the customer reach their first key milestone after onboarding? Customers who reach TTV within the first 30 days retain at dramatically higher rates than those who haven't reached TTV at 60 days. TTV is a leading indicator of the entire customer trajectory — it predicts Month 6 and Month 12 health from Month 1 data.</p>
+    <div class="sb-metrics">
+      <div class="sm-label">Key Metrics to Track</div>
+      <ul>
+        <li>DAU/MAU ratio (trend over 30/60/90 days)</li>
+        <li>Weekly active users as % of licensed seats (active user rate)</li>
+        <li>Core feature adoption breadth (# features used / total core features)</li>
+        <li>Key workflow completion rate (onboarding completion, primary use case completion)</li>
+        <li>Login frequency trend (increasing vs. decreasing)</li>
+        <li>Data sources: Mixpanel, Amplitude, Pendo, Gainsight PX, Segment</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="signal-block">
+    <div class="sb-header">
+      <div class="sb-icon">🎫</div>
+      <div class="sb-title">Support Signals</div>
+      <div class="sb-weight">Weight: 10-15%</div>
+    </div>
+    <p>Support signal data is a double-edged sword: high ticket volume can indicate either high engagement (customers actively using the product and encountering questions) or high frustration (customers struggling with critical issues). Context matters — separate analysis of ticket severity and sentiment from raw volume is essential.</p>
+    <p><strong>Positive signals:</strong> Low severity tickets (feature questions, how-to requests) indicate active usage. Tickets related to advanced features signal power-user engagement. Resolution satisfaction scores above 4/5 signal good support experience.</p>
+    <p><strong>Negative signals:</strong> High-severity tickets (P1/P2 — outages, data issues, critical bugs), unresolved or re-opened tickets, multiple tickets about the same underlying issue, escalations to VP or C-suite contact, tickets accompanied by declining usage patterns.</p>
+    <p>A single P1 critical incident that is resolved quickly and professionally can strengthen the customer relationship. A P1 incident that is handled poorly can accelerate churn even from a previously healthy account. Track resolution quality metrics (CSAT on tickets, time-to-resolution vs. SLA) as carefully as ticket volume.</p>
+    <div class="sb-metrics">
+      <div class="sm-label">Key Metrics to Track</div>
+      <ul>
+        <li>Total ticket volume (trend over 30 days vs. prior 30 days)</li>
+        <li>P1/P2 (critical) ticket count in last 90 days</li>
+        <li>Unresolved ticket age (tickets open >5 business days)</li>
+        <li>Support CSAT score (rolling 90-day average)</li>
+        <li>Escalations in last 90 days (binary: yes/no)</li>
+        <li>Data sources: Zendesk, Intercom, Salesforce Service Cloud, Freshdesk</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="signal-block">
+    <div class="sb-header">
+      <div class="sb-icon">💬</div>
+      <div class="sb-title">Engagement Signals</div>
+      <div class="sb-weight">Weight: 15-20%</div>
+    </div>
+    <p>Engagement signals measure the quality and frequency of the relationship between your team and the customer's stakeholders. A product may be performing perfectly, but if the champion has gone dark, if no executive sponsor is in place, or if the customer misses QBRs, the renewal is at risk regardless of usage metrics. Relationship health is a distinct dimension from product health.</p>
+    <p><strong>Communication cadence:</strong> Champion email response rate is one of the most reliable early warning signals available. A champion who previously responded to emails within 24 hours now taking 5-7 days is a signal that attention has shifted, organizational context has changed (new initiative, potential reorg), or the champion's enthusiasm for your product is declining. Track response rate trend, not just current response rate.</p>
+    <p><strong>QBR attendance and engagement:</strong> Customers who attend QBRs and arrive prepared with questions are significantly more likely to renew and expand than customers who repeatedly cancel or reschedule QBRs, or who attend passively without engagement. QBR completion rate is a strong health signal — track it explicitly. If a customer misses two consecutive QBRs, escalate to manager attention.</p>
+    <div class="sb-metrics">
+      <div class="sm-label">Key Metrics to Track</div>
+      <ul>
+        <li>Champion email response rate (last 60 days)</li>
+        <li>QBR completion rate (last 2 QBRs attended/scheduled)</li>
+        <li>Executive sponsor engaged in last 90 days (binary)</li>
+        <li>Event participation (webinars, training, user conference)</li>
+        <li>Training/certification completion rate among licensed users</li>
+        <li>Data sources: Salesforce activity logs, HubSpot email tracking, Outreach/Salesloft activity data</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="signal-block">
+    <div class="sb-header">
+      <div class="sb-icon">💰</div>
+      <div class="sb-title">Financial Signals</div>
+      <div class="sb-weight">Weight: 10-15%</div>
+    </div>
+    <p>Financial signals reflect the commercial health of the relationship. Expanding contract value is a strong positive health signal — a customer adding users, modules, or upgrading tier is demonstrating confidence in the product. Contracting value (downgrading, removing seats) is a serious red flag. Payment behavior is also meaningful.</p>
+    <p><strong>Renewal date proximity:</strong> A customer with renewal in 90 days who is Yellow or Red requires immediate executive escalation and a save play. A customer with renewal in 270 days has time for a structured intervention. Build automated alerts that flag renewal date proximity combined with health score thresholds: "Renewal in &lt;90 days + Health Score &lt;50" should trigger automatic CSM and manager notification.</p>
+    <p><strong>Contract value trend:</strong> Track whether the customer's contract value has grown, stayed flat, or contracted since their initial purchase. A customer who has expanded 3x in two years is fundamentally healthier than a customer who is still on the same contract as day one — even if their usage metrics are similar. Growth trajectory is a predictor of long-term relationship health.</p>
+    <div class="sb-metrics">
+      <div class="sm-label">Key Metrics to Track</div>
+      <ul>
+        <li>Contract value trend (expanding / flat / contracting)</li>
+        <li>Days until renewal date</li>
+        <li>Multi-year vs. annual contract (multi-year = lower churn risk)</li>
+        <li>Payment history (past-due invoices are a churn early warning)</li>
+        <li>Seat utilization (licensed seats vs. actively used seats)</li>
+        <li>Data sources: Salesforce, HubSpot, Chargebee, Stripe, billing system</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="signal-block">
+    <div class="sb-header">
+      <div class="sb-icon">🤝</div>
+      <div class="sb-title">Relationship Signals</div>
+      <div class="sb-weight">Weight: 10-20%</div>
+    </div>
+    <p>Relationship signals capture the subjective quality of the relationship between the customer and your company. Some of the most important signals in this category are qualitative — CSM sentiment and champion stability — and cannot be automatically collected. They require CSM judgment and consistent data entry discipline.</p>
+    <p><strong>NPS and CSAT:</strong> NPS (Net Promoter Score, 0-10 scale) measures advocacy intention. A score of 9-10 (Promoter) is a strong positive health signal. A score of 0-6 (Detractor) is a red alert. However, NPS alone is insufficient — a customer who gave an NPS of 8 six months ago but whose usage has declined sharply since then is more at risk than the NPS score suggests. NPS must be trended, not treated as a static data point.</p>
+    <p><strong>Champion stability:</strong> Champion turnover is one of the highest-risk events in customer health. When a champion leaves the company, the internal relationship, institutional knowledge, and advocacy for your product often leave with them. Monitor LinkedIn for champion job changes (many CS platforms have this integration). When a champion leaves: immediately identify the new champion candidate, schedule an executive engagement with their replacement, and rebuild the relationship proactively before the next renewal cycle.</p>
+    <p><strong>CSM sentiment (subjective rating):</strong> CSMs who speak to customers regularly have pattern-recognition capabilities that product data cannot capture. A CSM's gut feeling that an account is "not feeling good" should be surfaced as a data point, not ignored. Many CS platforms allow CSMs to enter a manual sentiment score (1-5) after each customer interaction. This qualitative signal, aggregated over time, has strong predictive validity for churn.</p>
+    <div class="sb-metrics">
+      <div class="sm-label">Key Metrics to Track</div>
+      <ul>
+        <li>NPS score (last survey) and trend</li>
+        <li>CSAT score (rolling average)</li>
+        <li>CSM sentiment score (1-5, entered after touchpoints)</li>
+        <li>Executive sponsor in place (yes/no)</li>
+        <li>Champion employment status (stable / at risk / departed)</li>
+        <li>Number of engaged contacts (breadth of relationship)</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="signal-block">
+    <div class="sb-header">
+      <div class="sb-icon">⭐</div>
+      <div class="sb-title">Advocacy Signals</div>
+      <div class="sb-weight">Weight: 5-10%</div>
+    </div>
+    <p>Advocacy signals measure the customer's willingness to publicly endorse and actively recommend your product. Advocacy is both a health indicator and a business outcome. A customer who serves as a reference, writes a G2 review, makes a referral, or participates in your advisory board is demonstrating high confidence in your product. Advocacy is typically a lagging indicator of health — customers become advocates after sustained positive experience — which makes it a strong predictor of renewal.</p>
+    <p>The advocacy signals below are ordered by intensity. Reference participation (agreeing to speak with a prospect) requires the most trust and has the highest health signal value. A review or case study approval requires meaningful satisfaction. Referrals require genuine product confidence. Advisory board participation indicates the deepest level of strategic partnership.</p>
+    <div class="sb-metrics">
+      <div class="sm-label">Advocacy Signals (Ordered by Signal Strength)</div>
+      <ul>
+        <li>Advisory board participation (highest signal)</li>
+        <li>Referral made to a prospective customer</li>
+        <li>Customer reference (agreed to speak with prospects)</li>
+        <li>Case study approved and published</li>
+        <li>G2, TrustRadius, or Capterra review written</li>
+        <li>Social media mention or content share (lightest signal)</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- BUILDING THE WEIGHTED SCORE -->
+  <h2 class="section-title">Building the Weighted Health Score</h2>
+  <p class="section-intro">The weighted score aggregates all signal categories into a single 0-100 number. Each category is first normalized to a 0-100 sub-score, then weighted by its assigned importance, then summed to produce the composite score. The normalization step is critical — different signals use different units (login frequency in days, NPS in points, ticket volume in counts) and must be converted to a common scale before weighting.</p>
+
+  <div class="subsection">
+    <div class="subsection-title">Recommended Default Weights</div>
+  </div>
+  <div style="background: var(--surface); border: 1.5px solid var(--border); border-radius: 10px; padding: 20px 24px; margin-bottom:20px;">
+    <div class="weight-bar">
+      <div class="wb-label">Product Usage</div>
+      <div class="wb-track"><div class="wb-fill" style="width:35%"></div></div>
+      <div class="wb-pct">35%</div>
+    </div>
+    <div class="weight-bar">
+      <div class="wb-label">Relationship Signals</div>
+      <div class="wb-track"><div class="wb-fill" style="width:20%"></div></div>
+      <div class="wb-pct">20%</div>
+    </div>
+    <div class="weight-bar">
+      <div class="wb-label">Engagement Signals</div>
+      <div class="wb-track"><div class="wb-fill" style="width:18%"></div></div>
+      <div class="wb-pct">18%</div>
+    </div>
+    <div class="weight-bar">
+      <div class="wb-label">Financial Signals</div>
+      <div class="wb-track"><div class="wb-fill" style="width:12%"></div></div>
+      <div class="wb-pct">12%</div>
+    </div>
+    <div class="weight-bar">
+      <div class="wb-label">Support Signals</div>
+      <div class="wb-track"><div class="wb-fill" style="width:10%"></div></div>
+      <div class="wb-pct">10%</div>
+    </div>
+    <div class="weight-bar">
+      <div class="wb-label">Advocacy Signals</div>
+      <div class="wb-track"><div class="wb-fill" style="width:5%"></div></div>
+      <div class="wb-pct">5%</div>
+    </div>
+  </div>
+
+  <div class="formula-block">
+    <div class="formula-label">Health Score Calculation</div>
+    <div class="formula-main">Sub-Score (each category) = Normalize(raw metric value) × 100 → produces 0-100 per category
+
+Normalization example (DAU/MAU ratio):
+  DAU/MAU = 0.40 → Sub-score = min(0.40/0.50, 1.0) × 100 = 80
+  DAU/MAU = 0.10 → Sub-score = min(0.10/0.50, 1.0) × 100 = 20
+  (where 0.50 is defined as the "100% healthy" benchmark for this metric)
+
+Composite Health Score = Σ (Category Sub-Score × Category Weight)
+  = (Usage Sub-Score × 0.35) + (Relationship Sub-Score × 0.20) + (Engagement Sub-Score × 0.18)
+    + (Financial Sub-Score × 0.12) + (Support Sub-Score × 0.10) + (Advocacy Sub-Score × 0.05)
+
+Red Override Rule: Any single critical signal (P1 escalation unresolved,
+champion departed, payment 30+ days overdue, usage drop >50% in 30 days)
+automatically caps the score at Red regardless of composite calculation.</div>
+  </div>
+
+  <div class="subsection">
+    <div class="subsection-title">Data Sources and Integration Requirements</div>
+    <p>Building an automated health score requires integrating data from four systems at minimum: (1) CRM (Salesforce/HubSpot) for relationship data, financial data, and CSM-entered subjective signals. (2) Product analytics (Mixpanel, Amplitude, Pendo) for usage data. (3) Support platform (Zendesk, Intercom) for ticket data. (4) Contract/billing system (Chargebee, Stripe, or CRM) for financial data. CS platforms like Gainsight and ChurnZero are designed to ingest and unify this data — for teams without a dedicated CS platform, custom Salesforce fields fed by API integrations can approximate the same result.</p>
+  </div>
+
+  <!-- GREEN YELLOW RED -->
+  <h2 class="section-title">Green / Yellow / Red Definitions & CS Playbooks</h2>
+  <p class="section-intro">The three-tier health classification provides CS teams with clear action triggers. Every customer should be in one tier at any given time, and tier changes should trigger automatic notifications and prescribed interventions.</p>
+
+  <div class="score-viz">
+    <div class="sv-red">RED: 0-39</div>
+    <div class="sv-yellow">YELLOW: 40-69</div>
+    <div class="sv-green">GREEN: 70-100</div>
+  </div>
+
+  <div class="traffic-light tl-green">
+    <div class="tl-header">
+      <div class="tl-dot dot-green"></div>
+      <div class="tl-label">GREEN (Score: 70-100) — Healthy & Expanding</div>
+    </div>
+    <p>Green customers are on track, actively using the product, engaged with your team, and satisfied with the relationship. They are the most likely to renew and represent the primary pool for expansion conversations. The CS approach for green customers is proactive and growth-oriented — not reactive problem-solving.</p>
+    <p><strong>Green Account Characteristics:</strong> DAU/MAU above 0.25, core feature adoption above 60%, QBR attendance consistent, champion responsive, NPS 8+, no significant support escalations in 90 days, contract value flat or growing.</p>
+    <div class="tl-action">
+      CS Touchpoint: Quarterly QBR focused on value realization and roadmap. Proactive expansion conversation: "Based on your usage, here's how your team could get even more value from [additional capability]." Reference and advocacy asks at green accounts. Maintain regular cadence — don't neglect green accounts by over-focusing on red.
+    </div>
+  </div>
+
+  <div class="traffic-light tl-yellow">
+    <div class="tl-header">
+      <div class="tl-dot dot-yellow"></div>
+      <div class="tl-label">YELLOW (Score: 40-69) — At Risk, Requires Attention</div>
+    </div>
+    <p>Yellow customers show concerning signals in one or more categories. They are not in crisis, but without intervention, a Yellow account will likely become Red within 60-90 days. Yellow is where proactive intervention has the highest ROI — the relationship is still strong enough to save easily, but the trend must be reversed before it worsens.</p>
+    <p><strong>Common Yellow Drivers:</strong> Usage trending down for 30+ days (but not critically low), champion unresponsive for 14-21 days, missed last QBR, NPS decline from prior survey, open support issue unresolved for 5+ days, upcoming renewal without prior expansion conversation.</p>
+    <div class="tl-action">
+      CS Touchpoint: Monthly check-in minimum. Diagnosis call to identify the specific signal driving the Yellow score. Adoption review — identify which features aren't being used and why. Issue identification — are there blockers to value that haven't been surfaced? Create a mini success plan: "Here's what we'll do together in the next 30 days to get your team back to full adoption." Escalate to CSM manager if no improvement within 30 days.
+    </div>
+  </div>
+
+  <div class="traffic-light tl-red">
+    <div class="tl-header">
+      <div class="tl-dot dot-red"></div>
+      <div class="tl-label">RED (Score: 0-39) — High Churn Risk, Immediate Action</div>
+    </div>
+    <p>Red customers are in imminent churn risk. Multiple health signals are negative, the relationship is damaged, and without significant intervention, this customer will likely not renew. Red accounts require executive escalation and a dedicated "save play" — a structured, time-bounded intervention program designed to diagnose the root cause and reverse the trajectory.</p>
+    <p><strong>Common Red Drivers:</strong> DAU/MAU below 0.05 for 60+ days, champion has left the company, P1 escalation unresolved or handled poorly, NPS 0-4, multiple missed QBRs, customer has expressed intent to evaluate alternatives, contract value contracting (seat reduction request), payment delinquency.</p>
+    <div class="tl-action">
+      CS Touchpoint: Weekly contact minimum. Executive escalation (VP CS or CRO calls executive sponsor). Save play initiated immediately (see below). Daily monitoring of usage signals. Root cause identification within first week of Red classification.
+    </div>
+  </div>
+
+  <!-- SAVE PLAY -->
+  <div class="save-play">
+    <h4>The Save Play — Red Account Intervention Protocol</h4>
+    <p>A save play is a structured, time-bounded intervention for Red accounts. It begins when an account first enters Red status and has a defined timeline (typically 30-60 days), specific owners at each step, and a clear success criterion (back to Yellow within 60 days, or understood churn and managed gracefully).</p>
+    <p><strong>Week 1 — Diagnosis:</strong> CSM schedules urgent call with champion. Agenda: what's changed, what specific problems are they experiencing, what would make them confident to renew. Be direct: "I want to make sure we're delivering the value you expected. Can we be honest with each other about what's working and what isn't?" Document all findings in CRM immediately.</p>
+    <p><strong>Week 1-2 — Executive Engagement:</strong> VP of CS or CRO calls executive sponsor at customer company (not just champion). Frame as relationship investment: "I wanted to reach out personally to understand how we can better support your team." Executive-to-executive outreach signals commitment and often surfaces issues that champions are too junior to escalate.</p>
+    <p><strong>Week 2-3 — Remediation Plan:</strong> Based on diagnosis, build a specific, written remediation plan: product configuration changes, additional training sessions, assigned dedicated support contact, roadmap items being expedited, executive sponsor meetings. Share the plan with the customer as a mutual commitment document.</p>
+    <p><strong>Week 3-4+ — Execution and Monitoring:</strong> Execute remediation plan. Weekly CSM-to-champion check-in. Track health score weekly — is it trending toward Yellow? If no improvement in 30 days despite remediation: escalate to managed churn (understand the timeline, ensure proper offboarding, capture reasons for future prevention).</p>
+    <p><strong>Trigger Criteria for Save Play:</strong> Health score first drops below 40. OR any single critical event: P1 escalation, champion departure, expressed intent to leave, contract contraction request, payment delinquency. OR renewal in &lt;90 days with Yellow/Red score. Save plays should be tracked in the CRM with their own pipeline record — treat renewals at risk the same way sales treats at-risk deals.</p>
+  </div>
+
+  <!-- EXPANSION -->
+  <h2 class="section-title">Health Score for Expansion Identification</h2>
+  <p class="section-intro">Health scoring is typically framed as a churn prevention tool, but it is equally powerful for expansion identification. High-health accounts with low expansion are the highest-potential expansion targets — they are satisfied customers who have proven the product's value and have room to grow. Identifying and routing these accounts proactively is how CS teams become genuine revenue generators, not just retention managers.</p>
+
+  <div class="expansion-block">
+    <h4>The Expansion Trigger Framework</h4>
+    <p><strong>Green + Low Seat Utilization:</strong> A customer at 90% of their licensed seat count is an upsell opportunity. A customer using only 40% of their licensed seats but with high feature adoption is an expansion opportunity — they need more training and active enablement to fill unused licenses, or they may have over-licensed and are at risk for contraction at renewal. Treat these differently.</p>
+    <p><strong>Green + High Feature Adoption of Core Module:</strong> A customer who has fully adopted Module A and is consistently at 85+ health score is a natural candidate for Module B cross-sell. Build product usage triggers: when a customer's usage of Feature Set A exceeds threshold X for 60 consecutive days, alert the CSM for an expansion conversation.</p>
+    <p><strong>Routing Expansion to the Right Team:</strong> Expansion routing depends on deal size and account strategy: (1) CSM-led expansion: for accounts where the CSM already owns the relationship and the expansion is a natural extension of the current scope (seat additions, tier upgrade). (2) AE-led expansion: for net-new product modules or use cases that require a new sales motion — the AE brings commercial expertise while the CSM provides relationship context. (3) Digital/automated expansion: for SMB accounts where the expansion trigger can be handled by in-product prompts, automated emails, and self-serve checkout.</p>
+  </div>
+
+  <!-- TOOLING -->
+  <h2 class="section-title">Health Score Tooling</h2>
+  <p class="section-intro">The right tooling for your health score depends on company size, ARR, and technical resources. Dedicated CS platforms offer the most complete capabilities, but teams without the budget can build effective health scoring in existing CRM infrastructure.</p>
+
+  <div style="background: var(--surface); border: 1.5px solid var(--border); border-radius: 10px; padding: 16px 20px; margin-bottom:20px;">
+    <div class="tool-row">
+      <div class="tr-name">Gainsight</div>
+      <div class="tr-target">$30M+ ARR</div>
+      <div class="tr-desc">The enterprise standard for CS platforms. Full health scoring engine, automated playbooks, journey orchestration, NPS survey tooling, revenue intelligence (expansion/at-risk alerts), CSM dashboards, Salesforce integration. Most comprehensive but also most complex and expensive ($40-120K+/year). Requires dedicated admin to operate effectively.</div>
+    </div>
+    <div class="tool-row">
+      <div class="tr-name">ChurnZero</div>
+      <div class="tr-target">$10-50M ARR</div>
+      <div class="tr-desc">Strong mid-market option with deep health scoring, automated plays, in-app surveys, and revenue tracking. Faster implementation than Gainsight. Native integrations with common SaaS stacks (Salesforce, HubSpot, Zendesk, Segment). Used by companies like Learnupon, Vidyard.</div>
+    </div>
+    <div class="tool-row">
+      <div class="tr-name">Totango</div>
+      <div class="tr-target">$10-50M ARR</div>
+      <div class="tr-desc">Known for the "SuccessBLOC" framework — pre-built CS program templates. Strong for teams wanting prescriptive structure. Health scoring, journey orchestration, usage analytics. Integrates with Salesforce, Segment, and support platforms.</div>
+    </div>
+    <div class="tool-row">
+      <div class="tr-name">Catalyst</div>
+      <div class="tr-target">$5-30M ARR</div>
+      <div class="tr-desc">Modern CS platform designed to feel like a sales CRM — built for CSMs who come from sales backgrounds. Clean UX, strong Salesforce native integration, health scoring, renewal pipeline management. Good for companies growing from founder-led CS to dedicated CS team.</div>
+    </div>
+    <div class="tool-row">
+      <div class="tr-name">ClientSuccess</div>
+      <div class="tr-target">$5-20M ARR</div>
+      <div class="tr-desc">Simple, focused CS platform emphasizing health scoring and renewal management. Lower cost entry point. Strong for teams that need health scoring without the complexity of Gainsight. Good onboarding tooling.</div>
+    </div>
+    <div class="tool-row">
+      <div class="tr-name">Salesforce (Custom)</div>
+      <div class="tr-target">Any stage</div>
+      <div class="tr-desc">For teams already on Salesforce who can't yet invest in a dedicated CS platform: build health scoring in custom Salesforce fields, driven by API integrations with product analytics and support systems. Use roll-up summary fields and formula fields to create a composite score. Requires Salesforce admin time to build (~80-150 hours), but achieves 80% of the value of a CS platform at a fraction of the cost.</div>
+    </div>
+    <div class="tool-row">
+      <div class="tr-name">Spreadsheet Model</div>
+      <div class="tr-target">&lt;$5M ARR / &lt;50 accounts</div>
+      <div class="tr-desc">Before investing in CS tooling, build a weekly-updated spreadsheet with manual data entry (usage stats pulled from product analytics, support ticket counts, CSM sentiment ratings) and a simple weighted average formula. Not scalable beyond ~50 accounts, but perfectly adequate for early-stage CS teams who need a systematic approach before the tooling investment is justified.</div>
+    </div>
+  </div>
+
+  <!-- HEALTH SCORE VALIDATION -->
+  <h2 class="section-title">Health Score Validation — Back-Testing and Recalibration</h2>
+  <p class="section-intro">A health score that doesn't actually predict churn is worse than no score at all — it creates false confidence in Red alerts being rare and false alarms in Yellow accounts. The only way to know if your health score works is to validate it against historical data.</p>
+
+  <div class="subsection">
+    <div class="subsection-title">The Back-Test Methodology</div>
+    <ol class="step-list">
+      <li>
+        <div class="step-content">
+          <span class="step-title">Extract Historical Data</span>
+          Pull all customers from the last 12-24 months with known outcomes (churned vs. retained vs. expanded). Extract the health score signals for each customer at the point 90-180 days before their renewal date (the window where intervention is possible).
+        </div>
+      </li>
+      <li>
+        <div class="step-content">
+          <span class="step-title">Apply Current Weights to Historical Data</span>
+          Calculate what their health score would have been under your current weighting model. Do the scores correlate with outcomes? Did the customers who churned have lower scores 90 days out? Did the customers who expanded have higher scores?
+        </div>
+      </li>
+      <li>
+        <div class="step-content">
+          <span class="step-title">Measure Predictive Accuracy</span>
+          Calculate precision and recall for each tier: Of all customers classified as Red 90 days before renewal, what % actually churned? (Precision.) Of all customers who actually churned, what % were classified as Red 90 days out? (Recall.) A good health score achieves &gt;70% precision and &gt;70% recall for the Red tier.
+        </div>
+      </li>
+      <li>
+        <div class="step-content">
+          <span class="step-title">Identify Which Signals Have the Most Predictive Power</span>
+          Run a correlation analysis between each individual signal and churn outcome. Signals with high correlation to churn should receive higher weights; signals with low correlation should be reduced. Common finding: product usage DAU/MAU typically has the highest single-signal predictive power; advocacy signals have significant predictive power but low volume.
+        </div>
+      </li>
+      <li>
+        <div class="step-content">
+          <span class="step-title">Recalibrate Weights and Re-Back-Test</span>
+          Adjust weights based on correlation findings. Recalculate the composite score for historical data and measure whether predictive accuracy improves. Iterate until you achieve satisfactory precision and recall. Document the final weights and the back-test results for the new model.
+        </div>
+      </li>
+    </ol>
+  </div>
+
+  <div class="callout callout-best-practice">
+    <div class="callout-title">Recalibration Cadence</div>
+    <p>Recalibrate the health score model at least annually — and whenever there is a significant product change (new core feature launch, pricing model change) or business model change (moving from SMB to mid-market, adding a new product line). The signals that predict churn evolve as the product and customer base mature. A health score model built for a 20-account customer base at Series A will need significant rework by the time you have 200 accounts at Series C. Treat the health score as a living model, not a one-time configuration.</p>
+  </div>
+
+  <div class="formula-block">
+    <div class="formula-label">Health Score Validation Formulas</div>
+    <div class="formula-main">Precision (Red tier) = True Red (correctly predicted churns) / Total Red predictions × 100
+Recall (Red tier) = True Red (correctly predicted churns) / Total actual churns × 100
+F1 Score = 2 × (Precision × Recall) / (Precision + Recall)
+
+Target: Precision > 70%, Recall > 70%, F1 > 70%
+
+Churn Rate by Health Cohort:
+  Green cohort churn rate: typically 2-5% annually
+  Yellow cohort churn rate: typically 15-30% annually
+  Red cohort churn rate: typically 50-80% annually
+  (if your cohorts don't show this pattern, your weights need recalibration)
+
+NRR by Health Score Cohort:
+  Green cohort NRR: 115-140%+
+  Yellow cohort NRR: 90-105%
+  Red cohort NRR: 60-85%</div>
+  </div>
+
+  <!-- KEY INDICATORS -->
+  <h2 class="section-title">Key Indicators</h2>
+
+  <div class="subsection">
+    <div class="subsection-title">Leading Indicators</div>
+    <div class="indicator-row">
+      <span class="indicator-tag ind-leading">Health Score Distribution (% Red/Yellow/Green)</span>
+      <span class="indicator-tag ind-leading">DAU/MAU Trend</span>
+      <span class="indicator-tag ind-leading">Support Escalation Rate</span>
+      <span class="indicator-tag ind-leading">Champion Response Rate</span>
+      <span class="indicator-tag ind-leading">QBR Completion Rate</span>
+      <span class="indicator-tag ind-leading">Score Trending Down &gt;10 pts/30 days</span>
+    </div>
+  </div>
+
+  <div class="subsection">
+    <div class="subsection-title">Lagging Indicators</div>
+    <div class="indicator-row">
+      <span class="indicator-tag ind-lagging">Churn Rate by Health Score Cohort</span>
+      <span class="indicator-tag ind-lagging">Expansion Rate by Health Score Cohort</span>
+      <span class="indicator-tag ind-lagging">NRR by Health Score Cohort</span>
+      <span class="indicator-tag ind-lagging">Save Play Success Rate</span>
+      <span class="indicator-tag ind-lagging">Health Score Predictive Accuracy (F1)</span>
+    </div>
+  </div>
+
+  <div class="subsection">
+    <div class="subsection-title">Key Formulas</div>
+    <div class="indicator-row">
+      <span class="indicator-tag ind-formula">DAU/MAU = Daily Active Users / Monthly Active Users</span>
+      <span class="indicator-tag ind-formula">Score = Σ(Sub-Score × Weight) / 100</span>
+      <span class="indicator-tag ind-formula">NRR = (Starting MRR + Expansion − Contraction − Churn) / Starting MRR</span>
+    </div>
+  </div>
+
+  <div class="related-section">
+    <div class="related-title">Related Sections</div>
+    <div class="related-links">
+      <a href="churn-prevention.html" class="related-link">Churn Prevention</a>
+      <a href="expansion-revenue.html" class="related-link">Expansion Revenue</a>
+      <a href="qbr-framework.html" class="related-link">QBR Framework</a>
+      <a href="nrr-optimization.html" class="related-link">NRR Optimization</a>
+      <a href="onboarding.html" class="related-link">Customer Onboarding</a>
+      <a href="../pages/customer-success.html" class="related-link">Customer Success Overview</a>
+    </div>
+  </div>
+</div>
+<script data-pplx-inline-edit>
+(function () {
+  if (window === window.top) return;
+
+  const allowedParentOrigins = ["https://www.perplexity.ai","https://perplexity.ai","https://testing.perplexity.ai","https://staging.perplexity.ai","https://*.preview.i.perplexity.ai","http://localhost:3000","http://127.0.0.1:3000","http://localhost:5173","http://127.0.0.1:5173"];
+  const MAX_FONT_BYTES = 500 * 1024;
+  const MAX_TOTAL_FONT_BYTES = 2 * 1024 * 1024;
+  let scrollForwarding = false;
+  let scrollRaf = 0;
+  let trustedTopOrigin = null;
+
+  // Allow entries like "https://*.preview.i.perplexity.ai" — the wildcard
+  // matches a single DNS label (no dots), so "https://*.foo" cannot stretch
+  // across multiple labels.
+  function matchesAllowedOrigin(origin) {
+    if (!origin) return false;
+    for (const entry of allowedParentOrigins) {
+      if (!entry.includes("*")) {
+        if (entry === origin) return true;
+        continue;
+      }
+      const pattern = new RegExp(
+        "^" +
+          entry.replace(/[.+?^${}()|[\]\\]/g, "\\$&").replace(/\*/g, "[^.]+") +
+          "$",
+      );
+      if (pattern.test(origin)) return true;
+    }
+    return false;
+  }
+
+  // Trust decision: when the sender is same-origin-visible (event.origin is a
+  // real origin like https://www.perplexity.ai) we trust event.origin directly.
+  // When event.origin is "null" (opaque broker srcdoc), we fall back to the
+  // broker's stamped `parentOrigin` to identify the top window. The fallback
+  // is claim-only — we rely on the browser's native `targetOrigin` enforcement
+  // on the response path (see postToTrustedTop) to ensure replies can't be
+  // delivered to anyone but the actual top window of that claimed origin.
+  function getTrustedParentOrigin(event) {
+    const forwardedParentOrigin =
+      typeof event.data.parentOrigin === "string" ? event.data.parentOrigin : null;
+    const parentOrigin = event.origin === "null" ? forwardedParentOrigin : event.origin;
+    return matchesAllowedOrigin(parentOrigin) ? parentOrigin : null;
+  }
+
+  // All responses go to window.top with targetOrigin = the allowlisted origin.
+  // An attacker that iframes us inside their own null-origin broker can claim
+  // any parentOrigin they like, but the browser will drop the reply whenever
+  // the real top's origin doesn't match — so the screenshot never leaves.
+  function postToTrustedTop(message) {
+    if (!trustedTopOrigin) return;
+    try {
+      window.top.postMessage(message, trustedTopOrigin);
+    } catch (_error) {}
+  }
+
+  function inlineAll(original, clone) {
+    if (original.nodeType !== 1 || clone.nodeType !== 1) return;
+
+    try {
+      const computedStyle = getComputedStyle(original);
+      // cssText on a computed style is the serialized declaration in modern
+      // Chromium/Safari — a single read beats enumerating ~400 longhand
+      // properties. Firefox returns "" here, so we fall back on empty.
+      const serialized = computedStyle.cssText;
+      if (serialized) {
+        clone.style.cssText = serialized;
+      } else {
+        const parts = new Array(computedStyle.length);
+        for (let index = 0; index < computedStyle.length; index += 1) {
+          const property = computedStyle[index];
+          parts[index] = `${property}:${computedStyle.getPropertyValue(property)};`;
+        }
+        clone.style.cssText = parts.join("");
+      }
+    } catch (_error) {}
+
+    const originalChildren = original.children;
+    const clonedChildren = clone.children;
+    for (
+      let index = 0;
+      index < originalChildren.length && index < clonedChildren.length;
+      index += 1
+    ) {
+      inlineAll(originalChildren[index], clonedChildren[index]);
+    }
+  }
+
+  function extractFontUrl(srcValue) {
+    const matches = [
+      ...srcValue.matchAll(
+        /url\(["']?([^"')]+)["']?\)(?:\s*format\(["']?([^"')]+)["']?\))?/gi,
+      ),
+    ];
+    if (matches.length === 0) return null;
+    const woff2 = matches.find((m) => m[2] && m[2].toLowerCase().includes("woff2"));
+    if (woff2) return woff2[1];
+    const woff = matches.find((m) => m[2] && m[2].toLowerCase().includes("woff"));
+    if (woff) return woff[1];
+    return matches[0][1];
+  }
+
+  // Cache resolved font URL -> data URI across captures. Fonts on a page
+  // essentially never change, and a batch run emits multiple captures back to
+  // back — without this we'd refetch + re-base64 every time.
+  const fontDataUriCache = new Map();
+  const SRC_DECLARATION_RE = /src\s*:\s*[^;}]+/i;
+
+  async function fetchAsDataUri(url) {
+    if (fontDataUriCache.has(url)) return fontDataUriCache.get(url);
+    let dataUri = null;
+    try {
+      const response = await fetch(url, { mode: "cors", credentials: "omit" });
+      if (response.ok) {
+        const blob = await response.blob();
+        if (blob.size <= MAX_FONT_BYTES) {
+          dataUri = await new Promise((resolve) => {
+            const reader = new FileReader();
+            reader.onloadend = () =>
+              resolve(typeof reader.result === "string" ? reader.result : null);
+            reader.onerror = () => resolve(null);
+            reader.readAsDataURL(blob);
+          });
+        }
+      }
+    } catch (_error) {
+      dataUri = null;
+    }
+    fontDataUriCache.set(url, dataUri);
+    return dataUri;
+  }
+
+  function collectFontFaceRuleTexts() {
+    const rules = [];
+    for (const sheet of document.styleSheets) {
+      let cssRules;
+      try {
+        cssRules = sheet.cssRules;
+      } catch (_error) {
+        continue;
+      }
+      if (!cssRules) continue;
+      for (const rule of cssRules) {
+        const cssText = rule.cssText || "";
+        if (cssText.startsWith("@font-face")) rules.push(cssText);
+      }
+    }
+    return rules;
+  }
+
+  async function buildInlinedFontCss() {
+    const ruleTexts = collectFontFaceRuleTexts();
+    if (ruleTexts.length === 0) return null;
+
+    const resolved = ruleTexts.map((cssText) => {
+      if (!SRC_DECLARATION_RE.test(cssText)) return null;
+      const srcMatch = cssText.match(/src\s*:\s*([^;}]+)[;}]/i);
+      if (!srcMatch) return null;
+      const url = extractFontUrl(srcMatch[1]);
+      if (!url) return null;
+      try {
+        return { cssText, url: new URL(url, document.baseURI).href };
+      } catch (_error) {
+        return null;
+      }
+    });
+
+    const dataUris = await Promise.all(
+      resolved.map((entry) => (entry ? fetchAsDataUri(entry.url) : Promise.resolve(null))),
+    );
+
+    const inlined = [];
+    let totalBytes = 0;
+    for (let index = 0; index < resolved.length; index += 1) {
+      const entry = resolved[index];
+      const dataUri = dataUris[index];
+      if (!entry || !dataUri) continue;
+      const approxBytes = dataUri.length * 0.75;
+      if (totalBytes + approxBytes > MAX_TOTAL_FONT_BYTES) break;
+      totalBytes += approxBytes;
+      inlined.push(entry.cssText.replace(SRC_DECLARATION_RE, `src: url("${dataUri}")`));
+    }
+    return inlined.length > 0 ? inlined.join("\n") : null;
+  }
+
+  function stripExternal(clone) {
+    const images = clone.querySelectorAll("img");
+    for (let index = 0; index < images.length; index += 1) {
+      const src = images[index].getAttribute("src");
+      if (src && !src.startsWith("data:")) images[index].removeAttribute("src");
+    }
+
+    const elements = clone.querySelectorAll("*");
+    for (let index = 0; index < elements.length; index += 1) {
+      const style = elements[index].style.cssText;
+      if (style && style.includes("url(")) {
+        elements[index].style.cssText = style.replace(
+          /url\(["']?(?!data:)[^)"']*["']?\)/gi,
+          "none",
+        );
+      }
+    }
+  }
+
+  function emitScroll() {
+    scrollRaf = 0;
+    if (!scrollForwarding) return;
+    postToTrustedTop({
+      type: "INLINE_EDIT_SCROLL",
+      scrollX: window.scrollX,
+      scrollY: window.scrollY,
+    });
+  }
+
+  window.addEventListener(
+    "scroll",
+    function () {
+      if (!scrollForwarding || scrollRaf) return;
+      scrollRaf = requestAnimationFrame(emitScroll);
+    },
+    { passive: true, capture: true },
+  );
+
+  async function handleCaptureRequest(event) {
+    const requestId = event.data.requestId;
+    const scrollX = window.scrollX;
+    const scrollY = window.scrollY;
+    const width = window.innerWidth;
+    const height = window.innerHeight;
+
+    function postResult(dataUrl) {
+      postToTrustedTop({
+        type: "INLINE_EDIT_SCREENSHOT_RESULT",
+        requestId,
+        dataUrl,
+        scrollX,
+        scrollY,
+      });
+    }
+
+    try {
+      // Wait for any pending web fonts to resolve so both inline metrics and
+      // the @font-face inlining below see the same loaded faces.
+      if (document.fonts && document.fonts.ready) {
+        try {
+          await document.fonts.ready;
+        } catch (_error) {}
+      }
+
+      const clone = document.documentElement.cloneNode(true);
+      inlineAll(document.documentElement, clone);
+
+      const removedNodes = clone.querySelectorAll("script,link[rel=\"stylesheet\"],style");
+      for (let index = 0; index < removedNodes.length; index += 1) {
+        removedNodes[index].remove();
+      }
+
+      stripExternal(clone);
+
+      // Re-embed web fonts as data-URI @font-face rules so the SVG rasterizer
+      // can resolve them — external font URLs aren't fetched during
+      // foreignObject rendering, which would otherwise force a fallback face
+      // and change text metrics.
+      const inlinedFontCss = await buildInlinedFontCss();
+      if (inlinedFontCss) {
+        const styleEl = document.createElement("style");
+        styleEl.textContent = inlinedFontCss;
+        const head = clone.querySelector("head");
+        if (head) head.appendChild(styleEl);
+        else clone.insertBefore(styleEl, clone.firstChild);
+      }
+
+      const html = new XMLSerializer().serializeToString(clone);
+      const svg =
+        `<svg xmlns="http://www.w3.org/2000/svg" width="${width}" height="${height}">` +
+        '<foreignObject width="100%" height="100%">' +
+        `<div xmlns="http://www.w3.org/1999/xhtml" style="width:${width}px;height:${height}px;overflow:hidden">` +
+        `<div style="transform:translate(-${scrollX}px,-${scrollY}px);transform-origin:top left">` +
+        html +
+        "</div></div></foreignObject></svg>";
+      const svgUrl = `data:image/svg+xml;charset=utf-8,${encodeURIComponent(svg)}`;
+      const image = new Image();
+      image.onload = function () {
+        const canvas = document.createElement("canvas");
+        canvas.width = width;
+        canvas.height = height;
+        canvas.getContext("2d").drawImage(image, 0, 0);
+        postResult(canvas.toDataURL("image/png"));
+      };
+      image.onerror = function () {
+        postResult(null);
+      };
+      image.src = svgUrl;
+    } catch (_error) {
+      postResult(null);
+    }
+  }
+
+  window.addEventListener("message", function (event) {
+    if (!event.data) return;
+    // Only accept messages from the direct parent frame. Blocks sibling /
+    // unrelated-window postMessage senders that could otherwise reach us.
+    if (event.source !== window.parent) return;
+
+    const trustedParentOrigin = getTrustedParentOrigin(event);
+    if (!trustedParentOrigin) return;
+    trustedTopOrigin = trustedParentOrigin;
+
+    if (event.data.type === "INLINE_EDIT_SCROLL_START") {
+      scrollForwarding = true;
+      emitScroll();
+      return;
+    }
+
+    if (event.data.type === "INLINE_EDIT_SCROLL_STOP") {
+      scrollForwarding = false;
+      if (scrollRaf) cancelAnimationFrame(scrollRaf);
+      scrollRaf = 0;
+      return;
+    }
+
+    if (event.data.type !== "INLINE_EDIT_CAPTURE_REQUEST") return;
+
+    handleCaptureRequest(event);
+  });
+})();
+
+
+</script></body>
+</html>

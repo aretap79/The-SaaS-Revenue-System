@@ -1,0 +1,658 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Diagnosing & Fixing Low Win Rates — SaaS Revenue System</title>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="../assets/shared.css"/>
+  <style>.page-hero { background: #A13544; }</style>
+</head>
+<body>
+<nav class="nav">
+  <span class="nav-logo">SaaS <span>Revenue System</span></span>
+  <span class="nav-sep">|</span>
+  <a href="../index.html" class="nav-back">← Home</a>
+  <span class="nav-sep">|</span>
+  <a href="../pages/phase6.html" class="nav-back">Troubleshooting</a>
+  <span class="nav-sep">|</span>
+  <span class="nav-current">Low Win Rates</span>
+</nav>
+
+<div class="page-hero">
+  <div class="hero-phase-label">PHASE 6 — TROUBLESHOOTING</div>
+  <div class="hero-title">Diagnosing &amp; Fixing Low Win Rates</div>
+  <div class="hero-subtitle">Win rate is the most sensitive signal of GTM health. When it drops, look everywhere — ICP, messaging, qualification, competitive positioning, and execution.</div>
+</div>
+
+<div class="content-wrap">
+  <div class="breadcrumb">
+    <a href="../index.html">Home</a><span class="sep">›</span>
+    <a href="../pages/phase6.html">Troubleshooting</a><span class="sep">›</span>
+    <span class="current">Diagnosing &amp; Fixing Low Win Rates</span>
+  </div>
+
+  <!-- INTRO -->
+  <div class="section-title">Why Win Rate Is the GTM Vital Sign</div>
+  <div class="section-intro">Win rate is the percentage of opportunities closed-won out of all closed opportunities (won + lost + no-decision). It is the single most information-dense metric in SaaS sales because it integrates the quality of every upstream decision: who you sell to, how you qualify, how you position, how you execute, and whether you have internal champions doing the selling for you. A declining win rate is a five-alarm signal — but only if you segment it correctly first.</div>
+
+  <div class="formula-block">
+    <div class="formula-label">Win Rate Formula</div>
+    <div class="formula-main">Win Rate = Closed-Won Deals ÷ (Closed-Won + Closed-Lost + No-Decision) × 100</div>
+    <div class="formula-note">SMB benchmark: 25–35% | Mid-Market: 20–28% | Enterprise: 15–25% | Below 15% in any segment = systemic problem</div>
+  </div>
+
+  <div class="callout callout-warning">
+    <div class="callout-title">⚠ Never Diagnose Win Rate in Aggregate</div>
+    <p>An aggregate win rate of 22% could be 35% SMB + 18% MM + 8% Enterprise — meaning your enterprise motion is failing catastrophically while your SMB motion is healthy. Diagnosing without segmentation leads to wrong fixes. Always segment first across four dimensions: by rep, by segment, by source, and by competitor.</p>
+  </div>
+
+  <!-- DIAGNOSTIC SEGMENTATION -->
+  <div class="section-title">The Win Rate Diagnostic Segmentation Framework</div>
+  <div class="section-intro">Before identifying root causes, run win rate through four diagnostic cuts. Each cut tells you something different about where the breakdown is occurring.</div>
+
+  <div class="subsection">
+    <div class="subsection-title">Cut 1: By Rep — Is the Problem Isolated or Systemic?</div>
+    <p>Pull the win rate for each AE over the last 6 months with at least 10 closed opportunities. If 1–2 reps have dramatically lower win rates than the team average, the problem is individual — coaching, capability, or territory fit. If the entire team is at similar below-benchmark rates, the problem is systemic — process, messaging, ICP, or competition.</p>
+  </div>
+
+  <div class="subsection">
+    <div class="subsection-title">Cut 2: By Segment — SMB, Mid-Market, Enterprise</div>
+    <p>Win rates naturally vary by segment because enterprise deals involve more stakeholders, longer procurement cycles, and more competitive evaluation. If your enterprise win rate has dropped from 20% to 10%, investigate champion strength and economic buyer access. If SMB win rate has dropped, investigate messaging clarity and competitive differentiation at low-touch velocity.</p>
+  </div>
+
+  <div class="subsection">
+    <div class="subsection-title">Cut 3: By Source — Inbound vs. Outbound</div>
+    <p>Inbound leads win at 1.5–2x the rate of outbound leads because they are self-selecting — the buyer raised their hand. If inbound win rate is healthy (30%+) but outbound win rate is low (10–15%), the issue is outbound qualification and ICP targeting. If inbound win rate itself is falling, the messaging and product positioning are off.</p>
+  </div>
+
+  <div class="subsection">
+    <div class="subsection-title">Cut 4: By Competitor — Losing to One Specific Player?</div>
+    <p>Pull win/loss outcomes by primary competitor mentioned in the deal. If you are winning 28% overall but only 8% when Company X is in the deal, you have a specific competitive positioning problem — not a general win rate problem. The fix is a competitive battle card, win room review, and specific competitive counter-messaging, not a general sales process overhaul.</p>
+  </div>
+
+  <div class="subsection">
+    <div class="subsection-title">Cut 5: By Deal Size — Win Rate Drop Above $50K ACV?</div>
+    <p>Many companies have strong win rates at smaller deal sizes but collapse at larger ACVs. The most common cause: at higher ACVs the CFO and procurement enter the deal, executive alignment requirements increase, and the champion must be more politically skilled. If your win rate drops precipitously above $50K, your team lacks the enterprise selling skills for large deals.</p>
+  </div>
+
+  <table class="data-table">
+    <thead>
+      <tr>
+        <th>Segmentation Cut</th>
+        <th>What It Tells You</th>
+        <th>Primary Root Cause Signal</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>By rep (isolated vs. universal)</td>
+        <td>Individual vs. systemic problem</td>
+        <td>Individual: coaching/territory | Systemic: process/ICP/competition</td>
+      </tr>
+      <tr>
+        <td>By segment (SMB/MM/Ent)</td>
+        <td>Where in the market motion is broken</td>
+        <td>Enterprise: champion, EB access | SMB: messaging, speed</td>
+      </tr>
+      <tr>
+        <td>By source (inbound/outbound)</td>
+        <td>Qualification and ICP targeting quality</td>
+        <td>Outbound low: ICP mismatch, poor qualification</td>
+      </tr>
+      <tr>
+        <td>By competitor</td>
+        <td>Specific competitive weakness</td>
+        <td>One competitor: battle card, positioning gap</td>
+      </tr>
+      <tr>
+        <td>By deal size ($50K threshold)</td>
+        <td>Enterprise selling capability gap</td>
+        <td>Large deal: champion weakness, EB access, MEDDIC gaps</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <!-- ROOT CAUSE 1: WRONG ICP -->
+  <div class="section-title">Root Cause 1: Wrong ICP — Selling to Customers Who Cannot Win</div>
+  <div class="section-intro">The most insidious win rate killer is selling to the wrong customers. These deals feel like real opportunities — the prospect shows interest, engages in discovery, requests a demo — but they never close because the product cannot solve their actual problem at a price they can justify. The sales team wastes cycles on deals that were never winnable.</div>
+
+  <div class="subsection">
+    <div class="subsection-title">How to Detect ICP Mismatch in Win Rate Data</div>
+    <p>Run a cohort analysis: take your won customers from the last 12 months and calculate their 12-month NRR and churn rate. Segment those customers by how closely they match your stated ICP (Tier 1 = perfect fit, Tier 2 = acceptable fit, Tier 3 = out of ICP). If Tier 1 customers have 115%+ NRR and Tier 3 have 75% NRR and high churn, you are both losing deals and winning the wrong ones.</p>
+    <p>For win rate specifically: calculate win rate by ICP tier. If your win rate with Tier 1 prospects is 35% but with Tier 3 it is 8%, you are wasting sales capacity on low-probability deals. The fix is to tighten the qualification gate — use ICP scoring in the SQL qualification step so reps stop pursuing Tier 3 accounts.</p>
+  </div>
+
+  <div class="formula-block">
+    <div class="formula-label">ICP-Adjusted Win Rate</div>
+    <div class="formula-main">ICP Win Rate = Closed-Won (ICP Tier 1) ÷ Total Closed (ICP Tier 1) × 100</div>
+    <div class="formula-note">Compare Tier 1 win rate vs. Tier 3. If gap is &gt;15pp, qualification is allowing too many non-ICP deals.</div>
+  </div>
+
+  <div class="subsection">
+    <div class="subsection-title">30–60 Day Fix</div>
+    <ul class="bullet-list">
+      <li>Build an ICP scorecard (5–7 firmographic/technographic criteria with weighted scoring) and apply it at SQL qualification</li>
+      <li>Set a minimum ICP score threshold below which deals are not advanced to Stage 2</li>
+      <li>Retroactively score all current pipeline deals — flag and review all below-threshold opportunities</li>
+      <li>Update marketing targeting to focus exclusively on Tier 1 firmographics</li>
+    </ul>
+  </div>
+
+  <!-- ROOT CAUSE 2: WEAK DISCOVERY -->
+  <div class="section-title">Root Cause 2: Weak Discovery and MEDDICC Gaps</div>
+  <div class="section-intro">Discovery is where win rates are actually won or lost — not in the demo and not in the proposal. Weak discovery leads to demos that miss the pain, proposals that fail to quantify value, and deals with no internal champion building urgency. You can diagnose discovery quality by auditing MEDDICC completion across the pipeline.</div>
+
+  <div class="subsection">
+    <div class="subsection-title">How to Detect Weak Discovery Using Deal Review Patterns</div>
+    <p>Conduct a MEDDICC audit of your last 20 closed-lost deals. For each element (Metrics, Economic Buyer, Decision Criteria, Decision Process, Identify Pain, Champion, Competition), score whether it was known and documented at Stage 3. Research consistently shows that deals with 5+ of 7 MEDDICC elements documented win at 2x–3x the rate of deals with fewer than 3 elements documented.</p>
+    <p>Use Gong or Chorus to analyze discovery call recordings: run a search for deals that closed lost and listen to the first discovery call. Identify: (1) did the rep spend more than 60% of the call talking (should be 40%), (2) did the rep ask about business impact and quantify it, (3) did the rep confirm who makes the final decision, (4) did the rep establish a mutual next step at the end of the call?</p>
+  </div>
+
+  <div class="callout callout-definition">
+    <div class="callout-title">MEDDICC Qualification Benchmark</div>
+    <p>Deals with all 7 MEDDICC criteria documented at Stage 3 win at 35–45%. Deals with fewer than 3 criteria documented win at 8–12%. The gap is the cost of weak discovery. Implement a MEDDICC gate at Stage 2→3 progression: reps cannot advance a deal without completing at least 5 of 7 elements in the CRM opportunity record.</p>
+  </div>
+
+  <div class="subsection">
+    <div class="subsection-title">30–60 Day Fix</div>
+    <ul class="bullet-list">
+      <li>Add MEDDICC fields to the CRM opportunity record; make them required for stage advancement</li>
+      <li>Run a 4-hour discovery workshop with the full sales team — roleplay discovery with a focus on pain quantification and EB mapping</li>
+      <li>Deploy Gong Scorecards or Chorus Deal Intelligence to automatically flag deals with low discovery coverage</li>
+      <li>Hold weekly deal reviews focused on MEDDICC completeness — not just deal size and close date</li>
+    </ul>
+  </div>
+
+  <!-- ROOT CAUSE 3: NO CHAMPION -->
+  <div class="section-title">Root Cause 3: No Champion — Selling to a Coach, Not a Champion</div>
+  <div class="section-intro">The most common reason deals die in the late stages of a cycle — especially in mid-market and enterprise — is the absence of a real champion. A champion is an internal advocate with organizational power who wants the deal to happen and is actively selling it internally on your behalf. A coach is helpful but passive — they will give you information but will not go to bat for you when there is pushback.</div>
+
+  <div class="subsection">
+    <div class="subsection-title">How to Detect a Missing Champion</div>
+    <p>In deal reviews, ask the rep to answer this question: "What did your champion do last week to advance this deal internally without you being present?" If the rep cannot answer specifically — "she sent an email to the CFO summarizing the ROI model," "he scheduled the demo with the IT team," "she is attending the procurement kickoff on our behalf" — there is no champion. There is a friendly contact who is telling the rep what they want to hear.</p>
+    <p>Signs of a coach vs. champion in Gong/Chorus: a champion will bring new stakeholders into calls without prompting; will ask you for business case materials to share internally; will tell you about competitive alternatives the committee is evaluating; will warn you when there is political headwind. A coach only shows up when you schedule them.</p>
+  </div>
+
+  <div class="callout callout-best-practice">
+    <div class="callout-title">✓ The Champion Test</div>
+    <p>Ask your contact: "If this project were to stall or get deprioritized, what would you personally do to keep it moving?" A champion will give you a specific, proactive answer. A coach will hesitate, deflect, or say "I'd hope the business case speaks for itself." You do not have a champion if they cannot answer this question confidently.</p>
+  </div>
+
+  <div class="subsection">
+    <div class="subsection-title">30–60 Day Fix</div>
+    <ul class="bullet-list">
+      <li>Add a Champion qualification field to the CRM with a 1–5 strength score (1=coach/no champion, 5=strong champion with EB access)</li>
+      <li>In weekly deal reviews, require reps to name the champion and provide specific evidence of champion activity in the last 7 days</li>
+      <li>Coach reps on champion development: how to elevate a coach to a champion by giving them tools, talking points, and air cover with their leadership</li>
+      <li>If there is no champion in a Stage 3+ deal, re-evaluate the deal and put it at risk in the forecast</li>
+    </ul>
+  </div>
+
+  <!-- ROOT CAUSE 4: COMPETITIVE POSITIONING -->
+  <div class="section-title">Root Cause 4: Poor Competitive Positioning</div>
+  <div class="section-intro">When you consistently lose to one specific competitor, the problem is almost always a combination of: (1) the prospect doesn't understand why you win, (2) the competitor is better at framing the evaluation criteria in their favor, and (3) your reps do not know how to counter the competitor's specific objections and FUD.</div>
+
+  <div class="subsection">
+    <div class="subsection-title">How to Detect Competitive Win Rate Issues</div>
+    <p>Build a competitive win/loss matrix: for every closed deal where a specific competitor was present, record the outcome. Calculate: win rate when Competitor A is in the deal, win rate when Competitor B is in the deal. If you win 30% overall but only 12% when Competitor X is present, you have a Competitor X problem — not a general positioning problem.</p>
+    <p>Conduct 10 loss interviews specifically for deals lost to Competitor X. Ask: what did they do better in the evaluation? What was the decision-maker's final reason for choosing them? What could you have done differently? The answer will almost always reveal: (1) they got to the EB first and set the evaluation criteria, (2) they had a specific feature or integration that was a hard requirement, or (3) they made a pricing offer you weren't willing to match.</p>
+  </div>
+
+  <div class="subsection">
+    <div class="subsection-title">The Competitive Displacement Playbook</div>
+  </div>
+
+  <ol class="step-list">
+    <li>
+      <div class="step-content">
+        <span class="step-title">Get There First — Set the Evaluation Criteria</span>
+        The company that sets the evaluation criteria wins 60–70% of the time. Train reps to provide a "what to look for in a solution" guide early in the process — framed around your strengths. When your competitor arrives, the criteria are already set in your favor.
+      </div>
+    </li>
+    <li>
+      <div class="step-content">
+        <span class="step-title">Build a Competitor-Specific Battle Card</span>
+        For your top 3 competitors, create a battle card with: their 3 main claims, the truth behind each claim, your counter-message for each, specific questions to ask that expose their weakness, and 3 customer quotes from companies who switched from them to you.
+      </div>
+    </li>
+    <li>
+      <div class="step-content">
+        <span class="step-title">Use Win/Loss Interviews to Source Real Objections</span>
+        Generic battle cards fail because they address theoretical objections. Win/loss interviews reveal the actual objections buyers use when justifying a choice to their leadership. Build your messaging around real language.
+      </div>
+    </li>
+    <li>
+      <div class="step-content">
+        <span class="step-title">Activate Your Customer Proof Against the Competitor</span>
+        Nothing beats a reference call where the prospect speaks directly to a customer who came from the competitor. Maintain a "competitive reference" list: customers who switched from each major competitor and are willing to take calls.
+      </div>
+    </li>
+  </ol>
+
+  <!-- ROOT CAUSE 5: VALUE PROP -->
+  <div class="section-title">Root Cause 5: Value Proposition Not Landing — Proposal Stage Drop-Off</div>
+  <div class="section-intro">If your win rate drops sharply between Stage 3 (technical validation) and Stage 4 (commercial), the value proposition is not landing. Prospects are technically interested but cannot justify the cost to their economic buyer. This is a business case and ROI quantification failure.</div>
+
+  <div class="subsection">
+    <div class="subsection-title">How to Detect Using Stage Conversion Analytics</div>
+    <p>Pull stage conversion rates for the last 6 months: Stage 1→2, Stage 2→3, Stage 3→4 (proposal), Stage 4→Closed-Won. If your S3→S4 rate is above 60% but your S4→Won rate is below 35%, you are generating interest and getting to commercial but failing to close. The issue is the value justification and the economic buyer conversation.</p>
+    <p>Review the last 15 lost deals where the loss occurred after a proposal was submitted. What was the stated reason? "Too expensive" is almost always a proxy for "we couldn't quantify the ROI." A prospect who understands the economic impact of the problem and the economic value of your solution does not decline based purely on price.</p>
+  </div>
+
+  <div class="subsection">
+    <div class="subsection-title">Using Gong and Chorus to Identify Win Patterns</div>
+    <p>Use Gong's "Topics" and "Trackers" features to identify language patterns that correlate with wins. Common win signals: the rep mentions specific dollar amounts of cost/time saved, the rep names specific outcomes the customer will achieve in 90 days, the rep secures an executive conversation. Run a Gong analysis to compare closed-won vs. closed-lost calls on these dimensions and build a coaching program around the differences.</p>
+  </div>
+
+  <div class="subsection">
+    <div class="subsection-title">30–60 Day Fix</div>
+    <ul class="bullet-list">
+      <li>Build a customizable ROI model that reps run with prospects during Stage 2 discovery — quantify the economic impact before submitting a proposal</li>
+      <li>Train reps to always present the "cost of doing nothing" before presenting the solution price</li>
+      <li>Add an Economic Buyer meeting requirement before Stage 4 — no commercial proposal without EB conversation</li>
+      <li>Rewrite proposals to lead with business outcomes (specific savings, revenue impact, time recovered) rather than feature lists</li>
+    </ul>
+  </div>
+
+  <div class="section-title">Win Rate Benchmarks at a Glance</div>
+
+  <table class="data-table">
+    <thead>
+      <tr>
+        <th>Metric</th>
+        <th>World-Class</th>
+        <th>Healthy</th>
+        <th>Warning</th>
+        <th>Investigate</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>Overall Win Rate (vs. all closed)</td>
+        <td>30%+</td>
+        <td>22–30%</td>
+        <td>15–22%</td>
+        <td>Below 15%</td>
+      </tr>
+      <tr>
+        <td>Inbound Win Rate</td>
+        <td>40%+</td>
+        <td>30–40%</td>
+        <td>20–30%</td>
+        <td>Below 20%</td>
+      </tr>
+      <tr>
+        <td>Outbound Win Rate</td>
+        <td>20–25%</td>
+        <td>15–20%</td>
+        <td>10–15%</td>
+        <td>Below 10%</td>
+      </tr>
+      <tr>
+        <td>MEDDICC Completion at Stage 3</td>
+        <td>6–7/7 elements</td>
+        <td>5/7</td>
+        <td>3–4/7</td>
+        <td>Below 3/7</td>
+      </tr>
+      <tr>
+        <td>Stage 3→4 Conversion</td>
+        <td>65%+</td>
+        <td>50–65%</td>
+        <td>35–50%</td>
+        <td>Below 35%</td>
+      </tr>
+      <tr>
+        <td>Stage 4→Won Conversion</td>
+        <td>55%+</td>
+        <td>40–55%</td>
+        <td>25–40%</td>
+        <td>Below 25%</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div class="related-section">
+    <div class="related-title">Related Sections</div>
+    <div class="related-links">
+      <a class="related-link" href="low-pipeline.html">Low Pipeline Volume</a>
+      <a class="related-link" href="long-sales-cycles.html">Long Sales Cycles</a>
+      <a class="related-link" href="missed-forecasts.html">Missed Forecasts</a>
+      <a class="related-link" href="../subpages/meddicc.html">MEDDICC Framework</a>
+      <a class="related-link" href="../subpages/champion-building.html">Champion Building</a>
+      <a class="related-link" href="../subpages/win-loss-analysis.html">Win/Loss Analysis</a>
+      <a class="related-link" href="../subpages/value-proposition.html">Value Proposition</a>
+    </div>
+  </div>
+</div>
+<script data-pplx-inline-edit>
+(function () {
+  if (window === window.top) return;
+
+  const allowedParentOrigins = ["https://www.perplexity.ai","https://perplexity.ai","https://testing.perplexity.ai","https://staging.perplexity.ai","https://*.preview.i.perplexity.ai","http://localhost:3000","http://127.0.0.1:3000","http://localhost:5173","http://127.0.0.1:5173"];
+  const MAX_FONT_BYTES = 500 * 1024;
+  const MAX_TOTAL_FONT_BYTES = 2 * 1024 * 1024;
+  let scrollForwarding = false;
+  let scrollRaf = 0;
+  let trustedTopOrigin = null;
+
+  // Allow entries like "https://*.preview.i.perplexity.ai" — the wildcard
+  // matches a single DNS label (no dots), so "https://*.foo" cannot stretch
+  // across multiple labels.
+  function matchesAllowedOrigin(origin) {
+    if (!origin) return false;
+    for (const entry of allowedParentOrigins) {
+      if (!entry.includes("*")) {
+        if (entry === origin) return true;
+        continue;
+      }
+      const pattern = new RegExp(
+        "^" +
+          entry.replace(/[.+?^${}()|[\]\\]/g, "\\$&").replace(/\*/g, "[^.]+") +
+          "$",
+      );
+      if (pattern.test(origin)) return true;
+    }
+    return false;
+  }
+
+  // Trust decision: when the sender is same-origin-visible (event.origin is a
+  // real origin like https://www.perplexity.ai) we trust event.origin directly.
+  // When event.origin is "null" (opaque broker srcdoc), we fall back to the
+  // broker's stamped `parentOrigin` to identify the top window. The fallback
+  // is claim-only — we rely on the browser's native `targetOrigin` enforcement
+  // on the response path (see postToTrustedTop) to ensure replies can't be
+  // delivered to anyone but the actual top window of that claimed origin.
+  function getTrustedParentOrigin(event) {
+    const forwardedParentOrigin =
+      typeof event.data.parentOrigin === "string" ? event.data.parentOrigin : null;
+    const parentOrigin = event.origin === "null" ? forwardedParentOrigin : event.origin;
+    return matchesAllowedOrigin(parentOrigin) ? parentOrigin : null;
+  }
+
+  // All responses go to window.top with targetOrigin = the allowlisted origin.
+  // An attacker that iframes us inside their own null-origin broker can claim
+  // any parentOrigin they like, but the browser will drop the reply whenever
+  // the real top's origin doesn't match — so the screenshot never leaves.
+  function postToTrustedTop(message) {
+    if (!trustedTopOrigin) return;
+    try {
+      window.top.postMessage(message, trustedTopOrigin);
+    } catch (_error) {}
+  }
+
+  function inlineAll(original, clone) {
+    if (original.nodeType !== 1 || clone.nodeType !== 1) return;
+
+    try {
+      const computedStyle = getComputedStyle(original);
+      // cssText on a computed style is the serialized declaration in modern
+      // Chromium/Safari — a single read beats enumerating ~400 longhand
+      // properties. Firefox returns "" here, so we fall back on empty.
+      const serialized = computedStyle.cssText;
+      if (serialized) {
+        clone.style.cssText = serialized;
+      } else {
+        const parts = new Array(computedStyle.length);
+        for (let index = 0; index < computedStyle.length; index += 1) {
+          const property = computedStyle[index];
+          parts[index] = `${property}:${computedStyle.getPropertyValue(property)};`;
+        }
+        clone.style.cssText = parts.join("");
+      }
+    } catch (_error) {}
+
+    const originalChildren = original.children;
+    const clonedChildren = clone.children;
+    for (
+      let index = 0;
+      index < originalChildren.length && index < clonedChildren.length;
+      index += 1
+    ) {
+      inlineAll(originalChildren[index], clonedChildren[index]);
+    }
+  }
+
+  function extractFontUrl(srcValue) {
+    const matches = [
+      ...srcValue.matchAll(
+        /url\(["']?([^"')]+)["']?\)(?:\s*format\(["']?([^"')]+)["']?\))?/gi,
+      ),
+    ];
+    if (matches.length === 0) return null;
+    const woff2 = matches.find((m) => m[2] && m[2].toLowerCase().includes("woff2"));
+    if (woff2) return woff2[1];
+    const woff = matches.find((m) => m[2] && m[2].toLowerCase().includes("woff"));
+    if (woff) return woff[1];
+    return matches[0][1];
+  }
+
+  // Cache resolved font URL -> data URI across captures. Fonts on a page
+  // essentially never change, and a batch run emits multiple captures back to
+  // back — without this we'd refetch + re-base64 every time.
+  const fontDataUriCache = new Map();
+  const SRC_DECLARATION_RE = /src\s*:\s*[^;}]+/i;
+
+  async function fetchAsDataUri(url) {
+    if (fontDataUriCache.has(url)) return fontDataUriCache.get(url);
+    let dataUri = null;
+    try {
+      const response = await fetch(url, { mode: "cors", credentials: "omit" });
+      if (response.ok) {
+        const blob = await response.blob();
+        if (blob.size <= MAX_FONT_BYTES) {
+          dataUri = await new Promise((resolve) => {
+            const reader = new FileReader();
+            reader.onloadend = () =>
+              resolve(typeof reader.result === "string" ? reader.result : null);
+            reader.onerror = () => resolve(null);
+            reader.readAsDataURL(blob);
+          });
+        }
+      }
+    } catch (_error) {
+      dataUri = null;
+    }
+    fontDataUriCache.set(url, dataUri);
+    return dataUri;
+  }
+
+  function collectFontFaceRuleTexts() {
+    const rules = [];
+    for (const sheet of document.styleSheets) {
+      let cssRules;
+      try {
+        cssRules = sheet.cssRules;
+      } catch (_error) {
+        continue;
+      }
+      if (!cssRules) continue;
+      for (const rule of cssRules) {
+        const cssText = rule.cssText || "";
+        if (cssText.startsWith("@font-face")) rules.push(cssText);
+      }
+    }
+    return rules;
+  }
+
+  async function buildInlinedFontCss() {
+    const ruleTexts = collectFontFaceRuleTexts();
+    if (ruleTexts.length === 0) return null;
+
+    const resolved = ruleTexts.map((cssText) => {
+      if (!SRC_DECLARATION_RE.test(cssText)) return null;
+      const srcMatch = cssText.match(/src\s*:\s*([^;}]+)[;}]/i);
+      if (!srcMatch) return null;
+      const url = extractFontUrl(srcMatch[1]);
+      if (!url) return null;
+      try {
+        return { cssText, url: new URL(url, document.baseURI).href };
+      } catch (_error) {
+        return null;
+      }
+    });
+
+    const dataUris = await Promise.all(
+      resolved.map((entry) => (entry ? fetchAsDataUri(entry.url) : Promise.resolve(null))),
+    );
+
+    const inlined = [];
+    let totalBytes = 0;
+    for (let index = 0; index < resolved.length; index += 1) {
+      const entry = resolved[index];
+      const dataUri = dataUris[index];
+      if (!entry || !dataUri) continue;
+      const approxBytes = dataUri.length * 0.75;
+      if (totalBytes + approxBytes > MAX_TOTAL_FONT_BYTES) break;
+      totalBytes += approxBytes;
+      inlined.push(entry.cssText.replace(SRC_DECLARATION_RE, `src: url("${dataUri}")`));
+    }
+    return inlined.length > 0 ? inlined.join("\n") : null;
+  }
+
+  function stripExternal(clone) {
+    const images = clone.querySelectorAll("img");
+    for (let index = 0; index < images.length; index += 1) {
+      const src = images[index].getAttribute("src");
+      if (src && !src.startsWith("data:")) images[index].removeAttribute("src");
+    }
+
+    const elements = clone.querySelectorAll("*");
+    for (let index = 0; index < elements.length; index += 1) {
+      const style = elements[index].style.cssText;
+      if (style && style.includes("url(")) {
+        elements[index].style.cssText = style.replace(
+          /url\(["']?(?!data:)[^)"']*["']?\)/gi,
+          "none",
+        );
+      }
+    }
+  }
+
+  function emitScroll() {
+    scrollRaf = 0;
+    if (!scrollForwarding) return;
+    postToTrustedTop({
+      type: "INLINE_EDIT_SCROLL",
+      scrollX: window.scrollX,
+      scrollY: window.scrollY,
+    });
+  }
+
+  window.addEventListener(
+    "scroll",
+    function () {
+      if (!scrollForwarding || scrollRaf) return;
+      scrollRaf = requestAnimationFrame(emitScroll);
+    },
+    { passive: true, capture: true },
+  );
+
+  async function handleCaptureRequest(event) {
+    const requestId = event.data.requestId;
+    const scrollX = window.scrollX;
+    const scrollY = window.scrollY;
+    const width = window.innerWidth;
+    const height = window.innerHeight;
+
+    function postResult(dataUrl) {
+      postToTrustedTop({
+        type: "INLINE_EDIT_SCREENSHOT_RESULT",
+        requestId,
+        dataUrl,
+        scrollX,
+        scrollY,
+      });
+    }
+
+    try {
+      // Wait for any pending web fonts to resolve so both inline metrics and
+      // the @font-face inlining below see the same loaded faces.
+      if (document.fonts && document.fonts.ready) {
+        try {
+          await document.fonts.ready;
+        } catch (_error) {}
+      }
+
+      const clone = document.documentElement.cloneNode(true);
+      inlineAll(document.documentElement, clone);
+
+      const removedNodes = clone.querySelectorAll("script,link[rel=\"stylesheet\"],style");
+      for (let index = 0; index < removedNodes.length; index += 1) {
+        removedNodes[index].remove();
+      }
+
+      stripExternal(clone);
+
+      // Re-embed web fonts as data-URI @font-face rules so the SVG rasterizer
+      // can resolve them — external font URLs aren't fetched during
+      // foreignObject rendering, which would otherwise force a fallback face
+      // and change text metrics.
+      const inlinedFontCss = await buildInlinedFontCss();
+      if (inlinedFontCss) {
+        const styleEl = document.createElement("style");
+        styleEl.textContent = inlinedFontCss;
+        const head = clone.querySelector("head");
+        if (head) head.appendChild(styleEl);
+        else clone.insertBefore(styleEl, clone.firstChild);
+      }
+
+      const html = new XMLSerializer().serializeToString(clone);
+      const svg =
+        `<svg xmlns="http://www.w3.org/2000/svg" width="${width}" height="${height}">` +
+        '<foreignObject width="100%" height="100%">' +
+        `<div xmlns="http://www.w3.org/1999/xhtml" style="width:${width}px;height:${height}px;overflow:hidden">` +
+        `<div style="transform:translate(-${scrollX}px,-${scrollY}px);transform-origin:top left">` +
+        html +
+        "</div></div></foreignObject></svg>";
+      const svgUrl = `data:image/svg+xml;charset=utf-8,${encodeURIComponent(svg)}`;
+      const image = new Image();
+      image.onload = function () {
+        const canvas = document.createElement("canvas");
+        canvas.width = width;
+        canvas.height = height;
+        canvas.getContext("2d").drawImage(image, 0, 0);
+        postResult(canvas.toDataURL("image/png"));
+      };
+      image.onerror = function () {
+        postResult(null);
+      };
+      image.src = svgUrl;
+    } catch (_error) {
+      postResult(null);
+    }
+  }
+
+  window.addEventListener("message", function (event) {
+    if (!event.data) return;
+    // Only accept messages from the direct parent frame. Blocks sibling /
+    // unrelated-window postMessage senders that could otherwise reach us.
+    if (event.source !== window.parent) return;
+
+    const trustedParentOrigin = getTrustedParentOrigin(event);
+    if (!trustedParentOrigin) return;
+    trustedTopOrigin = trustedParentOrigin;
+
+    if (event.data.type === "INLINE_EDIT_SCROLL_START") {
+      scrollForwarding = true;
+      emitScroll();
+      return;
+    }
+
+    if (event.data.type === "INLINE_EDIT_SCROLL_STOP") {
+      scrollForwarding = false;
+      if (scrollRaf) cancelAnimationFrame(scrollRaf);
+      scrollRaf = 0;
+      return;
+    }
+
+    if (event.data.type !== "INLINE_EDIT_CAPTURE_REQUEST") return;
+
+    handleCaptureRequest(event);
+  });
+})();
+
+
+</script></body>
+</html>

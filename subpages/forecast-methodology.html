@@ -1,0 +1,808 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Forecast Methodology — SaaS Revenue System</title>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="../assets/shared.css"/>
+  <style>
+    .page-hero { background: #01696F; }
+    .method-card {
+      background: var(--surface);
+      border: 1.5px solid var(--border);
+      border-radius: 10px;
+      margin-bottom: 24px;
+      overflow: hidden;
+    }
+    .method-header {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      padding: 20px 24px;
+      border-bottom: 1.5px solid var(--border);
+    }
+    .method-num {
+      width: 42px;
+      height: 42px;
+      border-radius: 8px;
+      background: #01696F;
+      color: #fff;
+      font-size: 18px;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+    .method-title { font-size: 17px; font-weight: 700; color: var(--text); margin-bottom: 2px; }
+    .method-subtitle { font-size: 13px; color: var(--text-muted); }
+    .method-body { padding: 20px 24px; }
+    .method-body p { font-size: 14px; line-height: 1.75; margin-bottom: 12px; }
+    .method-meta {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 12px;
+      margin-bottom: 16px;
+    }
+    .meta-box {
+      background: #fafaf8;
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      padding: 10px 12px;
+    }
+    .meta-box .mb-label { font-size: 10px; font-weight: 700; letter-spacing: 1px; text-transform: uppercase; color: var(--text-muted); margin-bottom: 4px; }
+    .meta-box .mb-value { font-size: 13px; font-weight: 600; color: var(--text); }
+    .accuracy-bar {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin: 8px 0;
+    }
+    .accuracy-label { font-size: 13px; min-width: 220px; }
+    .acc-bar-bg { flex: 1; height: 10px; background: var(--border); border-radius: 5px; overflow: hidden; }
+    .acc-bar-fill { height: 100%; border-radius: 5px; }
+    .acc-good { background: #437A22; }
+    .acc-ok { background: #964219; }
+    .acc-poor { background: #A13544; }
+    .acc-pct { font-size: 12px; font-weight: 700; color: var(--text-muted); min-width: 36px; text-align: right; }
+    .rollup-diagram {
+      display: flex;
+      flex-direction: column;
+      gap: 0;
+      margin: 20px 0;
+    }
+    .rollup-level {
+      display: flex;
+      align-items: stretch;
+    }
+    .rollup-connector {
+      width: 32px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 18px;
+      color: var(--text-faint);
+      flex-shrink: 0;
+      padding: 4px 0;
+    }
+    .rollup-box {
+      flex: 1;
+      background: var(--surface);
+      border: 1.5px solid var(--border);
+      border-radius: 8px;
+      padding: 14px 18px;
+      margin: 4px 0;
+    }
+    .rollup-box .rb-level { font-size: 11px; font-weight: 700; letter-spacing: 1px; text-transform: uppercase; color: var(--text-muted); margin-bottom: 4px; }
+    .rollup-box .rb-name { font-size: 15px; font-weight: 700; color: var(--text); margin-bottom: 4px; }
+    .rollup-box .rb-desc { font-size: 13px; color: var(--text-muted); line-height: 1.5; }
+    .rollup-box.cro-level { border-color: #01696F; border-width: 2px; background: #f0fafb; }
+    .call-agenda-item {
+      border-left: 3px solid #01696F;
+      padding: 12px 16px;
+      margin-bottom: 10px;
+      background: #fafaf8;
+      border-radius: 0 6px 6px 0;
+    }
+    .ca-time { font-size: 11px; font-weight: 700; color: #01696F; letter-spacing: 0.5px; text-transform: uppercase; margin-bottom: 4px; }
+    .ca-title { font-size: 14px; font-weight: 700; margin-bottom: 4px; }
+    .ca-desc { font-size: 13px; color: var(--text-muted); line-height: 1.5; }
+    @media (max-width: 640px) {
+      .method-meta { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+<nav class="nav">
+  <span class="nav-logo">SaaS <span>Revenue System</span></span>
+  <span class="nav-sep">|</span>
+  <a href="../index.html" class="nav-back">← Home</a>
+  <span class="nav-sep">|</span>
+  <a href="../pages/revops.html" class="nav-back">RevOps</a>
+  <span class="nav-sep">|</span>
+  <span class="nav-current">Forecast Methodology</span>
+</nav>
+
+<div class="page-hero">
+  <div class="hero-phase-label">REVENUE OPERATIONS</div>
+  <div class="hero-title">Forecast Methodology</div>
+  <div class="hero-subtitle">Building a Reliable Revenue Prediction System — The Four Methods, How to Combine Them, and How to Earn Forecast Trust</div>
+</div>
+
+<div class="content-wrap">
+  <div class="breadcrumb">
+    <a href="../index.html">Home</a><span class="sep">›</span>
+    <a href="../pages/revops.html">RevOps</a><span class="sep">›</span>
+    <span class="current">Forecast Methodology</span>
+  </div>
+
+  <!-- THE FUNDAMENTAL PROBLEM -->
+  <h2 class="section-title">The Fundamental Problem with Revenue Forecasting</h2>
+  <div class="section-intro">A forecast that is trusted changes behavior. A forecast that nobody believes is ignored — and a leadership team flying on vibes is one bad quarter away from a crisis.</div>
+
+  <div class="subsection">
+    <p>The purpose of a revenue forecast is not to predict the future with precision. That is impossible. The purpose of a revenue forecast is to create a shared, explainable, defensible estimate of quarterly revenue that leadership can make operational decisions against — hiring, spending, cash management, investor communications.</p>
+    <p>A CRO who tells the CFO "we'll hit $4.2M this quarter" is making a statement that will be evaluated in 90 days. If they're systematically off by 20%+ in either direction, the organization loses confidence in the forecast, managers start gaming the system, and reps stop taking the forecast process seriously. Forecast credibility compounds over time — it takes 4–6 quarters to build and one catastrophic miss to destroy.</p>
+    <p>The methodology choice determines how early you can see problems, how adjustable the forecast is, and how much it depends on human judgment vs. data. The right answer is not one methodology — it is a layered system where each method checks the others.</p>
+  </div>
+
+  <div class="metric-grid">
+    <div class="metric-card">
+      <div class="m-label">Target Accuracy</div>
+      <div class="m-value">±5%</div>
+      <div class="m-desc">Best-in-class forecast accuracy at end-of-quarter. ±10% is acceptable. ±20%+ is a systemic problem.</div>
+    </div>
+    <div class="metric-card">
+      <div class="m-label">Forecast Cadence</div>
+      <div class="m-value">Weekly</div>
+      <div class="m-desc">Weekly forecast calls with rep → manager → VP → CRO rollup. Monthly board version.</div>
+    </div>
+    <div class="metric-card">
+      <div class="m-label">Lookback for Calibration</div>
+      <div class="m-value">8 Qtrs</div>
+      <div class="m-desc">24 months of closed deal data required to build reliable stage-weighted and conversion-rate models.</div>
+    </div>
+    <div class="metric-card">
+      <div class="m-label">Commit Cushion</div>
+      <div class="m-value">90–95%</div>
+      <div class="m-desc">Commit forecast should land within 90–95% of reality. Commits that miss below 85% are disqualifying.</div>
+    </div>
+  </div>
+
+  <!-- THE 4 METHODOLOGIES -->
+  <h2 class="section-title">The Four Forecasting Methodologies</h2>
+  <div class="section-intro">Each methodology has a different information source, accuracy profile, and implementation complexity. Understanding all four is essential — the best practice is to run all four simultaneously and use disagreement between them as a signal.</div>
+
+  <!-- METHOD 1: STAGE WEIGHTED -->
+  <div class="method-card">
+    <div class="method-header">
+      <div class="method-num">1</div>
+      <div>
+        <div class="method-title">Stage-Weighted Pipeline (Probability × Amount)</div>
+        <div class="method-subtitle">The mathematical floor of your forecast — scalable, consistent, and completely dependent on stage definition quality</div>
+      </div>
+    </div>
+    <div class="method-body">
+      <div class="method-meta">
+        <div class="meta-box"><div class="mb-label">Accuracy</div><div class="mb-value">±15–25%</div></div>
+        <div class="meta-box"><div class="mb-label">Best For</div><div class="mb-value">Baseline / Floor</div></div>
+        <div class="meta-box"><div class="mb-label">Requires</div><div class="mb-value">Clean stage data</div></div>
+      </div>
+      <p>Stage-weighted forecasting applies a probability percentage to each deal based on its current pipeline stage, then sums the probability-weighted amounts. If you have a $100K deal in Stage 3 (50% probability) and a $200K deal in Stage 2 (30%), the stage-weighted forecast is $50K + $60K = $110K.</p>
+      <p>This is the simplest and most scalable method. It requires no human judgment beyond the stage assignment. Its accuracy is entirely determined by (a) the quality of your stage definitions and (b) whether your stage probabilities reflect actual historical conversion rates for your business, not industry benchmarks.</p>
+      <div class="formula-block">
+        <div class="formula-label">Stage-Weighted Forecast</div>
+        <div class="formula-main">Forecast = Σ (Opportunity Amount × Stage Probability)</div>
+        <div class="formula-note">Run separately by segment (SMB / Mid-Market / Enterprise) because stage probabilities differ significantly. A single blended forecast hides segment-level risk. Also run separately by Opportunity Type (New Business vs. Expansion vs. Renewal).</div>
+      </div>
+      <p><strong>Implementation:</strong> Build a CRM report with Opportunity Amount × Stage Probability summed by quarter. Stage probabilities must be stored as CRM formula fields (auto-calculated from stage) not manually entered. Update probabilities quarterly using the prior 8 quarters of closed data.</p>
+      <p><strong>Limitations:</strong> Stage-weighted forecasts are easily gamed (reps advance stages to inflate their forecast) and are blind to deal age, engagement velocity, and external signals. They also assume all deals at the same stage have the same probability — which is false. A 3-month-old Stage 3 deal and a 3-day-old Stage 3 deal have very different actual close probabilities.</p>
+      <div class="callout callout-warning">
+        <div class="callout-title">The Stage Inflation Problem</div>
+        <p>Because stage-weighted forecasts are visible to reps, reps learn they can inflate their forecast by advancing stages. The stage-weighted number should never be shared with reps as "your forecast" — it is a RevOps diagnostic tool, not a rep accountability metric.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- METHOD 2: COMMIT-BASED -->
+  <div class="method-card">
+    <div class="method-header">
+      <div class="method-num">2</div>
+      <div>
+        <div class="method-title">Commit-Based Forecast (Manager Judgment Layer)</div>
+        <div class="method-subtitle">The main operating forecast — human judgment applied deal-by-deal, requiring a strong coaching culture and manager accountability</div>
+      </div>
+    </div>
+    <div class="method-body">
+      <div class="method-meta">
+        <div class="meta-box"><div class="mb-label">Accuracy</div><div class="mb-value">±5–15%</div></div>
+        <div class="meta-box"><div class="mb-label">Best For</div><div class="mb-value">Primary forecast</div></div>
+        <div class="meta-box"><div class="mb-label">Requires</div><div class="mb-value">Trusted managers</div></div>
+      </div>
+      <p>The commit-based forecast asks managers to make a judgment call, deal by deal, about which opportunities in their pipeline will close in the current quarter. This judgment is codified in a "Forecast Category" field (Pipeline → Best Case → Commit → Closed) that each rep sets, and that each manager reviews and overrides where appropriate.</p>
+      <p>The commit number is the most important number in the forecast. A "commit" means: the manager is willing to be held accountable for this deal closing in the quarter. It is a statement of conviction, not probability. A manager who consistently commits deals that don't close loses credibility and eventually their job. This accountability structure is what makes the commit meaningful.</p>
+      <div class="formula-block">
+        <div class="formula-label">Commit Forecast Definition</div>
+        <div class="formula-main">Commit = Already Closed + Deals manager is willing to guarantee will close this quarter</div>
+        <div class="formula-note">Best Case = Commit + deals that could close if things break right. Best Case should land within 110–125% of actual. If Best Case consistently undershoots, your reps are sandbagging. If it consistently overshoots, they're being overly optimistic.</div>
+      </div>
+      <p><strong>The 4 Forecast Categories:</strong></p>
+      <ul class="bullet-list">
+        <li><strong>Pipeline:</strong> Early stage, real opportunity, close this quarter is possible but not likely. Contributes to Best Case only if very late in quarter.</li>
+        <li><strong>Best Case:</strong> Deal could close if the prospect moves faster than expected or if the rep executes perfectly. Manager believes in the deal but isn't ready to guarantee it.</li>
+        <li><strong>Commit:</strong> Manager conviction that this deal will close this quarter barring extraordinary circumstances. A commit that doesn't close requires a post-mortem. Should represent 90%+ close rate across a full quarter sample.</li>
+        <li><strong>Closed:</strong> Contract signed. Revenue recognized. No judgment required.</li>
+      </ul>
+      <p><strong>Implementation:</strong> Reps set their own forecast category. Managers override downward (rarely upward) in the weekly pipeline review. VP does the same across managers. The CRO sees manager-adjusted commit, not rep-self-reported commit. The gap between rep commit and manager commit is a coaching signal.</p>
+    </div>
+  </div>
+
+  <!-- METHOD 3: HISTORICAL CONVERSION -->
+  <div class="method-card">
+    <div class="method-header">
+      <div class="method-num">3</div>
+      <div>
+        <div class="method-title">Historical Conversion Rate Forecast</div>
+        <div class="method-subtitle">Uses your actual historical win rates by stage, cohort, and segment — the most data-driven approach</div>
+      </div>
+    </div>
+    <div class="method-body">
+      <div class="method-meta">
+        <div class="meta-box"><div class="mb-label">Accuracy</div><div class="mb-value">±8–18%</div></div>
+        <div class="meta-box"><div class="mb-label">Best For</div><div class="mb-value">Cross-check / Challenge</div></div>
+        <div class="meta-box"><div class="mb-label">Requires</div><div class="mb-value">24+ months data</div></div>
+      </div>
+      <p>Rather than using generic stage probabilities, the historical conversion rate method uses your actual close rates: of all deals that were in Stage X at this point in a quarter (e.g., week 6 of Q4), what percentage actually closed that quarter? This produces a much more accurate probability than a static stage-based number.</p>
+      <div class="formula-block">
+        <div class="formula-label">Historical Conversion Rate Forecast</div>
+        <div class="formula-main">Forecast = Σ (Deal Amount × Conversion Rate[Stage, Week-in-Quarter, Segment])</div>
+        <div class="formula-note">The conversion rate is a lookup table: rows = pipeline stage, columns = week in quarter. Cell value = historical close rate for deals at that stage entering that week. This requires a data warehouse — this model cannot be built in CRM native reports alone.</div>
+      </div>
+      <p><strong>Building the Conversion Rate Table:</strong> Export all opportunities closed in the last 8 quarters. For each closed opportunity, find the "waterfall" — what stage was it in at the start of each week of its closing quarter? Calculate: (Closed Won Count from that stage/week combination) ÷ (Total opps that were in that stage/week combination). This is your conversion rate for that cell.</p>
+      <p><strong>Limitations:</strong> This model assumes the future looks like the past. If you've changed your ICP, your sales motion, your pricing, or your competitive positioning, the historical rates may not apply. Also requires significant data — if you have &lt;50 closed deals per segment, the rates have too much sampling error to be reliable.</p>
+      <p><strong>The Most Powerful Insight:</strong> Week-in-quarter conversion rates reveal the velocity profile of your business. Most SaaS companies see dramatically higher close rates in weeks 11–13 than weeks 1–4. This "end-loading" pattern tells you whether your current pipeline composition is adequate to hit the number — particularly if most of your commits are early-stage deals in week 8 of a quarter.</p>
+    </div>
+  </div>
+
+  <!-- METHOD 4: AI-ASSISTED -->
+  <div class="method-card">
+    <div class="method-header">
+      <div class="method-num">4</div>
+      <div>
+        <div class="method-title">AI-Assisted Forecast (Clari / Aviso / Boostup)</div>
+        <div class="method-subtitle">Machine learning models trained on activity signals, engagement patterns, and CRM history — the challenge layer that catches what human judgment misses</div>
+      </div>
+    </div>
+    <div class="method-body">
+      <div class="method-meta">
+        <div class="meta-box"><div class="mb-label">Accuracy</div><div class="mb-value">±5–12%</div></div>
+        <div class="meta-box"><div class="mb-label">Best For</div><div class="mb-value">Challenge layer</div></div>
+        <div class="meta-box"><div class="mb-label">Requires</div><div class="mb-value">Activity data + tool</div></div>
+      </div>
+      <p>AI forecasting tools (Clari, Aviso, Boostup, Revenue.io) ingest signals from multiple sources — email open rates, meeting frequency, call sentiment, CRM field completion rates, time-in-stage, and engagement from multiple stakeholders — and produce a probability estimate that is typically more accurate than human judgment alone, especially for catching optimistic commit calls.</p>
+      <p>The key insight these tools provide is <strong>engagement signal</strong>: is the prospect actually engaged (responding to emails, accepting meetings, involving new stakeholders) or has the deal gone quiet while the rep is still carrying it as a commit? Human managers often miss this because they rely on what the rep tells them; AI tools measure what's actually happening in the communication record.</p>
+      <p><strong>The Three Main Tools:</strong></p>
+      <ul class="bullet-list">
+        <li><strong>Clari:</strong> The market leader. Best rollup UX, strongest signal capture across email/calendar/CRM. Best for teams &gt;30 AEs. Pricing: $60–80/user/month.</li>
+        <li><strong>Aviso:</strong> Strong AI model, particularly good at time-series forecast modeling. Better for companies with complex multi-product revenue. Pricing: comparable to Clari.</li>
+        <li><strong>Boostup:</strong> Newer entrant, faster to implement, strong mid-market fit. Better pricing for teams of 10–30 AEs.</li>
+      </ul>
+      <p><strong>How to use AI forecast as a challenge layer:</strong> Run your commit-based forecast as normal. Then look at deals where the AI model assigns a probability &lt;40% that the rep or manager has categorized as Commit. These are your "AI-flagged risk deals." Review each one in the pipeline call: is the AI right? Is there engagement evidence the tool is missing? This dialogue between human judgment and machine signal improves both.</p>
+      <div class="callout callout-best-practice">
+        <div class="callout-title">Implementation Reality Check</div>
+        <p>AI forecasting tools only work if your CRM data and activity data are clean. If reps aren't logging activities (or if your sales engagement tool isn't syncing to CRM), the AI has no signal. The prerequisite for AI forecasting is CRM hygiene — not the other way around. Most companies that buy Clari before fixing their data governance find that the AI model performs poorly and blame the tool.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- THE LAYERED SYSTEM -->
+  <h2 class="section-title">The Layered Forecast System: Best Practice Architecture</h2>
+  <div class="section-intro">Best practice is not one methodology. It is a system where each method provides a different lens, and disagreement between lenses triggers investigation.</div>
+
+  <div class="callout callout-definition">
+    <div class="callout-title">The Three-Layer Forecast</div>
+    <p><strong>Floor (Stage-Weighted):</strong> The mathematical minimum. If your stage-weighted number is $3.8M, you should not forecast below $3.8M unless you have clear evidence that specific large deals won't close. If your commit is above $4.8M, you need strong evidence that the deals not in stage-weighted will actually close.<br><br><strong>Main Forecast (Commit-Based):</strong> The number you will operate against. Manager-reviewed, rep-submitted, accountability-anchored.<br><br><strong>Challenge Layer (AI / Historical Conversion):</strong> The independent cross-check. If the AI model is materially below the commit, investigate. If historical conversion rates suggest the number is too high given the current pipeline composition and week-in-quarter, pressure-test the commit calls.</p>
+  </div>
+
+  <table class="data-table">
+    <thead>
+      <tr><th>Signal</th><th>Interpretation</th><th>Action</th></tr>
+    </thead>
+    <tbody>
+      <tr><td>Commit &gt; 120% of Stage-Weighted</td><td>Either reps are committing deals that aren't in CRM (bad data hygiene) or the commit is overly optimistic</td><td>Identify the specific deals driving the gap. Review each with manager for evidence of close confidence.</td></tr>
+      <tr><td>AI Forecast &lt; Commit by &gt;15%</td><td>AI is seeing engagement signal that doesn't support the human judgment</td><td>Pull the AI risk flags. Discuss each flagged commit deal in pipeline review with specific engagement evidence.</td></tr>
+      <tr><td>Historical Rate Forecast &gt; Commit</td><td>Pipeline is healthy but managers are being overly conservative (sandbagging)</td><td>Check for comp structures that incentivize sandbagging. Have a direct conversation about the gap with VP Sales.</td></tr>
+      <tr><td>All three methods agree (±5%)</td><td>High forecast confidence. The system is working.</td><td>Proceed. Monitor weekly for stage changes or deal slippage that would change the picture.</td></tr>
+    </tbody>
+  </table>
+
+  <!-- ROLLUP PROCESS -->
+  <h2 class="section-title">The Forecast Rollup Process</h2>
+  <div class="section-intro">The forecast flows from individual rep to the board. Each layer adds judgment — and accountability. The rollup should happen on the same day each week without exception.</div>
+
+  <div class="rollup-diagram">
+    <div class="rollup-level">
+      <div class="rollup-box">
+        <div class="rb-level">Level 1 — Rep</div>
+        <div class="rb-name">Account Executive</div>
+        <div class="rb-desc">Submits Closed + Commit + Best Case + Pipeline numbers by Friday EOD. Updates Forecast Category on each open opportunity. Must explain any change from prior week's commit with specific deal note.</div>
+      </div>
+    </div>
+    <div class="rollup-level">
+      <div class="rollup-connector">↓</div>
+    </div>
+    <div class="rollup-level">
+      <div class="rollup-box">
+        <div class="rb-level">Level 2 — Manager</div>
+        <div class="rb-name">Sales Manager / Team Lead</div>
+        <div class="rb-desc">Reviews all rep submissions by Saturday noon. Overrides rep forecast category where judgment differs. Submits rolled-up team forecast. Flags specific deals as "manager commit" separately from rep commit. Adds commentary for any deal where the team forecast changed by &gt;10%.</div>
+      </div>
+    </div>
+    <div class="rollup-level">
+      <div class="rollup-connector">↓</div>
+    </div>
+    <div class="rollup-level">
+      <div class="rollup-box">
+        <div class="rb-level">Level 3 — VP Sales</div>
+        <div class="rb-name">VP of Sales / Regional VP</div>
+        <div class="rb-desc">Reviews manager-adjusted forecasts by Sunday EOD. Makes any final adjustments at the manager level (not deal level — VPs should not be managing individual deals unless they're strategic accounts). Submits VP-adjusted forecast by segment and by manager.</div>
+      </div>
+    </div>
+    <div class="rollup-level">
+      <div class="rollup-connector">↓</div>
+    </div>
+    <div class="rollup-level">
+      <div class="rollup-box cro-level">
+        <div class="rb-level">Level 4 — CRO</div>
+        <div class="rb-name">Chief Revenue Officer</div>
+        <div class="rb-desc">Sees the VP-adjusted rollup Monday morning. Reviews against stage-weighted floor and AI challenge model. Makes the final CRO forecast call — the number shared with the CFO and CEO. This number should include: the commit figure, the upside scenario (Best Case), and the downside scenario (what if all Best Case misses). The CRO owns the accuracy of this number to the board.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- FORECAST ACCURACY MEASUREMENT -->
+  <h2 class="section-title">Measuring and Improving Forecast Accuracy</h2>
+  <div class="section-intro">You cannot improve what you don't measure. Forecast accuracy should be tracked at every layer of the rollup, for every quarter, going back as far as your records allow.</div>
+
+  <div class="formula-block">
+    <div class="formula-label">Forecast Accuracy</div>
+    <div class="formula-main">Forecast Accuracy % = 1 − |Forecast − Actual| ÷ Actual</div>
+    <div class="formula-note">Example: Forecast = $4.2M, Actual = $3.9M → Accuracy = 1 − (0.3/3.9) = 1 − 7.7% = 92.3%. Best-in-class CRO forecasters maintain 92%+ accuracy by week 9 of the quarter. Accuracy measured at multiple points: week 1, week 4, week 8, week 11, and final.</div>
+  </div>
+
+  <div class="subsection">
+    <div class="subsection-title">Forecast Accuracy by Layer</div>
+    <p>Track accuracy at each rollup level separately. A CRO with 93% accuracy that is built on managers with 72% accuracy means the CRO is good at gut-feel adjustment but the system underneath is broken. The goal is high accuracy at every level.</p>
+
+    <div class="accuracy-bar"><span class="accuracy-label">CRO forecast (industry best-in-class)</span><div class="acc-bar-bg"><div class="acc-bar-fill acc-good" style="width:93%"></div></div><span class="acc-pct">93%</span></div>
+    <div class="accuracy-bar"><span class="accuracy-label">VP Sales forecast (target)</span><div class="acc-bar-bg"><div class="acc-bar-fill acc-good" style="width:88%"></div></div><span class="acc-pct">88%</span></div>
+    <div class="accuracy-bar"><span class="accuracy-label">Manager forecast (target)</span><div class="acc-bar-bg"><div class="acc-bar-fill acc-ok" style="width:80%"></div></div><span class="acc-pct">80%</span></div>
+    <div class="accuracy-bar"><span class="accuracy-label">Rep forecast (typical)</span><div class="acc-bar-bg"><div class="acc-bar-fill acc-ok" style="width:72%"></div></div><span class="acc-pct">72%</span></div>
+    <div class="accuracy-bar"><span class="accuracy-label">Stage-weighted (typical)</span><div class="acc-bar-bg"><div class="acc-bar-fill acc-poor" style="width:78%"></div></div><span class="acc-pct">78%</span></div>
+  </div>
+
+  <div class="subsection">
+    <div class="subsection-title">The Accuracy Improvement Loop</div>
+    <p>After each quarter closes, run a "forecast retrospective" with every manager:</p>
+    <ul class="bullet-list">
+      <li>List every deal that was "Commit" at week 10 and didn't close. What was the actual reason it missed? Was it predictable?</li>
+      <li>List every deal that wasn't "Commit" at week 10 and did close. Why wasn't it called? Was the rep sandbagging?</li>
+      <li>Calculate each manager's commit accuracy for the quarter. This becomes part of their quarterly performance review.</li>
+      <li>Identify one systematic bias: does this manager consistently over-forecast? Under-forecast? By how much? Apply a correction factor to their future forecasts explicitly.</li>
+    </ul>
+  </div>
+
+  <!-- MEDDICC CONNECTION -->
+  <h2 class="section-title">MEDDICC-to-Forecast Connection</h2>
+  <div class="section-intro">MEDDICC is not just a qualification framework — it is the evidence base that justifies a commit call. A deal in the Commit category should be able to pass the MEDDICC test.</div>
+
+  <table class="data-table">
+    <thead>
+      <tr><th>MEDDICC Element</th><th>What It Tells the Forecast</th><th>If Missing, Forecast Impact</th></tr>
+    </thead>
+    <tbody>
+      <tr><td>Metrics</td><td>The buyer has a specific quantified ROI expectation — they know what they're buying it for</td><td>Without Metrics, the buyer may never commit because they can't justify the purchase internally. Downgrade to Best Case.</td></tr>
+      <tr><td>Economic Buyer</td><td>The person who can sign has been identified and engaged</td><td>Without economic buyer engagement, deals that appear at Stage 3 regularly slip to next quarter when the EB gets involved at the last minute and has concerns. Downgrade to Best Case.</td></tr>
+      <tr><td>Decision Criteria</td><td>You know what they're using to evaluate — and you know you meet the criteria</td><td>Unknown decision criteria = unknown risk. Could be disqualified on a factor you didn't know existed.</td></tr>
+      <tr><td>Decision Process</td><td>You know every step between now and signature — and there are no surprises left</td><td>Deals without a mapped process always take longer than expected. "Legal review" that appears in week 11 is a forecast killer.</td></tr>
+      <tr><td>Identify Pain</td><td>The business pain is confirmed, quantified, and owned by someone with authority</td><td>Deals without confirmed pain are vulnerable to "no decision" outcomes — the prospect deprioritizes during budget cycles.</td></tr>
+      <tr><td>Champion</td><td>Someone inside is actively selling for you — not just friendly</td><td>Deals without a champion at Stage 3+ have dramatically lower close rates. The champion is the most predictive single indicator of close. Downgrade to Best Case unless champion is named and has demonstrated advocacy.</td></tr>
+      <tr><td>Competition</td><td>You know who you're competing against and have a plan to win</td><td>Unknown competition = unknown risk. Deals that go quiet often involve a competitor you didn't know was in the conversation.</td></tr>
+    </tbody>
+  </table>
+
+  <!-- FORECAST CALL AGENDA -->
+  <h2 class="section-title">The Weekly Forecast Call: Agenda and Questions</h2>
+  <div class="section-intro">The forecast call is the most important recurring meeting in a sales organization. It should be tight, evidence-based, and action-oriented. It should never be a status report — it should be a decision-making meeting.</div>
+
+  <div class="call-agenda-item">
+    <div class="ca-time">0:00–5:00 — NUMBERS REVIEW</div>
+    <div class="ca-title">Where do we stand</div>
+    <div class="ca-desc">CRO reviews: Closed this week, total closed this quarter, current commit, current Best Case, stage-weighted floor, AI model number. No discussion yet — just establish the numbers. Note any changes from last week.</div>
+  </div>
+  <div class="call-agenda-item">
+    <div class="ca-time">5:00–20:00 — COMMIT REVIEW</div>
+    <div class="ca-title">Deal-by-deal review of all commit deals not yet closed</div>
+    <div class="ca-desc">For each commit deal: "What happened this week? What does the next step say? When is it on calendar? What are the risks?" Any commit deal without a concrete next step with a date is immediately downgraded to Best Case in the call. This discipline, applied consistently, is what makes commit meaningful.</div>
+  </div>
+  <div class="call-agenda-item">
+    <div class="ca-time">20:00–30:00 — RISK DEALS</div>
+    <div class="ca-title">AI-flagged and manager-flagged risk deals</div>
+    <div class="ca-desc">Review any deals where AI probability is &lt;50% but forecast category is Commit. For each: what evidence supports the commit call? What would need to be true for this to close? What's the contingency if it slips?</div>
+  </div>
+  <div class="call-agenda-item">
+    <div class="ca-time">30:00–40:00 — UPSIDE</div>
+    <div class="ca-title">Best Case deals that could accelerate</div>
+    <div class="ca-desc">Are there Best Case deals that could become commits? What would need to happen? Who needs to do what by when to pull a deal forward? This is where the CRO's job is to remove blockers — legal delays, executive access, pricing flexibility.</div>
+  </div>
+  <div class="call-agenda-item">
+    <div class="ca-time">40:00–50:00 — CALL</div>
+    <div class="ca-title">CRO makes the forecast call</div>
+    <div class="ca-desc">CRO states: "My call for this quarter is $X." This is not a discussion — it's a decision. The CRO own this number until the quarter closes. If the call changes next week, the CRO explains why. Consistency in the call process builds organizational trust in the forecast.</div>
+  </div>
+
+  <!-- KEY FORMULAS -->
+  <h2 class="section-title">Key Formulas and Benchmarks</h2>
+
+  <div class="formula-block">
+    <div class="formula-label">Pipeline Coverage Requirement</div>
+    <div class="formula-main">Required Pipeline = Revenue Target × Pipeline Coverage Ratio</div>
+    <div class="formula-note">Coverage ratio: SMB = 3×–4× target. Mid-Market = 4×–5×. Enterprise = 5×–7×. Higher ratio needed for longer sales cycles and lower per-stage conversion rates.</div>
+  </div>
+
+  <div class="formula-block">
+    <div class="formula-label">Forecast Call Range</div>
+    <div class="formula-main">Low = Closed + 80% of Commit | Base = Closed + 100% of Commit | High = Closed + Commit + 50% of Best Case</div>
+    <div class="formula-note">Present all three scenarios to leadership. The "base" is the primary number. The range communicates uncertainty honestly.</div>
+  </div>
+
+  <div class="formula-block">
+    <div class="formula-label">Sandbag Detection</div>
+    <div class="formula-main">Sandbag Rate = (Deals Closed > Manager Commit) ÷ Total Deals Closed × 100</div>
+    <div class="formula-note">If &gt;30% of closed deals weren't in the manager's commit the week before quarter-end, sandbagging is systematic. Investigate comp structure — sandbagging is usually a rational response to bad incentives.</div>
+  </div>
+
+  <div class="related-section">
+    <div class="related-title">Related Sections</div>
+    <div class="related-links">
+      <a href="funnel-definitions.html" class="related-link">Funnel Stage Definitions</a>
+      <a href="crm-architecture.html" class="related-link">CRM Architecture</a>
+      <a href="revenue-reporting.html" class="related-link">Revenue Reporting</a>
+      <a href="forecast-integrity.html" class="related-link">Forecast Integrity</a>
+      <a href="meddicc.html" class="related-link">MEDDICC</a>
+      <a href="pipeline-generation.html" class="related-link">Pipeline Generation</a>
+      <a href="../pages/revops.html" class="related-link">← RevOps Overview</a>
+    </div>
+  </div>
+</div>
+<script data-pplx-inline-edit>
+(function () {
+  if (window === window.top) return;
+
+  const allowedParentOrigins = ["https://www.perplexity.ai","https://perplexity.ai","https://testing.perplexity.ai","https://staging.perplexity.ai","https://*.preview.i.perplexity.ai","http://localhost:3000","http://127.0.0.1:3000","http://localhost:5173","http://127.0.0.1:5173"];
+  const MAX_FONT_BYTES = 500 * 1024;
+  const MAX_TOTAL_FONT_BYTES = 2 * 1024 * 1024;
+  let scrollForwarding = false;
+  let scrollRaf = 0;
+  let trustedTopOrigin = null;
+
+  // Allow entries like "https://*.preview.i.perplexity.ai" — the wildcard
+  // matches a single DNS label (no dots), so "https://*.foo" cannot stretch
+  // across multiple labels.
+  function matchesAllowedOrigin(origin) {
+    if (!origin) return false;
+    for (const entry of allowedParentOrigins) {
+      if (!entry.includes("*")) {
+        if (entry === origin) return true;
+        continue;
+      }
+      const pattern = new RegExp(
+        "^" +
+          entry.replace(/[.+?^${}()|[\]\\]/g, "\\$&").replace(/\*/g, "[^.]+") +
+          "$",
+      );
+      if (pattern.test(origin)) return true;
+    }
+    return false;
+  }
+
+  // Trust decision: when the sender is same-origin-visible (event.origin is a
+  // real origin like https://www.perplexity.ai) we trust event.origin directly.
+  // When event.origin is "null" (opaque broker srcdoc), we fall back to the
+  // broker's stamped `parentOrigin` to identify the top window. The fallback
+  // is claim-only — we rely on the browser's native `targetOrigin` enforcement
+  // on the response path (see postToTrustedTop) to ensure replies can't be
+  // delivered to anyone but the actual top window of that claimed origin.
+  function getTrustedParentOrigin(event) {
+    const forwardedParentOrigin =
+      typeof event.data.parentOrigin === "string" ? event.data.parentOrigin : null;
+    const parentOrigin = event.origin === "null" ? forwardedParentOrigin : event.origin;
+    return matchesAllowedOrigin(parentOrigin) ? parentOrigin : null;
+  }
+
+  // All responses go to window.top with targetOrigin = the allowlisted origin.
+  // An attacker that iframes us inside their own null-origin broker can claim
+  // any parentOrigin they like, but the browser will drop the reply whenever
+  // the real top's origin doesn't match — so the screenshot never leaves.
+  function postToTrustedTop(message) {
+    if (!trustedTopOrigin) return;
+    try {
+      window.top.postMessage(message, trustedTopOrigin);
+    } catch (_error) {}
+  }
+
+  function inlineAll(original, clone) {
+    if (original.nodeType !== 1 || clone.nodeType !== 1) return;
+
+    try {
+      const computedStyle = getComputedStyle(original);
+      // cssText on a computed style is the serialized declaration in modern
+      // Chromium/Safari — a single read beats enumerating ~400 longhand
+      // properties. Firefox returns "" here, so we fall back on empty.
+      const serialized = computedStyle.cssText;
+      if (serialized) {
+        clone.style.cssText = serialized;
+      } else {
+        const parts = new Array(computedStyle.length);
+        for (let index = 0; index < computedStyle.length; index += 1) {
+          const property = computedStyle[index];
+          parts[index] = `${property}:${computedStyle.getPropertyValue(property)};`;
+        }
+        clone.style.cssText = parts.join("");
+      }
+    } catch (_error) {}
+
+    const originalChildren = original.children;
+    const clonedChildren = clone.children;
+    for (
+      let index = 0;
+      index < originalChildren.length && index < clonedChildren.length;
+      index += 1
+    ) {
+      inlineAll(originalChildren[index], clonedChildren[index]);
+    }
+  }
+
+  function extractFontUrl(srcValue) {
+    const matches = [
+      ...srcValue.matchAll(
+        /url\(["']?([^"')]+)["']?\)(?:\s*format\(["']?([^"')]+)["']?\))?/gi,
+      ),
+    ];
+    if (matches.length === 0) return null;
+    const woff2 = matches.find((m) => m[2] && m[2].toLowerCase().includes("woff2"));
+    if (woff2) return woff2[1];
+    const woff = matches.find((m) => m[2] && m[2].toLowerCase().includes("woff"));
+    if (woff) return woff[1];
+    return matches[0][1];
+  }
+
+  // Cache resolved font URL -> data URI across captures. Fonts on a page
+  // essentially never change, and a batch run emits multiple captures back to
+  // back — without this we'd refetch + re-base64 every time.
+  const fontDataUriCache = new Map();
+  const SRC_DECLARATION_RE = /src\s*:\s*[^;}]+/i;
+
+  async function fetchAsDataUri(url) {
+    if (fontDataUriCache.has(url)) return fontDataUriCache.get(url);
+    let dataUri = null;
+    try {
+      const response = await fetch(url, { mode: "cors", credentials: "omit" });
+      if (response.ok) {
+        const blob = await response.blob();
+        if (blob.size <= MAX_FONT_BYTES) {
+          dataUri = await new Promise((resolve) => {
+            const reader = new FileReader();
+            reader.onloadend = () =>
+              resolve(typeof reader.result === "string" ? reader.result : null);
+            reader.onerror = () => resolve(null);
+            reader.readAsDataURL(blob);
+          });
+        }
+      }
+    } catch (_error) {
+      dataUri = null;
+    }
+    fontDataUriCache.set(url, dataUri);
+    return dataUri;
+  }
+
+  function collectFontFaceRuleTexts() {
+    const rules = [];
+    for (const sheet of document.styleSheets) {
+      let cssRules;
+      try {
+        cssRules = sheet.cssRules;
+      } catch (_error) {
+        continue;
+      }
+      if (!cssRules) continue;
+      for (const rule of cssRules) {
+        const cssText = rule.cssText || "";
+        if (cssText.startsWith("@font-face")) rules.push(cssText);
+      }
+    }
+    return rules;
+  }
+
+  async function buildInlinedFontCss() {
+    const ruleTexts = collectFontFaceRuleTexts();
+    if (ruleTexts.length === 0) return null;
+
+    const resolved = ruleTexts.map((cssText) => {
+      if (!SRC_DECLARATION_RE.test(cssText)) return null;
+      const srcMatch = cssText.match(/src\s*:\s*([^;}]+)[;}]/i);
+      if (!srcMatch) return null;
+      const url = extractFontUrl(srcMatch[1]);
+      if (!url) return null;
+      try {
+        return { cssText, url: new URL(url, document.baseURI).href };
+      } catch (_error) {
+        return null;
+      }
+    });
+
+    const dataUris = await Promise.all(
+      resolved.map((entry) => (entry ? fetchAsDataUri(entry.url) : Promise.resolve(null))),
+    );
+
+    const inlined = [];
+    let totalBytes = 0;
+    for (let index = 0; index < resolved.length; index += 1) {
+      const entry = resolved[index];
+      const dataUri = dataUris[index];
+      if (!entry || !dataUri) continue;
+      const approxBytes = dataUri.length * 0.75;
+      if (totalBytes + approxBytes > MAX_TOTAL_FONT_BYTES) break;
+      totalBytes += approxBytes;
+      inlined.push(entry.cssText.replace(SRC_DECLARATION_RE, `src: url("${dataUri}")`));
+    }
+    return inlined.length > 0 ? inlined.join("\n") : null;
+  }
+
+  function stripExternal(clone) {
+    const images = clone.querySelectorAll("img");
+    for (let index = 0; index < images.length; index += 1) {
+      const src = images[index].getAttribute("src");
+      if (src && !src.startsWith("data:")) images[index].removeAttribute("src");
+    }
+
+    const elements = clone.querySelectorAll("*");
+    for (let index = 0; index < elements.length; index += 1) {
+      const style = elements[index].style.cssText;
+      if (style && style.includes("url(")) {
+        elements[index].style.cssText = style.replace(
+          /url\(["']?(?!data:)[^)"']*["']?\)/gi,
+          "none",
+        );
+      }
+    }
+  }
+
+  function emitScroll() {
+    scrollRaf = 0;
+    if (!scrollForwarding) return;
+    postToTrustedTop({
+      type: "INLINE_EDIT_SCROLL",
+      scrollX: window.scrollX,
+      scrollY: window.scrollY,
+    });
+  }
+
+  window.addEventListener(
+    "scroll",
+    function () {
+      if (!scrollForwarding || scrollRaf) return;
+      scrollRaf = requestAnimationFrame(emitScroll);
+    },
+    { passive: true, capture: true },
+  );
+
+  async function handleCaptureRequest(event) {
+    const requestId = event.data.requestId;
+    const scrollX = window.scrollX;
+    const scrollY = window.scrollY;
+    const width = window.innerWidth;
+    const height = window.innerHeight;
+
+    function postResult(dataUrl) {
+      postToTrustedTop({
+        type: "INLINE_EDIT_SCREENSHOT_RESULT",
+        requestId,
+        dataUrl,
+        scrollX,
+        scrollY,
+      });
+    }
+
+    try {
+      // Wait for any pending web fonts to resolve so both inline metrics and
+      // the @font-face inlining below see the same loaded faces.
+      if (document.fonts && document.fonts.ready) {
+        try {
+          await document.fonts.ready;
+        } catch (_error) {}
+      }
+
+      const clone = document.documentElement.cloneNode(true);
+      inlineAll(document.documentElement, clone);
+
+      const removedNodes = clone.querySelectorAll("script,link[rel=\"stylesheet\"],style");
+      for (let index = 0; index < removedNodes.length; index += 1) {
+        removedNodes[index].remove();
+      }
+
+      stripExternal(clone);
+
+      // Re-embed web fonts as data-URI @font-face rules so the SVG rasterizer
+      // can resolve them — external font URLs aren't fetched during
+      // foreignObject rendering, which would otherwise force a fallback face
+      // and change text metrics.
+      const inlinedFontCss = await buildInlinedFontCss();
+      if (inlinedFontCss) {
+        const styleEl = document.createElement("style");
+        styleEl.textContent = inlinedFontCss;
+        const head = clone.querySelector("head");
+        if (head) head.appendChild(styleEl);
+        else clone.insertBefore(styleEl, clone.firstChild);
+      }
+
+      const html = new XMLSerializer().serializeToString(clone);
+      const svg =
+        `<svg xmlns="http://www.w3.org/2000/svg" width="${width}" height="${height}">` +
+        '<foreignObject width="100%" height="100%">' +
+        `<div xmlns="http://www.w3.org/1999/xhtml" style="width:${width}px;height:${height}px;overflow:hidden">` +
+        `<div style="transform:translate(-${scrollX}px,-${scrollY}px);transform-origin:top left">` +
+        html +
+        "</div></div></foreignObject></svg>";
+      const svgUrl = `data:image/svg+xml;charset=utf-8,${encodeURIComponent(svg)}`;
+      const image = new Image();
+      image.onload = function () {
+        const canvas = document.createElement("canvas");
+        canvas.width = width;
+        canvas.height = height;
+        canvas.getContext("2d").drawImage(image, 0, 0);
+        postResult(canvas.toDataURL("image/png"));
+      };
+      image.onerror = function () {
+        postResult(null);
+      };
+      image.src = svgUrl;
+    } catch (_error) {
+      postResult(null);
+    }
+  }
+
+  window.addEventListener("message", function (event) {
+    if (!event.data) return;
+    // Only accept messages from the direct parent frame. Blocks sibling /
+    // unrelated-window postMessage senders that could otherwise reach us.
+    if (event.source !== window.parent) return;
+
+    const trustedParentOrigin = getTrustedParentOrigin(event);
+    if (!trustedParentOrigin) return;
+    trustedTopOrigin = trustedParentOrigin;
+
+    if (event.data.type === "INLINE_EDIT_SCROLL_START") {
+      scrollForwarding = true;
+      emitScroll();
+      return;
+    }
+
+    if (event.data.type === "INLINE_EDIT_SCROLL_STOP") {
+      scrollForwarding = false;
+      if (scrollRaf) cancelAnimationFrame(scrollRaf);
+      scrollRaf = 0;
+      return;
+    }
+
+    if (event.data.type !== "INLINE_EDIT_CAPTURE_REQUEST") return;
+
+    handleCaptureRequest(event);
+  });
+})();
+
+
+</script></body>
+</html>

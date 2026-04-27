@@ -1,0 +1,663 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Ramp Time to Quota — SaaS Revenue System</title>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="../assets/shared.css"/>
+  <style>
+    .page-hero { background: #28251D; }
+    .ramp-curve {
+      background: var(--surface);
+      border: 1.5px solid var(--border);
+      border-radius: 10px;
+      padding: 20px;
+      margin: 20px 0;
+    }
+    .ramp-curve-title { font-size: 13px; font-weight: 700; letter-spacing: 0.5px; text-transform: uppercase; color: var(--text-muted); margin-bottom: 16px; }
+    .ramp-bars {
+      display: flex;
+      align-items: flex-end;
+      gap: 8px;
+      height: 120px;
+      margin-bottom: 8px;
+    }
+    .ramp-bar-group {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      flex: 1;
+      gap: 4px;
+    }
+    .ramp-bar {
+      width: 100%;
+      border-radius: 4px 4px 0 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 12px;
+      font-weight: 700;
+      color: #fff;
+      min-height: 16px;
+    }
+    .ramp-bar-label { font-size: 11px; font-weight: 700; color: var(--text-muted); }
+    .ramp-segments { display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; margin-top: 16px; }
+    .ramp-segment-card { background: #fafaf8; border: 1px solid var(--border); border-radius: 6px; padding: 10px 12px; }
+    .rs-month { font-size: 11px; font-weight: 700; letter-spacing: 1px; text-transform: uppercase; color: var(--text-muted); margin-bottom: 4px; }
+    .rs-title { font-size: 12px; font-weight: 700; margin-bottom: 4px; }
+    .rs-desc { font-size: 11px; line-height: 1.5; color: var(--text-muted); }
+    .benchmarks-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      gap: 14px;
+      margin: 16px 0;
+    }
+    .bench-card {
+      background: var(--surface);
+      border: 1.5px solid var(--border);
+      border-radius: 8px;
+      padding: 16px;
+      text-align: center;
+    }
+    .bc-segment { font-size: 11px; font-weight: 700; letter-spacing: 1px; text-transform: uppercase; color: var(--text-muted); margin-bottom: 6px; }
+    .bc-range { font-size: 26px; font-weight: 700; color: var(--primary); margin-bottom: 4px; }
+    .bc-note { font-size: 11px; color: var(--text-muted); line-height: 1.4; }
+    .hiring-math {
+      background: #1C1B19;
+      color: #CDCCCA;
+      border-radius: 10px;
+      padding: 24px;
+      margin: 20px 0;
+    }
+    .hm-title { font-size: 12px; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase; color: #4F98A3; margin-bottom: 16px; }
+    .hm-step { margin-bottom: 16px; }
+    .hm-step-label { font-size: 11px; font-weight: 700; letter-spacing: 1px; text-transform: uppercase; color: #6a6a60; margin-bottom: 4px; }
+    .hm-step-value { font-size: 15px; font-weight: 700; color: #fff; margin-bottom: 4px; }
+    .hm-step-note { font-size: 12px; color: #8a8a80; }
+    .hm-total { font-size: 18px; font-weight: 700; color: #4F98A3; padding-top: 16px; border-top: 1px solid #333; }
+    .reducer-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 14px;
+      margin: 16px 0;
+    }
+    .reducer-card {
+      background: var(--surface);
+      border: 1.5px solid var(--border);
+      border-left: 3px solid #437A22;
+      border-radius: 8px;
+      padding: 16px;
+    }
+    .r-title { font-size: 14px; font-weight: 700; margin-bottom: 6px; }
+    .r-impact { font-size: 11px; font-weight: 700; letter-spacing: 1px; text-transform: uppercase; color: #437A22; margin-bottom: 6px; }
+    .r-desc { font-size: 13px; line-height: 1.65; }
+    .cost-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 16px 0;
+    }
+    .cost-table th { background: #28251D; color: #fff; padding: 10px 14px; font-size: 12px; text-align: left; }
+    .cost-table td { padding: 12px 14px; font-size: 13px; border-bottom: 1px solid var(--border); line-height: 1.6; vertical-align: top; }
+    .cost-table tr:nth-child(even) td { background: #fafaf8; }
+  </style>
+</head>
+<body>
+<nav class="nav">
+  <span class="nav-logo">SaaS <span>Revenue System</span></span>
+  <span class="nav-sep">|</span>
+  <a href="../index.html" class="nav-back">← Home</a>
+  <span class="nav-sep">|</span>
+  <a href="../pages/north-star-metrics.html" class="nav-back">North Star Metrics</a>
+  <span class="nav-sep">|</span>
+  <span class="nav-current">Ramp Time to Quota</span>
+</nav>
+<div class="page-hero" style="background:#28251D">
+  <div class="hero-phase-label">North Star Metrics</div>
+  <div class="hero-title">Ramp Time to Quota</div>
+  <div class="hero-subtitle">The Speed of Sales Productivity — Why Ramp Time Is a Revenue Capacity Problem, Not Just an HR Metric</div>
+</div>
+<div class="content-wrap">
+  <div class="breadcrumb">
+    <a href="../index.html">Home</a><span class="sep">›</span>
+    <a href="../pages/north-star-metrics.html">North Star Metrics</a><span class="sep">›</span>
+    <span class="current">Ramp Time to Quota</span>
+  </div>
+
+  <h2 class="section-title">Definition and Why It Matters to Revenue Capacity</h2>
+  <div class="subsection">
+    <div class="callout callout-definition">
+      <div class="callout-title">Definition</div>
+      <p><strong>Ramp Time to Quota</strong> is the number of months from a sales rep's start date until they consistently achieve 100% of their full quota target. It is not the time until they close their first deal — it is the time until they are fully productive contributors to the revenue plan. A rep on a 6-month ramp is expected to close roughly 50% of their full quota in month 3, 75% in month 5, and 100% from month 7 onward (the exact curve depends on your ramp structure).</p>
+    </div>
+    <p>Ramp time matters to revenue capacity because every new hire is a negative revenue event for the first N months of their tenure. They consume salary, benefits, management time, and enablement resources without producing equivalent revenue. A company that plans to hit its revenue target by adding 10 reps in Q1 — but uses a 6-month ramp model and adds those reps in January — will not see full productivity until July. If the revenue target starts in January, there is a 6-month gap that must be filled by existing reps or existing expansion — which is frequently not modeled.</p>
+  </div>
+
+  <h2 class="section-title">The Ramp Efficiency Formula</h2>
+  <div class="formula-block">
+    <div class="formula-label">Ramp Efficiency</div>
+    <div class="formula-main">Ramp Efficiency(month N) = Actual Quota Attainment at Month N / Expected Full Quota</div>
+    <div class="formula-note">Example: If quota is $100K/quarter and a rep closes $30K in month 3, their 3-month efficiency is 30%. Track at months 3, 6, 9, and 12 for a complete ramp curve. Compare cohort of new hires from the same quarter — wide variance between them is a management or ICP signal.</div>
+  </div>
+  <div class="formula-block">
+    <div class="formula-label">Fully-Loaded Ramp Cost Formula</div>
+    <div class="formula-main">Ramp Cost = (Base Salary × Ramp Months) + OTE Variable (not earned during ramp) + Enablement Investment + Manager Time Cost</div>
+    <div class="formula-note">Example: $80K base, 6-month ramp, $40K OTE variable (not earned at 0% quota), $10K enablement cost, 20% of $180K manager salary for 6 months ($18K). Total ramp cost: $40K + $40K + $10K + $18K = $108K per rep before they're fully productive. This is the cost of each month of ramp delay you can eliminate.</div>
+  </div>
+
+  <h2 class="section-title">The Ramp Curve</h2>
+  <div class="ramp-curve">
+    <div class="ramp-curve-title">Typical Mid-Market AE Ramp Curve (% of Quota Attainment by Month)</div>
+    <div class="ramp-bars">
+      <div class="ramp-bar-group">
+        <div class="ramp-bar" style="height:6%; background:#ccc;">0%</div>
+        <div class="ramp-bar-label">M1</div>
+      </div>
+      <div class="ramp-bar-group">
+        <div class="ramp-bar" style="height:6%; background:#ccc;">0%</div>
+        <div class="ramp-bar-label">M2</div>
+      </div>
+      <div class="ramp-bar-group">
+        <div class="ramp-bar" style="height:20%; background:#964219;">~20%</div>
+        <div class="ramp-bar-label">M3</div>
+      </div>
+      <div class="ramp-bar-group">
+        <div class="ramp-bar" style="height:40%; background:#A8661A;">~40%</div>
+        <div class="ramp-bar-label">M4</div>
+      </div>
+      <div class="ramp-bar-group">
+        <div class="ramp-bar" style="height:60%; background:#437A22;">~60%</div>
+        <div class="ramp-bar-label">M5</div>
+      </div>
+      <div class="ramp-bar-group">
+        <div class="ramp-bar" style="height:75%; background:#3A6B1C;">~75%</div>
+        <div class="ramp-bar-label">M6</div>
+      </div>
+      <div class="ramp-bar-group">
+        <div class="ramp-bar" style="height:90%; background:#2D5415;">~90%</div>
+        <div class="ramp-bar-label">M7</div>
+      </div>
+      <div class="ramp-bar-group">
+        <div class="ramp-bar" style="height:100%; background:#20808D;">100%</div>
+        <div class="ramp-bar-label">M8+</div>
+      </div>
+    </div>
+    <div class="ramp-segments">
+      <div class="ramp-segment-card">
+        <div class="rs-month">Months 1–2</div>
+        <div class="rs-title">Onboarding Zone</div>
+        <div class="rs-desc">Product knowledge, process learning, ICP immersion, tool setup. Zero revenue expected. Pipeline building begins in month 2.</div>
+      </div>
+      <div class="ramp-segment-card">
+        <div class="rs-month">Months 3–4</div>
+        <div class="rs-title">First Deals</div>
+        <div class="rs-desc">First deals close — typically smaller SMB or expansion deals. Manager co-sells on larger opportunities. Win rate below full-ramp average.</div>
+      </div>
+      <div class="ramp-segment-card">
+        <div class="rs-month">Months 5–6</div>
+        <div class="rs-title">Building Confidence</div>
+        <div class="rs-desc">Rep runs deals more independently. Manager shadow-coaches. Pipeline grows as rep improves prospecting. Win rate approaches team average.</div>
+      </div>
+      <div class="ramp-segment-card">
+        <div class="rs-month">Months 7+</div>
+        <div class="rs-title">Full Productivity</div>
+        <div class="rs-desc">Rep manages full territory independently. Win rate at or above team average. Pipeline creation sustainable. Full quota expected from this point.</div>
+      </div>
+    </div>
+  </div>
+
+  <h2 class="section-title">Benchmarks by Segment</h2>
+  <div class="benchmarks-grid">
+    <div class="bench-card">
+      <div class="bc-segment">SMB AE</div>
+      <div class="bc-range">2–4 mo</div>
+      <div class="bc-note">Short sales cycles mean reps see real deal outcomes quickly. Product simplicity and template-driven demos compress learning.</div>
+    </div>
+    <div class="bench-card">
+      <div class="bc-segment">Mid-Market AE</div>
+      <div class="bc-range">4–6 mo</div>
+      <div class="bc-note">Longer cycles and more complex discovery extend ramp. Playbook quality is the primary differentiator between 4-month and 6-month ramps.</div>
+    </div>
+    <div class="bench-card">
+      <div class="bc-segment">Enterprise AE</div>
+      <div class="bc-range">6–9 mo</div>
+      <div class="bc-note">Deals take 6-12 months — reps need time to build accounts before they can close. First enterprise close often arrives at month 8-10.</div>
+    </div>
+    <div class="bench-card">
+      <div class="bc-segment">SDR / BDR</div>
+      <div class="bc-range">2–3 mo</div>
+      <div class="bc-note">Activity-based — faster feedback loop. First qualified meetings booked by week 3-4. Full meeting quota expected by month 3.</div>
+    </div>
+    <div class="bench-card">
+      <div class="bc-segment">Sales Manager</div>
+      <div class="bc-range">6–9 mo</div>
+      <div class="bc-note">Managers ramp their teams, not themselves. Ramp is measured by team performance improvement, not personal quota.</div>
+    </div>
+    <div class="bench-card">
+      <div class="bc-segment">CSM</div>
+      <div class="bc-range">3–5 mo</div>
+      <div class="bc-note">CS ramp measured by accounts independently managed and health score improvement. First renewal managed solo typically at month 4-5.</div>
+    </div>
+  </div>
+
+  <h2 class="section-title">The Hiring Lead Time Math</h2>
+  <div class="hiring-math">
+    <div class="hm-title">Worked Example — Hiring Calendar From Revenue Target</div>
+    <div class="hm-step">
+      <div class="hm-step-label">Revenue Target</div>
+      <div class="hm-step-value">Need 5 additional fully-productive Mid-Market AEs contributing $500K each by Q4</div>
+    </div>
+    <div class="hm-step">
+      <div class="hm-step-label">Ramp Time</div>
+      <div class="hm-step-value">Mid-Market ramp = 5 months to 75% quota; 7 months to full quota</div>
+    </div>
+    <div class="hm-step">
+      <div class="hm-step-label">Time to Hire</div>
+      <div class="hm-step-value">Average time from job req open to first day = 8 weeks (2 months)</div>
+    </div>
+    <div class="hm-step">
+      <div class="hm-step-label">Total Time: Req to Full Productivity</div>
+      <div class="hm-step-value">2 months hiring + 7 months ramp = 9 months total</div>
+      <div class="hm-step-note">If Q4 = October, working backward 9 months = January. You must open the job req in January to have fully productive reps in October.</div>
+    </div>
+    <div class="hm-total">→ To have 5 productive Mid-Market AEs by Q4, you must start hiring in January — not Q3.</div>
+  </div>
+  <p>This math is the source of the "hockey stick problem" — companies wait until Q2-Q3 to hire because they're not sure they need the headcount yet, then wonder why Q3 and Q4 miss plan despite hiring aggressively. The ramp lag means hiring decisions must be made 2-3 quarters before the revenue is needed.</p>
+
+  <h2 class="section-title">How to Reduce Ramp Time</h2>
+  <div class="reducer-grid">
+    <div class="reducer-card">
+      <div class="r-impact">Impact: High | Timeline: Immediate</div>
+      <div class="r-title">Tighten Your ICP — Before They Arrive</div>
+      <div class="r-desc">Reps with a narrow, clear ICP ramp faster because they can pattern-match immediately. If your ICP is "mid-market companies with CRMs," a new rep will take 9 months to learn who to call. If it is "Salesforce-using SaaS companies, $20M-$100M ARR, Series B-C, expanding sales team," a rep can prospect effectively by week 3.</div>
+    </div>
+    <div class="reducer-card">
+      <div class="r-impact">Impact: High | Timeline: Weeks</div>
+      <div class="r-title">Structured 30/60/90 Onboarding Program</div>
+      <div class="r-desc">Day 1 through week 8 must be highly structured: product certification by week 2, persona guide mastery by week 3, first demo certification by week 4, first prospecting calls by week 5. Unstructured onboarding ("here's your laptop, shadow some calls") extends ramp by 2-3 months.</div>
+    </div>
+    <div class="reducer-card">
+      <div class="r-impact">Impact: Very High | Timeline: Months</div>
+      <div class="r-title">Peer Mentorship + Co-Selling</div>
+      <div class="r-desc">Pair every new rep with your top-performing AE for the first 60 days of deal work. Not as an observer — as a co-seller who participates. The new rep absorbs pattern recognition that cannot be trained in a classroom. This single investment reduces ramp by 1-2 months.</div>
+    </div>
+    <div class="reducer-card">
+      <div class="r-impact">Impact: Medium | Timeline: Weeks</div>
+      <div class="r-title">Give Reps Warm Pipe on Day 1</div>
+      <div class="r-desc">New reps who inherit zero pipeline spend months 1-3 doing exclusively outbound prospecting — and see no deal outcomes until month 4-5. Give new reps a starter pipeline of 3-5 qualified opportunities from the SDR team or from manager-worked accounts. First close in month 2-3 dramatically improves confidence and learning speed.</div>
+    </div>
+    <div class="reducer-card">
+      <div class="r-impact">Impact: Medium | Timeline: Months</div>
+      <div class="r-title">Playbook Quality and Accessibility</div>
+      <div class="r-desc">A documented, specific, validated sales playbook (discovery questions, objection handlers, competitive positioning, demo structure, champion-building scripts) that a new rep can follow from day 1 dramatically compresses the time to "knowing what good looks like." See Sales Playbook page.</div>
+    </div>
+    <div class="reducer-card">
+      <div class="r-impact">Impact: High | Timeline: Ongoing</div>
+      <div class="r-title">Manager Deliberate Coaching Investment</div>
+      <div class="r-desc">The manager is the single highest-leverage ramp accelerator. A manager who does 2 call-shadow sessions per week with a ramping rep, provides immediate specific feedback, and meets for a 1-hour 1:1 weekly will ramp that rep 30-40% faster than a manager who does monthly check-ins.</div>
+    </div>
+  </div>
+
+  <h2 class="section-title">The ICP-Playbook-Management Triangle</h2>
+  <div class="subsection">
+    <p>Ramp time is the output of three inputs working in combination. Each can be improved independently, but all three must be at a minimum quality level for ramp to be fast. If any one of the three is broken, the other two cannot compensate:</p>
+    <table class="cost-table">
+      <thead>
+        <tr><th>Input</th><th>How It Affects Ramp</th><th>Diagnostic Question</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>ICP Clarity</td><td>Clear ICP = new reps know who to call and what they care about on day 1. Blurry ICP = 3-4 months of trial and error before a rep knows who to target.</td><td>Can a new rep, after reading your ICP document, name 10 specific accounts to prioritize without asking for help?</td></tr>
+        <tr><td>Playbook Quality</td><td>A validated, specific playbook gives reps the "what to say and when" without requiring experimentation. Without it, reps spend months developing personal methods that may or may not be effective.</td><td>Does your playbook include specific discovery questions by persona, objection handler scripts, and a detailed demo flow? Or is it a 50-page overview document?</td></tr>
+        <tr><td>Management Investment</td><td>A manager who coaches deliberatively — specific, behavioral, immediate feedback — can accelerate a new rep's learning by 40-50% vs. a manager who provides annual reviews and monthly check-ins.</td><td>How many hours per week does each manager spend in actual coaching (not deal review) with ramping reps?</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="indicator-row">
+    <span class="indicator-tag ind-leading">Leading: % of 30/60/90 onboarding milestones completed on schedule, deal count in pipeline by month 2, first demo conducted</span>
+    <span class="indicator-tag ind-lagging">Lagging: Month 3/6/9/12 quota attainment, ramp efficiency ratio by cohort, time to first close</span>
+    <span class="indicator-tag ind-formula">Formula: Ramp Cost = Salary × Months + OTE Gap + Enablement + Mgr Time</span>
+  </div>
+
+  <div class="related-section">
+    <div class="related-title">Related Sections</div>
+    <div class="related-links">
+      <a href="ramp-design.html" class="related-link">Ramp Design</a>
+      <a href="headcount-planning.html" class="related-link">Headcount Planning</a>
+      <a href="sales-enablement-mktg.html" class="related-link">Sales Enablement</a>
+      <a href="hiring-formula.html" class="related-link">Hiring Formula</a>
+      <a href="playbook.html" class="related-link">Sales Playbook</a>
+      <a href="coaching.html" class="related-link">Sales Coaching</a>
+    </div>
+  </div>
+</div>
+<script data-pplx-inline-edit>
+(function () {
+  if (window === window.top) return;
+
+  const allowedParentOrigins = ["https://www.perplexity.ai","https://perplexity.ai","https://testing.perplexity.ai","https://staging.perplexity.ai","https://*.preview.i.perplexity.ai","http://localhost:3000","http://127.0.0.1:3000","http://localhost:5173","http://127.0.0.1:5173"];
+  const MAX_FONT_BYTES = 500 * 1024;
+  const MAX_TOTAL_FONT_BYTES = 2 * 1024 * 1024;
+  let scrollForwarding = false;
+  let scrollRaf = 0;
+  let trustedTopOrigin = null;
+
+  // Allow entries like "https://*.preview.i.perplexity.ai" — the wildcard
+  // matches a single DNS label (no dots), so "https://*.foo" cannot stretch
+  // across multiple labels.
+  function matchesAllowedOrigin(origin) {
+    if (!origin) return false;
+    for (const entry of allowedParentOrigins) {
+      if (!entry.includes("*")) {
+        if (entry === origin) return true;
+        continue;
+      }
+      const pattern = new RegExp(
+        "^" +
+          entry.replace(/[.+?^${}()|[\]\\]/g, "\\$&").replace(/\*/g, "[^.]+") +
+          "$",
+      );
+      if (pattern.test(origin)) return true;
+    }
+    return false;
+  }
+
+  // Trust decision: when the sender is same-origin-visible (event.origin is a
+  // real origin like https://www.perplexity.ai) we trust event.origin directly.
+  // When event.origin is "null" (opaque broker srcdoc), we fall back to the
+  // broker's stamped `parentOrigin` to identify the top window. The fallback
+  // is claim-only — we rely on the browser's native `targetOrigin` enforcement
+  // on the response path (see postToTrustedTop) to ensure replies can't be
+  // delivered to anyone but the actual top window of that claimed origin.
+  function getTrustedParentOrigin(event) {
+    const forwardedParentOrigin =
+      typeof event.data.parentOrigin === "string" ? event.data.parentOrigin : null;
+    const parentOrigin = event.origin === "null" ? forwardedParentOrigin : event.origin;
+    return matchesAllowedOrigin(parentOrigin) ? parentOrigin : null;
+  }
+
+  // All responses go to window.top with targetOrigin = the allowlisted origin.
+  // An attacker that iframes us inside their own null-origin broker can claim
+  // any parentOrigin they like, but the browser will drop the reply whenever
+  // the real top's origin doesn't match — so the screenshot never leaves.
+  function postToTrustedTop(message) {
+    if (!trustedTopOrigin) return;
+    try {
+      window.top.postMessage(message, trustedTopOrigin);
+    } catch (_error) {}
+  }
+
+  function inlineAll(original, clone) {
+    if (original.nodeType !== 1 || clone.nodeType !== 1) return;
+
+    try {
+      const computedStyle = getComputedStyle(original);
+      // cssText on a computed style is the serialized declaration in modern
+      // Chromium/Safari — a single read beats enumerating ~400 longhand
+      // properties. Firefox returns "" here, so we fall back on empty.
+      const serialized = computedStyle.cssText;
+      if (serialized) {
+        clone.style.cssText = serialized;
+      } else {
+        const parts = new Array(computedStyle.length);
+        for (let index = 0; index < computedStyle.length; index += 1) {
+          const property = computedStyle[index];
+          parts[index] = `${property}:${computedStyle.getPropertyValue(property)};`;
+        }
+        clone.style.cssText = parts.join("");
+      }
+    } catch (_error) {}
+
+    const originalChildren = original.children;
+    const clonedChildren = clone.children;
+    for (
+      let index = 0;
+      index < originalChildren.length && index < clonedChildren.length;
+      index += 1
+    ) {
+      inlineAll(originalChildren[index], clonedChildren[index]);
+    }
+  }
+
+  function extractFontUrl(srcValue) {
+    const matches = [
+      ...srcValue.matchAll(
+        /url\(["']?([^"')]+)["']?\)(?:\s*format\(["']?([^"')]+)["']?\))?/gi,
+      ),
+    ];
+    if (matches.length === 0) return null;
+    const woff2 = matches.find((m) => m[2] && m[2].toLowerCase().includes("woff2"));
+    if (woff2) return woff2[1];
+    const woff = matches.find((m) => m[2] && m[2].toLowerCase().includes("woff"));
+    if (woff) return woff[1];
+    return matches[0][1];
+  }
+
+  // Cache resolved font URL -> data URI across captures. Fonts on a page
+  // essentially never change, and a batch run emits multiple captures back to
+  // back — without this we'd refetch + re-base64 every time.
+  const fontDataUriCache = new Map();
+  const SRC_DECLARATION_RE = /src\s*:\s*[^;}]+/i;
+
+  async function fetchAsDataUri(url) {
+    if (fontDataUriCache.has(url)) return fontDataUriCache.get(url);
+    let dataUri = null;
+    try {
+      const response = await fetch(url, { mode: "cors", credentials: "omit" });
+      if (response.ok) {
+        const blob = await response.blob();
+        if (blob.size <= MAX_FONT_BYTES) {
+          dataUri = await new Promise((resolve) => {
+            const reader = new FileReader();
+            reader.onloadend = () =>
+              resolve(typeof reader.result === "string" ? reader.result : null);
+            reader.onerror = () => resolve(null);
+            reader.readAsDataURL(blob);
+          });
+        }
+      }
+    } catch (_error) {
+      dataUri = null;
+    }
+    fontDataUriCache.set(url, dataUri);
+    return dataUri;
+  }
+
+  function collectFontFaceRuleTexts() {
+    const rules = [];
+    for (const sheet of document.styleSheets) {
+      let cssRules;
+      try {
+        cssRules = sheet.cssRules;
+      } catch (_error) {
+        continue;
+      }
+      if (!cssRules) continue;
+      for (const rule of cssRules) {
+        const cssText = rule.cssText || "";
+        if (cssText.startsWith("@font-face")) rules.push(cssText);
+      }
+    }
+    return rules;
+  }
+
+  async function buildInlinedFontCss() {
+    const ruleTexts = collectFontFaceRuleTexts();
+    if (ruleTexts.length === 0) return null;
+
+    const resolved = ruleTexts.map((cssText) => {
+      if (!SRC_DECLARATION_RE.test(cssText)) return null;
+      const srcMatch = cssText.match(/src\s*:\s*([^;}]+)[;}]/i);
+      if (!srcMatch) return null;
+      const url = extractFontUrl(srcMatch[1]);
+      if (!url) return null;
+      try {
+        return { cssText, url: new URL(url, document.baseURI).href };
+      } catch (_error) {
+        return null;
+      }
+    });
+
+    const dataUris = await Promise.all(
+      resolved.map((entry) => (entry ? fetchAsDataUri(entry.url) : Promise.resolve(null))),
+    );
+
+    const inlined = [];
+    let totalBytes = 0;
+    for (let index = 0; index < resolved.length; index += 1) {
+      const entry = resolved[index];
+      const dataUri = dataUris[index];
+      if (!entry || !dataUri) continue;
+      const approxBytes = dataUri.length * 0.75;
+      if (totalBytes + approxBytes > MAX_TOTAL_FONT_BYTES) break;
+      totalBytes += approxBytes;
+      inlined.push(entry.cssText.replace(SRC_DECLARATION_RE, `src: url("${dataUri}")`));
+    }
+    return inlined.length > 0 ? inlined.join("\n") : null;
+  }
+
+  function stripExternal(clone) {
+    const images = clone.querySelectorAll("img");
+    for (let index = 0; index < images.length; index += 1) {
+      const src = images[index].getAttribute("src");
+      if (src && !src.startsWith("data:")) images[index].removeAttribute("src");
+    }
+
+    const elements = clone.querySelectorAll("*");
+    for (let index = 0; index < elements.length; index += 1) {
+      const style = elements[index].style.cssText;
+      if (style && style.includes("url(")) {
+        elements[index].style.cssText = style.replace(
+          /url\(["']?(?!data:)[^)"']*["']?\)/gi,
+          "none",
+        );
+      }
+    }
+  }
+
+  function emitScroll() {
+    scrollRaf = 0;
+    if (!scrollForwarding) return;
+    postToTrustedTop({
+      type: "INLINE_EDIT_SCROLL",
+      scrollX: window.scrollX,
+      scrollY: window.scrollY,
+    });
+  }
+
+  window.addEventListener(
+    "scroll",
+    function () {
+      if (!scrollForwarding || scrollRaf) return;
+      scrollRaf = requestAnimationFrame(emitScroll);
+    },
+    { passive: true, capture: true },
+  );
+
+  async function handleCaptureRequest(event) {
+    const requestId = event.data.requestId;
+    const scrollX = window.scrollX;
+    const scrollY = window.scrollY;
+    const width = window.innerWidth;
+    const height = window.innerHeight;
+
+    function postResult(dataUrl) {
+      postToTrustedTop({
+        type: "INLINE_EDIT_SCREENSHOT_RESULT",
+        requestId,
+        dataUrl,
+        scrollX,
+        scrollY,
+      });
+    }
+
+    try {
+      // Wait for any pending web fonts to resolve so both inline metrics and
+      // the @font-face inlining below see the same loaded faces.
+      if (document.fonts && document.fonts.ready) {
+        try {
+          await document.fonts.ready;
+        } catch (_error) {}
+      }
+
+      const clone = document.documentElement.cloneNode(true);
+      inlineAll(document.documentElement, clone);
+
+      const removedNodes = clone.querySelectorAll("script,link[rel=\"stylesheet\"],style");
+      for (let index = 0; index < removedNodes.length; index += 1) {
+        removedNodes[index].remove();
+      }
+
+      stripExternal(clone);
+
+      // Re-embed web fonts as data-URI @font-face rules so the SVG rasterizer
+      // can resolve them — external font URLs aren't fetched during
+      // foreignObject rendering, which would otherwise force a fallback face
+      // and change text metrics.
+      const inlinedFontCss = await buildInlinedFontCss();
+      if (inlinedFontCss) {
+        const styleEl = document.createElement("style");
+        styleEl.textContent = inlinedFontCss;
+        const head = clone.querySelector("head");
+        if (head) head.appendChild(styleEl);
+        else clone.insertBefore(styleEl, clone.firstChild);
+      }
+
+      const html = new XMLSerializer().serializeToString(clone);
+      const svg =
+        `<svg xmlns="http://www.w3.org/2000/svg" width="${width}" height="${height}">` +
+        '<foreignObject width="100%" height="100%">' +
+        `<div xmlns="http://www.w3.org/1999/xhtml" style="width:${width}px;height:${height}px;overflow:hidden">` +
+        `<div style="transform:translate(-${scrollX}px,-${scrollY}px);transform-origin:top left">` +
+        html +
+        "</div></div></foreignObject></svg>";
+      const svgUrl = `data:image/svg+xml;charset=utf-8,${encodeURIComponent(svg)}`;
+      const image = new Image();
+      image.onload = function () {
+        const canvas = document.createElement("canvas");
+        canvas.width = width;
+        canvas.height = height;
+        canvas.getContext("2d").drawImage(image, 0, 0);
+        postResult(canvas.toDataURL("image/png"));
+      };
+      image.onerror = function () {
+        postResult(null);
+      };
+      image.src = svgUrl;
+    } catch (_error) {
+      postResult(null);
+    }
+  }
+
+  window.addEventListener("message", function (event) {
+    if (!event.data) return;
+    // Only accept messages from the direct parent frame. Blocks sibling /
+    // unrelated-window postMessage senders that could otherwise reach us.
+    if (event.source !== window.parent) return;
+
+    const trustedParentOrigin = getTrustedParentOrigin(event);
+    if (!trustedParentOrigin) return;
+    trustedTopOrigin = trustedParentOrigin;
+
+    if (event.data.type === "INLINE_EDIT_SCROLL_START") {
+      scrollForwarding = true;
+      emitScroll();
+      return;
+    }
+
+    if (event.data.type === "INLINE_EDIT_SCROLL_STOP") {
+      scrollForwarding = false;
+      if (scrollRaf) cancelAnimationFrame(scrollRaf);
+      scrollRaf = 0;
+      return;
+    }
+
+    if (event.data.type !== "INLINE_EDIT_CAPTURE_REQUEST") return;
+
+    handleCaptureRequest(event);
+  });
+})();
+
+
+</script></body>
+</html>

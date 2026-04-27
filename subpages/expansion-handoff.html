@@ -1,0 +1,772 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>The CS-to-Sales Expansion Handoff — SaaS Revenue System</title>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="../assets/shared.css"/>
+  <style>
+    .page-hero { background: #28251D; }
+    .trigger-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+      gap: 12px;
+      margin: 20px 0;
+    }
+    .trigger-card {
+      background: var(--surface);
+      border: 1.5px solid var(--border);
+      border-radius: 8px;
+      padding: 14px 16px;
+      border-top: 3px solid;
+    }
+    .tc-number {
+      font-size: 28px;
+      font-weight: 700;
+      margin-bottom: 4px;
+    }
+    .tc-name {
+      font-size: 13px;
+      font-weight: 700;
+      margin-bottom: 6px;
+    }
+    .tc-desc {
+      font-size: 12px;
+      line-height: 1.55;
+      color: var(--text-muted);
+    }
+    .ownership-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 16px 0;
+    }
+    .ownership-table th { background: #28251D; color: #fff; padding: 10px 14px; font-size: 12px; text-align: left; }
+    .ownership-table td { padding: 12px 14px; font-size: 13px; border-bottom: 1px solid var(--border); line-height: 1.6; vertical-align: top; }
+    .ownership-table tr:nth-child(even) td { background: #fafaf8; }
+    .cs-badge { background: #f5f0ff; color: #7A39BB; padding: 3px 10px; border-radius: 12px; font-size: 11px; font-weight: 700; }
+    .ae-badge { background: #e8f4f8; color: #006494; padding: 3px 10px; border-radius: 12px; font-size: 11px; font-weight: 700; }
+    .co-badge { background: #f0fff4; color: #437A22; padding: 3px 10px; border-radius: 12px; font-size: 11px; font-weight: 700; }
+    .comp-models {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 14px;
+      margin: 16px 0;
+    }
+    .comp-card {
+      background: var(--surface);
+      border: 1.5px solid var(--border);
+      border-radius: 8px;
+      padding: 16px;
+    }
+    .comp-title { font-size: 14px; font-weight: 700; margin-bottom: 6px; }
+    .comp-desc { font-size: 13px; line-height: 1.65; margin-bottom: 8px; }
+    .comp-pros-cons { font-size: 12px; line-height: 1.6; }
+    .checklist-box {
+      background: var(--surface);
+      border: 1.5px solid var(--border);
+      border-radius: 10px;
+      overflow: hidden;
+      margin: 16px 0;
+    }
+    .checklist-header {
+      background: #28251D;
+      color: #fff;
+      padding: 12px 18px;
+      font-size: 14px;
+      font-weight: 700;
+    }
+    .checklist-items { padding: 0; }
+    .checklist-item {
+      display: flex;
+      gap: 12px;
+      padding: 12px 18px;
+      border-bottom: 1px solid var(--border);
+      font-size: 13px;
+      line-height: 1.6;
+      align-items: flex-start;
+    }
+    .checklist-item:last-child { border-bottom: none; }
+    .ci-checkbox {
+      width: 18px;
+      height: 18px;
+      border: 2px solid var(--border);
+      border-radius: 4px;
+      flex-shrink: 0;
+      margin-top: 1px;
+    }
+    .ci-category {
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      min-width: 80px;
+      flex-shrink: 0;
+      margin-top: 2px;
+    }
+    .sla-workflow {
+      background: var(--surface);
+      border: 1.5px solid var(--border);
+      border-radius: 10px;
+      overflow: hidden;
+      margin: 16px 0;
+    }
+    .sla-header {
+      background: #28251D;
+      color: #fff;
+      padding: 12px 18px;
+      font-size: 13px;
+      font-weight: 700;
+    }
+    .sla-row {
+      display: grid;
+      grid-template-columns: 160px 1fr;
+      border-bottom: 1px solid var(--border);
+    }
+    .sla-row:last-child { border-bottom: none; }
+    .sla-label { padding: 12px 14px; font-size: 12px; font-weight: 700; background: #fafaf8; border-right: 1px solid var(--border); display: flex; align-items: center; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.5px; }
+    .sla-content { padding: 12px 14px; font-size: 13px; line-height: 1.65; }
+    .failure-card {
+      background: var(--surface);
+      border: 1.5px solid var(--border);
+      border-left: 4px solid #A13544;
+      border-radius: 8px;
+      padding: 16px 20px;
+      margin-bottom: 12px;
+    }
+    .fc-title { font-size: 14px; font-weight: 700; color: #A13544; margin-bottom: 8px; }
+    .fc-two { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+    .fc-label { font-size: 10px; font-weight: 700; letter-spacing: 1px; text-transform: uppercase; color: var(--text-muted); margin-bottom: 4px; }
+    .fc-text { font-size: 13px; line-height: 1.65; }
+    .audit-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 16px 0;
+    }
+    .audit-table th { background: #28251D; color: #fff; padding: 10px 14px; font-size: 12px; text-align: left; }
+    .audit-table td { padding: 12px 14px; font-size: 13px; border-bottom: 1px solid var(--border); line-height: 1.6; vertical-align: top; }
+    .audit-table tr:nth-child(even) td { background: #fafaf8; }
+  </style>
+</head>
+<body>
+<nav class="nav">
+  <span class="nav-logo">SaaS <span>Revenue System</span></span>
+  <span class="nav-sep">|</span>
+  <a href="../index.html" class="nav-back">← Home</a>
+  <span class="nav-sep">|</span>
+  <a href="../pages/handoffs.html" class="nav-back">Handoffs</a>
+  <span class="nav-sep">|</span>
+  <span class="nav-current">Expansion Handoff</span>
+</nav>
+<div class="page-hero" style="background:#28251D">
+  <div class="hero-phase-label">Handoffs</div>
+  <div class="hero-title">The CS-to-Sales Expansion Handoff</div>
+  <div class="hero-subtitle">From Retention to Growth — The Highest-ROI Motion in Your Revenue Engine</div>
+</div>
+<div class="content-wrap">
+  <div class="breadcrumb">
+    <a href="../index.html">Home</a><span class="sep">›</span>
+    <a href="../pages/handoffs.html">Handoffs</a><span class="sep">›</span>
+    <span class="current">CS-to-Sales Expansion Handoff</span>
+  </div>
+
+  <h2 class="section-title">Why Expansion Is the Highest-ROI Motion</h2>
+  <div class="subsection">
+    <p>Expansion revenue — upsells, cross-sells, seat additions, and contract upgrades within existing accounts — is the single highest-ROI motion in B2B SaaS for three mathematically provable reasons:</p>
+    <ul class="bullet-list">
+      <li><strong>Zero CAC:</strong> The customer already exists. There is no cost to acquire them — they are in your CRM, your CS team is already engaged, and trust is already established. The cost to expand an account is roughly 20-30% of the cost to acquire a new account of equivalent size.</li>
+      <li><strong>Higher win rate:</strong> Expansion opportunities close at 2-4x the win rate of new logo deals. The customer has already decided they trust your product. The expansion conversation is about scope and timing, not about whether to buy.</li>
+      <li><strong>Shorter sales cycle:</strong> Expansion deals close 40-60% faster than new logo deals because discovery is already done, the champion is known, and the evaluation criteria are established by the existing relationship.</li>
+    </ul>
+    <p>Despite this, most SaaS companies underinvest in expansion. CS teams treat retention as success and expansion as a bonus. Sales teams focus on new logos because they're more exciting and more visible. The result: the highest-ROI motion gets the least systematic attention.</p>
+    <div class="callout callout-definition">
+      <div class="callout-title">The NRR Connection</div>
+      <p>A company with 120% Net Revenue Retention is growing 20% per year purely from expansion — before a single new logo is added. A company with 90% NRR is losing ground every year. The expansion handoff is the operational mechanism that produces the difference. See the NRR page for the full formula and benchmarks.</p>
+    </div>
+  </div>
+
+  <h2 class="section-title">The 8 Expansion Triggers</h2>
+  <p class="section-intro">Expansion opportunities are most successfully surfaced when CS teams are trained to recognize specific triggers — not just "the account seems happy." These 8 triggers represent 80%+ of expansion conversations in practice.</p>
+
+  <div class="trigger-grid">
+    <div class="trigger-card" style="border-top-color: #20808D;">
+      <div class="tc-number" style="color:#20808D;">1</div>
+      <div class="tc-name">Usage Threshold Reached</div>
+      <div class="tc-desc">Account has consumed 75%+ of their purchased capacity (seats, API calls, data volume, feature limits). This is a natural, non-pushy expansion signal — the customer is growing into what they bought. Initiate proactively before they hit a hard limit and become frustrated.</div>
+    </div>
+    <div class="trigger-card" style="border-top-color: #437A22;">
+      <div class="tc-number" style="color:#437A22;">2</div>
+      <div class="tc-name">New Stakeholder Joins</div>
+      <div class="tc-desc">A new VP, CTO, or C-level joins the account and has different priorities or a fresh appetite to invest. New executives often want to demonstrate value by driving initiatives — and may not be locked into the existing vendor relationship's constraints.</div>
+    </div>
+    <div class="trigger-card" style="border-top-color: #006494;">
+      <div class="tc-number" style="color:#006494;">3</div>
+      <div class="tc-name">Renewal Upcoming (90 days)</div>
+      <div class="tc-desc">The 90-day window before renewal is the optimal time to introduce expansion conversations. The customer is already evaluating the relationship; bundling expansion with renewal creates commercial leverage and simplifies procurement.</div>
+    </div>
+    <div class="trigger-card" style="border-top-color: #964219;">
+      <div class="tc-number" style="color:#964219;">4</div>
+      <div class="tc-name">Product Launch</div>
+      <div class="tc-desc">You launch a new module, integration, or tier that directly addresses a need the CSM knows exists in the account. Product-triggered expansion is pre-qualified — you're not guessing whether they'd want it, you're confirming interest based on known pain.</div>
+    </div>
+    <div class="trigger-card" style="border-top-color: #A13544;">
+      <div class="tc-number" style="color:#A13544;">5</div>
+      <div class="tc-name">Account Company Growth</div>
+      <div class="tc-desc">The customer announces new funding, an acquisition, a new office, or a headcount expansion. Growth events expand the scope of problems the customer needs to solve — and the budget available to solve them.</div>
+    </div>
+    <div class="trigger-card" style="border-top-color: #6E522B;">
+      <div class="tc-number" style="color:#6E522B;">6</div>
+      <div class="tc-name">QBR Insight Surfaces New Pain</div>
+      <div class="tc-desc">During the Quarterly Business Review, the CSM uncovers a pain — from a different department, a new initiative, a gap in the current deployment — that maps to a product capability the customer doesn't currently use. This is the highest-quality expansion trigger.</div>
+    </div>
+    <div class="trigger-card" style="border-top-color: #7A39BB;">
+      <div class="tc-number" style="color:#7A39BB;">7</div>
+      <div class="tc-name">Support Pattern Change</div>
+      <div class="tc-desc">An uptick in a specific type of support ticket — e.g., "how do I do X with your API?" — signals that users are trying to use the product for something outside the current scope. This often points directly to a paid feature or module that solves the exact problem.</div>
+    </div>
+    <div class="trigger-card" style="border-top-color: #28251D;">
+      <div class="tc-number" style="color:#28251D;">8</div>
+      <div class="tc-name">Executive Access Gained</div>
+      <div class="tc-desc">The CSM earns a meeting with a C-level or VP who is above the current champion. This stakeholder has a broader view of the company's problems and a larger budget mandate. High-conversion expansion trigger when paired with a prepared business case.</div>
+    </div>
+  </div>
+
+  <h2 class="section-title">CS vs. AE Ownership Decision Framework</h2>
+  <p class="section-intro">The most politically charged question in expansion is: who owns it? CS teams fight for commission on expansion they surface. AEs want to own every commercial conversation. The answer depends on deal size, complexity, and relationship stage — not organizational politics.</p>
+
+  <table class="ownership-table">
+    <thead>
+      <tr><th>Deal Profile</th><th>Owner</th><th>Rationale</th></tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>Seat add or tier upgrade, &lt;$15K incremental ACV, same stakeholder</td>
+        <td><span class="cs-badge">CS Owns</span></td>
+        <td>Low complexity, existing relationship, no new discovery required. CS should close these without AE involvement — adding AE creates friction and delays.</td>
+      </tr>
+      <tr>
+        <td>New product module, $15K-$75K incremental ACV, new stakeholder involved</td>
+        <td><span class="co-badge">Co-Sell</span></td>
+        <td>CS surfaces, qualifies, and prepares context. AE leads commercial conversation. CS stays present to maintain relationship trust. AE brings commercial expertise.</td>
+      </tr>
+      <tr>
+        <td>New business unit, multi-product expansion, &gt;$75K incremental ACV</td>
+        <td><span class="ae-badge">AE Owns (with CS support)</span></td>
+        <td>Complexity, new stakeholders, multi-product discovery, and commercial negotiation require dedicated AE capacity. CS remains the trusted internal resource but the AE drives the deal.</td>
+      </tr>
+      <tr>
+        <td>Geographic expansion, new country/region, same buyer group</td>
+        <td><span class="ae-badge">AE Owns</span></td>
+        <td>New legal entity, new procurement, potentially new champion. The complexity is equivalent to a new logo deal even if the parent company is an existing customer.</td>
+      </tr>
+      <tr>
+        <td>Executive engagement, board-level relationship opened</td>
+        <td><span class="co-badge">Co-Sell (CRO/VP Sales involved)</span></td>
+        <td>Executive stakeholders require executive-level engagement from your side. This is a strategic account motion, not a standard expansion play.</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <h2 class="section-title">The 4 Co-Ownership Compensation Models</h2>
+  <div class="comp-models">
+    <div class="comp-card">
+      <div class="comp-title">Model 1: CS Owns Expansion Quota</div>
+      <div class="comp-desc">CS team has its own expansion ARR quota. AE provides support only for deals above a threshold. CS receives full OTE commission on all expansion below the threshold.</div>
+      <div class="comp-pros-cons">
+        <p style="color:#437A22; font-size:12px;">✓ CS fully motivated to find and close expansion. Simple.</p>
+        <p style="color:#A13544; font-size:12px;">✗ CS often lacks commercial closing skills for complex deals. Risk of underselling.</p>
+      </div>
+    </div>
+    <div class="comp-card">
+      <div class="comp-title">Model 2: AE Owns Expansion, CS Gets Referral Bonus</div>
+      <div class="comp-desc">AE owns all expansion commercial conversations. CS receives a flat referral bonus ($500-$2K) per qualified expansion lead handed to sales.</div>
+      <div class="comp-pros-cons">
+        <p style="color:#437A22; font-size:12px;">✓ Commercial expertise applied to all deals. Consistent closing motion.</p>
+        <p style="color:#A13544; font-size:12px;">✗ CS often deprioritizes expansion if bonus is too small. AE may not have bandwidth.</p>
+      </div>
+    </div>
+    <div class="comp-card">
+      <div class="comp-title">Model 3: Shared Commission by Deal Size</div>
+      <div class="comp-desc">CS receives 30-50% of commission on expansion deals they source; AE receives 50-70% on deals they close. Split varies by deal size and CS involvement level. CRM tracks CS-sourced tag.</div>
+      <div class="comp-pros-cons">
+        <p style="color:#437A22; font-size:12px;">✓ Aligns both teams to expansion outcome. Encourages proactive CS engagement.</p>
+        <p style="color:#A13544; font-size:12px;">✗ Commission split disputes; requires precise CRM tracking of who sourced and who closed.</p>
+      </div>
+    </div>
+    <div class="comp-card">
+      <div class="comp-title">Model 4: Net Revenue Retention Quota</div>
+      <div class="comp-desc">CS is measured on NRR (net of churn + expansion). Expansion above 100% NRR triggers accelerated commission. CS has full ownership of the revenue outcome for their portfolio.</div>
+      <div class="comp-pros-cons">
+        <p style="color:#437A22; font-size:12px;">✓ Perfectly aligns CS to the full customer revenue lifecycle. Drives both retention and growth.</p>
+        <p style="color:#A13544; font-size:12px;">✗ Complex to model for reps with new accounts or high-churn segments. Risky if product has known weaknesses.</p>
+      </div>
+    </div>
+  </div>
+
+  <h2 class="section-title">The Expansion MEDDICC Checklist</h2>
+  <div class="checklist-box">
+    <div class="checklist-header">Expansion MEDDICC — Required Before Handing to AE or Creating Opportunity in CRM</div>
+    <div class="checklist-items">
+      <div class="checklist-item">
+        <div class="ci-checkbox"></div>
+        <div class="ci-category">Metrics</div>
+        <div>The quantified business case for the expansion: what outcome does the customer expect, and what is the ROI of the incremental investment? Without a number, you're selling a feature — not a business decision.</div>
+      </div>
+      <div class="checklist-item">
+        <div class="ci-checkbox"></div>
+        <div class="ci-category">Economic Buyer</div>
+        <div>Identified the person who will approve the expansion spend. Is it the same economic buyer as the original deal, or a different stakeholder (new division, new budget owner)? Has the CSM accessed them yet or is this access required to qualify the opportunity?</div>
+      </div>
+      <div class="checklist-item">
+        <div class="ci-checkbox"></div>
+        <div class="ci-category">Decision Criteria</div>
+        <div>What will the customer evaluate to decide whether to expand? Is this a natural extension of the existing deployment or a new evaluation? What would have to be true for them to say yes?</div>
+      </div>
+      <div class="checklist-item">
+        <div class="ci-checkbox"></div>
+        <div class="ci-category">Decision Process</div>
+        <div>How does this expansion get approved? Does it require procurement? A new contract vs. an order form? Legal review? Budget approval cycle? What is the likely timeline to close based on their internal process?</div>
+      </div>
+      <div class="checklist-item">
+        <div class="ci-checkbox"></div>
+        <div class="ci-category">Identify Pain</div>
+        <div>The specific business pain that the expansion solves — in the customer's own words. "The champion mentioned in the last QBR that their sales ops team is spending 20 hours a week on X and our Advanced Analytics module would automate this" is a qualified pain. "They seem like they might want more" is not.</div>
+      </div>
+      <div class="checklist-item">
+        <div class="ci-checkbox"></div>
+        <div class="ci-category">Champion</div>
+        <div>Identified the internal champion for the expansion. Is it the same champion as the original deal, or a different person? Have they expressed a desire to expand, or is this the CS team's hypothesis? A champion without personal motivation to expand will not push the deal through.</div>
+      </div>
+      <div class="checklist-item">
+        <div class="ci-checkbox"></div>
+        <div class="ci-category">Competition</div>
+        <div>Is there a competing solution being evaluated? Is the customer's team already using a point solution that would be displaced? Is the decision between expanding with you or a different internal project consuming the budget?</div>
+      </div>
+    </div>
+  </div>
+
+  <h2 class="section-title">The Expansion SLA</h2>
+  <div class="sla-workflow">
+    <div class="sla-header">Expansion SLA — Routing and Timeline Requirements</div>
+    <div class="sla-row">
+      <div class="sla-label">CS Commits</div>
+      <div class="sla-content">When an expansion trigger is identified, CS logs a standardized "Expansion Signal" in CRM within 24 hours. Signal includes: trigger type, estimated expansion ARR, expansion MEDDICC checklist completion status, and recommended owner (CS / Co-sell / AE). CS does not hold the signal — it creates pipeline, even if CS will own it.</div>
+    </div>
+    <div class="sla-row">
+      <div class="sla-label">AE Response Time</div>
+      <div class="sla-content">When signal is assigned to AE (co-sell or AE-owned deals), AE responds to CS within 2 business days with either: acceptance (creates opportunity and schedules call with CS) or deferral with reason. Unresponsive AEs lose claim to the opportunity after 5 business days — CS can escalate to manager.</div>
+    </div>
+    <div class="sla-row">
+      <div class="sla-label">Qualification Call</div>
+      <div class="sla-content">For co-sell deals: CS + AE pre-call (15 min) before any customer outreach. CS briefs AE on account context, champion relationship, and expansion pain. AE does not go into the customer conversation blind — the briefing is the hand-off, not the discovery meeting.</div>
+    </div>
+    <div class="sla-row">
+      <div class="sla-label">Opportunity Creation</div>
+      <div class="sla-content">Expansion opportunity created in CRM within 5 business days of trigger identification. Required fields: expansion type (upsell/cross-sell/seat add), estimated ARR, close date, CS-sourced flag (for commission tracking), and link to parent opportunity/account.</div>
+    </div>
+    <div class="sla-row">
+      <div class="sla-label">Monitoring</div>
+      <div class="sla-content">RevOps produces weekly "expansion pipeline health" report: expansion signals logged, expansion opportunities created, expansion win rate by CS source vs. AE source, and revenue from CS-sourced expansion. CRO and VP of CS both review this report — shared accountability.</div>
+    </div>
+  </div>
+
+  <h2 class="section-title">Audit Metrics</h2>
+  <table class="audit-table">
+    <thead>
+      <tr><th>Metric</th><th>Definition</th><th>Target / Benchmark</th></tr>
+    </thead>
+    <tbody>
+      <tr><td>Expansion Pipeline from CS</td><td>Total ARR in expansion opportunities sourced by CS team (CS-sourced flag in CRM)</td><td>Should represent 40-60% of total expansion pipeline; below 30% signals CS is not engaged in expansion motion</td></tr>
+      <tr><td>Expansion Win Rate</td><td>% of expansion opportunities that close (won vs. total closed). Segment by owner: CS-only vs. co-sell vs. AE-led.</td><td>CS-only: 50-70%. Co-sell: 40-60%. AE-led: 30-50%. (Higher in CS-owned because relationships are stronger)</td></tr>
+      <tr><td>Time from Trigger to Opportunity</td><td>Days from expansion trigger logged to opportunity created in CRM</td><td>&lt;5 business days. Delays signal CS is not prioritizing expansion or AE handoff is breaking down.</td></tr>
+      <tr><td>Time from Opportunity to Close</td><td>Days from expansion opportunity creation to closed-won</td><td>40-60% shorter than new logo average. If expansion deals take as long as new logos, something is broken — you're re-qualifying an existing customer.</td></tr>
+      <tr><td>Expansion ARR / CS Headcount</td><td>Total expansion ARR generated per CSM — a productivity metric for the CS-as-revenue-driver motion</td><td>Benchmark: $500K-$2M expansion ARR per CSM (depends on segment and total portfolio ARR)</td></tr>
+      <tr><td>Net Revenue Retention</td><td>NRR = (Starting ARR + Expansion ARR − Churn ARR − Contraction ARR) / Starting ARR. The ultimate output metric of the expansion handoff process.</td><td>Best-in-class: &gt;120%. Acceptable: 100-115%. Below 100% = you are shrinking without new logos.</td></tr>
+    </tbody>
+  </table>
+
+  <h2 class="section-title">Failure Modes</h2>
+  <div class="failure-card">
+    <div class="fc-title">1. CS treats expansion as someone else's job</div>
+    <div class="fc-two">
+      <div><div class="fc-label">Diagnostic</div><div class="fc-text">CS-sourced expansion pipeline represents less than 20% of total expansion. CSMs say "I'm not sales." NRR is below 100% despite product adoption looking healthy.</div></div>
+      <div><div class="fc-label">Fix</div><div class="fc-text">Change comp to include expansion bonus or NRR-based accelerator. Add expansion pipeline creation as a KPI in CS performance reviews. Run a "find the expansion" training session using real account data — CSMs who see the opportunity tend to pursue it.</div></div>
+    </div>
+  </div>
+  <div class="failure-card">
+    <div class="fc-title">2. AE ignores CS-sourced signals and goes direct to customer</div>
+    <div class="fc-two">
+      <div><div class="fc-label">Diagnostic</div><div class="fc-text">CS complains that AE "cuts them out." Customer receives confusing outreach from both CS and AE with no context shared. CS stops surfacing signals because they don't feel respected.</div></div>
+      <div><div class="fc-label">Fix</div><div class="fc-text">Require pre-customer AE briefing call with CS as mandatory SLA step. Make CS-sourced flag track commission accurately — if AE skips CS and sources the deal themselves, they don't get commission share protection on CS-credited accounts.</div></div>
+    </div>
+  </div>
+  <div class="failure-card">
+    <div class="fc-title">3. Expansion conversations happen too late — at or after renewal</div>
+    <div class="fc-two">
+      <div><div class="fc-label">Diagnostic</div><div class="fc-text">Expansion ARR consistently bundles into renewal negotiations, reducing ACV expansion visibility. Customers feel surprised by expansion conversations at renewal rather than having had organic expansion conversations 6+ months earlier.</div></div>
+      <div><div class="fc-label">Fix</div><div class="fc-text">Separate the expansion motion from the renewal motion. Expansion conversations should be initiated 6-9 months before renewal — not at the 90-day renewal window. Create a "Year 1 Expansion Plays" track in the CSM playbook for accounts 3-6 months post-onboarding.</div></div>
+    </div>
+  </div>
+  <div class="failure-card">
+    <div class="fc-title">4. No CRM tracking of expansion signals — expansion happens but is invisible</div>
+    <div class="fc-two">
+      <div><div class="fc-label">Diagnostic</div><div class="fc-text">RevOps cannot report on expansion pipeline source, CS-sourced %, or expansion win rate by owner. Compensation disputes at end of quarter because no one knows who sourced what.</div></div>
+      <div><div class="fc-label">Fix</div><div class="fc-text">Build "Expansion Signal" as a custom object in Salesforce, linked to the Account and Opportunity objects. Require CS to log signals before any commercial conversation begins. Make the CRM workflow the enforcement mechanism for the SLA.</div></div>
+    </div>
+  </div>
+  <div class="failure-card">
+    <div class="fc-title">5. Expanding before the customer has achieved success with the current deployment</div>
+    <div class="fc-two">
+      <div><div class="fc-label">Diagnostic</div><div class="fc-text">Expansion conversations start at 60-day QBR before customers have even fully onboarded. Customers feel "sold to" rather than "supported." Expansion deals close but then churn — low ACV at renewal.</div></div>
+      <div><div class="fc-label">Fix</div><div class="fc-text">Create a minimum health score threshold before expansion conversations can be initiated: account health ≥ 70, at least one success metric achieved, champion is engaged. "Expand before they succeed" is a short-term revenue trap that produces long-term churn.</div></div>
+    </div>
+  </div>
+
+  <div class="indicator-row">
+    <span class="indicator-tag ind-leading">Leading: Expansion signals logged, CS-sourced expansion pipeline, trigger identification rate</span>
+    <span class="indicator-tag ind-lagging">Lagging: Expansion win rate, NRR, CS-sourced expansion ARR as % of total expansion</span>
+  </div>
+
+  <div class="related-section">
+    <div class="related-title">Related Sections</div>
+    <div class="related-links">
+      <a href="sales-cs-handoff.html" class="related-link">Sales-to-CS Handoff</a>
+      <a href="expansion-selling.html" class="related-link">Expansion Selling</a>
+      <a href="nrr.html" class="related-link">Net Revenue Retention</a>
+      <a href="health-scoring.html" class="related-link">Health Scoring</a>
+      <a href="compensation-design.html" class="related-link">Compensation Design</a>
+      <a href="meddicc.html" class="related-link">MEDDICC</a>
+    </div>
+  </div>
+</div>
+<script data-pplx-inline-edit>
+(function () {
+  if (window === window.top) return;
+
+  const allowedParentOrigins = ["https://www.perplexity.ai","https://perplexity.ai","https://testing.perplexity.ai","https://staging.perplexity.ai","https://*.preview.i.perplexity.ai","http://localhost:3000","http://127.0.0.1:3000","http://localhost:5173","http://127.0.0.1:5173"];
+  const MAX_FONT_BYTES = 500 * 1024;
+  const MAX_TOTAL_FONT_BYTES = 2 * 1024 * 1024;
+  let scrollForwarding = false;
+  let scrollRaf = 0;
+  let trustedTopOrigin = null;
+
+  // Allow entries like "https://*.preview.i.perplexity.ai" — the wildcard
+  // matches a single DNS label (no dots), so "https://*.foo" cannot stretch
+  // across multiple labels.
+  function matchesAllowedOrigin(origin) {
+    if (!origin) return false;
+    for (const entry of allowedParentOrigins) {
+      if (!entry.includes("*")) {
+        if (entry === origin) return true;
+        continue;
+      }
+      const pattern = new RegExp(
+        "^" +
+          entry.replace(/[.+?^${}()|[\]\\]/g, "\\$&").replace(/\*/g, "[^.]+") +
+          "$",
+      );
+      if (pattern.test(origin)) return true;
+    }
+    return false;
+  }
+
+  // Trust decision: when the sender is same-origin-visible (event.origin is a
+  // real origin like https://www.perplexity.ai) we trust event.origin directly.
+  // When event.origin is "null" (opaque broker srcdoc), we fall back to the
+  // broker's stamped `parentOrigin` to identify the top window. The fallback
+  // is claim-only — we rely on the browser's native `targetOrigin` enforcement
+  // on the response path (see postToTrustedTop) to ensure replies can't be
+  // delivered to anyone but the actual top window of that claimed origin.
+  function getTrustedParentOrigin(event) {
+    const forwardedParentOrigin =
+      typeof event.data.parentOrigin === "string" ? event.data.parentOrigin : null;
+    const parentOrigin = event.origin === "null" ? forwardedParentOrigin : event.origin;
+    return matchesAllowedOrigin(parentOrigin) ? parentOrigin : null;
+  }
+
+  // All responses go to window.top with targetOrigin = the allowlisted origin.
+  // An attacker that iframes us inside their own null-origin broker can claim
+  // any parentOrigin they like, but the browser will drop the reply whenever
+  // the real top's origin doesn't match — so the screenshot never leaves.
+  function postToTrustedTop(message) {
+    if (!trustedTopOrigin) return;
+    try {
+      window.top.postMessage(message, trustedTopOrigin);
+    } catch (_error) {}
+  }
+
+  function inlineAll(original, clone) {
+    if (original.nodeType !== 1 || clone.nodeType !== 1) return;
+
+    try {
+      const computedStyle = getComputedStyle(original);
+      // cssText on a computed style is the serialized declaration in modern
+      // Chromium/Safari — a single read beats enumerating ~400 longhand
+      // properties. Firefox returns "" here, so we fall back on empty.
+      const serialized = computedStyle.cssText;
+      if (serialized) {
+        clone.style.cssText = serialized;
+      } else {
+        const parts = new Array(computedStyle.length);
+        for (let index = 0; index < computedStyle.length; index += 1) {
+          const property = computedStyle[index];
+          parts[index] = `${property}:${computedStyle.getPropertyValue(property)};`;
+        }
+        clone.style.cssText = parts.join("");
+      }
+    } catch (_error) {}
+
+    const originalChildren = original.children;
+    const clonedChildren = clone.children;
+    for (
+      let index = 0;
+      index < originalChildren.length && index < clonedChildren.length;
+      index += 1
+    ) {
+      inlineAll(originalChildren[index], clonedChildren[index]);
+    }
+  }
+
+  function extractFontUrl(srcValue) {
+    const matches = [
+      ...srcValue.matchAll(
+        /url\(["']?([^"')]+)["']?\)(?:\s*format\(["']?([^"')]+)["']?\))?/gi,
+      ),
+    ];
+    if (matches.length === 0) return null;
+    const woff2 = matches.find((m) => m[2] && m[2].toLowerCase().includes("woff2"));
+    if (woff2) return woff2[1];
+    const woff = matches.find((m) => m[2] && m[2].toLowerCase().includes("woff"));
+    if (woff) return woff[1];
+    return matches[0][1];
+  }
+
+  // Cache resolved font URL -> data URI across captures. Fonts on a page
+  // essentially never change, and a batch run emits multiple captures back to
+  // back — without this we'd refetch + re-base64 every time.
+  const fontDataUriCache = new Map();
+  const SRC_DECLARATION_RE = /src\s*:\s*[^;}]+/i;
+
+  async function fetchAsDataUri(url) {
+    if (fontDataUriCache.has(url)) return fontDataUriCache.get(url);
+    let dataUri = null;
+    try {
+      const response = await fetch(url, { mode: "cors", credentials: "omit" });
+      if (response.ok) {
+        const blob = await response.blob();
+        if (blob.size <= MAX_FONT_BYTES) {
+          dataUri = await new Promise((resolve) => {
+            const reader = new FileReader();
+            reader.onloadend = () =>
+              resolve(typeof reader.result === "string" ? reader.result : null);
+            reader.onerror = () => resolve(null);
+            reader.readAsDataURL(blob);
+          });
+        }
+      }
+    } catch (_error) {
+      dataUri = null;
+    }
+    fontDataUriCache.set(url, dataUri);
+    return dataUri;
+  }
+
+  function collectFontFaceRuleTexts() {
+    const rules = [];
+    for (const sheet of document.styleSheets) {
+      let cssRules;
+      try {
+        cssRules = sheet.cssRules;
+      } catch (_error) {
+        continue;
+      }
+      if (!cssRules) continue;
+      for (const rule of cssRules) {
+        const cssText = rule.cssText || "";
+        if (cssText.startsWith("@font-face")) rules.push(cssText);
+      }
+    }
+    return rules;
+  }
+
+  async function buildInlinedFontCss() {
+    const ruleTexts = collectFontFaceRuleTexts();
+    if (ruleTexts.length === 0) return null;
+
+    const resolved = ruleTexts.map((cssText) => {
+      if (!SRC_DECLARATION_RE.test(cssText)) return null;
+      const srcMatch = cssText.match(/src\s*:\s*([^;}]+)[;}]/i);
+      if (!srcMatch) return null;
+      const url = extractFontUrl(srcMatch[1]);
+      if (!url) return null;
+      try {
+        return { cssText, url: new URL(url, document.baseURI).href };
+      } catch (_error) {
+        return null;
+      }
+    });
+
+    const dataUris = await Promise.all(
+      resolved.map((entry) => (entry ? fetchAsDataUri(entry.url) : Promise.resolve(null))),
+    );
+
+    const inlined = [];
+    let totalBytes = 0;
+    for (let index = 0; index < resolved.length; index += 1) {
+      const entry = resolved[index];
+      const dataUri = dataUris[index];
+      if (!entry || !dataUri) continue;
+      const approxBytes = dataUri.length * 0.75;
+      if (totalBytes + approxBytes > MAX_TOTAL_FONT_BYTES) break;
+      totalBytes += approxBytes;
+      inlined.push(entry.cssText.replace(SRC_DECLARATION_RE, `src: url("${dataUri}")`));
+    }
+    return inlined.length > 0 ? inlined.join("\n") : null;
+  }
+
+  function stripExternal(clone) {
+    const images = clone.querySelectorAll("img");
+    for (let index = 0; index < images.length; index += 1) {
+      const src = images[index].getAttribute("src");
+      if (src && !src.startsWith("data:")) images[index].removeAttribute("src");
+    }
+
+    const elements = clone.querySelectorAll("*");
+    for (let index = 0; index < elements.length; index += 1) {
+      const style = elements[index].style.cssText;
+      if (style && style.includes("url(")) {
+        elements[index].style.cssText = style.replace(
+          /url\(["']?(?!data:)[^)"']*["']?\)/gi,
+          "none",
+        );
+      }
+    }
+  }
+
+  function emitScroll() {
+    scrollRaf = 0;
+    if (!scrollForwarding) return;
+    postToTrustedTop({
+      type: "INLINE_EDIT_SCROLL",
+      scrollX: window.scrollX,
+      scrollY: window.scrollY,
+    });
+  }
+
+  window.addEventListener(
+    "scroll",
+    function () {
+      if (!scrollForwarding || scrollRaf) return;
+      scrollRaf = requestAnimationFrame(emitScroll);
+    },
+    { passive: true, capture: true },
+  );
+
+  async function handleCaptureRequest(event) {
+    const requestId = event.data.requestId;
+    const scrollX = window.scrollX;
+    const scrollY = window.scrollY;
+    const width = window.innerWidth;
+    const height = window.innerHeight;
+
+    function postResult(dataUrl) {
+      postToTrustedTop({
+        type: "INLINE_EDIT_SCREENSHOT_RESULT",
+        requestId,
+        dataUrl,
+        scrollX,
+        scrollY,
+      });
+    }
+
+    try {
+      // Wait for any pending web fonts to resolve so both inline metrics and
+      // the @font-face inlining below see the same loaded faces.
+      if (document.fonts && document.fonts.ready) {
+        try {
+          await document.fonts.ready;
+        } catch (_error) {}
+      }
+
+      const clone = document.documentElement.cloneNode(true);
+      inlineAll(document.documentElement, clone);
+
+      const removedNodes = clone.querySelectorAll("script,link[rel=\"stylesheet\"],style");
+      for (let index = 0; index < removedNodes.length; index += 1) {
+        removedNodes[index].remove();
+      }
+
+      stripExternal(clone);
+
+      // Re-embed web fonts as data-URI @font-face rules so the SVG rasterizer
+      // can resolve them — external font URLs aren't fetched during
+      // foreignObject rendering, which would otherwise force a fallback face
+      // and change text metrics.
+      const inlinedFontCss = await buildInlinedFontCss();
+      if (inlinedFontCss) {
+        const styleEl = document.createElement("style");
+        styleEl.textContent = inlinedFontCss;
+        const head = clone.querySelector("head");
+        if (head) head.appendChild(styleEl);
+        else clone.insertBefore(styleEl, clone.firstChild);
+      }
+
+      const html = new XMLSerializer().serializeToString(clone);
+      const svg =
+        `<svg xmlns="http://www.w3.org/2000/svg" width="${width}" height="${height}">` +
+        '<foreignObject width="100%" height="100%">' +
+        `<div xmlns="http://www.w3.org/1999/xhtml" style="width:${width}px;height:${height}px;overflow:hidden">` +
+        `<div style="transform:translate(-${scrollX}px,-${scrollY}px);transform-origin:top left">` +
+        html +
+        "</div></div></foreignObject></svg>";
+      const svgUrl = `data:image/svg+xml;charset=utf-8,${encodeURIComponent(svg)}`;
+      const image = new Image();
+      image.onload = function () {
+        const canvas = document.createElement("canvas");
+        canvas.width = width;
+        canvas.height = height;
+        canvas.getContext("2d").drawImage(image, 0, 0);
+        postResult(canvas.toDataURL("image/png"));
+      };
+      image.onerror = function () {
+        postResult(null);
+      };
+      image.src = svgUrl;
+    } catch (_error) {
+      postResult(null);
+    }
+  }
+
+  window.addEventListener("message", function (event) {
+    if (!event.data) return;
+    // Only accept messages from the direct parent frame. Blocks sibling /
+    // unrelated-window postMessage senders that could otherwise reach us.
+    if (event.source !== window.parent) return;
+
+    const trustedParentOrigin = getTrustedParentOrigin(event);
+    if (!trustedParentOrigin) return;
+    trustedTopOrigin = trustedParentOrigin;
+
+    if (event.data.type === "INLINE_EDIT_SCROLL_START") {
+      scrollForwarding = true;
+      emitScroll();
+      return;
+    }
+
+    if (event.data.type === "INLINE_EDIT_SCROLL_STOP") {
+      scrollForwarding = false;
+      if (scrollRaf) cancelAnimationFrame(scrollRaf);
+      scrollRaf = 0;
+      return;
+    }
+
+    if (event.data.type !== "INLINE_EDIT_CAPTURE_REQUEST") return;
+
+    handleCaptureRequest(event);
+  });
+})();
+
+
+</script></body>
+</html>

@@ -1,0 +1,642 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Quota Attainment Distribution — SaaS Revenue System</title>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="../assets/shared.css"/>
+  <style>
+    .page-hero { background: #28251D; }
+    .distribution-visual {
+      background: var(--surface);
+      border: 1.5px solid var(--border);
+      border-radius: 10px;
+      padding: 20px;
+      margin: 20px 0;
+    }
+    .dv-title { font-size: 13px; font-weight: 700; letter-spacing: 0.5px; text-transform: uppercase; color: var(--text-muted); margin-bottom: 16px; }
+    .dv-bars {
+      display: flex;
+      align-items: flex-end;
+      gap: 6px;
+      height: 140px;
+      margin-bottom: 6px;
+    }
+    .dv-bar-group {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      flex: 1;
+    }
+    .dv-bar {
+      width: 100%;
+      border-radius: 4px 4px 0 0;
+      display: flex;
+      align-items: flex-start;
+      justify-content: center;
+      padding-top: 4px;
+      font-size: 11px;
+      font-weight: 700;
+      color: #fff;
+    }
+    .dv-label { font-size: 10px; font-weight: 700; color: var(--text-muted); text-align: center; margin-top: 6px; white-space: nowrap; }
+    .dv-legend { display: flex; gap: 12px; flex-wrap: wrap; margin-top: 12px; }
+    .dv-legend-item { display: flex; align-items: center; gap: 6px; font-size: 11px; color: var(--text-muted); }
+    .dv-legend-dot { width: 10px; height: 10px; border-radius: 2px; flex-shrink: 0; }
+    .shape-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+      margin: 20px 0;
+    }
+    .shape-card {
+      background: var(--surface);
+      border: 1.5px solid var(--border);
+      border-radius: 10px;
+      overflow: hidden;
+    }
+    .sc-header {
+      padding: 12px 16px;
+      font-size: 13px;
+      font-weight: 700;
+    }
+    .sc-body { padding: 16px; }
+    .sc-visual {
+      display: flex;
+      align-items: flex-end;
+      gap: 3px;
+      height: 60px;
+      margin-bottom: 10px;
+    }
+    .sc-bar { flex: 1; border-radius: 2px 2px 0 0; }
+    .sc-diagnosis { font-size: 13px; line-height: 1.65; margin-bottom: 8px; }
+    .sc-action { font-size: 12px; color: var(--text-muted); line-height: 1.6; padding-top: 8px; border-top: 1px solid var(--border); }
+    .sandbagging-box {
+      background: #fff8f0;
+      border: 2px solid #964219;
+      border-radius: 10px;
+      padding: 20px;
+      margin: 20px 0;
+    }
+    .sb-title { font-size: 13px; font-weight: 700; letter-spacing: 0.5px; text-transform: uppercase; color: #964219; margin-bottom: 10px; }
+    .coaching-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 16px 0;
+    }
+    .coaching-table th { background: #28251D; color: #fff; padding: 10px 14px; font-size: 12px; text-align: left; }
+    .coaching-table td { padding: 12px 14px; font-size: 13px; border-bottom: 1px solid var(--border); line-height: 1.6; vertical-align: top; }
+    .coaching-table tr:nth-child(even) td { background: #fafaf8; }
+    .comp-test {
+      background: var(--surface);
+      border: 1.5px solid var(--border);
+      border-radius: 10px;
+      overflow: hidden;
+      margin: 16px 0;
+    }
+    .ct-header { background: #28251D; color: #fff; padding: 12px 18px; font-size: 13px; font-weight: 700; }
+    .ct-rows { padding: 0; }
+    .ct-row { display: grid; grid-template-columns: 200px 1fr; border-bottom: 1px solid var(--border); }
+    .ct-row:last-child { border-bottom: none; }
+    .ct-question { padding: 12px 14px; background: #fafaf8; border-right: 1px solid var(--border); font-size: 12px; font-weight: 700; color: var(--text-muted); display: flex; align-items: center; }
+    .ct-answer { padding: 12px 14px; font-size: 13px; line-height: 1.65; }
+    .badge-underattain { background: #fce8e6; color: #A13544; padding: 2px 8px; border-radius: 10px; font-size: 11px; font-weight: 700; }
+    .badge-target { background: #e6f4ea; color: #437A22; padding: 2px 8px; border-radius: 10px; font-size: 11px; font-weight: 700; }
+    .badge-overattain { background: #ede7f6; color: #7A39BB; padding: 2px 8px; border-radius: 10px; font-size: 11px; font-weight: 700; }
+  </style>
+</head>
+<body>
+<nav class="nav">
+  <span class="nav-logo">SaaS <span>Revenue System</span></span>
+  <span class="nav-sep">|</span>
+  <a href="../index.html" class="nav-back">← Home</a>
+  <span class="nav-sep">|</span>
+  <a href="../pages/north-star-metrics.html" class="nav-back">North Star Metrics</a>
+  <span class="nav-sep">|</span>
+  <span class="nav-current">Quota Attainment Distribution</span>
+</nav>
+<div class="page-hero" style="background:#28251D">
+  <div class="hero-phase-label">North Star Metrics</div>
+  <div class="hero-title">Quota Attainment Distribution</div>
+  <div class="hero-subtitle">The X-Ray of Your Sales System — Why the Distribution Tells You More Than the Average</div>
+</div>
+<div class="content-wrap">
+  <div class="breadcrumb">
+    <a href="../index.html">Home</a><span class="sep">›</span>
+    <a href="../pages/north-star-metrics.html">North Star Metrics</a><span class="sep">›</span>
+    <span class="current">Quota Attainment Distribution</span>
+  </div>
+
+  <h2 class="section-title">Why the Distribution Matters More Than the Average</h2>
+  <div class="subsection">
+    <p>The most common mistake in quota attainment analysis is reporting only the average: "Our team is at 82% of quota." That number tells you almost nothing about the health of your sales system. A team where 5 reps are at 150%+ and 10 reps are at 30% has an average attainment of ~82% — but the underlying dynamics are completely different from a team where every rep is clustered around 75-90%.</p>
+    <p>The distribution reveals: which reps need coaching, whether quota is set correctly, whether your ICP is accurate, whether your management is working, and whether your comp plan is driving the right behavior. It is an organizational X-ray.</p>
+    <div class="callout callout-definition">
+      <div class="callout-title">The Rule: Don't Manage to the Average</div>
+      <p>CROs who manage only to team average miss the structural problems that the distribution exposes. A team average of 75% could be healthy (most reps at 70-80%, a few outliers) or catastrophic (half the team at 0-30%, kept afloat by 2-3 overachievers). The action plans are completely different. Always review the distribution before reporting the average.</p>
+    </div>
+  </div>
+
+  <h2 class="section-title">The Healthy Distribution</h2>
+  <div class="distribution-visual">
+    <div class="dv-title">Healthy Quota Attainment Distribution — Full-Ramp Rep Population</div>
+    <div class="dv-bars">
+      <div class="dv-bar-group">
+        <div class="dv-bar" style="height:7%; background:#A13544;">5%</div>
+        <div class="dv-label">0%</div>
+      </div>
+      <div class="dv-bar-group">
+        <div class="dv-bar" style="height:10%; background:#964219;">8%</div>
+        <div class="dv-label">1-50%</div>
+      </div>
+      <div class="dv-bar-group">
+        <div class="dv-bar" style="height:19%; background:#8a6f00;">15%</div>
+        <div class="dv-label">50-75%</div>
+      </div>
+      <div class="dv-bar-group">
+        <div class="dv-bar" style="height:75%; background:#437A22;">55%</div>
+        <div class="dv-label">75-125%</div>
+      </div>
+      <div class="dv-bar-group">
+        <div class="dv-bar" style="height:32%; background:#20808D;">25%</div>
+        <div class="dv-label">&gt;125%</div>
+      </div>
+    </div>
+    <div class="dv-legend">
+      <div class="dv-legend-item"><div class="dv-legend-dot" style="background:#A13544;"></div><span>0%: 5% of reps (chronic underperformers — PIP or exit)</span></div>
+      <div class="dv-legend-item"><div class="dv-legend-dot" style="background:#964219;"></div><span>1-50%: 8% (new/ramping or struggling)</span></div>
+      <div class="dv-legend-item"><div class="dv-legend-dot" style="background:#8a6f00;"></div><span>50-75%: 15% (below quota but contributing)</span></div>
+      <div class="dv-legend-item"><div class="dv-legend-dot" style="background:#437A22;"></div><span>75-125%: 55% (target zone — majority of team)</span></div>
+      <div class="dv-legend-item"><div class="dv-legend-dot" style="background:#20808D;"></div><span>&gt;125%: 25% (overachievers — retain, celebrate, extract methods)</span></div>
+    </div>
+  </div>
+  <p>In this healthy distribution: the majority of the team (55%) is in the target zone of 75-125%, confirming that quota is set at approximately the right level. A significant percentage (25%) overachieves — which creates a culture of excellence and provides upside to the company. A small number (5%) chronically underperforms and should be managed out within 2 quarters. The remaining 23% are either ramping or in need of coaching intervention.</p>
+
+  <h2 class="section-title">What Different Distribution Shapes Mean</h2>
+  <div class="shape-grid">
+    <div class="shape-card">
+      <div class="sc-header" style="background:#A13544; color:#fff;">Bimodal Distribution — Two Distinct Groups</div>
+      <div class="sc-body">
+        <div class="sc-visual">
+          <div class="sc-bar" style="height:90%; background:#A13544;"></div>
+          <div class="sc-bar" style="height:20%; background:#e0e0e0;"></div>
+          <div class="sc-bar" style="height:15%; background:#e0e0e0;"></div>
+          <div class="sc-bar" style="height:85%; background:#20808D;"></div>
+        </div>
+        <div class="sc-diagnosis">Large cluster at 0-30% AND large cluster at 120%+, with very few reps in the middle. Average looks reasonable but the team is polarized.</div>
+        <div class="sc-action"><strong>Diagnosis:</strong> Management problem, segmentation mismatch, or territory inequity. Some reps are set up to win; others structurally can't. Investigate: are top reps in better territories? Are all ramping reps counted in the distribution? Is there a comp plan element that's creating binary outcomes?</div>
+      </div>
+    </div>
+    <div class="shape-card">
+      <div class="sc-header" style="background:#964219; color:#fff;">Left-Heavy (Bottom-Loaded) Distribution</div>
+      <div class="sc-body">
+        <div class="sc-visual">
+          <div class="sc-bar" style="height:90%; background:#A13544;"></div>
+          <div class="sc-bar" style="height:70%; background:#964219;"></div>
+          <div class="sc-bar" style="height:40%; background:#8a6f00;"></div>
+          <div class="sc-bar" style="height:20%; background:#437A22;"></div>
+          <div class="sc-bar" style="height:10%; background:#20808D;"></div>
+        </div>
+        <div class="sc-diagnosis">Majority of reps below 75% attainment. Average attainment might be 55-60%. Very few reps at or above quota.</div>
+        <div class="sc-action"><strong>Diagnosis:</strong> Systemic problem — quota is too high, product-market fit has shifted, ICP has changed, or training/management has deteriorated. Not a performance management problem with individuals — the system is broken. Check: has anything changed in the market, product pricing, or competitive environment in the last 2 quarters?</div>
+      </div>
+    </div>
+    <div class="shape-card">
+      <div class="sc-header" style="background:#437A22; color:#fff;">Right-Heavy (Top-Loaded) Distribution</div>
+      <div class="sc-body">
+        <div class="sc-visual">
+          <div class="sc-bar" style="height:10%; background:#e0e0e0;"></div>
+          <div class="sc-bar" style="height:15%; background:#e0e0e0;"></div>
+          <div class="sc-bar" style="height:40%; background:#8a6f00;"></div>
+          <div class="sc-bar" style="height:70%; background:#437A22;"></div>
+          <div class="sc-bar" style="height:90%; background:#20808D;"></div>
+        </div>
+        <div class="sc-diagnosis">Majority of reps at 100%+ attainment. Average well above 100%. Almost everyone makes quota easily.</div>
+        <div class="sc-action"><strong>Diagnosis:</strong> Quota is too easy — either the market is very favorable, ICP is very tight (not enough accounts for reps to cover), or quota was set too conservatively. Risk: you are leaving revenue on the table. Consider raising quotas, expanding territories, or investigating whether reps are sandbagging forecast to protect attainment.</div>
+      </div>
+    </div>
+    <div class="shape-card">
+      <div class="sc-header" style="background:#28251D; color:#fff;">Flat / Uniform Distribution</div>
+      <div class="sc-body">
+        <div class="sc-visual">
+          <div class="sc-bar" style="height:40%; background:#964219;"></div>
+          <div class="sc-bar" style="height:42%; background:#8a6f00;"></div>
+          <div class="sc-bar" style="height:38%; background:#437A22;"></div>
+          <div class="sc-bar" style="height:40%; background:#20808D;"></div>
+          <div class="sc-bar" style="height:41%; background:#006494;"></div>
+        </div>
+        <div class="sc-diagnosis">Roughly equal proportions across all attainment bands. No clear clustering. Outcome looks random relative to quota.</div>
+        <div class="sc-action"><strong>Diagnosis:</strong> ICP is poorly defined — outcomes vary by luck of territory rather than execution. Alternatively, quota-setting methodology is inconsistent across the team, creating artificial variance. Run ICP consistency analysis: do high attainers share account characteristics?</div>
+      </div>
+    </div>
+  </div>
+
+  <h2 class="section-title">The Quota Calibration Test</h2>
+  <div class="comp-test">
+    <div class="ct-header">Is Your Quota Set Correctly? — The 5-Question Test</div>
+    <div class="ct-rows">
+      <div class="ct-row">
+        <div class="ct-question">% at 100%+ attainment</div>
+        <div class="ct-answer"><span class="badge-target">Healthy:</span> 40-60% of full-ramp reps at or above quota. <span class="badge-underattain">Too low (&lt;25%):</span> Quota is too aggressive or reps are under-skilled. <span class="badge-overattain">Too high (&gt;75%):</span> Quota is too easy — you're leaving revenue on the table and overpaying commission.</div>
+      </div>
+      <div class="ct-row">
+        <div class="ct-question">% at &lt;50% attainment</div>
+        <div class="ct-answer"><span class="badge-target">Healthy:</span> 10-15% of full-ramp reps consistently below 50%. <span class="badge-underattain">Danger (&gt;25%):</span> Systemic failure — investigate market, product, quota, or training root causes immediately.</div>
+      </div>
+      <div class="ct-row">
+        <div class="ct-question">Tenure of top attainers</div>
+        <div class="ct-answer"><span class="badge-target">Healthy:</span> Mix of tenures — some early-career reps in top quartile. <span class="badge-underattain">Concern:</span> If 90%+ of 125%+ attainers have 3+ years tenure, quota model may be inaccessible to newer reps — signals ramp problem or territory inequity.</div>
+      </div>
+      <div class="ct-row">
+        <div class="ct-question">Attainment variance Q-over-Q</div>
+        <div class="ct-answer"><span class="badge-target">Healthy:</span> Distribution shape is relatively stable quarter over quarter. <span class="badge-underattain">Concern:</span> Wide quarter-over-quarter swings in distribution shape suggest lack of process repeatability — results are too dependent on timing or randomness.</div>
+      </div>
+      <div class="ct-row">
+        <div class="ct-question">Voluntary attrition at attainment bands</div>
+        <div class="ct-answer"><span class="badge-target">Healthy:</span> Voluntary attrition concentrated in &lt;75% attainment band. <span class="badge-underattain">Warning:</span> If high-attaining reps (&gt;100%) are leaving voluntarily, something is broken in your culture, comp plan, or territory design — your best reps are leaving.</div>
+      </div>
+    </div>
+  </div>
+
+  <h2 class="section-title">Identifying Sandbagging — The "Hostage" Rep Pattern</h2>
+  <div class="sandbagging-box">
+    <div class="sb-title">The Sandbagging Pattern</div>
+    <p>A rep who hits exactly 100-105% of quota in 4 consecutive quarters is statistically suspicious. Real deal flow has variance — some quarters are great, some are slow. A rep who is perfectly at quota every quarter is likely sandbagging: holding deals for the following quarter when they are already above quota, pulling in deals early when they are below, or submitting conservative forecasts to avoid pressure.</p>
+    <p><strong>Why it matters:</strong> Sandbagging creates false pipeline information, causes forecasting errors, and means the rep is optimizing for their own comp (commission smoothing) rather than the company's revenue target. A rep at exactly 100% every quarter may be leaving 20-30% more revenue in the market by deliberately not pushing deals to close in their best quarters.</p>
+    <p><strong>How to identify it:</strong> Run a "Q-over-Q variance" analysis on every rep's attainment. Reps with &lt;10% variance across 4+ quarters warrant a deeper look. Review their deal timing — do deals consistently close in the first week of the quarter (pulled from previous quarter) or last week (held from current quarter)?</p>
+    <p><strong>How to fix it:</strong> Accelerator above 100% that makes closing more, sooner, financially superior to smoothing. Remove comp plan design elements that penalize over-performance (quota resets that are too aggressive, club qualification that creates "enough" thresholds). See Compensation Design page.</p>
+  </div>
+
+  <h2 class="section-title">Using Distribution to Identify Coaching Priorities</h2>
+  <table class="coaching-table">
+    <thead>
+      <tr><th>Rep Cohort</th><th>Coaching Priority</th><th>Management Action</th></tr>
+    </thead>
+    <tbody>
+      <tr><td><span class="badge-overattain">125%+</span> overachievers</td><td>Extract methods, retain, celebrate</td><td>Document what they do differently — these behaviors become the new standard. Give them mentorship responsibility for ramping reps. Ensure comp accelerators reward continued performance. Check: are they in better territories (is their success portable)?</td></tr>
+      <tr><td><span class="badge-target">75-125%</span> target zone</td><td>Improve to 100%+ and sustain it</td><td>Identify 1-2 skill gaps per rep that are most limiting. Focused coaching on specific behaviors (discovery depth, EB access, multi-threading). Monthly pipeline review to spot stalled deals early. Goal: move 20% of this cohort into the 125%+ group each quarter.</td></tr>
+      <tr><td><span class="badge-underattain">50-75%</span> developing</td><td>Root cause diagnosis</td><td>Is this a skill gap (coaching-fixable), a ramp issue (time-fixable), or a territory/ICP problem (management-fixable)? Match intervention to root cause. Give rep a 60-day specific improvement plan with clear behavioral metrics — not just "close more deals."</td></tr>
+      <tr><td><span class="badge-underattain">&lt;50%</span> chronic</td><td>Performance improvement or exit</td><td>Formal PIP with clear metrics over 60-90 days. If on PIP for a second time, evaluate fit. Retaining persistent &lt;50% attainers beyond 2-3 quarters demoralizes the team and costs the company significant opportunity cost.</td></tr>
+    </tbody>
+  </table>
+
+  <h2 class="section-title">Relationship Between Distribution and Comp Plan Design</h2>
+  <div class="subsection">
+    <p>The shape of your attainment distribution is partially a product of your comp plan design. Specific comp plan elements create specific distribution distortions:</p>
+    <ul class="bullet-list">
+      <li><strong>Quota resets that are too steep (e.g., +20% each quarter regardless of market):</strong> Creates increasing left-heavy distribution over time as reps burn out chasing escalating numbers they can never sustainably hit.</li>
+      <li><strong>Club / President's Club thresholds that create "enough" goals:</strong> Can create artificial ceiling at club qualification threshold (e.g., everyone at exactly 110% if club requires 110%). Investigate if your distribution has a suspicious cluster at exactly your club threshold.</li>
+      <li><strong>Low or no accelerator above 100%:</strong> Reduces incentive to push for more after hitting quota. Creates behavioral "stop selling" effect. Compare monthly close rates for reps who hit quota early in the month vs. reps still below — the difference reveals accelerator effectiveness.</li>
+      <li><strong>Draw/recovery plans for new reps:</strong> New reps who are advanced salary against future earnings often behave differently once they've repaid the draw — a discontinuity in attainment behavior at the draw payback date is a comp design signal.</li>
+    </ul>
+    <p>See the Compensation Design page for full comp plan structure and the trade-offs of each design choice.</p>
+  </div>
+
+  <div class="indicator-row">
+    <span class="indicator-tag ind-leading">Leading: Pipeline per rep by stage, deal age trend, activity rate by attainment cohort</span>
+    <span class="indicator-tag ind-lagging">Lagging: Attainment distribution shape, % at quota, voluntary attrition by attainment band</span>
+  </div>
+
+  <div class="related-section">
+    <div class="related-title">Related Sections</div>
+    <div class="related-links">
+      <a href="compensation-design.html" class="related-link">Compensation Design</a>
+      <a href="performance-standards.html" class="related-link">Performance Standards</a>
+      <a href="coaching.html" class="related-link">Sales Coaching</a>
+      <a href="pipeline-coverage.html" class="related-link">Pipeline Coverage</a>
+      <a href="ramp-time.html" class="related-link">Ramp Time</a>
+      <a href="headcount-planning.html" class="related-link">Headcount Planning</a>
+    </div>
+  </div>
+</div>
+<script data-pplx-inline-edit>
+(function () {
+  if (window === window.top) return;
+
+  const allowedParentOrigins = ["https://www.perplexity.ai","https://perplexity.ai","https://testing.perplexity.ai","https://staging.perplexity.ai","https://*.preview.i.perplexity.ai","http://localhost:3000","http://127.0.0.1:3000","http://localhost:5173","http://127.0.0.1:5173"];
+  const MAX_FONT_BYTES = 500 * 1024;
+  const MAX_TOTAL_FONT_BYTES = 2 * 1024 * 1024;
+  let scrollForwarding = false;
+  let scrollRaf = 0;
+  let trustedTopOrigin = null;
+
+  // Allow entries like "https://*.preview.i.perplexity.ai" — the wildcard
+  // matches a single DNS label (no dots), so "https://*.foo" cannot stretch
+  // across multiple labels.
+  function matchesAllowedOrigin(origin) {
+    if (!origin) return false;
+    for (const entry of allowedParentOrigins) {
+      if (!entry.includes("*")) {
+        if (entry === origin) return true;
+        continue;
+      }
+      const pattern = new RegExp(
+        "^" +
+          entry.replace(/[.+?^${}()|[\]\\]/g, "\\$&").replace(/\*/g, "[^.]+") +
+          "$",
+      );
+      if (pattern.test(origin)) return true;
+    }
+    return false;
+  }
+
+  // Trust decision: when the sender is same-origin-visible (event.origin is a
+  // real origin like https://www.perplexity.ai) we trust event.origin directly.
+  // When event.origin is "null" (opaque broker srcdoc), we fall back to the
+  // broker's stamped `parentOrigin` to identify the top window. The fallback
+  // is claim-only — we rely on the browser's native `targetOrigin` enforcement
+  // on the response path (see postToTrustedTop) to ensure replies can't be
+  // delivered to anyone but the actual top window of that claimed origin.
+  function getTrustedParentOrigin(event) {
+    const forwardedParentOrigin =
+      typeof event.data.parentOrigin === "string" ? event.data.parentOrigin : null;
+    const parentOrigin = event.origin === "null" ? forwardedParentOrigin : event.origin;
+    return matchesAllowedOrigin(parentOrigin) ? parentOrigin : null;
+  }
+
+  // All responses go to window.top with targetOrigin = the allowlisted origin.
+  // An attacker that iframes us inside their own null-origin broker can claim
+  // any parentOrigin they like, but the browser will drop the reply whenever
+  // the real top's origin doesn't match — so the screenshot never leaves.
+  function postToTrustedTop(message) {
+    if (!trustedTopOrigin) return;
+    try {
+      window.top.postMessage(message, trustedTopOrigin);
+    } catch (_error) {}
+  }
+
+  function inlineAll(original, clone) {
+    if (original.nodeType !== 1 || clone.nodeType !== 1) return;
+
+    try {
+      const computedStyle = getComputedStyle(original);
+      // cssText on a computed style is the serialized declaration in modern
+      // Chromium/Safari — a single read beats enumerating ~400 longhand
+      // properties. Firefox returns "" here, so we fall back on empty.
+      const serialized = computedStyle.cssText;
+      if (serialized) {
+        clone.style.cssText = serialized;
+      } else {
+        const parts = new Array(computedStyle.length);
+        for (let index = 0; index < computedStyle.length; index += 1) {
+          const property = computedStyle[index];
+          parts[index] = `${property}:${computedStyle.getPropertyValue(property)};`;
+        }
+        clone.style.cssText = parts.join("");
+      }
+    } catch (_error) {}
+
+    const originalChildren = original.children;
+    const clonedChildren = clone.children;
+    for (
+      let index = 0;
+      index < originalChildren.length && index < clonedChildren.length;
+      index += 1
+    ) {
+      inlineAll(originalChildren[index], clonedChildren[index]);
+    }
+  }
+
+  function extractFontUrl(srcValue) {
+    const matches = [
+      ...srcValue.matchAll(
+        /url\(["']?([^"')]+)["']?\)(?:\s*format\(["']?([^"')]+)["']?\))?/gi,
+      ),
+    ];
+    if (matches.length === 0) return null;
+    const woff2 = matches.find((m) => m[2] && m[2].toLowerCase().includes("woff2"));
+    if (woff2) return woff2[1];
+    const woff = matches.find((m) => m[2] && m[2].toLowerCase().includes("woff"));
+    if (woff) return woff[1];
+    return matches[0][1];
+  }
+
+  // Cache resolved font URL -> data URI across captures. Fonts on a page
+  // essentially never change, and a batch run emits multiple captures back to
+  // back — without this we'd refetch + re-base64 every time.
+  const fontDataUriCache = new Map();
+  const SRC_DECLARATION_RE = /src\s*:\s*[^;}]+/i;
+
+  async function fetchAsDataUri(url) {
+    if (fontDataUriCache.has(url)) return fontDataUriCache.get(url);
+    let dataUri = null;
+    try {
+      const response = await fetch(url, { mode: "cors", credentials: "omit" });
+      if (response.ok) {
+        const blob = await response.blob();
+        if (blob.size <= MAX_FONT_BYTES) {
+          dataUri = await new Promise((resolve) => {
+            const reader = new FileReader();
+            reader.onloadend = () =>
+              resolve(typeof reader.result === "string" ? reader.result : null);
+            reader.onerror = () => resolve(null);
+            reader.readAsDataURL(blob);
+          });
+        }
+      }
+    } catch (_error) {
+      dataUri = null;
+    }
+    fontDataUriCache.set(url, dataUri);
+    return dataUri;
+  }
+
+  function collectFontFaceRuleTexts() {
+    const rules = [];
+    for (const sheet of document.styleSheets) {
+      let cssRules;
+      try {
+        cssRules = sheet.cssRules;
+      } catch (_error) {
+        continue;
+      }
+      if (!cssRules) continue;
+      for (const rule of cssRules) {
+        const cssText = rule.cssText || "";
+        if (cssText.startsWith("@font-face")) rules.push(cssText);
+      }
+    }
+    return rules;
+  }
+
+  async function buildInlinedFontCss() {
+    const ruleTexts = collectFontFaceRuleTexts();
+    if (ruleTexts.length === 0) return null;
+
+    const resolved = ruleTexts.map((cssText) => {
+      if (!SRC_DECLARATION_RE.test(cssText)) return null;
+      const srcMatch = cssText.match(/src\s*:\s*([^;}]+)[;}]/i);
+      if (!srcMatch) return null;
+      const url = extractFontUrl(srcMatch[1]);
+      if (!url) return null;
+      try {
+        return { cssText, url: new URL(url, document.baseURI).href };
+      } catch (_error) {
+        return null;
+      }
+    });
+
+    const dataUris = await Promise.all(
+      resolved.map((entry) => (entry ? fetchAsDataUri(entry.url) : Promise.resolve(null))),
+    );
+
+    const inlined = [];
+    let totalBytes = 0;
+    for (let index = 0; index < resolved.length; index += 1) {
+      const entry = resolved[index];
+      const dataUri = dataUris[index];
+      if (!entry || !dataUri) continue;
+      const approxBytes = dataUri.length * 0.75;
+      if (totalBytes + approxBytes > MAX_TOTAL_FONT_BYTES) break;
+      totalBytes += approxBytes;
+      inlined.push(entry.cssText.replace(SRC_DECLARATION_RE, `src: url("${dataUri}")`));
+    }
+    return inlined.length > 0 ? inlined.join("\n") : null;
+  }
+
+  function stripExternal(clone) {
+    const images = clone.querySelectorAll("img");
+    for (let index = 0; index < images.length; index += 1) {
+      const src = images[index].getAttribute("src");
+      if (src && !src.startsWith("data:")) images[index].removeAttribute("src");
+    }
+
+    const elements = clone.querySelectorAll("*");
+    for (let index = 0; index < elements.length; index += 1) {
+      const style = elements[index].style.cssText;
+      if (style && style.includes("url(")) {
+        elements[index].style.cssText = style.replace(
+          /url\(["']?(?!data:)[^)"']*["']?\)/gi,
+          "none",
+        );
+      }
+    }
+  }
+
+  function emitScroll() {
+    scrollRaf = 0;
+    if (!scrollForwarding) return;
+    postToTrustedTop({
+      type: "INLINE_EDIT_SCROLL",
+      scrollX: window.scrollX,
+      scrollY: window.scrollY,
+    });
+  }
+
+  window.addEventListener(
+    "scroll",
+    function () {
+      if (!scrollForwarding || scrollRaf) return;
+      scrollRaf = requestAnimationFrame(emitScroll);
+    },
+    { passive: true, capture: true },
+  );
+
+  async function handleCaptureRequest(event) {
+    const requestId = event.data.requestId;
+    const scrollX = window.scrollX;
+    const scrollY = window.scrollY;
+    const width = window.innerWidth;
+    const height = window.innerHeight;
+
+    function postResult(dataUrl) {
+      postToTrustedTop({
+        type: "INLINE_EDIT_SCREENSHOT_RESULT",
+        requestId,
+        dataUrl,
+        scrollX,
+        scrollY,
+      });
+    }
+
+    try {
+      // Wait for any pending web fonts to resolve so both inline metrics and
+      // the @font-face inlining below see the same loaded faces.
+      if (document.fonts && document.fonts.ready) {
+        try {
+          await document.fonts.ready;
+        } catch (_error) {}
+      }
+
+      const clone = document.documentElement.cloneNode(true);
+      inlineAll(document.documentElement, clone);
+
+      const removedNodes = clone.querySelectorAll("script,link[rel=\"stylesheet\"],style");
+      for (let index = 0; index < removedNodes.length; index += 1) {
+        removedNodes[index].remove();
+      }
+
+      stripExternal(clone);
+
+      // Re-embed web fonts as data-URI @font-face rules so the SVG rasterizer
+      // can resolve them — external font URLs aren't fetched during
+      // foreignObject rendering, which would otherwise force a fallback face
+      // and change text metrics.
+      const inlinedFontCss = await buildInlinedFontCss();
+      if (inlinedFontCss) {
+        const styleEl = document.createElement("style");
+        styleEl.textContent = inlinedFontCss;
+        const head = clone.querySelector("head");
+        if (head) head.appendChild(styleEl);
+        else clone.insertBefore(styleEl, clone.firstChild);
+      }
+
+      const html = new XMLSerializer().serializeToString(clone);
+      const svg =
+        `<svg xmlns="http://www.w3.org/2000/svg" width="${width}" height="${height}">` +
+        '<foreignObject width="100%" height="100%">' +
+        `<div xmlns="http://www.w3.org/1999/xhtml" style="width:${width}px;height:${height}px;overflow:hidden">` +
+        `<div style="transform:translate(-${scrollX}px,-${scrollY}px);transform-origin:top left">` +
+        html +
+        "</div></div></foreignObject></svg>";
+      const svgUrl = `data:image/svg+xml;charset=utf-8,${encodeURIComponent(svg)}`;
+      const image = new Image();
+      image.onload = function () {
+        const canvas = document.createElement("canvas");
+        canvas.width = width;
+        canvas.height = height;
+        canvas.getContext("2d").drawImage(image, 0, 0);
+        postResult(canvas.toDataURL("image/png"));
+      };
+      image.onerror = function () {
+        postResult(null);
+      };
+      image.src = svgUrl;
+    } catch (_error) {
+      postResult(null);
+    }
+  }
+
+  window.addEventListener("message", function (event) {
+    if (!event.data) return;
+    // Only accept messages from the direct parent frame. Blocks sibling /
+    // unrelated-window postMessage senders that could otherwise reach us.
+    if (event.source !== window.parent) return;
+
+    const trustedParentOrigin = getTrustedParentOrigin(event);
+    if (!trustedParentOrigin) return;
+    trustedTopOrigin = trustedParentOrigin;
+
+    if (event.data.type === "INLINE_EDIT_SCROLL_START") {
+      scrollForwarding = true;
+      emitScroll();
+      return;
+    }
+
+    if (event.data.type === "INLINE_EDIT_SCROLL_STOP") {
+      scrollForwarding = false;
+      if (scrollRaf) cancelAnimationFrame(scrollRaf);
+      scrollRaf = 0;
+      return;
+    }
+
+    if (event.data.type !== "INLINE_EDIT_CAPTURE_REQUEST") return;
+
+    handleCaptureRequest(event);
+  });
+})();
+
+
+</script></body>
+</html>

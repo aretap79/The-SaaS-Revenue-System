@@ -1,0 +1,781 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>CRM Architecture — SaaS Revenue System</title>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="../assets/shared.css"/>
+  <style>
+    .page-hero { background: #01696F; }
+    .object-card {
+      background: var(--surface);
+      border: 1.5px solid var(--border);
+      border-radius: 10px;
+      margin-bottom: 20px;
+      overflow: hidden;
+    }
+    .object-header {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      padding: 18px 24px;
+      background: #fafaf8;
+      border-bottom: 1.5px solid var(--border);
+    }
+    .object-icon {
+      width: 40px;
+      height: 40px;
+      border-radius: 8px;
+      background: #01696F;
+      color: #fff;
+      font-size: 15px;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+    .object-name { font-size: 16px; font-weight: 700; color: var(--text); margin-bottom: 2px; }
+    .object-desc { font-size: 13px; color: var(--text-muted); }
+    .object-body { padding: 20px 24px; }
+    .field-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 13px;
+      margin: 0;
+    }
+    .field-table th {
+      background: var(--text);
+      color: #fff;
+      padding: 8px 12px;
+      text-align: left;
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.5px;
+      text-transform: uppercase;
+    }
+    .field-table td {
+      padding: 8px 12px;
+      border-bottom: 1px solid var(--border);
+      vertical-align: top;
+      line-height: 1.5;
+    }
+    .field-table tr:nth-child(even) td { background: #fafaf8; }
+    .field-table tr:last-child td { border-bottom: none; }
+    .req-badge {
+      font-size: 10px;
+      font-weight: 700;
+      padding: 2px 6px;
+      border-radius: 4px;
+      letter-spacing: 0.3px;
+      white-space: nowrap;
+    }
+    .req-critical { background: #fce8e6; color: #A13544; }
+    .req-standard { background: #e6f4ea; color: #437A22; }
+    .req-optional { background: #f0f8ff; color: #006494; }
+    .arch-diagram {
+      background: #1C1B19;
+      border-radius: 10px;
+      padding: 24px;
+      margin: 20px 0;
+      font-family: 'Courier New', monospace;
+      font-size: 13px;
+      color: #CDCCCA;
+      overflow-x: auto;
+      line-height: 1.8;
+    }
+    .arch-diagram .hl { color: #4F98A3; font-weight: 700; }
+    .arch-diagram .arrow { color: #797876; }
+    .hygiene-meter {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin: 8px 0;
+    }
+    .hygiene-label { font-size: 13px; min-width: 180px; }
+    .hygiene-bar-bg { flex: 1; height: 8px; background: var(--border); border-radius: 4px; overflow: hidden; }
+    .hygiene-bar-fill { height: 100%; border-radius: 4px; background: #01696F; }
+    .hygiene-pct { font-size: 12px; font-weight: 700; color: var(--text-muted); min-width: 40px; text-align: right; }
+    .decision-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+      margin: 20px 0;
+    }
+    .decision-card {
+      border-radius: 10px;
+      padding: 22px;
+      border: 1.5px solid var(--border);
+    }
+    .decision-card.sf { border-top: 4px solid #00A1E0; }
+    .decision-card.hs { border-top: 4px solid #FF7A59; }
+    .decision-card-title { font-size: 16px; font-weight: 700; margin-bottom: 12px; }
+    .decision-card ul { list-style: none; padding: 0; }
+    .decision-card ul li {
+      font-size: 13px;
+      line-height: 1.6;
+      padding: 4px 0 4px 16px;
+      position: relative;
+    }
+    .decision-card ul li::before { content: '✓'; position: absolute; left: 0; color: #437A22; font-weight: 700; }
+    .audit-item {
+      display: flex;
+      gap: 12px;
+      align-items: flex-start;
+      padding: 12px 0;
+      border-bottom: 1px solid var(--border);
+    }
+    .audit-item:last-child { border-bottom: none; }
+    .audit-check {
+      width: 22px;
+      height: 22px;
+      border-radius: 4px;
+      border: 2px solid var(--border);
+      flex-shrink: 0;
+      margin-top: 1px;
+    }
+    .audit-text { font-size: 14px; line-height: 1.6; }
+    .audit-category { font-size: 10px; font-weight: 700; letter-spacing: 1px; text-transform: uppercase; color: var(--text-muted); margin-top: 2px; }
+    @media (max-width: 640px) {
+      .decision-row { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+<nav class="nav">
+  <span class="nav-logo">SaaS <span>Revenue System</span></span>
+  <span class="nav-sep">|</span>
+  <a href="../index.html" class="nav-back">← Home</a>
+  <span class="nav-sep">|</span>
+  <a href="../pages/revops.html" class="nav-back">RevOps</a>
+  <span class="nav-sep">|</span>
+  <span class="nav-current">CRM Architecture</span>
+</nav>
+
+<div class="page-hero">
+  <div class="hero-phase-label">REVENUE OPERATIONS</div>
+  <div class="hero-title">CRM Architecture</div>
+  <div class="hero-subtitle">Building the Data Foundation for Revenue — Object Model, Field Design, Hygiene Standards, and Adoption</div>
+</div>
+
+<div class="content-wrap">
+  <div class="breadcrumb">
+    <a href="../index.html">Home</a><span class="sep">›</span>
+    <a href="../pages/revops.html">RevOps</a><span class="sep">›</span>
+    <span class="current">CRM Architecture</span>
+  </div>
+
+  <!-- WHAT IT MEANS -->
+  <h2 class="section-title">What CRM Architecture Actually Means</h2>
+  <div class="section-intro">CRM architecture is not "how you've set up Salesforce." It is a deliberate system of objects, fields, workflows, integrations, and human behavior patterns that makes revenue data trustworthy enough to run the business on.</div>
+
+  <div class="subsection">
+    <p>Most SaaS companies have a CRM. Very few have CRM <em>architecture</em>. The difference is the difference between a spreadsheet that someone has been editing for three years and a properly designed database. Both contain data. Only one can be trusted for decisions that cost millions of dollars.</p>
+    <p>CRM architecture has five components: (1) the <strong>object model</strong> — what types of records exist and how they relate to each other; (2) <strong>field design</strong> — what data is captured on each record and how; (3) <strong>workflow configuration</strong> — what happens automatically when records change; (4) <strong>integration design</strong> — how the CRM connects to the rest of your revenue tech stack; and (5) <strong>user adoption</strong> — whether the humans in your organization actually use it correctly.</p>
+    <p>The fifth component is the one that kills most CRM architectures. You can build a perfect object model and fill it with validation rules, but if reps don't trust the system, don't understand it, or find it too painful to update, the data will rot within 90 days of launch.</p>
+  </div>
+
+  <div class="callout callout-definition">
+    <div class="callout-title">Architecture Principle</div>
+    <p>Every field in your CRM should have a clear owner (who is responsible for keeping it accurate), a clear purpose (what decision does it enable), and a clear maintenance cadence (how often it should be reviewed). If a field doesn't pass all three tests, it shouldn't exist.</p>
+  </div>
+
+  <!-- OBJECT MODEL -->
+  <h2 class="section-title">The Standard SaaS Revenue Object Model</h2>
+  <div class="section-intro">The object model is the schema of your CRM — the table of record types and how they relate. Below is the standard model for a B2B SaaS company.</div>
+
+  <div class="arch-diagram">
+    <span class="hl">CAMPAIGN</span> <span class="arrow">──touches──▶</span> <span class="hl">LEAD</span> <span class="arrow">──converts──▶</span> <span class="hl">CONTACT</span> <span class="arrow">──belongs to──▶</span> <span class="hl">ACCOUNT</span>
+    <br>
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;↑
+    <br>
+    <span class="hl">OPPORTUNITY</span> <span class="arrow">──links to──▶</span> <span class="hl">ACCOUNT</span> + <span class="hl">CONTACT (roles)</span>&nbsp;&nbsp;&nbsp;|
+    <br>
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|
+    <br>
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;▼&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|
+    <br>
+    <span class="hl">ACTIVITY</span> (Task/Event/Call) <span class="arrow">──logs on──▶</span> Opp / Contact / Account&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|
+    <br>
+    <span class="hl">CONTRACT / SUBSCRIPTION</span> <span class="arrow">──child of──▶</span> <span class="hl">ACCOUNT</span> <span class="arrow">──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────</span>┘
+  </div>
+
+  <!-- OBJECT DEFINITIONS -->
+  <h2 class="section-title">Object Definitions and Required Fields</h2>
+
+  <!-- LEAD OBJECT -->
+  <div class="object-card">
+    <div class="object-header">
+      <div class="object-icon">L</div>
+      <div>
+        <div class="object-name">Lead Object</div>
+        <div class="object-desc">Pre-qualification record — a person of unknown account relationship who has entered your database</div>
+      </div>
+    </div>
+    <div class="object-body">
+      <p style="font-size:14px; line-height:1.7; margin-bottom:16px;">Leads exist before conversion. A Lead in Salesforce or HubSpot represents a person whose Account relationship has not been confirmed or created. Upon qualification (SAL → SQL), the Lead converts to a Contact + Account + Opportunity. Never use Lead as a permanent record type — all qualified records should be Contact/Account/Opportunity.</p>
+      <table class="field-table">
+        <thead><tr><th>Field</th><th>Type</th><th>Required</th><th>Notes</th></tr></thead>
+        <tbody>
+          <tr><td>Lead Source</td><td>Picklist</td><td><span class="req-badge req-critical">Critical</span></td><td>Standardized values: Inbound Web, Paid Search, Paid Social, Content Download, Webinar, Outbound SDR, Event, Partner Referral, Customer Referral, Product Signup. No "Other."</td></tr>
+          <tr><td>Lead Score</td><td>Number</td><td><span class="req-badge req-critical">Critical</span></td><td>Auto-populated from marketing automation. Composite of fit score + engagement score. Do not allow manual edits.</td></tr>
+          <tr><td>Lead Status</td><td>Picklist</td><td><span class="req-badge req-critical">Critical</span></td><td>New → Working → MQL → SAL → Converted / Disqualified / Nurture. Status drives routing workflow.</td></tr>
+          <tr><td>MQL Date</td><td>Date/Time</td><td><span class="req-badge req-critical">Critical</span></td><td>Auto-stamped when status changes to MQL. Required for MQL-to-SQL conversion rate calculation.</td></tr>
+          <tr><td>Assigned SDR</td><td>Lookup: User</td><td><span class="req-badge req-critical">Critical</span></td><td>Auto-populated via routing rules. Timestamp of assignment required for SLA tracking.</td></tr>
+          <tr><td>ICP Segment</td><td>Picklist</td><td><span class="req-badge req-standard">Standard</span></td><td>SMB / Mid-Market / Enterprise / Partner. Auto-populated from firmographic data enrichment.</td></tr>
+          <tr><td>Industry</td><td>Picklist</td><td><span class="req-badge req-standard">Standard</span></td><td>Standardized taxonomy (max 15 values). Enriched from ZoomInfo/Clearbit. Do not allow free text.</td></tr>
+          <tr><td>Employee Count</td><td>Number</td><td><span class="req-badge req-standard">Standard</span></td><td>Enriched, used in ICP scoring. Ranges: &lt;50, 50–200, 201–1000, 1001–5000, 5000+.</td></tr>
+          <tr><td>Rejection Reason</td><td>Picklist</td><td><span class="req-badge req-optional">Conditional</span></td><td>Required only if status = Disqualified. Not ICP / Wrong Persona / Duplicate / Competitor / Student. Feeds MQL quality analysis.</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- ACCOUNT OBJECT -->
+  <div class="object-card">
+    <div class="object-header">
+      <div class="object-icon">A</div>
+      <div>
+        <div class="object-name">Account Object</div>
+        <div class="object-desc">The company — the anchor record for all customer and prospect data</div>
+      </div>
+    </div>
+    <div class="object-body">
+      <p style="font-size:14px; line-height:1.7; margin-bottom:16px;">The Account object is the most strategically important object in your CRM. It is the permanent home for all customer data — ARR, NRR, renewal dates, support history, health scores. Prospect accounts should be created before SQLs are created — this enables proper deduplication and territory assignment.</p>
+      <table class="field-table">
+        <thead><tr><th>Field</th><th>Type</th><th>Required</th><th>Notes</th></tr></thead>
+        <tbody>
+          <tr><td>Account Type</td><td>Picklist</td><td><span class="req-badge req-critical">Critical</span></td><td>Prospect / Customer / Partner / Competitor / Former Customer. Drives UI views and automation rules.</td></tr>
+          <tr><td>ICP Score</td><td>Number (1–100)</td><td><span class="req-badge req-critical">Critical</span></td><td>Composite score: firmographic fit + technographic fit + behavioral signals. Auto-calculated, reviewed quarterly.</td></tr>
+          <tr><td>Segment</td><td>Picklist</td><td><span class="req-badge req-critical">Critical</span></td><td>SMB / Mid-Market / Enterprise. Drives territory assignment, SDR routing, quota calculations.</td></tr>
+          <tr><td>Territory</td><td>Picklist</td><td><span class="req-badge req-critical">Critical</span></td><td>Assigned region/vertical. Links to AE owner. Must be set by RevOps — not editable by reps.</td></tr>
+          <tr><td>ARR (Current)</td><td>Currency</td><td><span class="req-badge req-critical">Critical</span></td><td>Current contracted ARR. Auto-updated from Contract/Subscription object on renewal/expansion/churn. Never manually edited.</td></tr>
+          <tr><td>NRR (TTM)</td><td>Percent</td><td><span class="req-badge req-critical">Critical</span></td><td>Net Revenue Retention trailing 12 months. Calculated field from ARR history. Formula: (Beginning ARR + Expansion − Contraction − Churn) / Beginning ARR.</td></tr>
+          <tr><td>Renewal Date</td><td>Date</td><td><span class="req-badge req-critical">Critical</span></td><td>Next contract renewal date. Auto-populated from Contract object. Feeds renewal pipeline creation automation (120 days out).</td></tr>
+          <tr><td>Health Score</td><td>Number (1–100)</td><td><span class="req-badge req-standard">Standard</span></td><td>Auto-synced from CS platform (Gainsight/ChurnZero/Totango). Not manually editable.</td></tr>
+          <tr><td>CSM Owner</td><td>Lookup: User</td><td><span class="req-badge req-standard">Standard</span></td><td>Assigned CS Manager. Required for all Type = Customer accounts.</td></tr>
+          <tr><td>Contract Start Date</td><td>Date</td><td><span class="req-badge req-standard">Standard</span></td><td>First contract date (customer since). Important for cohort analysis and tenure-based health benchmarks.</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- OPPORTUNITY OBJECT -->
+  <div class="object-card">
+    <div class="object-header">
+      <div class="object-icon">O</div>
+      <div>
+        <div class="object-name">Opportunity Object</div>
+        <div class="object-desc">The deal — the primary unit of pipeline and forecast management</div>
+      </div>
+    </div>
+    <div class="object-body">
+      <p style="font-size:14px; line-height:1.7; margin-bottom:16px;">The Opportunity is where pipeline lives. Every deal that has entered the sales process should have an Opportunity record. The fields below are the minimum viable set for forecast accuracy. Many organizations underinvest in Opportunity field design and then wonder why their forecast is unreliable.</p>
+      <table class="field-table">
+        <thead><tr><th>Field</th><th>Type</th><th>Required</th><th>Notes</th></tr></thead>
+        <tbody>
+          <tr><td>Stage</td><td>Picklist</td><td><span class="req-badge req-critical">Critical</span></td><td>Stage 1 through Closed Won/Lost. Stage change triggers probability update, validation rules, notifications. Never manually set probability — let it derive from stage.</td></tr>
+          <tr><td>Close Date</td><td>Date</td><td><span class="req-badge req-critical">Critical</span></td><td>Expected contract signature date. Used in quarterly forecast. Close date changes tracked in audit history — 3+ changes in same quarter is a data quality flag.</td></tr>
+          <tr><td>Amount (ARR)</td><td>Currency</td><td><span class="req-badge req-critical">Critical</span></td><td>Annual recurring revenue of the deal. Separate fields for ACV (1-year value) and TCV (total contract value) if multi-year. Amount drives pipeline reports — must be updated as deal scope changes.</td></tr>
+          <tr><td>Forecast Category</td><td>Picklist</td><td><span class="req-badge req-critical">Critical</span></td><td>Pipeline / Best Case / Commit / Closed. Separate from Stage — stage is objective fact, forecast category is rep's judgment layer. Required field in weekly pipeline review.</td></tr>
+          <tr><td>Next Step</td><td>Text</td><td><span class="req-badge req-critical">Critical</span></td><td>Specific next action with date, person responsible. "Call next week" is not a Next Step. "Demo with CTO on 3/14 — confirm technical requirements" is. Blank Next Step = red flag in pipeline review.</td></tr>
+          <tr><td>Lead Source</td><td>Picklist</td><td><span class="req-badge req-critical">Critical</span></td><td>Inherited from Lead/Contact source. Required for channel attribution and CAC analysis. Do not allow retroactive changes.</td></tr>
+          <tr><td>Opportunity Type</td><td>Picklist</td><td><span class="req-badge req-critical">Critical</span></td><td>New Business / Expansion / Renewal / Reactivation. Drives separate pipeline and forecast tracks for each motion.</td></tr>
+          <tr><td>M — Metrics</td><td>Text (long)</td><td><span class="req-badge req-standard">Standard</span></td><td>MEDDICC: Quantified business impact the customer expects. What does success look like in numbers?</td></tr>
+          <tr><td>E — Economic Buyer</td><td>Lookup: Contact</td><td><span class="req-badge req-standard">Standard</span></td><td>MEDDICC: The person with budget authority. Required for Stage 3+.</td></tr>
+          <tr><td>D — Decision Criteria</td><td>Text (long)</td><td><span class="req-badge req-standard">Standard</span></td><td>MEDDICC: What criteria will they use to evaluate vendors?</td></tr>
+          <tr><td>D — Decision Process</td><td>Text (long)</td><td><span class="req-badge req-standard">Standard</span></td><td>MEDDICC: Who is involved, what steps, what is the timeline?</td></tr>
+          <tr><td>I — Identify Pain</td><td>Text (long)</td><td><span class="req-badge req-standard">Standard</span></td><td>MEDDICC: The specific pain being solved. Required for Stage 1+.</td></tr>
+          <tr><td>C — Champion</td><td>Lookup: Contact</td><td><span class="req-badge req-standard">Standard</span></td><td>MEDDICC: The internal advocate. Required for Stage 3+. A deal without a named champion at Stage 3 is high risk.</td></tr>
+          <tr><td>C — Competition</td><td>Multi-select</td><td><span class="req-badge req-standard">Standard</span></td><td>MEDDICC: Which competitors are in the evaluation? Standardized list. Feeds win/loss competitive analysis.</td></tr>
+          <tr><td>Close Lost Reason</td><td>Picklist</td><td><span class="req-badge req-optional">Conditional</span></td><td>Required when Stage = Closed Lost. Standardized reasons only — no free text "Other." Minimum 50-char notes field also required.</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- CRM HYGIENE -->
+  <h2 class="section-title">CRM Data Hygiene Standards</h2>
+  <div class="section-intro">Clean data doesn't happen by accident. It requires standards, measurement, and accountability. The CRM hygiene score should be a standing metric in your weekly RevOps review.</div>
+
+  <div class="subsection">
+    <div class="subsection-title">Completeness Standards by Object</div>
+    <div style="margin: 16px 0;">
+      <div class="hygiene-meter"><span class="hygiene-label">Opportunity: Stage</span><div class="hygiene-bar-bg"><div class="hygiene-bar-fill" style="width:100%"></div></div><span class="hygiene-pct">100%</span></div>
+      <div class="hygiene-meter"><span class="hygiene-label">Opportunity: Close Date</span><div class="hygiene-bar-bg"><div class="hygiene-bar-fill" style="width:100%"></div></div><span class="hygiene-pct">100%</span></div>
+      <div class="hygiene-meter"><span class="hygiene-label">Opportunity: Amount</span><div class="hygiene-bar-bg"><div class="hygiene-bar-fill" style="width:100%"></div></div><span class="hygiene-pct">100%</span></div>
+      <div class="hygiene-meter"><span class="hygiene-label">Opportunity: Next Step</span><div class="hygiene-bar-bg"><div class="hygiene-bar-fill" style="width:95%"></div></div><span class="hygiene-pct">95%+</span></div>
+      <div class="hygiene-meter"><span class="hygiene-label">Opportunity: MEDDICC fields</span><div class="hygiene-bar-bg"><div class="hygiene-bar-fill" style="width:80%"></div></div><span class="hygiene-pct">80%+</span></div>
+      <div class="hygiene-meter"><span class="hygiene-label">Account: Segment</span><div class="hygiene-bar-bg"><div class="hygiene-bar-fill" style="width:98%"></div></div><span class="hygiene-pct">98%+</span></div>
+      <div class="hygiene-meter"><span class="hygiene-label">Account: ARR (customers)</span><div class="hygiene-bar-bg"><div class="hygiene-bar-fill" style="width:100%"></div></div><span class="hygiene-pct">100%</span></div>
+      <div class="hygiene-meter"><span class="hygiene-label">Contact: Lead Source</span><div class="hygiene-bar-bg"><div class="hygiene-bar-fill" style="width:90%"></div></div><span class="hygiene-pct">90%+</span></div>
+    </div>
+  </div>
+
+  <div class="subsection">
+    <div class="subsection-title">Deduplication Rules</div>
+    <p>Duplicates are the silent killer of CRM data integrity. They cause double-counting in pipeline reports, route the same lead to two SDRs, and destroy contact history. Implement a deduplication policy with the following rules:</p>
+    <ul class="bullet-list">
+      <li><strong>Lead-to-Contact deduplication:</strong> Run a match on email address + domain name when new Leads are created. Any match should trigger a merge prompt — not automatic merge. Human review is required before merging Contact records.</li>
+      <li><strong>Account deduplication:</strong> Match on company domain (primary), company name + country (secondary). Any match triggers RevOps review within 48 hours. Use a deduplication tool (Dedupely, DemandTools, CRMFusion) for bulk cleanup. Do not attempt to manually deduplicate at scale.</li>
+      <li><strong>Opportunity deduplication:</strong> Match rule: same Account + same Opportunity Type + close dates within 90 days. Flag for manager review. Two SDRs pitching the same account independently is a territory governance failure, not a deduplication problem.</li>
+    </ul>
+  </div>
+
+  <!-- FIELD GOVERNANCE -->
+  <h2 class="section-title">CRM Field Governance Process</h2>
+  <div class="section-intro">Field governance prevents the CRM from accumulating hundreds of unused fields — a common failure mode that degrades the rep experience and makes data analysis impossible.</div>
+
+  <ol class="step-list">
+    <li><div class="step-content"><span class="step-title">Field Request Process</span>Any team wanting a new CRM field must submit a request to RevOps including: (a) the field name and data type, (b) the business question it answers, (c) who owns populating it, (d) how often it changes, and (e) what automations or reports will use it. Requests without all five components are returned without review.</div></li>
+    <li><div class="step-content"><span class="step-title">RevOps Review (Weekly)</span>RevOps reviews all field requests in weekly governance meeting. Decision: Approve (create field), Defer (not needed now), Reject (existing field covers this, or ROI is insufficient). All decisions documented in the field registry with rationale.</div></li>
+    <li><div class="step-content"><span class="step-title">The Field Registry</span>RevOps maintains a master spreadsheet of every CRM field: object, field name, data type, owner, purpose, create date, last-used date. Reviewed quarterly. Any field with 0 data in 90 days is a deprecation candidate.</div></li>
+    <li><div class="step-content"><span class="step-title">Deprecation Process</span>Before deprecating a field: (a) notify all stakeholders 30 days in advance, (b) check that no automation, report, or integration references the field, (c) export all existing data to a backup sheet, (d) deactivate (do not delete — you cannot undo a deletion in Salesforce). Mark the field "Deprecated" with date in the field registry.</div></li>
+  </ol>
+
+  <!-- CRM ADOPTION -->
+  <h2 class="section-title">CRM Adoption: Why Reps Don't Use It and How to Fix It</h2>
+  <div class="section-intro">The most beautifully architected CRM is worthless if the humans don't use it. Adoption is not a change management problem — it is a product design problem. The CRM must be something reps want to use, not something imposed on them.</div>
+
+  <div class="subsection">
+    <div class="subsection-title">Root Causes of Poor CRM Adoption</div>
+    <table class="data-table">
+      <thead><tr><th>Failure Mode</th><th>Root Cause</th><th>Fix</th></tr></thead>
+      <tbody>
+        <tr><td>Reps don't log activities</td><td>Activity logging takes 3+ minutes per call; seen as admin overhead with no personal benefit</td><td>Auto-log from sales engagement tool (Outreach/Salesloft) and conversation intelligence (Gong/Chorus). Reps should never manually log calls.</td></tr>
+        <tr><td>Reps don't update Next Step</td><td>No accountability mechanism; they don't see what they put there after they type it</td><td>Make Next Step visible on the pipeline dashboard the rep uses daily. Pipeline reviews that start with "what's your next step?" create habit fast.</td></tr>
+        <tr><td>Reps use personal spreadsheets</td><td>CRM is too slow, too complex, or doesn't give them the view they need</td><td>Build rep-centric CRM views that give them their pipeline by stage, their activities for the week, and their quota attainment in one screen. If the CRM gives reps useful information, they'll use it.</td></tr>
+        <tr><td>Data is inaccurate so nobody trusts it</td><td>Bad data creates a vicious cycle: low trust → low usage → worse data</td><td>Start with a data quality sprint: fix the 20% of records that cause 80% of the problems. Publish a weekly data quality score by rep. Make it a manager metric, not a rep punishment.</td></tr>
+        <tr><td>Reps don't know what's required</td><td>No training; definitions are in a document nobody reads</td><td>Build the definitions directly into the CRM (field help text, hover tooltips on stages). Run a 30-minute "CRM hygiene sprint" at the start of every pipeline meeting where reps update their deals with the manager on the call.</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="callout callout-best-practice">
+    <div class="callout-title">The Single Source of Truth Principle</div>
+    <p>CRM adoption permanently improves when reps realize that every decision about their comp, their territory, their deals, and their promotions is made using CRM data. If the manager only discusses deals that are in the CRM, reps update the CRM. If the CFO only pays commission on deals that are in the CRM correctly, reps update the CRM. The single most effective adoption lever is making CRM the undisputed system of record for decisions that affect reps financially.</p>
+  </div>
+
+  <!-- INTEGRATION ARCHITECTURE -->
+  <h2 class="section-title">Integration Architecture: How CRM Connects to the Revenue Stack</h2>
+  <div class="section-intro">The CRM is the hub. Every other tool in the revenue tech stack should write to the CRM — not replace it — so that all data converges in one place.</div>
+
+  <table class="data-table">
+    <thead>
+      <tr><th>Tool Category</th><th>Example Tools</th><th>Data Flow to CRM</th><th>Integration Method</th></tr>
+    </thead>
+    <tbody>
+      <tr><td>Marketing Automation (MAP)</td><td>Marketo, HubSpot, Pardot</td><td>Lead records, lead scores, campaign memberships, form fills, email engagement, MQL dates</td><td>Native bidirectional sync. MAP is the master for lead data; CRM is the master for opportunity data.</td></tr>
+      <tr><td>Sales Engagement Platform</td><td>Outreach, Salesloft, Apollo</td><td>Email sends, call logs, sequence enrollment, reply rates, task completion</td><td>Native integration. All activities auto-logged to CRM Lead/Contact/Opportunity. Do not duplicate in CRM manually.</td></tr>
+      <tr><td>Conversation Intelligence</td><td>Gong, Chorus, Clari Copilot</td><td>Call recordings linked to Opportunity, talk ratio, next steps extracted, MEDDICC field updates from AI</td><td>Native integration. Gong writes back to CRM opportunity fields via AI-extracted insights.</td></tr>
+      <tr><td>CS Platform</td><td>Gainsight, ChurnZero, Totango</td><td>Health scores, QBR dates, renewal pipeline, NPS scores, expansion signals</td><td>Bidirectional. CS platform reads ARR/renewal data from CRM; writes health score and risk flags back.</td></tr>
+      <tr><td>BI / Analytics</td><td>Tableau, Looker, Metabase</td><td>Read-only. BI connects to CRM data warehouse replica, never to live CRM API.</td><td>CRM data warehouse sync (Snowflake/BigQuery). Avoid direct BI-to-CRM API connections — they degrade CRM performance and create governance issues.</td></tr>
+      <tr><td>CPQ / Billing</td><td>Salesforce CPQ, Chargebee, Stripe</td><td>Quote objects, contract terms, ARR recognition, invoice status</td><td>Bidirectional. Closed Won opportunity triggers CPQ quote generation. Billing system writes ARR recognized back to Account.</td></tr>
+    </tbody>
+  </table>
+
+  <!-- SALESFORCE VS HUBSPOT -->
+  <h2 class="section-title">Salesforce vs. HubSpot: The Decision Guide</h2>
+  <div class="section-intro">This is the most common CRM decision SaaS companies face at $5M–$30M ARR. Both are excellent products. The choice depends on your motion, team size, and technical resources — not marketing messaging.</div>
+
+  <div class="decision-row">
+    <div class="decision-card sf">
+      <div class="decision-card-title">Choose Salesforce when...</div>
+      <ul>
+        <li>ARR &gt;$20M or you plan to reach it within 18 months</li>
+        <li>Enterprise motion — complex deal structures, multi-stakeholder, custom approval workflows</li>
+        <li>You need sophisticated territory management (Enterprise Territory Management module)</li>
+        <li>You have or plan to hire a dedicated Salesforce Admin</li>
+        <li>Your reporting needs are complex (multi-object roll-up reports, custom formula fields)</li>
+        <li>You have multiple sales products/business units that need separate pipeline tracking</li>
+        <li>Regulatory or compliance requirements need Salesforce Shield or advanced security</li>
+        <li>You need CPQ (Salesforce CPQ is significantly more powerful than HubSpot's equivalent)</li>
+      </ul>
+    </div>
+    <div class="decision-card hs">
+      <div class="decision-card-title">Choose HubSpot when...</div>
+      <ul>
+        <li>ARR &lt;$20M with a primarily inbound or PLG motion</li>
+        <li>Small sales team (&lt;15 AEs) where marketing + sales CRM alignment is the priority</li>
+        <li>Your marketing team uses HubSpot MAP — native CRM/MAP integration is a significant advantage</li>
+        <li>No dedicated CRM admin on staff — HubSpot requires significantly less technical overhead</li>
+        <li>Self-service/SMB motion where contact-level tracking and automation is more important than deal complexity</li>
+        <li>Budget constraint — HubSpot Sales Hub is meaningfully less expensive at equivalent functionality for small teams</li>
+        <li>You want a CRM that non-technical users can configure without a developer</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="callout callout-warning">
+    <div class="callout-title">Migration Warning</div>
+    <p>Migrating from HubSpot to Salesforce (or vice versa) costs $150K–$400K in implementation time, data migration, integration re-work, and productivity loss. Do not choose a CRM you'll need to migrate from within 3 years. Over-invest in the decision. If you're growing fast, evaluate where you'll be in 4 years, not where you are today.</p>
+  </div>
+
+  <!-- AUDIT CHECKLIST -->
+  <h2 class="section-title">The CRM Architecture Audit Checklist</h2>
+  <div class="section-intro">Run this audit when you inherit a CRM, onboard a new RevOps hire, or haven't done a systematic review in 12 months.</div>
+
+  <div style="background: var(--surface); border: 1.5px solid var(--border); border-radius: 10px; padding: 24px;">
+    <div style="font-size:12px; font-weight:700; letter-spacing:1px; text-transform:uppercase; color: var(--text-muted); margin-bottom:16px;">DATA MODEL</div>
+    <div class="audit-item"><div class="audit-check"></div><div><div class="audit-text">All Opportunities are linked to an Account (no orphaned Opportunities)</div><div class="audit-category">Data integrity</div></div></div>
+    <div class="audit-item"><div class="audit-check"></div><div><div class="audit-text">All Contacts are linked to an Account (no orphaned Contacts)</div><div class="audit-category">Data integrity</div></div></div>
+    <div class="audit-item"><div class="audit-check"></div><div><div class="audit-text">Duplicate Account rate is &lt;3% (run deduplication report)</div><div class="audit-category">Hygiene</div></div></div>
+    <div class="audit-item"><div class="audit-check"></div><div><div class="audit-text">All open Opportunities have a Close Date in the future (no stale open pipeline)</div><div class="audit-category">Hygiene</div></div></div>
+    <div class="audit-item"><div class="audit-check"></div><div><div class="audit-text">Stage definitions are documented in CRM field help text — not just a Word doc</div><div class="audit-category">Process</div></div></div>
+    <div style="font-size:12px; font-weight:700; letter-spacing:1px; text-transform:uppercase; color: var(--text-muted); margin: 20px 0 16px;">FIELD QUALITY</div>
+    <div class="audit-item"><div class="audit-check"></div><div><div class="audit-text">Lead Source field is populated on &gt;90% of Contacts and Opportunities</div><div class="audit-category">Attribution</div></div></div>
+    <div class="audit-item"><div class="audit-check"></div><div><div class="audit-text">Amount/ARR field is populated on 100% of open Opportunities</div><div class="audit-category">Forecast</div></div></div>
+    <div class="audit-item"><div class="audit-check"></div><div><div class="audit-text">Forecast Category is populated on all Stage 2+ Opportunities</div><div class="audit-category">Forecast</div></div></div>
+    <div class="audit-item"><div class="audit-check"></div><div><div class="audit-text">No custom picklist field has "Other" or "N/A" accounting for &gt;10% of values</div><div class="audit-category">Hygiene</div></div></div>
+    <div class="audit-item"><div class="audit-check"></div><div><div class="audit-text">Field registry is up to date — every field has a documented owner and purpose</div><div class="audit-category">Governance</div></div></div>
+    <div style="font-size:12px; font-weight:700; letter-spacing:1px; text-transform:uppercase; color: var(--text-muted); margin: 20px 0 16px;">INTEGRATIONS</div>
+    <div class="audit-item"><div class="audit-check"></div><div><div class="audit-text">Sales engagement platform is logging activities to CRM (no manual logging required)</div><div class="audit-category">Automation</div></div></div>
+    <div class="audit-item"><div class="audit-check"></div><div><div class="audit-text">Marketing automation platform has clean bidirectional sync (test: MQL in MAP = MQL in CRM within 15 minutes)</div><div class="audit-category">Integration</div></div></div>
+    <div class="audit-item"><div class="audit-check"></div><div><div class="audit-text">CS platform health scores are visible in CRM Account records</div><div class="audit-category">Integration</div></div></div>
+    <div class="audit-item"><div class="audit-check"></div><div><div class="audit-text">BI tool connects to data warehouse replica, not live CRM API</div><div class="audit-category">Performance</div></div></div>
+  </div>
+
+  <div class="related-section">
+    <div class="related-title">Related Sections</div>
+    <div class="related-links">
+      <a href="funnel-definitions.html" class="related-link">Funnel Stage Definitions</a>
+      <a href="forecast-methodology.html" class="related-link">Forecast Methodology</a>
+      <a href="revenue-reporting.html" class="related-link">Revenue Reporting</a>
+      <a href="tech-stack.html" class="related-link">Tech Stack</a>
+      <a href="meddicc.html" class="related-link">MEDDICC</a>
+      <a href="territory-design.html" class="related-link">Territory Design</a>
+      <a href="../pages/revops.html" class="related-link">← RevOps Overview</a>
+    </div>
+  </div>
+</div>
+<script data-pplx-inline-edit>
+(function () {
+  if (window === window.top) return;
+
+  const allowedParentOrigins = ["https://www.perplexity.ai","https://perplexity.ai","https://testing.perplexity.ai","https://staging.perplexity.ai","https://*.preview.i.perplexity.ai","http://localhost:3000","http://127.0.0.1:3000","http://localhost:5173","http://127.0.0.1:5173"];
+  const MAX_FONT_BYTES = 500 * 1024;
+  const MAX_TOTAL_FONT_BYTES = 2 * 1024 * 1024;
+  let scrollForwarding = false;
+  let scrollRaf = 0;
+  let trustedTopOrigin = null;
+
+  // Allow entries like "https://*.preview.i.perplexity.ai" — the wildcard
+  // matches a single DNS label (no dots), so "https://*.foo" cannot stretch
+  // across multiple labels.
+  function matchesAllowedOrigin(origin) {
+    if (!origin) return false;
+    for (const entry of allowedParentOrigins) {
+      if (!entry.includes("*")) {
+        if (entry === origin) return true;
+        continue;
+      }
+      const pattern = new RegExp(
+        "^" +
+          entry.replace(/[.+?^${}()|[\]\\]/g, "\\$&").replace(/\*/g, "[^.]+") +
+          "$",
+      );
+      if (pattern.test(origin)) return true;
+    }
+    return false;
+  }
+
+  // Trust decision: when the sender is same-origin-visible (event.origin is a
+  // real origin like https://www.perplexity.ai) we trust event.origin directly.
+  // When event.origin is "null" (opaque broker srcdoc), we fall back to the
+  // broker's stamped `parentOrigin` to identify the top window. The fallback
+  // is claim-only — we rely on the browser's native `targetOrigin` enforcement
+  // on the response path (see postToTrustedTop) to ensure replies can't be
+  // delivered to anyone but the actual top window of that claimed origin.
+  function getTrustedParentOrigin(event) {
+    const forwardedParentOrigin =
+      typeof event.data.parentOrigin === "string" ? event.data.parentOrigin : null;
+    const parentOrigin = event.origin === "null" ? forwardedParentOrigin : event.origin;
+    return matchesAllowedOrigin(parentOrigin) ? parentOrigin : null;
+  }
+
+  // All responses go to window.top with targetOrigin = the allowlisted origin.
+  // An attacker that iframes us inside their own null-origin broker can claim
+  // any parentOrigin they like, but the browser will drop the reply whenever
+  // the real top's origin doesn't match — so the screenshot never leaves.
+  function postToTrustedTop(message) {
+    if (!trustedTopOrigin) return;
+    try {
+      window.top.postMessage(message, trustedTopOrigin);
+    } catch (_error) {}
+  }
+
+  function inlineAll(original, clone) {
+    if (original.nodeType !== 1 || clone.nodeType !== 1) return;
+
+    try {
+      const computedStyle = getComputedStyle(original);
+      // cssText on a computed style is the serialized declaration in modern
+      // Chromium/Safari — a single read beats enumerating ~400 longhand
+      // properties. Firefox returns "" here, so we fall back on empty.
+      const serialized = computedStyle.cssText;
+      if (serialized) {
+        clone.style.cssText = serialized;
+      } else {
+        const parts = new Array(computedStyle.length);
+        for (let index = 0; index < computedStyle.length; index += 1) {
+          const property = computedStyle[index];
+          parts[index] = `${property}:${computedStyle.getPropertyValue(property)};`;
+        }
+        clone.style.cssText = parts.join("");
+      }
+    } catch (_error) {}
+
+    const originalChildren = original.children;
+    const clonedChildren = clone.children;
+    for (
+      let index = 0;
+      index < originalChildren.length && index < clonedChildren.length;
+      index += 1
+    ) {
+      inlineAll(originalChildren[index], clonedChildren[index]);
+    }
+  }
+
+  function extractFontUrl(srcValue) {
+    const matches = [
+      ...srcValue.matchAll(
+        /url\(["']?([^"')]+)["']?\)(?:\s*format\(["']?([^"')]+)["']?\))?/gi,
+      ),
+    ];
+    if (matches.length === 0) return null;
+    const woff2 = matches.find((m) => m[2] && m[2].toLowerCase().includes("woff2"));
+    if (woff2) return woff2[1];
+    const woff = matches.find((m) => m[2] && m[2].toLowerCase().includes("woff"));
+    if (woff) return woff[1];
+    return matches[0][1];
+  }
+
+  // Cache resolved font URL -> data URI across captures. Fonts on a page
+  // essentially never change, and a batch run emits multiple captures back to
+  // back — without this we'd refetch + re-base64 every time.
+  const fontDataUriCache = new Map();
+  const SRC_DECLARATION_RE = /src\s*:\s*[^;}]+/i;
+
+  async function fetchAsDataUri(url) {
+    if (fontDataUriCache.has(url)) return fontDataUriCache.get(url);
+    let dataUri = null;
+    try {
+      const response = await fetch(url, { mode: "cors", credentials: "omit" });
+      if (response.ok) {
+        const blob = await response.blob();
+        if (blob.size <= MAX_FONT_BYTES) {
+          dataUri = await new Promise((resolve) => {
+            const reader = new FileReader();
+            reader.onloadend = () =>
+              resolve(typeof reader.result === "string" ? reader.result : null);
+            reader.onerror = () => resolve(null);
+            reader.readAsDataURL(blob);
+          });
+        }
+      }
+    } catch (_error) {
+      dataUri = null;
+    }
+    fontDataUriCache.set(url, dataUri);
+    return dataUri;
+  }
+
+  function collectFontFaceRuleTexts() {
+    const rules = [];
+    for (const sheet of document.styleSheets) {
+      let cssRules;
+      try {
+        cssRules = sheet.cssRules;
+      } catch (_error) {
+        continue;
+      }
+      if (!cssRules) continue;
+      for (const rule of cssRules) {
+        const cssText = rule.cssText || "";
+        if (cssText.startsWith("@font-face")) rules.push(cssText);
+      }
+    }
+    return rules;
+  }
+
+  async function buildInlinedFontCss() {
+    const ruleTexts = collectFontFaceRuleTexts();
+    if (ruleTexts.length === 0) return null;
+
+    const resolved = ruleTexts.map((cssText) => {
+      if (!SRC_DECLARATION_RE.test(cssText)) return null;
+      const srcMatch = cssText.match(/src\s*:\s*([^;}]+)[;}]/i);
+      if (!srcMatch) return null;
+      const url = extractFontUrl(srcMatch[1]);
+      if (!url) return null;
+      try {
+        return { cssText, url: new URL(url, document.baseURI).href };
+      } catch (_error) {
+        return null;
+      }
+    });
+
+    const dataUris = await Promise.all(
+      resolved.map((entry) => (entry ? fetchAsDataUri(entry.url) : Promise.resolve(null))),
+    );
+
+    const inlined = [];
+    let totalBytes = 0;
+    for (let index = 0; index < resolved.length; index += 1) {
+      const entry = resolved[index];
+      const dataUri = dataUris[index];
+      if (!entry || !dataUri) continue;
+      const approxBytes = dataUri.length * 0.75;
+      if (totalBytes + approxBytes > MAX_TOTAL_FONT_BYTES) break;
+      totalBytes += approxBytes;
+      inlined.push(entry.cssText.replace(SRC_DECLARATION_RE, `src: url("${dataUri}")`));
+    }
+    return inlined.length > 0 ? inlined.join("\n") : null;
+  }
+
+  function stripExternal(clone) {
+    const images = clone.querySelectorAll("img");
+    for (let index = 0; index < images.length; index += 1) {
+      const src = images[index].getAttribute("src");
+      if (src && !src.startsWith("data:")) images[index].removeAttribute("src");
+    }
+
+    const elements = clone.querySelectorAll("*");
+    for (let index = 0; index < elements.length; index += 1) {
+      const style = elements[index].style.cssText;
+      if (style && style.includes("url(")) {
+        elements[index].style.cssText = style.replace(
+          /url\(["']?(?!data:)[^)"']*["']?\)/gi,
+          "none",
+        );
+      }
+    }
+  }
+
+  function emitScroll() {
+    scrollRaf = 0;
+    if (!scrollForwarding) return;
+    postToTrustedTop({
+      type: "INLINE_EDIT_SCROLL",
+      scrollX: window.scrollX,
+      scrollY: window.scrollY,
+    });
+  }
+
+  window.addEventListener(
+    "scroll",
+    function () {
+      if (!scrollForwarding || scrollRaf) return;
+      scrollRaf = requestAnimationFrame(emitScroll);
+    },
+    { passive: true, capture: true },
+  );
+
+  async function handleCaptureRequest(event) {
+    const requestId = event.data.requestId;
+    const scrollX = window.scrollX;
+    const scrollY = window.scrollY;
+    const width = window.innerWidth;
+    const height = window.innerHeight;
+
+    function postResult(dataUrl) {
+      postToTrustedTop({
+        type: "INLINE_EDIT_SCREENSHOT_RESULT",
+        requestId,
+        dataUrl,
+        scrollX,
+        scrollY,
+      });
+    }
+
+    try {
+      // Wait for any pending web fonts to resolve so both inline metrics and
+      // the @font-face inlining below see the same loaded faces.
+      if (document.fonts && document.fonts.ready) {
+        try {
+          await document.fonts.ready;
+        } catch (_error) {}
+      }
+
+      const clone = document.documentElement.cloneNode(true);
+      inlineAll(document.documentElement, clone);
+
+      const removedNodes = clone.querySelectorAll("script,link[rel=\"stylesheet\"],style");
+      for (let index = 0; index < removedNodes.length; index += 1) {
+        removedNodes[index].remove();
+      }
+
+      stripExternal(clone);
+
+      // Re-embed web fonts as data-URI @font-face rules so the SVG rasterizer
+      // can resolve them — external font URLs aren't fetched during
+      // foreignObject rendering, which would otherwise force a fallback face
+      // and change text metrics.
+      const inlinedFontCss = await buildInlinedFontCss();
+      if (inlinedFontCss) {
+        const styleEl = document.createElement("style");
+        styleEl.textContent = inlinedFontCss;
+        const head = clone.querySelector("head");
+        if (head) head.appendChild(styleEl);
+        else clone.insertBefore(styleEl, clone.firstChild);
+      }
+
+      const html = new XMLSerializer().serializeToString(clone);
+      const svg =
+        `<svg xmlns="http://www.w3.org/2000/svg" width="${width}" height="${height}">` +
+        '<foreignObject width="100%" height="100%">' +
+        `<div xmlns="http://www.w3.org/1999/xhtml" style="width:${width}px;height:${height}px;overflow:hidden">` +
+        `<div style="transform:translate(-${scrollX}px,-${scrollY}px);transform-origin:top left">` +
+        html +
+        "</div></div></foreignObject></svg>";
+      const svgUrl = `data:image/svg+xml;charset=utf-8,${encodeURIComponent(svg)}`;
+      const image = new Image();
+      image.onload = function () {
+        const canvas = document.createElement("canvas");
+        canvas.width = width;
+        canvas.height = height;
+        canvas.getContext("2d").drawImage(image, 0, 0);
+        postResult(canvas.toDataURL("image/png"));
+      };
+      image.onerror = function () {
+        postResult(null);
+      };
+      image.src = svgUrl;
+    } catch (_error) {
+      postResult(null);
+    }
+  }
+
+  window.addEventListener("message", function (event) {
+    if (!event.data) return;
+    // Only accept messages from the direct parent frame. Blocks sibling /
+    // unrelated-window postMessage senders that could otherwise reach us.
+    if (event.source !== window.parent) return;
+
+    const trustedParentOrigin = getTrustedParentOrigin(event);
+    if (!trustedParentOrigin) return;
+    trustedTopOrigin = trustedParentOrigin;
+
+    if (event.data.type === "INLINE_EDIT_SCROLL_START") {
+      scrollForwarding = true;
+      emitScroll();
+      return;
+    }
+
+    if (event.data.type === "INLINE_EDIT_SCROLL_STOP") {
+      scrollForwarding = false;
+      if (scrollRaf) cancelAnimationFrame(scrollRaf);
+      scrollRaf = 0;
+      return;
+    }
+
+    if (event.data.type !== "INLINE_EDIT_CAPTURE_REQUEST") return;
+
+    handleCaptureRequest(event);
+  });
+})();
+
+
+</script></body>
+</html>

@@ -1,0 +1,645 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Diagnosing & Fixing Missed Forecasts — SaaS Revenue System</title>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="../assets/shared.css"/>
+  <style>.page-hero { background: #A13544; }</style>
+</head>
+<body>
+<nav class="nav">
+  <span class="nav-logo">SaaS <span>Revenue System</span></span>
+  <span class="nav-sep">|</span>
+  <a href="../index.html" class="nav-back">← Home</a>
+  <span class="nav-sep">|</span>
+  <a href="../pages/phase6.html" class="nav-back">Troubleshooting</a>
+  <span class="nav-sep">|</span>
+  <span class="nav-current">Missed Forecasts</span>
+</nav>
+
+<div class="page-hero">
+  <div class="hero-phase-label">PHASE 6 — TROUBLESHOOTING</div>
+  <div class="hero-title">Diagnosing &amp; Fixing Missed Forecasts</div>
+  <div class="hero-subtitle">A missed forecast is not just a revenue problem — it is a trust and credibility problem. Here is how to diagnose the root cause and build a forecast you can stand behind.</div>
+</div>
+
+<div class="content-wrap">
+  <div class="breadcrumb">
+    <a href="../index.html">Home</a><span class="sep">›</span>
+    <a href="../pages/phase6.html">Troubleshooting</a><span class="sep">›</span>
+    <span class="current">Diagnosing &amp; Fixing Missed Forecasts</span>
+  </div>
+
+  <!-- INTRO -->
+  <div class="section-title">Why Forecast Accuracy Is a Leadership Problem, Not Just a Sales Problem</div>
+  <div class="section-intro">Missing forecast creates a cascade of downstream damage: the board loses confidence in management, the CFO must reforecast hiring and spend, the CS team can't plan capacity, and the company's valuation may suffer if it is pre-IPO or being acquired. A pattern of missed forecasts — not just one — is the fastest path to CRO turnover. The goal of forecast management is not just to predict revenue; it is to build the organizational credibility that enables good business decisions downstream.</div>
+
+  <div class="formula-block">
+    <div class="formula-label">Forecast Accuracy Formula</div>
+    <div class="formula-main">Forecast Accuracy = (1 − |Actual Revenue − Forecasted Revenue| ÷ Forecasted Revenue) × 100</div>
+    <div class="formula-note">World-class: ±5% | Acceptable: ±10% | Warning: ±15% | Crisis: ±20%+ consistently</div>
+  </div>
+
+  <div class="callout callout-warning">
+    <div class="callout-title">⚠ One Miss vs. a Pattern</div>
+    <p>A single miss in a quarter can have legitimate causes (macroeconomic event, key customer emergency, competitive surprise). A pattern of misses — three or more consecutive quarters of forecast accuracy below ±15% — indicates a systemic process failure. This guide addresses both situations but focuses primarily on diagnosing and fixing the systemic pattern.</p>
+  </div>
+
+  <!-- 5 TYPES OF MISSES -->
+  <div class="section-title">The 5 Types of Forecast Misses</div>
+  <div class="section-intro">All forecast misses look the same from the outside: actual revenue below commit. But the root cause varies dramatically, and diagnosing the type determines the fix. The five types require five different interventions.</div>
+
+  <!-- TYPE 1: DEALS SLIP -->
+  <div class="subsection">
+    <div class="subsection-title">Type 1: Deals Slip — Pushed to Next Quarter</div>
+    <p>Slippage is the most common forecast miss type. Deals that were committed for Q1 push to Q2. The pattern: the rep commits a deal in week 4 with a close date of Q end, a "last-minute" procurement or legal issue appears, the deal slips 30–45 days, and the forecast misses. The root cause is almost always an unmapped or poorly understood decision process — the rep committed a close date without knowing the full internal approval requirements.</p>
+  </div>
+
+  <div class="callout callout-definition">
+    <div class="callout-title">How to Detect Deal Slippage as a Pattern</div>
+    <p>Pull all deals from the last 4 quarters that were in "Commit" or "Best Case" in week 8 of a quarter but did not close. Count them. Calculate what percentage of your forecast misses come from late-stage slippage vs. deal death vs. other causes. If slippage accounts for more than 60% of your misses, your decision process mapping is broken — not your pipeline generation.</p>
+  </div>
+
+  <div class="subsection">
+    <div class="subsection-title">CRM Data to Pull for Slippage Analysis</div>
+    <ul class="bullet-list">
+      <li>Close date change history for all opportunities — how many times was the close date pushed, and by how many days on average?</li>
+      <li>Stage at the time of the last close date push — are deals slipping from Stage 4 or Stage 3?</li>
+      <li>MEDDICC Decision Process field completion rate for slipped deals vs. on-time closed deals</li>
+      <li>Deals that slipped and subsequently closed vs. deals that slipped and died — what is the post-slip win rate?</li>
+    </ul>
+  </div>
+
+  <div class="subsection">
+    <div class="subsection-title">Management Intervention for Slippage</div>
+    <ul class="bullet-list">
+      <li>Implement a "close date justification" field: reps must document a specific event (procurement review, board approval, legal sign-off) tied to the close date — not just a guess</li>
+      <li>Require MAP completion for all commit-category deals — the MAP must show all remaining steps and their dates</li>
+      <li>When a deal slips for the first time, the CRO or VP of Sales calls the champion directly — this signals seriousness and often unblocks stalled steps</li>
+    </ul>
+  </div>
+
+  <!-- TYPE 2: DEALS DIE -->
+  <div class="subsection">
+    <div class="subsection-title">Type 2: Deals Die — Unexpected Late-Stage Losses</div>
+    <p>The nightmare scenario: a deal that was in "Commit" dies in the last 2 weeks of a quarter. The champion goes dark, the EB declines without explanation, or the project is canceled. This is almost always caused by: (1) the champion lacked the organizational power to push the deal through, (2) a blocker was never identified, or (3) an executive sponsor at the buyer's company changed (new CFO, M&A, reorg).</p>
+  </div>
+
+  <div class="subsection">
+    <div class="subsection-title">CRM Data to Pull</div>
+    <ul class="bullet-list">
+      <li>Champion strength score at Stage 3 for all deals that died in Stage 4 — was champion weakness flagged?</li>
+      <li>Economic Buyer involvement — was the EB ever on a call? Was their name in the MEDDICC notes?</li>
+      <li>Company news tracker — did the buyer company announce a reorg, M&A, earnings miss, or exec change in the 30 days before the deal died?</li>
+    </ul>
+  </div>
+
+  <div class="subsection">
+    <div class="subsection-title">Management Intervention</div>
+    <ul class="bullet-list">
+      <li>Require champion strength re-assessment at Stage 3→4 gate — manager must validate champion strength before deal enters Commit category</li>
+      <li>Set up a company news alert (Bombora, LinkedIn Sales Navigator, Google Alerts) for all commit-stage accounts to catch EB changes early</li>
+      <li>Add a "deal death post-mortem" template — within 5 days of any commit-stage deal death, reps complete a structured root cause form</li>
+    </ul>
+  </div>
+
+  <!-- TYPE 3: GHOST OPPORTUNITIES -->
+  <div class="subsection">
+    <div class="subsection-title">Type 3: Deals Were Never Real — CRM Hygiene and Ghost Opportunities</div>
+    <p>Ghost opportunities are deals in the CRM that have no real probability of closing — they exist because a rep entered them to show activity, because qualification standards are low, or because reps are reluctant to disqualify deals they worked hard to open. These inflate pipeline, distort forecast models, and lead to systematic over-forecasting when rolled up.</p>
+  </div>
+
+  <div class="callout callout-warning">
+    <div class="callout-title">⚠ Ghost Opportunity Signals</div>
+    <p>A deal is likely a ghost if: it has been in Stage 2 for 90+ days with no next steps, it has had no activity (emails, calls, meetings) in 30+ days, the close date has been pushed more than twice, there is no champion name recorded in MEDDICC, or the rep cannot articulate why the prospect will buy in the next 30 days. Audit every opportunity in Stage 3+ against these criteria monthly.</p>
+  </div>
+
+  <div class="subsection">
+    <div class="subsection-title">Management Intervention</div>
+    <ul class="bullet-list">
+      <li>Implement a quarterly CRM audit: force-disqualify all opportunities with no activity in 45 days and no next step — reps can re-qualify if they re-engage</li>
+      <li>Create a "Nurture" stage for deals that are real but not active — separate from active pipeline in forecast models</li>
+      <li>Reward reps for accurate pipeline, not just large pipeline — tie spiffs to on-time close rate, not just deal creation</li>
+    </ul>
+  </div>
+
+  <!-- TYPE 4: SANDBAGGING -->
+  <div class="subsection">
+    <div class="subsection-title">Type 4: Sandbagging — Reps Under-Commit Then Over-Achieve</div>
+    <p>Sandbagging is the inverse of a miss: reps deliberately keep deals out of commit, surprise the team with late-quarter closes, and manage their own quota attainment through information asymmetry. While it feels good in the short term (the team "beat forecast!"), sandbagging destroys forecast accuracy, makes capacity and hiring planning impossible, and signals a culture of self-protection over transparency.</p>
+  </div>
+
+  <div class="subsection">
+    <div class="subsection-title">How to Detect Sandbagging</div>
+    <p>Pull each rep's commit vs. actual over the last 4 quarters. Calculate the average over-performance ratio. A rep who consistently closes 20–30% above their commit is sandbagging. The tell: their deals never slip, they have remarkably few surprises, and their "upside" deals consistently close. Compare this rep's deal stage velocity against the team average — sandbagged deals will already be Stage 4 when first appearing in commit.</p>
+  </div>
+
+  <div class="subsection">
+    <div class="subsection-title">Management Intervention</div>
+    <ul class="bullet-list">
+      <li>Reward forecast accuracy, not just over-performance — build a "forecast accuracy bonus" into compensation where perfect range forecasting earns an additional multiplier</li>
+      <li>Call out sandbagging directly in 1:1s with data — "You've beaten commit by 28% for 3 straight quarters. What are you not telling me in your forecast call?"</li>
+      <li>Use Gong/Clari to independently score deal likelihood and compare to rep self-reported forecast — gaps reveal sandbagging</li>
+    </ul>
+  </div>
+
+  <!-- TYPE 5: INFLATION -->
+  <div class="subsection">
+    <div class="subsection-title">Type 5: Inflation — Reps Over-Commit and Miss Badly</div>
+    <p>Inflation is the classic forecast miss: reps put too many deals in commit to look confident, the quarter closes at 60–70% of commit, and the CRO must explain a catastrophic miss to the board. Inflation is driven by a culture where bad news is punished — reps learn that under-committing gets them in trouble immediately, while over-committing buys them time and avoids awkward conversations until quarter-end.</p>
+  </div>
+
+  <div class="subsection">
+    <div class="subsection-title">Management Intervention</div>
+    <ul class="bullet-list">
+      <li>Explicitly model and reward early bad news — a rep who surfaces a deal risk in week 6 should be praised, not punished</li>
+      <li>Create a "Risk" forecast category that sits between Best Case and Commit — reps can flag deals they are uncertain about without losing them from the forecast</li>
+      <li>Implement manager-led deal scoring that is independent of rep self-assessment — use the manager score as the primary forecast input, not the rep's</li>
+    </ul>
+  </div>
+
+  <!-- FORECAST AUDIT PROCESS -->
+  <div class="section-title">The Forecast Audit Process: Last 3 Quarters</div>
+  <div class="section-intro">The fastest way to diagnose your specific forecast problem is to run a structured audit of the last 3 quarters. This tells you which type of miss is dominant and where the breakdown occurs in your process.</div>
+
+  <ol class="step-list">
+    <li>
+      <div class="step-content">
+        <span class="step-title">Pull the Week-8 Forecast vs. Actual for Each Quarter</span>
+        Extract the CRM snapshot of all commit and best-case deals as of week 8 of each of the last 3 quarters. Compare that snapshot to what actually closed. Categorize each deal as: closed on time (hit), slipped (pushed to next Q), died (lost or no-decision after being in commit), or never entered (appeared in final week — likely sandbag).
+      </div>
+    </li>
+    <li>
+      <div class="step-content">
+        <span class="step-title">Categorize Each Miss by Type</span>
+        Using the 5 types above, assign each miss a type. Calculate what percentage of your total revenue miss came from each type across the 3 quarters. If 70% of missed revenue came from slipped deals, you have a decision process problem. If 70% came from dead deals, you have a champion/EB problem. The dominant type determines the primary fix.
+      </div>
+    </li>
+    <li>
+      <div class="step-content">
+        <span class="step-title">Run Rep-Level Analysis</span>
+        Do certain reps have consistently worse forecast accuracy than others? Is the problem isolated to 1–2 reps (coaching issue) or distributed across the team (process issue)? Segment by rep and by segment to identify whether the problem is individual or systemic.
+      </div>
+    </li>
+    <li>
+      <div class="step-content">
+        <span class="step-title">Identify the Earliest Point of Failure</span>
+        For your dominant miss type, trace back to the earliest point in the sales process where the future miss was detectable. For slipped deals: was the decision process incomplete at Stage 3? For dead deals: was champion strength low at Stage 2? This pinpoints where the process gate needs to be added.
+      </div>
+    </li>
+  </ol>
+
+  <!-- MEDDICC REVIEW -->
+  <div class="section-title">Building a Stage-Gate MEDDICC Review to Prevent Future Misses</div>
+  <div class="section-intro">The most effective structural fix for chronic forecast misses is adding MEDDICC-based stage gates that prevent deals from advancing to Commit unless critical qualification criteria are met. This removes the forecast inflation that comes from deals being promoted based on rep optimism rather than factual buyer signals.</div>
+
+  <table class="data-table">
+    <thead>
+      <tr>
+        <th>Stage Gate</th>
+        <th>MEDDICC Elements Required</th>
+        <th>Additional Requirements</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>Stage 1 → Stage 2 (Discovery)</td>
+        <td>Pain identified; Metrics (problem cost estimated)</td>
+        <td>Champion name identified; Next step scheduled</td>
+      </tr>
+      <tr>
+        <td>Stage 2 → Stage 3 (Validation)</td>
+        <td>Economic Buyer identified; Decision Criteria documented; Decision Process mapped</td>
+        <td>MAP in place; EB meeting scheduled or completed</td>
+      </tr>
+      <tr>
+        <td>Stage 3 → Stage 4 (Proposal)</td>
+        <td>All 7 MEDDICC elements documented; Champion strength ≥ 4/5</td>
+        <td>EB conversation completed; Competition identified; Security/legal review mapped</td>
+      </tr>
+      <tr>
+        <td>Stage 4 → Commit Forecast</td>
+        <td>All MEDDICC elements validated by manager; Close date tied to specific event</td>
+        <td>MAP has clear close date; No open procurement blockers; Manager approved</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <!-- FORECAST CALL DIAGNOSTIC -->
+  <div class="section-title">The Forecast Call Diagnostic: Questions That Identify Risk</div>
+  <div class="section-intro">The weekly forecast call is your primary real-time risk detection tool. Most forecast calls fail because managers ask "what's your commit this week?" and accept the answer. Effective forecast calls interrogate the deals behind the numbers.</div>
+
+  <div class="subsection">
+    <div class="subsection-title">10 Questions to Ask in Every Commit-Stage Deal Review</div>
+    <ul class="bullet-list">
+      <li>"When did you last speak with the economic buyer, and what did they say?"</li>
+      <li>"What is the next step, what is the specific date, and who owns it on the buyer's side?"</li>
+      <li>"Have you mapped every remaining step required to get this signed by [close date]? Walk me through it."</li>
+      <li>"What is the single biggest risk in this deal right now and what are you doing about it?"</li>
+      <li>"Who inside the company is opposed to this purchase, and how is your champion handling that?"</li>
+      <li>"What would cause this deal to slip 30 days?"</li>
+      <li>"Has procurement been initiated? Have they given you a timeline for contract review?"</li>
+      <li>"What does your champion need from you in the next 7 days to keep this on track?"</li>
+      <li>"If this doesn't close this quarter, what is your replacement in pipeline?"</li>
+      <li>"On a scale of 1–10, how confident are you this closes by [date], and what would make it a 10?"</li>
+    </ul>
+  </div>
+
+  <!-- 90-DAY IMPROVEMENT PLAN -->
+  <div class="section-title">Improving Forecast Accuracy in 90 Days</div>
+
+  <ol class="step-list">
+    <li>
+      <div class="step-content">
+        <span class="step-title">Days 1–14: Audit and Classify</span>
+        Run the 3-quarter forecast audit. Classify all current pipeline into forecast categories using the 5-type framework. Identify the dominant miss type. Present findings to the sales leadership team and agree on primary intervention.
+      </div>
+    </li>
+    <li>
+      <div class="step-content">
+        <span class="step-title">Days 15–30: Implement Stage Gates</span>
+        Add MEDDICC fields to CRM opportunity record. Define stage gate criteria. Train managers on the new qualification standards. Run a one-time pipeline scrub: advance or disqualify all existing deals based on new criteria.
+      </div>
+    </li>
+    <li>
+      <div class="step-content">
+        <span class="step-title">Days 31–60: Upgrade the Forecast Call</span>
+        Redesign the weekly forecast call structure using the 10 diagnostic questions. Train all managers on deal interrogation techniques. Deploy a conversation intelligence tool (Clari, Gong, Boostup) to provide deal risk scoring independent of rep self-assessment.
+      </div>
+    </li>
+    <li>
+      <div class="step-content">
+        <span class="step-title">Days 61–90: Measure and Iterate</span>
+        Calculate week-8 forecast accuracy for the current quarter. Compare to prior quarters. Identify remaining sources of miss. Adjust stage gate criteria and forecast call process based on findings. Report forecast accuracy as a KPI to the board starting this quarter.
+      </div>
+    </li>
+  </ol>
+
+  <div class="metric-grid">
+    <div class="metric-card">
+      <div class="m-label">Target Forecast Accuracy</div>
+      <div class="m-value">±5%</div>
+      <div class="m-desc">World-class. Most Series C+ companies target ±10% as a starting goal.</div>
+    </div>
+    <div class="metric-card">
+      <div class="m-label">Deal Slip Rate Target</div>
+      <div class="m-value">&lt;15%</div>
+      <div class="m-desc">Of commit-stage deals, less than 15% should push to next quarter.</div>
+    </div>
+    <div class="metric-card">
+      <div class="m-label">Late-Stage Death Rate</div>
+      <div class="m-value">&lt;5%</div>
+      <div class="m-desc">Of Stage 4 commit deals, less than 5% should die unexpectedly.</div>
+    </div>
+    <div class="metric-card">
+      <div class="m-label">MEDDICC Completion</div>
+      <div class="m-value">5/7</div>
+      <div class="m-desc">Minimum MEDDICC elements required before entering commit forecast category.</div>
+    </div>
+  </div>
+
+  <div class="related-section">
+    <div class="related-title">Related Sections</div>
+    <div class="related-links">
+      <a class="related-link" href="low-pipeline.html">Low Pipeline Volume</a>
+      <a class="related-link" href="low-win-rate.html">Low Win Rates</a>
+      <a class="related-link" href="long-sales-cycles.html">Long Sales Cycles</a>
+      <a class="related-link" href="../subpages/meddicc.html">MEDDICC Framework</a>
+      <a class="related-link" href="../subpages/forecast-integrity.html">Forecast Integrity</a>
+      <a class="related-link" href="../subpages/management-cadence.html">Management Cadence</a>
+      <a class="related-link" href="../subpages/champion-building.html">Champion Building</a>
+    </div>
+  </div>
+</div>
+<script data-pplx-inline-edit>
+(function () {
+  if (window === window.top) return;
+
+  const allowedParentOrigins = ["https://www.perplexity.ai","https://perplexity.ai","https://testing.perplexity.ai","https://staging.perplexity.ai","https://*.preview.i.perplexity.ai","http://localhost:3000","http://127.0.0.1:3000","http://localhost:5173","http://127.0.0.1:5173"];
+  const MAX_FONT_BYTES = 500 * 1024;
+  const MAX_TOTAL_FONT_BYTES = 2 * 1024 * 1024;
+  let scrollForwarding = false;
+  let scrollRaf = 0;
+  let trustedTopOrigin = null;
+
+  // Allow entries like "https://*.preview.i.perplexity.ai" — the wildcard
+  // matches a single DNS label (no dots), so "https://*.foo" cannot stretch
+  // across multiple labels.
+  function matchesAllowedOrigin(origin) {
+    if (!origin) return false;
+    for (const entry of allowedParentOrigins) {
+      if (!entry.includes("*")) {
+        if (entry === origin) return true;
+        continue;
+      }
+      const pattern = new RegExp(
+        "^" +
+          entry.replace(/[.+?^${}()|[\]\\]/g, "\\$&").replace(/\*/g, "[^.]+") +
+          "$",
+      );
+      if (pattern.test(origin)) return true;
+    }
+    return false;
+  }
+
+  // Trust decision: when the sender is same-origin-visible (event.origin is a
+  // real origin like https://www.perplexity.ai) we trust event.origin directly.
+  // When event.origin is "null" (opaque broker srcdoc), we fall back to the
+  // broker's stamped `parentOrigin` to identify the top window. The fallback
+  // is claim-only — we rely on the browser's native `targetOrigin` enforcement
+  // on the response path (see postToTrustedTop) to ensure replies can't be
+  // delivered to anyone but the actual top window of that claimed origin.
+  function getTrustedParentOrigin(event) {
+    const forwardedParentOrigin =
+      typeof event.data.parentOrigin === "string" ? event.data.parentOrigin : null;
+    const parentOrigin = event.origin === "null" ? forwardedParentOrigin : event.origin;
+    return matchesAllowedOrigin(parentOrigin) ? parentOrigin : null;
+  }
+
+  // All responses go to window.top with targetOrigin = the allowlisted origin.
+  // An attacker that iframes us inside their own null-origin broker can claim
+  // any parentOrigin they like, but the browser will drop the reply whenever
+  // the real top's origin doesn't match — so the screenshot never leaves.
+  function postToTrustedTop(message) {
+    if (!trustedTopOrigin) return;
+    try {
+      window.top.postMessage(message, trustedTopOrigin);
+    } catch (_error) {}
+  }
+
+  function inlineAll(original, clone) {
+    if (original.nodeType !== 1 || clone.nodeType !== 1) return;
+
+    try {
+      const computedStyle = getComputedStyle(original);
+      // cssText on a computed style is the serialized declaration in modern
+      // Chromium/Safari — a single read beats enumerating ~400 longhand
+      // properties. Firefox returns "" here, so we fall back on empty.
+      const serialized = computedStyle.cssText;
+      if (serialized) {
+        clone.style.cssText = serialized;
+      } else {
+        const parts = new Array(computedStyle.length);
+        for (let index = 0; index < computedStyle.length; index += 1) {
+          const property = computedStyle[index];
+          parts[index] = `${property}:${computedStyle.getPropertyValue(property)};`;
+        }
+        clone.style.cssText = parts.join("");
+      }
+    } catch (_error) {}
+
+    const originalChildren = original.children;
+    const clonedChildren = clone.children;
+    for (
+      let index = 0;
+      index < originalChildren.length && index < clonedChildren.length;
+      index += 1
+    ) {
+      inlineAll(originalChildren[index], clonedChildren[index]);
+    }
+  }
+
+  function extractFontUrl(srcValue) {
+    const matches = [
+      ...srcValue.matchAll(
+        /url\(["']?([^"')]+)["']?\)(?:\s*format\(["']?([^"')]+)["']?\))?/gi,
+      ),
+    ];
+    if (matches.length === 0) return null;
+    const woff2 = matches.find((m) => m[2] && m[2].toLowerCase().includes("woff2"));
+    if (woff2) return woff2[1];
+    const woff = matches.find((m) => m[2] && m[2].toLowerCase().includes("woff"));
+    if (woff) return woff[1];
+    return matches[0][1];
+  }
+
+  // Cache resolved font URL -> data URI across captures. Fonts on a page
+  // essentially never change, and a batch run emits multiple captures back to
+  // back — without this we'd refetch + re-base64 every time.
+  const fontDataUriCache = new Map();
+  const SRC_DECLARATION_RE = /src\s*:\s*[^;}]+/i;
+
+  async function fetchAsDataUri(url) {
+    if (fontDataUriCache.has(url)) return fontDataUriCache.get(url);
+    let dataUri = null;
+    try {
+      const response = await fetch(url, { mode: "cors", credentials: "omit" });
+      if (response.ok) {
+        const blob = await response.blob();
+        if (blob.size <= MAX_FONT_BYTES) {
+          dataUri = await new Promise((resolve) => {
+            const reader = new FileReader();
+            reader.onloadend = () =>
+              resolve(typeof reader.result === "string" ? reader.result : null);
+            reader.onerror = () => resolve(null);
+            reader.readAsDataURL(blob);
+          });
+        }
+      }
+    } catch (_error) {
+      dataUri = null;
+    }
+    fontDataUriCache.set(url, dataUri);
+    return dataUri;
+  }
+
+  function collectFontFaceRuleTexts() {
+    const rules = [];
+    for (const sheet of document.styleSheets) {
+      let cssRules;
+      try {
+        cssRules = sheet.cssRules;
+      } catch (_error) {
+        continue;
+      }
+      if (!cssRules) continue;
+      for (const rule of cssRules) {
+        const cssText = rule.cssText || "";
+        if (cssText.startsWith("@font-face")) rules.push(cssText);
+      }
+    }
+    return rules;
+  }
+
+  async function buildInlinedFontCss() {
+    const ruleTexts = collectFontFaceRuleTexts();
+    if (ruleTexts.length === 0) return null;
+
+    const resolved = ruleTexts.map((cssText) => {
+      if (!SRC_DECLARATION_RE.test(cssText)) return null;
+      const srcMatch = cssText.match(/src\s*:\s*([^;}]+)[;}]/i);
+      if (!srcMatch) return null;
+      const url = extractFontUrl(srcMatch[1]);
+      if (!url) return null;
+      try {
+        return { cssText, url: new URL(url, document.baseURI).href };
+      } catch (_error) {
+        return null;
+      }
+    });
+
+    const dataUris = await Promise.all(
+      resolved.map((entry) => (entry ? fetchAsDataUri(entry.url) : Promise.resolve(null))),
+    );
+
+    const inlined = [];
+    let totalBytes = 0;
+    for (let index = 0; index < resolved.length; index += 1) {
+      const entry = resolved[index];
+      const dataUri = dataUris[index];
+      if (!entry || !dataUri) continue;
+      const approxBytes = dataUri.length * 0.75;
+      if (totalBytes + approxBytes > MAX_TOTAL_FONT_BYTES) break;
+      totalBytes += approxBytes;
+      inlined.push(entry.cssText.replace(SRC_DECLARATION_RE, `src: url("${dataUri}")`));
+    }
+    return inlined.length > 0 ? inlined.join("\n") : null;
+  }
+
+  function stripExternal(clone) {
+    const images = clone.querySelectorAll("img");
+    for (let index = 0; index < images.length; index += 1) {
+      const src = images[index].getAttribute("src");
+      if (src && !src.startsWith("data:")) images[index].removeAttribute("src");
+    }
+
+    const elements = clone.querySelectorAll("*");
+    for (let index = 0; index < elements.length; index += 1) {
+      const style = elements[index].style.cssText;
+      if (style && style.includes("url(")) {
+        elements[index].style.cssText = style.replace(
+          /url\(["']?(?!data:)[^)"']*["']?\)/gi,
+          "none",
+        );
+      }
+    }
+  }
+
+  function emitScroll() {
+    scrollRaf = 0;
+    if (!scrollForwarding) return;
+    postToTrustedTop({
+      type: "INLINE_EDIT_SCROLL",
+      scrollX: window.scrollX,
+      scrollY: window.scrollY,
+    });
+  }
+
+  window.addEventListener(
+    "scroll",
+    function () {
+      if (!scrollForwarding || scrollRaf) return;
+      scrollRaf = requestAnimationFrame(emitScroll);
+    },
+    { passive: true, capture: true },
+  );
+
+  async function handleCaptureRequest(event) {
+    const requestId = event.data.requestId;
+    const scrollX = window.scrollX;
+    const scrollY = window.scrollY;
+    const width = window.innerWidth;
+    const height = window.innerHeight;
+
+    function postResult(dataUrl) {
+      postToTrustedTop({
+        type: "INLINE_EDIT_SCREENSHOT_RESULT",
+        requestId,
+        dataUrl,
+        scrollX,
+        scrollY,
+      });
+    }
+
+    try {
+      // Wait for any pending web fonts to resolve so both inline metrics and
+      // the @font-face inlining below see the same loaded faces.
+      if (document.fonts && document.fonts.ready) {
+        try {
+          await document.fonts.ready;
+        } catch (_error) {}
+      }
+
+      const clone = document.documentElement.cloneNode(true);
+      inlineAll(document.documentElement, clone);
+
+      const removedNodes = clone.querySelectorAll("script,link[rel=\"stylesheet\"],style");
+      for (let index = 0; index < removedNodes.length; index += 1) {
+        removedNodes[index].remove();
+      }
+
+      stripExternal(clone);
+
+      // Re-embed web fonts as data-URI @font-face rules so the SVG rasterizer
+      // can resolve them — external font URLs aren't fetched during
+      // foreignObject rendering, which would otherwise force a fallback face
+      // and change text metrics.
+      const inlinedFontCss = await buildInlinedFontCss();
+      if (inlinedFontCss) {
+        const styleEl = document.createElement("style");
+        styleEl.textContent = inlinedFontCss;
+        const head = clone.querySelector("head");
+        if (head) head.appendChild(styleEl);
+        else clone.insertBefore(styleEl, clone.firstChild);
+      }
+
+      const html = new XMLSerializer().serializeToString(clone);
+      const svg =
+        `<svg xmlns="http://www.w3.org/2000/svg" width="${width}" height="${height}">` +
+        '<foreignObject width="100%" height="100%">' +
+        `<div xmlns="http://www.w3.org/1999/xhtml" style="width:${width}px;height:${height}px;overflow:hidden">` +
+        `<div style="transform:translate(-${scrollX}px,-${scrollY}px);transform-origin:top left">` +
+        html +
+        "</div></div></foreignObject></svg>";
+      const svgUrl = `data:image/svg+xml;charset=utf-8,${encodeURIComponent(svg)}`;
+      const image = new Image();
+      image.onload = function () {
+        const canvas = document.createElement("canvas");
+        canvas.width = width;
+        canvas.height = height;
+        canvas.getContext("2d").drawImage(image, 0, 0);
+        postResult(canvas.toDataURL("image/png"));
+      };
+      image.onerror = function () {
+        postResult(null);
+      };
+      image.src = svgUrl;
+    } catch (_error) {
+      postResult(null);
+    }
+  }
+
+  window.addEventListener("message", function (event) {
+    if (!event.data) return;
+    // Only accept messages from the direct parent frame. Blocks sibling /
+    // unrelated-window postMessage senders that could otherwise reach us.
+    if (event.source !== window.parent) return;
+
+    const trustedParentOrigin = getTrustedParentOrigin(event);
+    if (!trustedParentOrigin) return;
+    trustedTopOrigin = trustedParentOrigin;
+
+    if (event.data.type === "INLINE_EDIT_SCROLL_START") {
+      scrollForwarding = true;
+      emitScroll();
+      return;
+    }
+
+    if (event.data.type === "INLINE_EDIT_SCROLL_STOP") {
+      scrollForwarding = false;
+      if (scrollRaf) cancelAnimationFrame(scrollRaf);
+      scrollRaf = 0;
+      return;
+    }
+
+    if (event.data.type !== "INLINE_EDIT_CAPTURE_REQUEST") return;
+
+    handleCaptureRequest(event);
+  });
+})();
+
+
+</script></body>
+</html>

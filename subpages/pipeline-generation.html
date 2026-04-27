@@ -1,0 +1,897 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Pipeline Generation Discipline — SaaS Revenue System</title>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="../assets/shared.css"/>
+  <style>
+    .page-hero { background: #964219; }
+    .ph4-accent { color: #964219; }
+    .coverage-bar { display: flex; align-items: stretch; gap: 0; border-radius: 8px; overflow: hidden; margin: 20px 0; }
+    .coverage-seg { padding: 16px 20px; flex: 1; color: #fff; }
+    .coverage-seg .cs-label { font-size: 11px; font-weight: 700; letter-spacing: 1px; text-transform: uppercase; opacity: 0.75; margin-bottom: 4px; }
+    .coverage-seg .cs-val { font-size: 20px; font-weight: 700; margin-bottom: 2px; }
+    .coverage-seg .cs-note { font-size: 12px; opacity: 0.8; }
+    .velocity-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; margin: 20px 0; }
+    .v-card { background: #1C1B19; border-radius: 8px; padding: 16px; text-align: center; }
+    .v-card .vc-op { font-size: 11px; color: #4F98A3; font-weight: 700; letter-spacing: 1px; text-transform: uppercase; margin-bottom: 8px; }
+    .v-card .vc-sym { font-size: 28px; font-weight: 700; color: #fff; margin-bottom: 4px; }
+    .v-card .vc-desc { font-size: 12px; color: #797876; line-height: 1.4; }
+    .velocity-eq { background: #1C1B19; border-radius: 8px; padding: 20px 24px; text-align: center; margin: 20px 0; }
+    .velocity-eq .ve-label { font-size: 11px; color: #4F98A3; font-weight: 700; letter-spacing: 1px; text-transform: uppercase; margin-bottom: 12px; }
+    .velocity-eq .ve-formula { font-family: 'Courier New', monospace; font-size: 16px; color: #fff; }
+    .velocity-eq .ve-note { font-size: 12px; color: #797876; margin-top: 10px; font-family: 'DM Sans', sans-serif; }
+    .source-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin: 20px 0; }
+    .source-card { background: var(--surface); border: 1.5px solid var(--border); border-radius: 8px; padding: 16px; }
+    .source-card .src-type { font-size: 11px; font-weight: 700; letter-spacing: 1px; text-transform: uppercase; color: var(--text-muted); margin-bottom: 6px; }
+    .source-card .src-name { font-size: 15px; font-weight: 700; margin-bottom: 6px; }
+    .source-card .src-desc { font-size: 13px; color: var(--text-muted); line-height: 1.5; }
+    .source-card .src-win { font-size: 12px; font-weight: 600; margin-top: 8px; }
+    .seq-block { background: var(--surface); border: 1.5px solid var(--border); border-radius: 8px; padding: 20px; margin: 16px 0; }
+    .seq-step { display: flex; gap: 16px; align-items: flex-start; margin-bottom: 14px; }
+    .seq-step:last-child { margin-bottom: 0; }
+    .seq-num { min-width: 32px; height: 32px; border-radius: 50%; background: #964219; color: #fff; font-size: 12px; font-weight: 700; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+    .seq-body .seq-title { font-size: 14px; font-weight: 700; margin-bottom: 3px; }
+    .seq-body .seq-detail { font-size: 13px; color: var(--text-muted); line-height: 1.5; }
+    .aging-table-wrap { overflow-x: auto; }
+    .highlight-row td { background: #fff8f0 !important; font-weight: 600; }
+    .framework-box { border: 2px solid #964219; border-radius: 8px; padding: 20px 24px; margin: 16px 0; }
+    .framework-box .fb-title { font-size: 13px; font-weight: 700; letter-spacing: 1px; text-transform: uppercase; color: #964219; margin-bottom: 12px; }
+    .trigger-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; margin: 16px 0; }
+    .trigger-card { background: var(--surface); border: 1.5px solid var(--border); border-radius: 8px; padding: 14px 16px; }
+    .trigger-card .tc-icon { font-size: 20px; margin-bottom: 6px; }
+    .trigger-card .tc-name { font-size: 14px; font-weight: 700; margin-bottom: 4px; }
+    .trigger-card .tc-desc { font-size: 12px; color: var(--text-muted); line-height: 1.4; }
+    @media (max-width: 768px) {
+      .velocity-grid { grid-template-columns: repeat(2, 1fr); }
+      .source-grid { grid-template-columns: 1fr; }
+      .trigger-grid { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+<nav class="nav">
+  <span class="nav-logo">SaaS <span>Revenue System</span></span>
+  <span class="nav-sep">|</span>
+  <a href="../index.html" class="nav-back">← Home</a>
+  <span class="nav-sep">|</span>
+  <a href="../pages/phase4.html" class="nav-back">Phase 4: Execution</a>
+  <span class="nav-sep">|</span>
+  <span class="nav-current">Pipeline Generation Discipline</span>
+</nav>
+
+<div class="page-hero" style="background:#964219">
+  <div class="hero-phase-label">Phase 4 — Execution &amp; Performance Management</div>
+  <div class="hero-title">Pipeline Generation Discipline</div>
+  <div class="hero-subtitle">Pipeline is oxygen. Without consistent, disciplined pipeline generation, everything else in the sales system eventually fails.</div>
+</div>
+
+<div class="content-wrap">
+  <div class="breadcrumb">
+    <a href="../index.html">Home</a>
+    <span class="sep">›</span>
+    <a href="../pages/phase4.html">Phase 4: Execution</a>
+    <span class="sep">›</span>
+    <span class="current">Pipeline Generation Discipline</span>
+  </div>
+
+  <!-- WHY PIPELINE IS EVERYTHING -->
+  <h2 class="section-title">Why Pipeline Is Everything</h2>
+  <p class="section-intro">Anthony Iannarino's central thesis in <em>The Only Sales Guide You'll Ever Need</em> is unambiguous: pipeline creation is the single most important activity in sales — more important than closing, discovery, or any other skill. Closing is downstream of pipeline. If you run out of pipeline, you run out of revenue.</p>
+
+  <div class="subsection">
+    <div class="subsection-title">The Mathematical Reality</div>
+    <p>You cannot forecast, quota, or scale without pipeline. A rep who can close 40% of their pipeline but only sources 50% of their quota in new opportunities will miss. A rep who can close 25% but sources 300% of quota will likely make it. At the organizational level, the math compounds: a 10% shortfall in pipeline entry this quarter becomes a 10–15% revenue miss next quarter, a quarter too late to fix.</p>
+
+    <div class="callout callout-warning">
+      <div class="callout-title">The Lag Problem</div>
+      <p>Pipeline generation deficits are typically invisible for 60–90 days — the length of the average sales cycle. By the time the revenue miss appears in the forecast, it's already too late to course-correct for that quarter. This is why pipeline generation must be a <strong>weekly discipline</strong>, not a quarterly scramble.</p>
+    </div>
+
+    <p>The pipeline coverage ratio makes the math explicit. Every CRO, VP of Sales, and frontline manager should know their coverage number at all times — not because it guarantees success, but because insufficient coverage guarantees failure.</p>
+  </div>
+
+  <!-- COVERAGE RATIO -->
+  <h2 class="section-title">The Pipeline Coverage Ratio — In Depth</h2>
+
+  <div class="formula-block">
+    <div class="formula-label">Core Formula</div>
+    <div class="formula-main">Pipeline Coverage Ratio = Total Qualified Pipeline Value ÷ Revenue Quota</div>
+    <div class="formula-note">Example: $4.2M in qualified pipeline / $1.2M quarterly quota = 3.5× coverage</div>
+  </div>
+
+  <div class="subsection">
+    <div class="subsection-title">Why You Need More Than 1×</div>
+    <p>A 1× coverage ratio would require a 100% win rate — impossible. Win rates across all stages and segments typically range from 20–35%. That alone demands 3–5× coverage before accounting for deal slippage, close date pushes, and unexpected losses. The coverage ratio is your statistical margin of safety.</p>
+  </div>
+
+  <div class="coverage-bar">
+    <div class="coverage-seg" style="background:#c0583a;">
+      <div class="cs-label">SMB</div>
+      <div class="cs-val">3.0×</div>
+      <div class="cs-note">Higher win rates (30–40%), shorter cycles justify lower coverage floor</div>
+    </div>
+    <div class="coverage-seg" style="background:#964219;">
+      <div class="cs-label">Mid-Market</div>
+      <div class="cs-val">3.5×</div>
+      <div class="cs-note">Balanced win rates (25–30%); moderate cycle length</div>
+    </div>
+    <div class="coverage-seg" style="background:#6b3412;">
+      <div class="cs-label">Enterprise</div>
+      <div class="cs-val">4–5×</div>
+      <div class="cs-note">Lower win rates (15–25%), longer cycles, higher slippage</div>
+    </div>
+  </div>
+
+  <div class="subsection">
+    <div class="subsection-title">Weighted Pipeline Coverage</div>
+    <p>Raw coverage counts all pipeline equally regardless of stage. Weighted coverage is more accurate.</p>
+    <div class="formula-block">
+      <div class="formula-label">Weighted Pipeline Formula</div>
+      <div class="formula-main">Weighted Pipeline = Σ (Opportunity Value × Stage Probability %)</div>
+      <div class="formula-note">Example: $500K at Discovery (10%) + $800K at Evaluation (25%) + $400K at Proposal (50%) + $200K at Negotiation (75%)<br/>= $50K + $200K + $200K + $150K = $600K weighted pipeline</div>
+    </div>
+
+    <div class="callout callout-definition">
+      <div class="callout-title">Coverage vs. Confidence</div>
+      <p><strong>Coverage</strong> is a quantity measurement — how much pipeline exists relative to quota. <strong>Confidence</strong> is a quality measurement — how likely that pipeline is to close. A pipeline with 4× coverage made up entirely of Discovery-stage deals has low confidence. A 2.5× pipeline with 60% of value in late stages has high confidence. Both metrics matter; neither alone is sufficient.</p>
+    </div>
+  </div>
+
+  <table class="data-table">
+    <thead>
+      <tr><th>Coverage Ratio</th><th>Interpretation</th><th>Action Required</th></tr>
+    </thead>
+    <tbody>
+      <tr><td>&lt; 2×</td><td>Critical — quota miss almost certain</td><td>Emergency pipeline push, suspend non-prospecting activities</td></tr>
+      <tr><td>2× – 3×</td><td>At risk — quota miss probable without improvement</td><td>Double down on prospecting; weekly inspection</td></tr>
+      <tr><td>3× – 4×</td><td>Adequate for SMB; marginal for Enterprise</td><td>Maintain activity levels; coach quality</td></tr>
+      <tr><td>4× – 5×</td><td>Healthy for most segments</td><td>Focus on pipeline quality and velocity</td></tr>
+      <tr><td>&gt; 5×</td><td>Strong — may indicate stale pipeline if unweighted</td><td>Audit for aging; apply deal or drop discipline</td></tr>
+    </tbody>
+  </table>
+
+  <!-- PIPELINE SOURCES -->
+  <h2 class="section-title">Pipeline Generation Sources</h2>
+  <p class="section-intro">A resilient revenue organization never depends on a single pipeline source. Each source has different economics, time-to-close, and win rates. Understanding your source mix is prerequisite to building a durable pipeline engine.</p>
+
+  <div class="source-grid">
+    <div class="source-card">
+      <div class="src-type">Inbound</div>
+      <div class="src-name">Marketing-Generated</div>
+      <div class="src-desc">Content, SEO, paid ads, webinars, events. Fastest to respond but variable quality and volume.</div>
+      <div class="src-win" style="color:#437A22;">Avg win rate: 25–35%</div>
+    </div>
+    <div class="source-card">
+      <div class="src-type">Outbound</div>
+      <div class="src-name">Rep-Generated</div>
+      <div class="src-desc">Cold outreach, prospecting, sequenced multi-channel campaigns. Higher effort, but rep controls timing and ICP fit.</div>
+      <div class="src-win" style="color:#437A22;">AE self-sourced win rate: 30–45%</div>
+    </div>
+    <div class="source-card">
+      <div class="src-type">SDR-Generated</div>
+      <div class="src-name">BDR / SDR Sourced</div>
+      <div class="src-desc">Outbound prospecting executed by a dedicated SDR/BDR team and handed off to AE at meeting stage.</div>
+      <div class="src-win" style="color:#964219;">Win rate: 20–30% (varies by handoff quality)</div>
+    </div>
+    <div class="source-card">
+      <div class="src-type">Partner</div>
+      <div class="src-name">Channel / Partner</div>
+      <div class="src-desc">Referrals from integration partners, VARs, SIs, and ecosystem relationships. High trust, lower required effort.</div>
+      <div class="src-win" style="color:#437A22;">Win rate: 30–50% (pre-qualified trust)</div>
+    </div>
+    <div class="source-card">
+      <div class="src-type">Referral</div>
+      <div class="src-name">Customer Referrals</div>
+      <div class="src-desc">Warm introductions from happy customers. Highest win rate of any source. Systematically underutilized.</div>
+      <div class="src-win" style="color:#437A22;">Win rate: 40–60%</div>
+    </div>
+    <div class="source-card">
+      <div class="src-type">Expansion</div>
+      <div class="src-name">Existing Customer</div>
+      <div class="src-desc">Upsell, cross-sell, and new department expansion. Lower CAC, faster close. Depends on CS-to-AE collaboration.</div>
+      <div class="src-win" style="color:#437A22;">Win rate: 35–55%</div>
+    </div>
+  </div>
+
+  <div class="callout callout-warning">
+    <div class="callout-title">Inbound Over-Reliance: A Critical Risk</div>
+    <p>The most common pipeline fragility pattern in SaaS: companies that grew on inbound in years 1–3 build sales teams entirely dependent on marketing-generated leads. When inbound volume drops (algorithm change, market saturation, budget cut, competitive surge), they have no outbound muscle. The fix is not "hire SDRs." The fix is <strong>building an outbound culture</strong> starting day one, with AEs who prospect and managers who inspect it.</p>
+  </div>
+
+  <div class="subsection">
+    <div class="subsection-title">Healthy Source Mix Benchmarks</div>
+    <table class="data-table">
+      <thead>
+        <tr><th>Source</th><th>SMB Target Mix</th><th>Mid-Market Target</th><th>Enterprise Target</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>Inbound (Marketing)</td><td>40–60%</td><td>30–40%</td><td>15–25%</td></tr>
+        <tr><td>SDR / BDR</td><td>20–30%</td><td>30–40%</td><td>30–40%</td></tr>
+        <tr><td>AE Self-Sourced</td><td>10–20%</td><td>15–25%</td><td>20–30%</td></tr>
+        <tr><td>Partner / Channel</td><td>5–15%</td><td>10–20%</td><td>15–25%</td></tr>
+        <tr><td>Customer Referral</td><td>5–10%</td><td>5–10%</td><td>5–10%</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- THE OUTBOUND ENGINE -->
+  <h2 class="section-title">The Outbound Engine</h2>
+  <p class="section-intro">Outbound prospecting is both a science and a craft. The science is in the system: sequences, targeting, timing, and measurement. The craft is in the message: relevance, personalization, and genuine value orientation.</p>
+
+  <div class="subsection">
+    <div class="subsection-title">Multi-Channel Sequence Design</div>
+    <p>The most effective outbound programs are multi-channel and multi-touch. Single-channel sequences (email only) consistently underperform. Phone calls 3–5× the response rate of email alone. The optimal sequence layers email, phone, LinkedIn, and video in a choreographed pattern over 2–4 weeks.</p>
+
+    <div class="seq-block">
+      <div style="font-size:13px; font-weight:700; letter-spacing:1px; text-transform:uppercase; color:var(--text-muted); margin-bottom:16px;">Sample 12-Touch Enterprise Sequence (21 Days)</div>
+      <div class="seq-step">
+        <div class="seq-num">1</div>
+        <div class="seq-body">
+          <div class="seq-title">Day 1 — Research + Personalized Email #1</div>
+          <div class="seq-detail">5×5 research: 5 minutes → 5 lines of personalization. Reference a specific trigger event (funding, hire, product launch, earnings). Value hypothesis in subject line. 3–4 sentences max.</div>
+        </div>
+      </div>
+      <div class="seq-step">
+        <div class="seq-num">2</div>
+        <div class="seq-body">
+          <div class="seq-title">Day 2 — LinkedIn Connection Request</div>
+          <div class="seq-detail">Connect with a personalized note. Reference the email or a shared context. No pitch. Build the relationship layer.</div>
+        </div>
+      </div>
+      <div class="seq-step">
+        <div class="seq-num">3</div>
+        <div class="seq-body">
+          <div class="seq-title">Day 3 — Cold Call #1</div>
+          <div class="seq-detail">Reference the email: "I sent you a note about X — wanted to add a voice to it." SNAP framework: Simple, iNvaluable, Align, Priority. 30-second framing maximum before asking a discovery question.</div>
+        </div>
+      </div>
+      <div class="seq-step">
+        <div class="seq-num">4</div>
+        <div class="seq-body">
+          <div class="seq-title">Day 5 — Email #2 (Different Angle)</div>
+          <div class="seq-detail">New value angle. Different pain point. Use a case study, benchmark, or ROI data point. "Three CROs at [similar companies] told us…"</div>
+        </div>
+      </div>
+      <div class="seq-step">
+        <div class="seq-num">5</div>
+        <div class="seq-body">
+          <div class="seq-title">Day 7 — Video Prospecting (Vidyard / Loom)</div>
+          <div class="seq-detail">60-second personalized video. Show their website or LinkedIn in the background. Name them in the thumbnail. Video open rates are 5–8× plain email.</div>
+        </div>
+      </div>
+      <div class="seq-step">
+        <div class="seq-num">6</div>
+        <div class="seq-body">
+          <div class="seq-title">Day 9 — Cold Call #2</div>
+          <div class="seq-detail">Reference the video. If voicemail, leave a 20-second message with a clear callback hook.</div>
+        </div>
+      </div>
+      <div class="seq-step">
+        <div class="seq-num">7–10</div>
+        <div class="seq-body">
+          <div class="seq-title">Days 10–18 — Continued Touches (3 email + 1 call)</div>
+          <div class="seq-detail">Rotate: content share → call → LinkedIn message → break-up email. Each touch should add new value or new information — never just "following up."</div>
+        </div>
+      </div>
+      <div class="seq-step">
+        <div class="seq-num">11</div>
+        <div class="seq-body">
+          <div class="seq-title">Day 21 — Break-Up Email</div>
+          <div class="seq-detail">"I've reached out a few times without hearing back — I'll assume the timing isn't right. If that changes, here's a direct link to book time." Subject: "Closing the loop." Counter-intuitively, break-up emails have the highest reply rate in any sequence.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="subsection">
+    <div class="subsection-title">The 5×5 Research Framework</div>
+    <div class="framework-box">
+      <div class="fb-title">5 Minutes of Research → 5 Lines of Personalization</div>
+      <ul class="bullet-list">
+        <li><strong>Company news:</strong> Funding rounds, M&amp;A, new product launches, earnings calls, leadership changes (Crunchbase, press releases, Google Alerts)</li>
+        <li><strong>Prospect's LinkedIn:</strong> Recent posts, articles, job change, shared connections, alma mater, community involvement</li>
+        <li><strong>Company job postings:</strong> Hiring for specific roles signals budget, pain points, and strategic priorities</li>
+        <li><strong>Competitor intelligence:</strong> Are they using a competitor? Can you find reviews (G2, Gartner Peer Insights) that reveal dissatisfaction?</li>
+        <li><strong>ICP pattern match:</strong> Industry, company size, tech stack, growth trajectory — tie these to your known success patterns</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="subsection">
+    <div class="subsection-title">Cold Calling Frameworks</div>
+    <table class="data-table">
+      <thead>
+        <tr><th>Framework</th><th>Full Name</th><th>Best For</th><th>Core Structure</th></tr>
+      </thead>
+      <tbody>
+        <tr><td><strong>BASHO</strong></td><td>Trigger-Based Outreach</td><td>Account-based, researched calls</td><td>Trigger Event → Hypothesis → Question → Ask</td></tr>
+        <tr><td><strong>SNAP</strong></td><td>Simple, iNvaluable, Align, Priority</td><td>Busy, distracted prospects</td><td>Simplify → Prove value → Align to their world → Create priority</td></tr>
+        <tr><td><strong>Gap Selling</strong></td><td>Keenan's Problem-Centric</td><td>Discovery-forward calls</td><td>Current state → Desired state → Gap → Impact → Solution</td></tr>
+        <tr><td><strong>PVC</strong></td><td>Personalize, Value, CTA</td><td>Voicemails and short touches</td><td>One personal detail → One value statement → One clear ask</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- SDR vs AE -->
+  <h2 class="section-title">SDR vs. AE Prospecting</h2>
+
+  <div class="callout callout-warning">
+    <div class="callout-title">Critical Principle</div>
+    <p>AEs must never stop prospecting even when they have a fully staffed SDR team. AE self-sourced pipeline consistently produces the highest win rates of any source — typically 5–15 percentage points above SDR-generated pipeline — because AEs have deeper product knowledge, stronger business acumen, and personally own the relationship from first contact.</p>
+  </div>
+
+  <div class="subsection">
+    <div class="subsection-title">BDR vs. SDR: The Distinction</div>
+    <table class="data-table">
+      <thead>
+        <tr><th>Role</th><th>Focus</th><th>Primary Activities</th><th>Metric</th></tr>
+      </thead>
+      <tbody>
+        <tr><td><strong>SDR</strong> (Sales Dev Rep)</td><td>Inbound qualification</td><td>Response to MQLs, qualification calls, routing to AE</td><td>MQL-to-SQL conversion rate</td></tr>
+        <tr><td><strong>BDR</strong> (Biz Dev Rep)</td><td>Outbound prospecting</td><td>Cold outreach, account research, sequence execution, meeting booking</td><td>Qualified meetings booked per month</td></tr>
+        <tr><td><strong>Hybrid SDR/BDR</strong></td><td>Both</td><td>Common in early-stage; usually blends both functions with lower efficiency</td><td>Both, weighted by mix</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="subsection">
+    <div class="subsection-title">The SDR-to-AE Handoff Process</div>
+    <p>Poor handoffs destroy the value created in prospecting. The transfer from SDR to AE must be a warm handoff — not a calendar invite with a contact record. Best-in-class handoff process:</p>
+    <ol class="step-list">
+      <li><div class="step-content"><span class="step-title">Pre-meeting brief</span>SDR sends AE a written brief: prospect background, trigger that motivated outreach, what pain point was discussed, what resonated, what the prospect expects from the meeting.</div></li>
+      <li><div class="step-content"><span class="step-title">3-way introduction</span>SDR sends an email introducing the AE to the prospect, re-establishing context and expectation. This is not optional — it signals professionalism and prevents the prospect from feeling "sold to an unknown."</div></li>
+      <li><div class="step-content"><span class="step-title">Joint first call (optional for Enterprise)</span>In Enterprise motions, the SDR joins the first AE call as context carrier. This validates continuity and prevents the prospect from re-explaining themselves.</div></li>
+      <li><div class="step-content"><span class="step-title">CRM transfer with full notes</span>All SDR research, qualification notes, and contact context transferred into CRM before the AE meeting. No "ask the SDR" — all knowledge must be documented.</div></li>
+    </ol>
+  </div>
+
+  <!-- PIPELINE GENERATION MEETING -->
+  <h2 class="section-title">The Pipeline Generation Meeting</h2>
+  <p class="section-intro">A weekly pipeline generation review is one of the highest-leverage activities a sales manager performs. Done well, it reinforces the prospecting habit and surfaces coaching opportunities. Done poorly, it becomes a demoralizing interrogation that drives sandbagging and avoidance.</p>
+
+  <div class="subsection">
+    <div class="subsection-title">Weekly Pipeline Generation Review Structure</div>
+    <ol class="step-list">
+      <li><div class="step-content"><span class="step-title">Pre-meeting preparation (manager)</span>Pull the prospecting activity dashboard before the meeting. Know each rep's numbers before asking. Show you've invested time in their results.</div></li>
+      <li><div class="step-content"><span class="step-title">Activity review (5 min)</span>Review outbound activities: calls made, emails sent, sequences initiated, LinkedIn touches. Not to judge volume alone, but to spot patterns and bottlenecks.</div></li>
+      <li><div class="step-content"><span class="step-title">Meeting and pipeline added (10 min)</span>How many qualified meetings booked? How much pipeline added to CRM this week? What's the running total for the month vs. target?</div></li>
+      <li><div class="step-content"><span class="step-title">Obstacle identification (10 min)</span>"What's getting in the way?" Not "why aren't you prospecting more?" The former surfaces coaching opportunities; the latter creates defensiveness.</div></li>
+      <li><div class="step-content"><span class="step-title">Commit and plan (5 min)</span>Each rep commits to specific prospecting targets for next week. Written in CRM or shared doc. Follow up next meeting.</div></li>
+    </ol>
+
+    <div class="callout callout-best-practice">
+      <div class="callout-title">Manager Principle</div>
+      <p>Inspect pipeline generation <strong>behavior</strong> (activities, quality, approach), not just pipeline generation <strong>outcomes</strong> (meetings, pipeline $). Outcomes lag behaviors by 1–2 weeks. If you only inspect outcomes, you'll always be reacting too late. Coach the process; trust the outcomes to follow.</p>
+    </div>
+  </div>
+
+  <div class="subsection">
+    <div class="subsection-title">Metrics to Inspect Weekly (by Role)</div>
+    <table class="data-table">
+      <thead>
+        <tr><th>Role</th><th>Calls/Day</th><th>Emails/Day</th><th>Sequences Started/Wk</th><th>Meetings Booked/Wk</th><th>Pipeline Added/Mo</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>SDR / BDR (Outbound)</td><td>40–60</td><td>30–50</td><td>15–25</td><td>8–15</td><td>$200K–$600K</td></tr>
+        <tr><td>SDR (Inbound)</td><td>25–40</td><td>20–30</td><td>5–10</td><td>10–20</td><td>$300K–$800K</td></tr>
+        <tr><td>AE (Self-Sourced)</td><td>10–20</td><td>10–20</td><td>5–10</td><td>2–4</td><td>$100K–$400K</td></tr>
+        <tr><td>AE (Enterprise)</td><td>5–10</td><td>8–15</td><td>3–6</td><td>1–3</td><td>$200K–$1M+</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- PIPELINE AGING AND DECAY -->
+  <h2 class="section-title">Pipeline Aging and Decay</h2>
+  <p class="section-intro">Not all pipeline is created equal. A deal that entered the pipeline 180 days ago is worth dramatically less than a deal that entered 30 days ago, even if they carry the same nominal value. This is the concept of pipeline half-life.</p>
+
+  <div class="subsection">
+    <div class="subsection-title">Pipeline Half-Life</div>
+    <p>Research from Salesforce and multiple B2B benchmarking studies shows that deals which linger beyond their expected stage duration close at rates 40–60% below average. After twice the expected stage duration, most deals should be treated as phantom pipeline — they may exist in CRM but contribute almost no predictive value to the forecast.</p>
+
+    <table class="data-table aging-table-wrap">
+      <thead>
+        <tr><th>Stage</th><th>Normal Duration</th><th>Yellow Flag</th><th>Red Flag</th><th>Action</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>Discovery</td><td>1–3 weeks</td><td>4 weeks</td><td>6+ weeks</td><td>Re-qualify or mark dormant</td></tr>
+        <tr><td>Evaluation / Demo</td><td>2–5 weeks</td><td>6 weeks</td><td>10+ weeks</td><td>Challenge champion, get exec alignment</td></tr>
+        <tr><td>Proposal / Quote</td><td>1–3 weeks</td><td>4 weeks</td><td>6+ weeks</td><td>Force decision: proceed or pause</td></tr>
+        <tr><td>Negotiation</td><td>1–3 weeks</td><td>4 weeks</td><td>6+ weeks</td><td>Escalate internally or walk</td></tr>
+        <tr class="highlight-row"><td>Any stage</td><td>—</td><td>—</td><td>2× expected</td><td>DEAL OR DROP — explicit decision required</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="subsection">
+    <div class="subsection-title">The Deal or Drop Discipline</div>
+    <p>Every deal that has exceeded its stage-appropriate aging threshold must go through an explicit "deal or drop" review:</p>
+    <ul class="bullet-list">
+      <li><strong>Deal:</strong> Can you define a concrete next step with a specific date and an accountable buyer contact? If yes, log it and keep the deal.</li>
+      <li><strong>Drop:</strong> If you cannot articulate a real next step, remove the deal from the forecast. Move it to "nurture" or close it as lost. False pipeline is more dangerous than no pipeline — it masks a real shortage.</li>
+    </ul>
+  </div>
+
+  <!-- PIPELINE VELOCITY -->
+  <h2 class="section-title">Pipeline Velocity Formula</h2>
+  <p class="section-intro">Pipeline velocity is the most comprehensive single metric of pipeline health. It answers the question: "How fast is revenue moving through our pipeline?" It ties together quantity, quality, deal size, and cycle time into one number.</p>
+
+  <div class="velocity-eq">
+    <div class="ve-label">Pipeline Velocity Formula</div>
+    <div class="ve-formula">Velocity = (# Opportunities × Win Rate % × Average Deal Value) ÷ Average Sales Cycle Length (days)</div>
+    <div class="ve-note">Result = Revenue generated per day from your current pipeline machine</div>
+  </div>
+
+  <div class="velocity-grid">
+    <div class="v-card">
+      <div class="vc-op">Lever 1</div>
+      <div class="vc-sym">#</div>
+      <div class="vc-desc">Number of qualified opportunities. Improved by pipeline generation discipline.</div>
+    </div>
+    <div class="v-card">
+      <div class="vc-op">Lever 2</div>
+      <div class="vc-sym">%</div>
+      <div class="vc-desc">Win rate. Improved by better qualification (MEDDICC), discovery, and competitive execution.</div>
+    </div>
+    <div class="v-card">
+      <div class="vc-op">Lever 3</div>
+      <div class="vc-sym">$</div>
+      <div class="vc-desc">Average deal value. Improved by multi-threading, expansion selling, and value-based pricing.</div>
+    </div>
+    <div class="v-card">
+      <div class="vc-op">Lever 4</div>
+      <div class="vc-sym">⏱</div>
+      <div class="vc-desc">Cycle length. Shortened by urgency creation, champion enablement, and procurement navigation.</div>
+    </div>
+  </div>
+
+  <div class="subsection">
+    <div class="subsection-title">Worked Example</div>
+    <div class="formula-block">
+      <div class="formula-label">Example Calculation</div>
+      <div class="formula-main">Velocity = (80 opps × 28% win rate × $45,000 ACV) ÷ 75 days</div>
+      <div class="formula-main" style="color:#4F98A3; margin-top:8px;">= (80 × 0.28 × $45,000) ÷ 75 = $1,008,000 ÷ 75 = $13,440/day</div>
+      <div class="formula-note">Over a 90-day quarter: $13,440 × 90 = $1.21M expected revenue<br/>
+      If win rate improves to 32%: $15,360/day → $1.38M (+14%)<br/>
+      If cycle shortens to 65 days: $15,507/day → $1.40M (+15%)</div>
+    </div>
+  </div>
+
+  <!-- ACCOUNT-BASED PROSPECTING -->
+  <h2 class="section-title">Account-Based Prospecting</h2>
+  <p class="section-intro">For Mid-Market and Enterprise motions, the most effective prospecting approach is account-based: select a named target list, build multi-threaded entry into each account, and execute coordinated outreach across multiple stakeholders simultaneously.</p>
+
+  <div class="subsection">
+    <div class="subsection-title">Trigger Event Monitoring</div>
+    <p>The highest-converting outbound touches are triggered by a real event in the prospect's world that creates relevance and urgency. Building a systematic trigger monitoring process is one of the highest ROI investments in any outbound program.</p>
+
+    <div class="trigger-grid">
+      <div class="trigger-card">
+        <div class="tc-icon">💰</div>
+        <div class="tc-name">Funding Announcement</div>
+        <div class="tc-desc">New capital means budget, headcount, and initiative expansion. Reach out within 48 hours. "Congratulations on the Series B — companies at your stage typically invest in X next…"</div>
+      </div>
+      <div class="trigger-card">
+        <div class="tc-icon">👤</div>
+        <div class="tc-name">Executive Hire / Change</div>
+        <div class="tc-desc">New VPs and C-suite typically have 90 days to make their mark. They're receptive to solutions that help them win early. The best time to reach a new VP of Sales is week 3–6 of their tenure.</div>
+      </div>
+      <div class="trigger-card">
+        <div class="tc-icon">🚀</div>
+        <div class="tc-name">Product Launch / Expansion</div>
+        <div class="tc-desc">New products, new geographies, new customer segments. Each creates new process gaps and budget priorities. Job postings are a leading indicator of expansion.</div>
+      </div>
+      <div class="trigger-card">
+        <div class="tc-icon">📊</div>
+        <div class="tc-name">Earnings / Press Release</div>
+        <div class="tc-desc">Public companies signal priorities in earnings calls. Listen for pain points, stated initiatives, and investment areas. Align your pitch to stated strategic priorities.</div>
+      </div>
+      <div class="trigger-card">
+        <div class="tc-icon">🏆</div>
+        <div class="tc-name">Award / Recognition</div>
+        <div class="tc-desc">Inc. 5000, Best Places to Work, industry awards. These signal growth and culture — both create budget and tool appetite. Congratulate genuinely before pitching.</div>
+      </div>
+      <div class="trigger-card">
+        <div class="tc-icon">⚡</div>
+        <div class="tc-name">Competitive Displacement</div>
+        <div class="tc-desc">Competitor announces sunset, pricing change, or acquires a rival. Set up Google Alerts and G2 review monitoring for competitor dissatisfaction signals.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="subsection">
+    <div class="subsection-title">Multi-Threading from Day One</div>
+    <p>Account-based prospecting means entering an account through multiple doors simultaneously — not sequentially. The champion may not be the decision-maker. The economic buyer may be two levels above your first contact. End-users may have veto power through technical evaluation. Map all relevant stakeholders in the first week of prospecting and build parallel entry points.</p>
+
+    <div class="callout callout-best-practice">
+      <div class="callout-title">Multi-Threading Rule</div>
+      <p>For any Enterprise deal, you should have active relationships with at minimum <strong>3 stakeholders</strong> before submitting a proposal. Deals with a single thread (champion only) close at 40–50% lower rates and have 2× the slippage risk when that champion leaves, gets promoted, or changes priorities.</p>
+    </div>
+  </div>
+
+  <!-- INDICATORS -->
+  <h2 class="section-title">Leading &amp; Lagging Indicators</h2>
+
+  <div class="subsection">
+    <div class="subsection-title">Leading Indicators (Predict Future Pipeline Health)</div>
+    <div class="indicator-row">
+      <span class="indicator-tag ind-leading">Outbound activities per rep/day</span>
+      <span class="indicator-tag ind-leading">Sequences initiated per rep/week</span>
+      <span class="indicator-tag ind-leading">Meetings booked per rep/week</span>
+      <span class="indicator-tag ind-leading">Pipeline $ added per rep/week</span>
+      <span class="indicator-tag ind-leading">New accounts researched per week</span>
+      <span class="indicator-tag ind-leading">Trigger events actioned within 48h</span>
+    </div>
+
+    <table class="data-table">
+      <thead>
+        <tr><th>Metric</th><th>Measurement</th><th>Best-in-Class Benchmark</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>Outbound activities / rep / day</td><td>Daily, from CRM / dialer</td><td>SDR: 80–100 touches; AE: 20–40</td></tr>
+        <tr><td>Sequences started / week</td><td>Weekly, from sequencing tool</td><td>SDR: 20–30 new accounts</td></tr>
+        <tr><td>Qualified meetings booked / week</td><td>Weekly</td><td>SDR: 8–15; AE: 2–4</td></tr>
+        <tr><td>Pipeline $ added / rep / month</td><td>Monthly from CRM</td><td>3–5× quota equivalent per quarter</td></tr>
+        <tr><td>Call-to-connect rate</td><td>Weekly</td><td>8–12% (varies by industry)</td></tr>
+        <tr><td>Email open rate (outbound)</td><td>Weekly</td><td>25–35% for well-personalized</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="subsection">
+    <div class="subsection-title">Lagging Indicators (Measure Past Pipeline Outcomes)</div>
+    <div class="indicator-row">
+      <span class="indicator-tag ind-lagging">Pipeline coverage ratio</span>
+      <span class="indicator-tag ind-lagging">Pipeline-to-quota ratio at Q start</span>
+      <span class="indicator-tag ind-lagging">Pipeline generated per rep/month</span>
+      <span class="indicator-tag ind-lagging">Pipeline velocity ($/day)</span>
+      <span class="indicator-tag ind-lagging">% pipeline from each source</span>
+      <span class="indicator-tag ind-lagging">Stage conversion rates</span>
+    </div>
+  </div>
+
+  <div class="related-section">
+    <div class="related-title">Related Sections</div>
+    <div class="related-links">
+      <a href="forecast-integrity.html" class="related-link">Forecast Integrity</a>
+      <a href="win-loss-analysis.html" class="related-link">Win/Loss Analysis</a>
+      <a href="meddicc.html" class="related-link">MEDDICC Qualification</a>
+      <a href="outbound-sequencing.html" class="related-link">Outbound Sequencing</a>
+      <a href="sdr-program.html" class="related-link">SDR Program Design</a>
+      <a href="quota-design.html" class="related-link">Quota Design</a>
+      <a href="../pages/phase4.html" class="related-link">← Phase 4 Overview</a>
+    </div>
+  </div>
+</div>
+<script data-pplx-inline-edit>
+(function () {
+  if (window === window.top) return;
+
+  const allowedParentOrigins = ["https://www.perplexity.ai","https://perplexity.ai","https://testing.perplexity.ai","https://staging.perplexity.ai","https://*.preview.i.perplexity.ai","http://localhost:3000","http://127.0.0.1:3000","http://localhost:5173","http://127.0.0.1:5173"];
+  const MAX_FONT_BYTES = 500 * 1024;
+  const MAX_TOTAL_FONT_BYTES = 2 * 1024 * 1024;
+  let scrollForwarding = false;
+  let scrollRaf = 0;
+  let trustedTopOrigin = null;
+
+  // Allow entries like "https://*.preview.i.perplexity.ai" — the wildcard
+  // matches a single DNS label (no dots), so "https://*.foo" cannot stretch
+  // across multiple labels.
+  function matchesAllowedOrigin(origin) {
+    if (!origin) return false;
+    for (const entry of allowedParentOrigins) {
+      if (!entry.includes("*")) {
+        if (entry === origin) return true;
+        continue;
+      }
+      const pattern = new RegExp(
+        "^" +
+          entry.replace(/[.+?^${}()|[\]\\]/g, "\\$&").replace(/\*/g, "[^.]+") +
+          "$",
+      );
+      if (pattern.test(origin)) return true;
+    }
+    return false;
+  }
+
+  // Trust decision: when the sender is same-origin-visible (event.origin is a
+  // real origin like https://www.perplexity.ai) we trust event.origin directly.
+  // When event.origin is "null" (opaque broker srcdoc), we fall back to the
+  // broker's stamped `parentOrigin` to identify the top window. The fallback
+  // is claim-only — we rely on the browser's native `targetOrigin` enforcement
+  // on the response path (see postToTrustedTop) to ensure replies can't be
+  // delivered to anyone but the actual top window of that claimed origin.
+  function getTrustedParentOrigin(event) {
+    const forwardedParentOrigin =
+      typeof event.data.parentOrigin === "string" ? event.data.parentOrigin : null;
+    const parentOrigin = event.origin === "null" ? forwardedParentOrigin : event.origin;
+    return matchesAllowedOrigin(parentOrigin) ? parentOrigin : null;
+  }
+
+  // All responses go to window.top with targetOrigin = the allowlisted origin.
+  // An attacker that iframes us inside their own null-origin broker can claim
+  // any parentOrigin they like, but the browser will drop the reply whenever
+  // the real top's origin doesn't match — so the screenshot never leaves.
+  function postToTrustedTop(message) {
+    if (!trustedTopOrigin) return;
+    try {
+      window.top.postMessage(message, trustedTopOrigin);
+    } catch (_error) {}
+  }
+
+  function inlineAll(original, clone) {
+    if (original.nodeType !== 1 || clone.nodeType !== 1) return;
+
+    try {
+      const computedStyle = getComputedStyle(original);
+      // cssText on a computed style is the serialized declaration in modern
+      // Chromium/Safari — a single read beats enumerating ~400 longhand
+      // properties. Firefox returns "" here, so we fall back on empty.
+      const serialized = computedStyle.cssText;
+      if (serialized) {
+        clone.style.cssText = serialized;
+      } else {
+        const parts = new Array(computedStyle.length);
+        for (let index = 0; index < computedStyle.length; index += 1) {
+          const property = computedStyle[index];
+          parts[index] = `${property}:${computedStyle.getPropertyValue(property)};`;
+        }
+        clone.style.cssText = parts.join("");
+      }
+    } catch (_error) {}
+
+    const originalChildren = original.children;
+    const clonedChildren = clone.children;
+    for (
+      let index = 0;
+      index < originalChildren.length && index < clonedChildren.length;
+      index += 1
+    ) {
+      inlineAll(originalChildren[index], clonedChildren[index]);
+    }
+  }
+
+  function extractFontUrl(srcValue) {
+    const matches = [
+      ...srcValue.matchAll(
+        /url\(["']?([^"')]+)["']?\)(?:\s*format\(["']?([^"')]+)["']?\))?/gi,
+      ),
+    ];
+    if (matches.length === 0) return null;
+    const woff2 = matches.find((m) => m[2] && m[2].toLowerCase().includes("woff2"));
+    if (woff2) return woff2[1];
+    const woff = matches.find((m) => m[2] && m[2].toLowerCase().includes("woff"));
+    if (woff) return woff[1];
+    return matches[0][1];
+  }
+
+  // Cache resolved font URL -> data URI across captures. Fonts on a page
+  // essentially never change, and a batch run emits multiple captures back to
+  // back — without this we'd refetch + re-base64 every time.
+  const fontDataUriCache = new Map();
+  const SRC_DECLARATION_RE = /src\s*:\s*[^;}]+/i;
+
+  async function fetchAsDataUri(url) {
+    if (fontDataUriCache.has(url)) return fontDataUriCache.get(url);
+    let dataUri = null;
+    try {
+      const response = await fetch(url, { mode: "cors", credentials: "omit" });
+      if (response.ok) {
+        const blob = await response.blob();
+        if (blob.size <= MAX_FONT_BYTES) {
+          dataUri = await new Promise((resolve) => {
+            const reader = new FileReader();
+            reader.onloadend = () =>
+              resolve(typeof reader.result === "string" ? reader.result : null);
+            reader.onerror = () => resolve(null);
+            reader.readAsDataURL(blob);
+          });
+        }
+      }
+    } catch (_error) {
+      dataUri = null;
+    }
+    fontDataUriCache.set(url, dataUri);
+    return dataUri;
+  }
+
+  function collectFontFaceRuleTexts() {
+    const rules = [];
+    for (const sheet of document.styleSheets) {
+      let cssRules;
+      try {
+        cssRules = sheet.cssRules;
+      } catch (_error) {
+        continue;
+      }
+      if (!cssRules) continue;
+      for (const rule of cssRules) {
+        const cssText = rule.cssText || "";
+        if (cssText.startsWith("@font-face")) rules.push(cssText);
+      }
+    }
+    return rules;
+  }
+
+  async function buildInlinedFontCss() {
+    const ruleTexts = collectFontFaceRuleTexts();
+    if (ruleTexts.length === 0) return null;
+
+    const resolved = ruleTexts.map((cssText) => {
+      if (!SRC_DECLARATION_RE.test(cssText)) return null;
+      const srcMatch = cssText.match(/src\s*:\s*([^;}]+)[;}]/i);
+      if (!srcMatch) return null;
+      const url = extractFontUrl(srcMatch[1]);
+      if (!url) return null;
+      try {
+        return { cssText, url: new URL(url, document.baseURI).href };
+      } catch (_error) {
+        return null;
+      }
+    });
+
+    const dataUris = await Promise.all(
+      resolved.map((entry) => (entry ? fetchAsDataUri(entry.url) : Promise.resolve(null))),
+    );
+
+    const inlined = [];
+    let totalBytes = 0;
+    for (let index = 0; index < resolved.length; index += 1) {
+      const entry = resolved[index];
+      const dataUri = dataUris[index];
+      if (!entry || !dataUri) continue;
+      const approxBytes = dataUri.length * 0.75;
+      if (totalBytes + approxBytes > MAX_TOTAL_FONT_BYTES) break;
+      totalBytes += approxBytes;
+      inlined.push(entry.cssText.replace(SRC_DECLARATION_RE, `src: url("${dataUri}")`));
+    }
+    return inlined.length > 0 ? inlined.join("\n") : null;
+  }
+
+  function stripExternal(clone) {
+    const images = clone.querySelectorAll("img");
+    for (let index = 0; index < images.length; index += 1) {
+      const src = images[index].getAttribute("src");
+      if (src && !src.startsWith("data:")) images[index].removeAttribute("src");
+    }
+
+    const elements = clone.querySelectorAll("*");
+    for (let index = 0; index < elements.length; index += 1) {
+      const style = elements[index].style.cssText;
+      if (style && style.includes("url(")) {
+        elements[index].style.cssText = style.replace(
+          /url\(["']?(?!data:)[^)"']*["']?\)/gi,
+          "none",
+        );
+      }
+    }
+  }
+
+  function emitScroll() {
+    scrollRaf = 0;
+    if (!scrollForwarding) return;
+    postToTrustedTop({
+      type: "INLINE_EDIT_SCROLL",
+      scrollX: window.scrollX,
+      scrollY: window.scrollY,
+    });
+  }
+
+  window.addEventListener(
+    "scroll",
+    function () {
+      if (!scrollForwarding || scrollRaf) return;
+      scrollRaf = requestAnimationFrame(emitScroll);
+    },
+    { passive: true, capture: true },
+  );
+
+  async function handleCaptureRequest(event) {
+    const requestId = event.data.requestId;
+    const scrollX = window.scrollX;
+    const scrollY = window.scrollY;
+    const width = window.innerWidth;
+    const height = window.innerHeight;
+
+    function postResult(dataUrl) {
+      postToTrustedTop({
+        type: "INLINE_EDIT_SCREENSHOT_RESULT",
+        requestId,
+        dataUrl,
+        scrollX,
+        scrollY,
+      });
+    }
+
+    try {
+      // Wait for any pending web fonts to resolve so both inline metrics and
+      // the @font-face inlining below see the same loaded faces.
+      if (document.fonts && document.fonts.ready) {
+        try {
+          await document.fonts.ready;
+        } catch (_error) {}
+      }
+
+      const clone = document.documentElement.cloneNode(true);
+      inlineAll(document.documentElement, clone);
+
+      const removedNodes = clone.querySelectorAll("script,link[rel=\"stylesheet\"],style");
+      for (let index = 0; index < removedNodes.length; index += 1) {
+        removedNodes[index].remove();
+      }
+
+      stripExternal(clone);
+
+      // Re-embed web fonts as data-URI @font-face rules so the SVG rasterizer
+      // can resolve them — external font URLs aren't fetched during
+      // foreignObject rendering, which would otherwise force a fallback face
+      // and change text metrics.
+      const inlinedFontCss = await buildInlinedFontCss();
+      if (inlinedFontCss) {
+        const styleEl = document.createElement("style");
+        styleEl.textContent = inlinedFontCss;
+        const head = clone.querySelector("head");
+        if (head) head.appendChild(styleEl);
+        else clone.insertBefore(styleEl, clone.firstChild);
+      }
+
+      const html = new XMLSerializer().serializeToString(clone);
+      const svg =
+        `<svg xmlns="http://www.w3.org/2000/svg" width="${width}" height="${height}">` +
+        '<foreignObject width="100%" height="100%">' +
+        `<div xmlns="http://www.w3.org/1999/xhtml" style="width:${width}px;height:${height}px;overflow:hidden">` +
+        `<div style="transform:translate(-${scrollX}px,-${scrollY}px);transform-origin:top left">` +
+        html +
+        "</div></div></foreignObject></svg>";
+      const svgUrl = `data:image/svg+xml;charset=utf-8,${encodeURIComponent(svg)}`;
+      const image = new Image();
+      image.onload = function () {
+        const canvas = document.createElement("canvas");
+        canvas.width = width;
+        canvas.height = height;
+        canvas.getContext("2d").drawImage(image, 0, 0);
+        postResult(canvas.toDataURL("image/png"));
+      };
+      image.onerror = function () {
+        postResult(null);
+      };
+      image.src = svgUrl;
+    } catch (_error) {
+      postResult(null);
+    }
+  }
+
+  window.addEventListener("message", function (event) {
+    if (!event.data) return;
+    // Only accept messages from the direct parent frame. Blocks sibling /
+    // unrelated-window postMessage senders that could otherwise reach us.
+    if (event.source !== window.parent) return;
+
+    const trustedParentOrigin = getTrustedParentOrigin(event);
+    if (!trustedParentOrigin) return;
+    trustedTopOrigin = trustedParentOrigin;
+
+    if (event.data.type === "INLINE_EDIT_SCROLL_START") {
+      scrollForwarding = true;
+      emitScroll();
+      return;
+    }
+
+    if (event.data.type === "INLINE_EDIT_SCROLL_STOP") {
+      scrollForwarding = false;
+      if (scrollRaf) cancelAnimationFrame(scrollRaf);
+      scrollRaf = 0;
+      return;
+    }
+
+    if (event.data.type !== "INLINE_EDIT_CAPTURE_REQUEST") return;
+
+    handleCaptureRequest(event);
+  });
+})();
+
+
+</script></body>
+</html>

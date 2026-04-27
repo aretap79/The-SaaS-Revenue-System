@@ -1,0 +1,659 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>CAC Payback Period — SaaS Revenue System</title>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="../assets/shared.css"/>
+  <style>
+    .page-hero { background: #28251D; }
+    .formula-chain {
+      display: flex;
+      flex-direction: column;
+      gap: 0;
+      margin: 20px 0;
+    }
+    .fc-step {
+      display: grid;
+      grid-template-columns: 200px 1fr;
+      border: 1.5px solid var(--border);
+      border-bottom: none;
+    }
+    .fc-step:first-child { border-radius: 8px 8px 0 0; }
+    .fc-step:last-child { border-bottom: 1.5px solid var(--border); border-radius: 0 0 8px 8px; }
+    .fc-label { padding: 12px 14px; background: #fafaf8; border-right: 1px solid var(--border); font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px; color: var(--text-muted); display: flex; align-items: center; }
+    .fc-formula-text { padding: 12px 16px; font-family: 'Courier New', monospace; font-size: 14px; color: var(--text); display: flex; align-items: center; font-weight: 600; }
+    .payback-bands {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr 1fr;
+      gap: 0;
+      margin: 20px 0;
+      border: 1.5px solid var(--border);
+      border-radius: 10px;
+      overflow: hidden;
+    }
+    .pb-band { padding: 16px; border-right: 1px solid var(--border); text-align: center; }
+    .pb-band:last-child { border-right: none; }
+    .pb-period { font-size: 16px; font-weight: 700; margin-bottom: 6px; }
+    .pb-status { font-size: 10px; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase; margin-bottom: 10px; padding: 2px 8px; border-radius: 10px; display: inline-block; }
+    .pb-implication { font-size: 11px; line-height: 1.55; text-align: left; }
+    .band-best { background: #f0fff4; }
+    .band-best .pb-period { color: #437A22; }
+    .band-best .pb-status { background: #e6f4ea; color: #437A22; }
+    .band-ok { background: #fffbec; }
+    .band-ok .pb-period { color: #8a6f00; }
+    .band-ok .pb-status { background: #fff8d6; color: #8a6f00; }
+    .band-watch { background: #fff8f0; }
+    .band-watch .pb-period { color: #964219; }
+    .band-watch .pb-status { background: #fdf0e6; color: #964219; }
+    .band-danger { background: #fff0f0; }
+    .band-danger .pb-period { color: #A13544; }
+    .band-danger .pb-status { background: #fce8e6; color: #A13544; }
+    .worked-example {
+      background: #1C1B19;
+      color: #CDCCCA;
+      border-radius: 10px;
+      padding: 24px;
+      margin: 20px 0;
+    }
+    .we-title { font-size: 12px; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase; color: #4F98A3; margin-bottom: 16px; }
+    .we-input-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 16px; }
+    .we-input { padding: 10px 12px; background: #252420; border-radius: 6px; }
+    .we-input-label { font-size: 10px; letter-spacing: 1px; text-transform: uppercase; color: #6a6a60; margin-bottom: 4px; }
+    .we-input-value { font-size: 15px; font-weight: 700; color: #fff; }
+    .we-calc { border-top: 1px solid #333; padding-top: 14px; }
+    .we-calc-step { margin-bottom: 8px; font-size: 14px; color: #CDCCCA; }
+    .we-calc-step strong { color: #4F98A3; }
+    .we-result { font-size: 18px; font-weight: 700; color: #78BE36; margin-top: 12px; }
+    .ltv-cac-bar {
+      background: var(--surface);
+      border: 1.5px solid var(--border);
+      border-radius: 8px;
+      padding: 16px;
+      margin: 16px 0;
+    }
+    .lc-bar { display: flex; height: 32px; border-radius: 6px; overflow: hidden; margin: 12px 0; }
+    .lc-cac { background: #A13544; display: flex; align-items: center; justify-content: center; color: #fff; font-size: 11px; font-weight: 700; }
+    .lc-profit { background: #437A22; display: flex; align-items: center; justify-content: center; color: #fff; font-size: 11px; font-weight: 700; }
+    .lc-labels { display: flex; gap: 16px; font-size: 12px; }
+    .lc-label-item { display: flex; align-items: center; gap: 6px; }
+    .lc-dot { width: 10px; height: 10px; border-radius: 2px; flex-shrink: 0; }
+    .driver-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 16px 0;
+    }
+    .driver-table th { background: #28251D; color: #fff; padding: 10px 14px; font-size: 12px; text-align: left; }
+    .driver-table td { padding: 12px 14px; font-size: 13px; border-bottom: 1px solid var(--border); line-height: 1.6; vertical-align: top; }
+    .driver-table tr:nth-child(even) td { background: #fafaf8; }
+    .reduction-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+      margin: 16px 0;
+    }
+    .reduction-card {
+      background: var(--surface);
+      border: 1.5px solid var(--border);
+      border-left: 3px solid #437A22;
+      border-radius: 8px;
+      padding: 14px 16px;
+    }
+    .r-title { font-size: 13px; font-weight: 700; margin-bottom: 4px; }
+    .r-desc { font-size: 12px; line-height: 1.6; color: var(--text); }
+    .r-lever { font-size: 10px; font-weight: 700; letter-spacing: 1px; text-transform: uppercase; color: #437A22; margin-bottom: 6px; }
+  </style>
+</head>
+<body>
+<nav class="nav">
+  <span class="nav-logo">SaaS <span>Revenue System</span></span>
+  <span class="nav-sep">|</span>
+  <a href="../index.html" class="nav-back">← Home</a>
+  <span class="nav-sep">|</span>
+  <a href="../pages/north-star-metrics.html" class="nav-back">North Star Metrics</a>
+  <span class="nav-sep">|</span>
+  <span class="nav-current">CAC Payback Period</span>
+</nav>
+<div class="page-hero" style="background:#28251D">
+  <div class="hero-phase-label">North Star Metrics</div>
+  <div class="hero-title">CAC Payback Period</div>
+  <div class="hero-subtitle">The Efficiency Clock on Your GTM — Full Formulas, LTV:CAC, Benchmarks, and How to Reduce Payback Without Cutting Corners</div>
+</div>
+<div class="content-wrap">
+  <div class="breadcrumb">
+    <a href="../index.html">Home</a><span class="sep">›</span>
+    <a href="../pages/north-star-metrics.html">North Star Metrics</a><span class="sep">›</span>
+    <span class="current">CAC Payback Period</span>
+  </div>
+
+  <h2 class="section-title">The Full Formula Chain</h2>
+  <p class="section-intro">CAC Payback is the third metric in a chain. You cannot interpret payback without understanding CAC, and you cannot interpret CAC without comparing it to LTV. Build all three simultaneously.</p>
+
+  <div class="formula-chain">
+    <div class="fc-step">
+      <div class="fc-label">CAC Formula</div>
+      <div class="fc-formula-text">CAC = Total Sales & Marketing Spend / New Customers Acquired</div>
+    </div>
+    <div class="fc-step">
+      <div class="fc-label">Gross Margin Adjusted CAC Payback</div>
+      <div class="fc-formula-text">Payback Period (months) = CAC / (MRR per Customer × Gross Margin %)</div>
+    </div>
+    <div class="fc-step">
+      <div class="fc-label">LTV Formula</div>
+      <div class="fc-formula-text">LTV = ACV × Gross Margin % / Annual Churn Rate</div>
+    </div>
+    <div class="fc-step">
+      <div class="fc-label">LTV:CAC Ratio</div>
+      <div class="fc-formula-text">LTV:CAC = LTV / CAC</div>
+    </div>
+    <div class="fc-step">
+      <div class="fc-label">S&M Spend Definition</div>
+      <div class="fc-formula-text">Include: salaries + OTE + benefits (Sales + Marketing headcount) + tools + ad spend + events + agency fees + headcount recruiting costs</div>
+    </div>
+  </div>
+
+  <div class="callout callout-warning">
+    <div class="callout-title">Common Calculation Mistakes</div>
+    <p><strong>Mistake 1:</strong> Not including gross margin adjustment. A $1,000 MRR customer with 50% gross margin contributes $500/month to payback — not $1,000. Always use gross margin-adjusted revenue in payback calculations or you will significantly overstate efficiency.<br/>
+    <strong>Mistake 2:</strong> Only counting direct sales commissions as S&M spend. CAC should include ALL S&M headcount costs (fully loaded: salary + benefits + equity), plus all marketing program spend. Many companies understate CAC by excluding marketing headcount.<br/>
+    <strong>Mistake 3:</strong> Using bookings rather than collected revenue. If your contracts are paid annually upfront, the economics are very different from monthly payments — the payback clock restarts differently.</p>
+  </div>
+
+  <h2 class="section-title">Worked Example</h2>
+  <div class="worked-example">
+    <div class="we-title">CAC Payback Calculation — Worked Example</div>
+    <div class="we-input-grid">
+      <div class="we-input"><div class="we-input-label">Total S&M Spend (Quarter)</div><div class="we-input-value">$2,000,000</div></div>
+      <div class="we-input"><div class="we-input-label">New Customers (Quarter)</div><div class="we-input-value">40</div></div>
+      <div class="we-input"><div class="we-input-label">Average ACV</div><div class="we-input-value">$60,000</div></div>
+      <div class="we-input"><div class="we-input-label">Gross Margin</div><div class="we-input-value">75%</div></div>
+      <div class="we-input"><div class="we-input-label">Annual Churn Rate</div><div class="we-input-value">12%</div></div>
+      <div class="we-input"><div class="we-input-label">Average MRR per Customer</div><div class="we-input-value">$5,000</div></div>
+    </div>
+    <div class="we-calc">
+      <div class="we-calc-step">CAC = $2,000,000 / 40 = <strong>$50,000</strong></div>
+      <div class="we-calc-step">Gross Margin-Adjusted MRR = $5,000 × 75% = <strong>$3,750/month</strong></div>
+      <div class="we-calc-step">Payback Period = $50,000 / $3,750 = <strong>13.3 months</strong> ← Acceptable range</div>
+      <div class="we-calc-step">LTV = $60,000 × 75% / 12% = <strong>$375,000</strong></div>
+      <div class="we-calc-step">LTV:CAC = $375,000 / $50,000 = <strong>7.5:1</strong> ← Excellent (target >3:1)</div>
+      <div class="we-result">→ Payback: 13.3 months | LTV:CAC: 7.5:1 — Strong unit economics, acceptable payback</div>
+    </div>
+  </div>
+
+  <h2 class="section-title">Payback Period Benchmarks</h2>
+  <div class="payback-bands">
+    <div class="pb-band band-best">
+      <div class="pb-period">&lt; 12 months</div>
+      <div class="pb-status">Best-in-Class</div>
+      <div class="pb-implication">Extremely efficient GTM. Typical of PLG companies, high-velocity SMB, or companies with strong inbound demand. Enables aggressive growth investment with low funding dependency.</div>
+    </div>
+    <div class="pb-band band-ok">
+      <div class="pb-period">12–18 months</div>
+      <div class="pb-status">Acceptable</div>
+      <div class="pb-implication">Solid unit economics for enterprise SaaS. Investors expect this range for well-run mid-market/enterprise companies. Indicates a functioning GTM that will generate positive ROI within the first contract term.</div>
+    </div>
+    <div class="pb-band band-watch">
+      <div class="pb-period">18–24 months</div>
+      <div class="pb-status">Watch</div>
+      <div class="pb-implication">Marginal but manageable with strong NRR (&gt;120%). Requires high gross margin and strong expansion to justify. Investors will ask hard questions. Need clear path to improvement in next 12 months.</div>
+    </div>
+    <div class="pb-band band-danger">
+      <div class="pb-period">&gt; 24 months</div>
+      <div class="pb-status">Problematic</div>
+      <div class="pb-implication">GTM is not efficient. Every new customer is a cash drain that takes 2+ years to recover. Requires either significant reduction in S&M spend, improvement in win rate/ACV, or pricing correction. Fundraising will be difficult without a credible fix plan.</div>
+    </div>
+  </div>
+
+  <h2 class="section-title">LTV:CAC — The Health Ratio</h2>
+  <div class="subsection">
+    <div class="ltv-cac-bar">
+      <p style="font-size:13px; margin-bottom:12px;">LTV:CAC visualized: for a company with $375K LTV and $50K CAC (7.5:1), the customer returns 7.5x the acquisition cost over their lifetime.</p>
+      <div class="lc-bar">
+        <div class="lc-cac" style="width:13%;">CAC: 13%</div>
+        <div class="lc-profit" style="width:87%;">LTV Profit: 87% of lifetime revenue recovered after CAC</div>
+      </div>
+      <div class="lc-labels">
+        <div class="lc-label-item"><div class="lc-dot" style="background:#A13544;"></div><span>CAC ($50K)</span></div>
+        <div class="lc-label-item"><div class="lc-dot" style="background:#437A22;"></div><span>Gross Profit over Lifetime ($325K)</span></div>
+      </div>
+    </div>
+    <div class="metric-grid">
+      <div class="metric-card">
+        <div class="m-label">LTV:CAC &gt; 3:1</div>
+        <div class="m-value">Good</div>
+        <div class="m-desc">Minimum healthy threshold. Below this, you are spending too much to acquire customers relative to their value.</div>
+      </div>
+      <div class="metric-card">
+        <div class="m-label">LTV:CAC 5:1–7:1</div>
+        <div class="m-value">Excellent</div>
+        <div class="m-desc">Strong unit economics. May indicate you could invest more aggressively in growth and still maintain healthy payback.</div>
+      </div>
+      <div class="metric-card">
+        <div class="m-label">LTV:CAC &gt; 8:1</div>
+        <div class="m-value">Under-Investing</div>
+        <div class="m-desc">Possibly leaving growth on the table. Consider whether you are investing enough in S&M relative to your market opportunity.</div>
+      </div>
+      <div class="metric-card">
+        <div class="m-label">LTV:CAC &lt; 3:1</div>
+        <div class="m-value">Fix Required</div>
+        <div class="m-desc">Unit economics are broken. Diagnose: is CAC too high, churn too high, or ACV too low? Fix before scaling.</div>
+      </div>
+    </div>
+  </div>
+
+  <h2 class="section-title">Blended CAC vs. Channel-Specific CAC</h2>
+  <div class="subsection">
+    <p>Blended CAC (total S&M spend / total new customers) hides the efficiency differences between channels. A company that acquires 80% of customers through inbound at $15K CAC and 20% through enterprise outbound at $120K CAC has a blended CAC of $36K — which looks fine but masks that enterprise outbound is destroying value at current ACV levels.</p>
+    <p>Calculate channel-specific CAC by allocating S&M spend to each channel:</p>
+    <ul class="bullet-list">
+      <li><strong>Inbound/PLG CAC:</strong> (Marketing headcount + tools + ad spend) / inbound-sourced new customers</li>
+      <li><strong>Outbound CAC:</strong> (SDR headcount + AE headcount × % time on outbound + enrichment tools) / outbound-sourced new customers</li>
+      <li><strong>Partner CAC:</strong> (Partner program costs + deal registration discounts given + partner manager headcount) / partner-sourced new customers</li>
+    </ul>
+    <p>Channel-specific CAC data drives the most important resource allocation decisions in GTM: where to invest the next dollar of S&M budget to generate the most revenue at the lowest cost.</p>
+  </div>
+
+  <h2 class="section-title">What Drives CAC Up and Down</h2>
+  <table class="driver-table">
+    <thead>
+      <tr><th>Variable</th><th>Effect on CAC</th><th>Mechanism</th></tr>
+    </thead>
+    <tbody>
+      <tr><td>Win rate increases 10pp</td><td>CAC ↓ significantly</td><td>Same S&M spend converts more deals. If you close 30% vs. 20% of pipeline, you need 33% less pipeline (and S&M) to hit the same revenue target.</td></tr>
+      <tr><td>Average ACV increases 25%</td><td>Payback period ↓ 25%</td><td>Higher deal value with same acquisition cost. If sales cycle length doesn't change proportionally, this is pure efficiency gain.</td></tr>
+      <tr><td>Sales cycle shortens 30%</td><td>CAC ↓ ~20-30%</td><td>Faster cycles mean reps close more deals per quarter, increasing productivity per dollar of compensation cost.</td></tr>
+      <tr><td>Rep ramp time increases 2 months</td><td>CAC ↑</td><td>Longer ramp = more months of unproductive headcount cost per hire. At $150K OTE and 2-month ramp extension, cost per hire increases by $25K.</td></tr>
+      <tr><td>SDR/AE ratio misaligned</td><td>CAC ↑</td><td>Too many SDRs per AE = bottleneck in AE capacity; too few = AE forced to do outbound prospecting at higher hourly cost. Optimize ratio by segment.</td></tr>
+      <tr><td>Marketing-sourced pipeline % increases</td><td>CAC ↓</td><td>Inbound pipeline is typically 40-60% cheaper to acquire than outbound. Shifting mix toward marketing-sourced reduces blended CAC.</td></tr>
+      <tr><td>Churn rate increases (affects LTV, not CAC directly)</td><td>LTV:CAC ↓, payback period effectively ↑</td><td>Higher churn means the payback clock "resets" before full recovery — even if nominal payback is 12 months, 25% churn at month 11 means you never fully paid back CAC.</td></tr>
+    </tbody>
+  </table>
+
+  <h2 class="section-title">The Rule of 40 Connection</h2>
+  <div class="subsection">
+    <p>The Rule of 40 (Revenue Growth Rate + Profit Margin ≥ 40) is the most common investor heuristic for SaaS efficiency. CAC payback connects to the Rule of 40 through the S&M expense ratio: companies with best-in-class CAC payback (&lt;12 months) typically have S&M as 30-40% of revenue, contributing to higher profit margins and Rule of 40 scores. Companies with &gt;24-month payback often have S&M at 60-80% of revenue, which forces them to grow fast enough to offset the inefficiency — a high-risk strategy that works in bull markets and fails in corrections.</p>
+  </div>
+
+  <h2 class="section-title">How to Reduce CAC Payback</h2>
+  <div class="reduction-grid">
+    <div class="reduction-card">
+      <div class="r-lever">Lever: Win Rate</div>
+      <div class="r-title">Improve Win Rate</div>
+      <div class="r-desc">Every 5pp improvement in win rate reduces the pipeline needed to hit quota, which reduces effective S&M spend per acquired customer. Focus on ICP tightening, competitive enablement, champion building — the highest-ROI win rate drivers.</div>
+    </div>
+    <div class="reduction-card">
+      <div class="r-lever">Lever: ACV</div>
+      <div class="r-title">Increase Average Contract Value</div>
+      <div class="r-desc">Multi-year contracts (prepaid annual or multi-year with upfront payment) improve payback by increasing the initial cash collection per customer. Pricing optimization and packaging (moving from per-seat to platform pricing) can increase ACV 20-40% without adding S&M cost.</div>
+    </div>
+    <div class="reduction-card">
+      <div class="r-lever">Lever: Gross Margin</div>
+      <div class="r-title">Improve Gross Margin</div>
+      <div class="r-desc">Reduce COGS: automate customer onboarding, reduce support-to-customer ratio through better self-service, move infrastructure to more efficient cloud configurations. Each point of gross margin improvement reduces payback proportionally.</div>
+    </div>
+    <div class="reduction-card">
+      <div class="r-lever">Lever: Sales Cycle</div>
+      <div class="r-title">Shorten Sales Cycle</div>
+      <div class="r-desc">Faster close velocity means AEs carry more deals per year — revenue per AE increases without proportional increase in OTE. The key levers: stronger champion building (removes delays), better qualification (removes low-probability deals), and mutual close plans (creates deadline accountability).</div>
+    </div>
+    <div class="reduction-card">
+      <div class="r-lever">Lever: Ramp Time</div>
+      <div class="r-title">Compress Rep Ramp</div>
+      <div class="r-desc">Each month of ramp compression saves (salary + benefits + unearned OTE) per rep and gets the rep producing revenue sooner. If ramp is compressed by 1.5 months across 20 new hires, the capacity and CAC impact can be $2-3M annually.</div>
+    </div>
+    <div class="reduction-card">
+      <div class="r-lever">Lever: Mix Shift</div>
+      <div class="r-title">Shift to Lower-CAC Channels</div>
+      <div class="r-desc">Invest more in inbound, PLG, and partner channels relative to pure outbound. These channels have lower cost-per-acquired-customer. Even a 10% shift in mix from outbound to inbound typically reduces blended CAC by 5-8%.</div>
+    </div>
+  </div>
+
+  <div class="indicator-row">
+    <span class="indicator-tag ind-leading">Leading: New pipeline CAC by channel, S&M spend ratio, win rate trend, rep ramp efficiency</span>
+    <span class="indicator-tag ind-lagging">Lagging: CAC payback period, LTV:CAC ratio, blended CAC by cohort</span>
+    <span class="indicator-tag ind-formula">Payback = CAC / (MRR × Gross Margin%) | LTV = ACV × GM% / Churn</span>
+  </div>
+
+  <div class="related-section">
+    <div class="related-title">Related Sections</div>
+    <div class="related-links">
+      <a href="nrr.html" class="related-link">Net Revenue Retention</a>
+      <a href="pipeline-coverage.html" class="related-link">Pipeline Coverage</a>
+      <a href="headcount-planning.html" class="related-link">Headcount Planning</a>
+      <a href="win-rate.html" class="related-link">Win Rate</a>
+      <a href="channel-strategy.html" class="related-link">Channel Strategy</a>
+      <a href="pipeline-attribution.html" class="related-link">Pipeline Attribution</a>
+    </div>
+  </div>
+</div>
+<script data-pplx-inline-edit>
+(function () {
+  if (window === window.top) return;
+
+  const allowedParentOrigins = ["https://www.perplexity.ai","https://perplexity.ai","https://testing.perplexity.ai","https://staging.perplexity.ai","https://*.preview.i.perplexity.ai","http://localhost:3000","http://127.0.0.1:3000","http://localhost:5173","http://127.0.0.1:5173"];
+  const MAX_FONT_BYTES = 500 * 1024;
+  const MAX_TOTAL_FONT_BYTES = 2 * 1024 * 1024;
+  let scrollForwarding = false;
+  let scrollRaf = 0;
+  let trustedTopOrigin = null;
+
+  // Allow entries like "https://*.preview.i.perplexity.ai" — the wildcard
+  // matches a single DNS label (no dots), so "https://*.foo" cannot stretch
+  // across multiple labels.
+  function matchesAllowedOrigin(origin) {
+    if (!origin) return false;
+    for (const entry of allowedParentOrigins) {
+      if (!entry.includes("*")) {
+        if (entry === origin) return true;
+        continue;
+      }
+      const pattern = new RegExp(
+        "^" +
+          entry.replace(/[.+?^${}()|[\]\\]/g, "\\$&").replace(/\*/g, "[^.]+") +
+          "$",
+      );
+      if (pattern.test(origin)) return true;
+    }
+    return false;
+  }
+
+  // Trust decision: when the sender is same-origin-visible (event.origin is a
+  // real origin like https://www.perplexity.ai) we trust event.origin directly.
+  // When event.origin is "null" (opaque broker srcdoc), we fall back to the
+  // broker's stamped `parentOrigin` to identify the top window. The fallback
+  // is claim-only — we rely on the browser's native `targetOrigin` enforcement
+  // on the response path (see postToTrustedTop) to ensure replies can't be
+  // delivered to anyone but the actual top window of that claimed origin.
+  function getTrustedParentOrigin(event) {
+    const forwardedParentOrigin =
+      typeof event.data.parentOrigin === "string" ? event.data.parentOrigin : null;
+    const parentOrigin = event.origin === "null" ? forwardedParentOrigin : event.origin;
+    return matchesAllowedOrigin(parentOrigin) ? parentOrigin : null;
+  }
+
+  // All responses go to window.top with targetOrigin = the allowlisted origin.
+  // An attacker that iframes us inside their own null-origin broker can claim
+  // any parentOrigin they like, but the browser will drop the reply whenever
+  // the real top's origin doesn't match — so the screenshot never leaves.
+  function postToTrustedTop(message) {
+    if (!trustedTopOrigin) return;
+    try {
+      window.top.postMessage(message, trustedTopOrigin);
+    } catch (_error) {}
+  }
+
+  function inlineAll(original, clone) {
+    if (original.nodeType !== 1 || clone.nodeType !== 1) return;
+
+    try {
+      const computedStyle = getComputedStyle(original);
+      // cssText on a computed style is the serialized declaration in modern
+      // Chromium/Safari — a single read beats enumerating ~400 longhand
+      // properties. Firefox returns "" here, so we fall back on empty.
+      const serialized = computedStyle.cssText;
+      if (serialized) {
+        clone.style.cssText = serialized;
+      } else {
+        const parts = new Array(computedStyle.length);
+        for (let index = 0; index < computedStyle.length; index += 1) {
+          const property = computedStyle[index];
+          parts[index] = `${property}:${computedStyle.getPropertyValue(property)};`;
+        }
+        clone.style.cssText = parts.join("");
+      }
+    } catch (_error) {}
+
+    const originalChildren = original.children;
+    const clonedChildren = clone.children;
+    for (
+      let index = 0;
+      index < originalChildren.length && index < clonedChildren.length;
+      index += 1
+    ) {
+      inlineAll(originalChildren[index], clonedChildren[index]);
+    }
+  }
+
+  function extractFontUrl(srcValue) {
+    const matches = [
+      ...srcValue.matchAll(
+        /url\(["']?([^"')]+)["']?\)(?:\s*format\(["']?([^"')]+)["']?\))?/gi,
+      ),
+    ];
+    if (matches.length === 0) return null;
+    const woff2 = matches.find((m) => m[2] && m[2].toLowerCase().includes("woff2"));
+    if (woff2) return woff2[1];
+    const woff = matches.find((m) => m[2] && m[2].toLowerCase().includes("woff"));
+    if (woff) return woff[1];
+    return matches[0][1];
+  }
+
+  // Cache resolved font URL -> data URI across captures. Fonts on a page
+  // essentially never change, and a batch run emits multiple captures back to
+  // back — without this we'd refetch + re-base64 every time.
+  const fontDataUriCache = new Map();
+  const SRC_DECLARATION_RE = /src\s*:\s*[^;}]+/i;
+
+  async function fetchAsDataUri(url) {
+    if (fontDataUriCache.has(url)) return fontDataUriCache.get(url);
+    let dataUri = null;
+    try {
+      const response = await fetch(url, { mode: "cors", credentials: "omit" });
+      if (response.ok) {
+        const blob = await response.blob();
+        if (blob.size <= MAX_FONT_BYTES) {
+          dataUri = await new Promise((resolve) => {
+            const reader = new FileReader();
+            reader.onloadend = () =>
+              resolve(typeof reader.result === "string" ? reader.result : null);
+            reader.onerror = () => resolve(null);
+            reader.readAsDataURL(blob);
+          });
+        }
+      }
+    } catch (_error) {
+      dataUri = null;
+    }
+    fontDataUriCache.set(url, dataUri);
+    return dataUri;
+  }
+
+  function collectFontFaceRuleTexts() {
+    const rules = [];
+    for (const sheet of document.styleSheets) {
+      let cssRules;
+      try {
+        cssRules = sheet.cssRules;
+      } catch (_error) {
+        continue;
+      }
+      if (!cssRules) continue;
+      for (const rule of cssRules) {
+        const cssText = rule.cssText || "";
+        if (cssText.startsWith("@font-face")) rules.push(cssText);
+      }
+    }
+    return rules;
+  }
+
+  async function buildInlinedFontCss() {
+    const ruleTexts = collectFontFaceRuleTexts();
+    if (ruleTexts.length === 0) return null;
+
+    const resolved = ruleTexts.map((cssText) => {
+      if (!SRC_DECLARATION_RE.test(cssText)) return null;
+      const srcMatch = cssText.match(/src\s*:\s*([^;}]+)[;}]/i);
+      if (!srcMatch) return null;
+      const url = extractFontUrl(srcMatch[1]);
+      if (!url) return null;
+      try {
+        return { cssText, url: new URL(url, document.baseURI).href };
+      } catch (_error) {
+        return null;
+      }
+    });
+
+    const dataUris = await Promise.all(
+      resolved.map((entry) => (entry ? fetchAsDataUri(entry.url) : Promise.resolve(null))),
+    );
+
+    const inlined = [];
+    let totalBytes = 0;
+    for (let index = 0; index < resolved.length; index += 1) {
+      const entry = resolved[index];
+      const dataUri = dataUris[index];
+      if (!entry || !dataUri) continue;
+      const approxBytes = dataUri.length * 0.75;
+      if (totalBytes + approxBytes > MAX_TOTAL_FONT_BYTES) break;
+      totalBytes += approxBytes;
+      inlined.push(entry.cssText.replace(SRC_DECLARATION_RE, `src: url("${dataUri}")`));
+    }
+    return inlined.length > 0 ? inlined.join("\n") : null;
+  }
+
+  function stripExternal(clone) {
+    const images = clone.querySelectorAll("img");
+    for (let index = 0; index < images.length; index += 1) {
+      const src = images[index].getAttribute("src");
+      if (src && !src.startsWith("data:")) images[index].removeAttribute("src");
+    }
+
+    const elements = clone.querySelectorAll("*");
+    for (let index = 0; index < elements.length; index += 1) {
+      const style = elements[index].style.cssText;
+      if (style && style.includes("url(")) {
+        elements[index].style.cssText = style.replace(
+          /url\(["']?(?!data:)[^)"']*["']?\)/gi,
+          "none",
+        );
+      }
+    }
+  }
+
+  function emitScroll() {
+    scrollRaf = 0;
+    if (!scrollForwarding) return;
+    postToTrustedTop({
+      type: "INLINE_EDIT_SCROLL",
+      scrollX: window.scrollX,
+      scrollY: window.scrollY,
+    });
+  }
+
+  window.addEventListener(
+    "scroll",
+    function () {
+      if (!scrollForwarding || scrollRaf) return;
+      scrollRaf = requestAnimationFrame(emitScroll);
+    },
+    { passive: true, capture: true },
+  );
+
+  async function handleCaptureRequest(event) {
+    const requestId = event.data.requestId;
+    const scrollX = window.scrollX;
+    const scrollY = window.scrollY;
+    const width = window.innerWidth;
+    const height = window.innerHeight;
+
+    function postResult(dataUrl) {
+      postToTrustedTop({
+        type: "INLINE_EDIT_SCREENSHOT_RESULT",
+        requestId,
+        dataUrl,
+        scrollX,
+        scrollY,
+      });
+    }
+
+    try {
+      // Wait for any pending web fonts to resolve so both inline metrics and
+      // the @font-face inlining below see the same loaded faces.
+      if (document.fonts && document.fonts.ready) {
+        try {
+          await document.fonts.ready;
+        } catch (_error) {}
+      }
+
+      const clone = document.documentElement.cloneNode(true);
+      inlineAll(document.documentElement, clone);
+
+      const removedNodes = clone.querySelectorAll("script,link[rel=\"stylesheet\"],style");
+      for (let index = 0; index < removedNodes.length; index += 1) {
+        removedNodes[index].remove();
+      }
+
+      stripExternal(clone);
+
+      // Re-embed web fonts as data-URI @font-face rules so the SVG rasterizer
+      // can resolve them — external font URLs aren't fetched during
+      // foreignObject rendering, which would otherwise force a fallback face
+      // and change text metrics.
+      const inlinedFontCss = await buildInlinedFontCss();
+      if (inlinedFontCss) {
+        const styleEl = document.createElement("style");
+        styleEl.textContent = inlinedFontCss;
+        const head = clone.querySelector("head");
+        if (head) head.appendChild(styleEl);
+        else clone.insertBefore(styleEl, clone.firstChild);
+      }
+
+      const html = new XMLSerializer().serializeToString(clone);
+      const svg =
+        `<svg xmlns="http://www.w3.org/2000/svg" width="${width}" height="${height}">` +
+        '<foreignObject width="100%" height="100%">' +
+        `<div xmlns="http://www.w3.org/1999/xhtml" style="width:${width}px;height:${height}px;overflow:hidden">` +
+        `<div style="transform:translate(-${scrollX}px,-${scrollY}px);transform-origin:top left">` +
+        html +
+        "</div></div></foreignObject></svg>";
+      const svgUrl = `data:image/svg+xml;charset=utf-8,${encodeURIComponent(svg)}`;
+      const image = new Image();
+      image.onload = function () {
+        const canvas = document.createElement("canvas");
+        canvas.width = width;
+        canvas.height = height;
+        canvas.getContext("2d").drawImage(image, 0, 0);
+        postResult(canvas.toDataURL("image/png"));
+      };
+      image.onerror = function () {
+        postResult(null);
+      };
+      image.src = svgUrl;
+    } catch (_error) {
+      postResult(null);
+    }
+  }
+
+  window.addEventListener("message", function (event) {
+    if (!event.data) return;
+    // Only accept messages from the direct parent frame. Blocks sibling /
+    // unrelated-window postMessage senders that could otherwise reach us.
+    if (event.source !== window.parent) return;
+
+    const trustedParentOrigin = getTrustedParentOrigin(event);
+    if (!trustedParentOrigin) return;
+    trustedTopOrigin = trustedParentOrigin;
+
+    if (event.data.type === "INLINE_EDIT_SCROLL_START") {
+      scrollForwarding = true;
+      emitScroll();
+      return;
+    }
+
+    if (event.data.type === "INLINE_EDIT_SCROLL_STOP") {
+      scrollForwarding = false;
+      if (scrollRaf) cancelAnimationFrame(scrollRaf);
+      scrollRaf = 0;
+      return;
+    }
+
+    if (event.data.type !== "INLINE_EDIT_CAPTURE_REQUEST") return;
+
+    handleCaptureRequest(event);
+  });
+})();
+
+
+</script></body>
+</html>

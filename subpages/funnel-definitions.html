@@ -1,0 +1,1063 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Funnel Stage Definitions — SaaS Revenue System</title>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="../assets/shared.css"/>
+  <style>
+    .page-hero { background: #01696F; }
+    .stage-card {
+      background: var(--surface);
+      border: 1.5px solid var(--border);
+      border-radius: 10px;
+      margin-bottom: 20px;
+      overflow: hidden;
+    }
+    .stage-header {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      padding: 20px 24px;
+      border-bottom: 1.5px solid var(--border);
+    }
+    .stage-badge {
+      min-width: 44px;
+      height: 44px;
+      border-radius: 8px;
+      background: #01696F;
+      color: #fff;
+      font-size: 13px;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      line-height: 1.2;
+      flex-shrink: 0;
+      letter-spacing: 0.3px;
+    }
+    .stage-badge.awareness { background: #7A7974; }
+    .stage-badge.mql { background: #006494; }
+    .stage-badge.sal { background: #20808D; }
+    .stage-badge.sql { background: #01696F; }
+    .stage-badge.stage1 { background: #437A22; }
+    .stage-badge.stage2 { background: #5a6e10; }
+    .stage-badge.stage3 { background: #964219; }
+    .stage-badge.stage4 { background: #7A39BB; }
+    .stage-badge.won { background: #1B474D; }
+    .stage-badge.lost { background: #A13544; }
+    .stage-name {
+      font-size: 17px;
+      font-weight: 700;
+      color: var(--text);
+      margin-bottom: 2px;
+    }
+    .stage-tagline { font-size: 13px; color: var(--text-muted); }
+    .stage-body { padding: 20px 24px; }
+    .stage-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 14px;
+      margin-bottom: 16px;
+    }
+    .stage-cell {
+      background: #fafaf8;
+      border-radius: 6px;
+      padding: 12px 14px;
+      border: 1px solid var(--border);
+    }
+    .stage-cell-title {
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 1.2px;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      margin-bottom: 6px;
+    }
+    .stage-cell p {
+      font-size: 13px;
+      line-height: 1.6;
+      color: var(--text);
+      margin: 0;
+    }
+    .funnel-diagram {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 2px;
+      margin: 24px 0;
+    }
+    .funnel-row {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      width: 100%;
+      max-width: 640px;
+    }
+    .funnel-bar {
+      height: 36px;
+      border-radius: 4px;
+      display: flex;
+      align-items: center;
+      padding: 0 14px;
+      color: #fff;
+      font-size: 12px;
+      font-weight: 700;
+      flex-shrink: 0;
+      transition: width 0.3s;
+    }
+    .funnel-label {
+      font-size: 12px;
+      color: var(--text-muted);
+      white-space: nowrap;
+    }
+    .workshop-step {
+      display: flex;
+      gap: 14px;
+      margin-bottom: 18px;
+      align-items: flex-start;
+    }
+    .ws-num {
+      min-width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      background: #01696F;
+      color: #fff;
+      font-size: 13px;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+    .ws-body { font-size: 14px; line-height: 1.65; }
+    .ws-title { font-weight: 700; display: block; margin-bottom: 3px; font-size: 15px; }
+    .enforcement-card {
+      background: #f0fff4;
+      border: 1.5px solid #437A22;
+      border-radius: 8px;
+      padding: 18px 22px;
+      margin-bottom: 14px;
+    }
+    .enforcement-card .ec-title {
+      font-size: 13px;
+      font-weight: 700;
+      color: #437A22;
+      margin-bottom: 8px;
+      text-transform: uppercase;
+      letter-spacing: 0.8px;
+    }
+    .enforcement-card p { font-size: 14px; line-height: 1.65; margin: 0; }
+    @media (max-width: 640px) {
+      .stage-grid { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+<nav class="nav">
+  <span class="nav-logo">SaaS <span>Revenue System</span></span>
+  <span class="nav-sep">|</span>
+  <a href="../index.html" class="nav-back">← Home</a>
+  <span class="nav-sep">|</span>
+  <a href="../pages/revops.html" class="nav-back">RevOps</a>
+  <span class="nav-sep">|</span>
+  <span class="nav-current">Funnel Stage Definitions</span>
+</nav>
+
+<div class="page-hero">
+  <div class="hero-phase-label">REVENUE OPERATIONS</div>
+  <div class="hero-title">Funnel Stage Definitions</div>
+  <div class="hero-subtitle">The Foundation of Forecast Integrity — Without Agreed Definitions, Pipeline Reporting Is Fiction</div>
+</div>
+
+<div class="content-wrap">
+  <div class="breadcrumb">
+    <a href="../index.html">Home</a><span class="sep">›</span>
+    <a href="../pages/revops.html">RevOps</a><span class="sep">›</span>
+    <span class="current">Funnel Stage Definitions</span>
+  </div>
+
+  <!-- WHY THIS IS FOUNDATIONAL -->
+  <h2 class="section-title">Why Stage Definitions Are the Most Important Thing in RevOps</h2>
+  <div class="section-intro">Before you can forecast, measure pipeline health, calculate conversion rates, or coach a rep — you need everyone to agree on what each stage actually means. Without this, every report is a lie.</div>
+
+  <div class="subsection">
+    <p>Pipeline reporting is meaningless unless every rep, manager, and leader is applying the same definition when they move a deal from one stage to the next. When stage definitions are absent or ambiguous, two things happen systematically: (1) reps sandbag or inflate deals based on their incentive at the moment, and (2) leadership makes resource allocation and forecast decisions based on data that does not reflect reality.</p>
+    <p>This is not a philosophical point — it has direct financial consequences. A $4M forecast built on a pipeline where "Stage 3" means wildly different things to five reps is not a $4M forecast. It is a number that may be 40% optimistic. The CRO who presents that number to the board is flying blind.</p>
+    <p>Stage definitions are also the foundation of conversion rate analysis. If your "SQL-to-Close" conversion rate is 22%, that number only means something if every deal that entered SQL status met the same criteria. If it didn't, your conversion rate is measuring noise. You cannot improve what you cannot accurately measure.</p>
+  </div>
+
+  <div class="callout callout-warning">
+    <div class="callout-title">The Definition Debt Problem</div>
+    <p>Organizations that have been operating without clear stage definitions for 12+ months have accumulated "definition debt." Pipeline data from that period cannot be used for reliable conversion rate analysis. The first step after creating definitions is to audit and reclassify existing open pipeline — not retroactively correct closed history, which would distort cohort analysis.</p>
+  </div>
+
+  <!-- FUNNEL DIAGRAM -->
+  <h2 class="section-title">The Complete SaaS Revenue Funnel</h2>
+  <div class="section-intro">The full funnel from initial awareness to closed revenue, with ownership at each stage.</div>
+
+  <div class="funnel-diagram">
+    <div class="funnel-row"><div class="funnel-bar awareness" style="width:100%">AWARENESS</div><span class="funnel-label">Marketing Owned</span></div>
+    <div class="funnel-row"><div class="funnel-bar mql" style="width:86%">MQL — Marketing Qualified Lead</div><span class="funnel-label">Marketing Owned</span></div>
+    <div class="funnel-row"><div class="funnel-bar sal" style="width:72%">SAL — Sales Accepted Lead</div><span class="funnel-label">SDR / BDR Owned</span></div>
+    <div class="funnel-row"><div class="funnel-bar sql" style="width:58%">SQL — Sales Qualified Lead</div><span class="funnel-label">AE Owned</span></div>
+    <div class="funnel-row"><div class="funnel-bar stage1" style="width:46%">Stage 1 — Discovery</div><span class="funnel-label">AE Owned</span></div>
+    <div class="funnel-row"><div class="funnel-bar stage2" style="width:35%">Stage 2 — Technical Validation</div><span class="funnel-label">AE + SE Owned</span></div>
+    <div class="funnel-row"><div class="funnel-bar stage3" style="width:26%">Stage 3 — Business Case &amp; Champion</div><span class="funnel-label">AE Owned</span></div>
+    <div class="funnel-row"><div class="funnel-bar stage4" style="width:18%">Stage 4 — Procurement &amp; Legal</div><span class="funnel-label">AE + Deal Desk Owned</span></div>
+    <div class="funnel-row"><div class="funnel-bar won" style="width:12%">Closed Won</div><span class="funnel-label">Finance + CS Owned</span></div>
+  </div>
+
+  <!-- STAGE-BY-STAGE DEFINITIONS -->
+  <h2 class="section-title">Stage-by-Stage Definitions: The Complete Reference</h2>
+  <div class="section-intro">Each stage definition below is the authoritative template. Your revenue operations team should adapt the language to your specific motion (PLG, inbound, outbound, enterprise) while preserving the structural logic.</div>
+
+  <!-- AWARENESS -->
+  <div class="stage-card">
+    <div class="stage-header">
+      <div class="stage-badge awareness">AW</div>
+      <div>
+        <div class="stage-name">Awareness</div>
+        <div class="stage-tagline">A potential buyer has interacted with your brand but has not been qualified</div>
+      </div>
+    </div>
+    <div class="stage-body">
+      <div class="stage-grid">
+        <div class="stage-cell">
+          <div class="stage-cell-title">Entry Criteria</div>
+          <p>Any first touchpoint: website visit (cookied), content download, ad click, conference badge scan, cold outreach response, or referral introduction. No qualification has occurred.</p>
+        </div>
+        <div class="stage-cell">
+          <div class="stage-cell-title">Exit Criteria</div>
+          <p>Sufficient engagement signals accumulated to cross lead scoring threshold (typically 40+ points). OR direct sales request. Moves to MQL.</p>
+        </div>
+        <div class="stage-cell">
+          <div class="stage-cell-title">Owner</div>
+          <p>Marketing. Awareness records exist as Leads in CRM (or anonymous visitor profiles in MAP).</p>
+        </div>
+        <div class="stage-cell">
+          <div class="stage-cell-title">Stage Transition Action</div>
+          <p>Lead score threshold crossed in marketing automation platform (Marketo, HubSpot, Pardot). Automated CRM record created or status updated to MQL.</p>
+        </div>
+        <div class="stage-cell">
+          <div class="stage-cell-title">If Criteria Not Met</div>
+          <p>Lead remains in nurture sequences. Score decays after 90 days of inactivity. Lead is not routed to SDR.</p>
+        </div>
+        <div class="stage-cell">
+          <div class="stage-cell-title">Probability</div>
+          <p>0% — not tracked in opportunity pipeline. No opportunity record created at this stage.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- MQL -->
+  <div class="stage-card">
+    <div class="stage-header">
+      <div class="stage-badge mql">MQL</div>
+      <div>
+        <div class="stage-name">Marketing Qualified Lead (MQL)</div>
+        <div class="stage-tagline">Marketing has determined sufficient interest to warrant sales outreach — but sales has not yet agreed</div>
+      </div>
+    </div>
+    <div class="stage-body">
+      <div class="stage-grid">
+        <div class="stage-cell">
+          <div class="stage-cell-title">Entry Criteria</div>
+          <p>Lead score ≥ threshold (e.g., 40 points) based on fit (firmographic match to ICP) AND engagement (page views, content downloads, email engagement, product trials). Both dimensions required — fit without engagement is a cold target, not an MQL.</p>
+        </div>
+        <div class="stage-cell">
+          <div class="stage-cell-title">Exit Criteria</div>
+          <p>SDR/BDR has reviewed and either: (A) Accepted as SAL — confirmed meets minimum fit criteria and is worth outreach, OR (B) Rejected back to nurture with documented reason.</p>
+        </div>
+        <div class="stage-cell">
+          <div class="stage-cell-title">Owner</div>
+          <p>Marketing is responsible for delivering MQLs. SDR/BDR team must respond within SLA (typically 4–8 business hours).</p>
+        </div>
+        <div class="stage-cell">
+          <div class="stage-cell-title">Stage Transition Action</div>
+          <p>SDR accepts or rejects the lead in CRM within the defined SLA window. Rejection requires a dropdown reason code (not ICP, wrong persona, duplicate, etc.).</p>
+        </div>
+        <div class="stage-cell">
+          <div class="stage-cell-title">If Criteria Not Met</div>
+          <p>SDR rejects lead within SLA with reason code. Lead returns to nurture. Marketing uses rejection data to calibrate scoring model monthly.</p>
+        </div>
+        <div class="stage-cell">
+          <div class="stage-cell-title">Probability</div>
+          <p>0% — still a lead record, not an opportunity. MQL volume is a leading indicator for pipeline, not a pipeline metric itself.</p>
+        </div>
+      </div>
+      <div class="callout callout-best-practice">
+        <div class="callout-title">MQL Definition Workshop Critical Question</div>
+        <p>The most important question to resolve in your MQL definition workshop: <strong>What combination of fit + engagement signals actually correlates with pipeline generation?</strong> Pull 12 months of historical data on MQLs that became SQLs and work backwards. The score threshold should be derived from data, not set arbitrarily.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- SAL -->
+  <div class="stage-card">
+    <div class="stage-header">
+      <div class="stage-badge sal">SAL</div>
+      <div>
+        <div class="stage-name">Sales Accepted Lead (SAL)</div>
+        <div class="stage-tagline">Sales has reviewed and accepted the lead — outreach is in progress</div>
+      </div>
+    </div>
+    <div class="stage-body">
+      <div class="stage-grid">
+        <div class="stage-cell">
+          <div class="stage-cell-title">Entry Criteria</div>
+          <p>SDR/BDR has reviewed MQL and confirmed: (1) Company is in ICP segment (right industry, size, geography), (2) Lead is at least director-level or economic buyer-adjacent, (3) No active opportunity or recent lost deal exists for this account. SDR clicks "Accept" in CRM.</p>
+        </div>
+        <div class="stage-cell">
+          <div class="stage-cell-title">Exit Criteria</div>
+          <p>SDR has secured a qualified discovery meeting that the AE has confirmed on calendar. Opportunity record created in CRM with required fields populated. Moves to SQL/Stage 1.</p>
+        </div>
+        <div class="stage-cell">
+          <div class="stage-cell-title">Owner</div>
+          <p>SDR/BDR team. The SDR owns this lead until a meeting is booked and an AE takes ownership. Do not hand off a SAL without a confirmed meeting.</p>
+        </div>
+        <div class="stage-cell">
+          <div class="stage-cell-title">Stage Transition Action</div>
+          <p>SDR books meeting, creates opportunity record in CRM, selects "Stage 1 — Discovery," populates required fields (AE assignment, close date estimate, source, initial ARR estimate), and marks the lead status as "Converted."</p>
+        </div>
+        <div class="stage-cell">
+          <div class="stage-cell-title">If Criteria Not Met</div>
+          <p>If after N outreach attempts (typically 8–12 touches over 14 days) no response, lead moves to "SAL — Exhausted" status and back to long-term nurture. Not rejected — just not yet responsive.</p>
+        </div>
+        <div class="stage-cell">
+          <div class="stage-cell-title">Probability</div>
+          <p>0% — still pre-opportunity. SAL-to-SQL conversion rate is the primary SDR efficiency metric. Benchmark: 15–30% of SALs convert to SQL depending on motion.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SQL -->
+  <div class="stage-card">
+    <div class="stage-header">
+      <div class="stage-badge sql">SQL</div>
+      <div>
+        <div class="stage-name">Sales Qualified Lead / Stage 0 — Qualified</div>
+        <div class="stage-tagline">The AE has confirmed this is a real opportunity worth pursuing — an opportunity record exists</div>
+      </div>
+    </div>
+    <div class="stage-body">
+      <div class="stage-grid">
+        <div class="stage-cell">
+          <div class="stage-cell-title">Entry Criteria</div>
+          <p>AE has conducted an initial conversation (inbound demo, outbound discovery call) and confirmed: (1) Identifiable pain or initiative the product addresses, (2) Budget exists or can be created, (3) Decision process exists (someone can say yes), (4) Timeline is defined (not "eventually"). BANT or MEDDICC minimum viable qualification.</p>
+        </div>
+        <div class="stage-cell">
+          <div class="stage-cell-title">Exit Criteria</div>
+          <p>Formal discovery meeting scheduled. AE has confirmed the opportunity is worth investing AE time. Opportunity moves to Stage 1.</p>
+        </div>
+        <div class="stage-cell">
+          <div class="stage-cell-title">Owner</div>
+          <p>Account Executive (AE). The AE is accountable for the quality of their SQL assessment. Manager reviews random sample of SQLs monthly to calibrate quality.</p>
+        </div>
+        <div class="stage-cell">
+          <div class="stage-cell-title">Stage Transition Action</div>
+          <p>AE confirms opportunity in CRM: sets Stage 1, populates MEDDICC initial assessment, sets close date, sets initial ARR amount. Manager is notified for pipeline review inclusion.</p>
+        </div>
+        <div class="stage-cell">
+          <div class="stage-cell-title">If Criteria Not Met</div>
+          <p>AE marks opportunity "Disqualified" with reason. Lead returns to SAL status for SDR follow-up cadence, or to long-term nurture. Disqualification reason is required — it feeds into win/loss analysis.</p>
+        </div>
+        <div class="stage-cell">
+          <div class="stage-cell-title">Probability</div>
+          <p>5–10%. An SQL means there's a real opportunity — it does not mean it's likely to close. Many SQLs never become real buying conversations.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- STAGE 1 -->
+  <div class="stage-card">
+    <div class="stage-header">
+      <div class="stage-badge stage1">S1</div>
+      <div>
+        <div class="stage-name">Stage 1 — Discovery</div>
+        <div class="stage-tagline">AE is conducting deep discovery to understand pain, process, and decision landscape</div>
+      </div>
+    </div>
+    <div class="stage-body">
+      <div class="stage-grid">
+        <div class="stage-cell">
+          <div class="stage-cell-title">Entry Criteria</div>
+          <p>Confirmed discovery meeting on calendar with at least one stakeholder who is involved in the buying process. Opportunity record created with: close date, estimated ARR, source, AE owner, MEDDICC fields initialized.</p>
+        </div>
+        <div class="stage-cell">
+          <div class="stage-cell-title">Exit Criteria</div>
+          <p>AE has documented: (1) Confirmed business pain with quantified impact, (2) Identification of at least one champion candidate, (3) Technical requirements understood, (4) Decision process/timeline mapped, (5) Next step agreed and on calendar. Moves to Stage 2.</p>
+        </div>
+        <div class="stage-cell">
+          <div class="stage-cell-title">Owner</div>
+          <p>AE. SE (Solutions Engineer) may be introduced in Stage 1 for complex products. AE owns the process.</p>
+        </div>
+        <div class="stage-cell">
+          <div class="stage-cell-title">Stage Transition Action</div>
+          <p>AE updates MEDDICC notes in CRM, records Metrics, economic buyer identification, and decision criteria. Manager must approve Stage 2 move in deal review if AE is ramping (&lt;12 months tenure).</p>
+        </div>
+        <div class="stage-cell">
+          <div class="stage-cell-title">If Criteria Not Met</div>
+          <p>Deal stays in Stage 1. If no progress after 21 days, manager reviews in pipeline meeting. Deals stuck in Stage 1 for 45+ days without activity are candidates for "Pushback" (close date moved to next quarter) or disqualification.</p>
+        </div>
+        <div class="stage-cell">
+          <div class="stage-cell-title">Probability</div>
+          <p>15–20%. In Stage 1, you don't yet know if you can win. Most businesses benchmark 30–40% Stage 1-to-close overall conversion.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- STAGE 2 -->
+  <div class="stage-card">
+    <div class="stage-header">
+      <div class="stage-badge stage2">S2</div>
+      <div>
+        <div class="stage-name">Stage 2 — Technical Validation</div>
+        <div class="stage-tagline">Prospect is actively evaluating whether the product can solve their problem</div>
+      </div>
+    </div>
+    <div class="stage-body">
+      <div class="stage-grid">
+        <div class="stage-cell">
+          <div class="stage-cell-title">Entry Criteria</div>
+          <p>All Stage 1 exit criteria met. Technical buyer engaged (not just business buyer). Demo or POC (proof of concept) scheduled or in progress. Evaluation criteria defined and documented in CRM.</p>
+        </div>
+        <div class="stage-cell">
+          <div class="stage-cell-title">Exit Criteria</div>
+          <p>Technical validation complete: (1) POC or demo completed and feedback received, (2) Technical buyer has confirmed product meets requirements, (3) No unresolved blockers from technical evaluation, (4) Business case conversation initiated. Moves to Stage 3.</p>
+        </div>
+        <div class="stage-cell">
+          <div class="stage-cell-title">Owner</div>
+          <p>AE with SE co-ownership during technical validation. AE owns the relationship and process; SE owns the technical narrative and POC execution.</p>
+        </div>
+        <div class="stage-cell">
+          <div class="stage-cell-title">Stage Transition Action</div>
+          <p>SE documents POC outcome in CRM. AE updates: Decision Criteria met/unmet status, Identified Competition field, Champion field (named person). Manager reviews before move to Stage 3.</p>
+        </div>
+        <div class="stage-cell">
+          <div class="stage-cell-title">If Criteria Not Met</div>
+          <p>Deal returns to Stage 1 if technical evaluation reveals disqualifying gaps. Competitive loss risk flagged. If POC stalls beyond 30 days, a "POC Success Criteria" reset conversation is required.</p>
+        </div>
+        <div class="stage-cell">
+          <div class="stage-cell-title">Probability</div>
+          <p>30–40%. Deals that clear technical validation have a materially higher close probability. The act of running a serious POC indicates real buying intent.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- STAGE 3 -->
+  <div class="stage-card">
+    <div class="stage-header">
+      <div class="stage-badge stage3">S3</div>
+      <div>
+        <div class="stage-name">Stage 3 — Business Case &amp; Champion</div>
+        <div class="stage-tagline">Economic buyer is engaged, business case is being built, champion is active</div>
+      </div>
+    </div>
+    <div class="stage-body">
+      <div class="stage-grid">
+        <div class="stage-cell">
+          <div class="stage-cell-title">Entry Criteria</div>
+          <p>Technical validation complete. Champion confirmed (a specific named person who wants you to win, has access to power, and is actively selling internally). Economic buyer meeting scheduled or completed. Business case (ROI model) under construction.</p>
+        </div>
+        <div class="stage-cell">
+          <div class="stage-cell-title">Exit Criteria</div>
+          <p>(1) Business case presented to economic buyer, (2) Verbal agreement on commercial terms range (even informal), (3) Legal/procurement process initiated by customer, (4) Formal proposal or MSA sent, (5) Champion has confirmed path to decision. Moves to Stage 4.</p>
+        </div>
+        <div class="stage-cell">
+          <div class="stage-cell-title">Owner</div>
+          <p>AE. At enterprise deals (&gt;$50K ARR), exec sponsor involvement expected at this stage. AE must involve their VP in deals exceeding ARR threshold.</p>
+        </div>
+        <div class="stage-cell">
+          <div class="stage-cell-title">Stage Transition Action</div>
+          <p>AE documents: Champion name and title in MEDDICC Champion field, Economic Buyer name, Decision Criteria confirmed, Proposal value submitted. Proposal attached to opportunity record.</p>
+        </div>
+        <div class="stage-cell">
+          <div class="stage-cell-title">If Criteria Not Met</div>
+          <p>If no named champion, deal is high risk regardless of stage. Deals without a champion should be flagged in pipeline review with "No Champion" risk tag. AE must have a champion development plan.</p>
+        </div>
+        <div class="stage-cell">
+          <div class="stage-cell-title">Probability</div>
+          <p>50–60%. A deal with a validated champion, engaged economic buyer, and submitted proposal should close more often than not. If Stage 3 win rate is below 40%, revisit earlier-stage qualification.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- STAGE 4 -->
+  <div class="stage-card">
+    <div class="stage-header">
+      <div class="stage-badge stage4">S4</div>
+      <div>
+        <div class="stage-name">Stage 4 — Procurement &amp; Legal</div>
+        <div class="stage-tagline">Commercial terms are agreed in principle — legal and procurement are the remaining gates</div>
+      </div>
+    </div>
+    <div class="stage-body">
+      <div class="stage-grid">
+        <div class="stage-cell">
+          <div class="stage-cell-title">Entry Criteria</div>
+          <p>Verbal agreement on commercial terms (price, contract term, seats/scope). Economic buyer has confirmed intent to proceed. MSA or SOW in legal review. Security/compliance questionnaire submitted (if required). This deal is in the "commit" forecast category.</p>
+        </div>
+        <div class="stage-cell">
+          <div class="stage-cell-title">Exit Criteria</div>
+          <p>Signed contract received. PO received (if applicable). Moves to Closed Won. OR: deal falls through — moves to Closed Lost or "Pushback" (extended timeline).</p>
+        </div>
+        <div class="stage-cell">
+          <div class="stage-cell-title">Owner</div>
+          <p>AE with Deal Desk support. Legal owns redline process. Finance owns PO/billing setup. AE remains the primary relationship owner and deal driver through close.</p>
+        </div>
+        <div class="stage-cell">
+          <div class="stage-cell-title">Stage Transition Action</div>
+          <p>AE uploads signed contract to CRM opportunity. Finance triggered for ARR recognition. CS receives CS handoff package. Closed Won marked with: ARR, ACV, contract start date, contract end date, renewal date.</p>
+        </div>
+        <div class="stage-cell">
+          <div class="stage-cell-title">If Criteria Not Met</div>
+          <p>If legal review stalls beyond 30 days, escalation path defined. If terms can't be agreed, opportunity moves to Closed Lost — never stays in Stage 4 indefinitely. CRO reviews all Stage 4 deals weekly.</p>
+        </div>
+        <div class="stage-cell">
+          <div class="stage-cell-title">Probability</div>
+          <p>75–85%. Stage 4 losses are failures of execution or signals of problems that should have been caught earlier. Track Stage 4 loss reasons — they expose process gaps.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- CLOSED WON / LOST -->
+  <div class="stage-card">
+    <div class="stage-header">
+      <div class="stage-badge won">WON</div>
+      <div>
+        <div class="stage-name">Closed Won</div>
+        <div class="stage-tagline">Contract signed — revenue recognized — CS handoff initiated</div>
+      </div>
+    </div>
+    <div class="stage-body">
+      <p style="font-size:14px; line-height:1.7;">Required fields at close: ARR, ACV, Contract Term (months), Contract Start Date, Contract End Date (= Renewal Date in CS platform), Closed Won Reason (1-click dropdown: Competitive Win, Greenfield, Renewal Upgrade, etc.), Products Sold, Use Case category. All fields mandatory — no close without complete data. Triggers: CS onboarding sequence, commission calculation, ARR recognition in financial system.</p>
+    </div>
+  </div>
+
+  <div class="stage-card">
+    <div class="stage-header">
+      <div class="stage-badge lost">LOST</div>
+      <div>
+        <div class="stage-name">Closed Lost</div>
+        <div class="stage-tagline">Opportunity did not close — structured loss data captured for win/loss analysis</div>
+      </div>
+    </div>
+    <div class="stage-body">
+      <p style="font-size:14px; line-height:1.7;">Required fields at loss: Primary Loss Reason (dropdown — see below), Competitor Won (if applicable), Stage Lost From (which stage was it when it died — not automatically the last stage), Loss Notes (free text, minimum 50 characters). Loss reasons must be standardized: No Decision, Competitor, Price, Product Gap, No Champion, Timing, Budget Eliminated. Free text "Other" is banned — it destroys analysis. Every loss should be reviewed in the monthly win/loss review.</p>
+    </div>
+  </div>
+
+  <!-- THE DEFINITION WORKSHOP -->
+  <h2 class="section-title">The Stage Definition Workshop: Running the Cross-Functional Session</h2>
+  <div class="section-intro">You cannot define stages in a RevOps team silo. You need buy-in from Marketing, SDR leadership, AE management, CS, and Finance. This is a political exercise as much as a logical one.</div>
+
+  <div class="workshop-step">
+    <div class="ws-num">1</div>
+    <div class="ws-body">
+      <span class="ws-title">Pre-Work: Pull the Data</span>
+      Before the workshop, export 12–18 months of opportunity data. Calculate current stage-to-stage conversion rates by rep and segment. Identify the 5–10 deals where the stage data most clearly didn't match the reality of what happened. These become your workshop case studies.
+    </div>
+  </div>
+  <div class="workshop-step">
+    <div class="ws-num">2</div>
+    <div class="ws-body">
+      <span class="ws-title">Invite the Right People (No More Than 8)</span>
+      VP/Director of Marketing, SDR Manager, 1–2 Senior AEs, VP of Sales, SE Lead, RevOps, and one CS rep. More than 8 people and the session becomes unmanageable. The CRO should be present for the final 30 minutes to provide executive sign-off.
+    </div>
+  </div>
+  <div class="workshop-step">
+    <div class="ws-num">3</div>
+    <div class="ws-body">
+      <span class="ws-title">Start With the MQL → SQL Handoff (The Biggest Fight)</span>
+      This is where Marketing and Sales disagree most. Marketing believes they're sending qualified leads; Sales believes they're getting garbage. The resolution is data: pull the last 6 months of MQLs and their outcomes. Let the numbers settle the argument. Define MQL criteria based on what actually correlates with becoming an SQL.
+    </div>
+  </div>
+  <div class="workshop-step">
+    <div class="ws-num">4</div>
+    <div class="ws-body">
+      <span class="ws-title">Work Stage by Stage — Entry and Exit Only</span>
+      For each stage, agree on two things and only two: what must be true to enter this stage (evidence in CRM, not opinion), and what must be true to leave this stage. Avoid defining stages by what happens "during" the stage — that's process documentation, not stage definition.
+    </div>
+  </div>
+  <div class="workshop-step">
+    <div class="ws-num">5</div>
+    <div class="ws-body">
+      <span class="ws-title">Test Each Definition Against Real Deals</span>
+      Apply the proposed definitions to 5 real historical deals (2 wins, 2 losses, 1 no-decision). Ask: under these definitions, would we have tracked this deal the same way? If the answer is no for all five reps in the room, the definition needs refinement.
+    </div>
+  </div>
+  <div class="workshop-step">
+    <div class="ws-num">6</div>
+    <div class="ws-body">
+      <span class="ws-title">Document and Distribute Before the Session Ends</span>
+      Do not leave the workshop without a draft document that everyone in the room agrees captures the decisions made. Send it for 48-hour review. Create a final v1.0 Stage Definition Register within 5 business days and load into CRM as the help text for every stage field.
+    </div>
+  </div>
+
+  <!-- CRM DOCUMENTATION AND ENFORCEMENT -->
+  <h2 class="section-title">Documenting and Enforcing Definitions in CRM</h2>
+
+  <div class="subsection">
+    <div class="subsection-title">The Stage Definition Register</div>
+    <p>Create a CRM document or help-text record for each stage that contains: the stage name, the entry criteria (bullet list), the exit criteria (bullet list), the mandatory CRM fields that must be populated before you can move to this stage, and the probability that the CRM assigns automatically. In Salesforce, this lives in the Stage picklist field setup. In HubSpot, it lives in the Deal Stage customization. Every rep sees these criteria when they change a stage — not in a separate document they'll never read.</p>
+  </div>
+
+  <div class="enforcement-card">
+    <div class="ec-title">Enforcement Method 1: Required Fields by Stage</div>
+    <p>Configure CRM validation rules that block stage advancement until mandatory fields are populated. Example: moving to Stage 2 requires "Technical Buyer Name" and "Evaluation Criteria" fields to be non-empty. In Salesforce, this is a validation rule with a formula. In HubSpot, this is a required properties configuration on stage transitions. This is the most effective enforcement mechanism — it makes it physically impossible to skip.</p>
+  </div>
+
+  <div class="enforcement-card">
+    <div class="ec-title">Enforcement Method 2: Stage Gate Review</div>
+    <p>For deals above an ARR threshold (e.g., $25K+ ACV), require manager review before stage advancement to Stage 3+. This is done via a CRM approval process or a standing agenda item in weekly pipeline reviews. The manager confirms entry criteria are met and documents their confirmation in the deal record.</p>
+  </div>
+
+  <div class="enforcement-card">
+    <div class="ec-title">Enforcement Method 3: Weekly Pipeline Audit</div>
+    <p>RevOps runs a weekly report showing every deal that (1) advanced a stage without an activity logged in the preceding 7 days, (2) has a close date within 30 days but hasn't moved from Stage 1 or 2, or (3) has been in the same stage for more than 2x the average days-in-stage benchmark. These "outlier deals" are reviewed in the weekly pipeline call.</p>
+  </div>
+
+  <!-- STAGE INFLATION -->
+  <h2 class="section-title">Stage Inflation: Detection and Prevention</h2>
+  <div class="section-intro">Stage inflation is the practice of moving deals to later stages prematurely — usually to show pipeline progress to management, hit activity metrics, or qualify for deals in forecast review. It is extremely common and extremely damaging.</div>
+
+  <div class="subsection">
+    <p>Stage inflation is not always deliberate. A rep who is optimistic about a deal, who wants to look good in the pipeline review, or who doesn't want to lose a deal from their pipeline will often unconsciously advance a deal based on how good they feel about it rather than the evidence in the CRM. The consequence is a forecast that looks healthy but is systematically overstated.</p>
+  </div>
+
+  <table class="data-table">
+    <thead>
+      <tr><th>Inflation Signal</th><th>What to Look For</th><th>How to Detect in CRM</th></tr>
+    </thead>
+    <tbody>
+      <tr><td>Stage Skip</td><td>Deal moved from Stage 1 directly to Stage 3 with no Stage 2 activity logged</td><td>Report: stage transition history where no activities exist in the intermediate stage time window</td></tr>
+      <tr><td>No Activity Advancement</td><td>Stage changed but no call, email, or meeting logged in 14 days prior</td><td>Report: last activity date vs. stage change date; flag any gap &gt;7 days</td></tr>
+      <tr><td>Probability vs. Stage Mismatch</td><td>Rep manually overrides probability to 80% on a Stage 2 deal</td><td>Report: deals where manual probability exceeds the stage's standard probability by &gt;20 points</td></tr>
+      <tr><td>Close Date Drift Without Stage Change</td><td>Close date pushed 3x+ with no stage regression</td><td>Report: close date change history; count of pushes per deal, flag 3+ pushes</td></tr>
+      <tr><td>Rep Outlier</td><td>One rep's average deal age is 30% shorter than team average yet win rate is similar</td><td>Cohort analysis by rep: compare average days-per-stage to team average</td></tr>
+    </tbody>
+  </table>
+
+  <!-- STAGE DEFINITIONS AND PROBABILITY -->
+  <h2 class="section-title">The Relationship Between Stage Definitions and Probability</h2>
+  <div class="section-intro">Forecast accuracy depends on two things: the quality of your stage definitions and the accuracy of your probability assignments. They are inseparable.</div>
+
+  <div class="subsection">
+    <p>Every stage in your CRM should have a default probability that is automatically assigned when a deal enters that stage. This probability is not the rep's opinion — it is a historical average for your business. It represents: out of all deals that reached this stage in the last 24 months, what percentage closed won?</p>
+  </div>
+
+  <div class="formula-block">
+    <div class="formula-label">Stage Probability Formula</div>
+    <div class="formula-main">Stage N Probability = Closed Won from Stage N ÷ Total Opportunities that Entered Stage N</div>
+    <div class="formula-note">Calculated rolling 24 months, by segment (SMB/Mid-Market/Enterprise), updated quarterly. Do not use the same probability for a $5K SMB deal and a $500K enterprise deal at the same stage — their conversion dynamics are completely different.</div>
+  </div>
+
+  <table class="data-table">
+    <thead>
+      <tr><th>Stage</th><th>Typical SMB Probability</th><th>Typical Mid-Market Probability</th><th>Typical Enterprise Probability</th></tr>
+    </thead>
+    <tbody>
+      <tr><td>Stage 1 — Discovery</td><td>15%</td><td>12%</td><td>8%</td></tr>
+      <tr><td>Stage 2 — Technical Validation</td><td>30%</td><td>28%</td><td>20%</td></tr>
+      <tr><td>Stage 3 — Business Case</td><td>55%</td><td>50%</td><td>40%</td></tr>
+      <tr><td>Stage 4 — Procurement/Legal</td><td>80%</td><td>78%</td><td>70%</td></tr>
+      <tr><td>Closed Won</td><td>100%</td><td>100%</td><td>100%</td></tr>
+      <tr><td>Closed Lost</td><td>0%</td><td>0%</td><td>0%</td></tr>
+    </tbody>
+  </table>
+
+  <!-- UPDATING DEFINITIONS -->
+  <h2 class="section-title">Updating Definitions as the Business Evolves</h2>
+
+  <div class="subsection">
+    <p>Stage definitions should be reviewed annually at minimum, and immediately following any major business change: a new product launch, entry into a new market segment, a pivot from inbound to outbound, or a shift from product-led to sales-led growth. The stage definition register is a living document.</p>
+    <p>Resist the temptation to revise definitions mid-quarter. Even if a definition proves imperfect, changing it in the middle of a quarter invalidates forecast models and creates confusion. Schedule definition revisions for the start of a new fiscal year or a new fiscal quarter only.</p>
+  </div>
+
+  <div class="callout callout-warning">
+    <div class="callout-title">Definition Change Protocol</div>
+    <p>When updating definitions: (1) Document the old definition in the change log with the effective-through date, (2) Notify all revenue-team members 2 weeks before the change takes effect, (3) Run a training session on the new definitions, (4) Audit the pipeline for any deals that need to be reclassified under new definitions, (5) Note the definition change date in all conversion rate analyses going forward — rates before and after a definition change are not directly comparable.</p>
+  </div>
+
+  <!-- TEMPLATES -->
+  <h2 class="section-title">Templates</h2>
+
+  <div class="subsection">
+    <div class="subsection-title">Stage Definition Register Template (CRM Help Text Format)</div>
+    <div class="formula-block">
+      <div class="formula-label">Stage 2 — Technical Validation (CRM Help Text)</div>
+      <pre style="white-space:pre-wrap; font-size:13px; color:#CDCCCA;">ENTRY CRITERIA (all required):
+• Stage 1 exit criteria confirmed ✓
+• Technical buyer (named) engaged ✓
+• Evaluation criteria documented in "Eval Criteria" field ✓
+• Demo or POC kickoff meeting completed ✓
+
+EXIT CRITERIA (all required):
+• POC/demo outcome documented in "Technical Validation Notes" ✓
+• Technical buyer confirmed fit (email/meeting note) ✓
+• No unresolved technical blockers ✓
+• Business case conversation initiated ✓
+
+MANDATORY FIELDS:
+- Technical Buyer (Contact): required, non-empty
+- Evaluation Criteria: required, min 50 chars
+- Technical Validation Notes: required on exit
+
+DEFAULT PROBABILITY: 30% (SMB), 28% (MM), 20% (ENT)
+AVERAGE DAYS IN STAGE: 14 days (SMB), 21 days (MM), 35 days (ENT)</pre>
+    </div>
+  </div>
+
+  <div class="related-section">
+    <div class="related-title">Related Sections</div>
+    <div class="related-links">
+      <a href="forecast-methodology.html" class="related-link">Forecast Methodology</a>
+      <a href="crm-architecture.html" class="related-link">CRM Architecture</a>
+      <a href="revenue-reporting.html" class="related-link">Revenue Reporting</a>
+      <a href="meddicc.html" class="related-link">MEDDICC</a>
+      <a href="win-loss-analysis.html" class="related-link">Win/Loss Analysis</a>
+      <a href="forecast-integrity.html" class="related-link">Forecast Integrity</a>
+      <a href="../pages/revops.html" class="related-link">← RevOps Overview</a>
+    </div>
+  </div>
+</div>
+<script data-pplx-inline-edit>
+(function () {
+  if (window === window.top) return;
+
+  const allowedParentOrigins = ["https://www.perplexity.ai","https://perplexity.ai","https://testing.perplexity.ai","https://staging.perplexity.ai","https://*.preview.i.perplexity.ai","http://localhost:3000","http://127.0.0.1:3000","http://localhost:5173","http://127.0.0.1:5173"];
+  const MAX_FONT_BYTES = 500 * 1024;
+  const MAX_TOTAL_FONT_BYTES = 2 * 1024 * 1024;
+  let scrollForwarding = false;
+  let scrollRaf = 0;
+  let trustedTopOrigin = null;
+
+  // Allow entries like "https://*.preview.i.perplexity.ai" — the wildcard
+  // matches a single DNS label (no dots), so "https://*.foo" cannot stretch
+  // across multiple labels.
+  function matchesAllowedOrigin(origin) {
+    if (!origin) return false;
+    for (const entry of allowedParentOrigins) {
+      if (!entry.includes("*")) {
+        if (entry === origin) return true;
+        continue;
+      }
+      const pattern = new RegExp(
+        "^" +
+          entry.replace(/[.+?^${}()|[\]\\]/g, "\\$&").replace(/\*/g, "[^.]+") +
+          "$",
+      );
+      if (pattern.test(origin)) return true;
+    }
+    return false;
+  }
+
+  // Trust decision: when the sender is same-origin-visible (event.origin is a
+  // real origin like https://www.perplexity.ai) we trust event.origin directly.
+  // When event.origin is "null" (opaque broker srcdoc), we fall back to the
+  // broker's stamped `parentOrigin` to identify the top window. The fallback
+  // is claim-only — we rely on the browser's native `targetOrigin` enforcement
+  // on the response path (see postToTrustedTop) to ensure replies can't be
+  // delivered to anyone but the actual top window of that claimed origin.
+  function getTrustedParentOrigin(event) {
+    const forwardedParentOrigin =
+      typeof event.data.parentOrigin === "string" ? event.data.parentOrigin : null;
+    const parentOrigin = event.origin === "null" ? forwardedParentOrigin : event.origin;
+    return matchesAllowedOrigin(parentOrigin) ? parentOrigin : null;
+  }
+
+  // All responses go to window.top with targetOrigin = the allowlisted origin.
+  // An attacker that iframes us inside their own null-origin broker can claim
+  // any parentOrigin they like, but the browser will drop the reply whenever
+  // the real top's origin doesn't match — so the screenshot never leaves.
+  function postToTrustedTop(message) {
+    if (!trustedTopOrigin) return;
+    try {
+      window.top.postMessage(message, trustedTopOrigin);
+    } catch (_error) {}
+  }
+
+  function inlineAll(original, clone) {
+    if (original.nodeType !== 1 || clone.nodeType !== 1) return;
+
+    try {
+      const computedStyle = getComputedStyle(original);
+      // cssText on a computed style is the serialized declaration in modern
+      // Chromium/Safari — a single read beats enumerating ~400 longhand
+      // properties. Firefox returns "" here, so we fall back on empty.
+      const serialized = computedStyle.cssText;
+      if (serialized) {
+        clone.style.cssText = serialized;
+      } else {
+        const parts = new Array(computedStyle.length);
+        for (let index = 0; index < computedStyle.length; index += 1) {
+          const property = computedStyle[index];
+          parts[index] = `${property}:${computedStyle.getPropertyValue(property)};`;
+        }
+        clone.style.cssText = parts.join("");
+      }
+    } catch (_error) {}
+
+    const originalChildren = original.children;
+    const clonedChildren = clone.children;
+    for (
+      let index = 0;
+      index < originalChildren.length && index < clonedChildren.length;
+      index += 1
+    ) {
+      inlineAll(originalChildren[index], clonedChildren[index]);
+    }
+  }
+
+  function extractFontUrl(srcValue) {
+    const matches = [
+      ...srcValue.matchAll(
+        /url\(["']?([^"')]+)["']?\)(?:\s*format\(["']?([^"')]+)["']?\))?/gi,
+      ),
+    ];
+    if (matches.length === 0) return null;
+    const woff2 = matches.find((m) => m[2] && m[2].toLowerCase().includes("woff2"));
+    if (woff2) return woff2[1];
+    const woff = matches.find((m) => m[2] && m[2].toLowerCase().includes("woff"));
+    if (woff) return woff[1];
+    return matches[0][1];
+  }
+
+  // Cache resolved font URL -> data URI across captures. Fonts on a page
+  // essentially never change, and a batch run emits multiple captures back to
+  // back — without this we'd refetch + re-base64 every time.
+  const fontDataUriCache = new Map();
+  const SRC_DECLARATION_RE = /src\s*:\s*[^;}]+/i;
+
+  async function fetchAsDataUri(url) {
+    if (fontDataUriCache.has(url)) return fontDataUriCache.get(url);
+    let dataUri = null;
+    try {
+      const response = await fetch(url, { mode: "cors", credentials: "omit" });
+      if (response.ok) {
+        const blob = await response.blob();
+        if (blob.size <= MAX_FONT_BYTES) {
+          dataUri = await new Promise((resolve) => {
+            const reader = new FileReader();
+            reader.onloadend = () =>
+              resolve(typeof reader.result === "string" ? reader.result : null);
+            reader.onerror = () => resolve(null);
+            reader.readAsDataURL(blob);
+          });
+        }
+      }
+    } catch (_error) {
+      dataUri = null;
+    }
+    fontDataUriCache.set(url, dataUri);
+    return dataUri;
+  }
+
+  function collectFontFaceRuleTexts() {
+    const rules = [];
+    for (const sheet of document.styleSheets) {
+      let cssRules;
+      try {
+        cssRules = sheet.cssRules;
+      } catch (_error) {
+        continue;
+      }
+      if (!cssRules) continue;
+      for (const rule of cssRules) {
+        const cssText = rule.cssText || "";
+        if (cssText.startsWith("@font-face")) rules.push(cssText);
+      }
+    }
+    return rules;
+  }
+
+  async function buildInlinedFontCss() {
+    const ruleTexts = collectFontFaceRuleTexts();
+    if (ruleTexts.length === 0) return null;
+
+    const resolved = ruleTexts.map((cssText) => {
+      if (!SRC_DECLARATION_RE.test(cssText)) return null;
+      const srcMatch = cssText.match(/src\s*:\s*([^;}]+)[;}]/i);
+      if (!srcMatch) return null;
+      const url = extractFontUrl(srcMatch[1]);
+      if (!url) return null;
+      try {
+        return { cssText, url: new URL(url, document.baseURI).href };
+      } catch (_error) {
+        return null;
+      }
+    });
+
+    const dataUris = await Promise.all(
+      resolved.map((entry) => (entry ? fetchAsDataUri(entry.url) : Promise.resolve(null))),
+    );
+
+    const inlined = [];
+    let totalBytes = 0;
+    for (let index = 0; index < resolved.length; index += 1) {
+      const entry = resolved[index];
+      const dataUri = dataUris[index];
+      if (!entry || !dataUri) continue;
+      const approxBytes = dataUri.length * 0.75;
+      if (totalBytes + approxBytes > MAX_TOTAL_FONT_BYTES) break;
+      totalBytes += approxBytes;
+      inlined.push(entry.cssText.replace(SRC_DECLARATION_RE, `src: url("${dataUri}")`));
+    }
+    return inlined.length > 0 ? inlined.join("\n") : null;
+  }
+
+  function stripExternal(clone) {
+    const images = clone.querySelectorAll("img");
+    for (let index = 0; index < images.length; index += 1) {
+      const src = images[index].getAttribute("src");
+      if (src && !src.startsWith("data:")) images[index].removeAttribute("src");
+    }
+
+    const elements = clone.querySelectorAll("*");
+    for (let index = 0; index < elements.length; index += 1) {
+      const style = elements[index].style.cssText;
+      if (style && style.includes("url(")) {
+        elements[index].style.cssText = style.replace(
+          /url\(["']?(?!data:)[^)"']*["']?\)/gi,
+          "none",
+        );
+      }
+    }
+  }
+
+  function emitScroll() {
+    scrollRaf = 0;
+    if (!scrollForwarding) return;
+    postToTrustedTop({
+      type: "INLINE_EDIT_SCROLL",
+      scrollX: window.scrollX,
+      scrollY: window.scrollY,
+    });
+  }
+
+  window.addEventListener(
+    "scroll",
+    function () {
+      if (!scrollForwarding || scrollRaf) return;
+      scrollRaf = requestAnimationFrame(emitScroll);
+    },
+    { passive: true, capture: true },
+  );
+
+  async function handleCaptureRequest(event) {
+    const requestId = event.data.requestId;
+    const scrollX = window.scrollX;
+    const scrollY = window.scrollY;
+    const width = window.innerWidth;
+    const height = window.innerHeight;
+
+    function postResult(dataUrl) {
+      postToTrustedTop({
+        type: "INLINE_EDIT_SCREENSHOT_RESULT",
+        requestId,
+        dataUrl,
+        scrollX,
+        scrollY,
+      });
+    }
+
+    try {
+      // Wait for any pending web fonts to resolve so both inline metrics and
+      // the @font-face inlining below see the same loaded faces.
+      if (document.fonts && document.fonts.ready) {
+        try {
+          await document.fonts.ready;
+        } catch (_error) {}
+      }
+
+      const clone = document.documentElement.cloneNode(true);
+      inlineAll(document.documentElement, clone);
+
+      const removedNodes = clone.querySelectorAll("script,link[rel=\"stylesheet\"],style");
+      for (let index = 0; index < removedNodes.length; index += 1) {
+        removedNodes[index].remove();
+      }
+
+      stripExternal(clone);
+
+      // Re-embed web fonts as data-URI @font-face rules so the SVG rasterizer
+      // can resolve them — external font URLs aren't fetched during
+      // foreignObject rendering, which would otherwise force a fallback face
+      // and change text metrics.
+      const inlinedFontCss = await buildInlinedFontCss();
+      if (inlinedFontCss) {
+        const styleEl = document.createElement("style");
+        styleEl.textContent = inlinedFontCss;
+        const head = clone.querySelector("head");
+        if (head) head.appendChild(styleEl);
+        else clone.insertBefore(styleEl, clone.firstChild);
+      }
+
+      const html = new XMLSerializer().serializeToString(clone);
+      const svg =
+        `<svg xmlns="http://www.w3.org/2000/svg" width="${width}" height="${height}">` +
+        '<foreignObject width="100%" height="100%">' +
+        `<div xmlns="http://www.w3.org/1999/xhtml" style="width:${width}px;height:${height}px;overflow:hidden">` +
+        `<div style="transform:translate(-${scrollX}px,-${scrollY}px);transform-origin:top left">` +
+        html +
+        "</div></div></foreignObject></svg>";
+      const svgUrl = `data:image/svg+xml;charset=utf-8,${encodeURIComponent(svg)}`;
+      const image = new Image();
+      image.onload = function () {
+        const canvas = document.createElement("canvas");
+        canvas.width = width;
+        canvas.height = height;
+        canvas.getContext("2d").drawImage(image, 0, 0);
+        postResult(canvas.toDataURL("image/png"));
+      };
+      image.onerror = function () {
+        postResult(null);
+      };
+      image.src = svgUrl;
+    } catch (_error) {
+      postResult(null);
+    }
+  }
+
+  window.addEventListener("message", function (event) {
+    if (!event.data) return;
+    // Only accept messages from the direct parent frame. Blocks sibling /
+    // unrelated-window postMessage senders that could otherwise reach us.
+    if (event.source !== window.parent) return;
+
+    const trustedParentOrigin = getTrustedParentOrigin(event);
+    if (!trustedParentOrigin) return;
+    trustedTopOrigin = trustedParentOrigin;
+
+    if (event.data.type === "INLINE_EDIT_SCROLL_START") {
+      scrollForwarding = true;
+      emitScroll();
+      return;
+    }
+
+    if (event.data.type === "INLINE_EDIT_SCROLL_STOP") {
+      scrollForwarding = false;
+      if (scrollRaf) cancelAnimationFrame(scrollRaf);
+      scrollRaf = 0;
+      return;
+    }
+
+    if (event.data.type !== "INLINE_EDIT_CAPTURE_REQUEST") return;
+
+    handleCaptureRequest(event);
+  });
+})();
+
+
+</script></body>
+</html>

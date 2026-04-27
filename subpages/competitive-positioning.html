@@ -1,0 +1,900 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Competitive Positioning — SaaS Revenue System</title>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="../assets/shared.css"/>
+  <style>
+    .page-hero { background: #20808D; }
+    .battle-card {
+      background: var(--surface);
+      border: 1.5px solid var(--border);
+      border-radius: 10px;
+      overflow: hidden;
+      margin-bottom: 24px;
+    }
+    .battle-card-header {
+      background: #20808D;
+      color: #fff;
+      padding: 14px 20px;
+      font-size: 14px;
+      font-weight: 700;
+      letter-spacing: 0.3px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .battle-card-header .bc-label {
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      opacity: 0.7;
+    }
+    .battle-card-body {
+      padding: 0;
+    }
+    .bc-row {
+      display: grid;
+      grid-template-columns: 200px 1fr;
+      border-bottom: 1px solid var(--border);
+    }
+    .bc-row:last-child { border-bottom: none; }
+    .bc-field {
+      padding: 14px 16px;
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: 0.5px;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      background: #fafaf8;
+      border-right: 1px solid var(--border);
+      display: flex;
+      align-items: flex-start;
+      padding-top: 16px;
+    }
+    .bc-content {
+      padding: 14px 16px;
+      font-size: 14px;
+      line-height: 1.7;
+      color: var(--text);
+    }
+    .bc-content ul { list-style: none; margin: 0; padding: 0; }
+    .bc-content ul li {
+      padding: 3px 0 3px 16px;
+      position: relative;
+    }
+    .bc-content ul li::before {
+      content: '→';
+      position: absolute;
+      left: 0;
+      color: #20808D;
+      font-weight: 700;
+      font-size: 12px;
+    }
+    .win-lose-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+      margin: 16px 0;
+    }
+    .win-box {
+      background: #f0fff4;
+      border: 1.5px solid #437A22;
+      border-radius: 8px;
+      padding: 16px;
+    }
+    .lose-box {
+      background: #fff0f0;
+      border: 1.5px solid #A13544;
+      border-radius: 8px;
+      padding: 16px;
+    }
+    .wl-title {
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      margin-bottom: 10px;
+    }
+    .win-box .wl-title { color: #437A22; }
+    .lose-box .wl-title { color: #A13544; }
+    .wl-list { list-style: none; margin: 0; padding: 0; }
+    .wl-list li {
+      font-size: 13px;
+      line-height: 1.6;
+      padding: 4px 0 4px 14px;
+      position: relative;
+      color: var(--text);
+    }
+    .win-box .wl-list li::before { content: '✓'; position: absolute; left: 0; color: #437A22; font-weight: 700; font-size: 11px; }
+    .lose-box .wl-list li::before { content: '✗'; position: absolute; left: 0; color: #A13544; font-weight: 700; font-size: 11px; }
+    .source-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+      gap: 12px;
+      margin: 16px 0;
+    }
+    .source-card {
+      background: var(--surface);
+      border: 1.5px solid var(--border);
+      border-radius: 8px;
+      padding: 14px 16px;
+    }
+    .source-card .sc-name {
+      font-size: 14px;
+      font-weight: 700;
+      color: var(--text);
+      margin-bottom: 4px;
+    }
+    .source-card .sc-type {
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      color: #20808D;
+      margin-bottom: 6px;
+    }
+    .source-card .sc-desc {
+      font-size: 12px;
+      color: var(--text-muted);
+      line-height: 1.5;
+    }
+    .reframe-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 16px 0;
+    }
+    .reframe-table th {
+      background: #20808D;
+      color: #fff;
+      padding: 10px 14px;
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: 0.5px;
+      text-align: left;
+    }
+    .reframe-table td {
+      padding: 12px 14px;
+      font-size: 13px;
+      line-height: 1.6;
+      border-bottom: 1px solid var(--border);
+      vertical-align: top;
+    }
+    .reframe-table tr:nth-child(even) td { background: #fafaf8; }
+    .mistake-item {
+      display: flex;
+      gap: 14px;
+      margin-bottom: 16px;
+      align-items: flex-start;
+    }
+    .mistake-num {
+      min-width: 28px;
+      height: 28px;
+      background: #A13544;
+      color: #fff;
+      border-radius: 50%;
+      font-size: 13px;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+    .mistake-content { flex: 1; }
+    .mistake-title { font-size: 15px; font-weight: 700; margin-bottom: 4px; }
+    .mistake-desc { font-size: 14px; line-height: 1.7; color: var(--text); }
+  </style>
+</head>
+<body>
+<nav class="nav">
+  <span class="nav-logo">SaaS <span>Revenue System</span></span>
+  <span class="nav-sep">|</span>
+  <a href="../index.html" class="nav-back">← Home</a>
+  <span class="nav-sep">|</span>
+  <a href="../pages/phase1.html" class="nav-back">Phase 1: Foundation</a>
+  <span class="nav-sep">|</span>
+  <span class="nav-current">Competitive Positioning</span>
+</nav>
+<div class="page-hero" style="background:#20808D">
+  <div class="hero-phase-label">Phase 1 — Foundation</div>
+  <div class="hero-title">Competitive Positioning</div>
+  <div class="hero-subtitle">Winning When There Are Alternatives — Battle Cards, Reframes, and the Art of the Competitive Conversation</div>
+</div>
+<div class="content-wrap">
+  <div class="breadcrumb">
+    <a href="../index.html">Home</a><span class="sep">›</span>
+    <a href="../pages/phase1.html">Phase 1: Foundation</a><span class="sep">›</span>
+    <span class="current">Competitive Positioning</span>
+  </div>
+
+  <h2 class="section-title">What Competitive Positioning Is — and Isn't</h2>
+  <div class="subsection">
+    <p>Competitive positioning is not your value proposition. Your value proposition answers the question: <em>"Why should I buy this product?"</em> Competitive positioning answers the question: <em>"Why should I buy YOUR product instead of theirs?"</em></p>
+    <p>Most sales teams conflate the two. They lead with product features against a general market, rather than specifically addressing why their solution is the right choice <em>relative to the specific competitor already in the deal</em>. The result: reps get outmaneuvered by a competitor's rep who knows exactly which traps to set and which anchors to exploit.</p>
+    <p>Effective competitive positioning is context-dependent. A message that beats Salesforce is different from one that beats HubSpot — even if you are the same product. The champion's internal business case, the evaluation criteria, and the executive's frame of reference all shift depending on who they have already spoken with.</p>
+    <div class="callout callout-definition">
+      <div class="callout-title">Definition</div>
+      <p><strong>Competitive Positioning</strong> is the deliberate selection of the frame — the evaluation criteria, the comparison points, the proof, and the language — that makes your solution the most rational choice when a specific competitor is present in the deal. It requires knowing what that competitor will say before they say it.</p>
+    </div>
+  </div>
+
+  <h2 class="section-title">The Battle Card: Structure and Fields</h2>
+  <p class="section-intro">A battle card is a one-page (or one-screen) reference document for a rep facing a specific competitor. It is not a marketing brochure — it is a tactical field guide. A good battle card is built for the <em>moment of the competitive call</em>, not for a conference presentation.</p>
+
+  <div class="battle-card">
+    <div class="battle-card-header">
+      <div>
+        <div class="bc-label">Battle Card Structure</div>
+        <div>The 10-Field Competitive Brief</div>
+      </div>
+    </div>
+    <div class="battle-card-body">
+      <div class="bc-row">
+        <div class="bc-field">Competitor Overview</div>
+        <div class="bc-content">2-3 sentences: who they are, their primary market, their funding/size, their go-to-market motion. Include their tagline and how they position themselves. What do buyers think they are buying when they evaluate this competitor?</div>
+      </div>
+      <div class="bc-row">
+        <div class="bc-field">Their Strengths</div>
+        <div class="bc-content">
+          <ul>
+            <li>What are they genuinely good at? Be honest — reps who dismiss competitor strengths sound naive and lose credibility.</li>
+            <li>What do their happiest customers cite as the reason they bought?</li>
+            <li>What is their best-performing use case or segment?</li>
+          </ul>
+        </div>
+      </div>
+      <div class="bc-row">
+        <div class="bc-field">Their Weaknesses</div>
+        <div class="bc-content">
+          <ul>
+            <li>Where do deals fall apart post-sale? (G2 reviews, Gartner Peer Insights, churn interviews)</li>
+            <li>What do their churned customers say? (win/loss interviews where they previously used the competitor)</li>
+            <li>What are the structural limitations of their architecture, pricing model, or support?</li>
+          </ul>
+        </div>
+      </div>
+      <div class="bc-row">
+        <div class="bc-field">Why Buyers Choose Them</div>
+        <div class="bc-content">The specific reasons — not guesses — that buyers selected this competitor in the last 10 competitive losses. Include direct quotes where possible. This separates good battle cards from bad ones: most skip this field entirely.</div>
+      </div>
+      <div class="bc-row">
+        <div class="bc-field">Our Differentiation</div>
+        <div class="bc-content">
+          <ul>
+            <li>The 3 most defensible differentiators that are (a) real, (b) provable, and (c) relevant to this competitor's buyers</li>
+            <li>Each must be tied to a business outcome, not a feature: not "we have better reporting" but "our reporting reduces time-to-insight by 60% which is why Finance teams close their books 3 days faster"</li>
+          </ul>
+        </div>
+      </div>
+      <div class="bc-row">
+        <div class="bc-field">Traps They Set</div>
+        <div class="bc-content">The evaluation criteria, RFP questions, demo requests, or proof-of-concept requirements that this competitor's champions are trained to insert into the buying process to disadvantage you. These come from win/loss interviews and sales feedback. E.g., "They always ask for an on-premise deployment option we don't offer" or "They push for a free 30-day POC which stalls our deals."</div>
+      </div>
+      <div class="bc-row">
+        <div class="bc-field">How to Reframe</div>
+        <div class="bc-content">The specific questions, stories, and pivots to redirect evaluation criteria away from the competitor's strengths and toward yours. Reframing is not lying — it is surfacing the evaluation criteria that the buyer should care about but isn't asking about yet. (See Reframe Table below.)</div>
+      </div>
+      <div class="bc-row">
+        <div class="bc-field">Proof Points</div>
+        <div class="bc-content">
+          <ul>
+            <li>3-5 reference customers who switched from this competitor — with named quotes and measurable outcomes</li>
+            <li>G2 comparison data (if favorable)</li>
+            <li>Third-party analyst recognition relevant to this competitor's key claims</li>
+            <li>Specific win stories from your own team in the last 90 days</li>
+          </ul>
+        </div>
+      </div>
+      <div class="bc-row">
+        <div class="bc-field">When We Win</div>
+        <div class="bc-content">The ICP profile and deal characteristics that predict a win against this competitor: company size, use case, stakeholder type, existing tech stack, budget profile, and evaluation timeline. Reps should use this to prioritize which competitive deals deserve maximum effort.</div>
+      </div>
+      <div class="bc-row">
+        <div class="bc-field">When We Lose</div>
+        <div class="bc-content">Be explicit about when to de-prioritize or walk away. If the prospect has already done a POC, has a deep existing relationship with this competitor, or has requirements that genuinely favor the other product, say so. Reps who chase every competitive deal burn out and miss their numbers.</div>
+      </div>
+    </div>
+  </div>
+
+  <h2 class="section-title">How to Build Battle Cards That Stay Current</h2>
+  <div class="subsection">
+    <div class="subsection-title">Primary Intelligence Sources</div>
+    <div class="source-grid">
+      <div class="source-card">
+        <div class="sc-type">Internal</div>
+        <div class="sc-name">Win/Loss Interviews</div>
+        <div class="sc-desc">30-min post-decision calls with both won and lost prospects. The gold standard. Conducted by Product Marketing, not Sales. Ask: "What would have had to be true for you to choose the competitor?" and "What did their rep say about us?"</div>
+      </div>
+      <div class="source-card">
+        <div class="sc-type">Internal</div>
+        <div class="sc-name">Gong / Call Intelligence</div>
+        <div class="sc-desc">Tag competitive mentions in call recordings. Gong CI (Competitive Intelligence) tracks how often each competitor is mentioned, in what deal stage, and correlates with win/loss outcomes. Invaluable for identifying which traps are being set most frequently.</div>
+      </div>
+      <div class="source-card">
+        <div class="sc-type">External</div>
+        <div class="sc-name">G2 Reviews</div>
+        <div class="sc-desc">Read the 1-3 star reviews of your competitors on G2 — these are your most honest intelligence. Also read G2 comparison pages for head-to-head feature perception data from real buyers.</div>
+      </div>
+      <div class="source-card">
+        <div class="sc-type">External</div>
+        <div class="sc-name">Analyst Reports</div>
+        <div class="sc-desc">Gartner Magic Quadrant, Forrester Wave, IDC MarketScape. These shape buyer perception before you ever get on a call. Know where your competitor is positioned and what the analysts say about them.</div>
+      </div>
+      <div class="source-card">
+        <div class="sc-type">Platform</div>
+        <div class="sc-name">Crayon / Klue</div>
+        <div class="sc-desc">Competitive intelligence platforms that track competitor websites, job postings, pricing page changes, press releases, and sales rep LinkedIn activity. Crayon is better for large teams; Klue for embedding CI into sales workflows via Slack/Salesforce.</div>
+      </div>
+      <div class="source-card">
+        <div class="sc-type">Platform</div>
+        <div class="sc-name">Sales Navigator</div>
+        <div class="sc-desc">Track competitor employee movements, hiring patterns (signals about which areas they're investing in), and shared connections at prospect accounts. New VP of Engineering hires at a competitor tells you which product areas they're strengthening.</div>
+      </div>
+    </div>
+  </div>
+
+  <h2 class="section-title">The "Why Us vs. Them" Framework</h2>
+  <div class="subsection">
+    <p>When a buyer asks "How are you different from Competitor X?", most reps answer with a feature list. The right answer follows a three-part structure:</p>
+    <ol class="step-list">
+      <li>
+        <div class="step-content">
+          <span class="step-title">Acknowledge their strength honestly</span>
+          "Competitor X is excellent at [specific thing] — for companies that [specific situation], they're a solid choice."
+        </div>
+      </li>
+      <li>
+        <div class="step-content">
+          <span class="step-title">Ask about the buyer's specific situation</span>
+          "Can I ask — which of their strengths is most important to your evaluation?" This forces the buyer to reveal which criteria they're using and lets you assess whether you should be competing.
+        </div>
+      </li>
+      <li>
+        <div class="step-content">
+          <span class="step-title">Reframe around your differentiators using their language</span>
+          "Given what you just described — [use case/outcome they care about] — here's why companies like yours that prioritize [X] consistently choose us..." Then lead with your strongest proof point for this specific context.
+        </div>
+      </li>
+    </ol>
+    <p>The power of this framework is in step 2. Reps who skip straight to "here's why we're better" miss the discovery data they need to position correctly. The question also creates a micro-commitment: if the buyer says "integration speed" is most important, and you're genuinely better on integration speed, you've already anchored the evaluation.</p>
+  </div>
+
+  <h2 class="section-title">The Reframe Table: Converting Traps Into Advantages</h2>
+  <table class="reframe-table">
+    <thead>
+      <tr>
+        <th>Competitor Trap / Their Claim</th>
+        <th>The Reframe Question</th>
+        <th>The Repositioned Frame</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>"We have 10x more features"</td>
+        <td>"What percentage of those features are you currently using? What's the adoption rate in your instance?"</td>
+        <td>Feature breadth without adoption is shelfware. Our focused feature set drives 90%+ activation and faster time-to-value.</td>
+      </tr>
+      <tr>
+        <td>"We've been in the market longer"</td>
+        <td>"What does your current tech stack look like? Were those integrations built in the last 5 years or is there legacy architecture?"</td>
+        <td>Longevity also means technical debt. Modern architecture means we can build integrations in hours, not months.</td>
+      </tr>
+      <tr>
+        <td>"Our enterprise customers include [Logo]"</td>
+        <td>"What was the renewal rate on those accounts in year 2 and 3? Are those logos still active customers?"</td>
+        <td>We have 120%+ NRR because our customers expand. Logo acquisition is not the same as customer success.</td>
+      </tr>
+      <tr>
+        <td>"We're cheaper"</td>
+        <td>"What's the total cost of ownership when you include implementation, admin overhead, and the hours your team spends working around limitations?"</td>
+        <td>TCO analysis: our higher license cost is typically offset by 40% faster implementation and lower admin burden.</td>
+      </tr>
+      <tr>
+        <td>"We have a free tier / 30-day trial"</td>
+        <td>"What does success look like at the end of the trial? What's the handoff plan for moving from trial to production?"</td>
+        <td>Free trials often delay decisions and create shadow IT. Our paid POC is scoped against your success criteria with executive alignment.</td>
+      </tr>
+      <tr>
+        <td>"Analysts rank us higher"</td>
+        <td>"Which analyst, and what dimension were they evaluating? Were they evaluating for your specific use case or the general market?"</td>
+        <td>Analyst rankings often favor breadth over depth. In your specific use case — [X] — our customers consistently outperform on [outcome metric].</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <h2 class="section-title">The Most Dangerous Competitor: Do Nothing</h2>
+  <div class="subsection">
+    <p>"Do nothing" or "status quo" is the most common reason B2B deals die — and it is rarely listed as a competitor. Research by Forrester and CEB (now Gartner) consistently finds that more than 40% of enterprise sales cycles end in "no decision" — not a competitor win. The rep gets beat not by Salesforce or HubSpot, but by the buyer's own inertia.</p>
+    <p>Positioning against do-nothing requires a completely different playbook than positioning against a competitor:</p>
+    <ul class="bullet-list">
+      <li><strong>Quantify the cost of inaction.</strong> "Every month you delay costs your team X hours in manual work, $Y in missed revenue opportunities, or Z customer escalations." Numbers make inaction uncomfortable. Use your customer data to anchor this.</li>
+      <li><strong>Identify the triggering event.</strong> Find the reason this got on the radar now. A triggering event — a board directive, a new hire, a compliance deadline, a competitor threat — is what creates urgency. If there is no triggering event, the deal may not be real.</li>
+      <li><strong>Build a champion with personal stakes.</strong> Do-nothing wins when there is no internal champion who owns the outcome. A champion who is personally accountable for the problem being solved will push against inertia. Without a champion, deals drift.</li>
+      <li><strong>Reduce switching risk perception.</strong> Buyers don't buy when perceived risk exceeds perceived reward. Lower switching risk by offering phased implementations, success guarantees, reference calls, or implementation support. Make it easier to say yes than to stay stuck.</li>
+      <li><strong>Create a decision deadline.</strong> Co-create a mutual close plan with specific milestones and a decision date tied to a business event: "If you want to be live by Q1, you need to start implementation by December 1st, which means a signed agreement by November 15th."</li>
+    </ul>
+  </div>
+
+  <h2 class="section-title">Handling FUD: Fear, Uncertainty, and Doubt</h2>
+  <div class="subsection">
+    <p>FUD is the competitive tactic of injecting fear into a buyer's evaluation process: "We heard they're burning through funding," "Their architecture doesn't scale past 10,000 users," "They were just acquired." Competitors, and sometimes prospects themselves, deploy FUD when they can't win on merit.</p>
+    <div class="callout callout-warning">
+      <div class="callout-title">The FUD Trap</div>
+      <p>The worst response to FUD is to either (a) panic and over-defend, or (b) deploy counter-FUD. Both make you look threatened. The strongest position is calm, documented refutation with evidence — and then a quick return to your value story.</p>
+    </div>
+    <p><strong>The FUD Response Framework:</strong></p>
+    <ol class="step-list">
+      <li>
+        <div class="step-content">
+          <span class="step-title">Acknowledge without amplifying</span>
+          "I'm aware that claim is in circulation. Let me address it directly."
+        </div>
+      </li>
+      <li>
+        <div class="step-content">
+          <span class="step-title">Refute with evidence</span>
+          Have pre-prepared documentation: customer retention data, security certifications, financial stability indicators, or architecture benchmarks that directly contradict the FUD. Send it immediately.
+        </div>
+      </li>
+      <li>
+        <div class="step-content">
+          <span class="step-title">Name the source indirectly</span>
+          "That's a claim we hear specifically in deals where [competitor] is involved. Here's what our customers who evaluated both say." Let the prospect draw the conclusion.
+        </div>
+      </li>
+      <li>
+        <div class="step-content">
+          <span class="step-title">Return to your story</span>
+          "What I'd rather have you evaluate us on is [your strongest differentiator]." Don't let FUD hijack the conversation.
+        </div>
+      </li>
+    </ol>
+  </div>
+
+  <h2 class="section-title">Win/Lose Analysis: When and Why</h2>
+  <div class="subsection">
+    <div class="win-lose-grid">
+      <div class="win-box">
+        <div class="wl-title">When You Win</div>
+        <ul class="wl-list">
+          <li>Large, complex enterprise accounts with multi-stakeholder evaluations</li>
+          <li>Prospects with previous bad experience with the competitor (churn + return)</li>
+          <li>Use cases that align to your core ICP — where you have the most references</li>
+          <li>Deals where your champion has personal accountability for outcomes</li>
+          <li>Short time-to-value requirements where your onboarding speed matters</li>
+          <li>Deals where price is less important than risk management</li>
+        </ul>
+      </div>
+      <div class="lose-box">
+        <div class="wl-title">When You Lose</div>
+        <ul class="wl-list">
+          <li>Prospect already 60%+ through a POC with the competitor</li>
+          <li>Existing multi-year contract that does not expire for 18+ months</li>
+          <li>Procurement is running an RFP designed around competitor's feature set</li>
+          <li>Evaluation criteria focused entirely on features you don't have</li>
+          <li>No identified champion — evaluation committee only, no internal advocate</li>
+          <li>Price-only evaluation with no interest in ROI or business outcome</li>
+        </ul>
+      </div>
+    </div>
+    <p>Tracking win rate by competitor is a leading indicator of positioning effectiveness. If your win rate against a specific competitor drops 10+ points over two quarters, it signals either: (1) they shipped something that closes a gap, (2) they changed their messaging and are now winning the framing battle, or (3) your enablement materials haven't been updated to reflect new intelligence.</p>
+  </div>
+
+  <h2 class="section-title">Competitive Win Rate Tracking</h2>
+  <div class="subsection">
+    <div class="formula-block">
+      <div class="formula-label">Formula — Competitive Win Rate</div>
+      <div class="formula-main">Competitive Win Rate = Deals Won Against [Competitor X] / (Deals Won + Deals Lost to [Competitor X])</div>
+      <div class="formula-note">Track by: competitor, rep, segment, deal size band, and deal source. Review monthly in sales management meetings.</div>
+    </div>
+    <p>Best-in-class competitive intelligence programs link win rate changes directly to battle card update cycles. If you updated a battle card with new proof points in January and your win rate against that competitor rose from 35% to 52% in Q2, that is quantifiable enablement ROI.</p>
+    <p><strong>Key metrics to track per competitor:</strong></p>
+    <ul class="bullet-list">
+      <li>Win rate (as above)</li>
+      <li>Average deal size when this competitor is present vs. not present</li>
+      <li>Sales cycle length when this competitor is present (competitive deals typically run 20-30% longer)</li>
+      <li>Discount depth — competitive pressure drives discounting; track this separately</li>
+      <li>Stage at which the competitor enters the deal (earlier entry = harder to dislodge)</li>
+    </ul>
+  </div>
+
+  <h2 class="section-title">How to Keep Battle Cards Current</h2>
+  <div class="subsection">
+    <p>Battle cards decay. A card written 18 months ago against a competitor that has shipped 4 major releases, raised a Series C, and hired a new VP of Sales is actively harmful — it trains reps to use arguments the competitor can easily rebut.</p>
+    <ul class="bullet-list">
+      <li><strong>Set a review cadence.</strong> Top 3 competitors: monthly review. Tier 2 competitors: quarterly. Use Crayon/Klue alerts as triggers for off-cycle updates.</li>
+      <li><strong>Build a "heard in the field" feedback loop.</strong> Create a Slack channel or CRM field for reps to log new competitor tactics, new claims, new FUD they hear in deals. Product Marketing reviews weekly.</li>
+      <li><strong>Tie updates to deal outcomes.</strong> When a deal is lost to a competitor, a 10-minute debrief with the rep should produce 1-2 new intelligence data points for the battle card.</li>
+      <li><strong>Version and date every card.</strong> Reps should know when it was last updated. Stale cards lose credibility faster than having no card at all.</li>
+    </ul>
+  </div>
+
+  <h2 class="section-title">Common Competitive Positioning Mistakes</h2>
+
+  <div class="mistake-item">
+    <div class="mistake-num">1</div>
+    <div class="mistake-content">
+      <div class="mistake-title">Leading with feature comparisons</div>
+      <div class="mistake-desc">Feature tables invite the prospect to focus on features. Most buyers can't evaluate features accurately — they rely on gut feel and stories. Lead with outcomes and proof, not checkboxes.</div>
+    </div>
+  </div>
+  <div class="mistake-item">
+    <div class="mistake-num">2</div>
+    <div class="mistake-content">
+      <div class="mistake-title">Badmouthing the competitor directly</div>
+      <div class="mistake-desc">"They're terrible, their support is a disaster" — buyers hear this as insecurity. Acknowledge competitors honestly and let your customers do the criticizing through quotes and references.</div>
+    </div>
+  </div>
+  <div class="mistake-item">
+    <div class="mistake-num">3</div>
+    <div class="mistake-content">
+      <div class="mistake-title">Using the same positioning for every competitor</div>
+      <div class="mistake-desc">Generic differentiation — "we're more innovative, we're better at partnerships, we have better support" — is useless when it doesn't address the specific strengths and weaknesses of the competitor in the room.</div>
+    </div>
+  </div>
+  <div class="mistake-item">
+    <div class="mistake-num">4</div>
+    <div class="mistake-content">
+      <div class="mistake-title">Waiting for the prospect to name the competitor</div>
+      <div class="mistake-desc">Reps should proactively ask which other solutions are being evaluated in every discovery call. "Are you evaluating anyone else?" is not aggressive — it is professional. You need to know who you're competing against to position correctly.</div>
+    </div>
+  </div>
+  <div class="mistake-item">
+    <div class="mistake-num">5</div>
+    <div class="mistake-content">
+      <div class="mistake-title">Over-indexing on Tier 1 competitors and ignoring niche players</div>
+      <div class="mistake-desc">Enterprise accounts evaluate 3-5 vendors. The one that eliminates you is often not Salesforce — it's the point solution that does one thing perfectly for a specific use case. Build cards for your top 5-7 competitors by deal volume, not by brand recognition.</div>
+    </div>
+  </div>
+  <div class="mistake-item">
+    <div class="mistake-num">6</div>
+    <div class="mistake-content">
+      <div class="mistake-title">Building battle cards that marketing never validates with sales</div>
+      <div class="mistake-desc">Battle cards built in a vacuum — by PMM without rep input — miss the actual objections happening in deals. Validate every card by walking 3-5 AEs through it and asking: "Is this what you're actually hearing?"</div>
+    </div>
+  </div>
+
+  <div class="related-section">
+    <div class="related-title">Related Sections</div>
+    <div class="related-links">
+      <a href="value-proposition.html" class="related-link">Value Proposition</a>
+      <a href="icp.html" class="related-link">ICP Definition</a>
+      <a href="win-loss-analysis.html" class="related-link">Win/Loss Analysis</a>
+      <a href="sales-enablement-mktg.html" class="related-link">Sales Enablement</a>
+      <a href="meddicc.html" class="related-link">MEDDICC Framework</a>
+    </div>
+  </div>
+</div>
+<script data-pplx-inline-edit>
+(function () {
+  if (window === window.top) return;
+
+  const allowedParentOrigins = ["https://www.perplexity.ai","https://perplexity.ai","https://testing.perplexity.ai","https://staging.perplexity.ai","https://*.preview.i.perplexity.ai","http://localhost:3000","http://127.0.0.1:3000","http://localhost:5173","http://127.0.0.1:5173"];
+  const MAX_FONT_BYTES = 500 * 1024;
+  const MAX_TOTAL_FONT_BYTES = 2 * 1024 * 1024;
+  let scrollForwarding = false;
+  let scrollRaf = 0;
+  let trustedTopOrigin = null;
+
+  // Allow entries like "https://*.preview.i.perplexity.ai" — the wildcard
+  // matches a single DNS label (no dots), so "https://*.foo" cannot stretch
+  // across multiple labels.
+  function matchesAllowedOrigin(origin) {
+    if (!origin) return false;
+    for (const entry of allowedParentOrigins) {
+      if (!entry.includes("*")) {
+        if (entry === origin) return true;
+        continue;
+      }
+      const pattern = new RegExp(
+        "^" +
+          entry.replace(/[.+?^${}()|[\]\\]/g, "\\$&").replace(/\*/g, "[^.]+") +
+          "$",
+      );
+      if (pattern.test(origin)) return true;
+    }
+    return false;
+  }
+
+  // Trust decision: when the sender is same-origin-visible (event.origin is a
+  // real origin like https://www.perplexity.ai) we trust event.origin directly.
+  // When event.origin is "null" (opaque broker srcdoc), we fall back to the
+  // broker's stamped `parentOrigin` to identify the top window. The fallback
+  // is claim-only — we rely on the browser's native `targetOrigin` enforcement
+  // on the response path (see postToTrustedTop) to ensure replies can't be
+  // delivered to anyone but the actual top window of that claimed origin.
+  function getTrustedParentOrigin(event) {
+    const forwardedParentOrigin =
+      typeof event.data.parentOrigin === "string" ? event.data.parentOrigin : null;
+    const parentOrigin = event.origin === "null" ? forwardedParentOrigin : event.origin;
+    return matchesAllowedOrigin(parentOrigin) ? parentOrigin : null;
+  }
+
+  // All responses go to window.top with targetOrigin = the allowlisted origin.
+  // An attacker that iframes us inside their own null-origin broker can claim
+  // any parentOrigin they like, but the browser will drop the reply whenever
+  // the real top's origin doesn't match — so the screenshot never leaves.
+  function postToTrustedTop(message) {
+    if (!trustedTopOrigin) return;
+    try {
+      window.top.postMessage(message, trustedTopOrigin);
+    } catch (_error) {}
+  }
+
+  function inlineAll(original, clone) {
+    if (original.nodeType !== 1 || clone.nodeType !== 1) return;
+
+    try {
+      const computedStyle = getComputedStyle(original);
+      // cssText on a computed style is the serialized declaration in modern
+      // Chromium/Safari — a single read beats enumerating ~400 longhand
+      // properties. Firefox returns "" here, so we fall back on empty.
+      const serialized = computedStyle.cssText;
+      if (serialized) {
+        clone.style.cssText = serialized;
+      } else {
+        const parts = new Array(computedStyle.length);
+        for (let index = 0; index < computedStyle.length; index += 1) {
+          const property = computedStyle[index];
+          parts[index] = `${property}:${computedStyle.getPropertyValue(property)};`;
+        }
+        clone.style.cssText = parts.join("");
+      }
+    } catch (_error) {}
+
+    const originalChildren = original.children;
+    const clonedChildren = clone.children;
+    for (
+      let index = 0;
+      index < originalChildren.length && index < clonedChildren.length;
+      index += 1
+    ) {
+      inlineAll(originalChildren[index], clonedChildren[index]);
+    }
+  }
+
+  function extractFontUrl(srcValue) {
+    const matches = [
+      ...srcValue.matchAll(
+        /url\(["']?([^"')]+)["']?\)(?:\s*format\(["']?([^"')]+)["']?\))?/gi,
+      ),
+    ];
+    if (matches.length === 0) return null;
+    const woff2 = matches.find((m) => m[2] && m[2].toLowerCase().includes("woff2"));
+    if (woff2) return woff2[1];
+    const woff = matches.find((m) => m[2] && m[2].toLowerCase().includes("woff"));
+    if (woff) return woff[1];
+    return matches[0][1];
+  }
+
+  // Cache resolved font URL -> data URI across captures. Fonts on a page
+  // essentially never change, and a batch run emits multiple captures back to
+  // back — without this we'd refetch + re-base64 every time.
+  const fontDataUriCache = new Map();
+  const SRC_DECLARATION_RE = /src\s*:\s*[^;}]+/i;
+
+  async function fetchAsDataUri(url) {
+    if (fontDataUriCache.has(url)) return fontDataUriCache.get(url);
+    let dataUri = null;
+    try {
+      const response = await fetch(url, { mode: "cors", credentials: "omit" });
+      if (response.ok) {
+        const blob = await response.blob();
+        if (blob.size <= MAX_FONT_BYTES) {
+          dataUri = await new Promise((resolve) => {
+            const reader = new FileReader();
+            reader.onloadend = () =>
+              resolve(typeof reader.result === "string" ? reader.result : null);
+            reader.onerror = () => resolve(null);
+            reader.readAsDataURL(blob);
+          });
+        }
+      }
+    } catch (_error) {
+      dataUri = null;
+    }
+    fontDataUriCache.set(url, dataUri);
+    return dataUri;
+  }
+
+  function collectFontFaceRuleTexts() {
+    const rules = [];
+    for (const sheet of document.styleSheets) {
+      let cssRules;
+      try {
+        cssRules = sheet.cssRules;
+      } catch (_error) {
+        continue;
+      }
+      if (!cssRules) continue;
+      for (const rule of cssRules) {
+        const cssText = rule.cssText || "";
+        if (cssText.startsWith("@font-face")) rules.push(cssText);
+      }
+    }
+    return rules;
+  }
+
+  async function buildInlinedFontCss() {
+    const ruleTexts = collectFontFaceRuleTexts();
+    if (ruleTexts.length === 0) return null;
+
+    const resolved = ruleTexts.map((cssText) => {
+      if (!SRC_DECLARATION_RE.test(cssText)) return null;
+      const srcMatch = cssText.match(/src\s*:\s*([^;}]+)[;}]/i);
+      if (!srcMatch) return null;
+      const url = extractFontUrl(srcMatch[1]);
+      if (!url) return null;
+      try {
+        return { cssText, url: new URL(url, document.baseURI).href };
+      } catch (_error) {
+        return null;
+      }
+    });
+
+    const dataUris = await Promise.all(
+      resolved.map((entry) => (entry ? fetchAsDataUri(entry.url) : Promise.resolve(null))),
+    );
+
+    const inlined = [];
+    let totalBytes = 0;
+    for (let index = 0; index < resolved.length; index += 1) {
+      const entry = resolved[index];
+      const dataUri = dataUris[index];
+      if (!entry || !dataUri) continue;
+      const approxBytes = dataUri.length * 0.75;
+      if (totalBytes + approxBytes > MAX_TOTAL_FONT_BYTES) break;
+      totalBytes += approxBytes;
+      inlined.push(entry.cssText.replace(SRC_DECLARATION_RE, `src: url("${dataUri}")`));
+    }
+    return inlined.length > 0 ? inlined.join("\n") : null;
+  }
+
+  function stripExternal(clone) {
+    const images = clone.querySelectorAll("img");
+    for (let index = 0; index < images.length; index += 1) {
+      const src = images[index].getAttribute("src");
+      if (src && !src.startsWith("data:")) images[index].removeAttribute("src");
+    }
+
+    const elements = clone.querySelectorAll("*");
+    for (let index = 0; index < elements.length; index += 1) {
+      const style = elements[index].style.cssText;
+      if (style && style.includes("url(")) {
+        elements[index].style.cssText = style.replace(
+          /url\(["']?(?!data:)[^)"']*["']?\)/gi,
+          "none",
+        );
+      }
+    }
+  }
+
+  function emitScroll() {
+    scrollRaf = 0;
+    if (!scrollForwarding) return;
+    postToTrustedTop({
+      type: "INLINE_EDIT_SCROLL",
+      scrollX: window.scrollX,
+      scrollY: window.scrollY,
+    });
+  }
+
+  window.addEventListener(
+    "scroll",
+    function () {
+      if (!scrollForwarding || scrollRaf) return;
+      scrollRaf = requestAnimationFrame(emitScroll);
+    },
+    { passive: true, capture: true },
+  );
+
+  async function handleCaptureRequest(event) {
+    const requestId = event.data.requestId;
+    const scrollX = window.scrollX;
+    const scrollY = window.scrollY;
+    const width = window.innerWidth;
+    const height = window.innerHeight;
+
+    function postResult(dataUrl) {
+      postToTrustedTop({
+        type: "INLINE_EDIT_SCREENSHOT_RESULT",
+        requestId,
+        dataUrl,
+        scrollX,
+        scrollY,
+      });
+    }
+
+    try {
+      // Wait for any pending web fonts to resolve so both inline metrics and
+      // the @font-face inlining below see the same loaded faces.
+      if (document.fonts && document.fonts.ready) {
+        try {
+          await document.fonts.ready;
+        } catch (_error) {}
+      }
+
+      const clone = document.documentElement.cloneNode(true);
+      inlineAll(document.documentElement, clone);
+
+      const removedNodes = clone.querySelectorAll("script,link[rel=\"stylesheet\"],style");
+      for (let index = 0; index < removedNodes.length; index += 1) {
+        removedNodes[index].remove();
+      }
+
+      stripExternal(clone);
+
+      // Re-embed web fonts as data-URI @font-face rules so the SVG rasterizer
+      // can resolve them — external font URLs aren't fetched during
+      // foreignObject rendering, which would otherwise force a fallback face
+      // and change text metrics.
+      const inlinedFontCss = await buildInlinedFontCss();
+      if (inlinedFontCss) {
+        const styleEl = document.createElement("style");
+        styleEl.textContent = inlinedFontCss;
+        const head = clone.querySelector("head");
+        if (head) head.appendChild(styleEl);
+        else clone.insertBefore(styleEl, clone.firstChild);
+      }
+
+      const html = new XMLSerializer().serializeToString(clone);
+      const svg =
+        `<svg xmlns="http://www.w3.org/2000/svg" width="${width}" height="${height}">` +
+        '<foreignObject width="100%" height="100%">' +
+        `<div xmlns="http://www.w3.org/1999/xhtml" style="width:${width}px;height:${height}px;overflow:hidden">` +
+        `<div style="transform:translate(-${scrollX}px,-${scrollY}px);transform-origin:top left">` +
+        html +
+        "</div></div></foreignObject></svg>";
+      const svgUrl = `data:image/svg+xml;charset=utf-8,${encodeURIComponent(svg)}`;
+      const image = new Image();
+      image.onload = function () {
+        const canvas = document.createElement("canvas");
+        canvas.width = width;
+        canvas.height = height;
+        canvas.getContext("2d").drawImage(image, 0, 0);
+        postResult(canvas.toDataURL("image/png"));
+      };
+      image.onerror = function () {
+        postResult(null);
+      };
+      image.src = svgUrl;
+    } catch (_error) {
+      postResult(null);
+    }
+  }
+
+  window.addEventListener("message", function (event) {
+    if (!event.data) return;
+    // Only accept messages from the direct parent frame. Blocks sibling /
+    // unrelated-window postMessage senders that could otherwise reach us.
+    if (event.source !== window.parent) return;
+
+    const trustedParentOrigin = getTrustedParentOrigin(event);
+    if (!trustedParentOrigin) return;
+    trustedTopOrigin = trustedParentOrigin;
+
+    if (event.data.type === "INLINE_EDIT_SCROLL_START") {
+      scrollForwarding = true;
+      emitScroll();
+      return;
+    }
+
+    if (event.data.type === "INLINE_EDIT_SCROLL_STOP") {
+      scrollForwarding = false;
+      if (scrollRaf) cancelAnimationFrame(scrollRaf);
+      scrollRaf = 0;
+      return;
+    }
+
+    if (event.data.type !== "INLINE_EDIT_CAPTURE_REQUEST") return;
+
+    handleCaptureRequest(event);
+  });
+})();
+
+
+</script></body>
+</html>

@@ -1,0 +1,596 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Diagnosing & Fixing Long Sales Cycles — SaaS Revenue System</title>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="../assets/shared.css"/>
+  <style>.page-hero { background: #A13544; }</style>
+</head>
+<body>
+<nav class="nav">
+  <span class="nav-logo">SaaS <span>Revenue System</span></span>
+  <span class="nav-sep">|</span>
+  <a href="../index.html" class="nav-back">← Home</a>
+  <span class="nav-sep">|</span>
+  <a href="../pages/phase6.html" class="nav-back">Troubleshooting</a>
+  <span class="nav-sep">|</span>
+  <span class="nav-current">Long Sales Cycles</span>
+</nav>
+
+<div class="page-hero">
+  <div class="hero-phase-label">PHASE 6 — TROUBLESHOOTING</div>
+  <div class="hero-title">Diagnosing &amp; Fixing Long Sales Cycles</div>
+  <div class="hero-subtitle">Long sales cycles are almost always a symptom of missing champion, missing economic buyer access, or undefined decision process — not a market reality.</div>
+</div>
+
+<div class="content-wrap">
+  <div class="breadcrumb">
+    <a href="../index.html">Home</a><span class="sep">›</span>
+    <a href="../pages/phase6.html">Troubleshooting</a><span class="sep">›</span>
+    <span class="current">Diagnosing &amp; Fixing Long Sales Cycles</span>
+  </div>
+
+  <!-- INTRO -->
+  <div class="section-title">Cycle Length Benchmarks: What Is "Too Long"?</div>
+  <div class="section-intro">Before diagnosing a long cycle problem, you need a calibrated benchmark. Sales cycle length is heavily segment-dependent — what is fast for enterprise is catastrophically slow for SMB. The question is always: how does your cycle compare to the benchmark for your segment and ACV, and how has it trended over the last 4 quarters?</div>
+
+  <table class="data-table">
+    <thead>
+      <tr>
+        <th>Segment</th>
+        <th>ACV Range</th>
+        <th>Expected Cycle Length</th>
+        <th>Warning Threshold</th>
+        <th>Crisis Threshold</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>SMB</td>
+        <td>&lt;$10K ACV</td>
+        <td>14–30 days</td>
+        <td>45+ days</td>
+        <td>60+ days</td>
+      </tr>
+      <tr>
+        <td>SMB / Lower Mid-Market</td>
+        <td>$10K–$30K ACV</td>
+        <td>30–60 days</td>
+        <td>75+ days</td>
+        <td>90+ days</td>
+      </tr>
+      <tr>
+        <td>Mid-Market</td>
+        <td>$30K–$100K ACV</td>
+        <td>60–90 days</td>
+        <td>120+ days</td>
+        <td>150+ days</td>
+      </tr>
+      <tr>
+        <td>Upper Mid-Market</td>
+        <td>$100K–$250K ACV</td>
+        <td>90–150 days</td>
+        <td>180+ days</td>
+        <td>240+ days</td>
+      </tr>
+      <tr>
+        <td>Enterprise</td>
+        <td>$250K+ ACV</td>
+        <td>120–180 days</td>
+        <td>240+ days</td>
+        <td>360+ days</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div class="formula-block">
+    <div class="formula-label">Average Sales Cycle Calculation</div>
+    <div class="formula-main">Avg Cycle = Sum of (Close Date − Opportunity Create Date) for all Closed-Won deals ÷ Count</div>
+    <div class="formula-note">Calculate by rep, by segment, and by source. Compare current quarter vs. same quarter last year for trend detection.</div>
+  </div>
+
+  <div class="callout callout-warning">
+    <div class="callout-title">⚠ "This Is Just How Our Market Works" Is Almost Never True</div>
+    <p>The most common defensive response when confronted with long cycles is "our buyers just take a long time — it's the nature of our market." In reality, every competitor in your market is selling to the same buyers. If your cycle is longer than theirs, the problem is your execution — not the market. Use competitor win/loss data and Gong analysis to compare your cycle length to competitors in the same deals.</p>
+  </div>
+
+  <!-- ROOT CAUSE 1: NO EB ACCESS -->
+  <div class="section-title">Root Cause 1: No Economic Buyer Access</div>
+  <div class="section-intro">The economic buyer (EB) is the person with the budget authority and the organizational power to say yes or no. In mid-market and enterprise deals, the single biggest cycle elongator is never reaching the EB. When reps sell only to the champion or end user, the deal must pass through multiple approval layers without your involvement — each layer adds weeks or months and creates opportunities for the deal to die silently.</div>
+
+  <div class="subsection">
+    <div class="subsection-title">How to Detect Missing EB Access</div>
+    <p>In your deal reviews, ask reps: "Have you had a conversation — not an email — with the person who controls the budget for this purchase?" If the answer is no for any deal above $30K ACV in Stage 3 or later, you have an EB access problem. In Gong, search for the titles of your prospects in closed-won vs. closed-lost: economic buyer titles (CFO, VP Finance, CEO, COO) will appear more frequently in won deals.</p>
+    <p>Audit your last 10 deals that slipped quarters: in how many did the deal stall because "finance review" or "budget approval" was cited without the rep having ever spoken to finance? This is the EB access failure pattern — the deal appears to be progressing until it hits a wall that the rep never saw coming.</p>
+  </div>
+
+  <div class="subsection">
+    <div class="subsection-title">How to Gain Economic Buyer Access</div>
+  </div>
+
+  <ol class="step-list">
+    <li>
+      <div class="step-content">
+        <span class="step-title">Through the Champion — The Ask</span>
+        Coach the champion to request an EB meeting by framing it as protecting the champion: "I want to make sure [EB name] has what she needs to feel confident approving this. Can you set up a 30-minute call so I can address any CFO-level questions directly and save you from having to relay information back and forth?" This frames EB access as service, not salesmanship.
+      </div>
+    </li>
+    <li>
+      <div class="step-content">
+        <span class="step-title">Through Referral — Peer-to-Peer Outreach</span>
+        Identify an existing customer whose CFO/VP Finance has already approved a similar purchase. Arrange a peer reference call between their EB and your prospect's EB. Economic buyers trust other economic buyers more than they trust vendors.
+      </div>
+    </li>
+    <li>
+      <div class="step-content">
+        <span class="step-title">Through Value-Based Framing — Executive Briefing</span>
+        Send the EB a concise "Executive Summary" document (1 page, not a deck) that quantifies the business impact in financial terms they care about: revenue protected, cost reduced, headcount efficiency, risk mitigated. Frame it as "a brief I put together for your review." This creates a reason for the EB to engage without the champion needing to arrange a meeting.
+      </div>
+    </li>
+  </ol>
+
+  <!-- ROOT CAUSE 2: NO DECISION PROCESS -->
+  <div class="section-title">Root Cause 2: No Defined Decision Process — The MAP Solution</div>
+  <div class="section-intro">A deal without a documented, agreed-upon decision process is a deal that will slip. The buyer side of most enterprise deals involves 6–10 stakeholders, each with different concerns and timelines. Without a Mutual Action Plan (MAP), the deal timeline is defined entirely by the buyer's internal bureaucracy — and your rep has no visibility or influence over it.</div>
+
+  <div class="subsection">
+    <div class="subsection-title">What a Mutual Action Plan (MAP) Is and Why It Compresses Cycles</div>
+    <p>A MAP is a shared document — visible to both buyer and seller — that outlines every remaining step to close, who is responsible for each step, and the target completion date. It transforms the deal from a series of one-sided sales pushes into a collaborative project with shared accountability. When a buyer agrees to a MAP, they are committing to the timeline. When steps slip, the seller can reference the shared agreement to re-anchor the urgency.</p>
+    <p>Research from MEDDIC practitioners consistently shows that deals with a signed or acknowledged MAP close 2–4 weeks faster than equivalent deals without one. The primary mechanism is forcing the buyer to articulate and commit to their own internal process, which surfaces procurement steps, IT review, legal review, and security review early — rather than discovering them as late-stage surprises.</p>
+  </div>
+
+  <div class="callout callout-definition">
+    <div class="callout-title">MAP — Mutual Action Plan: Required Elements</div>
+    <p><strong>Section 1: Decision Criteria</strong> — What the buyer needs to see to move forward (technical validation, security review, reference calls, ROI confirmation). <strong>Section 2: Decision Process</strong> — All internal steps required: who reviews, who approves, procurement timeline, legal redline cycle. <strong>Section 3: Timeline</strong> — Target date for each step with owner name. <strong>Section 4: Risks</strong> — Known blockers (vacation, board approval cycle, competing priorities) and contingency dates. <strong>Section 5: Go-Live Date</strong> — Working backwards from the desired launch date to create urgency.</p>
+  </div>
+
+  <div class="subsection">
+    <div class="subsection-title">How to Implement MAPs in Your Sales Process</div>
+    <ul class="bullet-list">
+      <li>Introduce the MAP in the Stage 2 meeting as "how we'll run this evaluation together" — not as a closing tool</li>
+      <li>Co-build the MAP with the champion during the meeting — do not send a pre-filled document, as shared ownership requires shared construction</li>
+      <li>Store the MAP in your shared document system (Google Drive, Notion) and share the link with all stakeholders in a follow-up email</li>
+      <li>Reference the MAP in every subsequent call: "Looking at our plan, the security review was scheduled for this week — how did that go?"</li>
+      <li>Make MAP completion a Stage 2→3 advancement requirement in the CRM</li>
+    </ul>
+  </div>
+
+  <!-- ROOT CAUSE 3: PAIN NOT QUANTIFIED -->
+  <div class="section-title">Root Cause 3: Pain Not Quantified — The Urgency Connection</div>
+  <div class="section-intro">An undiscovered or unquantified pain creates a zero-urgency deal. The buyer knows there is a problem but has no economic reason to solve it now rather than later. When there is no urgency, every internal priority — quarterly earnings, headcount freeze, competing project, vacation — beats the deal. Urgent pain compresses cycles because the cost of delay becomes concrete and visible.</div>
+
+  <div class="subsection">
+    <div class="subsection-title">How to Quantify Pain and Create Urgency</div>
+    <p>In discovery, ask the buyer to estimate the cost of the problem they are trying to solve. Use questions like: "How many hours per week does your team spend on this manual process?" "What does that cost at your average fully-loaded engineer rate?" "How many deals did you lose last quarter because of this capability gap?" The rep then converts those answers into a monthly and annual cost figure, which becomes the foundation of the urgency argument.</p>
+    <p>Once pain is quantified, calculate the "cost of delay" — what is the buyer losing per month by not solving this? If the answer is $80,000/month in engineer time, every 30-day delay costs the buyer $80,000. Frame this explicitly: "Based on what you've shared, every month you wait costs you approximately $80K. Our implementation takes 6 weeks — if we start now, you recover $160K by Q3."</p>
+  </div>
+
+  <div class="formula-block">
+    <div class="formula-label">Cost of Delay (Monthly)</div>
+    <div class="formula-main">Cost of Delay = (Annual Problem Cost ÷ 12)</div>
+    <div class="formula-note">Present to Economic Buyer: "Every month without a solution costs you $X. Here is your payback timeline."</div>
+  </div>
+
+  <!-- ROOT CAUSE 4: PROCUREMENT AND LEGAL DELAYS -->
+  <div class="section-title">Root Cause 4: Procurement and Legal Delays — Mapping and Accelerating</div>
+  <div class="section-intro">In enterprise deals, procurement and legal review often add 30–60 days to a cycle that is otherwise complete. The rep often discovers these requirements late — after the champion has agreed verbally — because they never mapped the decision process. The fix is early mapping, not faster legal.</div>
+
+  <div class="subsection">
+    <div class="subsection-title">How to Map Procurement and Legal Requirements Early</div>
+    <p>In Stage 2, ask the champion directly: "Walk me through what needs to happen internally after you decide you want to move forward. Who reviews contracts? Is there a vendor security review? Does legal need to redline? Is there a procurement portal? Are there preferred vendor lists or budget approval thresholds?" Every minute spent mapping these requirements in Stage 2 saves weeks of surprises in Stage 4.</p>
+  </div>
+
+  <div class="subsection">
+    <div class="subsection-title">Procurement Acceleration Tactics</div>
+    <ul class="bullet-list">
+      <li>Send a "pre-MSA" summary of your standard contract terms in Stage 3 so legal can begin parallel review while technical validation continues</li>
+      <li>Offer a security questionnaire pre-fill if there is a standard InfoSec review — have your security team complete 80% of it proactively</li>
+      <li>Find out if the prospect has a procurement portal (Coupa, Ariba, Jaggaer) and start vendor onboarding in Stage 3, not Stage 4</li>
+      <li>Ask the champion: "Is there a budget approval threshold above which the CFO must sign? What is it?" Structure the first-year deal value to be at or below that threshold if possible</li>
+      <li>Offer to join a procurement call directly — reps who engage procurement officers as stakeholders (not gatekeepers) close 3–4 weeks faster</li>
+    </ul>
+  </div>
+
+  <!-- ROOT CAUSE 5: NO CHAMPION PULLING -->
+  <div class="section-title">Root Cause 5: No Champion Pulling the Deal Internally</div>
+  <div class="section-intro">A cycle that appears to be progressing but keeps slipping by "2–3 more weeks" is almost always a champion problem. When a deal has a strong champion, they create internal urgency — they schedule the procurement call, they pre-sell the CFO, they respond to legal questions faster than the normal pace. When there is no champion, every internal step takes as long as the bureaucracy defaults to, which is always slow.</div>
+
+  <div class="subsection">
+    <div class="subsection-title">Re-Evaluating Whether You Have a Champion</div>
+    <p>The distinguishing test between a champion and a coach: a champion is at risk personally if the project fails or doesn't happen. They are using political capital to advance the deal. A coach has no skin in the game — they like you, they see the value, but they will not take career risk on your behalf. If a rep's primary contact has never: volunteered information unprompted, taken any action that required effort or political risk, or told the rep about internal opposition — that contact is a coach.</p>
+  </div>
+
+  <div class="callout callout-best-practice">
+    <div class="callout-title">✓ The Discount-as-Compression Fallacy</div>
+    <p>Discounting to accelerate a deal almost never works when the cycle length is driven by a missing champion, undefined decision process, or procurement complexity. The buyer's internal process does not speed up because the price dropped. Discounting in this context gives away margin without gaining time. The only time discounting compresses cycles is when the sole remaining barrier is price approval at the EB level — and even then, only if the EB has already engaged. Before offering a discount to "close this quarter," diagnose why it hasn't closed. Fix the process problem, not the price.</p>
+  </div>
+
+  <div class="section-title">Cycle Length Intervention Summary</div>
+
+  <table class="data-table">
+    <thead>
+      <tr>
+        <th>Root Cause</th>
+        <th>Key Diagnostic Signal</th>
+        <th>Primary Fix</th>
+        <th>Time to Impact</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>No Economic Buyer Access</td>
+        <td>EB has never been on a call; deal stalls at "budget approval"</td>
+        <td>Champion coaching to arrange EB meeting; executive briefing document</td>
+        <td>7–14 days</td>
+      </tr>
+      <tr>
+        <td>No Decision Process Defined</td>
+        <td>Deal keeps slipping 2–3 weeks with no specific reason</td>
+        <td>Mutual Action Plan built with champion in Stage 2</td>
+        <td>Immediate on new deals</td>
+      </tr>
+      <tr>
+        <td>Pain Not Quantified</td>
+        <td>Buyer agrees the product is good but "not a priority right now"</td>
+        <td>Cost of Delay calculation; ROI model with monthly value</td>
+        <td>1–2 meetings</td>
+      </tr>
+      <tr>
+        <td>Procurement/Legal Delays</td>
+        <td>Technical buy-in secured but stuck in procurement for 45+ days</td>
+        <td>Pre-send contract terms in Stage 3; early procurement onboarding</td>
+        <td>15–30 days saved</td>
+      </tr>
+      <tr>
+        <td>No Champion Pulling</td>
+        <td>All momentum comes from the rep; contact never takes unprompted action</td>
+        <td>Champion development or find a new champion; escalate risk in forecast</td>
+        <td>2–4 weeks if fixable</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div class="related-section">
+    <div class="related-title">Related Sections</div>
+    <div class="related-links">
+      <a class="related-link" href="low-win-rate.html">Low Win Rates</a>
+      <a class="related-link" href="missed-forecasts.html">Missed Forecasts</a>
+      <a class="related-link" href="low-pipeline.html">Low Pipeline Volume</a>
+      <a class="related-link" href="../subpages/meddicc.html">MEDDICC Framework</a>
+      <a class="related-link" href="../subpages/champion-building.html">Champion Building</a>
+      <a class="related-link" href="../subpages/forecast-integrity.html">Forecast Integrity</a>
+    </div>
+  </div>
+</div>
+<script data-pplx-inline-edit>
+(function () {
+  if (window === window.top) return;
+
+  const allowedParentOrigins = ["https://www.perplexity.ai","https://perplexity.ai","https://testing.perplexity.ai","https://staging.perplexity.ai","https://*.preview.i.perplexity.ai","http://localhost:3000","http://127.0.0.1:3000","http://localhost:5173","http://127.0.0.1:5173"];
+  const MAX_FONT_BYTES = 500 * 1024;
+  const MAX_TOTAL_FONT_BYTES = 2 * 1024 * 1024;
+  let scrollForwarding = false;
+  let scrollRaf = 0;
+  let trustedTopOrigin = null;
+
+  // Allow entries like "https://*.preview.i.perplexity.ai" — the wildcard
+  // matches a single DNS label (no dots), so "https://*.foo" cannot stretch
+  // across multiple labels.
+  function matchesAllowedOrigin(origin) {
+    if (!origin) return false;
+    for (const entry of allowedParentOrigins) {
+      if (!entry.includes("*")) {
+        if (entry === origin) return true;
+        continue;
+      }
+      const pattern = new RegExp(
+        "^" +
+          entry.replace(/[.+?^${}()|[\]\\]/g, "\\$&").replace(/\*/g, "[^.]+") +
+          "$",
+      );
+      if (pattern.test(origin)) return true;
+    }
+    return false;
+  }
+
+  // Trust decision: when the sender is same-origin-visible (event.origin is a
+  // real origin like https://www.perplexity.ai) we trust event.origin directly.
+  // When event.origin is "null" (opaque broker srcdoc), we fall back to the
+  // broker's stamped `parentOrigin` to identify the top window. The fallback
+  // is claim-only — we rely on the browser's native `targetOrigin` enforcement
+  // on the response path (see postToTrustedTop) to ensure replies can't be
+  // delivered to anyone but the actual top window of that claimed origin.
+  function getTrustedParentOrigin(event) {
+    const forwardedParentOrigin =
+      typeof event.data.parentOrigin === "string" ? event.data.parentOrigin : null;
+    const parentOrigin = event.origin === "null" ? forwardedParentOrigin : event.origin;
+    return matchesAllowedOrigin(parentOrigin) ? parentOrigin : null;
+  }
+
+  // All responses go to window.top with targetOrigin = the allowlisted origin.
+  // An attacker that iframes us inside their own null-origin broker can claim
+  // any parentOrigin they like, but the browser will drop the reply whenever
+  // the real top's origin doesn't match — so the screenshot never leaves.
+  function postToTrustedTop(message) {
+    if (!trustedTopOrigin) return;
+    try {
+      window.top.postMessage(message, trustedTopOrigin);
+    } catch (_error) {}
+  }
+
+  function inlineAll(original, clone) {
+    if (original.nodeType !== 1 || clone.nodeType !== 1) return;
+
+    try {
+      const computedStyle = getComputedStyle(original);
+      // cssText on a computed style is the serialized declaration in modern
+      // Chromium/Safari — a single read beats enumerating ~400 longhand
+      // properties. Firefox returns "" here, so we fall back on empty.
+      const serialized = computedStyle.cssText;
+      if (serialized) {
+        clone.style.cssText = serialized;
+      } else {
+        const parts = new Array(computedStyle.length);
+        for (let index = 0; index < computedStyle.length; index += 1) {
+          const property = computedStyle[index];
+          parts[index] = `${property}:${computedStyle.getPropertyValue(property)};`;
+        }
+        clone.style.cssText = parts.join("");
+      }
+    } catch (_error) {}
+
+    const originalChildren = original.children;
+    const clonedChildren = clone.children;
+    for (
+      let index = 0;
+      index < originalChildren.length && index < clonedChildren.length;
+      index += 1
+    ) {
+      inlineAll(originalChildren[index], clonedChildren[index]);
+    }
+  }
+
+  function extractFontUrl(srcValue) {
+    const matches = [
+      ...srcValue.matchAll(
+        /url\(["']?([^"')]+)["']?\)(?:\s*format\(["']?([^"')]+)["']?\))?/gi,
+      ),
+    ];
+    if (matches.length === 0) return null;
+    const woff2 = matches.find((m) => m[2] && m[2].toLowerCase().includes("woff2"));
+    if (woff2) return woff2[1];
+    const woff = matches.find((m) => m[2] && m[2].toLowerCase().includes("woff"));
+    if (woff) return woff[1];
+    return matches[0][1];
+  }
+
+  // Cache resolved font URL -> data URI across captures. Fonts on a page
+  // essentially never change, and a batch run emits multiple captures back to
+  // back — without this we'd refetch + re-base64 every time.
+  const fontDataUriCache = new Map();
+  const SRC_DECLARATION_RE = /src\s*:\s*[^;}]+/i;
+
+  async function fetchAsDataUri(url) {
+    if (fontDataUriCache.has(url)) return fontDataUriCache.get(url);
+    let dataUri = null;
+    try {
+      const response = await fetch(url, { mode: "cors", credentials: "omit" });
+      if (response.ok) {
+        const blob = await response.blob();
+        if (blob.size <= MAX_FONT_BYTES) {
+          dataUri = await new Promise((resolve) => {
+            const reader = new FileReader();
+            reader.onloadend = () =>
+              resolve(typeof reader.result === "string" ? reader.result : null);
+            reader.onerror = () => resolve(null);
+            reader.readAsDataURL(blob);
+          });
+        }
+      }
+    } catch (_error) {
+      dataUri = null;
+    }
+    fontDataUriCache.set(url, dataUri);
+    return dataUri;
+  }
+
+  function collectFontFaceRuleTexts() {
+    const rules = [];
+    for (const sheet of document.styleSheets) {
+      let cssRules;
+      try {
+        cssRules = sheet.cssRules;
+      } catch (_error) {
+        continue;
+      }
+      if (!cssRules) continue;
+      for (const rule of cssRules) {
+        const cssText = rule.cssText || "";
+        if (cssText.startsWith("@font-face")) rules.push(cssText);
+      }
+    }
+    return rules;
+  }
+
+  async function buildInlinedFontCss() {
+    const ruleTexts = collectFontFaceRuleTexts();
+    if (ruleTexts.length === 0) return null;
+
+    const resolved = ruleTexts.map((cssText) => {
+      if (!SRC_DECLARATION_RE.test(cssText)) return null;
+      const srcMatch = cssText.match(/src\s*:\s*([^;}]+)[;}]/i);
+      if (!srcMatch) return null;
+      const url = extractFontUrl(srcMatch[1]);
+      if (!url) return null;
+      try {
+        return { cssText, url: new URL(url, document.baseURI).href };
+      } catch (_error) {
+        return null;
+      }
+    });
+
+    const dataUris = await Promise.all(
+      resolved.map((entry) => (entry ? fetchAsDataUri(entry.url) : Promise.resolve(null))),
+    );
+
+    const inlined = [];
+    let totalBytes = 0;
+    for (let index = 0; index < resolved.length; index += 1) {
+      const entry = resolved[index];
+      const dataUri = dataUris[index];
+      if (!entry || !dataUri) continue;
+      const approxBytes = dataUri.length * 0.75;
+      if (totalBytes + approxBytes > MAX_TOTAL_FONT_BYTES) break;
+      totalBytes += approxBytes;
+      inlined.push(entry.cssText.replace(SRC_DECLARATION_RE, `src: url("${dataUri}")`));
+    }
+    return inlined.length > 0 ? inlined.join("\n") : null;
+  }
+
+  function stripExternal(clone) {
+    const images = clone.querySelectorAll("img");
+    for (let index = 0; index < images.length; index += 1) {
+      const src = images[index].getAttribute("src");
+      if (src && !src.startsWith("data:")) images[index].removeAttribute("src");
+    }
+
+    const elements = clone.querySelectorAll("*");
+    for (let index = 0; index < elements.length; index += 1) {
+      const style = elements[index].style.cssText;
+      if (style && style.includes("url(")) {
+        elements[index].style.cssText = style.replace(
+          /url\(["']?(?!data:)[^)"']*["']?\)/gi,
+          "none",
+        );
+      }
+    }
+  }
+
+  function emitScroll() {
+    scrollRaf = 0;
+    if (!scrollForwarding) return;
+    postToTrustedTop({
+      type: "INLINE_EDIT_SCROLL",
+      scrollX: window.scrollX,
+      scrollY: window.scrollY,
+    });
+  }
+
+  window.addEventListener(
+    "scroll",
+    function () {
+      if (!scrollForwarding || scrollRaf) return;
+      scrollRaf = requestAnimationFrame(emitScroll);
+    },
+    { passive: true, capture: true },
+  );
+
+  async function handleCaptureRequest(event) {
+    const requestId = event.data.requestId;
+    const scrollX = window.scrollX;
+    const scrollY = window.scrollY;
+    const width = window.innerWidth;
+    const height = window.innerHeight;
+
+    function postResult(dataUrl) {
+      postToTrustedTop({
+        type: "INLINE_EDIT_SCREENSHOT_RESULT",
+        requestId,
+        dataUrl,
+        scrollX,
+        scrollY,
+      });
+    }
+
+    try {
+      // Wait for any pending web fonts to resolve so both inline metrics and
+      // the @font-face inlining below see the same loaded faces.
+      if (document.fonts && document.fonts.ready) {
+        try {
+          await document.fonts.ready;
+        } catch (_error) {}
+      }
+
+      const clone = document.documentElement.cloneNode(true);
+      inlineAll(document.documentElement, clone);
+
+      const removedNodes = clone.querySelectorAll("script,link[rel=\"stylesheet\"],style");
+      for (let index = 0; index < removedNodes.length; index += 1) {
+        removedNodes[index].remove();
+      }
+
+      stripExternal(clone);
+
+      // Re-embed web fonts as data-URI @font-face rules so the SVG rasterizer
+      // can resolve them — external font URLs aren't fetched during
+      // foreignObject rendering, which would otherwise force a fallback face
+      // and change text metrics.
+      const inlinedFontCss = await buildInlinedFontCss();
+      if (inlinedFontCss) {
+        const styleEl = document.createElement("style");
+        styleEl.textContent = inlinedFontCss;
+        const head = clone.querySelector("head");
+        if (head) head.appendChild(styleEl);
+        else clone.insertBefore(styleEl, clone.firstChild);
+      }
+
+      const html = new XMLSerializer().serializeToString(clone);
+      const svg =
+        `<svg xmlns="http://www.w3.org/2000/svg" width="${width}" height="${height}">` +
+        '<foreignObject width="100%" height="100%">' +
+        `<div xmlns="http://www.w3.org/1999/xhtml" style="width:${width}px;height:${height}px;overflow:hidden">` +
+        `<div style="transform:translate(-${scrollX}px,-${scrollY}px);transform-origin:top left">` +
+        html +
+        "</div></div></foreignObject></svg>";
+      const svgUrl = `data:image/svg+xml;charset=utf-8,${encodeURIComponent(svg)}`;
+      const image = new Image();
+      image.onload = function () {
+        const canvas = document.createElement("canvas");
+        canvas.width = width;
+        canvas.height = height;
+        canvas.getContext("2d").drawImage(image, 0, 0);
+        postResult(canvas.toDataURL("image/png"));
+      };
+      image.onerror = function () {
+        postResult(null);
+      };
+      image.src = svgUrl;
+    } catch (_error) {
+      postResult(null);
+    }
+  }
+
+  window.addEventListener("message", function (event) {
+    if (!event.data) return;
+    // Only accept messages from the direct parent frame. Blocks sibling /
+    // unrelated-window postMessage senders that could otherwise reach us.
+    if (event.source !== window.parent) return;
+
+    const trustedParentOrigin = getTrustedParentOrigin(event);
+    if (!trustedParentOrigin) return;
+    trustedTopOrigin = trustedParentOrigin;
+
+    if (event.data.type === "INLINE_EDIT_SCROLL_START") {
+      scrollForwarding = true;
+      emitScroll();
+      return;
+    }
+
+    if (event.data.type === "INLINE_EDIT_SCROLL_STOP") {
+      scrollForwarding = false;
+      if (scrollRaf) cancelAnimationFrame(scrollRaf);
+      scrollRaf = 0;
+      return;
+    }
+
+    if (event.data.type !== "INLINE_EDIT_CAPTURE_REQUEST") return;
+
+    handleCaptureRequest(event);
+  });
+})();
+
+
+</script></body>
+</html>

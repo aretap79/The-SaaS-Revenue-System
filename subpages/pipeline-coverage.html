@@ -1,0 +1,661 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Pipeline Coverage Ratio — SaaS Revenue System</title>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="../assets/shared.css"/>
+  <style>
+    .page-hero { background: #28251D; }
+    .coverage-bands {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr 1fr;
+      gap: 0;
+      margin: 20px 0;
+      border: 1.5px solid var(--border);
+      border-radius: 10px;
+      overflow: hidden;
+    }
+    .cb-band {
+      padding: 20px 16px;
+      text-align: center;
+      border-right: 1px solid var(--border);
+    }
+    .cb-band:last-child { border-right: none; }
+    .cb-range {
+      font-size: 18px;
+      font-weight: 700;
+      margin-bottom: 6px;
+    }
+    .cb-status {
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      margin-bottom: 10px;
+      padding: 3px 10px;
+      border-radius: 12px;
+      display: inline-block;
+    }
+    .cb-actions {
+      font-size: 12px;
+      line-height: 1.65;
+      color: var(--text);
+      text-align: left;
+    }
+    .band-critical { background: #fff0f0; }
+    .band-critical .cb-range { color: #A13544; }
+    .band-critical .cb-status { background: #fce8e6; color: #A13544; }
+    .band-low { background: #fff8f0; }
+    .band-low .cb-range { color: #964219; }
+    .band-low .cb-status { background: #fdf0e6; color: #964219; }
+    .band-healthy { background: #f0fff4; }
+    .band-healthy .cb-range { color: #437A22; }
+    .band-healthy .cb-status { background: #e6f4ea; color: #437A22; }
+    .band-over { background: #f5f5f5; }
+    .band-over .cb-range { color: var(--text-muted); }
+    .band-over .cb-status { background: #ebebeb; color: var(--text-muted); }
+    .coverage-meeting {
+      background: var(--surface);
+      border: 1.5px solid var(--border);
+      border-radius: 10px;
+      overflow: hidden;
+      margin: 16px 0;
+    }
+    .cm-header {
+      background: #28251D;
+      color: #fff;
+      padding: 12px 18px;
+      font-size: 13px;
+      font-weight: 700;
+    }
+    .cm-rows { padding: 0; }
+    .cm-row {
+      display: grid;
+      grid-template-columns: 100px 1fr;
+      border-bottom: 1px solid var(--border);
+    }
+    .cm-row:last-child { border-bottom: none; }
+    .cm-time { padding: 12px 14px; font-size: 12px; font-weight: 700; color: var(--text-muted); background: #fafaf8; border-right: 1px solid var(--border); display: flex; align-items: center; }
+    .cm-content { padding: 12px 14px; font-size: 13px; line-height: 1.65; }
+    .recovery-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 14px;
+      margin: 16px 0;
+    }
+    .recovery-card {
+      background: var(--surface);
+      border: 1.5px solid var(--border);
+      border-radius: 8px;
+      padding: 16px;
+    }
+    .rc-title { font-size: 14px; font-weight: 700; margin-bottom: 6px; }
+    .rc-timeline { font-size: 11px; font-weight: 700; letter-spacing: 1px; text-transform: uppercase; color: var(--text-muted); margin-bottom: 8px; }
+    .rc-desc { font-size: 13px; line-height: 1.65; }
+    .stage-breakdown {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 16px 0;
+    }
+    .stage-breakdown th { background: #28251D; color: #fff; padding: 10px 14px; font-size: 12px; text-align: left; }
+    .stage-breakdown td { padding: 12px 14px; font-size: 13px; border-bottom: 1px solid var(--border); line-height: 1.6; }
+    .stage-breakdown tr:nth-child(even) td { background: #fafaf8; }
+    .weight-badge {
+      padding: 2px 8px;
+      border-radius: 4px;
+      font-size: 12px;
+      font-weight: 700;
+    }
+  </style>
+</head>
+<body>
+<nav class="nav">
+  <span class="nav-logo">SaaS <span>Revenue System</span></span>
+  <span class="nav-sep">|</span>
+  <a href="../index.html" class="nav-back">← Home</a>
+  <span class="nav-sep">|</span>
+  <a href="../pages/north-star-metrics.html" class="nav-back">North Star Metrics</a>
+  <span class="nav-sep">|</span>
+  <span class="nav-current">Pipeline Coverage</span>
+</nav>
+<div class="page-hero" style="background:#28251D">
+  <div class="hero-phase-label">North Star Metrics</div>
+  <div class="hero-title">Pipeline Coverage Ratio</div>
+  <div class="hero-subtitle">Do You Have Enough to Make the Number? — Formula, Segmented Benchmarks, and How to Build Coverage Back Up</div>
+</div>
+<div class="content-wrap">
+  <div class="breadcrumb">
+    <a href="../index.html">Home</a><span class="sep">›</span>
+    <a href="../pages/north-star-metrics.html">North Star Metrics</a><span class="sep">›</span>
+    <span class="current">Pipeline Coverage Ratio</span>
+  </div>
+
+  <h2 class="section-title">Definition and Core Formula</h2>
+  <div class="subsection">
+    <div class="callout callout-definition">
+      <div class="callout-title">Definition</div>
+      <p>Pipeline Coverage Ratio is the ratio of total qualified pipeline value to the revenue quota for the period. It answers the question: "If we close at our historical win rate, do we have enough pipeline to hit the number?" A coverage of 3x means you have $3 of qualified pipeline for every $1 of quota.</p>
+    </div>
+    <div class="formula-block">
+      <div class="formula-label">Core Formula</div>
+      <div class="formula-main">Pipeline Coverage Ratio = Total Qualified Pipeline / Revenue Quota</div>
+      <div class="formula-note">Example: $12M in open qualified pipeline / $4M quarterly quota = 3.0x coverage. "Qualified" means opportunities that have passed your minimum qualification bar (e.g., MEDDICC Stage 2+, defined pain, confirmed budget timeline).</div>
+    </div>
+    <div class="formula-block">
+      <div class="formula-label">Weighted Pipeline Coverage Formula</div>
+      <div class="formula-main">Weighted Coverage = Σ(Deal Value × Stage Win Rate) / Revenue Quota</div>
+      <div class="formula-note">Example: Stage 1 deals × 15% + Stage 2 deals × 35% + Stage 3 deals × 60% + Stage 4 deals × 80% = Weighted Pipeline. Weighted coverage of 1.2x–1.5x is generally considered healthy (equivalent to unweighted 3x–4x).</div>
+    </div>
+  </div>
+
+  <h2 class="section-title">Why 3x–4x Is the Standard</h2>
+  <div class="subsection">
+    <p>The 3x coverage standard exists because at an average win rate of 25-35% on qualified pipeline, you need approximately 3-4x the quota in pipeline to ensure statistical confidence in hitting the number. It is not arbitrary — it is the inverse of your win rate applied to your qualification standard.</p>
+    <p>The critical caveat: 3x is the benchmark at the <em>start of the quarter</em> for pipeline that closes <em>within the quarter</em>. Coverage measured mid-quarter must be adjusted for how many of the 13 weeks remain and what percentage of deals typically close in the final weeks of a quarter (the end-of-quarter compression effect in enterprise SaaS).</p>
+    <div class="callout callout-warning">
+      <div class="callout-title">Common Coverage Mistake</div>
+      <p>Including deals that are unlikely to close this quarter in your "pipeline" overstates coverage. A deal that's been in stage 2 for 6 months is not the same as a deal that entered stage 2 last week. Always segment pipeline by close date confidence and stage entry date, not just stage alone.</p>
+    </div>
+  </div>
+
+  <h2 class="section-title">Segment-Specific Benchmarks</h2>
+  <table class="stage-breakdown">
+    <thead>
+      <tr><th>Segment</th><th>Typical Win Rate</th><th>Required Coverage</th><th>Rationale</th></tr>
+    </thead>
+    <tbody>
+      <tr><td>SMB (ACV &lt;$15K)</td><td>25–40%</td><td>2.5x – 4x</td><td>Shorter sales cycle = faster pipeline refresh; some deals close within 30 days of creation. Coverage requirement slightly lower because pipeline can be rebuilt quickly.</td></tr>
+      <tr><td>Mid-Market (ACV $15K–$100K)</td><td>20–30%</td><td>3x – 4x</td><td>Standard 90-day+ cycles; coverage must be established at start of quarter. Pipeline created mid-quarter rarely closes in the same quarter.</td></tr>
+      <tr><td>Enterprise (ACV &gt;$100K)</td><td>15–25%</td><td>4x – 5x</td><td>Lower win rates require higher coverage. Enterprise deals have longer cycles and higher uncertainty. "In play" enterprise deals can slip by multiple quarters — coverage buffer must absorb this.</td></tr>
+      <tr><td>Strategic / Named Accounts (ACV &gt;$500K)</td><td>20–35% (relationships)</td><td>3x – 4x</td><td>Win rate higher because relationships are deeper and deals are less competitive. But deal size variance is high — one slip = large coverage gap. Separate from standard enterprise tracking.</td></tr>
+    </tbody>
+  </table>
+
+  <h2 class="section-title">Segmenting Pipeline by Stage</h2>
+  <table class="stage-breakdown">
+    <thead>
+      <tr><th>Stage</th><th>Stage Description</th><th>Win Rate Weight</th><th>Coverage Contribution</th></tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>Stage 1 — Discovery</td>
+        <td>Pain identified, ICP fit confirmed, next step agreed</td>
+        <td><span class="weight-badge" style="background:#fce8e6;color:#A13544">10–20%</span></td>
+        <td>Early pipeline signal. Important for 60-90 day forecast but unreliable for in-quarter coverage. Over-counting Stage 1 creates false confidence.</td>
+      </tr>
+      <tr>
+        <td>Stage 2 — Qualified</td>
+        <td>MEDDICC criteria partially met; demo complete; stakeholders identified</td>
+        <td><span class="weight-badge" style="background:#fdf0e6;color:#964219">25–40%</span></td>
+        <td>The core of your "coverage" number. These deals are actively progressing. 3x coverage should have majority of pipeline here.</td>
+      </tr>
+      <tr>
+        <td>Stage 3 — Evaluation</td>
+        <td>EB engaged; champion active; success criteria defined; POC or demo 2 complete</td>
+        <td><span class="weight-badge" style="background:#fffbe6;color:#8a6f00">50–65%</span></td>
+        <td>High-confidence pipeline. Deals here should close within 30-45 days. If you have strong Stage 3 coverage, you can likely hit the number even if Stage 1-2 is thin.</td>
+      </tr>
+      <tr>
+        <td>Stage 4 — Close</td>
+        <td>Verbal yes; paper process active; legal/procurement engaged</td>
+        <td><span class="weight-badge" style="background:#e6f4ea;color:#437A22">75–90%</span></td>
+        <td>"Commit" pipeline. These deals should close this quarter barring procurement delays. Having strong Stage 4 coverage going into the final 3 weeks of a quarter is the most reliable indicator of making the number.</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <h2 class="section-title">Coverage vs. Forecast Coverage</h2>
+  <div class="subsection">
+    <p>Pipeline coverage and forecast coverage are related but distinct:</p>
+    <ul class="bullet-list">
+      <li><strong>Pipeline Coverage:</strong> Total qualified pipeline / total quota. A top-of-funnel sufficiency measure. "Do we have enough opportunities in the system to close the number if we execute?"</li>
+      <li><strong>Forecast Coverage:</strong> Total committed/likely pipeline / total quota. A bottom-of-funnel confidence measure. "Based on deals reps have committed to close this quarter, how much revenue is virtually certain?" Forecast coverage of 0.8x–1.0x is healthy (you're committed to most of the number).</li>
+    </ul>
+    <p>You can have strong pipeline coverage (4x) but weak forecast coverage (0.3x) — this means you have lots of deals but none of them are close enough to confidently commit. Conversely, if your forecast coverage is strong but pipeline coverage is weak, you will make this quarter but face a pipeline cliff next quarter.</p>
+  </div>
+
+  <h2 class="section-title">What to Do at Each Coverage Level</h2>
+  <div class="coverage-bands">
+    <div class="cb-band band-critical">
+      <div class="cb-range">&lt; 2x</div>
+      <div class="cb-status">Critical</div>
+      <div class="cb-actions"><ul style="list-style:none;padding:0;margin:0;"><li style="padding:3px 0;font-size:12px;">→ Emergency pipeline blitz: all hands SDR campaign</li><li style="padding:3px 0;font-size:12px;">→ Manager reviews every deal — remove stalled opps</li><li style="padding:3px 0;font-size:12px;">→ Activate partner pipeline</li><li style="padding:3px 0;font-size:12px;">→ Consider revising quota or calling early miss</li><li style="padding:3px 0;font-size:12px;">→ Root cause: poor top-of-funnel or too many stalled deals</li></ul></div>
+    </div>
+    <div class="cb-band band-low">
+      <div class="cb-range">2x – 3x</div>
+      <div class="cb-status">At Risk</div>
+      <div class="cb-actions"><ul style="list-style:none;padding:0;margin:0;"><li style="padding:3px 0;font-size:12px;">→ Increase SDR activity by 30% immediately</li><li style="padding:3px 0;font-size:12px;">→ Prioritize deals most likely to close — push later</li><li style="padding:3px 0;font-size:12px;">→ Run campaign to reactivate dormant opps</li><li style="padding:3px 0;font-size:12px;">→ Focus AE time on Stage 3-4 deals only</li><li style="padding:3px 0;font-size:12px;">→ Weekly coverage reviews with CRO</li></ul></div>
+    </div>
+    <div class="cb-band band-healthy">
+      <div class="cb-range">3x – 4x</div>
+      <div class="cb-status">Healthy</div>
+      <div class="cb-actions"><ul style="list-style:none;padding:0;margin:0;"><li style="padding:3px 0;font-size:12px;">→ Execute standard pipeline management</li><li style="padding:3px 0;font-size:12px;">→ Maintain SDR velocity to protect future quarters</li><li style="padding:3px 0;font-size:12px;">→ Monitor Stage 2→3 conversion rate</li><li style="padding:3px 0;font-size:12px;">→ Focus on deal quality, not just quantity</li><li style="padding:3px 0;font-size:12px;">→ Review every deal for multi-threading</li></ul></div>
+    </div>
+    <div class="cb-band band-over">
+      <div class="cb-range">&gt; 4x</div>
+      <div class="cb-status">Monitor</div>
+      <div class="cb-actions"><ul style="list-style:none;padding:0;margin:0;"><li style="padding:3px 0;font-size:12px;">→ Audit for pipeline hygiene — are deals real?</li><li style="padding:3px 0;font-size:12px;">→ Check if stalled deals are inflating number</li><li style="padding:3px 0;font-size:12px;">→ Ensure win rate assumption is accurate</li><li style="padding:3px 0;font-size:12px;">→ If genuinely &gt;4x: consider raising quota</li><li style="padding:3px 0;font-size:12px;">→ Begin planning for rep capacity constraint</li></ul></div>
+    </div>
+  </div>
+
+  <h2 class="section-title">The Pipeline Coverage Meeting</h2>
+  <div class="coverage-meeting">
+    <div class="cm-header">Weekly Pipeline Coverage Review — 30 Minutes (Sales Manager + AEs)</div>
+    <div class="cm-rows">
+      <div class="cm-row">
+        <div class="cm-time">0–5 min</div>
+        <div class="cm-content"><strong>Coverage snapshot:</strong> Current quarter coverage by rep, by stage. Trending vs. last week. Is coverage improving or declining? If declining, why?</div>
+      </div>
+      <div class="cm-row">
+        <div class="cm-time">5–15 min</div>
+        <div class="cm-content"><strong>Stage 3-4 deal review:</strong> For every deal in commit/likely, manager asks: "What is the next step and when? Have you spoken to the EB in the last 7 days? What is the risk?" Rapid-fire — not a full forecast review.</div>
+      </div>
+      <div class="cm-row">
+        <div class="cm-time">15–22 min</div>
+        <div class="cm-content"><strong>Stage 1-2 deal health:</strong> Which deals have not progressed in 14+ days? These are stalled — either advance them or remove from coverage count. Stalled deals create false coverage confidence.</div>
+      </div>
+      <div class="cm-row">
+        <div class="cm-time">22–28 min</div>
+        <div class="cm-content"><strong>Pipeline creation plan:</strong> Each rep states how much new pipeline they will create in the next 7 days and which specific activities will produce it. Accountability for the leading indicator, not just the lagging coverage number.</div>
+      </div>
+      <div class="cm-row">
+        <div class="cm-time">28–30 min</div>
+        <div class="cm-content"><strong>Decisions logged:</strong> Any deal requiring manager support — coaching, escalation, pricing exception — is assigned with owner and deadline. No ambiguity about who is doing what.</div>
+      </div>
+    </div>
+  </div>
+
+  <h2 class="section-title">How to Build Pipeline Coverage Back Up Quickly</h2>
+  <div class="recovery-grid">
+    <div class="recovery-card">
+      <div class="rc-timeline">0–2 Weeks</div>
+      <div class="rc-title">Emergency Outbound Blitz</div>
+      <div class="rc-desc">SDR team runs a focused outbound campaign to ICP accounts. AEs co-prospect for 2 hours/day alongside their close work. All available manager capacity goes to helping reps with cold outreach. Target: 20% pipeline increase in 2 weeks.</div>
+    </div>
+    <div class="recovery-card">
+      <div class="rc-timeline">0–3 Weeks</div>
+      <div class="rc-title">Reactivate Dormant Pipeline</div>
+      <div class="rc-desc">Review all "closed-lost" from the last 180 days where the loss was "timing" or "no decision." Run a targeted re-engagement sequence. These opportunities already know you — conversion rate is 2-3x cold outbound.</div>
+    </div>
+    <div class="recovery-card">
+      <div class="rc-timeline">1–4 Weeks</div>
+      <div class="rc-title">Marketing Pipeline Surge</div>
+      <div class="rc-desc">Activate a targeted campaign to the highest-intent ABM accounts. Run a webinar with a direct CTA to demo booking. Increase LinkedIn Matched Audiences budget to TAL accounts showing intent. Marketing-generated pipeline that can be converted quickly.</div>
+    </div>
+    <div class="recovery-card">
+      <div class="rc-timeline">2–6 Weeks</div>
+      <div class="rc-title">Partner Pipeline Activation</div>
+      <div class="rc-desc">Call top 5 partners and provide co-sell support for deals in their pipeline. Offer co-marketing MDF incentive for any deal they register this month. Partners can source deals in 2-3 weeks that would take SDRs 4-6 weeks to build from cold.</div>
+    </div>
+    <div class="recovery-card">
+      <div class="rc-timeline">Ongoing</div>
+      <div class="rc-title">Expansion Pipeline</div>
+      <div class="rc-desc">Work with CS to surface expansion signals from existing accounts. Expansion closes at 2-4x the rate of new logo pipeline and in half the time. In a pipeline shortage, expansion pipeline is the fastest relief valve — if CS-to-sales expansion handoff process is functional.</div>
+    </div>
+    <div class="recovery-card">
+      <div class="rc-timeline">Root Cause</div>
+      <div class="rc-title">Fix the Leak, Not the Symptom</div>
+      <div class="rc-desc">Coverage problems repeat if the root cause isn't addressed: insufficient SDR headcount, ICP definition too broad, AEs not prospecting, demand generation underinvesting in certain segments. Cover the gap now AND fix the system.</div>
+    </div>
+  </div>
+
+  <h2 class="section-title">Pipeline Coverage and Win Rate: The Math</h2>
+  <div class="subsection">
+    <div class="formula-block">
+      <div class="formula-label">Required Coverage Formula</div>
+      <div class="formula-main">Required Coverage = 1 / Win Rate (on qualified pipeline)</div>
+      <div class="formula-note">Win rate 33% → required coverage = 1/0.33 = 3.0x minimum. Win rate 25% → required coverage = 4.0x. This is why enterprise orgs (lower win rates) need higher coverage than SMB orgs. If your win rate drops, your required coverage increases — a double-compounding problem.</div>
+    </div>
+    <p>A 5-point drop in win rate (e.g., from 30% to 25%) increases required coverage from 3.3x to 4.0x. If pipeline creation didn't simultaneously increase by 20%, you have a hidden coverage gap even if the absolute pipeline number looks the same as last quarter.</p>
+  </div>
+
+  <div class="indicator-row">
+    <span class="indicator-tag ind-leading">Leading: New pipeline created per week, SDR-booked meetings, SQLs entering Stage 1-2</span>
+    <span class="indicator-tag ind-lagging">Lagging: Current pipeline coverage, stage conversion rate, end-of-quarter quota attainment</span>
+    <span class="indicator-tag ind-formula">Formula: Coverage = Pipeline / Quota</span>
+  </div>
+
+  <div class="related-section">
+    <div class="related-title">Related Sections</div>
+    <div class="related-links">
+      <a href="win-rate.html" class="related-link">Win Rate</a>
+      <a href="forecast-integrity.html" class="related-link">Forecast Integrity</a>
+      <a href="pipeline-generation.html" class="related-link">Pipeline Generation</a>
+      <a href="funnel-architecture.html" class="related-link">Funnel Architecture</a>
+      <a href="management-cadence.html" class="related-link">Management Cadence</a>
+      <a href="quota-attainment.html" class="related-link">Quota Attainment</a>
+    </div>
+  </div>
+</div>
+<script data-pplx-inline-edit>
+(function () {
+  if (window === window.top) return;
+
+  const allowedParentOrigins = ["https://www.perplexity.ai","https://perplexity.ai","https://testing.perplexity.ai","https://staging.perplexity.ai","https://*.preview.i.perplexity.ai","http://localhost:3000","http://127.0.0.1:3000","http://localhost:5173","http://127.0.0.1:5173"];
+  const MAX_FONT_BYTES = 500 * 1024;
+  const MAX_TOTAL_FONT_BYTES = 2 * 1024 * 1024;
+  let scrollForwarding = false;
+  let scrollRaf = 0;
+  let trustedTopOrigin = null;
+
+  // Allow entries like "https://*.preview.i.perplexity.ai" — the wildcard
+  // matches a single DNS label (no dots), so "https://*.foo" cannot stretch
+  // across multiple labels.
+  function matchesAllowedOrigin(origin) {
+    if (!origin) return false;
+    for (const entry of allowedParentOrigins) {
+      if (!entry.includes("*")) {
+        if (entry === origin) return true;
+        continue;
+      }
+      const pattern = new RegExp(
+        "^" +
+          entry.replace(/[.+?^${}()|[\]\\]/g, "\\$&").replace(/\*/g, "[^.]+") +
+          "$",
+      );
+      if (pattern.test(origin)) return true;
+    }
+    return false;
+  }
+
+  // Trust decision: when the sender is same-origin-visible (event.origin is a
+  // real origin like https://www.perplexity.ai) we trust event.origin directly.
+  // When event.origin is "null" (opaque broker srcdoc), we fall back to the
+  // broker's stamped `parentOrigin` to identify the top window. The fallback
+  // is claim-only — we rely on the browser's native `targetOrigin` enforcement
+  // on the response path (see postToTrustedTop) to ensure replies can't be
+  // delivered to anyone but the actual top window of that claimed origin.
+  function getTrustedParentOrigin(event) {
+    const forwardedParentOrigin =
+      typeof event.data.parentOrigin === "string" ? event.data.parentOrigin : null;
+    const parentOrigin = event.origin === "null" ? forwardedParentOrigin : event.origin;
+    return matchesAllowedOrigin(parentOrigin) ? parentOrigin : null;
+  }
+
+  // All responses go to window.top with targetOrigin = the allowlisted origin.
+  // An attacker that iframes us inside their own null-origin broker can claim
+  // any parentOrigin they like, but the browser will drop the reply whenever
+  // the real top's origin doesn't match — so the screenshot never leaves.
+  function postToTrustedTop(message) {
+    if (!trustedTopOrigin) return;
+    try {
+      window.top.postMessage(message, trustedTopOrigin);
+    } catch (_error) {}
+  }
+
+  function inlineAll(original, clone) {
+    if (original.nodeType !== 1 || clone.nodeType !== 1) return;
+
+    try {
+      const computedStyle = getComputedStyle(original);
+      // cssText on a computed style is the serialized declaration in modern
+      // Chromium/Safari — a single read beats enumerating ~400 longhand
+      // properties. Firefox returns "" here, so we fall back on empty.
+      const serialized = computedStyle.cssText;
+      if (serialized) {
+        clone.style.cssText = serialized;
+      } else {
+        const parts = new Array(computedStyle.length);
+        for (let index = 0; index < computedStyle.length; index += 1) {
+          const property = computedStyle[index];
+          parts[index] = `${property}:${computedStyle.getPropertyValue(property)};`;
+        }
+        clone.style.cssText = parts.join("");
+      }
+    } catch (_error) {}
+
+    const originalChildren = original.children;
+    const clonedChildren = clone.children;
+    for (
+      let index = 0;
+      index < originalChildren.length && index < clonedChildren.length;
+      index += 1
+    ) {
+      inlineAll(originalChildren[index], clonedChildren[index]);
+    }
+  }
+
+  function extractFontUrl(srcValue) {
+    const matches = [
+      ...srcValue.matchAll(
+        /url\(["']?([^"')]+)["']?\)(?:\s*format\(["']?([^"')]+)["']?\))?/gi,
+      ),
+    ];
+    if (matches.length === 0) return null;
+    const woff2 = matches.find((m) => m[2] && m[2].toLowerCase().includes("woff2"));
+    if (woff2) return woff2[1];
+    const woff = matches.find((m) => m[2] && m[2].toLowerCase().includes("woff"));
+    if (woff) return woff[1];
+    return matches[0][1];
+  }
+
+  // Cache resolved font URL -> data URI across captures. Fonts on a page
+  // essentially never change, and a batch run emits multiple captures back to
+  // back — without this we'd refetch + re-base64 every time.
+  const fontDataUriCache = new Map();
+  const SRC_DECLARATION_RE = /src\s*:\s*[^;}]+/i;
+
+  async function fetchAsDataUri(url) {
+    if (fontDataUriCache.has(url)) return fontDataUriCache.get(url);
+    let dataUri = null;
+    try {
+      const response = await fetch(url, { mode: "cors", credentials: "omit" });
+      if (response.ok) {
+        const blob = await response.blob();
+        if (blob.size <= MAX_FONT_BYTES) {
+          dataUri = await new Promise((resolve) => {
+            const reader = new FileReader();
+            reader.onloadend = () =>
+              resolve(typeof reader.result === "string" ? reader.result : null);
+            reader.onerror = () => resolve(null);
+            reader.readAsDataURL(blob);
+          });
+        }
+      }
+    } catch (_error) {
+      dataUri = null;
+    }
+    fontDataUriCache.set(url, dataUri);
+    return dataUri;
+  }
+
+  function collectFontFaceRuleTexts() {
+    const rules = [];
+    for (const sheet of document.styleSheets) {
+      let cssRules;
+      try {
+        cssRules = sheet.cssRules;
+      } catch (_error) {
+        continue;
+      }
+      if (!cssRules) continue;
+      for (const rule of cssRules) {
+        const cssText = rule.cssText || "";
+        if (cssText.startsWith("@font-face")) rules.push(cssText);
+      }
+    }
+    return rules;
+  }
+
+  async function buildInlinedFontCss() {
+    const ruleTexts = collectFontFaceRuleTexts();
+    if (ruleTexts.length === 0) return null;
+
+    const resolved = ruleTexts.map((cssText) => {
+      if (!SRC_DECLARATION_RE.test(cssText)) return null;
+      const srcMatch = cssText.match(/src\s*:\s*([^;}]+)[;}]/i);
+      if (!srcMatch) return null;
+      const url = extractFontUrl(srcMatch[1]);
+      if (!url) return null;
+      try {
+        return { cssText, url: new URL(url, document.baseURI).href };
+      } catch (_error) {
+        return null;
+      }
+    });
+
+    const dataUris = await Promise.all(
+      resolved.map((entry) => (entry ? fetchAsDataUri(entry.url) : Promise.resolve(null))),
+    );
+
+    const inlined = [];
+    let totalBytes = 0;
+    for (let index = 0; index < resolved.length; index += 1) {
+      const entry = resolved[index];
+      const dataUri = dataUris[index];
+      if (!entry || !dataUri) continue;
+      const approxBytes = dataUri.length * 0.75;
+      if (totalBytes + approxBytes > MAX_TOTAL_FONT_BYTES) break;
+      totalBytes += approxBytes;
+      inlined.push(entry.cssText.replace(SRC_DECLARATION_RE, `src: url("${dataUri}")`));
+    }
+    return inlined.length > 0 ? inlined.join("\n") : null;
+  }
+
+  function stripExternal(clone) {
+    const images = clone.querySelectorAll("img");
+    for (let index = 0; index < images.length; index += 1) {
+      const src = images[index].getAttribute("src");
+      if (src && !src.startsWith("data:")) images[index].removeAttribute("src");
+    }
+
+    const elements = clone.querySelectorAll("*");
+    for (let index = 0; index < elements.length; index += 1) {
+      const style = elements[index].style.cssText;
+      if (style && style.includes("url(")) {
+        elements[index].style.cssText = style.replace(
+          /url\(["']?(?!data:)[^)"']*["']?\)/gi,
+          "none",
+        );
+      }
+    }
+  }
+
+  function emitScroll() {
+    scrollRaf = 0;
+    if (!scrollForwarding) return;
+    postToTrustedTop({
+      type: "INLINE_EDIT_SCROLL",
+      scrollX: window.scrollX,
+      scrollY: window.scrollY,
+    });
+  }
+
+  window.addEventListener(
+    "scroll",
+    function () {
+      if (!scrollForwarding || scrollRaf) return;
+      scrollRaf = requestAnimationFrame(emitScroll);
+    },
+    { passive: true, capture: true },
+  );
+
+  async function handleCaptureRequest(event) {
+    const requestId = event.data.requestId;
+    const scrollX = window.scrollX;
+    const scrollY = window.scrollY;
+    const width = window.innerWidth;
+    const height = window.innerHeight;
+
+    function postResult(dataUrl) {
+      postToTrustedTop({
+        type: "INLINE_EDIT_SCREENSHOT_RESULT",
+        requestId,
+        dataUrl,
+        scrollX,
+        scrollY,
+      });
+    }
+
+    try {
+      // Wait for any pending web fonts to resolve so both inline metrics and
+      // the @font-face inlining below see the same loaded faces.
+      if (document.fonts && document.fonts.ready) {
+        try {
+          await document.fonts.ready;
+        } catch (_error) {}
+      }
+
+      const clone = document.documentElement.cloneNode(true);
+      inlineAll(document.documentElement, clone);
+
+      const removedNodes = clone.querySelectorAll("script,link[rel=\"stylesheet\"],style");
+      for (let index = 0; index < removedNodes.length; index += 1) {
+        removedNodes[index].remove();
+      }
+
+      stripExternal(clone);
+
+      // Re-embed web fonts as data-URI @font-face rules so the SVG rasterizer
+      // can resolve them — external font URLs aren't fetched during
+      // foreignObject rendering, which would otherwise force a fallback face
+      // and change text metrics.
+      const inlinedFontCss = await buildInlinedFontCss();
+      if (inlinedFontCss) {
+        const styleEl = document.createElement("style");
+        styleEl.textContent = inlinedFontCss;
+        const head = clone.querySelector("head");
+        if (head) head.appendChild(styleEl);
+        else clone.insertBefore(styleEl, clone.firstChild);
+      }
+
+      const html = new XMLSerializer().serializeToString(clone);
+      const svg =
+        `<svg xmlns="http://www.w3.org/2000/svg" width="${width}" height="${height}">` +
+        '<foreignObject width="100%" height="100%">' +
+        `<div xmlns="http://www.w3.org/1999/xhtml" style="width:${width}px;height:${height}px;overflow:hidden">` +
+        `<div style="transform:translate(-${scrollX}px,-${scrollY}px);transform-origin:top left">` +
+        html +
+        "</div></div></foreignObject></svg>";
+      const svgUrl = `data:image/svg+xml;charset=utf-8,${encodeURIComponent(svg)}`;
+      const image = new Image();
+      image.onload = function () {
+        const canvas = document.createElement("canvas");
+        canvas.width = width;
+        canvas.height = height;
+        canvas.getContext("2d").drawImage(image, 0, 0);
+        postResult(canvas.toDataURL("image/png"));
+      };
+      image.onerror = function () {
+        postResult(null);
+      };
+      image.src = svgUrl;
+    } catch (_error) {
+      postResult(null);
+    }
+  }
+
+  window.addEventListener("message", function (event) {
+    if (!event.data) return;
+    // Only accept messages from the direct parent frame. Blocks sibling /
+    // unrelated-window postMessage senders that could otherwise reach us.
+    if (event.source !== window.parent) return;
+
+    const trustedParentOrigin = getTrustedParentOrigin(event);
+    if (!trustedParentOrigin) return;
+    trustedTopOrigin = trustedParentOrigin;
+
+    if (event.data.type === "INLINE_EDIT_SCROLL_START") {
+      scrollForwarding = true;
+      emitScroll();
+      return;
+    }
+
+    if (event.data.type === "INLINE_EDIT_SCROLL_STOP") {
+      scrollForwarding = false;
+      if (scrollRaf) cancelAnimationFrame(scrollRaf);
+      scrollRaf = 0;
+      return;
+    }
+
+    if (event.data.type !== "INLINE_EDIT_CAPTURE_REQUEST") return;
+
+    handleCaptureRequest(event);
+  });
+})();
+
+
+</script></body>
+</html>

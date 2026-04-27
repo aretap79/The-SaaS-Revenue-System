@@ -1,0 +1,720 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Account-Based Marketing (ABM) — SaaS Revenue System</title>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="../assets/shared.css"/>
+  <style>
+    .page-hero { background: #006494; }
+    .abm-tier-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      gap: 16px;
+      margin: 20px 0;
+    }
+    .abm-tier {
+      border-radius: 10px;
+      padding: 20px;
+      border: 2px solid;
+    }
+    .abm-tier.t1 { background: #f0f4ff; border-color: #006494; }
+    .abm-tier.t2 { background: #f0f8ff; border-color: #2a7fa8; }
+    .abm-tier.t3 { background: #f5f9ff; border-color: #a0c4d8; }
+    .tier-badge {
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      margin-bottom: 8px;
+    }
+    .t1 .tier-badge { color: #006494; }
+    .t2 .tier-badge { color: #2a7fa8; }
+    .t3 .tier-badge { color: #5a9ab8; }
+    .tier-title { font-size: 16px; font-weight: 700; margin-bottom: 6px; color: var(--text); }
+    .tier-count { font-size: 13px; font-weight: 700; margin-bottom: 10px; color: var(--text-muted); }
+    .tier-desc { font-size: 13px; line-height: 1.7; color: var(--text); margin-bottom: 10px; }
+    .tier-tactics { font-size: 12px; color: var(--text-muted); }
+    .tier-tactics li { list-style: none; padding: 2px 0; }
+    .tier-tactics li::before { content: '› '; font-weight: 700; }
+    .intent-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+      gap: 12px;
+      margin: 16px 0;
+    }
+    .intent-card {
+      background: var(--surface);
+      border: 1.5px solid var(--border);
+      border-radius: 8px;
+      padding: 16px;
+    }
+    .intent-card .ic-name { font-size: 14px; font-weight: 700; margin-bottom: 4px; }
+    .intent-card .ic-type { font-size: 10px; font-weight: 700; letter-spacing: 1px; text-transform: uppercase; color: #006494; margin-bottom: 6px; }
+    .intent-card .ic-desc { font-size: 12px; color: var(--text-muted); line-height: 1.5; }
+    .play-timeline {
+      position: relative;
+      margin: 20px 0;
+      padding-left: 32px;
+    }
+    .play-timeline::before {
+      content: '';
+      position: absolute;
+      left: 10px;
+      top: 0;
+      bottom: 0;
+      width: 2px;
+      background: #006494;
+    }
+    .play-step {
+      position: relative;
+      margin-bottom: 20px;
+    }
+    .play-step::before {
+      content: '';
+      position: absolute;
+      left: -26px;
+      top: 4px;
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+      background: #006494;
+      border: 2px solid #fff;
+      box-shadow: 0 0 0 2px #006494;
+    }
+    .play-step-owner {
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      color: #006494;
+      margin-bottom: 4px;
+    }
+    .play-step-action {
+      font-size: 14px;
+      font-weight: 700;
+      margin-bottom: 4px;
+    }
+    .play-step-detail {
+      font-size: 13px;
+      line-height: 1.65;
+      color: var(--text);
+    }
+    .failure-mode {
+      background: var(--surface);
+      border: 1.5px solid var(--border);
+      border-left: 4px solid #A13544;
+      border-radius: 8px;
+      padding: 16px 20px;
+      margin-bottom: 12px;
+    }
+    .failure-mode .fm-title { font-size: 14px; font-weight: 700; margin-bottom: 4px; color: #A13544; }
+    .failure-mode .fm-desc { font-size: 13px; line-height: 1.65; }
+    .abm-metrics-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 16px 0;
+    }
+    .abm-metrics-table th { background: #006494; color: #fff; padding: 10px 14px; font-size: 12px; text-align: left; }
+    .abm-metrics-table td { padding: 12px 14px; font-size: 13px; border-bottom: 1px solid var(--border); vertical-align: top; line-height: 1.6; }
+    .abm-metrics-table tr:nth-child(even) td { background: #fafaf8; }
+    .vs-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 16px 0;
+    }
+    .vs-table th { background: #006494; color: #fff; padding: 10px 14px; font-size: 12px; text-align: left; }
+    .vs-table td { padding: 12px 14px; font-size: 13px; border-bottom: 1px solid var(--border); line-height: 1.6; }
+    .vs-table tr:nth-child(even) td { background: #fafaf8; }
+  </style>
+</head>
+<body>
+<nav class="nav">
+  <span class="nav-logo">SaaS <span>Revenue System</span></span>
+  <span class="nav-sep">|</span>
+  <a href="../index.html" class="nav-back">← Home</a>
+  <span class="nav-sep">|</span>
+  <a href="../pages/marketing.html" class="nav-back">Marketing</a>
+  <span class="nav-sep">|</span>
+  <span class="nav-current">Account-Based Marketing</span>
+</nav>
+<div class="page-hero" style="background:#006494">
+  <div class="hero-phase-label">Marketing</div>
+  <div class="hero-title">Account-Based Marketing (ABM)</div>
+  <div class="hero-subtitle">Precision Demand Generation for Target Accounts — TAL Building, Intent Data, the 3 ABM Tiers, and the Coordinated ABM Play</div>
+</div>
+<div class="content-wrap">
+  <div class="breadcrumb">
+    <a href="../index.html">Home</a><span class="sep">›</span>
+    <a href="../pages/marketing.html">Marketing</a><span class="sep">›</span>
+    <span class="current">Account-Based Marketing</span>
+  </div>
+
+  <h2 class="section-title">What ABM Is and Why It Emerged</h2>
+  <div class="subsection">
+    <p>Account-Based Marketing (ABM) is a B2B go-to-market strategy in which marketing and sales treat a specific set of accounts as a market of one — tailoring content, outreach, advertising, and sales plays to the individual needs and context of each target account, rather than broadcasting generic campaigns to the full addressable market.</p>
+    <p>ABM emerged as a response to the limitations of traditional demand generation in enterprise SaaS. As buyers became more sophisticated and more resistant to generic outreach, as buying committees grew from 2 to 6-10 stakeholders, and as deal cycles extended from weeks to months, the economics of spray-and-pray demand generation collapsed. Generating 10,000 MQLs means nothing if 9,800 of them are too small, wrong industry, or already using a competitor.</p>
+    <div class="callout callout-definition">
+      <div class="callout-title">The Core ABM Shift</div>
+      <p>Traditional demand gen asks: <em>"How do we get more leads?"</em> ABM asks: <em>"How do we get deeper engagement inside the 200 accounts that represent 80% of our revenue potential?"</em> The shift is from volume to precision — fewer targets, more investment per target, higher close rates.</p>
+    </div>
+  </div>
+
+  <h2 class="section-title">ABM vs. Traditional Demand Gen</h2>
+  <table class="vs-table">
+    <thead>
+      <tr><th>Dimension</th><th>Traditional Demand Gen</th><th>Account-Based Marketing</th></tr>
+    </thead>
+    <tbody>
+      <tr><td>Target Universe</td><td>Broad market — anyone who fits a loose profile</td><td>Named account list — specific companies pre-selected by sales + marketing</td></tr>
+      <tr><td>Success Metric</td><td>MQL volume, CPL, email open rates</td><td>Account engagement score, multi-thread %, pipeline from target accounts</td></tr>
+      <tr><td>Content Approach</td><td>Generic personas — broad industry content</td><td>Account-specific or cluster-specific content tied to their exact business context</td></tr>
+      <tr><td>Sales Alignment</td><td>Loose — marketing generates leads, sales follows up</td><td>Tight — sales defines the target list, marketing executes coordinated plays together</td></tr>
+      <tr><td>Advertising</td><td>Retargeting broad audiences, keyword bidding</td><td>IP-targeted display to specific company IP ranges; LinkedIn Matched Audiences to named accounts</td></tr>
+      <tr><td>Timeline</td><td>Immediate — MQLs within days of campaign launch</td><td>Long — 3-6+ months to build account engagement, then convert to pipeline</td></tr>
+      <tr><td>Best Fit</td><td>PLG / SMB / self-serve with large TAM</td><td>Enterprise / mid-market with complex buying process and $50K+ ACV</td></tr>
+    </tbody>
+  </table>
+
+  <h2 class="section-title">The 3 ABM Tiers</h2>
+  <p class="section-intro">Not all target accounts deserve the same investment. The ABM tiering model matches the depth of personalization and resource investment to the revenue potential of each account.</p>
+  <div class="abm-tier-grid">
+    <div class="abm-tier t1">
+      <div class="tier-badge">Tier 1</div>
+      <div class="tier-title">1:1 Strategic ABM</div>
+      <div class="tier-count">5–50 accounts / AE or named segment</div>
+      <div class="tier-desc">Maximum personalization. Dedicated content, custom microsites, bespoke executive events, named AE + SDR + CSM pod assigned. Every touchpoint references the account's specific context — their industry, their stack, their org chart, their stated pain.</div>
+      <ul class="tier-tactics">
+        <li>Custom account-specific landing pages</li>
+        <li>Personalized direct mail packages</li>
+        <li>Executive briefing center invitations</li>
+        <li>Customized ROI models with their own numbers</li>
+        <li>Named research reports addressing their industry</li>
+      </ul>
+    </div>
+    <div class="abm-tier t2">
+      <div class="tier-badge">Tier 2</div>
+      <div class="tier-title">1:Few Programmatic ABM</div>
+      <div class="tier-count">50–500 accounts / cluster</div>
+      <div class="tier-desc">Cluster-level personalization. Accounts are grouped by industry, use case, or company profile and receive content tailored to the cluster — not the individual company, but not generic either. Automated personalization at scale using Demandbase, 6sense, or Terminus.</div>
+      <ul class="tier-tactics">
+        <li>Industry/vertical-specific landing pages</li>
+        <li>Cluster-targeted LinkedIn ad campaigns</li>
+        <li>Programmatic display to target account IPs</li>
+        <li>Personalized email sequences by persona + industry</li>
+        <li>Industry-specific case studies and proof points</li>
+      </ul>
+    </div>
+    <div class="abm-tier t3">
+      <div class="tier-badge">Tier 3</div>
+      <div class="tier-title">1:Many ABM at Scale</div>
+      <div class="tier-count">500–5,000 accounts</div>
+      <div class="tier-desc">Persona-level personalization at scale. This is the ABM bridge to traditional demand gen — targeting a broad account list with messaging aligned to ICP persona, using intent data to prioritize which accounts to serve ads and outreach to in any given week. Technology-dependent.</div>
+      <ul class="tier-tactics">
+        <li>Intent data-triggered ad serving (Bombora topics)</li>
+        <li>6sense / Demandbase predictive scoring</li>
+        <li>LinkedIn Matched Audiences — contact-level targeting</li>
+        <li>Behavioral personalization on website</li>
+        <li>Automated SDR sequences triggered by intent signals</li>
+      </ul>
+    </div>
+  </div>
+
+  <h2 class="section-title">Building the Target Account List (TAL)</h2>
+  <div class="subsection">
+    <p>The TAL is the foundation of your ABM program. A poorly constructed TAL — one that includes accounts that are too small, wrong vertical, or already lost — wastes every downstream investment. TAL construction is a joint marketing + sales process, run quarterly.</p>
+    <ol class="step-list">
+      <li>
+        <div class="step-content">
+          <span class="step-title">Start with ICP scoring</span>
+          Apply your ICP criteria (firmographic: company size, industry, geography, tech stack; technographic: tools they use that integrate with yours; behavioral: previous engagement with your content or trials) to your total addressable market. Score each account 0-100 against ICP fit.
+        </div>
+      </li>
+      <li>
+        <div class="step-content">
+          <span class="step-title">Overlay intent data</span>
+          Identify which ICP-fit accounts are currently researching your category. A company that scores 85 on ICP fit AND is currently showing 3rd-party intent signals for topics related to your solution is 5-10x more likely to buy in the next 90 days than one that is not in-market. Prioritize these accounts for Tier 1 and Tier 2.
+        </div>
+      </li>
+      <li>
+        <div class="step-content">
+          <span class="step-title">Get sales input</span>
+          Have each AE review their account list and flag: (a) strategic accounts they want to prioritize regardless of intent signal, (b) accounts with existing relationships or previous contact history, (c) accounts to exclude (current customers, partnership discussions, competitive situations). Sales must own the TAL — if they don't, they won't work the accounts marketing targets.
+        </div>
+      </li>
+      <li>
+        <div class="step-content">
+          <span class="step-title">Assign tiers</span>
+          Tier 1: highest ICP score + active intent + AE strategic priority. Tier 2: strong ICP fit, moderate intent, available SDR capacity. Tier 3: ICP fit, no active intent, technology-led nurture.
+        </div>
+      </li>
+      <li>
+        <div class="step-content">
+          <span class="step-title">Establish TAL review cadence</span>
+          Quarterly TAL refresh: remove accounts that have gone 180+ days with zero engagement. Add new accounts that have entered intent. Promote/demote accounts between tiers based on engagement progression.
+        </div>
+      </li>
+    </ol>
+  </div>
+
+  <h2 class="section-title">Intent Data Platforms</h2>
+  <div class="intent-grid">
+    <div class="intent-card">
+      <div class="ic-type">3rd-Party Intent</div>
+      <div class="ic-name">Bombora</div>
+      <div class="ic-desc">Tracks topic research across a consortium of B2B content publishers. Reports when a company's employees are consuming content about topics relevant to your category at above-baseline rates. Best for early-stage intent before they visit your website.</div>
+    </div>
+    <div class="intent-card">
+      <div class="ic-type">Predictive AI</div>
+      <div class="ic-name">6sense</div>
+      <div class="ic-desc">Uses ML to predict which accounts are in each buying stage (awareness → consideration → decision). Combines 1st-party, 3rd-party intent, and CRM data. Particularly strong for B2B SaaS with complex sales cycles. Activates targeted ads to predicted in-market accounts.</div>
+    </div>
+    <div class="intent-card">
+      <div class="ic-type">Review Platform</div>
+      <div class="ic-name">G2 Buyer Intent</div>
+      <div class="ic-desc">Identifies companies whose employees are viewing your G2 profile, your competitors' G2 profiles, or G2 comparison pages for your category. The highest-signal intent data available — a company actively comparing you to competitors on G2 is already in an active evaluation.</div>
+    </div>
+    <div class="intent-card">
+      <div class="ic-type">ABM Platform</div>
+      <div class="ic-name">Demandbase</div>
+      <div class="ic-desc">End-to-end ABM platform combining account identification (IP-based), intent data, website personalization, and targeted advertising. Good for larger marketing teams running full Tier 1-3 ABM programs with unified analytics across channels.</div>
+    </div>
+    <div class="intent-card">
+      <div class="ic-type">Social</div>
+      <div class="ic-name">LinkedIn Matched Audiences</div>
+      <div class="ic-desc">Upload your TAL company names (or contact emails) and serve LinkedIn ads specifically to people at those companies with targeting by title/role. The only channel that can reach a specific person at a specific company by title — the VP of Engineering at Acme Corp — without needing their contact info.</div>
+    </div>
+    <div class="intent-card">
+      <div class="ic-type">ABM Platform</div>
+      <div class="ic-name">Terminus</div>
+      <div class="ic-desc">ABM platform strong in display advertising orchestration and email signature marketing. Good for companies already using HubSpot and wanting a tighter CRM-to-ABM loop. Often chosen for mid-market ABM at Tier 2-3 scale.</div>
+    </div>
+  </div>
+
+  <h2 class="section-title">The Coordinated ABM Play</h2>
+  <p class="section-intro">The defining difference between ABM done right and ABM done wrong is coordination. Marketing running ads to an account while the SDR sends cold emails and the AE calls the CFO blind — without any of them knowing what the others are doing — is not ABM. It is expensive chaos. Real ABM requires a synchronized, orchestrated play across marketing, SDR, and AE against the same account at the same time.</p>
+
+  <div class="play-timeline">
+    <div class="play-step">
+      <div class="play-step-owner">RevOps / Marketing</div>
+      <div class="play-step-action">Week 0: Account enters TAL — intent signal detected</div>
+      <div class="play-step-detail">6sense / Bombora signals that Acme Corp has surged on topics related to your category. Account is promoted to Tier 1. AE is notified. Account enrichment is run (new stakeholders found via LinkedIn Sales Navigator + ZoomInfo). CRM account record is updated.</div>
+    </div>
+    <div class="play-step">
+      <div class="play-step-owner">Marketing</div>
+      <div class="play-step-action">Week 1–2: Surround with relevant content</div>
+      <div class="play-step-detail">LinkedIn Matched Audiences campaign activated for all employees at Acme Corp, with ads referencing Acme's industry and pain. IP-targeted display ads served to Acme's office IP ranges. Personalized website experience activated — Acme's industry vertical is detected, homepage swaps messaging to their use case.</div>
+    </div>
+    <div class="play-step">
+      <div class="play-step-owner">SDR</div>
+      <div class="play-step-action">Week 2–3: Warm outreach to economic buyer + champion</div>
+      <div class="play-step-detail">SDR reaches out to 2-3 stakeholders at Acme with personalized messages that reference their specific context — not a generic sequence. Email 1 references a recent press release or LinkedIn post from the target. Call 2 references a case study from their exact vertical. Not a blast — a conversation.</div>
+    </div>
+    <div class="play-step">
+      <div class="play-step-owner">AE</div>
+      <div class="play-step-action">Week 3–4: Executive outreach and relationship activation</div>
+      <div class="play-step-detail">AE reaches out to VP+ stakeholders with a well-researched, peer-to-peer message. If there are mutual connections or board-level relationships, now is the time to activate them. AE reviews all intent and engagement data from prior 3 weeks before any outreach.</div>
+    </div>
+    <div class="play-step">
+      <div class="play-step-owner">Marketing + AE</div>
+      <div class="play-step-action">Week 4–8: Personalized content delivery</div>
+      <div class="play-step-detail">Custom landing page goes live for Acme referencing their industry benchmarks. Industry-specific ROI calculator is sent. If Tier 1, an executive briefing invitation is extended. All touchpoints reference earlier conversations — every interaction builds on the previous one.</div>
+    </div>
+    <div class="play-step">
+      <div class="play-step-owner">AE + SDR</div>
+      <div class="play-step-action">Week 6–12: Discovery meeting achieved — ABM play has worked</div>
+      <div class="play-step-detail">A discovery call is booked. The AE arrives having read every intent signal, every piece of engagement data, every LinkedIn post by the stakeholders. The prospect feels known, not targeted. This is the payoff of coordinated ABM.</div>
+    </div>
+  </div>
+
+  <h2 class="section-title">ABM Metrics</h2>
+  <table class="abm-metrics-table">
+    <thead>
+      <tr><th>Metric</th><th>Definition</th><th>Target / Benchmark</th></tr>
+    </thead>
+    <tbody>
+      <tr><td>Account Engagement Score</td><td>Composite score per account: website visits + content downloads + ad impressions + email opens + event attendance + SDR/AE touchpoints</td><td>Rising scores = plan is working; flat = change tactics</td></tr>
+      <tr><td>Multi-Thread %</td><td>% of target accounts where you have 2+ active contacts engaged (not just one person)</td><td>&gt;50% of Tier 1 accounts; enterprise deals with 1 contact have 40% lower win rates</td></tr>
+      <tr><td>Pipeline from Target Accounts</td><td>Pipeline generated from TAL accounts as % of total pipeline</td><td>Target: 60-80% of pipeline from Tier 1+2 accounts in enterprise-focused orgs</td></tr>
+      <tr><td>Account Coverage %</td><td>% of TAL accounts with at least 1 active SDR or AE touch in the trailing 90 days</td><td>&gt;80% for Tier 1, &gt;50% for Tier 2</td></tr>
+      <tr><td>TAL Win Rate vs. Non-TAL</td><td>Win rate for opportunities originated from TAL accounts vs. all other inbound accounts</td><td>Well-run ABM shows 20-40% higher win rate in TAL deals vs. non-TAL</td></tr>
+      <tr><td>TAL ACV vs. Non-TAL ACV</td><td>Average deal size for TAL-originated opportunities vs. non-TAL</td><td>ABM-sourced deals typically 2-3x higher ACV — this is why the economics work despite higher per-account cost</td></tr>
+      <tr><td>Time to Pipeline from TAL Activation</td><td>Days from account entering TAL (intent signal detected) to opportunity created in CRM</td><td>Tier 1: target 30-60 days. If &gt;90 days, the play is not working.</td></tr>
+    </tbody>
+  </table>
+
+  <h2 class="section-title">ABM ROI: Why the Math Works</h2>
+  <div class="subsection">
+    <div class="formula-block">
+      <div class="formula-label">ABM ROI Comparison</div>
+      <div class="formula-main">Traditional demand gen: 10,000 MQLs × $150 CPL = $1.5M spend → 2% MQL-to-Opp × $50K ACV = $10M pipeline</div>
+      <div class="formula-note">ABM: 200 Tier 1 accounts × $5,000 account investment = $1M spend → 30% account-to-opp × $150K ACV (larger deals) = $9M pipeline at lower spend, with higher win rate and shorter sales cycle</div>
+    </div>
+    <p>The ABM model wins on efficiency — fewer accounts, fewer reps distracted by poor-fit leads, higher ACV per opportunity, and better win rates because reps arrive at every meeting better prepared. The challenge is that ABM results take 6-12 months to fully materialize, which creates pressure from leadership expecting MQL volume metrics in months 1-3.</p>
+  </div>
+
+  <h2 class="section-title">ABM Failure Modes</h2>
+  <div class="failure-mode">
+    <div class="fm-title">Marketing runs ABM without sales commitment</div>
+    <div class="fm-desc">Marketing invests in TAL-targeted ads and content. Sales ignores the signals and keeps their own pipeline lists. Result: expensive campaigns with no follow-through. ABM only works as a joint program with shared accountability.</div>
+  </div>
+  <div class="failure-mode">
+    <div class="fm-title">TAL is too large and too generic</div>
+    <div class="fm-desc">"Let's put 5,000 accounts in Tier 1" — this defeats the purpose. If you can't personalize at Tier 1 depth, those accounts are Tier 3 at best. Over-large TALs dilute investment and produce Tier 3 results at Tier 1 costs.</div>
+  </div>
+  <div class="failure-mode">
+    <div class="fm-title">Measuring ABM success with demand gen metrics</div>
+    <div class="fm-desc">Reporting ABM performance as MQL volume is a category error. ABM must be measured by account engagement, multi-thread %, and pipeline from target accounts. Leadership that insists on MQL volume will starve ABM before it can work.</div>
+  </div>
+  <div class="failure-mode">
+    <div class="fm-title">Personalization stops at the company name in the subject line</div>
+    <div class="fm-desc">"Hi [First Name], I noticed [Company] is growing fast..." is not ABM — it is mail-merge. Real personalization requires researching the company's specific priorities, referencing their public statements, and connecting your solution to their stated goals. This takes time and cannot be fully automated.</div>
+  </div>
+  <div class="failure-mode">
+    <div class="fm-title">No feedback loop on account engagement data to sales</div>
+    <div class="fm-desc">If the AE doesn't know that the VP of Engineering at Acme Corp visited your pricing page 3 times last week, viewed a case study, and engaged with a LinkedIn ad — they cannot use that intelligence. Engagement data must flow from marketing to CRM to rep in real time.</div>
+  </div>
+
+  <div class="related-section">
+    <div class="related-title">Related Sections</div>
+    <div class="related-links">
+      <a href="icp.html" class="related-link">ICP Definition</a>
+      <a href="demand-generation.html" class="related-link">Demand Generation</a>
+      <a href="sales-enablement-mktg.html" class="related-link">Sales Enablement</a>
+      <a href="pipeline-attribution.html" class="related-link">Pipeline Attribution</a>
+      <a href="mql-handoff.html" class="related-link">MQL Handoff</a>
+      <a href="segmentation.html" class="related-link">Market Segmentation</a>
+    </div>
+  </div>
+</div>
+<script data-pplx-inline-edit>
+(function () {
+  if (window === window.top) return;
+
+  const allowedParentOrigins = ["https://www.perplexity.ai","https://perplexity.ai","https://testing.perplexity.ai","https://staging.perplexity.ai","https://*.preview.i.perplexity.ai","http://localhost:3000","http://127.0.0.1:3000","http://localhost:5173","http://127.0.0.1:5173"];
+  const MAX_FONT_BYTES = 500 * 1024;
+  const MAX_TOTAL_FONT_BYTES = 2 * 1024 * 1024;
+  let scrollForwarding = false;
+  let scrollRaf = 0;
+  let trustedTopOrigin = null;
+
+  // Allow entries like "https://*.preview.i.perplexity.ai" — the wildcard
+  // matches a single DNS label (no dots), so "https://*.foo" cannot stretch
+  // across multiple labels.
+  function matchesAllowedOrigin(origin) {
+    if (!origin) return false;
+    for (const entry of allowedParentOrigins) {
+      if (!entry.includes("*")) {
+        if (entry === origin) return true;
+        continue;
+      }
+      const pattern = new RegExp(
+        "^" +
+          entry.replace(/[.+?^${}()|[\]\\]/g, "\\$&").replace(/\*/g, "[^.]+") +
+          "$",
+      );
+      if (pattern.test(origin)) return true;
+    }
+    return false;
+  }
+
+  // Trust decision: when the sender is same-origin-visible (event.origin is a
+  // real origin like https://www.perplexity.ai) we trust event.origin directly.
+  // When event.origin is "null" (opaque broker srcdoc), we fall back to the
+  // broker's stamped `parentOrigin` to identify the top window. The fallback
+  // is claim-only — we rely on the browser's native `targetOrigin` enforcement
+  // on the response path (see postToTrustedTop) to ensure replies can't be
+  // delivered to anyone but the actual top window of that claimed origin.
+  function getTrustedParentOrigin(event) {
+    const forwardedParentOrigin =
+      typeof event.data.parentOrigin === "string" ? event.data.parentOrigin : null;
+    const parentOrigin = event.origin === "null" ? forwardedParentOrigin : event.origin;
+    return matchesAllowedOrigin(parentOrigin) ? parentOrigin : null;
+  }
+
+  // All responses go to window.top with targetOrigin = the allowlisted origin.
+  // An attacker that iframes us inside their own null-origin broker can claim
+  // any parentOrigin they like, but the browser will drop the reply whenever
+  // the real top's origin doesn't match — so the screenshot never leaves.
+  function postToTrustedTop(message) {
+    if (!trustedTopOrigin) return;
+    try {
+      window.top.postMessage(message, trustedTopOrigin);
+    } catch (_error) {}
+  }
+
+  function inlineAll(original, clone) {
+    if (original.nodeType !== 1 || clone.nodeType !== 1) return;
+
+    try {
+      const computedStyle = getComputedStyle(original);
+      // cssText on a computed style is the serialized declaration in modern
+      // Chromium/Safari — a single read beats enumerating ~400 longhand
+      // properties. Firefox returns "" here, so we fall back on empty.
+      const serialized = computedStyle.cssText;
+      if (serialized) {
+        clone.style.cssText = serialized;
+      } else {
+        const parts = new Array(computedStyle.length);
+        for (let index = 0; index < computedStyle.length; index += 1) {
+          const property = computedStyle[index];
+          parts[index] = `${property}:${computedStyle.getPropertyValue(property)};`;
+        }
+        clone.style.cssText = parts.join("");
+      }
+    } catch (_error) {}
+
+    const originalChildren = original.children;
+    const clonedChildren = clone.children;
+    for (
+      let index = 0;
+      index < originalChildren.length && index < clonedChildren.length;
+      index += 1
+    ) {
+      inlineAll(originalChildren[index], clonedChildren[index]);
+    }
+  }
+
+  function extractFontUrl(srcValue) {
+    const matches = [
+      ...srcValue.matchAll(
+        /url\(["']?([^"')]+)["']?\)(?:\s*format\(["']?([^"')]+)["']?\))?/gi,
+      ),
+    ];
+    if (matches.length === 0) return null;
+    const woff2 = matches.find((m) => m[2] && m[2].toLowerCase().includes("woff2"));
+    if (woff2) return woff2[1];
+    const woff = matches.find((m) => m[2] && m[2].toLowerCase().includes("woff"));
+    if (woff) return woff[1];
+    return matches[0][1];
+  }
+
+  // Cache resolved font URL -> data URI across captures. Fonts on a page
+  // essentially never change, and a batch run emits multiple captures back to
+  // back — without this we'd refetch + re-base64 every time.
+  const fontDataUriCache = new Map();
+  const SRC_DECLARATION_RE = /src\s*:\s*[^;}]+/i;
+
+  async function fetchAsDataUri(url) {
+    if (fontDataUriCache.has(url)) return fontDataUriCache.get(url);
+    let dataUri = null;
+    try {
+      const response = await fetch(url, { mode: "cors", credentials: "omit" });
+      if (response.ok) {
+        const blob = await response.blob();
+        if (blob.size <= MAX_FONT_BYTES) {
+          dataUri = await new Promise((resolve) => {
+            const reader = new FileReader();
+            reader.onloadend = () =>
+              resolve(typeof reader.result === "string" ? reader.result : null);
+            reader.onerror = () => resolve(null);
+            reader.readAsDataURL(blob);
+          });
+        }
+      }
+    } catch (_error) {
+      dataUri = null;
+    }
+    fontDataUriCache.set(url, dataUri);
+    return dataUri;
+  }
+
+  function collectFontFaceRuleTexts() {
+    const rules = [];
+    for (const sheet of document.styleSheets) {
+      let cssRules;
+      try {
+        cssRules = sheet.cssRules;
+      } catch (_error) {
+        continue;
+      }
+      if (!cssRules) continue;
+      for (const rule of cssRules) {
+        const cssText = rule.cssText || "";
+        if (cssText.startsWith("@font-face")) rules.push(cssText);
+      }
+    }
+    return rules;
+  }
+
+  async function buildInlinedFontCss() {
+    const ruleTexts = collectFontFaceRuleTexts();
+    if (ruleTexts.length === 0) return null;
+
+    const resolved = ruleTexts.map((cssText) => {
+      if (!SRC_DECLARATION_RE.test(cssText)) return null;
+      const srcMatch = cssText.match(/src\s*:\s*([^;}]+)[;}]/i);
+      if (!srcMatch) return null;
+      const url = extractFontUrl(srcMatch[1]);
+      if (!url) return null;
+      try {
+        return { cssText, url: new URL(url, document.baseURI).href };
+      } catch (_error) {
+        return null;
+      }
+    });
+
+    const dataUris = await Promise.all(
+      resolved.map((entry) => (entry ? fetchAsDataUri(entry.url) : Promise.resolve(null))),
+    );
+
+    const inlined = [];
+    let totalBytes = 0;
+    for (let index = 0; index < resolved.length; index += 1) {
+      const entry = resolved[index];
+      const dataUri = dataUris[index];
+      if (!entry || !dataUri) continue;
+      const approxBytes = dataUri.length * 0.75;
+      if (totalBytes + approxBytes > MAX_TOTAL_FONT_BYTES) break;
+      totalBytes += approxBytes;
+      inlined.push(entry.cssText.replace(SRC_DECLARATION_RE, `src: url("${dataUri}")`));
+    }
+    return inlined.length > 0 ? inlined.join("\n") : null;
+  }
+
+  function stripExternal(clone) {
+    const images = clone.querySelectorAll("img");
+    for (let index = 0; index < images.length; index += 1) {
+      const src = images[index].getAttribute("src");
+      if (src && !src.startsWith("data:")) images[index].removeAttribute("src");
+    }
+
+    const elements = clone.querySelectorAll("*");
+    for (let index = 0; index < elements.length; index += 1) {
+      const style = elements[index].style.cssText;
+      if (style && style.includes("url(")) {
+        elements[index].style.cssText = style.replace(
+          /url\(["']?(?!data:)[^)"']*["']?\)/gi,
+          "none",
+        );
+      }
+    }
+  }
+
+  function emitScroll() {
+    scrollRaf = 0;
+    if (!scrollForwarding) return;
+    postToTrustedTop({
+      type: "INLINE_EDIT_SCROLL",
+      scrollX: window.scrollX,
+      scrollY: window.scrollY,
+    });
+  }
+
+  window.addEventListener(
+    "scroll",
+    function () {
+      if (!scrollForwarding || scrollRaf) return;
+      scrollRaf = requestAnimationFrame(emitScroll);
+    },
+    { passive: true, capture: true },
+  );
+
+  async function handleCaptureRequest(event) {
+    const requestId = event.data.requestId;
+    const scrollX = window.scrollX;
+    const scrollY = window.scrollY;
+    const width = window.innerWidth;
+    const height = window.innerHeight;
+
+    function postResult(dataUrl) {
+      postToTrustedTop({
+        type: "INLINE_EDIT_SCREENSHOT_RESULT",
+        requestId,
+        dataUrl,
+        scrollX,
+        scrollY,
+      });
+    }
+
+    try {
+      // Wait for any pending web fonts to resolve so both inline metrics and
+      // the @font-face inlining below see the same loaded faces.
+      if (document.fonts && document.fonts.ready) {
+        try {
+          await document.fonts.ready;
+        } catch (_error) {}
+      }
+
+      const clone = document.documentElement.cloneNode(true);
+      inlineAll(document.documentElement, clone);
+
+      const removedNodes = clone.querySelectorAll("script,link[rel=\"stylesheet\"],style");
+      for (let index = 0; index < removedNodes.length; index += 1) {
+        removedNodes[index].remove();
+      }
+
+      stripExternal(clone);
+
+      // Re-embed web fonts as data-URI @font-face rules so the SVG rasterizer
+      // can resolve them — external font URLs aren't fetched during
+      // foreignObject rendering, which would otherwise force a fallback face
+      // and change text metrics.
+      const inlinedFontCss = await buildInlinedFontCss();
+      if (inlinedFontCss) {
+        const styleEl = document.createElement("style");
+        styleEl.textContent = inlinedFontCss;
+        const head = clone.querySelector("head");
+        if (head) head.appendChild(styleEl);
+        else clone.insertBefore(styleEl, clone.firstChild);
+      }
+
+      const html = new XMLSerializer().serializeToString(clone);
+      const svg =
+        `<svg xmlns="http://www.w3.org/2000/svg" width="${width}" height="${height}">` +
+        '<foreignObject width="100%" height="100%">' +
+        `<div xmlns="http://www.w3.org/1999/xhtml" style="width:${width}px;height:${height}px;overflow:hidden">` +
+        `<div style="transform:translate(-${scrollX}px,-${scrollY}px);transform-origin:top left">` +
+        html +
+        "</div></div></foreignObject></svg>";
+      const svgUrl = `data:image/svg+xml;charset=utf-8,${encodeURIComponent(svg)}`;
+      const image = new Image();
+      image.onload = function () {
+        const canvas = document.createElement("canvas");
+        canvas.width = width;
+        canvas.height = height;
+        canvas.getContext("2d").drawImage(image, 0, 0);
+        postResult(canvas.toDataURL("image/png"));
+      };
+      image.onerror = function () {
+        postResult(null);
+      };
+      image.src = svgUrl;
+    } catch (_error) {
+      postResult(null);
+    }
+  }
+
+  window.addEventListener("message", function (event) {
+    if (!event.data) return;
+    // Only accept messages from the direct parent frame. Blocks sibling /
+    // unrelated-window postMessage senders that could otherwise reach us.
+    if (event.source !== window.parent) return;
+
+    const trustedParentOrigin = getTrustedParentOrigin(event);
+    if (!trustedParentOrigin) return;
+    trustedTopOrigin = trustedParentOrigin;
+
+    if (event.data.type === "INLINE_EDIT_SCROLL_START") {
+      scrollForwarding = true;
+      emitScroll();
+      return;
+    }
+
+    if (event.data.type === "INLINE_EDIT_SCROLL_STOP") {
+      scrollForwarding = false;
+      if (scrollRaf) cancelAnimationFrame(scrollRaf);
+      scrollRaf = 0;
+      return;
+    }
+
+    if (event.data.type !== "INLINE_EDIT_CAPTURE_REQUEST") return;
+
+    handleCaptureRequest(event);
+  });
+})();
+
+
+</script></body>
+</html>

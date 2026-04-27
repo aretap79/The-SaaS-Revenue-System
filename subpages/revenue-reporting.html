@@ -1,0 +1,838 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Revenue Reporting — SaaS Revenue System</title>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="../assets/shared.css"/>
+  <style>
+    .page-hero { background: #01696F; }
+    .cadence-card {
+      background: var(--surface);
+      border: 1.5px solid var(--border);
+      border-radius: 10px;
+      margin-bottom: 20px;
+      overflow: hidden;
+    }
+    .cadence-header {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      padding: 16px 22px;
+      border-bottom: 1.5px solid var(--border);
+    }
+    .cadence-dot {
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+      flex-shrink: 0;
+    }
+    .cadence-dot.daily { background: #A13544; }
+    .cadence-dot.weekly { background: #964219; }
+    .cadence-dot.monthly { background: #006494; }
+    .cadence-dot.quarterly { background: #01696F; }
+    .cadence-name { font-size: 16px; font-weight: 700; color: var(--text); }
+    .cadence-meta { font-size: 12px; color: var(--text-muted); margin-top: 1px; }
+    .cadence-body { padding: 16px 22px; }
+    .report-card {
+      background: var(--surface);
+      border: 1.5px solid var(--border);
+      border-radius: 10px;
+      padding: 22px 26px;
+      margin-bottom: 18px;
+    }
+    .report-number {
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      color: #01696F;
+      margin-bottom: 4px;
+    }
+    .report-title { font-size: 17px; font-weight: 700; margin-bottom: 8px; }
+    .report-desc { font-size: 14px; line-height: 1.75; color: var(--text); margin-bottom: 14px; }
+    .report-meta {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+      margin-bottom: 14px;
+    }
+    .r-tag {
+      font-size: 11px;
+      font-weight: 700;
+      padding: 3px 10px;
+      border-radius: 12px;
+      letter-spacing: 0.3px;
+    }
+    .r-tag.cadence { background: #f0fafb; color: #01696F; border: 1px solid #c0e0e2; }
+    .r-tag.source { background: #fafaf8; color: var(--text-muted); border: 1px solid var(--border); }
+    .r-tag.owner { background: #f0fff4; color: #437A22; border: 1px solid #c8e8c8; }
+    .report-fields { font-size: 13px; line-height: 1.65; color: var(--text-muted); }
+    .report-fields strong { color: var(--text); }
+    .stack-comparison {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 14px;
+      margin: 20px 0;
+    }
+    .stack-card {
+      border-radius: 10px;
+      padding: 18px;
+      border: 1.5px solid var(--border);
+    }
+    .stack-card .sc-tier { font-size: 11px; font-weight: 700; letter-spacing: 1px; text-transform: uppercase; margin-bottom: 6px; }
+    .stack-card .sc-name { font-size: 15px; font-weight: 700; margin-bottom: 8px; }
+    .stack-card ul { list-style: none; padding: 0; }
+    .stack-card ul li { font-size: 12px; line-height: 1.6; padding: 3px 0 3px 14px; position: relative; }
+    .stack-card ul li::before { content: '•'; position: absolute; left: 0; color: var(--primary); }
+    .stack-card.primary { border-color: #01696F; }
+    .governance-row {
+      display: flex;
+      gap: 12px;
+      align-items: flex-start;
+      padding: 14px 0;
+      border-bottom: 1px solid var(--border);
+    }
+    .governance-row:last-child { border-bottom: none; }
+    .gov-icon {
+      width: 36px;
+      height: 36px;
+      border-radius: 6px;
+      background: #01696F;
+      color: #fff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 16px;
+      flex-shrink: 0;
+    }
+    .gov-body { flex: 1; }
+    .gov-title { font-size: 14px; font-weight: 700; margin-bottom: 3px; }
+    .gov-desc { font-size: 13px; color: var(--text-muted); line-height: 1.55; }
+    @media (max-width: 640px) {
+      .stack-comparison { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+<nav class="nav">
+  <span class="nav-logo">SaaS <span>Revenue System</span></span>
+  <span class="nav-sep">|</span>
+  <a href="../index.html" class="nav-back">← Home</a>
+  <span class="nav-sep">|</span>
+  <a href="../pages/revops.html" class="nav-back">RevOps</a>
+  <span class="nav-sep">|</span>
+  <span class="nav-current">Revenue Reporting</span>
+</nav>
+
+<div class="page-hero">
+  <div class="hero-phase-label">REVENUE OPERATIONS</div>
+  <div class="hero-title">Revenue Reporting</div>
+  <div class="hero-subtitle">Building the Dashboards That Drive Decisions — Not Vanity Metrics, But the Data Infrastructure That Enables Leadership to Act</div>
+</div>
+
+<div class="content-wrap">
+  <div class="breadcrumb">
+    <a href="../index.html">Home</a><span class="sep">›</span>
+    <a href="../pages/revops.html">RevOps</a><span class="sep">›</span>
+    <span class="current">Revenue Reporting</span>
+  </div>
+
+  <!-- WHAT IT IS AND ISN'T -->
+  <h2 class="section-title">What Revenue Reporting Is — and Isn't</h2>
+  <div class="section-intro">Most SaaS companies have too many dashboards and too few decisions. The goal of revenue reporting is not to display data — it is to change behavior.</div>
+
+  <div class="subsection">
+    <p>Revenue reporting is the data infrastructure that enables leaders to make three types of decisions: <strong>immediate tactical decisions</strong> (which rep needs coaching today, which deal is at risk this week), <strong>operational decisions</strong> (is our pipeline sufficient to hit next quarter, do we need to change hiring plans), and <strong>strategic decisions</strong> (is our ICP right, is our pricing model working, which channels have the best unit economics).</p>
+    <p>A dashboard that gets built, looks impressive in a QBR, and then never gets opened again is not revenue reporting — it's theater. The test of a good report is not "does it show interesting data" but "does someone look at this report and change what they do as a result?"</p>
+    <p>The enemy of good revenue reporting is <strong>vanity metrics</strong>: numbers that go up reliably but don't connect to revenue outcomes. Website visitors, social followers, email open rates — these are inputs to inputs, not measures of revenue health. A CRO who reports on these as primary metrics has confused activity with outcomes.</p>
+  </div>
+
+  <div class="callout callout-definition">
+    <div class="callout-title">The Revenue Reporting Test</div>
+    <p>For every report you build, ask: (1) Who looks at this? (2) How often? (3) What specific decision does it enable? (4) What would they do differently if the number went up vs. down? If you can't answer all four questions, the report probably shouldn't exist.</p>
+  </div>
+
+  <!-- THE REPORTING STACK -->
+  <h2 class="section-title">The Revenue Reporting Stack</h2>
+  <div class="section-intro">Where your reports live determines how trustworthy they are, how fast they update, and who can build them. The right stack depends on your company's data maturity.</div>
+
+  <div class="stack-comparison">
+    <div class="stack-card">
+      <div class="sc-tier" style="color:#006494">Tier 1</div>
+      <div class="sc-name">CRM Native Reports</div>
+      <ul>
+        <li>Salesforce Reports & Dashboards, HubSpot Analytics</li>
+        <li>Best for operational reports that need real-time CRM data</li>
+        <li>Pipeline by stage, activity metrics, close date reports</li>
+        <li>Limitation: no cross-system data, limited visualization options</li>
+        <li>Who builds: RevOps</li>
+        <li>Use for: daily/weekly tactical reporting</li>
+      </ul>
+    </div>
+    <div class="stack-card primary">
+      <div class="sc-tier" style="color:#01696F">Tier 2 (Best)</div>
+      <div class="sc-name">BI Tool + Data Warehouse</div>
+      <ul>
+        <li>Looker, Tableau, Metabase, Power BI connected to Snowflake/BigQuery</li>
+        <li>Gold standard: all revenue data in one place, cross-system joins possible</li>
+        <li>CRM + Marketing + CS + Billing data unified</li>
+        <li>Enables cohort analysis, conversion rate analysis, unit economics</li>
+        <li>Who builds: Data / Analytics team, RevOps with SQL skills</li>
+        <li>Use for: weekly/monthly/quarterly strategic reporting</li>
+      </ul>
+    </div>
+    <div class="stack-card">
+      <div class="sc-tier" style="color:#964219">Tier 3 (Temporary)</div>
+      <div class="sc-name">Spreadsheets</div>
+      <ul>
+        <li>Google Sheets, Excel with CRM data exports</li>
+        <li>Fast to build, flexible, terrible for ongoing reporting</li>
+        <li>Data is stale the moment it's exported</li>
+        <li>Formula errors are invisible and catastrophic</li>
+        <li>One person's CRM export can differ from another's by 10%</li>
+        <li>Use only as a temporary bridge to proper BI infrastructure</li>
+        <li>Any report built in a spreadsheet that runs for &gt;90 days is technical debt</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="callout callout-warning">
+    <div class="callout-title">The Spreadsheet Trap</div>
+    <p>Every SaaS company starts with spreadsheets. Many $50M+ ARR companies are still running critical revenue reports from Google Sheets. The warning signs: reports that take 2+ hours to "refresh," different people quoting different numbers from different exports for the same metric, revenue reports that nobody fully trusts. The investment to build proper BI infrastructure ($50K–$200K depending on stack choice) pays back in 2–3 quarters of better decisions alone.</p>
+  </div>
+
+  <!-- THE 4 REPORTING CADENCES -->
+  <h2 class="section-title">The Four Reporting Cadences</h2>
+  <div class="section-intro">Different decisions require different time horizons. Running everything at the same cadence either floods leaders with noise (too frequent) or blinds them to emerging problems (too infrequent).</div>
+
+  <div class="cadence-card">
+    <div class="cadence-header">
+      <div class="cadence-dot daily"></div>
+      <div>
+        <div class="cadence-name">Daily — Activity and Pipeline Alerts</div>
+        <div class="cadence-meta">Automated alerts, not meetings. Sent to managers, not reported in review.</div>
+      </div>
+    </div>
+    <div class="cadence-body">
+      <p style="font-size:14px; line-height:1.7;">Daily reporting is not a dashboard review — it's an automated alert system. The goal is to surface same-day information that requires same-day action. Daily "reports" should be push notifications, not pull dashboards.</p>
+      <ul class="bullet-list">
+        <li><strong>Inbound lead alert:</strong> High-score ICP lead created in CRM — routes to SDR with 4-hour SLA notification</li>
+        <li><strong>Deal risk alert:</strong> Commit deal with no activity logged in 5+ days — manager notified automatically</li>
+        <li><strong>Close date today:</strong> Any opportunity with close date = today that hasn't moved to Closed Won/Lost — manager alert</li>
+        <li><strong>Stage regression alert:</strong> Any deal moved backward in stage — RevOps notified for tracking</li>
+        <li><strong>Activity summary:</strong> Each rep's calls/emails/meetings from yesterday — sent to their manager at 7am</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="cadence-card">
+    <div class="cadence-header">
+      <div class="cadence-dot weekly"></div>
+      <div>
+        <div class="cadence-name">Weekly — Pipeline and Forecast Review</div>
+        <div class="cadence-meta">Monday morning. CRO, VP Sales, Sales Managers. 60 minutes maximum.</div>
+      </div>
+    </div>
+    <div class="cadence-body">
+      <p style="font-size:14px; line-height:1.7;">The weekly revenue review is the operational heartbeat of the revenue organization. Every number discussed in this meeting should come from the same report — no individual exports, no "my version" of the pipeline. One source of truth.</p>
+      <ul class="bullet-list">
+        <li>Pipeline by stage, by segment, by rep — current quarter and next quarter</li>
+        <li>Forecast: Closed, Commit, Best Case vs. quota — current quarter</li>
+        <li>Pipeline changes week-over-week: new deals in, deals lost, deals moved out</li>
+        <li>Coverage ratio: current quarter pipeline vs. quota (should be 2× remaining quota minimum)</li>
+        <li>Deal risk dashboard: all commit deals flagged by AI model as &lt;50% probability</li>
+        <li>Next quarter pipeline: is early-stage pipeline building sufficiently for next quarter?</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="cadence-card">
+    <div class="cadence-header">
+      <div class="cadence-dot monthly"></div>
+      <div>
+        <div class="cadence-name">Monthly — Funnel and Cohort Analysis</div>
+        <div class="cadence-meta">First week of the new month. RevOps presents to CRO and VPs. 90 minutes.</div>
+      </div>
+    </div>
+    <div class="cadence-body">
+      <p style="font-size:14px; line-height:1.7;">Monthly reporting zooms out from the deal-level view to the system-level view. What is the health of the revenue engine as a whole? Where are conversion rates changing? Where is our unit economics improving or deteriorating?</p>
+      <ul class="bullet-list">
+        <li>Full funnel conversion: Awareness → MQL → SAL → SQL → Stage 1 → 2 → 3 → 4 → Won. Month-over-month.</li>
+        <li>MQL volume and quality by source: which sources are generating MQLs that become revenue?</li>
+        <li>Win rate by segment, by source, by competitor</li>
+        <li>Average sales cycle by segment and by product (is it getting longer or shorter?)</li>
+        <li>NRR by cohort: customers who started in month X — what is their ARR today vs. at start?</li>
+        <li>Ramp analysis: what is the productivity of reps at months 1, 3, 6, 9, 12?</li>
+        <li>CAC by channel: what did we spend to acquire new ARR from each marketing channel?</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="cadence-card">
+    <div class="cadence-header">
+      <div class="cadence-dot quarterly"></div>
+      <div>
+        <div class="cadence-name">Quarterly — Business Review Metrics</div>
+        <div class="cadence-meta">Week 1 of new quarter. Full leadership team + Board. 3–4 hours.</div>
+      </div>
+    </div>
+    <div class="cadence-body">
+      <p style="font-size:14px; line-height:1.7;">The QBR report package is the definitive quarterly review of revenue health. It should tell a coherent story: here's what we set out to do, here's what happened, here's why, and here's what we're changing. Data without narrative is just numbers.</p>
+      <ul class="bullet-list">
+        <li>Revenue: ARR closed, growth vs. prior year, growth vs. plan</li>
+        <li>NRR, GRR — churn and expansion breakdown</li>
+        <li>Forecast accuracy: how accurate was our Q forecast at weeks 1, 4, 8, and final?</li>
+        <li>Pipeline health going into next quarter: coverage ratio, age distribution, quality assessment</li>
+        <li>Quota attainment distribution: what % of reps hit quota? What % hit 80%?</li>
+        <li>CAC payback by channel and segment</li>
+        <li>Headcount productivity: ARR/AE, ARR/CSM, ARR/total RevOps headcount</li>
+        <li>Competitive win/loss: which competitors did we beat and lose to, by how much</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- THE 10 REPORTS EVERY CRO NEEDS -->
+  <h2 class="section-title">The 10 Reports Every CRO Needs</h2>
+  <div class="section-intro">These are not optional. If you don't have these reports, you are running your revenue organization without instruments.</div>
+
+  <div class="report-card">
+    <div class="report-number">Report 01</div>
+    <div class="report-title">Pipeline by Stage and by Rep — Current and Next Quarter</div>
+    <div class="report-desc">The most fundamental pipeline report. Shows total ARR in each pipeline stage, broken out by individual rep, for both the current quarter (close date = this quarter) and next quarter. Enables the CRO to see whether individual reps have sufficient pipeline to hit their number and whether the organization is building next-quarter pipeline while closing this quarter.</div>
+    <div class="report-meta">
+      <span class="r-tag cadence">Weekly</span>
+      <span class="r-tag source">CRM</span>
+      <span class="r-tag owner">RevOps</span>
+    </div>
+    <div class="report-fields"><strong>Key fields:</strong> Opportunity Amount, Stage, Close Date Quarter, AE Owner, Segment. <strong>Key alert:</strong> Any rep with current-quarter pipeline below 2× their remaining quota needs immediate coaching attention.</div>
+  </div>
+
+  <div class="report-card">
+    <div class="report-number">Report 02</div>
+    <div class="report-title">Pipeline Coverage Ratio by Segment</div>
+    <div class="report-desc">Pipeline coverage is the most important forward-looking health indicator in a SaaS revenue organization. Coverage = (total open pipeline ARR for the quarter) ÷ (remaining quota for the quarter). If you have $3M of pipeline and $1M of remaining quota, your coverage is 3×. This report tracks coverage by segment, by manager, and at the company level — updated weekly.</div>
+    <div class="report-meta">
+      <span class="r-tag cadence">Weekly</span>
+      <span class="r-tag source">CRM</span>
+      <span class="r-tag owner">RevOps</span>
+    </div>
+    <div class="report-fields"><strong>Benchmark targets:</strong> SMB: 3× minimum. Mid-Market: 4× minimum. Enterprise: 5× minimum. <strong>Key alert:</strong> Coverage below target at week 4 of quarter = high forecast risk. Below target at week 8 = near-certain miss unless deals accelerate or new pipeline is created immediately.</div>
+  </div>
+
+  <div class="report-card">
+    <div class="report-number">Report 03</div>
+    <div class="report-title">Forecast vs. Actual — Current Quarter</div>
+    <div class="report-desc">Tracks the forecast number (as submitted at the prior week's forecast call) against actual closed ARR, week by week through the quarter. Provides a visual "closing curve" that shows whether we are pacing ahead or behind. Also shows forecast accuracy — how much the forecast has moved week-over-week and whether it has converged on reality as the quarter progresses.</div>
+    <div class="report-meta">
+      <span class="r-tag cadence">Weekly</span>
+      <span class="r-tag source">BI + CRM</span>
+      <span class="r-tag owner">RevOps</span>
+    </div>
+    <div class="report-fields"><strong>Visualization:</strong> Line chart: X-axis = week in quarter, Y-axis = ARR. Three lines: Quota (flat), Closed (step-up each week), Forecast (should converge toward Closed as quarter progresses). <strong>Pattern to watch:</strong> Forecast that doesn't converge until week 12 indicates late-stage deals dominating the book — very high variance business.</div>
+  </div>
+
+  <div class="report-card">
+    <div class="report-number">Report 04</div>
+    <div class="report-title">Win Rate by Rep / Segment / Source / Competitor</div>
+    <div class="report-desc">Win rate is the single most important efficiency metric in your sales organization. It tells you how much of the pipeline you convert to revenue. Small win rate improvements have massive ARR leverage — a 5-point win rate improvement on $20M of pipeline = $1M of additional ARR at zero additional pipeline cost. This report slices win rate across four dimensions to identify where you win reliably and where you lose.</div>
+    <div class="report-meta">
+      <span class="r-tag cadence">Monthly</span>
+      <span class="r-tag source">CRM / BI</span>
+      <span class="r-tag owner">RevOps + Enablement</span>
+    </div>
+    <div class="report-fields"><strong>Formula:</strong> Win Rate = Closed Won ARR ÷ (Closed Won ARR + Closed Lost ARR). Measure on ARR (not deal count). <strong>By rep:</strong> identifies coaching needs and top performer patterns. <strong>By source:</strong> identifies highest-quality pipeline sources. <strong>By competitor:</strong> identifies where you have competitive positioning gaps.</div>
+  </div>
+
+  <div class="report-card">
+    <div class="report-number">Report 05</div>
+    <div class="report-title">Pipeline Velocity</div>
+    <div class="report-desc">Pipeline velocity is the single metric that captures the overall throughput of your revenue engine. It combines deal volume, deal size, win rate, and sales cycle length into a single number: how much ARR does your pipeline generate per day? Tracking this over time reveals whether your revenue system is becoming more or less efficient.</div>
+    <div class="report-meta">
+      <span class="r-tag cadence">Monthly</span>
+      <span class="r-tag source">BI</span>
+      <span class="r-tag owner">RevOps</span>
+    </div>
+    <div class="report-fields">
+      <div class="formula-block" style="margin:8px 0;">
+        <div class="formula-label">Pipeline Velocity Formula</div>
+        <div class="formula-main">Velocity = (Opportunities × Win Rate × ACV) ÷ Sales Cycle Length (days)</div>
+        <div class="formula-note">Each variable tells you something different when it changes: more opportunities → volume; higher win rate → conversion; higher ACV → deal quality; shorter cycle → speed. Track each variable separately to understand which lever is driving change.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="report-card">
+    <div class="report-number">Report 06</div>
+    <div class="report-title">Ramp Metrics — New Hire Productivity</div>
+    <div class="report-desc">Ramp metrics track how quickly new AEs become productive. This is critical for headcount planning (you can't count on a new hire's full quota contribution for 6–9 months) and for diagnosing whether your onboarding program is working. Track: time-to-first-deal, time-to-quota-attainment, ARR-per-quarter by cohort (grouped by hire quarter), and attrition rate by tenure bucket.</div>
+    <div class="report-meta">
+      <span class="r-tag cadence">Monthly</span>
+      <span class="r-tag source">CRM + HRIS</span>
+      <span class="r-tag owner">RevOps + Enablement</span>
+    </div>
+    <div class="report-fields"><strong>Benchmark targets:</strong> Time to first deal: &lt;90 days. Full quota productivity: month 9–12 (varies by ACV/complexity). Attrition in first 6 months &gt;20%: onboarding problem. Attrition 6–18 months &gt;30%: quota or management problem.</div>
+  </div>
+
+  <div class="report-card">
+    <div class="report-number">Report 07</div>
+    <div class="report-title">NRR by Customer Cohort</div>
+    <div class="report-desc">Net Revenue Retention by cohort answers the most important question in SaaS: are your customers growing with you? Cohort analysis groups customers by the quarter they first purchased and tracks their ARR through time. If your $1M ARR cohort from Q1 2022 is $1.3M today, your NRR for that cohort is 130%. If it's $800K, your NRR is 80% — you are losing more than you are growing.</div>
+    <div class="report-meta">
+      <span class="r-tag cadence">Monthly</span>
+      <span class="r-tag source">BI + Billing</span>
+      <span class="r-tag owner">RevOps + CS</span>
+    </div>
+    <div class="report-fields"><strong>Benchmark:</strong> Elite SaaS: 120%+ NRR. Good: 110%+. Acceptable: 100%+. At-risk: &lt;100% (losing revenue from existing customers). <strong>Key visualization:</strong> Cohort grid — rows = originating quarter, columns = quarters since origination, values = NRR. Reveals whether churn is improving or worsening over time.</div>
+  </div>
+
+  <div class="report-card">
+    <div class="report-number">Report 08</div>
+    <div class="report-title">MQL-to-Close Conversion Funnel</div>
+    <div class="report-desc">The full-funnel conversion report tracks the progression of leads through every stage from MQL to Closed Won. It shows conversion rates at each stage transition — MQL-to-SAL, SAL-to-SQL, SQL-to-Stage1, Stage1-to-Stage2, etc. — and identifies which stage has the highest drop-off. Every percentage point improvement in any stage multiplies through the entire funnel. This is the primary report for diagnosing where the revenue system is leaking.</div>
+    <div class="report-meta">
+      <span class="r-tag cadence">Monthly</span>
+      <span class="r-tag source">BI + CRM + MAP</span>
+      <span class="r-tag owner">RevOps</span>
+    </div>
+    <div class="report-fields"><strong>Benchmark industry conversion rates:</strong> MQL→SAL: 50–70%. SAL→SQL: 15–30%. SQL→Stage1: 70–90%. Stage1→Won: 20–35% (of all Stage1 entries). Full funnel MQL→Won: 3–8%. <strong>Split by source:</strong> Inbound typically has higher MQL→Won than outbound but may have lower ACV.</div>
+  </div>
+
+  <div class="report-card">
+    <div class="report-number">Report 09</div>
+    <div class="report-title">Activity Metrics by Rep</div>
+    <div class="report-desc">Activity metrics measure rep effort and process adherence. They are leading indicators — activity drives pipeline, which drives revenue. The key insight is that activity metrics should never be used as a primary performance metric (that's a vanity metric trap) — they should be used as a diagnostic tool when outcomes are deteriorating. High activity + low outcomes = quality problem. Low activity + good outcomes = efficiency insight worth studying.</div>
+    <div class="report-meta">
+      <span class="r-tag cadence">Weekly</span>
+      <span class="r-tag source">CRM + Engagement Tool</span>
+      <span class="r-tag owner">Sales Managers</span>
+    </div>
+    <div class="report-fields"><strong>Track:</strong> Calls made (connected), emails sent, meetings booked, meetings completed, CRM field completion rate, Next Step population rate. <strong>Do not track:</strong> Emails sent (without connect rate), LinkedIn connections, "touches" as a vanity metric. <strong>Key benchmark:</strong> AEs with &lt;10 meetings/week in mid-market and enterprise are typically underpipelining.</div>
+  </div>
+
+  <div class="report-card">
+    <div class="report-number">Report 10</div>
+    <div class="report-title">CAC and Payback Period by Channel</div>
+    <div class="report-desc">Customer Acquisition Cost by channel tells you how efficiently each marketing and sales channel converts spend into revenue. CAC payback period tells you how long it takes to recoup that investment. These metrics are the foundation of resource allocation decisions: where should we invest to grow ARR most efficiently? Without this report, budget decisions are based on gut feel, which is how companies consistently over-invest in high-cost, low-ROI channels.</div>
+    <div class="report-meta">
+      <span class="r-tag cadence">Quarterly</span>
+      <span class="r-tag source">BI + Finance + CRM</span>
+      <span class="r-tag owner">RevOps + Finance</span>
+    </div>
+    <div class="report-fields">
+      <div class="formula-block" style="margin:8px 0;">
+        <div class="formula-label">CAC and Payback</div>
+        <div class="formula-main">CAC = Total Sales + Marketing Spend ÷ New Customers Acquired (same period)</div>
+        <div class="formula-main" style="margin-top:6px;">Payback = CAC ÷ (ACV × Gross Margin %)</div>
+        <div class="formula-note">Benchmark: CAC Payback &lt;12 months (excellent), &lt;18 months (acceptable), &gt;24 months (unacceptable for most B2B SaaS). Calculate by segment — enterprise CAC payback is always longer but justified by higher NRR and LTV.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SINGLE PANE OF GLASS -->
+  <h2 class="section-title">Building the Single-Pane-of-Glass CRO Dashboard</h2>
+  <div class="section-intro">The CRO should be able to assess the health of the entire revenue organization in 5 minutes on a single screen. This requires discipline about what goes on the dashboard — less is more.</div>
+
+  <div class="subsection">
+    <p>A CRO dashboard should have three sections: <strong>Now</strong> (what is happening today/this week — closed ARR, forecast, pipeline changes), <strong>Quarter</strong> (how are we tracking against this quarter's targets — coverage, commit vs. quota, key deals), and <strong>Trend</strong> (are key metrics improving or deteriorating — win rate, NRR, CAC payback, pipeline velocity).</p>
+    <p>The dashboard should auto-refresh from CRM/data warehouse — never from a manual data export. Every number should have a click-through to the underlying data. If a leader looks at a number and asks "why?", they should be able to answer that question without asking RevOps.</p>
+  </div>
+
+  <table class="data-table">
+    <thead><tr><th>Dashboard Section</th><th>Metrics</th><th>Refresh Rate</th><th>Alert Threshold</th></tr></thead>
+    <tbody>
+      <tr><td>Now — This Week</td><td>ARR Closed This Week, New Pipeline Created, Deals Lost This Week, Active Commit Count</td><td>Daily</td><td>Alert if weekly new pipeline &lt;50% of weekly target</td></tr>
+      <tr><td>Quarter — Current Quarter</td><td>ARR vs. Quota (%), Forecast vs. Quota, Pipeline Coverage, Weeks to Quarter End</td><td>Daily</td><td>Alert if coverage drops below threshold for segment</td></tr>
+      <tr><td>Quarter — New Business</td><td>New Logos Closed, New Business ARR, NB Win Rate, Avg Sales Cycle</td><td>Weekly</td><td>Alert if NB Win Rate drops &gt;5pts vs. prior quarter</td></tr>
+      <tr><td>Quarter — Expansion/Renewal</td><td>Expansion ARR, Renewal ARR, NRR Running Rate, Churn ARR</td><td>Weekly</td><td>Alert if Churn ARR &gt;110% of prior quarter churn</td></tr>
+      <tr><td>Trend — 6-Month View</td><td>Monthly ARR Added, NRR Trend, Pipeline Velocity, Win Rate Trend, CAC Payback</td><td>Monthly</td><td>Alert if any trend metric worsens &gt;10% month-over-month</td></tr>
+    </tbody>
+  </table>
+
+  <!-- REPORTING GOVERNANCE -->
+  <h2 class="section-title">Reporting Governance: Who Owns What, and How</h2>
+  <div class="section-intro">Without governance, reporting decays. Reports get stale, ownership is unclear, and numbers start to diverge across different tools. Governance prevents the "whose number is right?" meeting that wastes 2 hours before every board prep.</div>
+
+  <div style="background: var(--surface); border: 1.5px solid var(--border); border-radius: 10px; padding: 22px;">
+    <div class="governance-row">
+      <div class="gov-icon">📊</div>
+      <div class="gov-body">
+        <div class="gov-title">Report Registry</div>
+        <div class="gov-desc">RevOps maintains a report registry: a document listing every report, its purpose, its data source, its owner, its refresh cadence, and who reviews it. Minimum quarterly review of the registry — archive any report not reviewed in 90 days.</div>
+      </div>
+    </div>
+    <div class="governance-row">
+      <div class="gov-icon">🔄</div>
+      <div class="gov-body">
+        <div class="gov-title">Single Source of Truth Policy</div>
+        <div class="gov-desc">For every metric, there is one and only one canonical definition and one and only one source system. When a number is disputed, the policy answer is: "the correct number is X from Y system using Z definition." If two people can get different numbers for "win rate" from the same dataset, the definition is ambiguous. Resolve definitionally — not by choosing the number you prefer.</div>
+      </div>
+    </div>
+    <div class="governance-row">
+      <div class="gov-icon">✅</div>
+      <div class="gov-body">
+        <div class="gov-title">Report Validation Process</div>
+        <div class="gov-desc">Before any new report is shared with leadership: RevOps validates it against a known data sample. For the first 3 months of a new report, spot-check 10% of the underlying deals monthly to verify the report logic is correct. This catches formula errors, filter issues, and definition mismatches before they cause bad decisions.</div>
+      </div>
+    </div>
+    <div class="governance-row">
+      <div class="gov-icon">📅</div>
+      <div class="gov-body">
+        <div class="gov-title">Freeze Policy for Board-Level Data</div>
+        <div class="gov-desc">Data used in board presentations is frozen at month-end close — it does not update after the slide deck is created. Board members receive a static snapshot of the data as it stood at close. CRM data continues to update after close; the board deck does not retroactively change. This prevents confusing discrepancies between what was reported to the board and what the CRM shows today.</div>
+      </div>
+    </div>
+    <div class="governance-row" style="border-bottom:none;">
+      <div class="gov-icon">⚠️</div>
+      <div class="gov-body">
+        <div class="gov-title">Data Quality Owner</div>
+        <div class="gov-desc">RevOps publishes a weekly data quality score (% completeness of required fields across key objects). This score is reported to the VP Sales every Monday. Managers with teams below threshold are accountable for improvement. Data quality is a team management metric, not a rep punishment — managers who cannot maintain data quality in their teams are failing a core operational responsibility.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="related-section">
+    <div class="related-title">Related Sections</div>
+    <div class="related-links">
+      <a href="forecast-methodology.html" class="related-link">Forecast Methodology</a>
+      <a href="funnel-definitions.html" class="related-link">Funnel Stage Definitions</a>
+      <a href="crm-architecture.html" class="related-link">CRM Architecture</a>
+      <a href="quota-design.html" class="related-link">Quota Design</a>
+      <a href="nrr.html" class="related-link">NRR</a>
+      <a href="win-loss-analysis.html" class="related-link">Win/Loss Analysis</a>
+      <a href="../pages/north-star-metrics.html" class="related-link">North Star Metrics</a>
+      <a href="../pages/revops.html" class="related-link">← RevOps Overview</a>
+    </div>
+  </div>
+</div>
+<script data-pplx-inline-edit>
+(function () {
+  if (window === window.top) return;
+
+  const allowedParentOrigins = ["https://www.perplexity.ai","https://perplexity.ai","https://testing.perplexity.ai","https://staging.perplexity.ai","https://*.preview.i.perplexity.ai","http://localhost:3000","http://127.0.0.1:3000","http://localhost:5173","http://127.0.0.1:5173"];
+  const MAX_FONT_BYTES = 500 * 1024;
+  const MAX_TOTAL_FONT_BYTES = 2 * 1024 * 1024;
+  let scrollForwarding = false;
+  let scrollRaf = 0;
+  let trustedTopOrigin = null;
+
+  // Allow entries like "https://*.preview.i.perplexity.ai" — the wildcard
+  // matches a single DNS label (no dots), so "https://*.foo" cannot stretch
+  // across multiple labels.
+  function matchesAllowedOrigin(origin) {
+    if (!origin) return false;
+    for (const entry of allowedParentOrigins) {
+      if (!entry.includes("*")) {
+        if (entry === origin) return true;
+        continue;
+      }
+      const pattern = new RegExp(
+        "^" +
+          entry.replace(/[.+?^${}()|[\]\\]/g, "\\$&").replace(/\*/g, "[^.]+") +
+          "$",
+      );
+      if (pattern.test(origin)) return true;
+    }
+    return false;
+  }
+
+  // Trust decision: when the sender is same-origin-visible (event.origin is a
+  // real origin like https://www.perplexity.ai) we trust event.origin directly.
+  // When event.origin is "null" (opaque broker srcdoc), we fall back to the
+  // broker's stamped `parentOrigin` to identify the top window. The fallback
+  // is claim-only — we rely on the browser's native `targetOrigin` enforcement
+  // on the response path (see postToTrustedTop) to ensure replies can't be
+  // delivered to anyone but the actual top window of that claimed origin.
+  function getTrustedParentOrigin(event) {
+    const forwardedParentOrigin =
+      typeof event.data.parentOrigin === "string" ? event.data.parentOrigin : null;
+    const parentOrigin = event.origin === "null" ? forwardedParentOrigin : event.origin;
+    return matchesAllowedOrigin(parentOrigin) ? parentOrigin : null;
+  }
+
+  // All responses go to window.top with targetOrigin = the allowlisted origin.
+  // An attacker that iframes us inside their own null-origin broker can claim
+  // any parentOrigin they like, but the browser will drop the reply whenever
+  // the real top's origin doesn't match — so the screenshot never leaves.
+  function postToTrustedTop(message) {
+    if (!trustedTopOrigin) return;
+    try {
+      window.top.postMessage(message, trustedTopOrigin);
+    } catch (_error) {}
+  }
+
+  function inlineAll(original, clone) {
+    if (original.nodeType !== 1 || clone.nodeType !== 1) return;
+
+    try {
+      const computedStyle = getComputedStyle(original);
+      // cssText on a computed style is the serialized declaration in modern
+      // Chromium/Safari — a single read beats enumerating ~400 longhand
+      // properties. Firefox returns "" here, so we fall back on empty.
+      const serialized = computedStyle.cssText;
+      if (serialized) {
+        clone.style.cssText = serialized;
+      } else {
+        const parts = new Array(computedStyle.length);
+        for (let index = 0; index < computedStyle.length; index += 1) {
+          const property = computedStyle[index];
+          parts[index] = `${property}:${computedStyle.getPropertyValue(property)};`;
+        }
+        clone.style.cssText = parts.join("");
+      }
+    } catch (_error) {}
+
+    const originalChildren = original.children;
+    const clonedChildren = clone.children;
+    for (
+      let index = 0;
+      index < originalChildren.length && index < clonedChildren.length;
+      index += 1
+    ) {
+      inlineAll(originalChildren[index], clonedChildren[index]);
+    }
+  }
+
+  function extractFontUrl(srcValue) {
+    const matches = [
+      ...srcValue.matchAll(
+        /url\(["']?([^"')]+)["']?\)(?:\s*format\(["']?([^"')]+)["']?\))?/gi,
+      ),
+    ];
+    if (matches.length === 0) return null;
+    const woff2 = matches.find((m) => m[2] && m[2].toLowerCase().includes("woff2"));
+    if (woff2) return woff2[1];
+    const woff = matches.find((m) => m[2] && m[2].toLowerCase().includes("woff"));
+    if (woff) return woff[1];
+    return matches[0][1];
+  }
+
+  // Cache resolved font URL -> data URI across captures. Fonts on a page
+  // essentially never change, and a batch run emits multiple captures back to
+  // back — without this we'd refetch + re-base64 every time.
+  const fontDataUriCache = new Map();
+  const SRC_DECLARATION_RE = /src\s*:\s*[^;}]+/i;
+
+  async function fetchAsDataUri(url) {
+    if (fontDataUriCache.has(url)) return fontDataUriCache.get(url);
+    let dataUri = null;
+    try {
+      const response = await fetch(url, { mode: "cors", credentials: "omit" });
+      if (response.ok) {
+        const blob = await response.blob();
+        if (blob.size <= MAX_FONT_BYTES) {
+          dataUri = await new Promise((resolve) => {
+            const reader = new FileReader();
+            reader.onloadend = () =>
+              resolve(typeof reader.result === "string" ? reader.result : null);
+            reader.onerror = () => resolve(null);
+            reader.readAsDataURL(blob);
+          });
+        }
+      }
+    } catch (_error) {
+      dataUri = null;
+    }
+    fontDataUriCache.set(url, dataUri);
+    return dataUri;
+  }
+
+  function collectFontFaceRuleTexts() {
+    const rules = [];
+    for (const sheet of document.styleSheets) {
+      let cssRules;
+      try {
+        cssRules = sheet.cssRules;
+      } catch (_error) {
+        continue;
+      }
+      if (!cssRules) continue;
+      for (const rule of cssRules) {
+        const cssText = rule.cssText || "";
+        if (cssText.startsWith("@font-face")) rules.push(cssText);
+      }
+    }
+    return rules;
+  }
+
+  async function buildInlinedFontCss() {
+    const ruleTexts = collectFontFaceRuleTexts();
+    if (ruleTexts.length === 0) return null;
+
+    const resolved = ruleTexts.map((cssText) => {
+      if (!SRC_DECLARATION_RE.test(cssText)) return null;
+      const srcMatch = cssText.match(/src\s*:\s*([^;}]+)[;}]/i);
+      if (!srcMatch) return null;
+      const url = extractFontUrl(srcMatch[1]);
+      if (!url) return null;
+      try {
+        return { cssText, url: new URL(url, document.baseURI).href };
+      } catch (_error) {
+        return null;
+      }
+    });
+
+    const dataUris = await Promise.all(
+      resolved.map((entry) => (entry ? fetchAsDataUri(entry.url) : Promise.resolve(null))),
+    );
+
+    const inlined = [];
+    let totalBytes = 0;
+    for (let index = 0; index < resolved.length; index += 1) {
+      const entry = resolved[index];
+      const dataUri = dataUris[index];
+      if (!entry || !dataUri) continue;
+      const approxBytes = dataUri.length * 0.75;
+      if (totalBytes + approxBytes > MAX_TOTAL_FONT_BYTES) break;
+      totalBytes += approxBytes;
+      inlined.push(entry.cssText.replace(SRC_DECLARATION_RE, `src: url("${dataUri}")`));
+    }
+    return inlined.length > 0 ? inlined.join("\n") : null;
+  }
+
+  function stripExternal(clone) {
+    const images = clone.querySelectorAll("img");
+    for (let index = 0; index < images.length; index += 1) {
+      const src = images[index].getAttribute("src");
+      if (src && !src.startsWith("data:")) images[index].removeAttribute("src");
+    }
+
+    const elements = clone.querySelectorAll("*");
+    for (let index = 0; index < elements.length; index += 1) {
+      const style = elements[index].style.cssText;
+      if (style && style.includes("url(")) {
+        elements[index].style.cssText = style.replace(
+          /url\(["']?(?!data:)[^)"']*["']?\)/gi,
+          "none",
+        );
+      }
+    }
+  }
+
+  function emitScroll() {
+    scrollRaf = 0;
+    if (!scrollForwarding) return;
+    postToTrustedTop({
+      type: "INLINE_EDIT_SCROLL",
+      scrollX: window.scrollX,
+      scrollY: window.scrollY,
+    });
+  }
+
+  window.addEventListener(
+    "scroll",
+    function () {
+      if (!scrollForwarding || scrollRaf) return;
+      scrollRaf = requestAnimationFrame(emitScroll);
+    },
+    { passive: true, capture: true },
+  );
+
+  async function handleCaptureRequest(event) {
+    const requestId = event.data.requestId;
+    const scrollX = window.scrollX;
+    const scrollY = window.scrollY;
+    const width = window.innerWidth;
+    const height = window.innerHeight;
+
+    function postResult(dataUrl) {
+      postToTrustedTop({
+        type: "INLINE_EDIT_SCREENSHOT_RESULT",
+        requestId,
+        dataUrl,
+        scrollX,
+        scrollY,
+      });
+    }
+
+    try {
+      // Wait for any pending web fonts to resolve so both inline metrics and
+      // the @font-face inlining below see the same loaded faces.
+      if (document.fonts && document.fonts.ready) {
+        try {
+          await document.fonts.ready;
+        } catch (_error) {}
+      }
+
+      const clone = document.documentElement.cloneNode(true);
+      inlineAll(document.documentElement, clone);
+
+      const removedNodes = clone.querySelectorAll("script,link[rel=\"stylesheet\"],style");
+      for (let index = 0; index < removedNodes.length; index += 1) {
+        removedNodes[index].remove();
+      }
+
+      stripExternal(clone);
+
+      // Re-embed web fonts as data-URI @font-face rules so the SVG rasterizer
+      // can resolve them — external font URLs aren't fetched during
+      // foreignObject rendering, which would otherwise force a fallback face
+      // and change text metrics.
+      const inlinedFontCss = await buildInlinedFontCss();
+      if (inlinedFontCss) {
+        const styleEl = document.createElement("style");
+        styleEl.textContent = inlinedFontCss;
+        const head = clone.querySelector("head");
+        if (head) head.appendChild(styleEl);
+        else clone.insertBefore(styleEl, clone.firstChild);
+      }
+
+      const html = new XMLSerializer().serializeToString(clone);
+      const svg =
+        `<svg xmlns="http://www.w3.org/2000/svg" width="${width}" height="${height}">` +
+        '<foreignObject width="100%" height="100%">' +
+        `<div xmlns="http://www.w3.org/1999/xhtml" style="width:${width}px;height:${height}px;overflow:hidden">` +
+        `<div style="transform:translate(-${scrollX}px,-${scrollY}px);transform-origin:top left">` +
+        html +
+        "</div></div></foreignObject></svg>";
+      const svgUrl = `data:image/svg+xml;charset=utf-8,${encodeURIComponent(svg)}`;
+      const image = new Image();
+      image.onload = function () {
+        const canvas = document.createElement("canvas");
+        canvas.width = width;
+        canvas.height = height;
+        canvas.getContext("2d").drawImage(image, 0, 0);
+        postResult(canvas.toDataURL("image/png"));
+      };
+      image.onerror = function () {
+        postResult(null);
+      };
+      image.src = svgUrl;
+    } catch (_error) {
+      postResult(null);
+    }
+  }
+
+  window.addEventListener("message", function (event) {
+    if (!event.data) return;
+    // Only accept messages from the direct parent frame. Blocks sibling /
+    // unrelated-window postMessage senders that could otherwise reach us.
+    if (event.source !== window.parent) return;
+
+    const trustedParentOrigin = getTrustedParentOrigin(event);
+    if (!trustedParentOrigin) return;
+    trustedTopOrigin = trustedParentOrigin;
+
+    if (event.data.type === "INLINE_EDIT_SCROLL_START") {
+      scrollForwarding = true;
+      emitScroll();
+      return;
+    }
+
+    if (event.data.type === "INLINE_EDIT_SCROLL_STOP") {
+      scrollForwarding = false;
+      if (scrollRaf) cancelAnimationFrame(scrollRaf);
+      scrollRaf = 0;
+      return;
+    }
+
+    if (event.data.type !== "INLINE_EDIT_CAPTURE_REQUEST") return;
+
+    handleCaptureRequest(event);
+  });
+})();
+
+
+</script></body>
+</html>

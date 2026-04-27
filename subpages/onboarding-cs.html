@@ -1,0 +1,657 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Customer Onboarding — SaaS Revenue System</title>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="../assets/shared.css"/>
+  <style>.page-hero { background: #7A39BB; }</style>
+</head>
+<body>
+<nav class="nav">
+  <span class="nav-logo">SaaS <span>Revenue System</span></span>
+  <span class="nav-sep">|</span>
+  <a href="../index.html" class="nav-back">← Home</a>
+  <span class="nav-sep">|</span>
+  <a href="../pages/customer-success.html" class="nav-back">Customer Success</a>
+  <span class="nav-sep">|</span>
+  <span class="nav-current">Customer Onboarding</span>
+</nav>
+
+<div class="page-hero" style="background:#7A39BB;">
+  <div class="hero-phase-label">Customer Success</div>
+  <div class="hero-title">Customer Onboarding — Engineering the Path to First Value</div>
+  <div class="hero-subtitle">Onboarding is where churn is born or prevented. Time-to-value is the most critical early metric in the customer lifecycle.</div>
+</div>
+
+<div class="content-wrap">
+  <div class="breadcrumb">
+    <a href="../index.html">Home</a><span class="sep">›</span>
+    <a href="../pages/customer-success.html">Customer Success</a><span class="sep">›</span>
+    <span class="current">Customer Onboarding</span>
+  </div>
+
+  <!-- SECTION 1 -->
+  <div class="section-title">What Onboarding Is (and Is Not)</div>
+  <div class="section-intro">Customer onboarding in SaaS is the structured process by which a new customer moves from signed contract to confirmed, sustained value delivery. It is not product training. It is not account setup. It is the engineering of the conditions under which the customer achieves the outcome they purchased for.</div>
+
+  <div class="callout callout-definition">
+    <div class="callout-title">Definition</div>
+    <p><strong>Customer Onboarding:</strong> The deliberate, structured program that guides a new customer from contract signature to first value realization — covering administrative setup, technical implementation, user training, stakeholder alignment, and the achievement of the first measurable success milestone. Onboarding ends when the customer has experienced the product's core value, not when the CSM has completed the onboarding checklist.</p>
+  </div>
+
+  <div class="subsection">
+    <p>The research on the relationship between onboarding quality and retention is unambiguous. Customers who achieve first value within the expected timeframe renew at dramatically higher rates than customers who experience delayed or failed onboarding. Totango's 2023 CS Benchmark Survey found that customers who completed structured onboarding had <strong>42% lower first-year churn rates</strong> compared to customers with unstructured onboarding — independent of product quality, pricing, or market conditions.</p>
+    <p>The implication: churn is not primarily a renewal problem. It is an onboarding problem. The failure that manifests at month 11 (non-renewal) was almost always planted at month 1 (failed onboarding) and watered at months 3–6 (no value confirmation, no relationship depth, no executive engagement).</p>
+  </div>
+
+  <!-- SECTION 2 -->
+  <div class="section-title">Time-to-Value (TTV) — The North Star Onboarding Metric</div>
+  <div class="section-intro">Time-to-Value is the time from contract signature to the moment the customer first experiences the core value of your product. It is the most important early metric in the customer lifecycle because it is the strongest predictor of retention.</div>
+
+  <div class="formula-block">
+    <div class="formula-label">Time-to-Value</div>
+    <div class="formula-main">TTV = Date of First Value Milestone − Contract Signature Date</div>
+    <div class="formula-note">Example: Contract signed January 1. Customer completes first workflow automation and saves 10 hours of manual work on January 28. TTV = 27 days. Benchmark against your product category and ACV tier.</div>
+  </div>
+
+  <div class="subsection">
+    <div class="subsection-title">The 3 Types of Time-to-Value</div>
+  </div>
+
+  <table class="data-table">
+    <thead>
+      <tr><th>TTV Type</th><th>Definition</th><th>Example</th><th>Relevant For</th></tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><strong>Immediate Value (TTV-I)</strong></td>
+        <td>Customer experiences a quick win within hours or days of activation — a "wow moment" that confirms they made the right purchase decision.</td>
+        <td>Connecting Slack to a third-party tool in 5 minutes. Pulling the first Gong call analysis. Sending the first automated email sequence.</td>
+        <td>SMB / PLG products. Quick activation required for early engagement and low-touch CS models.</td>
+      </tr>
+      <tr>
+        <td><strong>Deep Value (TTV-D)</strong></td>
+        <td>Customer achieves the primary workflow outcome they purchased for. Requires full implementation and user adoption.</td>
+        <td>First sales forecast submitted through Clari. First customer health score live in Gainsight. First custom dashboard built in Tableau.</td>
+        <td>Mid-market products with meaningful implementation requirements. The primary TTV metric for most B2B SaaS.</td>
+      </tr>
+      <tr>
+        <td><strong>Transformational Value (TTV-T)</strong></td>
+        <td>Customer achieves the strategic business outcome that justified the purchase. Requires full rollout, behavior change, and measurable business impact.</td>
+        <td>Revenue increased $X million from pipeline visibility. Support ticket volume reduced 40% from self-service. Sales cycle shortened by 3 weeks.</td>
+        <td>Enterprise deals with multi-quarter payback periods. Measured at QBR, typically 90–180 days post-close.</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <!-- SECTION 3 -->
+  <div class="section-title">The Onboarding Playbook: End-to-End Structure</div>
+  <div class="section-intro">A complete onboarding playbook has five phases. Each phase has a clear owner, defined activities, success criteria, and a gate — a condition that must be met before moving to the next phase.</div>
+
+  <!-- Phase 1 -->
+  <div class="subsection">
+    <div class="subsection-title">Phase 1: Administrative Setup (Days 1–5)</div>
+    <p><strong>Owner:</strong> CS Ops or Onboarding Specialist<br/><strong>Activities:</strong> CRM account creation; CSM assigned and introduced; license provisioning; billing confirmation; kickoff meeting scheduled; legal/security documentation requests initiated if applicable.<br/><strong>Success Criteria:</strong> All licenses provisioned. Kickoff scheduled. CSM introduction email sent and acknowledged.<br/><strong>Gate:</strong> Customer has received login credentials and kickoff is on the calendar.</p>
+  </div>
+
+  <!-- Phase 2 -->
+  <div class="subsection">
+    <div class="subsection-title">Phase 2: Kickoff Call and Mutual Success Plan (Days 5–10)</div>
+    <p>The kickoff call is the most important single touchpoint in the entire customer lifecycle. Done well, it sets the direction, builds the relationship, creates accountability, and establishes the shared definition of success. Done poorly, it is an admin meeting that signals the customer's experience is going to be transactional.</p>
+  </div>
+
+  <div class="callout callout-definition">
+    <div class="callout-title">Kickoff Call Agenda Template (60–90 minutes)</div>
+    <p>
+      <strong>Introductions (10 min):</strong> CSM + implementation team introduced. Customer team introduced — confirm all stakeholders are present (decision-maker should be on this call).<br/><br/>
+      <strong>Deal Context Review (10 min):</strong> CSM reviews the outcome the customer purchased for, as captured by the AE. Confirms: "Here is what I understood you are trying to achieve. Is this still accurate? Has anything changed since you signed?" This is not admin — it is the first trust signal that CS has read the handoff notes and understands the business context.<br/><br/>
+      <strong>Success Definition (15 min):</strong> Co-define what success looks like at 30, 60, and 90 days. "If we are sitting here in 90 days and this is going well, what will be true?" Get specific answers. These become the Mutual Success Plan milestones.<br/><br/>
+      <strong>Stakeholder Map (10 min):</strong> Identify all stakeholders who need to be involved in onboarding. Who makes technical decisions? Who owns user training? Who is the executive sponsor? Who is the day-to-day champion? Build the map in the call.<br/><br/>
+      <strong>Onboarding Plan Review (15 min):</strong> Walk through the onboarding timeline, activities, and owner for each phase. Set expectations on the customer's time commitment. "Here is what we need from you to make this work."<br/><br/>
+      <strong>Risk Identification (10 min):</strong> Ask explicitly: "What could get in the way of a successful onboarding?" IT resource constraints, upcoming company changes, competing priorities, rollout politics. Better to surface these now than discover them at week 6.<br/><br/>
+      <strong>Next Steps (5 min):</strong> Specific next steps, owners, and dates. CSM sends summary within 24 hours.
+    </p>
+  </div>
+
+  <!-- MSP -->
+  <div class="subsection">
+    <div class="subsection-title">The Mutual Success Plan (MSP)</div>
+    <p>The Mutual Success Plan is a living document — not a static onboarding checklist — that captures the shared commitment between the CSM and the customer. It is created in the kickoff call and updated throughout the relationship.</p>
+  </div>
+
+  <table class="data-table">
+    <thead>
+      <tr><th>MSP Element</th><th>Content</th><th>Owner</th></tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><strong>Business Goals</strong></td>
+        <td>The 2–3 measurable business outcomes the customer is trying to achieve. Specific and quantified where possible.</td>
+        <td>Customer (confirmed by CSM)</td>
+      </tr>
+      <tr>
+        <td><strong>Success Criteria</strong></td>
+        <td>The specific metrics that will tell both parties whether the goals are being achieved. "Reduce manual report time from 4 hours to 30 minutes by Q2."</td>
+        <td>Co-created</td>
+      </tr>
+      <tr>
+        <td><strong>30/60/90 Milestones</strong></td>
+        <td>Specific, date-bound activities and outcomes for each phase of onboarding and early adoption.</td>
+        <td>CSM proposes, customer confirms</td>
+      </tr>
+      <tr>
+        <td><strong>Stakeholder Map</strong></td>
+        <td>All key contacts: decision-maker, champion, technical owner, end users, executive sponsor. With contact info and role in the relationship.</td>
+        <td>CSM</td>
+      </tr>
+      <tr>
+        <td><strong>Risk Register</strong></td>
+        <td>Known risks and mitigation plans. Updated as new risks emerge.</td>
+        <td>Co-owned</td>
+      </tr>
+      <tr>
+        <td><strong>CSM Commitments</strong></td>
+        <td>What the CS team commits to deliver: training sessions, implementation support, QBR schedule, response time SLA.</td>
+        <td>CSM</td>
+      </tr>
+      <tr>
+        <td><strong>Customer Commitments</strong></td>
+        <td>What the customer commits to provide: IT access, training attendance, feedback on implementation, named contacts.</td>
+        <td>Customer</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <!-- Phase 3 -->
+  <div class="subsection">
+    <div class="subsection-title">Phase 3: Technical Implementation (Days 10–30, varies by product)</div>
+    <p><strong>Owner:</strong> Implementation Engineer or CSM (depending on complexity)<br/><strong>Activities:</strong> API integrations, data migration, SSO configuration, custom configuration, sandbox/testing, acceptance testing with customer technical team.<br/><strong>Risk Signals:</strong> Customer IT team is unavailable or unresponsive; integration complexity was underestimated in the sales process; security/compliance review causing delays; technical requirements not captured in the sales process.<br/><strong>Gate:</strong> Technical implementation signed off by customer technical owner. Product is live in production environment.</p>
+  </div>
+
+  <!-- Phase 4 -->
+  <div class="subsection">
+    <div class="subsection-title">Phase 4: User Training and Adoption (Days 20–45)</div>
+    <p><strong>Owner:</strong> CSM<br/><strong>Activities:</strong> Role-based training sessions (admin, power users, end users), training attendance tracking, product certification/assessment, in-app guidance activation, train-the-trainer for large rollouts.<br/><strong>Training Best Practices:</strong> Never train on features — train on workflows. "Here is how you use this feature" produces worse outcomes than "here is how you solve the problem you told us you have, using this feature." Role-based training (admins, managers, end users have different workflows) improves adoption significantly over one-size-fits-all sessions.<br/><strong>Gate:</strong> ≥80% of named users have completed training. Adoption dashboard shows users logging in and completing core workflows.</p>
+  </div>
+
+  <!-- Phase 5 -->
+  <div class="subsection">
+    <div class="subsection-title">Phase 5: First Value Confirmation and Onboarding Close (Days 30–60)</div>
+    <p>Onboarding is not complete when the CSM has finished their checklist. It is complete when the customer confirms — in their own words — that they have achieved the first value milestone.</p>
+    <p><strong>First Value Meeting:</strong> Schedule a dedicated 30-minute meeting to review early results. Ask the customer: "Can you walk me through a specific example of how you are using the product and what the outcome was?" The answer to this question tells you more about onboarding success than any dashboard metric.</p>
+    <p><strong>Onboarding Close Criteria:</strong> (1) Customer confirms first value milestone achieved, (2) MSP 30-day milestones completed, (3) Core users trained and actively using the product, (4) Ongoing CS cadence established (recurring monthly or quarterly reviews scheduled), (5) Escalation paths established and customer knows how to access support.</p>
+  </div>
+
+  <!-- SECTION 4 -->
+  <div class="section-title">High-Touch vs. Low-Touch Onboarding Models</div>
+  <div class="section-intro">The onboarding model must match the ACV of the customer. Providing $150K enterprise white-glove onboarding to a $3,000 ARR SMB customer is economically unsustainable. Providing self-serve onboarding to a $200K enterprise deal is a guaranteed churn risk.</div>
+
+  <table class="data-table">
+    <thead>
+      <tr><th>Model</th><th>ACV Threshold</th><th>CSM Ratio</th><th>Onboarding Elements</th></tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><strong>High-Touch Enterprise</strong></td>
+        <td>&gt;$50K ACV</td>
+        <td>1:10–30 accounts</td>
+        <td>Dedicated CSM. Weekly calls during onboarding. Custom implementation support. Executive sponsor engagement. On-site if needed. Full MSP. Named executive sponsor.</td>
+      </tr>
+      <tr>
+        <td><strong>Mid-Touch</strong></td>
+        <td>$10K–$50K ACV</td>
+        <td>1:30–80 accounts</td>
+        <td>CSM-led kickoff. Structured onboarding program with milestone check-ins. Pooled implementation support. Group training webinars. MSP with key milestones.</td>
+      </tr>
+      <tr>
+        <td><strong>Low-Touch / Digital</strong></td>
+        <td>&lt;$10K ACV</td>
+        <td>1:100–500 accounts</td>
+        <td>In-app onboarding guides (Pendo, Appcues). Automated email nurture sequence. Video walkthroughs. Knowledge base. Community / self-serve support. Human CSM touch only at key risk signals or health score drops.</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <!-- Digital Onboarding -->
+  <div class="subsection">
+    <div class="subsection-title">Digital Onboarding for SMB: The Technology Stack</div>
+    <p>For SMB customers where 1:1 onboarding is not economically viable, digital tools must do the work of the CSM:</p>
+  </div>
+  <ul class="bullet-list">
+    <li><strong>In-app guides (Pendo, Appcues, WalkMe):</strong> Contextual tooltips, product tours, and checklists triggered by user actions. Guide users to key workflows at the moment they need help.</li>
+    <li><strong>Automated email sequences (Intercom, Gainsight PX, Marketo):</strong> Triggered by product events (signup, first login, first action, stall). Provide guidance, encourage specific next actions, surface help content at the right moment.</li>
+    <li><strong>Video walkthroughs (Loom, Vidyard, Wistia):</strong> Short (2–5 minute) workflow-based videos embedded in the product and the knowledge base. More effective than text documentation for adoption of complex workflows.</li>
+    <li><strong>Community forums:</strong> Peer support at scale. Users answering each other's questions reduces CS support load while building product expertise and customer community.</li>
+  </ul>
+
+  <!-- SECTION 5 -->
+  <div class="section-title">Onboarding Metrics</div>
+  <div class="section-intro">Measure onboarding effectiveness through a combination of completion metrics (did we execute the program?) and outcome metrics (did the customer achieve value?).</div>
+
+  <div class="metric-grid">
+    <div class="metric-card">
+      <div class="m-label">Time-to-Value</div>
+      <div class="m-value">≤30d</div>
+      <div class="m-desc">Days to first value milestone. Target varies by product complexity. Track by ACV tier.</div>
+    </div>
+    <div class="metric-card">
+      <div class="m-label">Onboarding Completion Rate</div>
+      <div class="m-value">≥85%</div>
+      <div class="m-desc">% of customers who complete all onboarding milestones within the expected timeframe.</div>
+    </div>
+    <div class="metric-card">
+      <div class="m-label">Feature Activation Rate</div>
+      <div class="m-value">≥70%</div>
+      <div class="m-desc">% of core features activated within 30 days. Proxy for depth of adoption.</div>
+    </div>
+    <div class="metric-card">
+      <div class="m-label">Training Attendance Rate</div>
+      <div class="m-value">≥80%</div>
+      <div class="m-desc">% of named users who complete scheduled training. Low rate predicts adoption failure.</div>
+    </div>
+  </div>
+
+  <!-- SECTION 6 -->
+  <div class="section-title">Onboarding Failures: The Most Common and How to Prevent Them</div>
+
+  <table class="data-table">
+    <thead>
+      <tr><th>Failure</th><th>Root Cause</th><th>Prevention</th></tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><strong>Sales-to-CS Handoff Gap</strong></td>
+        <td>AE closes the deal without adequately documenting customer goals, use cases, and success criteria. CSM starts from scratch.</td>
+        <td>Mandatory handoff document: business goals, success metrics, competitive alternatives considered, deal risk, executive relationships, any commitments made during sales process. CSM reviews before kickoff call.</td>
+      </tr>
+      <tr>
+        <td><strong>Delayed Kickoff</strong></td>
+        <td>Customer goes dark after signing. IT delays. No urgency to start.</td>
+        <td>Set kickoff expectations in the sales process ("we will schedule kickoff within 5 days of signature"). CSM reaches out within 24 hours of signature. Include kickoff scheduling in contract/order form process.</td>
+      </tr>
+      <tr>
+        <td><strong>Champion Turnover</strong></td>
+        <td>The champion who drove the purchase leaves or changes roles during onboarding. New contact has no context and low motivation to drive adoption.</td>
+        <td>Multi-thread from Day 1. Never let the MSP have a single owner on the customer side. Executive sponsor engagement in kickoff ensures executive-level awareness even if the champion changes.</td>
+      </tr>
+      <tr>
+        <td><strong>Technical Scope Mismatch</strong></td>
+        <td>Technical implementation complexity was underestimated in the sales process. Implementation takes 3x longer than planned.</td>
+        <td>Pre-sales technical review (solutions engineer) for any deal over ACV threshold. Implementation scope documented in the order of service and signed by the customer. CSM flagging discrepancies immediately rather than absorbing them silently.</td>
+      </tr>
+      <tr>
+        <td><strong>No First Value Confirmation</strong></td>
+        <td>CSM completes the onboarding checklist but never explicitly confirms with the customer that they have achieved value. Customer and CSM have divergent views of success.</td>
+        <td>First Value Confirmation meeting is a mandatory milestone in every onboarding playbook. No onboarding is "complete" without an explicit customer acknowledgment of first value.</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <!-- SECTION 7 -->
+  <div class="section-title">The Onboarding-to-Ongoing CS Handoff</div>
+  <div class="section-intro">When a dedicated onboarding team exists, the handoff from onboarding to ongoing CS is itself a risk moment. Poor handoffs create discontinuity that erodes trust and resets relationship-building to zero.</div>
+
+  <ul class="bullet-list">
+    <li><strong>Warm handoff, not cold transfer:</strong> Onboarding CSM introduces the ongoing CSM to the customer — by name, with context. A 30-minute three-way call is the standard. Onboarding CSM champions the ongoing CSM: "Alex is exceptional and will be your partner for the rest of your journey."</li>
+    <li><strong>Complete documentation transfer:</strong> The MSP, stakeholder map, risk register, technical documentation, and any notes from the onboarding process transfer fully to the ongoing CSM before the handoff call.</li>
+    <li><strong>Ongoing CSM reviews prior to handoff:</strong> The ongoing CSM reviews all documentation before the three-way call and can articulate the customer's business goals and current status without being prompted. This demonstrates to the customer that their context was not lost in the transition.</li>
+    <li><strong>First solo call within 2 weeks:</strong> The ongoing CSM schedules and holds their first solo call with the customer within 2 weeks of the handoff — establishing presence and continuity before the customer's attention drifts elsewhere.</li>
+  </ul>
+
+  <!-- SECTION 8 — Indicators -->
+  <div class="section-title">Leading & Lagging Indicators</div>
+
+  <div class="indicator-row">
+    <span class="indicator-tag ind-leading">LEADING: Kickoff call completion rate within 10 days of signature</span>
+    <span class="indicator-tag ind-leading">LEADING: MSP creation rate (% of accounts with active MSP)</span>
+    <span class="indicator-tag ind-leading">LEADING: Training attendance rate ≥80%</span>
+    <span class="indicator-tag ind-leading">LEADING: Time-to-First-Value — average by segment</span>
+  </div>
+  <div class="indicator-row">
+    <span class="indicator-tag ind-lagging">LAGGING: 90-day churn rate (onboarding failure indicator)</span>
+    <span class="indicator-tag ind-lagging">LAGGING: 12-month gross dollar churn rate</span>
+    <span class="indicator-tag ind-lagging">LAGGING: CSAT / NPS at onboarding completion</span>
+    <span class="indicator-tag ind-lagging">LAGGING: Feature adoption rate at 60 days</span>
+  </div>
+
+  <div class="related-section">
+    <div class="related-title">Related Sections</div>
+    <div class="related-links">
+      <a href="expansion-selling.html" class="related-link">Expansion Selling</a>
+      <a href="../pages/customer-success.html" class="related-link">Customer Success</a>
+    </div>
+  </div>
+
+</div>
+<script data-pplx-inline-edit>
+(function () {
+  if (window === window.top) return;
+
+  const allowedParentOrigins = ["https://www.perplexity.ai","https://perplexity.ai","https://testing.perplexity.ai","https://staging.perplexity.ai","https://*.preview.i.perplexity.ai","http://localhost:3000","http://127.0.0.1:3000","http://localhost:5173","http://127.0.0.1:5173"];
+  const MAX_FONT_BYTES = 500 * 1024;
+  const MAX_TOTAL_FONT_BYTES = 2 * 1024 * 1024;
+  let scrollForwarding = false;
+  let scrollRaf = 0;
+  let trustedTopOrigin = null;
+
+  // Allow entries like "https://*.preview.i.perplexity.ai" — the wildcard
+  // matches a single DNS label (no dots), so "https://*.foo" cannot stretch
+  // across multiple labels.
+  function matchesAllowedOrigin(origin) {
+    if (!origin) return false;
+    for (const entry of allowedParentOrigins) {
+      if (!entry.includes("*")) {
+        if (entry === origin) return true;
+        continue;
+      }
+      const pattern = new RegExp(
+        "^" +
+          entry.replace(/[.+?^${}()|[\]\\]/g, "\\$&").replace(/\*/g, "[^.]+") +
+          "$",
+      );
+      if (pattern.test(origin)) return true;
+    }
+    return false;
+  }
+
+  // Trust decision: when the sender is same-origin-visible (event.origin is a
+  // real origin like https://www.perplexity.ai) we trust event.origin directly.
+  // When event.origin is "null" (opaque broker srcdoc), we fall back to the
+  // broker's stamped `parentOrigin` to identify the top window. The fallback
+  // is claim-only — we rely on the browser's native `targetOrigin` enforcement
+  // on the response path (see postToTrustedTop) to ensure replies can't be
+  // delivered to anyone but the actual top window of that claimed origin.
+  function getTrustedParentOrigin(event) {
+    const forwardedParentOrigin =
+      typeof event.data.parentOrigin === "string" ? event.data.parentOrigin : null;
+    const parentOrigin = event.origin === "null" ? forwardedParentOrigin : event.origin;
+    return matchesAllowedOrigin(parentOrigin) ? parentOrigin : null;
+  }
+
+  // All responses go to window.top with targetOrigin = the allowlisted origin.
+  // An attacker that iframes us inside their own null-origin broker can claim
+  // any parentOrigin they like, but the browser will drop the reply whenever
+  // the real top's origin doesn't match — so the screenshot never leaves.
+  function postToTrustedTop(message) {
+    if (!trustedTopOrigin) return;
+    try {
+      window.top.postMessage(message, trustedTopOrigin);
+    } catch (_error) {}
+  }
+
+  function inlineAll(original, clone) {
+    if (original.nodeType !== 1 || clone.nodeType !== 1) return;
+
+    try {
+      const computedStyle = getComputedStyle(original);
+      // cssText on a computed style is the serialized declaration in modern
+      // Chromium/Safari — a single read beats enumerating ~400 longhand
+      // properties. Firefox returns "" here, so we fall back on empty.
+      const serialized = computedStyle.cssText;
+      if (serialized) {
+        clone.style.cssText = serialized;
+      } else {
+        const parts = new Array(computedStyle.length);
+        for (let index = 0; index < computedStyle.length; index += 1) {
+          const property = computedStyle[index];
+          parts[index] = `${property}:${computedStyle.getPropertyValue(property)};`;
+        }
+        clone.style.cssText = parts.join("");
+      }
+    } catch (_error) {}
+
+    const originalChildren = original.children;
+    const clonedChildren = clone.children;
+    for (
+      let index = 0;
+      index < originalChildren.length && index < clonedChildren.length;
+      index += 1
+    ) {
+      inlineAll(originalChildren[index], clonedChildren[index]);
+    }
+  }
+
+  function extractFontUrl(srcValue) {
+    const matches = [
+      ...srcValue.matchAll(
+        /url\(["']?([^"')]+)["']?\)(?:\s*format\(["']?([^"')]+)["']?\))?/gi,
+      ),
+    ];
+    if (matches.length === 0) return null;
+    const woff2 = matches.find((m) => m[2] && m[2].toLowerCase().includes("woff2"));
+    if (woff2) return woff2[1];
+    const woff = matches.find((m) => m[2] && m[2].toLowerCase().includes("woff"));
+    if (woff) return woff[1];
+    return matches[0][1];
+  }
+
+  // Cache resolved font URL -> data URI across captures. Fonts on a page
+  // essentially never change, and a batch run emits multiple captures back to
+  // back — without this we'd refetch + re-base64 every time.
+  const fontDataUriCache = new Map();
+  const SRC_DECLARATION_RE = /src\s*:\s*[^;}]+/i;
+
+  async function fetchAsDataUri(url) {
+    if (fontDataUriCache.has(url)) return fontDataUriCache.get(url);
+    let dataUri = null;
+    try {
+      const response = await fetch(url, { mode: "cors", credentials: "omit" });
+      if (response.ok) {
+        const blob = await response.blob();
+        if (blob.size <= MAX_FONT_BYTES) {
+          dataUri = await new Promise((resolve) => {
+            const reader = new FileReader();
+            reader.onloadend = () =>
+              resolve(typeof reader.result === "string" ? reader.result : null);
+            reader.onerror = () => resolve(null);
+            reader.readAsDataURL(blob);
+          });
+        }
+      }
+    } catch (_error) {
+      dataUri = null;
+    }
+    fontDataUriCache.set(url, dataUri);
+    return dataUri;
+  }
+
+  function collectFontFaceRuleTexts() {
+    const rules = [];
+    for (const sheet of document.styleSheets) {
+      let cssRules;
+      try {
+        cssRules = sheet.cssRules;
+      } catch (_error) {
+        continue;
+      }
+      if (!cssRules) continue;
+      for (const rule of cssRules) {
+        const cssText = rule.cssText || "";
+        if (cssText.startsWith("@font-face")) rules.push(cssText);
+      }
+    }
+    return rules;
+  }
+
+  async function buildInlinedFontCss() {
+    const ruleTexts = collectFontFaceRuleTexts();
+    if (ruleTexts.length === 0) return null;
+
+    const resolved = ruleTexts.map((cssText) => {
+      if (!SRC_DECLARATION_RE.test(cssText)) return null;
+      const srcMatch = cssText.match(/src\s*:\s*([^;}]+)[;}]/i);
+      if (!srcMatch) return null;
+      const url = extractFontUrl(srcMatch[1]);
+      if (!url) return null;
+      try {
+        return { cssText, url: new URL(url, document.baseURI).href };
+      } catch (_error) {
+        return null;
+      }
+    });
+
+    const dataUris = await Promise.all(
+      resolved.map((entry) => (entry ? fetchAsDataUri(entry.url) : Promise.resolve(null))),
+    );
+
+    const inlined = [];
+    let totalBytes = 0;
+    for (let index = 0; index < resolved.length; index += 1) {
+      const entry = resolved[index];
+      const dataUri = dataUris[index];
+      if (!entry || !dataUri) continue;
+      const approxBytes = dataUri.length * 0.75;
+      if (totalBytes + approxBytes > MAX_TOTAL_FONT_BYTES) break;
+      totalBytes += approxBytes;
+      inlined.push(entry.cssText.replace(SRC_DECLARATION_RE, `src: url("${dataUri}")`));
+    }
+    return inlined.length > 0 ? inlined.join("\n") : null;
+  }
+
+  function stripExternal(clone) {
+    const images = clone.querySelectorAll("img");
+    for (let index = 0; index < images.length; index += 1) {
+      const src = images[index].getAttribute("src");
+      if (src && !src.startsWith("data:")) images[index].removeAttribute("src");
+    }
+
+    const elements = clone.querySelectorAll("*");
+    for (let index = 0; index < elements.length; index += 1) {
+      const style = elements[index].style.cssText;
+      if (style && style.includes("url(")) {
+        elements[index].style.cssText = style.replace(
+          /url\(["']?(?!data:)[^)"']*["']?\)/gi,
+          "none",
+        );
+      }
+    }
+  }
+
+  function emitScroll() {
+    scrollRaf = 0;
+    if (!scrollForwarding) return;
+    postToTrustedTop({
+      type: "INLINE_EDIT_SCROLL",
+      scrollX: window.scrollX,
+      scrollY: window.scrollY,
+    });
+  }
+
+  window.addEventListener(
+    "scroll",
+    function () {
+      if (!scrollForwarding || scrollRaf) return;
+      scrollRaf = requestAnimationFrame(emitScroll);
+    },
+    { passive: true, capture: true },
+  );
+
+  async function handleCaptureRequest(event) {
+    const requestId = event.data.requestId;
+    const scrollX = window.scrollX;
+    const scrollY = window.scrollY;
+    const width = window.innerWidth;
+    const height = window.innerHeight;
+
+    function postResult(dataUrl) {
+      postToTrustedTop({
+        type: "INLINE_EDIT_SCREENSHOT_RESULT",
+        requestId,
+        dataUrl,
+        scrollX,
+        scrollY,
+      });
+    }
+
+    try {
+      // Wait for any pending web fonts to resolve so both inline metrics and
+      // the @font-face inlining below see the same loaded faces.
+      if (document.fonts && document.fonts.ready) {
+        try {
+          await document.fonts.ready;
+        } catch (_error) {}
+      }
+
+      const clone = document.documentElement.cloneNode(true);
+      inlineAll(document.documentElement, clone);
+
+      const removedNodes = clone.querySelectorAll("script,link[rel=\"stylesheet\"],style");
+      for (let index = 0; index < removedNodes.length; index += 1) {
+        removedNodes[index].remove();
+      }
+
+      stripExternal(clone);
+
+      // Re-embed web fonts as data-URI @font-face rules so the SVG rasterizer
+      // can resolve them — external font URLs aren't fetched during
+      // foreignObject rendering, which would otherwise force a fallback face
+      // and change text metrics.
+      const inlinedFontCss = await buildInlinedFontCss();
+      if (inlinedFontCss) {
+        const styleEl = document.createElement("style");
+        styleEl.textContent = inlinedFontCss;
+        const head = clone.querySelector("head");
+        if (head) head.appendChild(styleEl);
+        else clone.insertBefore(styleEl, clone.firstChild);
+      }
+
+      const html = new XMLSerializer().serializeToString(clone);
+      const svg =
+        `<svg xmlns="http://www.w3.org/2000/svg" width="${width}" height="${height}">` +
+        '<foreignObject width="100%" height="100%">' +
+        `<div xmlns="http://www.w3.org/1999/xhtml" style="width:${width}px;height:${height}px;overflow:hidden">` +
+        `<div style="transform:translate(-${scrollX}px,-${scrollY}px);transform-origin:top left">` +
+        html +
+        "</div></div></foreignObject></svg>";
+      const svgUrl = `data:image/svg+xml;charset=utf-8,${encodeURIComponent(svg)}`;
+      const image = new Image();
+      image.onload = function () {
+        const canvas = document.createElement("canvas");
+        canvas.width = width;
+        canvas.height = height;
+        canvas.getContext("2d").drawImage(image, 0, 0);
+        postResult(canvas.toDataURL("image/png"));
+      };
+      image.onerror = function () {
+        postResult(null);
+      };
+      image.src = svgUrl;
+    } catch (_error) {
+      postResult(null);
+    }
+  }
+
+  window.addEventListener("message", function (event) {
+    if (!event.data) return;
+    // Only accept messages from the direct parent frame. Blocks sibling /
+    // unrelated-window postMessage senders that could otherwise reach us.
+    if (event.source !== window.parent) return;
+
+    const trustedParentOrigin = getTrustedParentOrigin(event);
+    if (!trustedParentOrigin) return;
+    trustedTopOrigin = trustedParentOrigin;
+
+    if (event.data.type === "INLINE_EDIT_SCROLL_START") {
+      scrollForwarding = true;
+      emitScroll();
+      return;
+    }
+
+    if (event.data.type === "INLINE_EDIT_SCROLL_STOP") {
+      scrollForwarding = false;
+      if (scrollRaf) cancelAnimationFrame(scrollRaf);
+      scrollRaf = 0;
+      return;
+    }
+
+    if (event.data.type !== "INLINE_EDIT_CAPTURE_REQUEST") return;
+
+    handleCaptureRequest(event);
+  });
+})();
+
+
+</script></body>
+</html>

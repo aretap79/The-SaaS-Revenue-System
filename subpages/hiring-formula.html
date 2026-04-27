@@ -1,0 +1,1084 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>The Hiring Formula — SaaS Revenue System</title>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="../assets/shared.css"/>
+  <style>
+    .page-hero { background: #2a7fa8; }
+    .competency-card {
+      background: var(--surface);
+      border: 1.5px solid var(--border);
+      border-radius: 10px;
+      padding: 24px 28px;
+      margin-bottom: 24px;
+    }
+    .comp-header {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      margin-bottom: 16px;
+      padding-bottom: 16px;
+      border-bottom: 1.5px solid var(--border);
+    }
+    .comp-number {
+      width: 44px;
+      height: 44px;
+      border-radius: 50%;
+      background: #2a7fa8;
+      color: #fff;
+      font-size: 18px;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+    .comp-name {
+      font-size: 17px;
+      font-weight: 700;
+      color: var(--text);
+      margin-bottom: 2px;
+    }
+    .comp-def {
+      font-size: 13px;
+      color: var(--text-muted);
+      line-height: 1.4;
+    }
+    .competency-card p {
+      font-size: 15px;
+      line-height: 1.75;
+      color: var(--text);
+      margin-bottom: 12px;
+    }
+    .comp-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+      margin-top: 12px;
+    }
+    .comp-section {
+      background: #f8f6f0;
+      border-radius: 6px;
+      padding: 12px 16px;
+    }
+    .comp-section-title {
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      margin-bottom: 8px;
+    }
+    .comp-section ul {
+      margin: 0;
+      padding: 0;
+      list-style: none;
+    }
+    .comp-section ul li {
+      font-size: 13px;
+      padding: 4px 0 4px 16px;
+      position: relative;
+      line-height: 1.5;
+    }
+    .comp-section ul li::before {
+      content: '·';
+      position: absolute;
+      left: 4px;
+      color: #2a7fa8;
+      font-weight: 700;
+      font-size: 16px;
+      line-height: 1.2;
+    }
+    .comp-section.red-flags { background: #fff8f0; }
+    .comp-section.red-flags .comp-section-title { color: #A13544; }
+    .comp-section.questions { background: #e8f4f5; }
+    .comp-section.questions .comp-section-title { color: #2a7fa8; }
+    .scorecard-table td, .scorecard-table th {
+      vertical-align: top;
+    }
+    .weight-badge {
+      display: inline-block;
+      font-size: 12px;
+      font-weight: 700;
+      padding: 2px 10px;
+      border-radius: 20px;
+      background: #e0ecf5;
+      color: #2a7fa8;
+      margin-left: 8px;
+    }
+    .interview-round {
+      background: var(--surface);
+      border: 1.5px solid var(--border);
+      border-radius: 8px;
+      padding: 18px 22px;
+      margin-bottom: 12px;
+      display: grid;
+      grid-template-columns: 80px 1fr;
+      gap: 16px;
+    }
+    .round-num {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: flex-start;
+      padding-top: 2px;
+    }
+    .round-label {
+      font-size: 10px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      color: var(--text-muted);
+      margin-bottom: 4px;
+    }
+    .round-name-badge {
+      font-size: 13px;
+      font-weight: 700;
+      color: #2a7fa8;
+      background: #e0ecf5;
+      padding: 4px 10px;
+      border-radius: 6px;
+      text-align: center;
+    }
+    .round-content h4 {
+      font-size: 15px;
+      font-weight: 700;
+      margin-bottom: 6px;
+    }
+    .round-content p {
+      font-size: 14px;
+      color: var(--text-muted);
+      line-height: 1.6;
+    }
+    .profile-compare {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+      margin: 20px 0;
+    }
+    .profile-card {
+      background: var(--surface);
+      border: 1.5px solid var(--border);
+      border-radius: 8px;
+      padding: 18px;
+    }
+    .profile-label {
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      color: #2a7fa8;
+      margin-bottom: 8px;
+    }
+    .profile-title {
+      font-size: 15px;
+      font-weight: 700;
+      margin-bottom: 8px;
+    }
+    .profile-list {
+      font-size: 13px;
+      color: var(--text-muted);
+      line-height: 1.7;
+    }
+    .cost-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 10px;
+      margin: 20px 0;
+    }
+    .cost-card {
+      background: #fce8e6;
+      border: 1.5px solid #f5c6c2;
+      border-radius: 8px;
+      padding: 16px;
+      text-align: center;
+    }
+    .cost-value {
+      font-size: 20px;
+      font-weight: 700;
+      color: #A13544;
+      margin-bottom: 4px;
+    }
+    .cost-label {
+      font-size: 12px;
+      color: #A13544;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+    @media (max-width: 768px) {
+      .comp-grid { grid-template-columns: 1fr; }
+      .profile-compare { grid-template-columns: 1fr; }
+      .cost-grid { grid-template-columns: 1fr 1fr; }
+      .interview-round { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+<nav class="nav">
+  <span class="nav-logo">SaaS <span>Revenue System</span></span>
+  <span class="nav-sep">|</span>
+  <a href="../index.html" class="nav-back">← Home</a>
+  <span class="nav-sep">|</span>
+  <a href="../pages/phase2.html" class="nav-back">Phase 2: Team</a>
+  <span class="nav-sep">|</span>
+  <span class="nav-current">The Hiring Formula</span>
+</nav>
+
+<div class="page-hero">
+  <div class="hero-phase-label">Phase 2 — Hiring, Onboarding &amp; Compensation</div>
+  <div class="hero-title">The Hiring Formula — Building a Predictive Hiring System</div>
+  <div class="hero-subtitle">Roberge's most important insight: stop hiring on instinct and industry experience. Build a data-driven competency model that predicts sales performance.</div>
+</div>
+
+<div class="content-wrap">
+  <div class="breadcrumb">
+    <a href="../index.html">Home</a>
+    <span class="sep">›</span>
+    <a href="../pages/phase2.html">Phase 2</a>
+    <span class="sep">›</span>
+    <span class="current">The Hiring Formula</span>
+  </div>
+
+  <!-- WHY COMPANIES HIRE WRONG -->
+  <h2 class="section-title">Why Companies Hire Wrong</h2>
+  <p class="section-intro">The average company hires sales reps using a process designed to confirm existing biases rather than predict future performance. The result: 50–60% of new sales hires miss quota in their first full year, and turnover in the first 12 months averages 30–40% in enterprise SaaS (Bridge Group benchmark).</p>
+
+  <div class="subsection">
+    <table class="data-table">
+      <thead><tr><th>Hiring Bias</th><th>How It Manifests</th><th>Why It Fails</th></tr></thead>
+      <tbody>
+        <tr>
+          <td><strong>Industry Experience Trap</strong></td>
+          <td>"We need someone who has sold HR software before." Screens by domain over competency.</td>
+          <td>Industry knowledge is learnable in 30–60 days. Coachability and drive are not. Companies that optimize for industry experience get expensive reps who stop growing.</td>
+        </tr>
+        <tr>
+          <td><strong>Resume Bias</strong></td>
+          <td>Preferring candidates from name-brand companies (Salesforce, Oracle, SAP alumni). Conflating brand with individual performance.</td>
+          <td>Being at a winning company is not the same as winning. A Salesforce AE in a top territory with strong marketing tailwinds looks very different from one in a greenfield territory. The resume does not disambiguate.</td>
+        </tr>
+        <tr>
+          <td><strong>Charisma Bias</strong></td>
+          <td>"She has it — great energy, told great stories, I'd buy from her." Hiring on likability and presentation style.</td>
+          <td>Charisma predicts initial rapport, not quota attainment. Many high-charisma reps fail because they cannot handle rejection, cannot execute a structured process, or cannot qualify rigorously.</td>
+        </tr>
+        <tr>
+          <td><strong>Unstructured Interview</strong></td>
+          <td>Different interviewers ask different questions; scoring is gut-feel; debrief is a discussion that reverts to the highest-status person's opinion.</td>
+          <td>Unstructured interviews have a validity coefficient of ~0.1–0.2 (Schmidt &amp; Hunter meta-analysis). Structured interviews have validity of ~0.5. The difference is hiring 2–3× more accurately.</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <div class="callout callout-formula">
+      <div class="callout-title">Mark Roberge's Core Insight (The Sales Acceleration Formula)</div>
+      <p>Roberge built HubSpot's sales team from $0 to $100M ARR using a single discipline: define the competencies that predict success in your specific sales motion, build a scoring rubric for each, evaluate every candidate against the rubric, and track correlation between interview score and quota attainment. Over time, the data tells you which competencies actually predict performance — and the hiring model improves with every hire.</p>
+    </div>
+  </div>
+
+  <!-- THE COST OF A BAD HIRE -->
+  <h2 class="section-title">The Cost of a Bad Hire</h2>
+  <div class="subsection">
+    <p>The phrase "we need to hire fast" is the most dangerous statement in sales leadership. Speed pressure causes hiring managers to lower their bar, skip references, and rationalize red flags. The cost of a bad hire makes this trade-off extremely negative.</p>
+
+    <div class="cost-grid">
+      <div class="cost-card">
+        <div class="cost-value">$150K–300K</div>
+        <div class="cost-label">Total Direct Cost</div>
+      </div>
+      <div class="cost-card">
+        <div class="cost-value">6–9 months</div>
+        <div class="cost-label">Management Time Lost</div>
+      </div>
+      <div class="cost-card">
+        <div class="cost-value">2–4 deals</div>
+        <div class="cost-label">Lost Pipeline Impact</div>
+      </div>
+    </div>
+
+    <table class="data-table">
+      <thead><tr><th>Cost Category</th><th>How to Calculate</th><th>Typical Range</th></tr></thead>
+      <tbody>
+        <tr><td><strong>Lost quota contribution</strong></td><td>Quota × months underperforming × expected attainment (50% vs. 100%)</td><td>$50K–$200K ARR impact</td></tr>
+        <tr><td><strong>Recruiter and sourcing cost</strong></td>
+        <td>2× search fee (first hire + replacement) at 15–20% of OTE</td><td>$30K–$70K</td></tr>
+        <tr><td><strong>Onboarding and training investment</strong></td><td>Ramp salary + SE time + enablement cost: typically $40K–$60K for first 90 days</td><td>$40K–$60K</td></tr>
+        <tr><td><strong>Manager opportunity cost</strong></td><td>6–9 months of manager time managing out, coaching, documenting for PIP: 20–30% of manager's time</td><td>$25K–$60K manager time value</td></tr>
+        <tr><td><strong>Team morale cost</strong></td><td>Unquantified but measurable — team attrition increases 10–15% when adjacent reps work with chronic underperformers</td><td>Secondary attrition risk</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- THE 5 COMPETENCIES -->
+  <h2 class="section-title">Roberge's Five Core Competencies</h2>
+  <p class="section-intro">These five competencies are the foundation of the Hiring Formula. They are not the only criteria to evaluate — your specific motion may add or weight differently — but they are the universal predictors of sales performance across most B2B SaaS motions.</p>
+
+  <!-- COACHABILITY -->
+  <div class="competency-card">
+    <div class="comp-header">
+      <div class="comp-number">1</div>
+      <div>
+        <div class="comp-name">Coachability <span class="weight-badge">Highest Weight for Most Roles</span></div>
+        <div class="comp-def">The ability to receive, internalize, and apply feedback — quickly and without defensiveness.</div>
+      </div>
+    </div>
+
+    <p>Coachability is the meta-competency. A highly coachable rep with average raw skills will outperform an uncoachable rep with excellent raw skills within 12 months, because the coachable rep compounds — they improve with every deal, every coaching session, every piece of feedback. Uncoachable reps plateau and stagnate.</p>
+
+    <p>Coachability is distinct from agreeableness. Agreeable people say "yes" to feedback but don't change. Truly coachable candidates can demonstrate specific instances where they received critical feedback, sat with it, changed their behavior, and can articulate the measurable outcome of that change.</p>
+
+    <div class="comp-grid">
+      <div class="comp-section">
+        <div class="comp-section-title">Behavioral Indicators</div>
+        <ul>
+          <li>Proactively seeks feedback without being prompted</li>
+          <li>Can describe a specific time they changed their approach based on feedback</li>
+          <li>References mentors, coaches, or managers as key to their development</li>
+          <li>Does not become defensive when challenged during the interview</li>
+          <li>Asks thoughtful questions about how they'll be coached/managed</li>
+        </ul>
+      </div>
+      <div class="comp-section questions">
+        <div class="comp-section-title">Interview Questions</div>
+        <ul>
+          <li>"Tell me about the most significant piece of critical feedback you've ever received. How did it change you?"</li>
+          <li>"Walk me through your last performance review. What were you told to improve? What did you do about it?"</li>
+          <li>"What's something you believed about sales 2 years ago that you no longer believe?"</li>
+          <li>"Describe your ideal manager. How do they give feedback?"</li>
+        </ul>
+      </div>
+      <div class="comp-section red-flags">
+        <div class="comp-section-title">Red Flags</div>
+        <ul>
+          <li>Cannot name a specific piece of critical feedback</li>
+          <li>Feedback stories always end with "they were wrong"</li>
+          <li>Becomes defensive when an interviewer pushes back on a claim</li>
+          <li>"I'm pretty much self-taught — I don't need a lot of management"</li>
+          <li>Blames previous managers for performance issues without acknowledging own role</li>
+        </ul>
+      </div>
+      <div class="comp-section">
+        <div class="comp-section-title">Scoring Rubric</div>
+        <ul>
+          <li><strong>1 (Poor):</strong> Defensive, cannot name specific feedback, blames others</li>
+          <li><strong>2 (Below avg):</strong> Can name feedback but response is superficial</li>
+          <li><strong>3 (Average):</strong> Specific story, made the change, unclear outcome</li>
+          <li><strong>4 (Good):</strong> Specific, changed behavior, can measure impact</li>
+          <li><strong>5 (Excellent):</strong> Proactively sought feedback, systematic improvement habit, coaches others</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- WORK ETHIC / DRIVE -->
+  <div class="competency-card">
+    <div class="comp-header">
+      <div class="comp-number">2</div>
+      <div>
+        <div class="comp-name">Work Ethic &amp; Drive</div>
+        <div class="comp-def">Sustained high-effort orientation toward goals — Angela Duckworth's "Grit" operationalized for sales.</div>
+      </div>
+    </div>
+
+    <p>Drive is different from busyness. Driven candidates pursue goals with a combination of passion and perseverance. Duckworth's research shows that grit — defined as the combination of passion for long-term goals and resilience in the face of setbacks — predicts performance better than IQ in most achievement domains, including sales.</p>
+
+    <p>The key diagnostic is what the candidate does when things get hard. A driven person does not stop when prospecting returns are low, when a big deal slips, or when quota is raised. They recalibrate and push. Assess this with specific situational questions that reveal behavior under adversity.</p>
+
+    <div class="comp-grid">
+      <div class="comp-section questions">
+        <div class="comp-section-title">Interview Questions</div>
+        <ul>
+          <li>"Describe your worst quarter ever. What happened, and what did you do?"</li>
+          <li>"Tell me about a goal you set that took more than 2 years to achieve. What kept you going?"</li>
+          <li>"What does your week look like during a slow pipeline month? Walk me through a specific day."</li>
+          <li>"What's something you pursued that never worked out? How do you think about that?"</li>
+          <li>"When you're behind quota in week 8 of a 13-week quarter, what does your playbook look like?"</li>
+        </ul>
+      </div>
+      <div class="comp-section red-flags">
+        <div class="comp-section-title">Red Flags</div>
+        <ul>
+          <li>Cannot describe a genuine adversity situation — implies limited grit testing</li>
+          <li>Stories consistently feature luck rather than sustained effort</li>
+          <li>"I rely on my SDR team / marketing / lead flow" — lacks self-sourcing drive</li>
+          <li>Left previous jobs quickly when quotas got hard</li>
+          <li>No meaningful pursuits outside work that demonstrate goal-persistence</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- PRIOR SUCCESS PATTERN -->
+  <div class="competency-card">
+    <div class="comp-header">
+      <div class="comp-number">3</div>
+      <div>
+        <div class="comp-name">Prior Success Pattern</div>
+        <div class="comp-def">Evidence that the candidate has achieved meaningful goals through their own agency — not merely been in the right place.</div>
+      </div>
+    </div>
+
+    <p>Prior success is not the same as prior employment history. The key question is: was the candidate the agent of their success, or a beneficiary of their environment? An AE who hit 120% of quota at a high-growth SaaS company with strong brand, heavy inbound, and an exceptional SDR team may have a very different success profile than one who built a territory from scratch at an unknown company with no SDR support.</p>
+
+    <div class="comp-grid">
+      <div class="comp-section questions">
+        <div class="comp-section-title">Diagnostic Questions</div>
+        <ul>
+          <li>"What % of your quota came from self-sourced pipeline vs. inbound/SDR?"</li>
+          <li>"How did your quota rank against your peers? Were you in the top quartile, median, or below?"</li>
+          <li>"Was your territory typical, better than average, or harder than average? What makes you say that?"</li>
+          <li>"Walk me through your biggest deal ever. What was your specific contribution to winning it?"</li>
+          <li>"What were you ranked on your team last year, the year before, and the year before that?"</li>
+        </ul>
+      </div>
+      <div class="comp-section red-flags">
+        <div class="comp-section-title">Red Flags</div>
+        <ul>
+          <li>Cannot state their own ranking on their team with specificity</li>
+          <li>Success always attributed to the product, the market, or the team</li>
+          <li>ATC% (quota attainment) claims that don't match market context</li>
+          <li>High attainment with no self-sourced pipeline — signals dependency on inbound</li>
+          <li>Pattern of moving companies when quota gets harder after first-year ramp advantage</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- INTELLIGENCE / LEARNING AGILITY -->
+  <div class="competency-card">
+    <div class="comp-header">
+      <div class="comp-number">4</div>
+      <div>
+        <div class="comp-name">Intelligence &amp; Learning Agility</div>
+        <div class="comp-def">The ability to learn new domains quickly, make connections across concepts, and adapt frameworks to novel situations.</div>
+      </div>
+    </div>
+
+    <p>Raw intelligence is less important than learning velocity. The best sales hires are not necessarily the smartest people in the room — they are the people who can learn your product, industry, personas, and competitive landscape the fastest, and then apply that knowledge to customer situations they've never encountered before. Assess this through case-based approaches, not abstract IQ tests.</p>
+
+    <div class="comp-grid">
+      <div class="comp-section questions">
+        <div class="comp-section-title">Assessment Approaches</div>
+        <ul>
+          <li><strong>Live case study:</strong> Give them a customer scenario in advance; assess how they structure their thinking, ask questions, and build a solution</li>
+          <li><strong>Product learning speed:</strong> Give them your product docs for 30 minutes; ask them to explain the product to a specific persona they just met</li>
+          <li><strong>Cross-domain learning:</strong> "Tell me about something complex you learned recently — outside of work. How did you go about learning it?"</li>
+          <li><strong>Inductive reasoning:</strong> Present a novel business problem without an obvious answer; assess how they think through it</li>
+        </ul>
+      </div>
+      <div class="comp-section red-flags">
+        <div class="comp-section-title">Red Flags</div>
+        <ul>
+          <li>Cannot explain their previous product in simple terms to a non-technical audience</li>
+          <li>Linear thinking — can't make connections between concepts</li>
+          <li>Dismisses learning in unfamiliar domains: "I'll rely on SE for that"</li>
+          <li>Case study responses are generic, not specific to the customer context given</li>
+          <li>Has not read a business book or attended a professional development resource in 2+ years</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- PREPARATION / RESEARCH -->
+  <div class="competency-card">
+    <div class="comp-header">
+      <div class="comp-number">5</div>
+      <div>
+        <div class="comp-name">Preparation &amp; Research</div>
+        <div class="comp-def">How the candidate shows up to interviews is exactly how they will show up to customer meetings.</div>
+      </div>
+    </div>
+
+    <p>Preparation for the interview is the most observable proxy you have for how the candidate will prepare for customer meetings. A candidate who hasn't read your website, doesn't know your category, hasn't looked up the interviewer, or can't speak to a relevant industry challenge is showing you exactly who they will be in front of your best prospects.</p>
+
+    <div class="comp-grid">
+      <div class="comp-section">
+        <div class="comp-section-title">What Excellent Preparation Looks Like</div>
+        <ul>
+          <li>Has read your website, recent press, and key product pages</li>
+          <li>Researched the interviewer on LinkedIn and references their background</li>
+          <li>Has prepared thoughtful, specific questions (not generic questions)</li>
+          <li>Can explain how they would sell your product to a specific persona they researched</li>
+          <li>Knows your top competitors and has a point of view on your positioning</li>
+          <li>References a customer success story or case study from your website</li>
+        </ul>
+      </div>
+      <div class="comp-section red-flags">
+        <div class="comp-section-title">Red Flags</div>
+        <ul>
+          <li>Asks "can you tell me a bit about what you do?" in a final-round interview</li>
+          <li>No specific questions prepared — or only asks about comp and benefits</li>
+          <li>Cannot name a single customer or use case from your website</li>
+          <li>Does not reference the interviewer's background in any question</li>
+          <li>"I prefer to go into meetings fresh and respond to what comes up"</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- BUILDING THE SCORECARD -->
+  <h2 class="section-title">Building the Competency Scorecard</h2>
+  <p class="section-intro">The scorecard is the tool that transforms the competency model into an operational hiring decision. Every interviewer scores independently before the debrief, preventing anchoring on the first strong opinion expressed.</p>
+
+  <div class="subsection">
+    <h4 class="subsection-title">Weighting by Role and Motion</h4>
+    <table class="data-table scorecard-table">
+      <thead><tr><th>Competency</th><th>SMB AE</th><th>Enterprise AE</th><th>SDR</th><th>CSM</th><th>SE</th></tr></thead>
+      <tbody>
+        <tr><td><strong>Coachability</strong></td><td>25%</td><td>20%</td><td>30%</td><td>25%</td><td>20%</td></tr>
+        <tr><td><strong>Work Ethic / Drive</strong></td><td>25%</td><td>20%</td><td>30%</td><td>15%</td><td>15%</td></tr>
+        <tr><td><strong>Prior Success Pattern</strong></td><td>20%</td><td>25%</td><td>15%</td><td>20%</td><td>20%</td></tr>
+        <tr><td><strong>Intelligence / Learning</strong></td><td>15%</td><td>20%</td><td>10%</td><td>20%</td><td>30%</td></tr>
+        <tr><td><strong>Preparation / Research</strong></td><td>15%</td><td>15%</td><td>15%</td><td>20%</td><td>15%</td></tr>
+        <tr><td><strong>Total</strong></td><td>100%</td><td>100%</td><td>100%</td><td>100%</td><td>100%</td></tr>
+      </tbody>
+    </table>
+
+    <div class="callout callout-definition">
+      <div class="callout-title">Why Weights Differ by Role</div>
+      <p>SDRs need coachability and drive above all else — they do a repetitive, rejection-heavy job and must be willing to iterate their approach constantly. Enterprise AEs need more prior success pattern and intelligence — complex multi-stakeholder deals require judgment developed through experience. SEs need intelligence weighted highest — technical depth and learning agility are the primary value drivers.</p>
+    </div>
+
+    <h4 class="subsection-title">How to Add Role-Specific Criteria</h4>
+    <p>For your specific role, add 1–2 criteria weighted at 10–15% and reduce other criteria proportionally. Common additions: <strong>Technical aptitude</strong> (for SE, technical AE roles), <strong>Executive presence</strong> (for enterprise AE, VP roles), <strong>Process discipline</strong> (for SDR, ops-heavy roles), <strong>Empathy / customer orientation</strong> (for CSM, account management).</p>
+
+    <div class="formula-block">
+      <div class="formula-label">Scorecard Total Formula</div>
+      <div class="formula-main">Weighted Score = Σ (Competency Score 1–5 × Competency Weight)</div>
+      <div class="formula-note">Range: 1.0 (all 1s) to 5.0 (all 5s). Hiring threshold: typically ≥ 3.5 for offer, ≥ 4.0 for no-brainer hire. Scores below 3.0 are hard no regardless of other factors. Track score vs. 90-day and 6-month performance to calibrate over time.</div>
+    </div>
+  </div>
+
+  <!-- STRUCTURED INTERVIEW PROCESS -->
+  <h2 class="section-title">The Structured Interview Process</h2>
+  <div class="subsection">
+    <div class="interview-round">
+      <div class="round-num">
+        <div class="round-label">Round</div>
+        <div class="round-name-badge">1</div>
+      </div>
+      <div class="round-content">
+        <h4>Recruiter Screen (30 min)</h4>
+        <p>Compensation alignment, availability, basic qualification, logistics fit. Administer preparation question: ask candidate to research a specific topic before Round 2. This is a test of the Preparation competency — you will review their response at the start of Round 2.</p>
+      </div>
+    </div>
+
+    <div class="interview-round">
+      <div class="round-num">
+        <div class="round-label">Round</div>
+        <div class="round-name-badge">2</div>
+      </div>
+      <div class="round-content">
+        <h4>Hiring Manager: Competency Interview (60 min)</h4>
+        <p>Structured behavioral interview covering all 5 competencies. Start by reviewing the research task from Round 1 (preparation indicator). Use STAR format (Situation, Task, Action, Result) for every behavioral question. Score each competency independently on 1–5 scale before debrief.</p>
+      </div>
+    </div>
+
+    <div class="interview-round">
+      <div class="round-num">
+        <div class="round-label">Round</div>
+        <div class="round-name-badge">3</div>
+      </div>
+      <div class="round-content">
+        <h4>Role-Play / Case Study Round (60 min)</h4>
+        <p>The most diagnostic round. Present a realistic customer scenario: "You're calling on [specific ICP persona] at a [specific ICP company]. They've come inbound — they watched a webinar. You have a 30-minute discovery call. Run me through it." Evaluate: discovery question quality, active listening, ability to qualify pain, early MEDDICC awareness. For AE roles: follow with a mini-negotiation or objection handling scenario.</p>
+      </div>
+    </div>
+
+    <div class="interview-round">
+      <div class="round-num">
+        <div class="round-label">Round</div>
+        <div class="round-name-badge">4</div>
+      </div>
+      <div class="round-content">
+        <h4>Cross-Functional Panel (45 min)</h4>
+        <p>Interviews with future peers (1 senior AE), a partner function (CS, Marketing, or SE), and optionally your "bar raiser" (see below). Panel members score independently against the competency scorecard. The peer interview is particularly diagnostic — reps know how to interview with management but act differently with peers.</p>
+      </div>
+    </div>
+
+    <div class="interview-round">
+      <div class="round-num">
+        <div class="round-label">Round</div>
+        <div class="round-name-badge">5</div>
+      </div>
+      <div class="round-content">
+        <h4>Reference Checks (2–3 checks)</h4>
+        <p>Not a formality — this is intelligence gathering. See the Reference Check section below for how to get useful information.</p>
+      </div>
+    </div>
+
+    <h4 class="subsection-title">The Bar Raiser Concept</h4>
+    <p>Borrowed from Amazon's hiring process, the bar raiser is a trained interviewer from outside the hiring team who has veto power. Their job is not to find reasons to reject candidates — it is to maintain the hiring standard independently of the urgency pressure the hiring manager feels. They ask: "Is this candidate better than 50% of our current reps doing this job?" If no, the answer is no — regardless of how long the role has been open.</p>
+
+    <h4 class="subsection-title">Reference Checks That Actually Work</h4>
+    <p>Most reference checks fail because they call the references the candidate provided (who will only say positive things) and ask weak questions ("Would you rehire them?"). Here's how to make references useful:</p>
+    <ul class="bullet-list">
+      <li><strong>Ask for the right people:</strong> Request the candidate's direct manager at their most recent role, not a peer or a colleague from 5 years ago. If they resist, that's information.</li>
+      <li><strong>Ask ranking questions:</strong> "If you had to rank [candidate] in their peer group of AEs, where would they fall? Top quartile, median, lower quartile?" This is hard to dodge and very informative.</li>
+      <li><strong>Ask growth questions:</strong> "How did [candidate] change from when you first started managing them to when they left? What improved? What stayed the same?"</li>
+      <li><strong>Ask coachability directly:</strong> "How did [candidate] respond to feedback? Can you give me a specific example?"</li>
+      <li><strong>LinkedIn reference sourcing:</strong> Identify who their previous managers were from their LinkedIn (they often list them or can be identified from company history). Reach out directly to people they did not list as references.</li>
+    </ul>
+  </div>
+
+  <!-- MOTION → PROFILE -->
+  <h2 class="section-title">How Your Sales Motion Dictates the Hiring Profile</h2>
+  <div class="subsection">
+    <p>The competency weights, interview scenarios, and success metrics must match your actual sales motion. A hiring profile built for a different motion will systematically produce the wrong hires.</p>
+
+    <div class="profile-compare">
+      <div class="profile-card">
+        <div class="profile-label">SMB / Velocity Motion</div>
+        <div class="profile-title">30–90 Day Cycles, $5K–$30K ACV</div>
+        <div class="profile-list">
+          <strong>Top competencies:</strong> Drive, coachability, preparation<br>
+          <strong>Key skill:</strong> High-volume pipeline generation, fast qualification, efficient closing<br>
+          <strong>Activity profile:</strong> 80–120 touches/day (calls + email + social)<br>
+          <strong>Experience needed:</strong> 1–3 years; industry less important than activity orientation<br>
+          <strong>Red flag hire:</strong> Enterprise rep who "needs time to think through the account"<br>
+          <strong>Role-play test:</strong> 5-minute cold call; 15-minute discovery on inbound
+        </div>
+      </div>
+      <div class="profile-card">
+        <div class="profile-label">Enterprise Motion</div>
+        <div class="profile-title">6–18 Month Cycles, $100K–$500K+ ACV</div>
+        <div class="profile-list">
+          <strong>Top competencies:</strong> Prior success, intelligence, coachability<br>
+          <strong>Key skill:</strong> Multi-stakeholder navigation, executive communication, strategic account planning<br>
+          <strong>Activity profile:</strong> 10–20 high-quality touches/week; deep account research<br>
+          <strong>Experience needed:</strong> 5–10+ years; complex sale experience valued; organization navigation<br>
+          <strong>Red flag hire:</strong> SMB closer who can't slow down to map an org<br>
+          <strong>Role-play test:</strong> 30-minute C-suite discovery; multi-stakeholder scenario with competing interests
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- DIVERSITY -->
+  <h2 class="section-title">Diversity in Sales Hiring</h2>
+  <div class="subsection">
+    <p>Structured competency-based hiring is one of the strongest tools available to reduce bias in sales hiring. By evaluating every candidate against identical criteria with identical questions, you reduce the impact of affinity bias (hiring people like yourself) and cultural fit bias (often a proxy for demographic similarity).</p>
+
+    <div class="callout callout-best-practice">
+      <div class="callout-title">The Research Case for Diverse Sales Teams</div>
+      <p>McKinsey's research on diversity shows companies in the top quartile for ethnic and racial diversity are 35% more likely to have above-average financial returns. In sales specifically, diverse teams outperform for two reasons: (1) they better represent the diversity of the buyer population, leading to stronger customer empathy; and (2) diverse problem-solving approaches prevent groupthink in account strategy and forecasting.</p>
+    </div>
+
+    <ul class="bullet-list">
+      <li><strong>Inclusive job descriptions:</strong> Use tools like Textio or Gender Decoder to remove gendered language. Remove "ninja," "rockstar," and "hunting" language that research shows deters female and underrepresented candidates.</li>
+      <li><strong>Diverse sourcing:</strong> Actively source from HBCUs, minority professional associations, veterans' programs, and coding bootcamps in addition to standard channels.</li>
+      <li><strong>Panel diversity:</strong> Ensure interview panels include diverse representation. Candidates from underrepresented groups report significantly better candidate experience when they see representation in the process.</li>
+      <li><strong>Blind resume screening:</strong> Remove name, gender indicators, and graduation year from initial resume screen to reduce affinity bias in the first gate.</li>
+    </ul>
+  </div>
+
+  <!-- OFFER STRATEGY -->
+  <h2 class="section-title">Offer Strategy — Closing Top Candidates</h2>
+  <div class="subsection">
+    <p>Top sales candidates receive multiple offers. The offer is itself a sales process, and the best hiring managers treat it as one.</p>
+
+    <table class="data-table">
+      <thead><tr><th>Lever</th><th>How to Use It</th><th>When to Lead With It</th></tr></thead>
+      <tbody>
+        <tr>
+          <td><strong>OTE Competitiveness</strong></td>
+          <td>Know the market (Radford, Option Impact, LinkedIn Salary, Glassdoor). Offer at or above median for your segment/stage/geography. Don't lose candidates to $10K OTE difference.</td>
+          <td>Default lever — always be competitive</td>
+        </tr>
+        <tr>
+          <td><strong>Mission and Product</strong></td>
+          <td>The candidate cares about what they're selling. Connect the product to a larger mission they can believe in. Help them articulate why this company > that company beyond comp.</td>
+          <td>Lead when competing with larger, higher-comp incumbents</td>
+        </tr>
+        <tr>
+          <td><strong>Growth Path</strong></td>
+          <td>Show them the career map: "In 18 months, if you hit 100%+ of quota, here's what your path looks like. We've had 4 AEs move into management in the last 2 years."</td>
+          <td>Lead with early-career candidates and high-ambition profiles</td>
+        </tr>
+        <tr>
+          <td><strong>Quality of Manager</strong></td>
+          <td>"You will be spending 40+ hours a week with this team and this manager. A great manager is worth $50K in career acceleration." Make sure the hiring manager is exceptional.</td>
+          <td>Lead when candidate specifically values coaching/development</td>
+        </tr>
+        <tr>
+          <td><strong>Equity</strong></td>
+          <td>If pre-IPO, help them understand the equity upside in concrete scenarios. Candidates often undervalue equity — educate them on outcomes if growth trajectory continues.</td>
+          <td>Lead with candidates at early-stage companies or those with financial sophistication</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <div class="callout callout-best-practice">
+      <div class="callout-title">The Offer Call (Not Offer Email)</div>
+      <p>Always deliver offers verbally before sending in writing. The offer call allows you to read their reaction in real time, address concerns before they solidify, and frame the offer in context ("This puts you in the top 25% of OTE for this role in this market"). Emailed offers give the candidate time to shop without you present. After the verbal call, follow with the written offer within 2 hours.</p>
+    </div>
+  </div>
+
+  <!-- LEADING/LAGGING INDICATORS -->
+  <h2 class="section-title">Leading &amp; Lagging Indicators</h2>
+  <div class="subsection">
+    <div class="callout callout-definition">
+      <div class="callout-title">Leading Indicators</div>
+      <p>
+        <strong>Interview-to-offer ratio</strong> — target 4:1 to 6:1; below 3:1 suggests bar is too low; above 10:1 suggests sourcing problems or job description misalignment.<br><br>
+        <strong>Offer acceptance rate</strong> — target ≥ 80%; below 70% indicates comp competitiveness issues, candidate experience problems, or closing process failures.<br><br>
+        <strong>Scorecard completion rate</strong> — % of hires with complete structured interview scorecard; below 90% signals process compliance failure.<br><br>
+        <strong>Diversity of candidate pipeline</strong> — measure at each stage (applied, screened, interviewed, offered, hired) to identify where bias is occurring.
+      </p>
+    </div>
+
+    <div class="callout callout-warning">
+      <div class="callout-title">Lagging Indicators</div>
+      <p>
+        <strong>90-day ramp completion rate</strong> — % of new hires reaching expected activity/pipeline targets by day 90; leading predictor of 6-month quota attainment.<br><br>
+        <strong>6-month quota attainment</strong> — % of hires at or above 70% of prorated quota target in months 4–6; the key output metric of the hiring formula.<br><br>
+        <strong>12-month voluntary attrition by cohort</strong> — voluntary attrition within 12 months is the clearest signal of hiring or onboarding failure.<br><br>
+        <strong>Score-to-performance correlation</strong> — track weighted interview score against 12-month quota attainment; this is the calibration data that improves your model over time. The goal is r &gt; 0.4 between scorecard score and quota attainment.
+      </p>
+    </div>
+  </div>
+
+  <div class="related-section">
+    <div class="related-title">Related Pages</div>
+    <div class="related-links">
+      <a href="compensation-design.html" class="related-link">Compensation Design</a>
+      <a href="../subpages/onboarding.html" class="related-link">Onboarding Formula</a>
+      <a href="../subpages/sales-coaching.html" class="related-link">Sales Coaching</a>
+      <a href="../pages/phase2.html" class="related-link">← Phase 2 Overview</a>
+    </div>
+  </div>
+</div>
+<script data-pplx-inline-edit>
+(function () {
+  if (window === window.top) return;
+
+  const allowedParentOrigins = ["https://www.perplexity.ai","https://perplexity.ai","https://testing.perplexity.ai","https://staging.perplexity.ai","https://*.preview.i.perplexity.ai","http://localhost:3000","http://127.0.0.1:3000","http://localhost:5173","http://127.0.0.1:5173"];
+  const MAX_FONT_BYTES = 500 * 1024;
+  const MAX_TOTAL_FONT_BYTES = 2 * 1024 * 1024;
+  let scrollForwarding = false;
+  let scrollRaf = 0;
+  let trustedTopOrigin = null;
+
+  // Allow entries like "https://*.preview.i.perplexity.ai" — the wildcard
+  // matches a single DNS label (no dots), so "https://*.foo" cannot stretch
+  // across multiple labels.
+  function matchesAllowedOrigin(origin) {
+    if (!origin) return false;
+    for (const entry of allowedParentOrigins) {
+      if (!entry.includes("*")) {
+        if (entry === origin) return true;
+        continue;
+      }
+      const pattern = new RegExp(
+        "^" +
+          entry.replace(/[.+?^${}()|[\]\\]/g, "\\$&").replace(/\*/g, "[^.]+") +
+          "$",
+      );
+      if (pattern.test(origin)) return true;
+    }
+    return false;
+  }
+
+  // Trust decision: when the sender is same-origin-visible (event.origin is a
+  // real origin like https://www.perplexity.ai) we trust event.origin directly.
+  // When event.origin is "null" (opaque broker srcdoc), we fall back to the
+  // broker's stamped `parentOrigin` to identify the top window. The fallback
+  // is claim-only — we rely on the browser's native `targetOrigin` enforcement
+  // on the response path (see postToTrustedTop) to ensure replies can't be
+  // delivered to anyone but the actual top window of that claimed origin.
+  function getTrustedParentOrigin(event) {
+    const forwardedParentOrigin =
+      typeof event.data.parentOrigin === "string" ? event.data.parentOrigin : null;
+    const parentOrigin = event.origin === "null" ? forwardedParentOrigin : event.origin;
+    return matchesAllowedOrigin(parentOrigin) ? parentOrigin : null;
+  }
+
+  // All responses go to window.top with targetOrigin = the allowlisted origin.
+  // An attacker that iframes us inside their own null-origin broker can claim
+  // any parentOrigin they like, but the browser will drop the reply whenever
+  // the real top's origin doesn't match — so the screenshot never leaves.
+  function postToTrustedTop(message) {
+    if (!trustedTopOrigin) return;
+    try {
+      window.top.postMessage(message, trustedTopOrigin);
+    } catch (_error) {}
+  }
+
+  function inlineAll(original, clone) {
+    if (original.nodeType !== 1 || clone.nodeType !== 1) return;
+
+    try {
+      const computedStyle = getComputedStyle(original);
+      // cssText on a computed style is the serialized declaration in modern
+      // Chromium/Safari — a single read beats enumerating ~400 longhand
+      // properties. Firefox returns "" here, so we fall back on empty.
+      const serialized = computedStyle.cssText;
+      if (serialized) {
+        clone.style.cssText = serialized;
+      } else {
+        const parts = new Array(computedStyle.length);
+        for (let index = 0; index < computedStyle.length; index += 1) {
+          const property = computedStyle[index];
+          parts[index] = `${property}:${computedStyle.getPropertyValue(property)};`;
+        }
+        clone.style.cssText = parts.join("");
+      }
+    } catch (_error) {}
+
+    const originalChildren = original.children;
+    const clonedChildren = clone.children;
+    for (
+      let index = 0;
+      index < originalChildren.length && index < clonedChildren.length;
+      index += 1
+    ) {
+      inlineAll(originalChildren[index], clonedChildren[index]);
+    }
+  }
+
+  function extractFontUrl(srcValue) {
+    const matches = [
+      ...srcValue.matchAll(
+        /url\(["']?([^"')]+)["']?\)(?:\s*format\(["']?([^"')]+)["']?\))?/gi,
+      ),
+    ];
+    if (matches.length === 0) return null;
+    const woff2 = matches.find((m) => m[2] && m[2].toLowerCase().includes("woff2"));
+    if (woff2) return woff2[1];
+    const woff = matches.find((m) => m[2] && m[2].toLowerCase().includes("woff"));
+    if (woff) return woff[1];
+    return matches[0][1];
+  }
+
+  // Cache resolved font URL -> data URI across captures. Fonts on a page
+  // essentially never change, and a batch run emits multiple captures back to
+  // back — without this we'd refetch + re-base64 every time.
+  const fontDataUriCache = new Map();
+  const SRC_DECLARATION_RE = /src\s*:\s*[^;}]+/i;
+
+  async function fetchAsDataUri(url) {
+    if (fontDataUriCache.has(url)) return fontDataUriCache.get(url);
+    let dataUri = null;
+    try {
+      const response = await fetch(url, { mode: "cors", credentials: "omit" });
+      if (response.ok) {
+        const blob = await response.blob();
+        if (blob.size <= MAX_FONT_BYTES) {
+          dataUri = await new Promise((resolve) => {
+            const reader = new FileReader();
+            reader.onloadend = () =>
+              resolve(typeof reader.result === "string" ? reader.result : null);
+            reader.onerror = () => resolve(null);
+            reader.readAsDataURL(blob);
+          });
+        }
+      }
+    } catch (_error) {
+      dataUri = null;
+    }
+    fontDataUriCache.set(url, dataUri);
+    return dataUri;
+  }
+
+  function collectFontFaceRuleTexts() {
+    const rules = [];
+    for (const sheet of document.styleSheets) {
+      let cssRules;
+      try {
+        cssRules = sheet.cssRules;
+      } catch (_error) {
+        continue;
+      }
+      if (!cssRules) continue;
+      for (const rule of cssRules) {
+        const cssText = rule.cssText || "";
+        if (cssText.startsWith("@font-face")) rules.push(cssText);
+      }
+    }
+    return rules;
+  }
+
+  async function buildInlinedFontCss() {
+    const ruleTexts = collectFontFaceRuleTexts();
+    if (ruleTexts.length === 0) return null;
+
+    const resolved = ruleTexts.map((cssText) => {
+      if (!SRC_DECLARATION_RE.test(cssText)) return null;
+      const srcMatch = cssText.match(/src\s*:\s*([^;}]+)[;}]/i);
+      if (!srcMatch) return null;
+      const url = extractFontUrl(srcMatch[1]);
+      if (!url) return null;
+      try {
+        return { cssText, url: new URL(url, document.baseURI).href };
+      } catch (_error) {
+        return null;
+      }
+    });
+
+    const dataUris = await Promise.all(
+      resolved.map((entry) => (entry ? fetchAsDataUri(entry.url) : Promise.resolve(null))),
+    );
+
+    const inlined = [];
+    let totalBytes = 0;
+    for (let index = 0; index < resolved.length; index += 1) {
+      const entry = resolved[index];
+      const dataUri = dataUris[index];
+      if (!entry || !dataUri) continue;
+      const approxBytes = dataUri.length * 0.75;
+      if (totalBytes + approxBytes > MAX_TOTAL_FONT_BYTES) break;
+      totalBytes += approxBytes;
+      inlined.push(entry.cssText.replace(SRC_DECLARATION_RE, `src: url("${dataUri}")`));
+    }
+    return inlined.length > 0 ? inlined.join("\n") : null;
+  }
+
+  function stripExternal(clone) {
+    const images = clone.querySelectorAll("img");
+    for (let index = 0; index < images.length; index += 1) {
+      const src = images[index].getAttribute("src");
+      if (src && !src.startsWith("data:")) images[index].removeAttribute("src");
+    }
+
+    const elements = clone.querySelectorAll("*");
+    for (let index = 0; index < elements.length; index += 1) {
+      const style = elements[index].style.cssText;
+      if (style && style.includes("url(")) {
+        elements[index].style.cssText = style.replace(
+          /url\(["']?(?!data:)[^)"']*["']?\)/gi,
+          "none",
+        );
+      }
+    }
+  }
+
+  function emitScroll() {
+    scrollRaf = 0;
+    if (!scrollForwarding) return;
+    postToTrustedTop({
+      type: "INLINE_EDIT_SCROLL",
+      scrollX: window.scrollX,
+      scrollY: window.scrollY,
+    });
+  }
+
+  window.addEventListener(
+    "scroll",
+    function () {
+      if (!scrollForwarding || scrollRaf) return;
+      scrollRaf = requestAnimationFrame(emitScroll);
+    },
+    { passive: true, capture: true },
+  );
+
+  async function handleCaptureRequest(event) {
+    const requestId = event.data.requestId;
+    const scrollX = window.scrollX;
+    const scrollY = window.scrollY;
+    const width = window.innerWidth;
+    const height = window.innerHeight;
+
+    function postResult(dataUrl) {
+      postToTrustedTop({
+        type: "INLINE_EDIT_SCREENSHOT_RESULT",
+        requestId,
+        dataUrl,
+        scrollX,
+        scrollY,
+      });
+    }
+
+    try {
+      // Wait for any pending web fonts to resolve so both inline metrics and
+      // the @font-face inlining below see the same loaded faces.
+      if (document.fonts && document.fonts.ready) {
+        try {
+          await document.fonts.ready;
+        } catch (_error) {}
+      }
+
+      const clone = document.documentElement.cloneNode(true);
+      inlineAll(document.documentElement, clone);
+
+      const removedNodes = clone.querySelectorAll("script,link[rel=\"stylesheet\"],style");
+      for (let index = 0; index < removedNodes.length; index += 1) {
+        removedNodes[index].remove();
+      }
+
+      stripExternal(clone);
+
+      // Re-embed web fonts as data-URI @font-face rules so the SVG rasterizer
+      // can resolve them — external font URLs aren't fetched during
+      // foreignObject rendering, which would otherwise force a fallback face
+      // and change text metrics.
+      const inlinedFontCss = await buildInlinedFontCss();
+      if (inlinedFontCss) {
+        const styleEl = document.createElement("style");
+        styleEl.textContent = inlinedFontCss;
+        const head = clone.querySelector("head");
+        if (head) head.appendChild(styleEl);
+        else clone.insertBefore(styleEl, clone.firstChild);
+      }
+
+      const html = new XMLSerializer().serializeToString(clone);
+      const svg =
+        `<svg xmlns="http://www.w3.org/2000/svg" width="${width}" height="${height}">` +
+        '<foreignObject width="100%" height="100%">' +
+        `<div xmlns="http://www.w3.org/1999/xhtml" style="width:${width}px;height:${height}px;overflow:hidden">` +
+        `<div style="transform:translate(-${scrollX}px,-${scrollY}px);transform-origin:top left">` +
+        html +
+        "</div></div></foreignObject></svg>";
+      const svgUrl = `data:image/svg+xml;charset=utf-8,${encodeURIComponent(svg)}`;
+      const image = new Image();
+      image.onload = function () {
+        const canvas = document.createElement("canvas");
+        canvas.width = width;
+        canvas.height = height;
+        canvas.getContext("2d").drawImage(image, 0, 0);
+        postResult(canvas.toDataURL("image/png"));
+      };
+      image.onerror = function () {
+        postResult(null);
+      };
+      image.src = svgUrl;
+    } catch (_error) {
+      postResult(null);
+    }
+  }
+
+  window.addEventListener("message", function (event) {
+    if (!event.data) return;
+    // Only accept messages from the direct parent frame. Blocks sibling /
+    // unrelated-window postMessage senders that could otherwise reach us.
+    if (event.source !== window.parent) return;
+
+    const trustedParentOrigin = getTrustedParentOrigin(event);
+    if (!trustedParentOrigin) return;
+    trustedTopOrigin = trustedParentOrigin;
+
+    if (event.data.type === "INLINE_EDIT_SCROLL_START") {
+      scrollForwarding = true;
+      emitScroll();
+      return;
+    }
+
+    if (event.data.type === "INLINE_EDIT_SCROLL_STOP") {
+      scrollForwarding = false;
+      if (scrollRaf) cancelAnimationFrame(scrollRaf);
+      scrollRaf = 0;
+      return;
+    }
+
+    if (event.data.type !== "INLINE_EDIT_CAPTURE_REQUEST") return;
+
+    handleCaptureRequest(event);
+  });
+})();
+
+
+</script></body>
+</html>

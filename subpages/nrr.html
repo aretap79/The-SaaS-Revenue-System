@@ -1,0 +1,892 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Net Revenue Retention (NRR) — SaaS Revenue System</title>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="../assets/shared.css"/>
+  <style>
+    .page-hero { background: #6E522B; }
+    .nrr-formula-breakdown { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; margin: 20px 0; }
+    .nrr-comp { border-radius: 8px; padding: 18px 16px; text-align: center; }
+    .nrr-comp .nc-op { font-size: 22px; font-weight: 700; margin-bottom: 6px; }
+    .nrr-comp .nc-name { font-size: 14px; font-weight: 700; margin-bottom: 6px; }
+    .nrr-comp .nc-def { font-size: 12px; line-height: 1.4; opacity: 0.85; }
+    .benchmark-stack { margin: 20px 0; }
+    .bm-row { display: flex; align-items: center; gap: 12px; margin-bottom: 8px; }
+    .bm-label { width: 120px; font-size: 14px; font-weight: 700; flex-shrink: 0; text-align: right; }
+    .bm-bar-track { flex: 1; height: 36px; background: #E8E6E0; border-radius: 6px; overflow: hidden; position: relative; }
+    .bm-bar-fill { height: 100%; border-radius: 6px; display: flex; align-items: center; padding-left: 12px; font-size: 13px; font-weight: 700; color: #fff; }
+    .bm-note { width: 220px; font-size: 12px; color: var(--text-muted); flex-shrink: 0; line-height: 1.4; }
+    .compound-table-wrap { overflow-x: auto; margin: 20px 0; }
+    .compound-table { min-width: 600px; width: 100%; border-collapse: collapse; font-size: 14px; }
+    .compound-table th { background: var(--text); color: #fff; padding: 10px 14px; text-align: right; font-size: 12px; font-weight: 700; letter-spacing: 0.5px; text-transform: uppercase; }
+    .compound-table th:first-child { text-align: left; }
+    .compound-table td { padding: 10px 14px; border-bottom: 1px solid var(--border); text-align: right; }
+    .compound-table td:first-child { text-align: left; font-weight: 600; }
+    .compound-table tr:nth-child(even) td { background: #fafaf8; }
+    .compound-table tr:last-child td { border-bottom: none; font-weight: 700; font-size: 15px; }
+    .c-120 { color: #437A22; font-weight: 700; }
+    .c-100 { color: #2a7fa8; font-weight: 700; }
+    .c-90 { color: #A13544; font-weight: 700; }
+    .drivers-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin: 20px 0; }
+    .driver-card { border-radius: 8px; padding: 20px; }
+    .driver-card .dc-title { font-size: 16px; font-weight: 700; margin-bottom: 12px; }
+    .driver-card ul { list-style: none; }
+    .driver-card ul li { font-size: 14px; line-height: 1.6; padding: 4px 0 4px 20px; position: relative; }
+    .driver-card ul li::before { content: '→'; position: absolute; left: 0; font-weight: 700; }
+    .cohort-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin: 20px 0; }
+    .cohort-card { background: var(--surface); border: 1.5px solid var(--border); border-radius: 8px; padding: 16px; }
+    .cohort-card .cc-label { font-size: 11px; font-weight: 700; letter-spacing: 1px; text-transform: uppercase; color: var(--text-muted); margin-bottom: 8px; }
+    .cohort-card .cc-nrr { font-size: 24px; font-weight: 700; margin-bottom: 6px; }
+    .cohort-card .cc-desc { font-size: 12px; color: var(--text-muted); line-height: 1.4; }
+    .valuation-table-wrap { overflow-x: auto; }
+    .nrr-improvement-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin: 20px 0; }
+    .ni-card { background: var(--surface); border: 1.5px solid var(--border); border-radius: 8px; padding: 18px; }
+    .ni-card .nic-problem { font-size: 13px; font-weight: 700; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.8px; margin-bottom: 8px; }
+    .ni-card .nic-diagnosis { font-size: 14px; font-weight: 700; margin-bottom: 10px; }
+    .ni-card .nic-fixes { font-size: 13px; line-height: 1.6; color: var(--text-muted); }
+    .grr-comparison { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin: 20px 0; }
+    .grr-side { border-radius: 8px; padding: 20px; }
+    .grr-side .gs-metric { font-size: 28px; font-weight: 700; margin-bottom: 4px; }
+    .grr-side .gs-name { font-size: 14px; font-weight: 700; margin-bottom: 8px; }
+    .grr-side .gs-desc { font-size: 13px; line-height: 1.6; }
+    .nrr-val-table { min-width: 500px; }
+    @media (max-width: 768px) {
+      .nrr-formula-breakdown { grid-template-columns: repeat(2, 1fr); }
+      .drivers-grid { grid-template-columns: 1fr; }
+      .cohort-grid { grid-template-columns: 1fr; }
+      .nrr-improvement-grid { grid-template-columns: 1fr; }
+      .grr-comparison { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+<nav class="nav">
+  <span class="nav-logo">SaaS <span>Revenue System</span></span>
+  <span class="nav-sep">|</span>
+  <a href="../index.html" class="nav-back">← Home</a>
+  <span class="nav-sep">|</span>
+  <a href="../pages/phase5.html" class="nav-back">Phase 5: Retention &amp; Expansion</a>
+  <span class="nav-sep">|</span>
+  <span class="nav-current">Net Revenue Retention</span>
+</nav>
+
+<div class="page-hero" style="background:#6E522B">
+  <div class="hero-phase-label">Phase 5 — Retention &amp; Expansion</div>
+  <div class="hero-title">Net Revenue Retention (NRR)</div>
+  <div class="hero-subtitle">NRR is the single most important indicator of a SaaS company's long-term health. It measures the compounding engine of your existing customer base.</div>
+</div>
+
+<div class="content-wrap">
+  <div class="breadcrumb">
+    <a href="../index.html">Home</a>
+    <span class="sep">›</span>
+    <a href="../pages/phase5.html">Phase 5: Retention &amp; Expansion</a>
+    <span class="sep">›</span>
+    <span class="current">Net Revenue Retention (NRR)</span>
+  </div>
+
+  <!-- WHAT NRR IS -->
+  <h2 class="section-title">What NRR Is and Why It Defines SaaS</h2>
+  <p class="section-intro">In a traditional business, every dollar of revenue must be re-earned. In SaaS, you start each year with a baseline of recurring revenue that exists unless a customer cancels. NRR measures what happens to that baseline — not just whether it holds, but whether it grows from within.</p>
+
+  <div class="subsection">
+    <div class="subsection-title">The Leaky Bucket vs. The Expanding Universe</div>
+    <p>The <strong>leaky bucket</strong> model describes a SaaS company where churn and contraction erode revenue faster than expansion adds it. The company must run harder just to stay still — every new customer acquisition partially offsets an existing customer loss rather than growing the base.</p>
+    <p>The <strong>expanding universe</strong> model describes a company with NRR above 100%. The existing customer base generates more revenue each year than it started with — before adding a single new logo. This is the compounding engine: growth from within, without incremental sales cost on existing relationships.</p>
+
+    <div class="callout callout-definition">
+      <div class="callout-title">Why Investors Value NRR at Premium Multiples</div>
+      <p>High NRR is one of the strongest signals of product-market fit, customer value delivery, and durable growth. A company with 125% NRR can grow 25% per year from its existing customer base alone. This fundamentally changes the capital efficiency equation: less cash needed for new customer acquisition to hit growth targets. In public SaaS markets, each 10-point improvement in NRR has historically corresponded to a 1–2× increase in revenue multiple. In private markets, it's the first metric sophisticated growth investors ask for after ARR.</p>
+    </div>
+  </div>
+
+  <!-- NRR FORMULA -->
+  <h2 class="section-title">The NRR Formula — In Full Depth</h2>
+
+  <div class="formula-block">
+    <div class="formula-label">Net Revenue Retention Formula</div>
+    <div class="formula-main">NRR = (Starting MRR + Expansion MRR − Contraction MRR − Churn MRR) ÷ Starting MRR × 100</div>
+    <div class="formula-note">Also expressed as: NRR = Ending MRR from Starting Cohort ÷ Starting MRR × 100</div>
+  </div>
+
+  <div class="nrr-formula-breakdown">
+    <div class="nrr-comp" style="background:#2a7fa8; color:#fff;">
+      <div class="nc-op">+</div>
+      <div class="nc-name">Starting MRR</div>
+      <div class="nc-def">MRR from existing customers at the start of the measurement period (Jan 1 cohort)</div>
+    </div>
+    <div class="nrr-comp" style="background:#437A22; color:#fff;">
+      <div class="nc-op">+</div>
+      <div class="nc-name">Expansion MRR</div>
+      <div class="nc-def">Upsell, cross-sell, seat additions, tier upgrades from existing customers during the period</div>
+    </div>
+    <div class="nrr-comp" style="background:#964219; color:#fff;">
+      <div class="nc-op">−</div>
+      <div class="nc-name">Contraction MRR</div>
+      <div class="nc-def">Downgrades, seat reductions, plan downgrades from existing customers during the period</div>
+    </div>
+    <div class="nrr-comp" style="background:#A13544; color:#fff;">
+      <div class="nc-op">−</div>
+      <div class="nc-name">Churn MRR</div>
+      <div class="nc-def">MRR completely lost from customers who cancelled during the period</div>
+    </div>
+  </div>
+
+  <div class="subsection">
+    <div class="subsection-title">Worked Example (Monthly)</div>
+    <div class="formula-block">
+      <div class="formula-label">Worked Example — January Cohort NRR</div>
+      <div class="formula-main">Starting MRR: $500,000</div>
+      <div class="formula-main">+ Expansion MRR: +$75,000 (upsells + seat additions)</div>
+      <div class="formula-main">− Contraction MRR: −$20,000 (downgrades)</div>
+      <div class="formula-main">− Churn MRR: −$30,000 (cancellations)</div>
+      <div class="formula-main" style="color:#4F98A3; margin-top:8px;">Ending MRR from cohort: $525,000</div>
+      <div class="formula-main" style="color:#4F98A3;">NRR = $525,000 ÷ $500,000 × 100 = 105%</div>
+      <div class="formula-note">This company grew its existing customer base by 5% in one month — without acquiring a single new customer</div>
+    </div>
+  </div>
+
+  <div class="subsection">
+    <div class="subsection-title">Monthly vs. Annual NRR</div>
+    <p>NRR can be measured monthly (looking at a single month's cohort) or annually (a 12-month cohort view). Annual NRR is the more commonly cited benchmark — it smooths seasonal patterns and reflects the full expansion cycle. Monthly NRR × 12 is not the same as annual NRR for cohorts with significant seasonal churn. Always specify the measurement window when reporting NRR.</p>
+
+    <table class="data-table">
+      <thead>
+        <tr><th>Measurement Type</th><th>Formula</th><th>Best Used For</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>Monthly NRR</td><td>Ending MRR (cohort) ÷ Starting MRR × 100</td><td>Operational monitoring; early warning system</td></tr>
+        <tr><td>Trailing 12-Month NRR</td><td>Ending MRR 12 months later ÷ Starting MRR × 100</td><td>Investor reporting; board metrics; benchmarking</td></tr>
+        <tr><td>Cohort NRR</td><td>NRR calculated per customer vintage (e.g., all customers acquired in Q1 2023)</td><td>ICP quality analysis; predictive churn modeling</td></tr>
+        <tr><td>Blended NRR</td><td>Aggregate NRR across all cohorts in the period</td><td>Company-level benchmark; investor dashboard</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- NRR BENCHMARKS -->
+  <h2 class="section-title">NRR Benchmarks</h2>
+  <p class="section-intro">NRR benchmarks vary by company stage, ACV tier, customer segment, and vertical. Below are the widely referenced industry benchmarks used by investors and operators.</p>
+
+  <div class="benchmark-stack">
+    <div class="bm-row">
+      <div class="bm-label" style="color:#437A22;">&gt;130%</div>
+      <div class="bm-bar-track"><div class="bm-bar-fill" style="width:100%; background:#437A22;">World-Class (Snowflake, Datadog level)</div></div>
+      <div class="bm-note">Expansion far exceeds churn. Product is deeply embedded and regularly expanded. Extremely rare.</div>
+    </div>
+    <div class="bm-row">
+      <div class="bm-label" style="color:#437A22;">120–130%</div>
+      <div class="bm-bar-track"><div class="bm-bar-fill" style="width:88%; background:#5a9e2f;">Excellent — Top Quartile SaaS</div></div>
+      <div class="bm-note">Strong expansion motion. Well above market. Investors will pay premium multiples.</div>
+    </div>
+    <div class="bm-row">
+      <div class="bm-label" style="color:#2a7fa8;">110–120%</div>
+      <div class="bm-bar-track"><div class="bm-bar-fill" style="width:77%; background:#2a7fa8;">Strong — Well Above Average</div></div>
+      <div class="bm-note">Healthy expansion. Top-half performance across all SaaS cohorts. Good Series B+ profile.</div>
+    </div>
+    <div class="bm-row">
+      <div class="bm-label" style="color:#6E522B;">100–110%</div>
+      <div class="bm-bar-track"><div class="bm-bar-fill" style="width:66%; background:#6E522B;">Healthy — Room to Improve</div></div>
+      <div class="bm-note">Expansion just ahead of churn. Median for many growth-stage SaaS companies.</div>
+    </div>
+    <div class="bm-row">
+      <div class="bm-label" style="color:#964219;">90–100%</div>
+      <div class="bm-bar-track"><div class="bm-bar-fill" style="width:55%; background:#964219;">Concerning — Churn Offsetting Expansion</div></div>
+      <div class="bm-note">Net negative even with some expansion. Requires growth in new logos just to maintain ARR.</div>
+    </div>
+    <div class="bm-row">
+      <div class="bm-label" style="color:#A13544;">&lt;90%</div>
+      <div class="bm-bar-track"><div class="bm-bar-fill" style="width:40%; background:#A13544;">Leaky Bucket — Going Backward</div></div>
+      <div class="bm-note">Existing customer base is shrinking. Every quarter of new logo growth is partially destroyed.</div>
+    </div>
+  </div>
+
+  <div class="subsection">
+    <div class="subsection-title">Benchmarks by Company Profile</div>
+    <table class="data-table">
+      <thead>
+        <tr><th>Company Profile</th><th>Good NRR</th><th>Great NRR</th><th>Driver</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>SMB-focused SaaS (&lt;$5K ACV)</td><td>100–105%</td><td>110–115%</td><td>High logo churn offset by volume; expansion is harder</td></tr>
+        <tr><td>Mid-Market ($5K–$50K ACV)</td><td>105–115%</td><td>120–125%</td><td>Balanced — expansion from seat growth and upsell</td></tr>
+        <tr><td>Enterprise (&gt;$50K ACV)</td><td>115–125%</td><td>130%+</td><td>Multi-year contracts, large expansion surface, deep integration</td></tr>
+        <tr><td>Infrastructure / DevTools</td><td>120–130%</td><td>140%+</td><td>Usage-based expansion; scales with customer growth</td></tr>
+        <tr><td>Vertical SaaS</td><td>105–115%</td><td>120–125%</td><td>High stickiness; limited expansion surface vs. horizontal</td></tr>
+        <tr><td>Usage-Based Pricing</td><td>120–130%</td><td>140%+</td><td>Expansion is automatic as usage grows; no required upsell motion</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- GRR -->
+  <h2 class="section-title">Gross Revenue Retention (GRR)</h2>
+
+  <div class="formula-block">
+    <div class="formula-label">Gross Revenue Retention Formula</div>
+    <div class="formula-main">GRR = (Starting MRR − Contraction MRR − Churn MRR) ÷ Starting MRR × 100</div>
+    <div class="formula-note">GRR excludes expansion. Maximum possible GRR = 100% (no loss). It measures your floor.</div>
+  </div>
+
+  <div class="grr-comparison">
+    <div class="grr-side" style="background:#f0fff4; border: 1.5px solid #437A22;">
+      <div class="gs-metric" style="color:#437A22;">NRR</div>
+      <div class="gs-name">Net Revenue Retention</div>
+      <div class="gs-desc">Includes expansion. Measures the full customer revenue story — whether the base is growing, stable, or shrinking. The primary investor metric. Can exceed 100%.</div>
+    </div>
+    <div class="grr-side" style="background:#fff8f0; border: 1.5px solid #964219;">
+      <div class="gs-metric" style="color:#964219;">GRR</div>
+      <div class="gs-name">Gross Revenue Retention</div>
+      <div class="gs-desc">Excludes expansion. Measures only your ability to retain what you have. Maximum 100%. The floor metric — what you'd have if no expansion happened. Best-in-class GRR: &gt;90%.</div>
+    </div>
+  </div>
+
+  <div class="callout callout-definition">
+    <div class="callout-title">What GRR Tells You That NRR Doesn't</div>
+    <p>A company with 115% NRR and 75% GRR is in a different strategic position than a company with 115% NRR and 92% GRR — even though the top-line NRR is identical. The first company relies heavily on expansion to mask high churn; if expansion slows, NRR collapses. The second has strong retention with modest expansion on top. Investors will pay more for the second profile. <strong>GRR is the quality check on NRR.</strong></p>
+  </div>
+
+  <!-- COMPOUNDING MATH -->
+  <h2 class="section-title">The Compounding Math of NRR</h2>
+  <p class="section-intro">The power of NRR is in the compounding. Even modest differences in NRR produce enormous divergences in 5-year outcomes. This is the mathematical reason why investors treat NRR as the defining metric of SaaS health.</p>
+
+  <div class="compound-table-wrap">
+    <table class="compound-table">
+      <thead>
+        <tr>
+          <th>Year</th>
+          <th class="c-120">120% NRR</th>
+          <th class="c-100">100% NRR</th>
+          <th class="c-90">90% NRR</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Year 0 (Start)</td>
+          <td class="c-120">$10.0M</td>
+          <td class="c-100">$10.0M</td>
+          <td class="c-90">$10.0M</td>
+        </tr>
+        <tr>
+          <td>Year 1</td>
+          <td class="c-120">$12.0M</td>
+          <td class="c-100">$10.0M</td>
+          <td class="c-90">$9.0M</td>
+        </tr>
+        <tr>
+          <td>Year 2</td>
+          <td class="c-120">$14.4M</td>
+          <td class="c-100">$10.0M</td>
+          <td class="c-90">$8.1M</td>
+        </tr>
+        <tr>
+          <td>Year 3</td>
+          <td class="c-120">$17.3M</td>
+          <td class="c-100">$10.0M</td>
+          <td class="c-90">$7.3M</td>
+        </tr>
+        <tr>
+          <td>Year 4</td>
+          <td class="c-120">$20.7M</td>
+          <td class="c-100">$10.0M</td>
+          <td class="c-90">$6.6M</td>
+        </tr>
+        <tr>
+          <td>Year 5</td>
+          <td class="c-120">$24.9M</td>
+          <td class="c-100">$10.0M</td>
+          <td class="c-90">$5.9M</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="metric-grid" style="margin-top:16px;">
+    <div class="metric-card">
+      <div class="m-label">120% NRR — 5yr growth</div>
+      <div class="m-value" style="color:#437A22;">+149%</div>
+      <div class="m-desc">Nearly 2.5× the starting base from existing customers alone — without adding new logos</div>
+    </div>
+    <div class="metric-card">
+      <div class="m-label">100% NRR — 5yr growth</div>
+      <div class="m-value" style="color:#2a7fa8;">0%</div>
+      <div class="m-desc">Flat. Every year of growth requires entirely new logo acquisition.</div>
+    </div>
+    <div class="metric-card">
+      <div class="m-label">90% NRR — 5yr decline</div>
+      <div class="m-value" style="color:#A13544;">−41%</div>
+      <div class="m-desc">$4.1M of the original $10M base evaporated. New sales can't keep up.</div>
+    </div>
+    <div class="metric-card">
+      <div class="m-label">Rule of Thumb</div>
+      <div class="m-value" style="color:#6E522B;">~4 yrs</div>
+      <div class="m-desc">At 120% NRR, existing customer base doubles roughly every 4 years</div>
+    </div>
+  </div>
+
+  <div class="callout callout-best-practice">
+    <div class="callout-title">The Critical Insight: NRR &gt; 100% Changes the Growth Math</div>
+    <p>At NRR above 100%, a SaaS company can grow even with no new customer acquisition. At 115% NRR, a $50M ARR company adds $7.5M in ARR from existing customers before it signs a single new deal. This is why NRR above 100% is not just "nice to have" — it is the structural difference between a business that requires constant capital infusion to grow and one that compounds organically.</p>
+  </div>
+
+  <!-- WHAT DRIVES NRR UP -->
+  <h2 class="section-title">What Drives NRR Up and Down</h2>
+
+  <div class="drivers-grid">
+    <div class="driver-card" style="background:#f0fff4; border: 1.5px solid #437A22;">
+      <div class="dc-title" style="color:#437A22;">↑ What Drives NRR Up</div>
+      <ul>
+        <li><strong>Product adoption depth:</strong> Customers who use &gt;70% of features churn at 3× lower rates and expand at 2× the rate</li>
+        <li><strong>Onboarding quality:</strong> Time-to-value in first 90 days is the strongest predictor of 12-month retention</li>
+        <li><strong>CS investment:</strong> Proactive CS (QBRs, health monitoring, executive touchpoints) vs. reactive ticketing</li>
+        <li><strong>Expansion motion:</strong> Dedicated CSMs or AEs with expansion quota; clear upgrade triggers and plays</li>
+        <li><strong>ICP fit quality:</strong> Wrong-fit customers churn at 3–5× the rate of right-fit customers regardless of CS effort</li>
+        <li><strong>QBR program:</strong> Customers who attend quarterly business reviews have 25–40% lower churn rates</li>
+        <li><strong>Multi-threading:</strong> Relationships with 3+ stakeholders per account reduce single-point-of-failure churn</li>
+        <li><strong>Usage-based pricing:</strong> Aligns revenue to value delivery; expansion is automatic with growth</li>
+      </ul>
+    </div>
+    <div class="driver-card" style="background:#fce8e6; border: 1.5px solid #A13544;">
+      <div class="dc-title" style="color:#A13544;">↓ What Drives NRR Down</div>
+      <ul>
+        <li><strong>Wrong ICP customers:</strong> Acquired cheaply but don't get value; churn is inevitable from day 1</li>
+        <li><strong>Low product adoption:</strong> Customers paying for seats they aren't using are pre-churned</li>
+        <li><strong>Product gaps:</strong> Missing features that prevent workflow completion create evaluation of alternatives</li>
+        <li><strong>Competitive displacement:</strong> Well-funded competitors specifically targeting your installed base</li>
+        <li><strong>Budget pressure / downgrade:</strong> Pricing misaligned with perceived value; economic pressure on customer</li>
+        <li><strong>Seat reductions:</strong> Layoffs at customer companies reduce per-seat SaaS spend; GDP correlation</li>
+        <li><strong>No champion post-sale:</strong> Buying contact leaves; no successor relationship; account goes dark</li>
+        <li><strong>Poor implementation:</strong> Long time-to-value; unresolved technical issues; frustrated users</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- NRR BY SEGMENT AND COHORT -->
+  <h2 class="section-title">NRR by Segment and Cohort</h2>
+  <p class="section-intro">Company-level blended NRR is a starting point, not an answer. The real intelligence is in disaggregating NRR by customer segment, vintage cohort, acquisition source, and industry.</p>
+
+  <div class="subsection">
+    <div class="subsection-title">Cohort NRR Analysis</div>
+    <p>Cohort NRR tracks the revenue performance of customers acquired in a specific period (e.g., all customers acquired in Q1 2022). It shows you whether your ICP quality is improving or degrading over time — invisible in blended metrics.</p>
+
+    <div class="cohort-grid">
+      <div class="cohort-card">
+        <div class="cc-label">Q1 2022 Cohort</div>
+        <div class="cc-nrr" style="color:#437A22;">118%</div>
+        <div class="cc-desc">Pre-product-market-fit expansion. Strong early adopter segment. High expansion from fast-growing companies.</div>
+      </div>
+      <div class="cohort-card">
+        <div class="cc-label">Q3 2022 Cohort</div>
+        <div class="cc-nrr" style="color:#6E522B;">105%</div>
+        <div class="cc-desc">Growth phase — ICP expanded to include adjacent segments. Some misfit customers visible now.</div>
+      </div>
+      <div class="cohort-card">
+        <div class="cc-label">Q1 2023 Cohort</div>
+        <div class="cc-nrr" style="color:#A13544;">94%</div>
+        <div class="cc-desc">Over-aggressive GTM expansion. Wrong ICP customers acquired at high volume. Churn problem becoming visible.</div>
+      </div>
+    </div>
+
+    <div class="callout callout-warning">
+      <div class="callout-title">The Cohort NRR Diagnostic</div>
+      <p>Declining cohort NRR across sequential vintages is the clearest signal that ICP drift is occurring — the sales team is acquiring customers outside the ideal profile to hit quota. This pattern is invisible in blended NRR for 6–12 months, then surfaces catastrophically as a churn wave. Cohort analysis is the early warning system.</p>
+    </div>
+  </div>
+
+  <div class="subsection">
+    <div class="subsection-title">NRR by Segment</div>
+    <table class="data-table">
+      <thead>
+        <tr><th>Customer Segment</th><th>Typical NRR Range</th><th>Primary NRR Driver</th><th>Primary NRR Risk</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>SMB (&lt;100 employees)</td><td>85–105%</td><td>Expansion from fast-growing small companies</td><td>High logo churn; bankruptcy/closure rates</td></tr>
+        <tr><td>Mid-Market (100–1K employees)</td><td>105–120%</td><td>Seat expansion, module upsell</td><td>Budget cycles, competitive evaluation</td></tr>
+        <tr><td>Enterprise (&gt;1K employees)</td><td>115–135%</td><td>Department expansion, global rollout</td><td>Procurement cycles, political risk</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- NRR AND COMPANY VALUATION -->
+  <h2 class="section-title">NRR and Company Valuation</h2>
+
+  <div class="subsection">
+    <div class="subsection-title">The NRR-to-Multiple Relationship</div>
+    <p>NRR is one of the strongest predictors of SaaS revenue multiples in both public and private markets. The data from public SaaS cohorts and growth equity deal databases consistently shows a strong positive correlation between NRR and EV/Revenue multiples.</p>
+
+    <div class="valuation-table-wrap">
+      <table class="data-table nrr-val-table">
+        <thead>
+          <tr><th>NRR Range</th><th>Implied Revenue Multiple (Growth-Stage Private)</th><th>Public SaaS Comp Range</th><th>Investor Signal</th></tr>
+        </thead>
+        <tbody>
+          <tr><td style="color:#437A22; font-weight:700;">&gt;130%</td><td>12–20×+ ARR</td><td>Snowflake, Datadog tier</td><td>Premium / exceptional; growth without new sales</td></tr>
+          <tr><td style="color:#437A22; font-weight:700;">120–130%</td><td>10–15× ARR</td><td>Top-quartile public SaaS</td><td>Strong expansion engine; high capital efficiency</td></tr>
+          <tr><td style="color:#2a7fa8; font-weight:700;">110–120%</td><td>8–12× ARR</td><td>Well-above-average public SaaS</td><td>Solid expansion; good retention foundation</td></tr>
+          <tr><td style="color:#6E522B; font-weight:700;">100–110%</td><td>6–9× ARR</td><td>Median public SaaS</td><td>Adequate; expansion visible but modest</td></tr>
+          <tr><td style="color:#964219; font-weight:700;">90–100%</td><td>4–6× ARR</td><td>Below-median; often discounted</td><td>Churn concern; requires new logo acceleration to grow</td></tr>
+          <tr><td style="color:#A13544; font-weight:700;">&lt;90%</td><td>2–4× ARR</td><td>Distressed valuation range</td><td>Structural issues; capital raise will be difficult</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="callout callout-definition">
+      <div class="callout-title">Series A+ Investor Lens</div>
+      <p>At Series A and beyond, sophisticated investors analyze NRR alongside ARR growth rate and gross margin to form a complete picture of unit economics. The rough framework: ARR growth rate + NRR should sum to &gt;140% for a strong Series B investment thesis. A company growing 80% YoY with 130% NRR is compelling. A company growing 150% YoY with 85% NRR is fragile — the churn crisis is coming and will be expensive to fix.</p>
+    </div>
+  </div>
+
+  <!-- NRR IMPROVEMENT PLAN -->
+  <h2 class="section-title">Building an NRR Improvement Plan</h2>
+  <p class="section-intro">Before investing in NRR improvement, diagnose which component is the primary driver of underperformance. The treatment is different for a churn problem vs. a contraction problem vs. an expansion gap.</p>
+
+  <div class="nrr-improvement-grid">
+    <div class="ni-card" style="border-top: 3px solid #A13544;">
+      <div class="nic-problem">Primary Problem</div>
+      <div class="nic-diagnosis" style="color:#A13544;">High Churn (GRR &lt; 85%)</div>
+      <div class="nic-fixes">
+        <strong>Diagnosis:</strong> Wrong ICP, adoption failure, or product-market fit gap.<br/><br/>
+        <strong>90-Day Fixes:</strong><br/>
+        → Audit cohort churn by ICP segment — identify which customers are churning<br/>
+        → Revamp onboarding: time-to-value is the #1 churn predictor<br/>
+        → Implement customer health scoring; trigger interventions at yellow/red<br/>
+        → Build executive sponsor program for at-risk accounts<br/>
+        → Stop selling to out-of-ICP prospects (harder than it sounds)
+      </div>
+    </div>
+    <div class="ni-card" style="border-top: 3px solid #964219;">
+      <div class="nic-problem">Primary Problem</div>
+      <div class="nic-diagnosis" style="color:#964219;">High Contraction (Downgrades)</div>
+      <div class="nic-fixes">
+        <strong>Diagnosis:</strong> Pricing misalignment, budget pressure, or perceived overcharge for value.<br/><br/>
+        <strong>90-Day Fixes:</strong><br/>
+        → Conduct pricing audit — where are customers downgrading and why?<br/>
+        → Introduce value realization program at renewal: show ROI data before renewal discussion<br/>
+        → Consider usage-based pricing components that right-size to customer value<br/>
+        → Build contraction early warning: customers reducing usage 30 days before renewal
+      </div>
+    </div>
+    <div class="ni-card" style="border-top: 3px solid #6E522B;">
+      <div class="nic-problem">Primary Problem</div>
+      <div class="nic-diagnosis" style="color:#6E522B;">Low Expansion (NRR near GRR)</div>
+      <div class="nic-fixes">
+        <strong>Diagnosis:</strong> No expansion motion, product doesn't scale, or CS not commercially focused.<br/><br/>
+        <strong>90-Day Fixes:</strong><br/>
+        → Define expansion playbooks: who to call, when to call, what trigger to use<br/>
+        → Give CSMs expansion quota or assign AEs to strategic accounts<br/>
+        → Build product triggers for expansion conversations (usage thresholds, new feature interest)<br/>
+        → Identify top 20% of accounts by expansion potential; create Named Account list
+      </div>
+    </div>
+  </div>
+
+  <div class="subsection">
+    <div class="subsection-title">Investment Priority Framework</div>
+    <ol class="step-list">
+      <li><div class="step-content"><span class="step-title">Fix churn first — it is the most destructive force</span>You cannot expand your way out of a churn problem. Every dollar of churn requires $1 of new expansion to stay flat — at a fraction of the CAC efficiency. Stop the bleeding before growing the patient.</div></li>
+      <li><div class="step-content"><span class="step-title">Invest in CS headcount at the right ratio</span>CS headcount benchmarks: SMB → 1 CSM per $2–4M ARR; Mid-Market → 1 CSM per $1–2M ARR; Enterprise → 1 CSM per $3–5M ARR. Understaffed CS leads to reactive firefighting rather than proactive value delivery.</div></li>
+      <li><div class="step-content"><span class="step-title">Build the onboarding engine before the expansion engine</span>Customers who successfully onboard expand at 2–3× the rate of those who struggle. Onboarding investment has the highest ROI of any CS investment.</div></li>
+      <li><div class="step-content"><span class="step-title">Instrument the product for health signals</span>Health scoring requires product usage data. Invest in instrumentation before expecting CSMs to manage at-risk accounts proactively.</div></li>
+      <li><div class="step-content"><span class="step-title">Build the expansion playbook last — on a stable retention foundation</span>Expansion is a multiplier on retention. If retention is broken, expansion is irrelevant.</div></li>
+    </ol>
+  </div>
+
+  <!-- INDICATORS -->
+  <h2 class="section-title">Leading &amp; Lagging Indicators</h2>
+
+  <div class="subsection">
+    <div class="subsection-title">Leading Indicators (Predict NRR Before It Materializes)</div>
+    <div class="indicator-row">
+      <span class="indicator-tag ind-leading">Health score distribution (% red/yellow/green)</span>
+      <span class="indicator-tag ind-leading">Product adoption rate (DAU/MAU)</span>
+      <span class="indicator-tag ind-leading">Time-to-value (days to first key action)</span>
+      <span class="indicator-tag ind-leading">Expansion pipeline volume ($)</span>
+      <span class="indicator-tag ind-leading">Renewal rate by quarter</span>
+      <span class="indicator-tag ind-leading">QBR completion rate</span>
+      <span class="indicator-tag ind-leading">Support ticket volume per customer</span>
+    </div>
+
+    <table class="data-table">
+      <thead>
+        <tr><th>Leading Metric</th><th>Measurement</th><th>Best-in-Class Benchmark</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>Health score (% green)</td><td>Real-time / weekly</td><td>&gt;70% of ARR in green health</td></tr>
+        <tr><td>DAU/MAU (product engagement)</td><td>Weekly</td><td>&gt;40% for daily-workflow tools; &gt;20% for periodic tools</td></tr>
+        <tr><td>Time-to-first-value</td><td>Per cohort</td><td>&lt;14 days for SMB; &lt;45 days for Enterprise</td></tr>
+        <tr><td>Expansion pipeline / ARR base</td><td>Monthly</td><td>20–35% of ARR in expansion pipeline at any time</td></tr>
+        <tr><td>QBR completion rate</td><td>Quarterly</td><td>&gt;80% of strategic accounts complete QBR on time</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="subsection">
+    <div class="subsection-title">Lagging Indicators (Measure Historical NRR Performance)</div>
+    <div class="indicator-row">
+      <span class="indicator-tag ind-lagging">NRR monthly trend</span>
+      <span class="indicator-tag ind-lagging">GRR monthly trend</span>
+      <span class="indicator-tag ind-lagging">Logo churn rate</span>
+      <span class="indicator-tag ind-lagging">Revenue churn rate</span>
+      <span class="indicator-tag ind-lagging">Expansion revenue % of total</span>
+      <span class="indicator-tag ind-lagging">Cohort NRR by vintage</span>
+      <span class="indicator-tag ind-lagging">Average contract value at renewal vs. initial ACV</span>
+    </div>
+
+    <table class="data-table">
+      <thead>
+        <tr><th>Lagging Metric</th><th>Measurement Frequency</th><th>Best-in-Class Benchmark</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>Annual NRR</td><td>Monthly (trailing 12-month)</td><td>&gt;120% (enterprise); &gt;110% (mid-market)</td></tr>
+        <tr><td>Annual GRR</td><td>Monthly (trailing 12-month)</td><td>&gt;90% (all segments)</td></tr>
+        <tr><td>Logo churn rate (annual)</td><td>Quarterly</td><td>&lt;5% (enterprise); &lt;15% (SMB)</td></tr>
+        <tr><td>Revenue churn rate (annual)</td><td>Monthly</td><td>&lt;5% (enterprise); &lt;8% (mid-market)</td></tr>
+        <tr><td>Expansion % of ARR growth</td><td>Quarterly</td><td>30–50% of ARR growth from expansion</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="related-section">
+    <div class="related-title">Related Sections</div>
+    <div class="related-links">
+      <a href="customer-health-scoring.html" class="related-link">Customer Health Scoring</a>
+      <a href="expansion-playbooks.html" class="related-link">Expansion Playbooks</a>
+      <a href="churn-prevention.html" class="related-link">Churn Prevention</a>
+      <a href="qbr-program.html" class="related-link">QBR Program Design</a>
+      <a href="cs-org-design.html" class="related-link">CS Org Design</a>
+      <a href="arr-modeling.html" class="related-link">ARR Modeling</a>
+      <a href="../pages/phase5.html" class="related-link">← Phase 5 Overview</a>
+    </div>
+  </div>
+</div>
+<script data-pplx-inline-edit>
+(function () {
+  if (window === window.top) return;
+
+  const allowedParentOrigins = ["https://www.perplexity.ai","https://perplexity.ai","https://testing.perplexity.ai","https://staging.perplexity.ai","https://*.preview.i.perplexity.ai","http://localhost:3000","http://127.0.0.1:3000","http://localhost:5173","http://127.0.0.1:5173"];
+  const MAX_FONT_BYTES = 500 * 1024;
+  const MAX_TOTAL_FONT_BYTES = 2 * 1024 * 1024;
+  let scrollForwarding = false;
+  let scrollRaf = 0;
+  let trustedTopOrigin = null;
+
+  // Allow entries like "https://*.preview.i.perplexity.ai" — the wildcard
+  // matches a single DNS label (no dots), so "https://*.foo" cannot stretch
+  // across multiple labels.
+  function matchesAllowedOrigin(origin) {
+    if (!origin) return false;
+    for (const entry of allowedParentOrigins) {
+      if (!entry.includes("*")) {
+        if (entry === origin) return true;
+        continue;
+      }
+      const pattern = new RegExp(
+        "^" +
+          entry.replace(/[.+?^${}()|[\]\\]/g, "\\$&").replace(/\*/g, "[^.]+") +
+          "$",
+      );
+      if (pattern.test(origin)) return true;
+    }
+    return false;
+  }
+
+  // Trust decision: when the sender is same-origin-visible (event.origin is a
+  // real origin like https://www.perplexity.ai) we trust event.origin directly.
+  // When event.origin is "null" (opaque broker srcdoc), we fall back to the
+  // broker's stamped `parentOrigin` to identify the top window. The fallback
+  // is claim-only — we rely on the browser's native `targetOrigin` enforcement
+  // on the response path (see postToTrustedTop) to ensure replies can't be
+  // delivered to anyone but the actual top window of that claimed origin.
+  function getTrustedParentOrigin(event) {
+    const forwardedParentOrigin =
+      typeof event.data.parentOrigin === "string" ? event.data.parentOrigin : null;
+    const parentOrigin = event.origin === "null" ? forwardedParentOrigin : event.origin;
+    return matchesAllowedOrigin(parentOrigin) ? parentOrigin : null;
+  }
+
+  // All responses go to window.top with targetOrigin = the allowlisted origin.
+  // An attacker that iframes us inside their own null-origin broker can claim
+  // any parentOrigin they like, but the browser will drop the reply whenever
+  // the real top's origin doesn't match — so the screenshot never leaves.
+  function postToTrustedTop(message) {
+    if (!trustedTopOrigin) return;
+    try {
+      window.top.postMessage(message, trustedTopOrigin);
+    } catch (_error) {}
+  }
+
+  function inlineAll(original, clone) {
+    if (original.nodeType !== 1 || clone.nodeType !== 1) return;
+
+    try {
+      const computedStyle = getComputedStyle(original);
+      // cssText on a computed style is the serialized declaration in modern
+      // Chromium/Safari — a single read beats enumerating ~400 longhand
+      // properties. Firefox returns "" here, so we fall back on empty.
+      const serialized = computedStyle.cssText;
+      if (serialized) {
+        clone.style.cssText = serialized;
+      } else {
+        const parts = new Array(computedStyle.length);
+        for (let index = 0; index < computedStyle.length; index += 1) {
+          const property = computedStyle[index];
+          parts[index] = `${property}:${computedStyle.getPropertyValue(property)};`;
+        }
+        clone.style.cssText = parts.join("");
+      }
+    } catch (_error) {}
+
+    const originalChildren = original.children;
+    const clonedChildren = clone.children;
+    for (
+      let index = 0;
+      index < originalChildren.length && index < clonedChildren.length;
+      index += 1
+    ) {
+      inlineAll(originalChildren[index], clonedChildren[index]);
+    }
+  }
+
+  function extractFontUrl(srcValue) {
+    const matches = [
+      ...srcValue.matchAll(
+        /url\(["']?([^"')]+)["']?\)(?:\s*format\(["']?([^"')]+)["']?\))?/gi,
+      ),
+    ];
+    if (matches.length === 0) return null;
+    const woff2 = matches.find((m) => m[2] && m[2].toLowerCase().includes("woff2"));
+    if (woff2) return woff2[1];
+    const woff = matches.find((m) => m[2] && m[2].toLowerCase().includes("woff"));
+    if (woff) return woff[1];
+    return matches[0][1];
+  }
+
+  // Cache resolved font URL -> data URI across captures. Fonts on a page
+  // essentially never change, and a batch run emits multiple captures back to
+  // back — without this we'd refetch + re-base64 every time.
+  const fontDataUriCache = new Map();
+  const SRC_DECLARATION_RE = /src\s*:\s*[^;}]+/i;
+
+  async function fetchAsDataUri(url) {
+    if (fontDataUriCache.has(url)) return fontDataUriCache.get(url);
+    let dataUri = null;
+    try {
+      const response = await fetch(url, { mode: "cors", credentials: "omit" });
+      if (response.ok) {
+        const blob = await response.blob();
+        if (blob.size <= MAX_FONT_BYTES) {
+          dataUri = await new Promise((resolve) => {
+            const reader = new FileReader();
+            reader.onloadend = () =>
+              resolve(typeof reader.result === "string" ? reader.result : null);
+            reader.onerror = () => resolve(null);
+            reader.readAsDataURL(blob);
+          });
+        }
+      }
+    } catch (_error) {
+      dataUri = null;
+    }
+    fontDataUriCache.set(url, dataUri);
+    return dataUri;
+  }
+
+  function collectFontFaceRuleTexts() {
+    const rules = [];
+    for (const sheet of document.styleSheets) {
+      let cssRules;
+      try {
+        cssRules = sheet.cssRules;
+      } catch (_error) {
+        continue;
+      }
+      if (!cssRules) continue;
+      for (const rule of cssRules) {
+        const cssText = rule.cssText || "";
+        if (cssText.startsWith("@font-face")) rules.push(cssText);
+      }
+    }
+    return rules;
+  }
+
+  async function buildInlinedFontCss() {
+    const ruleTexts = collectFontFaceRuleTexts();
+    if (ruleTexts.length === 0) return null;
+
+    const resolved = ruleTexts.map((cssText) => {
+      if (!SRC_DECLARATION_RE.test(cssText)) return null;
+      const srcMatch = cssText.match(/src\s*:\s*([^;}]+)[;}]/i);
+      if (!srcMatch) return null;
+      const url = extractFontUrl(srcMatch[1]);
+      if (!url) return null;
+      try {
+        return { cssText, url: new URL(url, document.baseURI).href };
+      } catch (_error) {
+        return null;
+      }
+    });
+
+    const dataUris = await Promise.all(
+      resolved.map((entry) => (entry ? fetchAsDataUri(entry.url) : Promise.resolve(null))),
+    );
+
+    const inlined = [];
+    let totalBytes = 0;
+    for (let index = 0; index < resolved.length; index += 1) {
+      const entry = resolved[index];
+      const dataUri = dataUris[index];
+      if (!entry || !dataUri) continue;
+      const approxBytes = dataUri.length * 0.75;
+      if (totalBytes + approxBytes > MAX_TOTAL_FONT_BYTES) break;
+      totalBytes += approxBytes;
+      inlined.push(entry.cssText.replace(SRC_DECLARATION_RE, `src: url("${dataUri}")`));
+    }
+    return inlined.length > 0 ? inlined.join("\n") : null;
+  }
+
+  function stripExternal(clone) {
+    const images = clone.querySelectorAll("img");
+    for (let index = 0; index < images.length; index += 1) {
+      const src = images[index].getAttribute("src");
+      if (src && !src.startsWith("data:")) images[index].removeAttribute("src");
+    }
+
+    const elements = clone.querySelectorAll("*");
+    for (let index = 0; index < elements.length; index += 1) {
+      const style = elements[index].style.cssText;
+      if (style && style.includes("url(")) {
+        elements[index].style.cssText = style.replace(
+          /url\(["']?(?!data:)[^)"']*["']?\)/gi,
+          "none",
+        );
+      }
+    }
+  }
+
+  function emitScroll() {
+    scrollRaf = 0;
+    if (!scrollForwarding) return;
+    postToTrustedTop({
+      type: "INLINE_EDIT_SCROLL",
+      scrollX: window.scrollX,
+      scrollY: window.scrollY,
+    });
+  }
+
+  window.addEventListener(
+    "scroll",
+    function () {
+      if (!scrollForwarding || scrollRaf) return;
+      scrollRaf = requestAnimationFrame(emitScroll);
+    },
+    { passive: true, capture: true },
+  );
+
+  async function handleCaptureRequest(event) {
+    const requestId = event.data.requestId;
+    const scrollX = window.scrollX;
+    const scrollY = window.scrollY;
+    const width = window.innerWidth;
+    const height = window.innerHeight;
+
+    function postResult(dataUrl) {
+      postToTrustedTop({
+        type: "INLINE_EDIT_SCREENSHOT_RESULT",
+        requestId,
+        dataUrl,
+        scrollX,
+        scrollY,
+      });
+    }
+
+    try {
+      // Wait for any pending web fonts to resolve so both inline metrics and
+      // the @font-face inlining below see the same loaded faces.
+      if (document.fonts && document.fonts.ready) {
+        try {
+          await document.fonts.ready;
+        } catch (_error) {}
+      }
+
+      const clone = document.documentElement.cloneNode(true);
+      inlineAll(document.documentElement, clone);
+
+      const removedNodes = clone.querySelectorAll("script,link[rel=\"stylesheet\"],style");
+      for (let index = 0; index < removedNodes.length; index += 1) {
+        removedNodes[index].remove();
+      }
+
+      stripExternal(clone);
+
+      // Re-embed web fonts as data-URI @font-face rules so the SVG rasterizer
+      // can resolve them — external font URLs aren't fetched during
+      // foreignObject rendering, which would otherwise force a fallback face
+      // and change text metrics.
+      const inlinedFontCss = await buildInlinedFontCss();
+      if (inlinedFontCss) {
+        const styleEl = document.createElement("style");
+        styleEl.textContent = inlinedFontCss;
+        const head = clone.querySelector("head");
+        if (head) head.appendChild(styleEl);
+        else clone.insertBefore(styleEl, clone.firstChild);
+      }
+
+      const html = new XMLSerializer().serializeToString(clone);
+      const svg =
+        `<svg xmlns="http://www.w3.org/2000/svg" width="${width}" height="${height}">` +
+        '<foreignObject width="100%" height="100%">' +
+        `<div xmlns="http://www.w3.org/1999/xhtml" style="width:${width}px;height:${height}px;overflow:hidden">` +
+        `<div style="transform:translate(-${scrollX}px,-${scrollY}px);transform-origin:top left">` +
+        html +
+        "</div></div></foreignObject></svg>";
+      const svgUrl = `data:image/svg+xml;charset=utf-8,${encodeURIComponent(svg)}`;
+      const image = new Image();
+      image.onload = function () {
+        const canvas = document.createElement("canvas");
+        canvas.width = width;
+        canvas.height = height;
+        canvas.getContext("2d").drawImage(image, 0, 0);
+        postResult(canvas.toDataURL("image/png"));
+      };
+      image.onerror = function () {
+        postResult(null);
+      };
+      image.src = svgUrl;
+    } catch (_error) {
+      postResult(null);
+    }
+  }
+
+  window.addEventListener("message", function (event) {
+    if (!event.data) return;
+    // Only accept messages from the direct parent frame. Blocks sibling /
+    // unrelated-window postMessage senders that could otherwise reach us.
+    if (event.source !== window.parent) return;
+
+    const trustedParentOrigin = getTrustedParentOrigin(event);
+    if (!trustedParentOrigin) return;
+    trustedTopOrigin = trustedParentOrigin;
+
+    if (event.data.type === "INLINE_EDIT_SCROLL_START") {
+      scrollForwarding = true;
+      emitScroll();
+      return;
+    }
+
+    if (event.data.type === "INLINE_EDIT_SCROLL_STOP") {
+      scrollForwarding = false;
+      if (scrollRaf) cancelAnimationFrame(scrollRaf);
+      scrollRaf = 0;
+      return;
+    }
+
+    if (event.data.type !== "INLINE_EDIT_CAPTURE_REQUEST") return;
+
+    handleCaptureRequest(event);
+  });
+})();
+
+
+</script></body>
+</html>

@@ -1,0 +1,1108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Funnel Architecture — SaaS Revenue System</title>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="../assets/shared.css"/>
+  <style>
+    .page-hero { background: #437A22; }
+    .funnel-stage {
+      background: var(--surface);
+      border-radius: 10px;
+      border: 1.5px solid var(--border);
+      padding: 20px 24px;
+      margin-bottom: 12px;
+      position: relative;
+    }
+    .funnel-stage.active-stage {
+      border-color: #437A22;
+    }
+    .funnel-stage .fs-header {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      margin-bottom: 12px;
+    }
+    .fs-badge {
+      min-width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 13px;
+      font-weight: 700;
+      flex-shrink: 0;
+      background: #437A22;
+      color: #fff;
+    }
+    .fs-badge.pre { background: var(--text-muted); }
+    .fs-badge.closed-won { background: #437A22; }
+    .fs-badge.closed-lost { background: #A13544; }
+    .funnel-stage .fs-name {
+      font-size: 16px;
+      font-weight: 700;
+      color: var(--text);
+    }
+    .funnel-stage .fs-prob {
+      margin-left: auto;
+      font-size: 13px;
+      font-weight: 700;
+      background: #f0fff4;
+      color: #437A22;
+      padding: 3px 10px;
+      border-radius: 20px;
+      white-space: nowrap;
+    }
+    .funnel-stage .fs-prob.prob-red { background: #fce8e6; color: #A13544; }
+    .criteria-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+      margin-top: 12px;
+    }
+    .criteria-box {
+      background: var(--bg);
+      border-radius: 6px;
+      padding: 10px 14px;
+    }
+    .criteria-box .cb-label {
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      margin-bottom: 6px;
+    }
+    .criteria-box ul {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+    }
+    .criteria-box ul li {
+      font-size: 13px;
+      line-height: 1.6;
+      padding: 2px 0 2px 14px;
+      position: relative;
+      color: var(--text);
+    }
+    .criteria-box ul li::before {
+      content: '✓';
+      position: absolute;
+      left: 0;
+      color: #437A22;
+      font-size: 11px;
+      font-weight: 700;
+    }
+    .funnel-stage p {
+      font-size: 14px;
+      line-height: 1.7;
+      color: var(--text);
+      margin-bottom: 0;
+    }
+    .conversion-table-wrap { overflow-x: auto; margin: 16px 0; }
+    .bowtie-section {
+      background: linear-gradient(135deg, #f0fff4, #e8f5e9);
+      border: 1.5px solid #437A22;
+      border-radius: 10px;
+      padding: 24px;
+      margin: 20px 0;
+    }
+    .bowtie-section h4 { font-size: 18px; font-weight: 700; color: #437A22; margin-bottom: 12px; }
+    .bowtie-section p { font-size: 14px; line-height: 1.7; margin-bottom: 10px; }
+    .bowtie-section p:last-child { margin-bottom: 0; }
+    .velocity-card {
+      background: var(--surface);
+      border: 1.5px solid var(--border);
+      border-radius: 8px;
+      padding: 14px 16px;
+      margin-bottom: 10px;
+    }
+    .velocity-card .vc-stage { font-weight: 700; font-size: 14px; margin-bottom: 4px; }
+    .velocity-card .vc-bench { font-size: 13px; color: #437A22; font-weight: 700; margin-bottom: 4px; }
+    .velocity-card .vc-note { font-size: 13px; color: var(--text-muted); line-height: 1.5; }
+    .governance-block {
+      background: var(--surface);
+      border: 1.5px solid var(--border);
+      border-radius: 8px;
+      padding: 16px 20px;
+      margin: 12px 0;
+    }
+    .governance-block .gb-role { font-size: 12px; font-weight: 700; letter-spacing: 1px; text-transform: uppercase; color: #437A22; margin-bottom: 6px; }
+    .governance-block .gb-name { font-size: 15px; font-weight: 700; margin-bottom: 8px; }
+    .governance-block p { font-size: 14px; line-height: 1.65; color: var(--text); margin: 0; }
+    @media(max-width:768px){ .criteria-row { grid-template-columns: 1fr; } }
+  </style>
+</head>
+<body>
+<nav class="nav">
+  <span class="nav-logo">SaaS <span>Revenue System</span></span>
+  <span class="nav-sep">|</span>
+  <a href="../index.html" class="nav-back">← Home</a>
+  <span class="nav-sep">|</span>
+  <a href="../pages/phase3.html" class="nav-back">Phase 3: Demand Gen</a>
+  <span class="nav-sep">|</span>
+  <span class="nav-current">Funnel Architecture</span>
+</nav>
+<div class="page-hero" style="background:#437A22">
+  <div class="hero-phase-label">Phase 3 — Demand Generation</div>
+  <div class="hero-title">Funnel Architecture — Defining the Revenue Pipeline from Lead to Close</div>
+  <div class="hero-subtitle">Without agreed funnel definitions, every pipeline number is meaningless, every forecast is fiction, and marketing and sales will always be at war.</div>
+</div>
+<div class="content-wrap">
+  <div class="breadcrumb">
+    <a href="../index.html">Home</a><span class="sep">›</span>
+    <a href="../pages/phase3.html">Phase 3</a><span class="sep">›</span>
+    <span class="current">Funnel Architecture</span>
+  </div>
+
+  <!-- WHY FUNNEL DEFINITIONS MATTER -->
+  <h2 class="section-title">Why Funnel Definitions Matter</h2>
+  <p class="section-intro">The single biggest source of sales and marketing conflict in SaaS companies is undefined or inconsistently applied funnel stage definitions. Marketing claims they delivered 500 MQLs. Sales says 450 were garbage. Both are correct — because no one defined what an MQL actually is. The result is a broken trust relationship, a meaningless pipeline number, and a forecast that management can't rely on.</p>
+
+  <div class="subsection">
+    <div class="subsection-title">The Cost of Undefined Stages</div>
+    <p>When funnel stages are not precisely defined with entry criteria AND exit criteria — and when those definitions are not consistently applied in the CRM — every downstream process breaks. Forecasting becomes guesswork because Stage 3 means different things to different reps. Pipeline coverage analysis is meaningless because you can't compare pipeline velocity when stages have different entry thresholds. Marketing and sales finger-pointing about lead quality is unresolvable because there are no objective criteria to resolve the dispute.</p>
+    <p>The solution is a shared Revenue Funnel Document — a single, written, CRM-enforced definition of every stage, its entry criteria, exit criteria, associated SLAs, and probability weight. This document must be co-created by marketing, sales, and RevOps leadership and must be enforced technically in the CRM (required fields at stage entry, automated alerts for SLA violations).</p>
+  </div>
+
+  <div class="callout callout-warning">
+    <div class="callout-title">The Most Common Funnel Definition Mistake</div>
+    <p>Defining stages by rep activity ("Stage 2 = demo delivered") rather than by buyer behavior and confirmed outcomes ("Stage 2 = champion identified, success criteria agreed, mutual evaluation plan accepted"). Activity-based stages are gamed by reps who move deals forward to look active. Buyer-behavior-based stages reflect actual deal progression and produce reliable forecasts.</p>
+  </div>
+
+  <!-- THE COMPLETE FUNNEL -->
+  <h2 class="section-title">The Complete Funnel — Every Stage Defined</h2>
+  <p class="section-intro">Each stage below is defined with entry criteria (what must be true for a lead/opportunity to enter this stage) and exit criteria (what must happen for it to advance). These are starting templates — calibrate to your specific business, segment, and sales motion.</p>
+
+  <div class="funnel-stage">
+    <div class="fs-header">
+      <div class="fs-badge pre">★</div>
+      <div class="fs-name">AWARENESS (Pre-Funnel)</div>
+    </div>
+    <p>The pre-funnel stage encompasses all contact with your brand before a lead enters the managed funnel. A website visitor who reads a blog post, a prospect who sees a LinkedIn ad, a conference attendee who walks past your booth, an SDR target identified from a prospect list — all are in the Awareness stage. This stage is not tracked in the CRM at the individual level (unless the prospect takes a named action like filling out a form) but is measured in aggregate via marketing analytics.</p>
+    <p style="margin-top:10px;"><strong>How leads enter the system:</strong> Web form fill (demo request, content download, contact us), inbound phone call, SDR outbound response (reply to email or LinkedIn), event check-in scan, chat/chatbot conversation, direct referral. All named leads entering the CRM start here before scoring determines if they become MQLs.</p>
+  </div>
+
+  <div class="funnel-stage active-stage">
+    <div class="fs-header">
+      <div class="fs-badge">MQL</div>
+      <div class="fs-name">MQL — Marketing Qualified Lead</div>
+      <div class="fs-prob">~5% probability</div>
+    </div>
+    <p>An MQL is a lead that has met a defined score threshold (typically 50-75 points) combining fit score (does this person match our ICP?) and engagement score (have they taken actions suggesting purchase intent?). The score threshold must be empirically calibrated to maximize SAL acceptance rate — an MQL should convert to SAL at 50-70% rate; if below 30%, the threshold is too low.</p>
+    <div class="criteria-row">
+      <div class="criteria-box">
+        <div class="cb-label">Entry Criteria</div>
+        <ul>
+          <li>Lead score ≥ threshold (e.g., 60 points)</li>
+          <li>Fit criteria: job title matches buyer persona</li>
+          <li>Fit criteria: company size in ICP range</li>
+          <li>Behavioral: at least one high-intent action (demo request, pricing page, etc.)</li>
+          <li>Not a competitor, current customer, or disqualified domain</li>
+        </ul>
+      </div>
+      <div class="criteria-box">
+        <div class="cb-label">Exit Criteria</div>
+        <ul>
+          <li>Sales accepts → becomes SAL (within SLA)</li>
+          <li>Sales rejects with reason code → recycled back to nurture</li>
+          <li>SLA breach: no action within 24-48 hours → auto-escalation to SDR manager</li>
+          <li>Disqualified outright → marked Disqualified with reason</li>
+        </ul>
+      </div>
+    </div>
+    <div class="callout callout-definition" style="margin-top:12px;">
+      <div class="callout-title">MQL SLA</div>
+      <p>MQLs must be reviewed and accepted or rejected within 24 hours (business hours) for high-intent MQLs (demo requests, pricing inquiries) and 48 hours for lower-intent MQLs (content downloads). SLA compliance should be tracked in the CRM and reported weekly. SLA violations are a leading indicator of pipeline leakage.</p>
+    </div>
+  </div>
+
+  <div class="funnel-stage active-stage">
+    <div class="fs-header">
+      <div class="fs-badge">SAL</div>
+      <div class="fs-name">SAL — Sales Accepted Lead</div>
+      <div class="fs-prob">~8% probability</div>
+    </div>
+    <p>An SAL is an MQL that a sales rep (typically an SDR or AE, depending on the motion) has reviewed and accepted as worth pursuing — meaning they believe the lead is a real person at a real company that could plausibly buy your product. Acceptance means the rep commits to attempting contact within the SLA window.</p>
+    <div class="criteria-row">
+      <div class="criteria-box">
+        <div class="cb-label">Entry Criteria</div>
+        <ul>
+          <li>SDR or AE has reviewed the lead</li>
+          <li>Lead is a real person at a real company (verified)</li>
+          <li>Company size, industry, and geography within target parameters</li>
+          <li>Rep has accepted ownership and initiated contact attempt</li>
+        </ul>
+      </div>
+      <div class="criteria-box">
+        <div class="cb-label">Exit Criteria</div>
+        <ul>
+          <li>Qualification call completed → becomes SQL</li>
+          <li>Unable to reach after X attempts → recycled to nurture sequence</li>
+          <li>Disqualified on first contact (wrong person, no budget, wrong stage) → closed disqualified</li>
+          <li>SLA: first contact attempt within 4 hours of acceptance; 5 attempts before recycle</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <div class="funnel-stage active-stage">
+    <div class="fs-header">
+      <div class="fs-badge">SQL</div>
+      <div class="fs-name">SQL — Sales Qualified Lead</div>
+      <div class="fs-prob">~12% probability</div>
+    </div>
+    <p>An SQL has passed initial qualification — typically via a brief 15-30 minute discovery/qualification call. The qualification framework (BANT, MEDDICC, SPICED — see ICP &amp; Qualification page) has been applied to confirm that the basic requirements for a deal exist: there is a business problem your product addresses, there is probable budget, someone with authority has been identified, and the timeline is reasonable for your sales cycle.</p>
+    <div class="criteria-row">
+      <div class="criteria-box">
+        <div class="cb-label">Entry Criteria (BANT-Minimum)</div>
+        <ul>
+          <li>Business Pain confirmed — a specific problem your product addresses</li>
+          <li>Budget probable — budget category exists or initiative has executive sponsorship</li>
+          <li>Authority located — decision-maker identified (though not necessarily engaged)</li>
+          <li>Timeline reasonable — not "in 3 years," active evaluation likely within 6 months</li>
+          <li>Qualification call documented in CRM with notes</li>
+        </ul>
+      </div>
+      <div class="criteria-box">
+        <div class="cb-label">Exit Criteria</div>
+        <ul>
+          <li>Full discovery completed, pain confirmed → Stage 1 Opportunity created</li>
+          <li>ICP validated: company matches firmographic and technographic criteria</li>
+          <li>Economic Buyer identified (name, title on record)</li>
+          <li>Next steps agreed with prospect (not just "I'll reach out")</li>
+          <li>Disqualified if BANT fails → closed with reason code</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <div class="funnel-stage active-stage">
+    <div class="fs-header">
+      <div class="fs-badge">1</div>
+      <div class="fs-name">Stage 1 — Discovery</div>
+      <div class="fs-prob">15-20%</div>
+    </div>
+    <p>Discovery is the first formal opportunity stage. The rep has moved beyond qualification (confirming the basics exist) to deep discovery (understanding the full picture of the problem, the stakeholders involved, the decision process, and the business impact). This is the most critical stage — what you learn here determines your entire deal strategy for every subsequent stage.</p>
+    <div class="criteria-row">
+      <div class="criteria-box">
+        <div class="cb-label">Entry Criteria</div>
+        <ul>
+          <li>Discovery call scheduled or completed</li>
+          <li>Opportunity record created in CRM</li>
+          <li>Initial pain documented</li>
+          <li>ICP validation confirmed by AE</li>
+        </ul>
+      </div>
+      <div class="criteria-box">
+        <div class="cb-label">Exit Criteria</div>
+        <ul>
+          <li>Pain fully confirmed with specific business impact</li>
+          <li>ICP validated (not just probable)</li>
+          <li>Economic Buyer identified by name and title</li>
+          <li>Champion identified (internal advocate)</li>
+          <li>Decision process and criteria mapped</li>
+          <li>Compelling event / deadline identified</li>
+          <li>Next steps agreed in writing (MPA)</li>
+        </ul>
+      </div>
+    </div>
+    <p style="margin-top:12px;"><strong>Key Questions for Stage 1:</strong> What does the problem cost you today? How is this being handled currently? Who else is involved in solving this? What would happen if you didn't fix this? Who has to sign off on the purchase? What other solutions are you evaluating?</p>
+  </div>
+
+  <div class="funnel-stage active-stage">
+    <div class="fs-header">
+      <div class="fs-badge">2</div>
+      <div class="fs-name">Stage 2 — Evaluation / Solution Design</div>
+      <div class="fs-prob">30-40%</div>
+    </div>
+    <p>Stage 2 is the evaluation phase — the prospect is actively evaluating your solution against alternatives (including competitors and the status quo). This stage typically includes a product demonstration, a proof of concept (POC), a sandbox trial, or a deep-dive working session. The champion is now confirmed and actively helping you navigate the internal process.</p>
+    <div class="criteria-row">
+      <div class="criteria-box">
+        <div class="cb-label">Entry Criteria</div>
+        <ul>
+          <li>Mutual evaluation begun (demo, POC, or deep-dive scheduled)</li>
+          <li>Champion confirmed (internal advocate actively helping)</li>
+          <li>Evaluation scope agreed</li>
+        </ul>
+      </div>
+      <div class="criteria-box">
+        <div class="cb-label">Exit Criteria</div>
+        <ul>
+          <li>Champion confirmed with access to Economic Buyer</li>
+          <li>Success criteria agreed in writing (how will they evaluate success?)</li>
+          <li>Decision criteria mapped (all factors in the evaluation)</li>
+          <li>Competitive landscape identified (who else is in the deal?)</li>
+          <li>Technical validation completed (security review, integration check)</li>
+          <li>Economic Buyer engaged at least once (email, meeting, or champion confirmed EB support)</li>
+        </ul>
+      </div>
+    </div>
+    <div class="callout callout-best-practice" style="margin-top:12px;">
+      <div class="callout-title">The POC Trap</div>
+      <p>Extended POCs and trials are the #1 deal killer in B2B SaaS. Insist on a Mutual Success Plan before starting any POC: defined success criteria, defined timeframe (30 days maximum), defined decision process after POC completion, and EB engagement at POC kickoff. An open-ended POC without success criteria is just delay — and delay is the enemy of every deal.</p>
+    </div>
+  </div>
+
+  <div class="funnel-stage active-stage">
+    <div class="fs-header">
+      <div class="fs-badge">3</div>
+      <div class="fs-name">Stage 3 — Proposal / Business Case</div>
+      <div class="fs-prob">50-60%</div>
+    </div>
+    <p>Stage 3 begins when you have delivered a formal proposal or business case to the Economic Buyer. This is not the same as emailing a pricing deck to a champion — the EB must be directly engaged. The business case should quantify the ROI of the investment, summarize the evaluation results (POC success, reference checks), and make the commercial ask.</p>
+    <div class="criteria-row">
+      <div class="criteria-box">
+        <div class="cb-label">Entry Criteria</div>
+        <ul>
+          <li>Proposal delivered to Economic Buyer directly</li>
+          <li>Business case built and presented (ROI documented)</li>
+          <li>Commercial terms provided</li>
+          <li>Success criteria from Stage 2 addressed in proposal</li>
+        </ul>
+      </div>
+      <div class="criteria-box">
+        <div class="cb-label">Exit Criteria</div>
+        <ul>
+          <li>EB engagement confirmed (response, meeting, or champion confirms active consideration)</li>
+          <li>Evaluation criteria confirmed in our favor (champion provides honest assessment)</li>
+          <li>Legal and procurement process identified</li>
+          <li>Decision timeline confirmed</li>
+          <li>Verbal commitment or shortlisting confirmed</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <div class="funnel-stage active-stage">
+    <div class="fs-header">
+      <div class="fs-badge">4</div>
+      <div class="fs-name">Stage 4 — Negotiation / Legal</div>
+      <div class="fs-prob">75-85%</div>
+    </div>
+    <p>Stage 4 begins when a verbal commitment has been received and the deal is in commercial and legal review. The prospect has chosen your solution — the remaining work is finalizing contract terms, completing legal review (security questionnaires, MSA/DPA negotiation), and navigating procurement approval. This is not a done deal until contracts are signed — but the primary risk has shifted from "will they choose us" to "will internal process complete in time."</p>
+    <div class="criteria-row">
+      <div class="criteria-box">
+        <div class="cb-label">Entry Criteria</div>
+        <ul>
+          <li>Verbal commitment received from EB or champion with EB confirmation</li>
+          <li>Contract/legal review initiated</li>
+          <li>Redline process or standard contract review underway</li>
+          <li>Procurement/finance stakeholder identified</li>
+        </ul>
+      </div>
+      <div class="criteria-box">
+        <div class="cb-label">Exit Criteria</div>
+        <ul>
+          <li>Contract fully executed (signed by both parties) → Closed Won</li>
+          <li>Deal collapses during legal/negotiation → Closed Lost with reason</li>
+          <li>Deal pauses (budget freeze, re-org, no decision) → track separately</li>
+        </ul>
+      </div>
+    </div>
+    <div class="callout callout-warning" style="margin-top:12px;">
+      <div class="callout-title">Stage 4 Risk Factors</div>
+      <p>Deals that die in Stage 4 almost always die due to risks that were present in earlier stages: legal requirements not surfaced, procurement process not understood, budget not truly confirmed, or the EB commitment was softer than believed. The best Stage 4 risk mitigation is thorough Stage 2 and Stage 3 qualification. In Stage 4, maintain weekly contact with champion, understand the legal timeline, and escalate executive-to-executive if review extends beyond agreed timeline.</p>
+    </div>
+  </div>
+
+  <div class="funnel-stage" style="border-color:#437A22; background:#f0fff4;">
+    <div class="fs-header">
+      <div class="fs-badge closed-won">✓</div>
+      <div class="fs-name">CLOSED WON</div>
+      <div class="fs-prob" style="background:#437A22; color:#fff;">100%</div>
+    </div>
+    <p>Contract signed by all required parties. Revenue recognized per company accounting policy (ASC 606 in the US). CRM updated with contract value, start date, contract term, and renewal date. Deal is transitioned to Customer Success within SLA (typically 24-48 hours post-signature). All competitive data, deal notes, and lessons learned archived for analysis.</p>
+  </div>
+
+  <div class="funnel-stage" style="border-color:#A13544; background:#fff8f9;">
+    <div class="fs-header">
+      <div class="fs-badge closed-lost">✗</div>
+      <div class="fs-name">CLOSED LOST</div>
+      <div class="fs-prob prob-red">0%</div>
+    </div>
+    <p>The prospect chose a competitor, chose to delay (no decision), failed to secure budget approval, or went dark after sustained follow-up. <strong>Lost reason codes must be mandatory CRM fields</strong> — without consistent lost reason tracking, you cannot identify systematic weaknesses in positioning, qualification, or competitive response. Standard lost reasons: Lost to Competitor (specify which), Lost to No Decision / Status Quo, Lost — Budget not approved, Lost — Product gap, Lost — Timeline slip &gt;6 months, Lost — Champion left, Lost — Price.</p>
+    <p style="margin-top:10px;"><strong>Lost deal analysis</strong> should be a monthly ritual. Which competitors appear most frequently? At which stage do most losses occur? What product gaps or pricing issues appear across multiple lost deals? This is your most important feedback loop for product roadmap, pricing strategy, and competitive enablement.</p>
+  </div>
+
+  <!-- STAGE PROBABILITY DEFAULTS -->
+  <h2 class="section-title">Stage Probability Defaults & Calibration</h2>
+  <p class="section-intro">Probabilities are used in weighted pipeline forecasting. Default probabilities should reflect historical close rates at each stage, not aspirational targets. Calibrate annually based on prior year deal data.</p>
+
+  <table class="data-table">
+    <thead>
+      <tr>
+        <th>Stage</th>
+        <th>Default Probability</th>
+        <th>Calibration Signal</th>
+        <th>Common Miscalibration</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>MQL</td>
+        <td>5%</td>
+        <td>% of MQLs that eventually close</td>
+        <td>Often 0% in practice — remove from pipeline reports</td>
+      </tr>
+      <tr>
+        <td>SQL</td>
+        <td>10%</td>
+        <td>% of SQLs that become opportunities that close</td>
+        <td>Often set too high by optimistic reps</td>
+      </tr>
+      <tr>
+        <td>Stage 1 — Discovery</td>
+        <td>15-20%</td>
+        <td>Historical Stage 1 close rate</td>
+        <td>Commonly 8-12% in practice for many segments</td>
+      </tr>
+      <tr>
+        <td>Stage 2 — Evaluation</td>
+        <td>30-40%</td>
+        <td>Historical Stage 2+ close rate</td>
+        <td>Deals that stall in Stage 2 for 60+ days need discount</td>
+      </tr>
+      <tr>
+        <td>Stage 3 — Proposal</td>
+        <td>50-60%</td>
+        <td>Historical Stage 3+ close rate</td>
+        <td>If EB not engaged, 50% is likely overestimated</td>
+      </tr>
+      <tr>
+        <td>Stage 4 — Negotiation</td>
+        <td>75-85%</td>
+        <td>Historical Stage 4+ close rate</td>
+        <td>Legal/procurement delays can push deals to next quarter</td>
+      </tr>
+      <tr>
+        <td>Closed Won</td>
+        <td>100%</td>
+        <td>N/A — actuals</td>
+        <td>N/A</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <!-- CONVERSION BENCHMARKS -->
+  <h2 class="section-title">Funnel Conversion Benchmarks by Segment</h2>
+  <p class="section-intro">These benchmarks represent typical ranges for well-run SaaS sales organizations. Your actual rates will vary based on ICP quality, product-market fit, rep quality, and sales motion. Use these as diagnostic references — if you're materially below a benchmark, investigate why before setting targets.</p>
+
+  <table class="data-table">
+    <thead>
+      <tr>
+        <th>Conversion</th>
+        <th>SMB (&lt;$10K ACV)</th>
+        <th>Mid-Market ($10-100K ACV)</th>
+        <th>Enterprise (&gt;$100K ACV)</th>
+        <th>Intervention if Below</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>MQL → SAL</td>
+        <td>40-65%</td>
+        <td>50-70%</td>
+        <td>60-80%</td>
+        <td>Review ICP targeting and lead scoring thresholds</td>
+      </tr>
+      <tr>
+        <td>SAL → SQL</td>
+        <td>40-60%</td>
+        <td>35-55%</td>
+        <td>30-50%</td>
+        <td>Improve qualification calls; review SDR training</td>
+      </tr>
+      <tr>
+        <td>SQL → Stage 1 Opp</td>
+        <td>60-80%</td>
+        <td>60-75%</td>
+        <td>55-70%</td>
+        <td>Review qualification criteria; ensure SQL threshold is high enough</td>
+      </tr>
+      <tr>
+        <td>Stage 1 → Stage 2</td>
+        <td>55-70%</td>
+        <td>50-65%</td>
+        <td>45-60%</td>
+        <td>Review discovery call quality and champion development</td>
+      </tr>
+      <tr>
+        <td>Stage 2 → Stage 3</td>
+        <td>50-65%</td>
+        <td>50-65%</td>
+        <td>45-60%</td>
+        <td>POC/evaluation process, EB engagement strategy</td>
+      </tr>
+      <tr>
+        <td>Stage 3 → Stage 4</td>
+        <td>60-75%</td>
+        <td>55-70%</td>
+        <td>50-65%</td>
+        <td>Business case quality, competitive positioning, pricing</td>
+      </tr>
+      <tr>
+        <td>Stage 4 → Close</td>
+        <td>70-85%</td>
+        <td>70-85%</td>
+        <td>65-80%</td>
+        <td>Legal process, procurement navigation, executive sponsorship</td>
+      </tr>
+      <tr>
+        <td><strong>Overall SQL-to-Close</strong></td>
+        <td><strong>15-25%</strong></td>
+        <td><strong>15-22%</strong></td>
+        <td><strong>12-20%</strong></td>
+        <td>Systemic review across all stages</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <!-- THE FUNNEL AUDIT -->
+  <h2 class="section-title">The Funnel Audit — Identifying and Fixing Leakage</h2>
+  <p class="section-intro">A funnel audit examines conversion rates at every stage to find where pipeline is being lost at disproportionate rates. The audit framework: Volume × Conversion = Output. For every stage, ask: is the volume entering this stage sufficient? Is the conversion rate at or above benchmark? If either fails, identify root cause and intervene.</p>
+
+  <div class="formula-block">
+    <div class="formula-label">Funnel Audit Framework</div>
+    <div class="formula-main">Required Input Volume at Stage N = Required Output / Conversion Rate at Stage N
+
+Gap Analysis: Actual Output vs. Required Output at each stage
+Root Cause by Stage:
+  Low MQL volume → Demand gen investment or ICP targeting problem
+  Low MQL→SAL rate → Lead scoring too loose (quality problem from marketing)
+  Low SAL→SQL rate → SDR call quality, wrong buyer, bad qualification framework
+  Low Stage 1→2 rate → Discovery quality, product-market fit signal, champion identification
+  Low Stage 2→3 rate → POC quality, competitive positioning, EB engagement
+  Low Stage 3→4 rate → Business case, pricing, procurement navigation
+  Low Stage 4→Close rate → Legal process, deal stall, last-mile commitment issues</div>
+  </div>
+
+  <!-- LEAD LIFECYCLE -->
+  <h2 class="section-title">Lead Lifecycle Model — Age-Out Rules & Re-Engagement</h2>
+  <p class="section-intro">Leads that sit at a stage beyond a defined maximum age should either be disqualified or recycled into nurture programs. Without age-out rules, pipeline reports become cluttered with zombie opportunities that distort forecasting and waste rep time.</p>
+
+  <table class="data-table">
+    <thead>
+      <tr>
+        <th>Stage</th>
+        <th>Maximum Age (SMB/MM)</th>
+        <th>Maximum Age (Enterprise)</th>
+        <th>Age-Out Action</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>MQL (unworked)</td>
+        <td>48 hours</td>
+        <td>48 hours</td>
+        <td>Auto-escalation to SDR manager if not accepted/rejected</td>
+      </tr>
+      <tr>
+        <td>SAL (uncontacted)</td>
+        <td>5 business days</td>
+        <td>5 business days</td>
+        <td>Disqualify or auto-reassign to available SDR</td>
+      </tr>
+      <tr>
+        <td>Stage 1 — Discovery</td>
+        <td>30 days</td>
+        <td>60 days</td>
+        <td>Manager review required; recycle to nurture if no progress</td>
+      </tr>
+      <tr>
+        <td>Stage 2 — Evaluation</td>
+        <td>45 days</td>
+        <td>90 days</td>
+        <td>Manager pipeline review; require written next steps or downgrade</td>
+      </tr>
+      <tr>
+        <td>Stage 3 — Proposal</td>
+        <td>30 days</td>
+        <td>60 days</td>
+        <td>Executive escalation if EB not responsive; consider no-decision</td>
+      </tr>
+      <tr>
+        <td>Stage 4 — Negotiation</td>
+        <td>30 days</td>
+        <td>45 days</td>
+        <td>Legal escalation; executive-to-executive outreach; close or lose</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div class="subsection">
+    <div class="subsection-title">Re-Engagement Programs for Aged Leads</div>
+    <p>Leads recycled from the funnel — particularly SQLs that went cold and MQLs that were disqualified — are not dead. They represent a warm, partially-educated audience. Recycle them into a structured nurture program: 6-8 email touches over 60-90 days covering use cases, customer stories, product updates, and value content. Automate triggers based on re-engagement signals (email open, website visit, content download). When a recycled lead re-engages meaningfully, route back to an SDR for re-qualification — not back to the original rep if the deal went cold due to relationship issues.</p>
+  </div>
+
+  <!-- FUNNEL VELOCITY -->
+  <h2 class="section-title">Funnel Velocity — Measuring and Improving Deal Speed</h2>
+  <p class="section-intro">Pipeline velocity measures how quickly revenue moves through the funnel. Slower velocity means longer sales cycles, higher rep costs per deal, and reduced forecasting accuracy. The Pipeline Velocity formula combines four key levers into a single metric.</p>
+
+  <div class="formula-block">
+    <div class="formula-label">Pipeline Velocity Formula</div>
+    <div class="formula-main">Pipeline Velocity = (# Opportunities × Win Rate × Average ACV) / Average Sales Cycle Length (days)
+
+Example: 50 opps × 20% win rate × $50K ACV / 90 days = $5,556/day in pipeline velocity
+
+Improving velocity:
+  ↑ # Opportunities: demand gen, SDR productivity
+  ↑ Win Rate: better qualification, champion development, competitive response
+  ↑ ACV: upsell motion, multi-year deals, better ICP targeting
+  ↓ Sales Cycle: better discovery, mutual success plans, executive alignment</div>
+  </div>
+
+  <div class="subsection">
+    <div class="subsection-title">Days-in-Stage Benchmarks</div>
+  </div>
+  <div style="display:grid; grid-template-columns: 1fr 1fr; gap:10px; margin-bottom:20px;">
+    <div class="velocity-card">
+      <div class="vc-stage">Stage 1 — Discovery</div>
+      <div class="vc-bench">SMB: 7-14 days | MM: 14-30 days | Enterprise: 30-60 days</div>
+      <div class="vc-note">If exceeding: discovery call quality issue or unclear next steps. Require mutual action plan at Stage 1 exit.</div>
+    </div>
+    <div class="velocity-card">
+      <div class="vc-stage">Stage 2 — Evaluation</div>
+      <div class="vc-bench">SMB: 14-21 days | MM: 21-45 days | Enterprise: 45-90 days</div>
+      <div class="vc-note">POC/trial durations drive this. Time-box all evaluations. Open-ended POCs are sales cycle killers.</div>
+    </div>
+    <div class="velocity-card">
+      <div class="vc-stage">Stage 3 — Proposal</div>
+      <div class="vc-bench">SMB: 7-14 days | MM: 14-30 days | Enterprise: 30-45 days</div>
+      <div class="vc-note">Slow EB response is the primary cause of Stage 3 stall. Champion must be your internal advocate pushing for EB engagement.</div>
+    </div>
+    <div class="velocity-card">
+      <div class="vc-stage">Stage 4 — Negotiation</div>
+      <div class="vc-bench">SMB: 3-7 days | MM: 14-30 days | Enterprise: 30-60 days</div>
+      <div class="vc-note">Legal review is the primary driver. Know procurement timelines early. Surface legal requirements in Stage 2, not Stage 4.</div>
+    </div>
+  </div>
+
+  <!-- BOWTIE MODEL -->
+  <h2 class="section-title">The Bowtie Model — Revenue Beyond the Close</h2>
+
+  <div class="bowtie-section">
+    <h4>The Bowtie Replaces the Linear Funnel in SaaS</h4>
+    <p>The traditional linear funnel ends at Closed Won — but in SaaS, the close is the beginning of the revenue relationship, not the end. The Bowtie Model (popularized by David Boyle and widely adopted in CS-led SaaS companies) extends the funnel through the entire customer lifecycle. The left side of the bowtie is the traditional acquisition funnel (awareness → MQL → SQL → opportunity → close). The right side is the expansion funnel: onboarding → adoption → value realization → renewal → expansion → advocacy.</p>
+    <p>In SaaS companies with NRR above 120%, the right side of the bowtie generates more revenue than the left side. This means that a CRO's job isn't just to close new business — it's to ensure the entire revenue system, including post-sale, is generating compounding growth. Tracking the right side of the bowtie requires the same rigor as the left: defined stages with entry/exit criteria, conversion rates, and velocity metrics.</p>
+    <p><strong>Bowtie Right-Side Stages:</strong> Onboarding (time-to-value tracked), Adoption (DAU/MAU, feature breadth), Value Realization (first ROI moment documented), At-Risk / Health Score (see Health Scoring page), Renewal (renewal pipeline managed as a separate funnel), Expansion (upsell/cross-sell opportunity pipeline), Advocacy (reference program, G2 reviews, referrals). Each stage has a responsible owner (typically CS or a CSM/AE hybrid) and defined metrics.</p>
+  </div>
+
+  <!-- FUNNEL GOVERNANCE -->
+  <h2 class="section-title">Funnel Governance — Ownership, Audits & Cadences</h2>
+  <p class="section-intro">A funnel definition document that lives in a Google Doc and is never enforced is worse than useless — it creates false confidence. Funnel governance means active, operational ownership of the funnel definitions, CRM enforcement of stage criteria, and regular audits of funnel health.</p>
+
+  <div style="display:grid; grid-template-columns: 1fr 1fr; gap:12px; margin: 16px 0;">
+    <div class="governance-block">
+      <div class="gb-role">Owner</div>
+      <div class="gb-name">RevOps</div>
+      <p>Maintains the funnel definition document, enforces CRM field requirements at stage transitions, builds and maintains funnel analytics dashboards, runs monthly funnel audit, identifies conversion rate trends.</p>
+    </div>
+    <div class="governance-block">
+      <div class="gb-role">Owner</div>
+      <div class="gb-name">Marketing</div>
+      <p>Owns MQL definition and quality. Responsible for MQL-to-SAL rate above threshold. Reports on lead source quality by MQL-to-SQL conversion. Updates lead scoring model quarterly.</p>
+    </div>
+    <div class="governance-block">
+      <div class="gb-role">Owner</div>
+      <div class="gb-name">SDR Manager</div>
+      <p>Owns SAL-to-SQL conversion rate and MQL SLA compliance. Responsible for qualification standards and documentation. Reviews all recycled/disqualified leads for trend patterns.</p>
+    </div>
+    <div class="governance-block">
+      <div class="gb-role">Owner</div>
+      <div class="gb-name">Sales Management</div>
+      <p>Owns Stage 1-4 conversion rates and deal velocity. Reviews pipeline health weekly. Enforces stage criteria in pipeline reviews — no "hoped for" stage advancement without evidence-based exit criteria met.</p>
+    </div>
+  </div>
+
+  <div class="subsection">
+    <div class="subsection-title">Funnel Review Cadence</div>
+    <ul class="bullet-list">
+      <li><strong>Weekly:</strong> Pipeline review with all AEs — every Stage 2+ opportunity reviewed for next steps, blockers, and forecast category. Flag any opportunity exceeding age-out thresholds.</li>
+      <li><strong>Monthly:</strong> Full funnel health audit — conversion rates vs. prior month vs. benchmark, volume at each stage vs. plan, CPL by channel, MQL-to-SAL trends. Identify root causes for any metric below threshold.</li>
+      <li><strong>Quarterly:</strong> Funnel definition review — are stage criteria still accurate for the current motion? Update conversion benchmarks based on trailing quarter actuals. Recalibrate stage probabilities. Review lost reason analysis and update competitive battle cards.</li>
+      <li><strong>Annually:</strong> Full funnel architecture review — as the company scales, the funnel motion may need to evolve (new segments, new geographies, new sales motions like PLG or channel). Revisit all definitions against current go-to-market strategy.</li>
+    </ul>
+  </div>
+
+  <!-- KEY INDICATORS -->
+  <h2 class="section-title">Key Indicators</h2>
+
+  <div class="subsection">
+    <div class="subsection-title">Leading Indicators</div>
+    <div class="indicator-row">
+      <span class="indicator-tag ind-leading">MQL Volume</span>
+      <span class="indicator-tag ind-leading">MQL-to-SAL Rate</span>
+      <span class="indicator-tag ind-leading">SAL-to-SQL Rate</span>
+      <span class="indicator-tag ind-leading">Days in Stage (trend)</span>
+      <span class="indicator-tag ind-leading">Stage 1 Creation Rate</span>
+      <span class="indicator-tag ind-leading">MQL SLA Compliance %</span>
+    </div>
+  </div>
+
+  <div class="subsection">
+    <div class="subsection-title">Lagging Indicators</div>
+    <div class="indicator-row">
+      <span class="indicator-tag ind-lagging">SQL-to-Close Rate</span>
+      <span class="indicator-tag ind-lagging">Funnel Conversion Trend</span>
+      <span class="indicator-tag ind-lagging">Pipeline Velocity</span>
+      <span class="indicator-tag ind-lagging">Average Sales Cycle Length</span>
+      <span class="indicator-tag ind-lagging">Lost Reason Distribution</span>
+      <span class="indicator-tag ind-lagging">Win Rate vs. Prior Period</span>
+    </div>
+  </div>
+
+  <div class="subsection">
+    <div class="subsection-title">Funnel Formulas</div>
+    <div class="indicator-row">
+      <span class="indicator-tag ind-formula">Pipeline Velocity = (Opps × Win Rate × ACV) / Sales Cycle Days</span>
+      <span class="indicator-tag ind-formula">MQL-to-Close Rate = Total Closes / Total MQLs</span>
+      <span class="indicator-tag ind-formula">Conversion Rate N→N+1 = Exits to next stage / Total entered × 100</span>
+    </div>
+  </div>
+
+  <div class="related-section">
+    <div class="related-title">Related Sections</div>
+    <div class="related-links">
+      <a href="demand-generation.html" class="related-link">Demand Generation</a>
+      <a href="lead-scoring.html" class="related-link">Lead Scoring</a>
+      <a href="meddicc.html" class="related-link">MEDDICC</a>
+      <a href="forecasting.html" class="related-link">Forecasting</a>
+      <a href="revenue-attribution.html" class="related-link">Revenue Attribution</a>
+      <a href="../pages/phase3.html" class="related-link">Phase 3 Overview</a>
+    </div>
+  </div>
+</div>
+<script data-pplx-inline-edit>
+(function () {
+  if (window === window.top) return;
+
+  const allowedParentOrigins = ["https://www.perplexity.ai","https://perplexity.ai","https://testing.perplexity.ai","https://staging.perplexity.ai","https://*.preview.i.perplexity.ai","http://localhost:3000","http://127.0.0.1:3000","http://localhost:5173","http://127.0.0.1:5173"];
+  const MAX_FONT_BYTES = 500 * 1024;
+  const MAX_TOTAL_FONT_BYTES = 2 * 1024 * 1024;
+  let scrollForwarding = false;
+  let scrollRaf = 0;
+  let trustedTopOrigin = null;
+
+  // Allow entries like "https://*.preview.i.perplexity.ai" — the wildcard
+  // matches a single DNS label (no dots), so "https://*.foo" cannot stretch
+  // across multiple labels.
+  function matchesAllowedOrigin(origin) {
+    if (!origin) return false;
+    for (const entry of allowedParentOrigins) {
+      if (!entry.includes("*")) {
+        if (entry === origin) return true;
+        continue;
+      }
+      const pattern = new RegExp(
+        "^" +
+          entry.replace(/[.+?^${}()|[\]\\]/g, "\\$&").replace(/\*/g, "[^.]+") +
+          "$",
+      );
+      if (pattern.test(origin)) return true;
+    }
+    return false;
+  }
+
+  // Trust decision: when the sender is same-origin-visible (event.origin is a
+  // real origin like https://www.perplexity.ai) we trust event.origin directly.
+  // When event.origin is "null" (opaque broker srcdoc), we fall back to the
+  // broker's stamped `parentOrigin` to identify the top window. The fallback
+  // is claim-only — we rely on the browser's native `targetOrigin` enforcement
+  // on the response path (see postToTrustedTop) to ensure replies can't be
+  // delivered to anyone but the actual top window of that claimed origin.
+  function getTrustedParentOrigin(event) {
+    const forwardedParentOrigin =
+      typeof event.data.parentOrigin === "string" ? event.data.parentOrigin : null;
+    const parentOrigin = event.origin === "null" ? forwardedParentOrigin : event.origin;
+    return matchesAllowedOrigin(parentOrigin) ? parentOrigin : null;
+  }
+
+  // All responses go to window.top with targetOrigin = the allowlisted origin.
+  // An attacker that iframes us inside their own null-origin broker can claim
+  // any parentOrigin they like, but the browser will drop the reply whenever
+  // the real top's origin doesn't match — so the screenshot never leaves.
+  function postToTrustedTop(message) {
+    if (!trustedTopOrigin) return;
+    try {
+      window.top.postMessage(message, trustedTopOrigin);
+    } catch (_error) {}
+  }
+
+  function inlineAll(original, clone) {
+    if (original.nodeType !== 1 || clone.nodeType !== 1) return;
+
+    try {
+      const computedStyle = getComputedStyle(original);
+      // cssText on a computed style is the serialized declaration in modern
+      // Chromium/Safari — a single read beats enumerating ~400 longhand
+      // properties. Firefox returns "" here, so we fall back on empty.
+      const serialized = computedStyle.cssText;
+      if (serialized) {
+        clone.style.cssText = serialized;
+      } else {
+        const parts = new Array(computedStyle.length);
+        for (let index = 0; index < computedStyle.length; index += 1) {
+          const property = computedStyle[index];
+          parts[index] = `${property}:${computedStyle.getPropertyValue(property)};`;
+        }
+        clone.style.cssText = parts.join("");
+      }
+    } catch (_error) {}
+
+    const originalChildren = original.children;
+    const clonedChildren = clone.children;
+    for (
+      let index = 0;
+      index < originalChildren.length && index < clonedChildren.length;
+      index += 1
+    ) {
+      inlineAll(originalChildren[index], clonedChildren[index]);
+    }
+  }
+
+  function extractFontUrl(srcValue) {
+    const matches = [
+      ...srcValue.matchAll(
+        /url\(["']?([^"')]+)["']?\)(?:\s*format\(["']?([^"')]+)["']?\))?/gi,
+      ),
+    ];
+    if (matches.length === 0) return null;
+    const woff2 = matches.find((m) => m[2] && m[2].toLowerCase().includes("woff2"));
+    if (woff2) return woff2[1];
+    const woff = matches.find((m) => m[2] && m[2].toLowerCase().includes("woff"));
+    if (woff) return woff[1];
+    return matches[0][1];
+  }
+
+  // Cache resolved font URL -> data URI across captures. Fonts on a page
+  // essentially never change, and a batch run emits multiple captures back to
+  // back — without this we'd refetch + re-base64 every time.
+  const fontDataUriCache = new Map();
+  const SRC_DECLARATION_RE = /src\s*:\s*[^;}]+/i;
+
+  async function fetchAsDataUri(url) {
+    if (fontDataUriCache.has(url)) return fontDataUriCache.get(url);
+    let dataUri = null;
+    try {
+      const response = await fetch(url, { mode: "cors", credentials: "omit" });
+      if (response.ok) {
+        const blob = await response.blob();
+        if (blob.size <= MAX_FONT_BYTES) {
+          dataUri = await new Promise((resolve) => {
+            const reader = new FileReader();
+            reader.onloadend = () =>
+              resolve(typeof reader.result === "string" ? reader.result : null);
+            reader.onerror = () => resolve(null);
+            reader.readAsDataURL(blob);
+          });
+        }
+      }
+    } catch (_error) {
+      dataUri = null;
+    }
+    fontDataUriCache.set(url, dataUri);
+    return dataUri;
+  }
+
+  function collectFontFaceRuleTexts() {
+    const rules = [];
+    for (const sheet of document.styleSheets) {
+      let cssRules;
+      try {
+        cssRules = sheet.cssRules;
+      } catch (_error) {
+        continue;
+      }
+      if (!cssRules) continue;
+      for (const rule of cssRules) {
+        const cssText = rule.cssText || "";
+        if (cssText.startsWith("@font-face")) rules.push(cssText);
+      }
+    }
+    return rules;
+  }
+
+  async function buildInlinedFontCss() {
+    const ruleTexts = collectFontFaceRuleTexts();
+    if (ruleTexts.length === 0) return null;
+
+    const resolved = ruleTexts.map((cssText) => {
+      if (!SRC_DECLARATION_RE.test(cssText)) return null;
+      const srcMatch = cssText.match(/src\s*:\s*([^;}]+)[;}]/i);
+      if (!srcMatch) return null;
+      const url = extractFontUrl(srcMatch[1]);
+      if (!url) return null;
+      try {
+        return { cssText, url: new URL(url, document.baseURI).href };
+      } catch (_error) {
+        return null;
+      }
+    });
+
+    const dataUris = await Promise.all(
+      resolved.map((entry) => (entry ? fetchAsDataUri(entry.url) : Promise.resolve(null))),
+    );
+
+    const inlined = [];
+    let totalBytes = 0;
+    for (let index = 0; index < resolved.length; index += 1) {
+      const entry = resolved[index];
+      const dataUri = dataUris[index];
+      if (!entry || !dataUri) continue;
+      const approxBytes = dataUri.length * 0.75;
+      if (totalBytes + approxBytes > MAX_TOTAL_FONT_BYTES) break;
+      totalBytes += approxBytes;
+      inlined.push(entry.cssText.replace(SRC_DECLARATION_RE, `src: url("${dataUri}")`));
+    }
+    return inlined.length > 0 ? inlined.join("\n") : null;
+  }
+
+  function stripExternal(clone) {
+    const images = clone.querySelectorAll("img");
+    for (let index = 0; index < images.length; index += 1) {
+      const src = images[index].getAttribute("src");
+      if (src && !src.startsWith("data:")) images[index].removeAttribute("src");
+    }
+
+    const elements = clone.querySelectorAll("*");
+    for (let index = 0; index < elements.length; index += 1) {
+      const style = elements[index].style.cssText;
+      if (style && style.includes("url(")) {
+        elements[index].style.cssText = style.replace(
+          /url\(["']?(?!data:)[^)"']*["']?\)/gi,
+          "none",
+        );
+      }
+    }
+  }
+
+  function emitScroll() {
+    scrollRaf = 0;
+    if (!scrollForwarding) return;
+    postToTrustedTop({
+      type: "INLINE_EDIT_SCROLL",
+      scrollX: window.scrollX,
+      scrollY: window.scrollY,
+    });
+  }
+
+  window.addEventListener(
+    "scroll",
+    function () {
+      if (!scrollForwarding || scrollRaf) return;
+      scrollRaf = requestAnimationFrame(emitScroll);
+    },
+    { passive: true, capture: true },
+  );
+
+  async function handleCaptureRequest(event) {
+    const requestId = event.data.requestId;
+    const scrollX = window.scrollX;
+    const scrollY = window.scrollY;
+    const width = window.innerWidth;
+    const height = window.innerHeight;
+
+    function postResult(dataUrl) {
+      postToTrustedTop({
+        type: "INLINE_EDIT_SCREENSHOT_RESULT",
+        requestId,
+        dataUrl,
+        scrollX,
+        scrollY,
+      });
+    }
+
+    try {
+      // Wait for any pending web fonts to resolve so both inline metrics and
+      // the @font-face inlining below see the same loaded faces.
+      if (document.fonts && document.fonts.ready) {
+        try {
+          await document.fonts.ready;
+        } catch (_error) {}
+      }
+
+      const clone = document.documentElement.cloneNode(true);
+      inlineAll(document.documentElement, clone);
+
+      const removedNodes = clone.querySelectorAll("script,link[rel=\"stylesheet\"],style");
+      for (let index = 0; index < removedNodes.length; index += 1) {
+        removedNodes[index].remove();
+      }
+
+      stripExternal(clone);
+
+      // Re-embed web fonts as data-URI @font-face rules so the SVG rasterizer
+      // can resolve them — external font URLs aren't fetched during
+      // foreignObject rendering, which would otherwise force a fallback face
+      // and change text metrics.
+      const inlinedFontCss = await buildInlinedFontCss();
+      if (inlinedFontCss) {
+        const styleEl = document.createElement("style");
+        styleEl.textContent = inlinedFontCss;
+        const head = clone.querySelector("head");
+        if (head) head.appendChild(styleEl);
+        else clone.insertBefore(styleEl, clone.firstChild);
+      }
+
+      const html = new XMLSerializer().serializeToString(clone);
+      const svg =
+        `<svg xmlns="http://www.w3.org/2000/svg" width="${width}" height="${height}">` +
+        '<foreignObject width="100%" height="100%">' +
+        `<div xmlns="http://www.w3.org/1999/xhtml" style="width:${width}px;height:${height}px;overflow:hidden">` +
+        `<div style="transform:translate(-${scrollX}px,-${scrollY}px);transform-origin:top left">` +
+        html +
+        "</div></div></foreignObject></svg>";
+      const svgUrl = `data:image/svg+xml;charset=utf-8,${encodeURIComponent(svg)}`;
+      const image = new Image();
+      image.onload = function () {
+        const canvas = document.createElement("canvas");
+        canvas.width = width;
+        canvas.height = height;
+        canvas.getContext("2d").drawImage(image, 0, 0);
+        postResult(canvas.toDataURL("image/png"));
+      };
+      image.onerror = function () {
+        postResult(null);
+      };
+      image.src = svgUrl;
+    } catch (_error) {
+      postResult(null);
+    }
+  }
+
+  window.addEventListener("message", function (event) {
+    if (!event.data) return;
+    // Only accept messages from the direct parent frame. Blocks sibling /
+    // unrelated-window postMessage senders that could otherwise reach us.
+    if (event.source !== window.parent) return;
+
+    const trustedParentOrigin = getTrustedParentOrigin(event);
+    if (!trustedParentOrigin) return;
+    trustedTopOrigin = trustedParentOrigin;
+
+    if (event.data.type === "INLINE_EDIT_SCROLL_START") {
+      scrollForwarding = true;
+      emitScroll();
+      return;
+    }
+
+    if (event.data.type === "INLINE_EDIT_SCROLL_STOP") {
+      scrollForwarding = false;
+      if (scrollRaf) cancelAnimationFrame(scrollRaf);
+      scrollRaf = 0;
+      return;
+    }
+
+    if (event.data.type !== "INLINE_EDIT_CAPTURE_REQUEST") return;
+
+    handleCaptureRequest(event);
+  });
+})();
+
+
+</script></body>
+</html>

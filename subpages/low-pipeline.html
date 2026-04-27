@@ -1,0 +1,769 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Diagnosing & Fixing Low Pipeline Volume — SaaS Revenue System</title>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="../assets/shared.css"/>
+  <style>.page-hero { background: #A13544; }</style>
+</head>
+<body>
+<nav class="nav">
+  <span class="nav-logo">SaaS <span>Revenue System</span></span>
+  <span class="nav-sep">|</span>
+  <a href="../index.html" class="nav-back">← Home</a>
+  <span class="nav-sep">|</span>
+  <a href="../pages/phase6.html" class="nav-back">Troubleshooting</a>
+  <span class="nav-sep">|</span>
+  <span class="nav-current">Low Pipeline Volume</span>
+</nav>
+
+<div class="page-hero">
+  <div class="hero-phase-label">PHASE 6 — TROUBLESHOOTING</div>
+  <div class="hero-title">Diagnosing &amp; Fixing Low Pipeline Volume</div>
+  <div class="hero-subtitle">Low pipeline is the most dangerous revenue problem — it is always a leading indicator of future missed quarters. Here is how to find the root cause and fix it fast.</div>
+</div>
+
+<div class="content-wrap">
+  <div class="breadcrumb">
+    <a href="../index.html">Home</a><span class="sep">›</span>
+    <a href="../pages/phase6.html">Troubleshooting</a><span class="sep">›</span>
+    <span class="current">Diagnosing &amp; Fixing Low Pipeline Volume</span>
+  </div>
+
+  <!-- WHY PIPELINE IS A LEADING INDICATOR -->
+  <div class="section-title">Why Low Pipeline Is the Most Dangerous Revenue Problem</div>
+  <div class="section-intro">Pipeline is the only true leading indicator in SaaS sales. By the time a missed quarter appears in your forecast, the decision-making failures that caused it happened 60–120 days earlier — precisely when the pipeline was thin. Every other revenue problem (low win rate, long cycles, high churn) is visible in real time. Low pipeline is invisible until it is too late.</div>
+
+  <div class="subsection">
+    <div class="subsection-title">The 60–120 Day Lag Effect</div>
+    <p>In a typical mid-market SaaS company with a 60–90 day average sales cycle, pipeline created today will close in Q+1. If you end Q1 with below-2x coverage heading into Q2, you already missed Q2 — you just don't know it yet. This is why pipeline reviews must happen weekly, not monthly, and why CROs who only inspect pipeline at QBRs consistently miss quarters.</p>
+    <p>The math is unforgiving: if your average sales cycle is 75 days, pipeline you create in week 1 of a quarter may not close until week 10–11. Any shortfall visible in week 4 cannot be made up within the same quarter with organic prospecting alone. The only options at that point are emergency programs, deal acceleration tactics, or resignation to the miss.</p>
+  </div>
+
+  <div class="indicator-row">
+    <span class="indicator-tag ind-leading">LEADING INDICATOR — visible 60–120 days before a miss</span>
+    <span class="indicator-tag ind-lagging">REVENUE IMPACT — visible at quarter close</span>
+  </div>
+
+  <div class="callout callout-warning">
+    <div class="callout-title">⚠ The Benchmark You Must Know</div>
+    <p>Healthy pipeline coverage is <strong>3x–4x quota for a quarter</strong> at the start of the period. If you are below 2x at week 4 of a quarter, you are in emergency territory. Below 1.5x means the quarter is mathematically at risk even with perfect execution. Most companies do not measure this until it is too late.</p>
+  </div>
+
+  <div class="formula-block">
+    <div class="formula-label">Pipeline Coverage Ratio</div>
+    <div class="formula-main">Coverage = Total Pipeline Value ÷ Quota for the Period</div>
+    <div class="formula-note">Target: 3x–4x at quarter start | Warning: below 2x | Emergency: below 1.5x</div>
+  </div>
+
+  <!-- THE DIAGNOSTIC FRAMEWORK -->
+  <div class="section-title">The Pipeline Diagnostic Framework</div>
+  <div class="section-intro">Before prescribing a fix, you must correctly diagnose the cause. There are exactly two top-level categories: demand generation failure and sales execution failure. Most low-pipeline situations involve both, but one usually dominates. The diagnostic starts with segmentation.</div>
+
+  <div class="subsection">
+    <div class="subsection-title">Step 1: Isolate the Source of the Gap</div>
+    <p>Pull pipeline created over the last 90 days and break it down by source: inbound marketing-sourced vs. outbound SDR-sourced vs. AE self-sourced. If marketing-sourced pipeline is healthy but SDR-sourced is thin, the problem is in sales execution. If both are thin, demand gen is the upstream failure. If only one segment or territory is thin, the problem is localized to a rep or a market.</p>
+  </div>
+
+  <table class="data-table">
+    <thead>
+      <tr>
+        <th>Pipeline Source</th>
+        <th>Healthy Signal</th>
+        <th>Warning Signal</th>
+        <th>Primary Suspect</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>Inbound / Marketing</td>
+        <td>MQL volume growing QoQ; MQL→SQL >30%</td>
+        <td>MQL volume flat or declining; SQL rate <15%</td>
+        <td>Demand gen: spend, channels, messaging</td>
+      </tr>
+      <tr>
+        <td>Outbound / SDR-sourced</td>
+        <td>Meetings booked per SDR ≥8/month</td>
+        <td>Meetings booked <4/month per SDR</td>
+        <td>SDR activity, ICP targeting, outreach quality</td>
+      </tr>
+      <tr>
+        <td>AE Self-Sourced</td>
+        <td>20–30% of AE pipeline self-generated</td>
+        <td>AEs producing <10% of own pipeline</td>
+        <td>Rep prospecting discipline, enablement</td>
+      </tr>
+      <tr>
+        <td>Partner / Referral</td>
+        <td>Growing 10%+ QoQ</td>
+        <td>Declining or zero</td>
+        <td>Partner program investment and activation</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <!-- ROOT CAUSE 1: ICP -->
+  <div class="section-title">Root Cause 1: ICP Too Narrow or Too Broad</div>
+  <div class="section-intro">An ICP that is too narrow starves the top of funnel by limiting the addressable pool. An ICP that is too broad creates volume but collapses at the MQL→SQL conversion because reps are disqualifying most of what marketing sends them. Both look like "low pipeline" but require opposite fixes.</div>
+
+  <div class="subsection">
+    <div class="subsection-title">How to Diagnose ICP Fit as the Root Cause</div>
+    <p>Pull your MQL-to-SQL conversion rate for the last 6 months. Benchmark: world-class is 40–50%, good is 30–40%, problematic is below 20%. If your rate is below 20%, marketing is generating leads that sales cannot qualify. This is an ICP definition or targeting problem — marketing and sales are misaligned on who the ideal customer is.</p>
+    <p>Next, segment your won deals by the firmographic dimensions of your ICP — company size, industry, tech stack, use case, growth stage. Calculate win rate and average ACV by segment. If certain segments win at 30%+ and others win at less than 10%, your ICP should be tightened to the high-converting segments and your demand gen targeting updated accordingly.</p>
+  </div>
+
+  <div class="formula-block">
+    <div class="formula-label">MQL-to-SQL Conversion Rate</div>
+    <div class="formula-main">MQL→SQL Rate = SQLs Created ÷ MQLs Generated × 100</div>
+    <div class="formula-note">World-class: 40–50% | Good: 30–40% | Problematic: &lt;20% → ICP/targeting misalignment</div>
+  </div>
+
+  <div class="subsection">
+    <div class="subsection-title">Diagnostic Questions</div>
+    <ul class="bullet-list">
+      <li>When was the ICP last formally reviewed against customer outcomes (NRR, churn)?</li>
+      <li>What is the MQL→SQL conversion rate by source and by industry segment?</li>
+      <li>Are reps consistently rejecting leads from the same categories? What categories?</li>
+      <li>Do your won customers in the last 12 months match the ICP on file?</li>
+      <li>What is the win rate and ACV by ICP tier (Tier 1 / Tier 2 / Out of ICP)?</li>
+    </ul>
+  </div>
+
+  <div class="subsection">
+    <div class="subsection-title">30-Day Fix</div>
+    <ul class="bullet-list">
+      <li>Week 1: Audit the last 50 won deals — identify the 5 firmographic characteristics most predictive of wins</li>
+      <li>Week 2: Run a win-rate and NRR analysis by ICP attribute, identify outlier-performing segments</li>
+      <li>Week 3: Update ICP definition document and align marketing on targeting update</li>
+      <li>Week 4: Rebuild SDR targeting lists using updated ICP; update marketing audience definitions in paid channels</li>
+    </ul>
+  </div>
+
+  <!-- ROOT CAUSE 2: DEMAND GEN -->
+  <div class="section-title">Root Cause 2: Demand Gen Underfunded or Misdirected</div>
+  <div class="section-intro">Demand generation failures come in two flavors: not enough investment (budget too low for the market), or investment in the wrong channels for the ICP. Both starve the top of funnel but the fix is different.</div>
+
+  <div class="subsection">
+    <div class="subsection-title">How to Diagnose Using Pipeline by Source</div>
+    <p>Pull pipeline created in the last 3 quarters segmented by marketing channel: paid search, paid social, content/SEO, events, partner, direct outbound. Calculate the pipeline-to-spend ratio for each channel (pipeline generated ÷ spend). Identify which channels are generating pipeline at a cost below your CAC target and which are burning budget without producing pipeline.</p>
+    <p>The classic misdirection pattern: spending heavily on brand awareness (podcast sponsorships, conference sponsorships, brand campaigns) while bottom-of-funnel demand capture (paid search on high-intent keywords, direct competitor terms, retargeting) is underfunded. Brand spend has a 6–18 month payback window; if you are in a low-pipeline emergency, brand spend does not help.</p>
+  </div>
+
+  <div class="formula-block">
+    <div class="formula-label">Pipeline Return on Marketing Spend (by Channel)</div>
+    <div class="formula-main">Pipeline ROMS = Pipeline Generated from Channel ÷ Channel Spend</div>
+    <div class="formula-note">Target: 10x–15x | Good: 6x–10x | At-risk: below 4x | Re-evaluate channel below 2x</div>
+  </div>
+
+  <div class="subsection">
+    <div class="subsection-title">Diagnostic Questions</div>
+    <ul class="bullet-list">
+      <li>What is pipeline by marketing channel for the last 3 quarters? What is the cost-per-pipeline-dollar by channel?</li>
+      <li>What percentage of the marketing budget is demand capture vs. brand awareness?</li>
+      <li>What is the content conversion rate — visits to MQL for content/SEO pages?</li>
+      <li>Are events producing pipeline? What is the pipeline-to-event-cost ratio?</li>
+      <li>What does the paid search auction look like — are competitors bidding on your brand terms?</li>
+    </ul>
+  </div>
+
+  <div class="subsection">
+    <div class="subsection-title">30-Day Fix</div>
+    <ul class="bullet-list">
+      <li>Shift budget immediately from brand/awareness to demand capture (paid search on buying-intent keywords, retargeting, competitor terms)</li>
+      <li>Audit the top 10 content pieces — add high-intent CTAs and gating where appropriate</li>
+      <li>Launch a direct response email campaign to existing MQL database (contacts who visited pricing or demo pages)</li>
+      <li>Activate bottom-of-funnel content: case studies, comparison pages, ROI calculators targeted at in-market buyers</li>
+    </ul>
+  </div>
+
+  <!-- ROOT CAUSE 3: REPS NOT PROSPECTING -->
+  <div class="section-title">Root Cause 3: Reps Not Prospecting</div>
+  <div class="section-intro">In many mid-market and enterprise SaaS organizations, AEs have been conditioned to wait for inbound — to treat pipeline as something that happens to them rather than something they create. When inbound slows, these reps do not compensate with outbound because they have never been held accountable for self-generated pipeline.</div>
+
+  <div class="subsection">
+    <div class="subsection-title">How to Diagnose Using Activity Metrics</div>
+    <p>Pull activity data from your CRM and sales engagement platform (Outreach, Salesloft, Apollo) for the last 30 days per rep: sequences enrolled, calls made, emails sent, meetings booked from outbound. Compare against the activity benchmark for your team. If reps are running below 50% of the activity target, you have a prospecting execution problem — not a market problem.</p>
+  </div>
+
+  <table class="data-table">
+    <thead>
+      <tr>
+        <th>Activity Metric</th>
+        <th>SMB AE Benchmark</th>
+        <th>Mid-Market AE Benchmark</th>
+        <th>Enterprise AE Benchmark</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>Sequences started / week</td>
+        <td>15–25 new prospects</td>
+        <td>8–15 new prospects</td>
+        <td>3–6 new prospects</td>
+      </tr>
+      <tr>
+        <td>Calls made / week</td>
+        <td>30–50 dials</td>
+        <td>20–35 dials</td>
+        <td>8–15 dials</td>
+      </tr>
+      <tr>
+        <td>Outbound meetings booked / month</td>
+        <td>6–10</td>
+        <td>4–7</td>
+        <td>2–4</td>
+      </tr>
+      <tr>
+        <td>Self-sourced pipeline as % of quota</td>
+        <td>30–40%</td>
+        <td>20–30%</td>
+        <td>15–25%</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div class="subsection">
+    <div class="subsection-title">Diagnostic Questions</div>
+    <ul class="bullet-list">
+      <li>What are each rep's sequences started and calls made in the last 30 days vs. their target?</li>
+      <li>What percentage of each rep's pipeline is self-sourced vs. inbound? How has this trended over 6 months?</li>
+      <li>Is the team using the sales engagement platform consistently? What is the platform login frequency?</li>
+      <li>Are reps given adequate prospecting time or is it crowded out by admin, QBR prep, and internal meetings?</li>
+      <li>Is there an explicit prospecting block on reps' calendars each week?</li>
+    </ul>
+  </div>
+
+  <div class="subsection">
+    <div class="subsection-title">30-Day Fix</div>
+    <ul class="bullet-list">
+      <li>Publish a weekly activity leaderboard — visibility alone moves behavior significantly</li>
+      <li>Block 2-hour prospecting time on each AE calendar Monday–Wednesday; treat it as non-negotiable</li>
+      <li>Run a 2-week outbound sprint with a team challenge — first AE to book 5 self-sourced meetings wins</li>
+      <li>Hold managers accountable to reviewing activity metrics in every 1:1 — not just pipeline value</li>
+    </ul>
+  </div>
+
+  <!-- ROOT CAUSE 4: SDR UNDERPERFORMANCE -->
+  <div class="section-title">Root Cause 4: SDR Underperformance</div>
+  <div class="section-intro">SDR underperformance is distinct from AE prospecting failure. SDRs are measured on a narrower set of metrics and have a single job: create qualified meetings that convert to pipeline. If the SDR motion is broken, the pipeline creation engine is broken for all outbound.</div>
+
+  <div class="subsection">
+    <div class="subsection-title">SDR Conversion Funnel Benchmarks</div>
+  </div>
+
+  <div class="metric-grid">
+    <div class="metric-card">
+      <div class="m-label">Meetings Booked / SDR / Month</div>
+      <div class="m-value">8–12</div>
+      <div class="m-desc">World-class SDR. Below 5 is underperformance. Below 3 is a crisis.</div>
+    </div>
+    <div class="metric-card">
+      <div class="m-label">Meeting → SQL Rate</div>
+      <div class="m-value">55–70%</div>
+      <div class="m-desc">Of booked meetings, what % become actual SQLs. Below 40% = ICP targeting issue.</div>
+    </div>
+    <div class="metric-card">
+      <div class="m-label">Outreach → Meeting Rate</div>
+      <div class="m-value">3–6%</div>
+      <div class="m-desc">Of prospects contacted, what % book meetings. Below 2% = messaging problem.</div>
+    </div>
+    <div class="metric-card">
+      <div class="m-label">Sequences Running (Active)</div>
+      <div class="m-value">150–250</div>
+      <div class="m-desc">Number of prospects in active sequences at any time. Below 100 = not enough volume.</div>
+    </div>
+  </div>
+
+  <div class="subsection">
+    <div class="subsection-title">Diagnosing SDR Conversion Issues</div>
+    <p>If meetings booked are low but activity is high, the issue is conversion — either messaging is not resonating (low reply rate, low call connect-to-meeting rate) or the prospect list is wrong (wrong personas, wrong company size, not in ICP). If both activity and meetings are low, the SDR is not prospecting enough and this is a management and accountability issue.</p>
+    <p>Segment SDR performance: if one or two SDRs are consistently above target and others are below, the problem is individual performance and coaching. If the entire team is below target, the problem is systemic — the process, the messaging, the ICP, or the tools.</p>
+  </div>
+
+  <div class="subsection">
+    <div class="subsection-title">30-Day Fix for SDR Underperformance</div>
+    <ul class="bullet-list">
+      <li>Run a messaging audit: A/B test 3 new email hooks on the same target list; measure reply rate improvements</li>
+      <li>Institute daily SDR standup (10 minutes) to review prior day activity, share what is working, set daily targets</li>
+      <li>Pull call recordings for the bottom 3 SDRs — identify specific conversion breakdown points (cold open, value pitch, handling objections)</li>
+      <li>Refresh prospect lists using updated ICP; remove contacts who have been outreached 4+ times with no engagement</li>
+      <li>If messaging and lists are healthy but performance is still low after 30 days of coaching, make performance management decisions</li>
+    </ul>
+  </div>
+
+  <!-- ROOT CAUSE 5: MESSAGING NOT RESONATING -->
+  <div class="section-title">Root Cause 5: Messaging Not Resonating</div>
+  <div class="section-intro">Even with the right ICP and sufficient activity, pipeline will be low if the outreach messaging does not create urgency and relevance. This is especially common when the product has evolved but the messaging has not, or when the market has shifted and the original pain points are less acute.</div>
+
+  <div class="subsection">
+    <div class="subsection-title">How to Diagnose Using Reply Rates and Meeting Booking Rates</div>
+    <p>Pull email reply rates from your sales engagement platform for the last 60 days. Benchmark: a reply rate (including negative replies) above 8% indicates the message is generating interest. Below 3% is a strong signal the message is either not reaching the right person or not landing. Meeting booking rate from email: above 2% is healthy, below 1% is a messaging failure.</p>
+    <p>For calls, analyze the call connect-to-meeting conversion rate. If reps are connecting with decision-makers but not booking meetings (below 15% connect-to-meeting), the value proposition is not landing on the phone. Listen to 10–15 recordings with the CRO and VP of Marketing in the room and identify exactly where prospects disengage.</p>
+  </div>
+
+  <div class="callout callout-best-practice">
+    <div class="callout-title">✓ Messaging Fix: The 3-Message Test</div>
+    <p>Write three different version-A cold email sequences targeting the same persona list: (1) pain-focused opening (the problem your prospect hates), (2) outcome-focused opening (what life looks like after the problem is solved), (3) insight-led opening (a provocative insight about their industry). Run all three simultaneously for 2 weeks. The highest-performing variant in reply rate and meeting rate becomes your new control. Rotate at 60-day intervals to prevent fatigue.</p>
+  </div>
+
+  <div class="subsection">
+    <div class="subsection-title">30-Day Fix</div>
+    <ul class="bullet-list">
+      <li>Conduct 5 win interviews and 5 loss interviews this week — ask what language resonated and what felt generic</li>
+      <li>Rewrite cold email sequences with persona-specific pain language from interview findings</li>
+      <li>Update call scripts to open with a provocative insight or relevant trigger (funding news, hiring spike, tech stack change)</li>
+      <li>Enable reps with case studies from the same industry or company stage as the target account</li>
+    </ul>
+  </div>
+
+  <!-- EMERGENCY PLAYBOOK -->
+  <div class="section-title">The Pipeline Emergency Playbook: 60 Days to End of Quarter, Below 2x Coverage</div>
+  <div class="section-intro">When you are 60 days from quarter end and pipeline is below 2x coverage, normal interventions are too slow. You need an emergency program that can generate qualified pipeline within 30 days — which limits your options significantly.</div>
+
+  <div class="callout callout-warning">
+    <div class="callout-title">⚠ Reality Check First</div>
+    <p>Before launching an emergency program, accept that Q is likely at risk. The emergency program is to protect Q+1, not to save Q. Pipeline created in week 4 of a quarter with a 60-day average cycle will close in week 12 at the earliest — which is Q+1. Communicate this reality to the board before the miss, not after.</p>
+  </div>
+
+  <ol class="step-list">
+    <li>
+      <div class="step-content">
+        <span class="step-title">Activate Every Warm Relationship in the Company</span>
+        Email your entire customer base from the CEO asking for referrals. Activate executive relationships for warm introductions. Pull the "lost-to-no-decision" list from the last 12 months and re-engage with a new angle. These are the fastest pipeline opportunities because trust already exists.
+      </div>
+    </li>
+    <li>
+      <div class="step-content">
+        <span class="step-title">Launch an Outbound Blitz with the Entire GTM Team</span>
+        Every SDR, AE, and CSM runs outbound for 2 weeks. Set a company-wide target: 50 qualified meetings in 14 days. Hold a daily war room standup. Create a shared Slack channel with live updates on meetings booked. The urgency and visibility drive behavior.
+      </div>
+    </li>
+    <li>
+      <div class="step-content">
+        <span class="step-title">Double Down on High-Intent Demand Capture</span>
+        Increase paid search budget 2–3x on bottom-of-funnel keywords immediately. Launch retargeting campaigns to all pricing page visitors from the last 60 days. Run a "free assessment" or "pipeline audit" content campaign to capture in-market buyers who need a low-friction entry point.
+      </div>
+    </li>
+    <li>
+      <div class="step-content">
+        <span class="step-title">Run an Event or Webinar Immediately</span>
+        A targeted virtual event for your ICP on a high-relevance pain topic can generate 20–40 qualified attendees within 3 weeks if executed well. The invite list should be existing contacts in your CRM who have not converted to opportunities. Host a follow-up discovery call offer at the close of every session.
+      </div>
+    </li>
+    <li>
+      <div class="step-content">
+        <span class="step-title">Expedite Stalled Deals in the Pipeline</span>
+        Pull every deal that has been in stage 2+ for more than 60 days. Schedule a CRO or VP call for each one this week. Offer to solve a specific problem (free workshop, executive briefing, reference call) to re-activate momentum. A small number of reactivated deals can be worth more than weeks of top-of-funnel work.
+      </div>
+    </li>
+    <li>
+      <div class="step-content">
+        <span class="step-title">Offer a Q-End Incentive to Accelerate Timeline</span>
+        For deals that could close this quarter with urgency, offer a time-limited incentive: extended payment terms, an additional seat discount, free implementation support, or a quarterly pricing option. Use selectively — do not devalue the product by doing this broadly. Reserve for deals where the buyer has signaled interest but lacks urgency.
+      </div>
+    </li>
+  </ol>
+
+  <div class="section-title">All Pipeline Benchmarks at a Glance</div>
+
+  <table class="data-table">
+    <thead>
+      <tr>
+        <th>Metric</th>
+        <th>World-Class</th>
+        <th>Healthy</th>
+        <th>Warning</th>
+        <th>Emergency</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>Pipeline Coverage at Quarter Start</td>
+        <td>4x+</td>
+        <td>3x–4x</td>
+        <td>2x–3x</td>
+        <td>Below 2x</td>
+      </tr>
+      <tr>
+        <td>MQL→SQL Conversion Rate</td>
+        <td>40–50%</td>
+        <td>30–40%</td>
+        <td>20–30%</td>
+        <td>Below 20%</td>
+      </tr>
+      <tr>
+        <td>SDR Meetings Booked / Month</td>
+        <td>10–12</td>
+        <td>7–10</td>
+        <td>4–7</td>
+        <td>Below 4</td>
+      </tr>
+      <tr>
+        <td>Outreach Reply Rate (Cold Email)</td>
+        <td>8–12%</td>
+        <td>5–8%</td>
+        <td>3–5%</td>
+        <td>Below 3%</td>
+      </tr>
+      <tr>
+        <td>Meeting → SQL Rate</td>
+        <td>65–75%</td>
+        <td>50–65%</td>
+        <td>35–50%</td>
+        <td>Below 35%</td>
+      </tr>
+      <tr>
+        <td>Pipeline ROMS (Marketing)</td>
+        <td>15x+</td>
+        <td>10x–15x</td>
+        <td>5x–10x</td>
+        <td>Below 5x</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div class="related-section">
+    <div class="related-title">Related Sections</div>
+    <div class="related-links">
+      <a class="related-link" href="low-win-rate.html">Low Win Rates</a>
+      <a class="related-link" href="long-sales-cycles.html">Long Sales Cycles</a>
+      <a class="related-link" href="missed-forecasts.html">Missed Forecasts</a>
+      <a class="related-link" href="../subpages/pipeline-generation.html">Pipeline Generation</a>
+      <a class="related-link" href="../subpages/icp.html">ICP Definition</a>
+      <a class="related-link" href="../subpages/demand-generation.html">Demand Generation</a>
+      <a class="related-link" href="../subpages/meddicc.html">MEDDICC Framework</a>
+    </div>
+  </div>
+</div>
+<script data-pplx-inline-edit>
+(function () {
+  if (window === window.top) return;
+
+  const allowedParentOrigins = ["https://www.perplexity.ai","https://perplexity.ai","https://testing.perplexity.ai","https://staging.perplexity.ai","https://*.preview.i.perplexity.ai","http://localhost:3000","http://127.0.0.1:3000","http://localhost:5173","http://127.0.0.1:5173"];
+  const MAX_FONT_BYTES = 500 * 1024;
+  const MAX_TOTAL_FONT_BYTES = 2 * 1024 * 1024;
+  let scrollForwarding = false;
+  let scrollRaf = 0;
+  let trustedTopOrigin = null;
+
+  // Allow entries like "https://*.preview.i.perplexity.ai" — the wildcard
+  // matches a single DNS label (no dots), so "https://*.foo" cannot stretch
+  // across multiple labels.
+  function matchesAllowedOrigin(origin) {
+    if (!origin) return false;
+    for (const entry of allowedParentOrigins) {
+      if (!entry.includes("*")) {
+        if (entry === origin) return true;
+        continue;
+      }
+      const pattern = new RegExp(
+        "^" +
+          entry.replace(/[.+?^${}()|[\]\\]/g, "\\$&").replace(/\*/g, "[^.]+") +
+          "$",
+      );
+      if (pattern.test(origin)) return true;
+    }
+    return false;
+  }
+
+  // Trust decision: when the sender is same-origin-visible (event.origin is a
+  // real origin like https://www.perplexity.ai) we trust event.origin directly.
+  // When event.origin is "null" (opaque broker srcdoc), we fall back to the
+  // broker's stamped `parentOrigin` to identify the top window. The fallback
+  // is claim-only — we rely on the browser's native `targetOrigin` enforcement
+  // on the response path (see postToTrustedTop) to ensure replies can't be
+  // delivered to anyone but the actual top window of that claimed origin.
+  function getTrustedParentOrigin(event) {
+    const forwardedParentOrigin =
+      typeof event.data.parentOrigin === "string" ? event.data.parentOrigin : null;
+    const parentOrigin = event.origin === "null" ? forwardedParentOrigin : event.origin;
+    return matchesAllowedOrigin(parentOrigin) ? parentOrigin : null;
+  }
+
+  // All responses go to window.top with targetOrigin = the allowlisted origin.
+  // An attacker that iframes us inside their own null-origin broker can claim
+  // any parentOrigin they like, but the browser will drop the reply whenever
+  // the real top's origin doesn't match — so the screenshot never leaves.
+  function postToTrustedTop(message) {
+    if (!trustedTopOrigin) return;
+    try {
+      window.top.postMessage(message, trustedTopOrigin);
+    } catch (_error) {}
+  }
+
+  function inlineAll(original, clone) {
+    if (original.nodeType !== 1 || clone.nodeType !== 1) return;
+
+    try {
+      const computedStyle = getComputedStyle(original);
+      // cssText on a computed style is the serialized declaration in modern
+      // Chromium/Safari — a single read beats enumerating ~400 longhand
+      // properties. Firefox returns "" here, so we fall back on empty.
+      const serialized = computedStyle.cssText;
+      if (serialized) {
+        clone.style.cssText = serialized;
+      } else {
+        const parts = new Array(computedStyle.length);
+        for (let index = 0; index < computedStyle.length; index += 1) {
+          const property = computedStyle[index];
+          parts[index] = `${property}:${computedStyle.getPropertyValue(property)};`;
+        }
+        clone.style.cssText = parts.join("");
+      }
+    } catch (_error) {}
+
+    const originalChildren = original.children;
+    const clonedChildren = clone.children;
+    for (
+      let index = 0;
+      index < originalChildren.length && index < clonedChildren.length;
+      index += 1
+    ) {
+      inlineAll(originalChildren[index], clonedChildren[index]);
+    }
+  }
+
+  function extractFontUrl(srcValue) {
+    const matches = [
+      ...srcValue.matchAll(
+        /url\(["']?([^"')]+)["']?\)(?:\s*format\(["']?([^"')]+)["']?\))?/gi,
+      ),
+    ];
+    if (matches.length === 0) return null;
+    const woff2 = matches.find((m) => m[2] && m[2].toLowerCase().includes("woff2"));
+    if (woff2) return woff2[1];
+    const woff = matches.find((m) => m[2] && m[2].toLowerCase().includes("woff"));
+    if (woff) return woff[1];
+    return matches[0][1];
+  }
+
+  // Cache resolved font URL -> data URI across captures. Fonts on a page
+  // essentially never change, and a batch run emits multiple captures back to
+  // back — without this we'd refetch + re-base64 every time.
+  const fontDataUriCache = new Map();
+  const SRC_DECLARATION_RE = /src\s*:\s*[^;}]+/i;
+
+  async function fetchAsDataUri(url) {
+    if (fontDataUriCache.has(url)) return fontDataUriCache.get(url);
+    let dataUri = null;
+    try {
+      const response = await fetch(url, { mode: "cors", credentials: "omit" });
+      if (response.ok) {
+        const blob = await response.blob();
+        if (blob.size <= MAX_FONT_BYTES) {
+          dataUri = await new Promise((resolve) => {
+            const reader = new FileReader();
+            reader.onloadend = () =>
+              resolve(typeof reader.result === "string" ? reader.result : null);
+            reader.onerror = () => resolve(null);
+            reader.readAsDataURL(blob);
+          });
+        }
+      }
+    } catch (_error) {
+      dataUri = null;
+    }
+    fontDataUriCache.set(url, dataUri);
+    return dataUri;
+  }
+
+  function collectFontFaceRuleTexts() {
+    const rules = [];
+    for (const sheet of document.styleSheets) {
+      let cssRules;
+      try {
+        cssRules = sheet.cssRules;
+      } catch (_error) {
+        continue;
+      }
+      if (!cssRules) continue;
+      for (const rule of cssRules) {
+        const cssText = rule.cssText || "";
+        if (cssText.startsWith("@font-face")) rules.push(cssText);
+      }
+    }
+    return rules;
+  }
+
+  async function buildInlinedFontCss() {
+    const ruleTexts = collectFontFaceRuleTexts();
+    if (ruleTexts.length === 0) return null;
+
+    const resolved = ruleTexts.map((cssText) => {
+      if (!SRC_DECLARATION_RE.test(cssText)) return null;
+      const srcMatch = cssText.match(/src\s*:\s*([^;}]+)[;}]/i);
+      if (!srcMatch) return null;
+      const url = extractFontUrl(srcMatch[1]);
+      if (!url) return null;
+      try {
+        return { cssText, url: new URL(url, document.baseURI).href };
+      } catch (_error) {
+        return null;
+      }
+    });
+
+    const dataUris = await Promise.all(
+      resolved.map((entry) => (entry ? fetchAsDataUri(entry.url) : Promise.resolve(null))),
+    );
+
+    const inlined = [];
+    let totalBytes = 0;
+    for (let index = 0; index < resolved.length; index += 1) {
+      const entry = resolved[index];
+      const dataUri = dataUris[index];
+      if (!entry || !dataUri) continue;
+      const approxBytes = dataUri.length * 0.75;
+      if (totalBytes + approxBytes > MAX_TOTAL_FONT_BYTES) break;
+      totalBytes += approxBytes;
+      inlined.push(entry.cssText.replace(SRC_DECLARATION_RE, `src: url("${dataUri}")`));
+    }
+    return inlined.length > 0 ? inlined.join("\n") : null;
+  }
+
+  function stripExternal(clone) {
+    const images = clone.querySelectorAll("img");
+    for (let index = 0; index < images.length; index += 1) {
+      const src = images[index].getAttribute("src");
+      if (src && !src.startsWith("data:")) images[index].removeAttribute("src");
+    }
+
+    const elements = clone.querySelectorAll("*");
+    for (let index = 0; index < elements.length; index += 1) {
+      const style = elements[index].style.cssText;
+      if (style && style.includes("url(")) {
+        elements[index].style.cssText = style.replace(
+          /url\(["']?(?!data:)[^)"']*["']?\)/gi,
+          "none",
+        );
+      }
+    }
+  }
+
+  function emitScroll() {
+    scrollRaf = 0;
+    if (!scrollForwarding) return;
+    postToTrustedTop({
+      type: "INLINE_EDIT_SCROLL",
+      scrollX: window.scrollX,
+      scrollY: window.scrollY,
+    });
+  }
+
+  window.addEventListener(
+    "scroll",
+    function () {
+      if (!scrollForwarding || scrollRaf) return;
+      scrollRaf = requestAnimationFrame(emitScroll);
+    },
+    { passive: true, capture: true },
+  );
+
+  async function handleCaptureRequest(event) {
+    const requestId = event.data.requestId;
+    const scrollX = window.scrollX;
+    const scrollY = window.scrollY;
+    const width = window.innerWidth;
+    const height = window.innerHeight;
+
+    function postResult(dataUrl) {
+      postToTrustedTop({
+        type: "INLINE_EDIT_SCREENSHOT_RESULT",
+        requestId,
+        dataUrl,
+        scrollX,
+        scrollY,
+      });
+    }
+
+    try {
+      // Wait for any pending web fonts to resolve so both inline metrics and
+      // the @font-face inlining below see the same loaded faces.
+      if (document.fonts && document.fonts.ready) {
+        try {
+          await document.fonts.ready;
+        } catch (_error) {}
+      }
+
+      const clone = document.documentElement.cloneNode(true);
+      inlineAll(document.documentElement, clone);
+
+      const removedNodes = clone.querySelectorAll("script,link[rel=\"stylesheet\"],style");
+      for (let index = 0; index < removedNodes.length; index += 1) {
+        removedNodes[index].remove();
+      }
+
+      stripExternal(clone);
+
+      // Re-embed web fonts as data-URI @font-face rules so the SVG rasterizer
+      // can resolve them — external font URLs aren't fetched during
+      // foreignObject rendering, which would otherwise force a fallback face
+      // and change text metrics.
+      const inlinedFontCss = await buildInlinedFontCss();
+      if (inlinedFontCss) {
+        const styleEl = document.createElement("style");
+        styleEl.textContent = inlinedFontCss;
+        const head = clone.querySelector("head");
+        if (head) head.appendChild(styleEl);
+        else clone.insertBefore(styleEl, clone.firstChild);
+      }
+
+      const html = new XMLSerializer().serializeToString(clone);
+      const svg =
+        `<svg xmlns="http://www.w3.org/2000/svg" width="${width}" height="${height}">` +
+        '<foreignObject width="100%" height="100%">' +
+        `<div xmlns="http://www.w3.org/1999/xhtml" style="width:${width}px;height:${height}px;overflow:hidden">` +
+        `<div style="transform:translate(-${scrollX}px,-${scrollY}px);transform-origin:top left">` +
+        html +
+        "</div></div></foreignObject></svg>";
+      const svgUrl = `data:image/svg+xml;charset=utf-8,${encodeURIComponent(svg)}`;
+      const image = new Image();
+      image.onload = function () {
+        const canvas = document.createElement("canvas");
+        canvas.width = width;
+        canvas.height = height;
+        canvas.getContext("2d").drawImage(image, 0, 0);
+        postResult(canvas.toDataURL("image/png"));
+      };
+      image.onerror = function () {
+        postResult(null);
+      };
+      image.src = svgUrl;
+    } catch (_error) {
+      postResult(null);
+    }
+  }
+
+  window.addEventListener("message", function (event) {
+    if (!event.data) return;
+    // Only accept messages from the direct parent frame. Blocks sibling /
+    // unrelated-window postMessage senders that could otherwise reach us.
+    if (event.source !== window.parent) return;
+
+    const trustedParentOrigin = getTrustedParentOrigin(event);
+    if (!trustedParentOrigin) return;
+    trustedTopOrigin = trustedParentOrigin;
+
+    if (event.data.type === "INLINE_EDIT_SCROLL_START") {
+      scrollForwarding = true;
+      emitScroll();
+      return;
+    }
+
+    if (event.data.type === "INLINE_EDIT_SCROLL_STOP") {
+      scrollForwarding = false;
+      if (scrollRaf) cancelAnimationFrame(scrollRaf);
+      scrollRaf = 0;
+      return;
+    }
+
+    if (event.data.type !== "INLINE_EDIT_CAPTURE_REQUEST") return;
+
+    handleCaptureRequest(event);
+  });
+})();
+
+
+</script></body>
+</html>

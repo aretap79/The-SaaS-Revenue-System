@@ -1,0 +1,1080 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Sales Compensation Design — SaaS Revenue System</title>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="../assets/shared.css"/>
+  <style>
+    .page-hero { background: #2a7fa8; }
+    .ratio-card {
+      background: var(--surface);
+      border: 1.5px solid var(--border);
+      border-radius: 10px;
+      padding: 20px 24px;
+      margin-bottom: 14px;
+    }
+    .ratio-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 12px;
+    }
+    .ratio-role {
+      font-size: 15px;
+      font-weight: 700;
+      color: var(--text);
+    }
+    .ratio-badge {
+      font-size: 15px;
+      font-weight: 700;
+      color: #2a7fa8;
+      background: #e0ecf5;
+      padding: 4px 14px;
+      border-radius: 20px;
+    }
+    .ratio-bar {
+      height: 10px;
+      border-radius: 5px;
+      background: var(--border);
+      overflow: hidden;
+      margin-bottom: 6px;
+    }
+    .ratio-bar-inner {
+      height: 100%;
+      background: linear-gradient(90deg, #2a7fa8 0%, #e0ecf5 0%);
+      border-radius: 5px;
+    }
+    .ratio-labels {
+      display: flex;
+      justify-content: space-between;
+      font-size: 11px;
+      color: var(--text-muted);
+    }
+    .dist-chart {
+      display: flex;
+      align-items: flex-end;
+      gap: 6px;
+      height: 120px;
+      margin: 20px 0;
+      padding-bottom: 24px;
+      position: relative;
+    }
+    .dist-bar-wrap {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      height: 100%;
+      position: relative;
+    }
+    .dist-bar {
+      width: 100%;
+      background: #2a7fa8;
+      border-radius: 4px 4px 0 0;
+      position: absolute;
+      bottom: 20px;
+      transition: background 0.2s;
+    }
+    .dist-bar.under { background: #f5c6c2; }
+    .dist-bar.target { background: #a8d5a2; }
+    .dist-bar.over { background: #2a7fa8; }
+    .dist-label {
+      font-size: 10px;
+      color: var(--text-muted);
+      position: absolute;
+      bottom: 0;
+      text-align: center;
+      white-space: nowrap;
+    }
+    .dist-pct {
+      font-size: 11px;
+      font-weight: 700;
+      color: var(--text);
+      position: absolute;
+      width: 100%;
+      text-align: center;
+    }
+    .accel-block {
+      background: var(--surface);
+      border: 1.5px solid var(--border);
+      border-radius: 8px;
+      overflow: hidden;
+      margin: 20px 0;
+    }
+    .accel-row {
+      display: grid;
+      grid-template-columns: 1.5fr 1fr 1.5fr 2fr;
+      padding: 12px 16px;
+      border-bottom: 1px solid var(--border);
+      align-items: center;
+    }
+    .accel-row:last-child { border-bottom: none; }
+    .accel-header {
+      background: #1C1B19;
+      color: #fff;
+    }
+    .accel-header span {
+      font-size: 11px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+    .accel-row span {
+      font-size: 14px;
+    }
+    .accel-row .highlight {
+      color: #2a7fa8;
+      font-weight: 700;
+    }
+    .accel-row .muted {
+      color: var(--text-muted);
+      font-size: 13px;
+    }
+    .timing-card {
+      background: var(--surface);
+      border: 1.5px solid var(--border);
+      border-radius: 8px;
+      padding: 16px 20px;
+      margin-bottom: 10px;
+    }
+    .timing-title {
+      font-size: 14px;
+      font-weight: 700;
+      margin-bottom: 6px;
+    }
+    .timing-pros, .timing-cons {
+      font-size: 13px;
+      line-height: 1.6;
+    }
+    .timing-pros::before { content: '✓ '; color: #437A22; font-weight: 700; }
+    .timing-cons::before { content: '✗ '; color: #A13544; font-weight: 700; }
+    .timing-meta {
+      font-size: 12px;
+      color: var(--text-muted);
+      margin-top: 4px;
+    }
+    .comp-doc-item {
+      display: flex;
+      gap: 12px;
+      padding: 12px 0;
+      border-bottom: 1px solid var(--border);
+      align-items: flex-start;
+    }
+    .comp-doc-item:last-child { border-bottom: none; }
+    .comp-doc-item .icon {
+      width: 32px;
+      height: 32px;
+      border-radius: 6px;
+      background: #e0ecf5;
+      color: #2a7fa8;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 14px;
+      font-weight: 700;
+      flex-shrink: 0;
+    }
+    .comp-doc-content h5 {
+      font-size: 14px;
+      font-weight: 700;
+      margin-bottom: 3px;
+    }
+    .comp-doc-content p {
+      font-size: 13px;
+      color: var(--text-muted);
+      line-height: 1.5;
+      margin: 0;
+    }
+    .spiff-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+      margin: 16px 0;
+    }
+    .spiff-card {
+      background: var(--surface);
+      border: 1.5px solid var(--border);
+      border-radius: 8px;
+      padding: 16px;
+    }
+    .spiff-type {
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      color: #2a7fa8;
+      margin-bottom: 6px;
+    }
+    .spiff-name {
+      font-size: 14px;
+      font-weight: 700;
+      margin-bottom: 6px;
+    }
+    .spiff-desc {
+      font-size: 13px;
+      color: var(--text-muted);
+      line-height: 1.5;
+    }
+    @media (max-width: 768px) {
+      .accel-row { grid-template-columns: 1fr 1fr; }
+      .spiff-grid { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+<nav class="nav">
+  <span class="nav-logo">SaaS <span>Revenue System</span></span>
+  <span class="nav-sep">|</span>
+  <a href="../index.html" class="nav-back">← Home</a>
+  <span class="nav-sep">|</span>
+  <a href="../pages/phase2.html" class="nav-back">Phase 2: Team</a>
+  <span class="nav-sep">|</span>
+  <span class="nav-current">Compensation Design</span>
+</nav>
+
+<div class="page-hero">
+  <div class="hero-phase-label">Phase 2 — Hiring, Onboarding &amp; Compensation</div>
+  <div class="hero-title">Sales Compensation Design — Aligning Behavior with Revenue Strategy</div>
+  <div class="hero-subtitle">The compensation plan is the most powerful behavioral lever a sales leader has. Design it wrong and you will get exactly the wrong behaviors.</div>
+</div>
+
+<div class="content-wrap">
+  <div class="breadcrumb">
+    <a href="../index.html">Home</a>
+    <span class="sep">›</span>
+    <a href="../pages/phase2.html">Phase 2</a>
+    <span class="sep">›</span>
+    <span class="current">Compensation Design</span>
+  </div>
+
+  <!-- THE COMPENSATION PRINCIPLE -->
+  <h2 class="section-title">The Compensation Principle</h2>
+  <p class="section-intro">Before designing any element of a comp plan, answer two questions: What behaviors do we want to incentivize? What outcomes are we trying to optimize? Every other design decision flows from these answers.</p>
+
+  <div class="subsection">
+    <div class="callout callout-definition">
+      <div class="callout-title">The Behavior-Outcome-Comp Alignment Chain</div>
+      <p>Good comp design is simple: identify the behaviors that lead to the outcomes you want, then pay for those behaviors. If you want reps to close multi-year deals, pay a premium on multi-year TCV. If you want reps to prioritize new logos over expansion, create separate quotas with separate commission rates. If you want reps to sell higher-margin products, tier commission rates by product margin. The plan will produce exactly what it rewards — design it intentionally.</p>
+    </div>
+
+    <table class="data-table">
+      <thead><tr><th>If You Want…</th><th>Design the Plan to…</th><th>Warning If You Don't</th></tr></thead>
+      <tbody>
+        <tr><td>Multi-year deal growth</td><td>Pay commission on TCV (not just Year 1 ACV) with a multi-year kicker</td><td>Reps will default to annual deals; less cash commitment friction but lower LTV</td></tr>
+        <tr><td>New logo acquisition</td><td>Separate new logo quota with higher commission rate than expansion</td><td>Reps will farm existing accounts because it's easier; new logo pipeline atrophies</td></tr>
+        <tr><td>High-margin product mix</td><td>Tier commission rate by product contribution margin</td><td>Reps will sell whatever is easiest to close; low-margin SKUs dominate mix</td></tr>
+        <tr><td>Accurate forecasting</td><td>Include a forecast accuracy component (% of quarterly commit achieved) in accelerator unlock</td><td>Reps will sandbag or overcommit without consequence; manager loses forecast visibility</td></tr>
+        <tr><td>CS handoff quality</td><td>Clawback % of commission on deals churned within 90 days post-signature</td><td>Reps will close bad-fit customers to hit quota; CS burden and churn increase</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- OTE -->
+  <h2 class="section-title">OTE (On-Target Earnings) — Definition and Benchmarking</h2>
+  <p class="section-intro">OTE is the total compensation a rep earns when they achieve exactly 100% of their quota. It is the market-clearing price for talent in your segment, role level, and geography. Set it wrong and you will lose candidates to competitors or overpay relative to productivity.</p>
+
+  <div class="subsection">
+    <h4 class="subsection-title">OTE Benchmarking Sources</h4>
+    <ul class="bullet-list">
+      <li><strong>Radford / Aon Compensation Survey:</strong> Gold standard for enterprise-grade comp benchmarking; subscription-based; most reliable for Series C+ companies</li>
+      <li><strong>Carta Total Comp:</strong> Particularly strong for early-stage startup benchmarks; uses anonymized equity + cash data from Carta customers</li>
+      <li><strong>Levels.fyi:</strong> Primarily tech/engineering but has expanding sales data; useful for cross-validation</li>
+      <li><strong>LinkedIn Salary:</strong> Free, large sample, but lacks role nuance; use as directional check only</li>
+      <li><strong>RepVue:</strong> Sales-specific compensation database with verified reported earnings by company, role, and team; increasingly authoritative for AE/SDR benchmarking</li>
+      <li><strong>Bridge Group SaaS Metrics Report:</strong> Annual survey of inside sales comp by ACV, segment, and company size; free and highly reliable for SaaS-specific context</li>
+    </ul>
+
+    <h4 class="subsection-title">Base:Variable Ratios by Role</h4>
+    <p>The base:variable ratio reflects how much behavioral control you have over the activity (high control = more base) and the risk tolerance required of the rep (high risk tolerance = higher variable). The ratio also signals role expectations — a 50:50 ratio signals "this is a high-accountability revenue role" while 80:20 signals "this is primarily a relationship management role."</p>
+
+    <div class="ratio-card">
+      <div class="ratio-header">
+        <span class="ratio-role">Field AE (Enterprise)</span>
+        <span class="ratio-badge">50 : 50</span>
+      </div>
+      <div class="ratio-bar"><div class="ratio-bar-inner" style="background: linear-gradient(90deg, #2a7fa8 50%, #e0ecf5 50%);"></div></div>
+      <div class="ratio-labels"><span>Base (50%)</span><span>Variable (50%)</span></div>
+      <p style="font-size:13px;color:var(--text-muted);margin-top:8px;margin-bottom:0;">Highest risk/reward ratio; enterprise AEs with long cycles and large ACVs should be motivated by large upside potential. The 50:50 ratio attracts self-motivated hunters.</p>
+    </div>
+
+    <div class="ratio-card">
+      <div class="ratio-header">
+        <span class="ratio-role">Inside AE (Mid-Market)</span>
+        <span class="ratio-badge">55 : 45</span>
+      </div>
+      <div class="ratio-bar"><div class="ratio-bar-inner" style="background: linear-gradient(90deg, #2a7fa8 55%, #e0ecf5 55%);"></div></div>
+      <div class="ratio-labels"><span>Base (55%)</span><span>Variable (45%)</span></div>
+      <p style="font-size:13px;color:var(--text-muted);margin-top:8px;margin-bottom:0;">Slightly more base than field AE; inside motion is more process-driven and managers have more visibility into activity. Some companies go 60:40 for junior inside AEs.</p>
+    </div>
+
+    <div class="ratio-card">
+      <div class="ratio-header">
+        <span class="ratio-role">SDR / BDR</span>
+        <span class="ratio-badge">65 : 35</span>
+      </div>
+      <div class="ratio-bar"><div class="ratio-bar-inner" style="background: linear-gradient(90deg, #2a7fa8 65%, #e0ecf5 65%);"></div></div>
+      <div class="ratio-labels"><span>Base (65%)</span><span>Variable (35%)</span></div>
+      <p style="font-size:13px;color:var(--text-muted);margin-top:8px;margin-bottom:0;">SDRs have limited control over downstream deal outcomes; they should be paid primarily for activity and qualified pipeline. Some companies use 70:30. Avoid going below 60% base — it creates instability and early attrition.</p>
+    </div>
+
+    <div class="ratio-card">
+      <div class="ratio-header">
+        <span class="ratio-role">CSM (Expansion-Focused)</span>
+        <span class="ratio-badge">70 : 30</span>
+      </div>
+      <div class="ratio-bar"><div class="ratio-bar-inner" style="background: linear-gradient(90deg, #2a7fa8 70%, #e0ecf5 70%);"></div></div>
+      <div class="ratio-labels"><span>Base (70%)</span><span>Variable (30%)</span></div>
+      <p style="font-size:13px;color:var(--text-muted);margin-top:8px;margin-bottom:0;">CSMs who own expansion and upsell targets should have a variable component. The 30% variable motivates expansion behavior without making retention-risk decisions feel personally costly. Pure retention CSMs can be 80:20.</p>
+    </div>
+  </div>
+
+  <!-- QUOTA-TO-OTE RATIO -->
+  <h2 class="section-title">Quota-to-OTE Ratio — The Productivity Standard</h2>
+  <div class="subsection">
+    <p>The quota-to-OTE ratio (sometimes called the "coverage ratio" or "leverage ratio") is the amount of quota a rep is expected to carry per dollar of OTE. It is the fundamental unit economics of your sales compensation model.</p>
+
+    <div class="formula-block">
+      <div class="formula-label">Quota-to-OTE Ratio</div>
+      <div class="formula-main">Quota-to-OTE Ratio = Annual Quota Target / OTE</div>
+      <div class="formula-note">Industry standard for enterprise B2B SaaS: 4x–6x OTE. Example: AE with $200K OTE should carry $800K–$1.2M quota. Below 4x = company is overpaying for output. Above 6x = quota is unrealistic or OTE is below market.</div>
+    </div>
+
+    <table class="data-table">
+      <thead><tr><th>Ratio</th><th>Signal</th><th>Implication</th></tr></thead>
+      <tbody>
+        <tr><td><strong>&lt; 3x</strong></td><td>Over-investment in sales capacity relative to productivity</td><td>Review whether OTE is above-market, quota is too low, or territory is undersized</td></tr>
+        <tr><td><strong>3x–4x</strong></td><td>Low productivity; acceptable for early-stage companies building foundation</td><td>Viable if ramping large territories, but not scalable long-term</td></tr>
+        <tr><td><strong>4x–6x</strong></td><td>Standard SaaS range; healthy productivity expectation</td><td>Sustainable; allows both rep upside and company return</td></tr>
+        <tr><td><strong>6x–8x</strong></td><td>High productivity; requires strong market, product, or support</td><td>Watch attainment distribution — if &lt;60% hit 100%, quota may be too high</td></tr>
+        <tr><td><strong>&gt; 8x</strong></td><td>Quota is likely aspirational / unattainable</td><td>Expect low attainment, high attrition, and demoralization</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- COMMISSION RATE -->
+  <h2 class="section-title">The Commission Rate — Design and Calculation</h2>
+  <div class="subsection">
+    <div class="formula-block">
+      <div class="formula-label">Commission Rate Derivation</div>
+      <div class="formula-main">Commission Rate = (OTE × Variable %) / Annual Quota</div>
+      <div class="formula-note">Example: $200K OTE, 50% variable, $1M quota → ($200K × 50%) / $1M = 10% commission rate. At this rate, the rep earns $100K variable when they hit $1M in quota exactly.</div>
+    </div>
+
+    <h4 class="subsection-title">Flat Rate vs. Tiered Rate</h4>
+    <table class="data-table">
+      <thead><tr><th>Structure</th><th>How It Works</th><th>Best For</th><th>Watch Out For</th></tr></thead>
+      <tbody>
+        <tr>
+          <td><strong>Flat Rate</strong></td>
+          <td>Same rate on every dollar from $0 to infinity. Simple to administer and communicate.</td>
+          <td>SMB/velocity motion; SDR variable comp; simple inside sales teams</td>
+          <td>Does not differentially reward over-achievement; top performers can feel capped relative to their contribution</td>
+        </tr>
+        <tr>
+          <td><strong>Tiered Rate (Accelerated)</strong></td>
+          <td>Base rate up to 100% quota; higher rate above 100%. Often 1.5–2× rate above quota.</td>
+          <td>Enterprise AE; any role where top performer retention is critical; companies wanting to create earnings dispersion</td>
+          <td>More complex to administer; reps will optimize deal timing around thresholds; retroactive vs. prospective design matters enormously</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <h4 class="subsection-title">Retroactive vs. Prospective Accelerators</h4>
+    <p><strong>Retroactive accelerators</strong> apply the higher rate to all deals in the period once the threshold is crossed. Example: if a rep sells $1.05M against a $1M quota, the 1.5× rate applies retroactively to the entire $1.05M, not just the last $50K. This creates dramatic behavioral effects near the threshold — reps will push hard to cross it. <strong>Prospective accelerators</strong> apply only to dollars above the threshold, producing a smoother incentive curve with less "hockey stick" behavior.</p>
+
+    <div class="callout callout-warning">
+      <div class="callout-title">The Deal-Timing Gaming Risk</div>
+      <p>Any threshold-based accelerator creates an incentive to time deals. If the accelerator kicks in at 100% quota and the year-end is December 31, reps near threshold in mid-December will pull deals forward aggressively — sometimes by pressuring customers or offering excessive discounts — to cross the accelerator. Design around this with quarterly accelerators that reset, or caps on discount authority that require manager approval.</p>
+    </div>
+  </div>
+
+  <!-- ACCELERATORS -->
+  <h2 class="section-title">Accelerators — Designing for Top Performer Retention</h2>
+  <div class="subsection">
+    <p>Accelerators are the primary tool for creating earnings upside that retains your best performers. A flat commission plan with no accelerators means a rep at 150% of quota earns 50% more than a rep at 100% of quota. An accelerated plan can make that same 150% rep earn 80–120% more. That difference is the retention mechanism for your top 10–20% of performers.</p>
+
+    <div class="accel-block">
+      <div class="accel-row accel-header">
+        <span>Attainment Range</span>
+        <span>Rate Multiplier</span>
+        <span>Example: 10% Base Rate</span>
+        <span>Earnings on $1M Quota</span>
+      </div>
+      <div class="accel-row">
+        <span>0% – 50%</span>
+        <span style="color: #A13544; font-weight:700;">0.5×</span>
+        <span class="muted">5% rate</span>
+        <span class="muted">$0–$25K on first $500K (draw back; some plans don't do this)</span>
+      </div>
+      <div class="accel-row">
+        <span>50% – 100%</span>
+        <span>1.0×</span>
+        <span class="muted">10% rate</span>
+        <span class="muted">$50K earned at 100% = full variable component</span>
+      </div>
+      <div class="accel-row">
+        <span>100% – 125%</span>
+        <span class="highlight">1.5×</span>
+        <span class="muted">15% rate</span>
+        <span class="muted">+$37.5K on the $250K above quota</span>
+      </div>
+      <div class="accel-row">
+        <span>125% – 150%</span>
+        <span class="highlight">2.0×</span>
+        <span class="muted">20% rate</span>
+        <span class="muted">+$50K on next $250K = total earnings well above OTE</span>
+      </div>
+      <div class="accel-row">
+        <span>150%+</span>
+        <span class="highlight" style="color:#437A22;">2.5×</span>
+        <span class="muted">25% rate</span>
+        <span class="muted">Uncapped; president's club territory</span>
+      </div>
+    </div>
+
+    <div class="formula-block">
+      <div class="formula-label">Accelerated Commission Earnings Formula</div>
+      <div class="formula-main">Total Commission = (Quota × Base Rate) + ((ACV − Quota) × (Base Rate × Accelerator))</div>
+      <div class="formula-note">Example: $1M quota, 10% base rate, 1.5× accelerator, $1.2M ACV closed:
+Commission = ($1M × 10%) + ($200K × 15%) = $100K + $30K = $130K variable.
+OTE was $100K variable — rep earns 30% above plan variable at 120% quota attainment.</div>
+    </div>
+
+    <h4 class="subsection-title">Uncapped Commission — Pros and Cons</h4>
+    <table class="data-table">
+      <thead><tr><th></th><th>Uncapped (Most Common in SaaS)</th><th>Capped</th></tr></thead>
+      <tbody>
+        <tr><td><strong>Top performer retention</strong></td><td>Strong — reps can earn 200–400% of OTE in great years</td><td>Poor — reps will sandbag or leave when cap is in sight</td></tr>
+        <tr><td><strong>Financial predictability</strong></td><td>Lower — windfall earnings in blowout years; manage with quarterly accelerators</td><td>Higher — total comp cost is bounded</td></tr>
+        <tr><td><strong>Candidate attraction</strong></td><td>Strong competitive advantage in talent market</td><td>Immediate red flag for experienced candidates</td></tr>
+        <tr><td><strong>Behavioral risk</strong></td><td>Deal timing games; "bank" deals into next quarter</td><td>End-of-period sandbagging; withholding deals until cap resets</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- ATTAINMENT DISTRIBUTION TEST -->
+  <h2 class="section-title">The Attainment Distribution Test</h2>
+  <p class="section-intro">If fewer than 60–70% of reps can achieve 100% of their quota, the comp plan is structurally broken. Quotas that are unattainable by most reps create demoralization, attrition, and sandbagging — not better performance.</p>
+
+  <div class="subsection">
+    <h4 class="subsection-title">The Healthy Attainment Distribution</h4>
+    <p>In a well-designed comp plan, attainment should follow a roughly normal distribution with the mean at or slightly above 100%. The following benchmarks from the Bridge Group and SaaS Capital describe healthy distributions:</p>
+
+    <table class="data-table">
+      <thead><tr><th>Attainment Band</th><th>Healthy % of Reps</th><th>Interpretation</th></tr></thead>
+      <tbody>
+        <tr><td><strong>&lt; 50%</strong></td><td>5–10%</td><td>Chronic underperformers; PIP territory; should rarely exceed 10%</td></tr>
+        <tr><td><strong>50%–75%</strong></td><td>10–15%</td><td>Developing reps; ramping; territory challenges</td></tr>
+        <tr><td><strong>75%–100%</strong></td><td>20–30%</td><td>Solid contributors; not blowing out quota</td></tr>
+        <tr><td><strong>100%–125%</strong></td><td>25–35%</td><td>Core performers; plan working as designed</td></tr>
+        <tr><td><strong>125%–150%</strong></td><td>15–20%</td><td>High performers; accelerator territory</td></tr>
+        <tr><td><strong>150%+</strong></td><td>5–10%</td><td>President's Club; top performers; comp cost is justified by revenue</td></tr>
+      </tbody>
+    </table>
+
+    <div class="callout callout-warning">
+      <div class="callout-title">What Different Distributions Signal</div>
+      <p><strong>Bimodal distribution (many under 50%, many over 150%):</strong> Territory inequity — some reps have great territories and some have broken ones. Fix: territory rebalancing, not quota changes.<br><br>
+      <strong>Almost everyone under 75%:</strong> Quotas are too high (over-setting), ramp time insufficient, or product/market fit issues are blocking pipeline. Do not fire reps before diagnosing root cause.<br><br>
+      <strong>Almost everyone at 100–110%:</strong> Quotas are too low (sandbagging in quota setting). Fix: raise quota 10–20%; implement upside accelerators so high performance is rewarded more aggressively.<br><br>
+      <strong>High variance regardless of average:</strong> Territory inequity is likely the primary driver. Build territory equity analysis before changing comp structure.</p>
+    </div>
+  </div>
+
+  <!-- COMMISSION TIMING -->
+  <h2 class="section-title">Commission Timing — When Reps Get Paid</h2>
+  <div class="subsection">
+    <p>Commission timing has major implications for rep behavior, cash flow, and the quality of deals closed. The timing policy should align with the point at which value is actually confirmed — which is not always at signature.</p>
+
+    <div class="timing-card">
+      <div class="timing-title">On Booking (Contract Signature) — Most Common</div>
+      <div class="timing-pros">Maximizes motivation to close; aligns with when the company records ARR</div>
+      <div class="timing-cons">Creates risk if customer does not activate or pays late; can incentivize closing bad-fit customers</div>
+      <div class="timing-meta">Mitigate with: 60–90 day clawback provision for churned/cancelled deals. Standard in SaaS.</div>
+    </div>
+
+    <div class="timing-card">
+      <div class="timing-title">On Invoice / On Billing</div>
+      <div class="timing-pros">Cash is verified before commission paid; reduces bad-deal incentive</div>
+      <div class="timing-cons">If billing is delayed, rep motivation suffers; common friction in enterprise deals with net-60/90 payment terms</div>
+      <div class="timing-meta">Best for: companies with high invoice-to-cash delay risk or frequent deal restructuring post-signature.</div>
+    </div>
+
+    <div class="timing-card">
+      <div class="timing-title">On Cash Payment</div>
+      <div class="timing-pros">Company only pays commission when cash is received; zero credit risk</div>
+      <div class="timing-cons">Enterprise deals with net-90 terms mean a Q1 close pays commission in Q2; severely dampens motivation; uncommon in SaaS</div>
+      <div class="timing-meta">Rarely used in SaaS; creates cash flow alignment at significant motivational cost.</div>
+    </div>
+
+    <div class="timing-card">
+      <div class="timing-title">On Activation / On Go-Live</div>
+      <div class="timing-pros">Incentivizes rep to ensure smooth handoff and customer launch; aligns with actual value delivery</div>
+      <div class="timing-cons">Activation is partially outside rep's control; can create conflict between AE and CS on handoff accountability</div>
+      <div class="timing-meta">Consider for companies where implementation lag or activation failure is a major churn driver.</div>
+    </div>
+
+    <h4 class="subsection-title">Clawback Provisions</h4>
+    <p>A clawback recovers paid commission when a deal cancels, churns, or is restructured within a specified period. Clawbacks create accountability for deal quality — not just deal quantity. Standard design: 100% clawback on cancellations within 90 days, 50% clawback on cancellations within 180 days, no clawback after 180 days. Clawback should never exceed what the rep earned on the specific deal (i.e., cannot create net negative commission).</p>
+  </div>
+
+  <!-- SPIFFS -->
+  <h2 class="section-title">SPIFs — Sales Performance Incentive Funds</h2>
+  <div class="subsection">
+    <p>A SPIF is a short-term, targeted incentive layered on top of the base comp plan to drive specific behaviors during a defined window. Used well, SPIFs create urgency, focus, and excitement. Overused, they destroy the baseline comp plan's credibility — reps learn to wait for the SPIF.</p>
+
+    <h4 class="subsection-title">When SPIFs Are Appropriate</h4>
+    <div class="spiff-grid">
+      <div class="spiff-card">
+        <div class="spiff-type">Product Launch</div>
+        <div class="spiff-name">New Product Acceleration</div>
+        <div class="spiff-desc">Drive early adoption of a new SKU by paying 2× commission on first X deals. Builds pipeline data and customer references for the new product in the first 90 days.</div>
+      </div>
+      <div class="spiff-card">
+        <div class="spiff-type">End-of-Period</div>
+        <div class="spiff-name">Q-End Pipeline Pull</div>
+        <div class="spiff-desc">Bonus for deals closed in the last 2 weeks of the quarter. Drives urgency on deals that are "almost ready." Use sparingly — customers learn to wait for Q-end discounts.</div>
+      </div>
+      <div class="spiff-card">
+        <div class="spiff-type">Market Entry</div>
+        <div class="spiff-name">New Vertical / Geo Kicker</div>
+        <div class="spiff-desc">Pay 1.5× on first N deals in a new target vertical or geography. Creates focus on the strategic objective without permanently restructuring the base plan.</div>
+      </div>
+      <div class="spiff-card">
+        <div class="spiff-type">Competitive</div>
+        <div class="spiff-name">Competitive Displacement Bonus</div>
+        <div class="spiff-desc">Specific bonus for displacing a named competitor. Creates focus and motivation on competitive takeouts that may have lower win rates but high strategic value.</div>
+      </div>
+    </div>
+
+    <div class="callout callout-warning">
+      <div class="callout-title">Why SPIF Overuse Destroys Effectiveness</div>
+      <p>If a SPIF runs every quarter, reps will mentally adjust their base behavior downward and wait for the SPIF before putting deals in. The SPIF becomes expected income, not incremental motivation. The rule: SPIFs should be rare (no more than 2–3 per year), specific (one behavior, one time window), and surprising (announced with short notice to prevent behavioral adjustment before launch).</p>
+    </div>
+  </div>
+
+  <!-- MULTI-YEAR DEAL TREATMENT -->
+  <h2 class="section-title">Multi-Year Deal Treatment</h2>
+  <div class="subsection">
+    <p>Multi-year deals are strategically valuable: they lock in revenue, improve GRR, and often come with higher TCV at lower marginal sales cost. But if your comp plan doesn't reward them appropriately, reps will default to annual deals because they are easier to close and consume less negotiating capital.</p>
+
+    <h4 class="subsection-title">TCV vs. ACV Commission Treatment</h4>
+    <table class="data-table">
+      <thead><tr><th>Approach</th><th>How It Works</th><th>Pro</th><th>Con</th></tr></thead>
+      <tbody>
+        <tr>
+          <td><strong>Pay on ACV (Year 1 only)</strong></td>
+          <td>Rep earns commission only on Year 1 contract value regardless of deal length</td>
+          <td>Simple; predictable commission cost</td>
+          <td>Creates no incentive for multi-year; 3-year deal = same pay as 1-year deal</td>
+        </tr>
+        <tr>
+          <td><strong>Pay on TCV with a Cap</strong></td>
+          <td>Rep earns on total contract value but capped at 2–3× ACV to limit commission in blowout deals</td>
+          <td>Incentivizes multi-year; limits financial exposure</td>
+          <td>Cap creates cliff effect at threshold; reps optimize deal structure around cap</td>
+        </tr>
+        <tr>
+          <td><strong>TCV with Multi-Year Kicker</strong></td>
+          <td>Standard ACV commission on Year 1 + 25–50% kicker paid upfront on Years 2–3 committed value</td>
+          <td>Strong multi-year incentive; keeps cash timing close to deal close</td>
+          <td>Requires clawback mechanism if customer cancels in Year 2–3; more complex administration</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <h4 class="subsection-title">The Discounting Incentive Problem</h4>
+    <p>Multi-year deals are often won with year-over-year price discounts (e.g., "we'll lock in flat pricing for 3 years"). This creates a margin problem: the deal looks big on TCV but the company gives up revenue growth. Solve this with comp design: pay commission on <em>committed TCV net of any discounts vs. list price</em>. A rep who gives away 20% of list price gets 20% less commission. This aligns rep incentives with margin, not just volume.</p>
+  </div>
+
+  <!-- CHANNEL AND EXPANSION COMP -->
+  <h2 class="section-title">Channel, Expansion &amp; Partner Comp</h2>
+  <div class="subsection">
+    <h4 class="subsection-title">Expansion Compensation for AEs</h4>
+    <p>In many SaaS companies, AEs retain ownership of their accounts for 12–24 months post-close and are eligible to earn on expansion (upsell, cross-sell). The design question: what rate and what quota mechanism?</p>
+    <table class="data-table">
+      <thead><tr><th>Option</th><th>Design</th><th>Best For</th></tr></thead>
+      <tbody>
+        <tr><td>Separate expansion quota</td><td>AE has a new logo quota and an expansion quota; separate commission rates (expansion often lower, 50–75% of new logo rate)</td><td>Enterprise accounts where expansion is a named AE responsibility</td></tr>
+        <tr><td>Blended quota</td><td>All revenue (new logo + expansion) counts against one quota; same rate</td><td>SMB/Mid-Market where expansion is opportunistic</td></tr>
+        <tr><td>No expansion comp for AE</td><td>CS owns expansion; AE has no financial incentive but is expected to facilitate</td><td>High-velocity models where post-sale engagement is fully owned by CS</td></tr>
+      </tbody>
+    </table>
+
+    <h4 class="subsection-title">The Double Compensation Problem in Co-Selling</h4>
+    <p>When an AE and a partner (reseller, integrator, technology partner) are both involved in closing a deal, both may have expectation of commission or fee. Define co-sell compensation upfront: AE receives full commission on net new ACV (no reduction for partner involvement); partner receives a separate referral fee (typically 5–15% of first-year ACV) paid from a separate G&A or sales program budget. Never split the AE's commission to pay the partner — it creates resentment and misaligned incentives.</p>
+  </div>
+
+  <!-- THE COMP PLAN DOCUMENT -->
+  <h2 class="section-title">The Comp Plan Document</h2>
+  <div class="subsection">
+    <p>Every rep must receive a written, signed compensation plan document at the beginning of each plan period. Verbal commitments are not compensation plans — they are liability. The comp plan document is a contract.</p>
+
+    <div style="background: var(--surface); border: 1.5px solid var(--border); border-radius: 10px; padding: 20px 24px; margin: 20px 0;">
+      <div class="comp-doc-item">
+        <div class="icon">1</div>
+        <div class="comp-doc-content">
+          <h5>Effective Date and Plan Period</h5>
+          <p>Start and end date of the plan. Typically January 1 – December 31 for annual plans, or by quarter for quarterly plans. State what happens mid-year if the plan changes.</p>
+        </div>
+      </div>
+      <div class="comp-doc-item">
+        <div class="icon">2</div>
+        <div class="comp-doc-content">
+          <h5>Quota and OTE</h5>
+          <p>Annual quota amount (and quarterly breakdown if applicable). OTE amount split by base and variable. Both in dollars — no ambiguity.</p>
+        </div>
+      </div>
+      <div class="comp-doc-item">
+        <div class="icon">3</div>
+        <div class="comp-doc-content">
+          <h5>Commission Structure</h5>
+          <p>Exact commission rate(s) at each attainment tier. Whether it's flat or tiered. Whether accelerators are retroactive or prospective. What qualifies as commissionable revenue (new logo only? expansion? renewals?).</p>
+        </div>
+      </div>
+      <div class="comp-doc-item">
+        <div class="icon">4</div>
+        <div class="comp-doc-content">
+          <h5>Commission Timing and Clawbacks</h5>
+          <p>When commission is paid (booking, billing, payment). Clawback terms: percentage and duration. Process for disputed clawbacks.</p>
+        </div>
+      </div>
+      <div class="comp-doc-item">
+        <div class="icon">5</div>
+        <div class="comp-doc-content">
+          <h5>Accelerators and SPIFs</h5>
+          <p>Accelerator thresholds and multipliers. Any known SPIFs for the plan period (if pre-announced). Statement that additional SPIFs may be issued during the plan year.</p>
+        </div>
+      </div>
+      <div class="comp-doc-item">
+        <div class="icon">6</div>
+        <div class="comp-doc-content">
+          <h5>Dispute Resolution</h5>
+          <p>Process for disputing commission calculations. Who to contact. Timeline for resolution. Statement that all commission calculations are based on CRM/billing system of record.</p>
+        </div>
+      </div>
+      <div class="comp-doc-item">
+        <div class="icon">7</div>
+        <div class="comp-doc-content">
+          <h5>Plan Modification and Termination Clauses</h5>
+          <p>Company's right to modify the plan with notice (typically 30 days). What happens to in-progress deals if the rep's employment terminates — earned vs. unvested commission.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="callout callout-warning">
+      <div class="callout-title">When to Involve Legal</div>
+      <p>Always involve legal on: clawback provisions (jurisdiction-specific wage law implications), plan modification clauses, termination and commission treatment, and any commission dispute resolution mechanism. In California particularly, commission clawbacks and forfeiture provisions are heavily regulated — what is standard in other states may be unenforceable in CA. Legal review of the comp plan template costs $1–3K annually; commission litigation costs $50–500K.</p>
+    </div>
+  </div>
+
+  <!-- ANNUAL COMP PLANNING -->
+  <h2 class="section-title">Annual Comp Planning Process</h2>
+  <div class="subsection">
+    <h4 class="subsection-title">Timeline</h4>
+    <ol class="step-list">
+      <li><div class="step-content"><span class="step-title">Q3: Data Collection and Analysis</span>Pull attainment distribution for the current plan year. Identify what behaviors were and were not incentivized. Survey team on plan satisfaction and clarity. Benchmark against market data (Radford, Bridge Group) for the coming year.</div></li>
+      <li><div class="step-content"><span class="step-title">September–October: Strategy Alignment</span>Align with CRO, CFO, and VPs on strategic priorities for next year. What behaviors needs to be rewarded differently? New products? New market entry? Margin improvement? These drive plan design changes.</div></li>
+      <li><div class="step-content"><span class="step-title">October–November: Plan Design and Modeling</span>Design new plan structure. Model it against historical performance data: if 30% of current reps had been on the new plan, what would they have earned? Ensure the new plan is cost-neutral or within budget envelope. Model for attainment distribution scenarios (bear, base, bull).</div></li>
+      <li><div class="step-content"><span class="step-title">November: Legal and Finance Review</span>Legal reviews for compliance. Finance reviews cost model and budgetary impact. HR reviews for internal equity issues. Secure all approvals before communicating to the team.</div></li>
+      <li><div class="step-content"><span class="step-title">December: Communication</span>Present changes to the team with at least 30 days before effective date. Explain the "why" — what behaviors the new plan is designed to reward. Give individuals examples of what they would earn at various attainment levels under the new plan.</div></li>
+    </ol>
+  </div>
+
+  <!-- ALL FORMULAS -->
+  <h2 class="section-title">Key Formulas Reference</h2>
+  <div class="subsection">
+    <div class="formula-block">
+      <div class="formula-label">OTE Derivation</div>
+      <div class="formula-main">OTE = Base Salary + (Quota × Commission Rate)</div>
+      <div class="formula-note">Commission Rate = (OTE × Variable %) / Annual Quota. If OTE = $200K, variable = 50%, quota = $1M: rate = ($100K / $1M) = 10%.</div>
+    </div>
+    <div class="formula-block">
+      <div class="formula-label">Standard Commission</div>
+      <div class="formula-main">Commission = ACV Closed × Commission Rate</div>
+      <div class="formula-note">At 10% rate on $1.2M ACV closed: Commission = $120K variable. Base + Variable = full comp for the period.</div>
+    </div>
+    <div class="formula-block">
+      <div class="formula-label">Accelerated Commission</div>
+      <div class="formula-main">Commission = (Quota × Rate) + ((ACV − Quota) × (Rate × Accelerator Multiplier))</div>
+      <div class="formula-note">At $1M quota, 10% rate, 1.5× accelerator, $1.3M ACV: = ($1M × 10%) + ($300K × 15%) = $100K + $45K = $145K variable. Rep earns 45% above plan variable.</div>
+    </div>
+    <div class="formula-block">
+      <div class="formula-label">Quota-to-OTE Ratio</div>
+      <div class="formula-main">Quota:OTE = Annual Quota / OTE | Target Range: 4×–6×</div>
+      <div class="formula-note">$1M quota / $200K OTE = 5× — within healthy range. $600K quota / $200K OTE = 3× — likely over-paying or under-quoting. $1.5M quota / $200K OTE = 7.5× — likely unrealistic; expect low attainment.</div>
+    </div>
+    <div class="formula-block">
+      <div class="formula-label">Sales Compensation Cost of Sales</div>
+      <div class="formula-main">Comp CoS% = Total Sales Comp / Total ARR Closed × 100</div>
+      <div class="formula-note">Benchmark: 8–12% for mid-market SaaS; 12–18% for enterprise; 5–8% for high-velocity SMB. Above benchmark → productivity or quota-setting problem. Below benchmark → possible under-investment in talent.</div>
+    </div>
+  </div>
+
+  <!-- LEADING/LAGGING INDICATORS -->
+  <h2 class="section-title">Leading &amp; Lagging Indicators</h2>
+  <div class="subsection">
+    <div class="callout callout-definition">
+      <div class="callout-title">Leading Indicators</div>
+      <p>
+        <strong>Pipeline coverage by attainment band</strong> — reps working toward accelerator thresholds will show elevated pipeline coverage in the 100–130% range; reps below 50% often have thin pipeline and need intervention.<br><br>
+        <strong>Average deal size trend</strong> — if comp rewards larger deals, average ACV should trend up over time; flat or declining ACV suggests pricing pressure or comp misalignment.<br><br>
+        <strong>Multi-year deal rate</strong> — if comp structure rewards multi-year deals, this rate should increase each quarter; flat rate signals the plan is not working as intended.<br><br>
+        <strong>Discount rate by rep</strong> — if comp penalizes discounting (margin-linked commission), discount rate should be lower for reps with strong comp management discipline.
+      </p>
+    </div>
+
+    <div class="callout callout-warning">
+      <div class="callout-title">Lagging Indicators</div>
+      <p>
+        <strong>Quota attainment distribution</strong> — run monthly; the shape of the distribution tells you more about plan health than any single number. Target: 60–70% above 100%, mean at 105–115%.<br><br>
+        <strong>Voluntary attrition rate</strong> — top performers leaving is the primary comp plan failure signal; exit interview data on comp satisfaction is the diagnostic.<br><br>
+        <strong>Average OTE achieved vs. plan OTE</strong> — if average achieved OTE is significantly below plan OTE (e.g., 75% of OTE on average), quotas are too high or territory is too thin; if above 130% of plan OTE, quotas are too low.<br><br>
+        <strong>New logo rate vs. expansion rate</strong> — if the plan has separate quotas, track actual achievement on each; imbalance signals behavioral gaming toward the easier quota.
+      </p>
+    </div>
+  </div>
+
+  <div class="related-section">
+    <div class="related-title">Related Pages</div>
+    <div class="related-links">
+      <a href="hiring-formula.html" class="related-link">The Hiring Formula</a>
+      <a href="../subpages/quota-setting.html" class="related-link">Quota Setting</a>
+      <a href="../subpages/territory-design.html" class="related-link">Territory Design</a>
+      <a href="../subpages/onboarding.html" class="related-link">Onboarding Formula</a>
+      <a href="../pages/phase2.html" class="related-link">← Phase 2 Overview</a>
+    </div>
+  </div>
+</div>
+<script data-pplx-inline-edit>
+(function () {
+  if (window === window.top) return;
+
+  const allowedParentOrigins = ["https://www.perplexity.ai","https://perplexity.ai","https://testing.perplexity.ai","https://staging.perplexity.ai","https://*.preview.i.perplexity.ai","http://localhost:3000","http://127.0.0.1:3000","http://localhost:5173","http://127.0.0.1:5173"];
+  const MAX_FONT_BYTES = 500 * 1024;
+  const MAX_TOTAL_FONT_BYTES = 2 * 1024 * 1024;
+  let scrollForwarding = false;
+  let scrollRaf = 0;
+  let trustedTopOrigin = null;
+
+  // Allow entries like "https://*.preview.i.perplexity.ai" — the wildcard
+  // matches a single DNS label (no dots), so "https://*.foo" cannot stretch
+  // across multiple labels.
+  function matchesAllowedOrigin(origin) {
+    if (!origin) return false;
+    for (const entry of allowedParentOrigins) {
+      if (!entry.includes("*")) {
+        if (entry === origin) return true;
+        continue;
+      }
+      const pattern = new RegExp(
+        "^" +
+          entry.replace(/[.+?^${}()|[\]\\]/g, "\\$&").replace(/\*/g, "[^.]+") +
+          "$",
+      );
+      if (pattern.test(origin)) return true;
+    }
+    return false;
+  }
+
+  // Trust decision: when the sender is same-origin-visible (event.origin is a
+  // real origin like https://www.perplexity.ai) we trust event.origin directly.
+  // When event.origin is "null" (opaque broker srcdoc), we fall back to the
+  // broker's stamped `parentOrigin` to identify the top window. The fallback
+  // is claim-only — we rely on the browser's native `targetOrigin` enforcement
+  // on the response path (see postToTrustedTop) to ensure replies can't be
+  // delivered to anyone but the actual top window of that claimed origin.
+  function getTrustedParentOrigin(event) {
+    const forwardedParentOrigin =
+      typeof event.data.parentOrigin === "string" ? event.data.parentOrigin : null;
+    const parentOrigin = event.origin === "null" ? forwardedParentOrigin : event.origin;
+    return matchesAllowedOrigin(parentOrigin) ? parentOrigin : null;
+  }
+
+  // All responses go to window.top with targetOrigin = the allowlisted origin.
+  // An attacker that iframes us inside their own null-origin broker can claim
+  // any parentOrigin they like, but the browser will drop the reply whenever
+  // the real top's origin doesn't match — so the screenshot never leaves.
+  function postToTrustedTop(message) {
+    if (!trustedTopOrigin) return;
+    try {
+      window.top.postMessage(message, trustedTopOrigin);
+    } catch (_error) {}
+  }
+
+  function inlineAll(original, clone) {
+    if (original.nodeType !== 1 || clone.nodeType !== 1) return;
+
+    try {
+      const computedStyle = getComputedStyle(original);
+      // cssText on a computed style is the serialized declaration in modern
+      // Chromium/Safari — a single read beats enumerating ~400 longhand
+      // properties. Firefox returns "" here, so we fall back on empty.
+      const serialized = computedStyle.cssText;
+      if (serialized) {
+        clone.style.cssText = serialized;
+      } else {
+        const parts = new Array(computedStyle.length);
+        for (let index = 0; index < computedStyle.length; index += 1) {
+          const property = computedStyle[index];
+          parts[index] = `${property}:${computedStyle.getPropertyValue(property)};`;
+        }
+        clone.style.cssText = parts.join("");
+      }
+    } catch (_error) {}
+
+    const originalChildren = original.children;
+    const clonedChildren = clone.children;
+    for (
+      let index = 0;
+      index < originalChildren.length && index < clonedChildren.length;
+      index += 1
+    ) {
+      inlineAll(originalChildren[index], clonedChildren[index]);
+    }
+  }
+
+  function extractFontUrl(srcValue) {
+    const matches = [
+      ...srcValue.matchAll(
+        /url\(["']?([^"')]+)["']?\)(?:\s*format\(["']?([^"')]+)["']?\))?/gi,
+      ),
+    ];
+    if (matches.length === 0) return null;
+    const woff2 = matches.find((m) => m[2] && m[2].toLowerCase().includes("woff2"));
+    if (woff2) return woff2[1];
+    const woff = matches.find((m) => m[2] && m[2].toLowerCase().includes("woff"));
+    if (woff) return woff[1];
+    return matches[0][1];
+  }
+
+  // Cache resolved font URL -> data URI across captures. Fonts on a page
+  // essentially never change, and a batch run emits multiple captures back to
+  // back — without this we'd refetch + re-base64 every time.
+  const fontDataUriCache = new Map();
+  const SRC_DECLARATION_RE = /src\s*:\s*[^;}]+/i;
+
+  async function fetchAsDataUri(url) {
+    if (fontDataUriCache.has(url)) return fontDataUriCache.get(url);
+    let dataUri = null;
+    try {
+      const response = await fetch(url, { mode: "cors", credentials: "omit" });
+      if (response.ok) {
+        const blob = await response.blob();
+        if (blob.size <= MAX_FONT_BYTES) {
+          dataUri = await new Promise((resolve) => {
+            const reader = new FileReader();
+            reader.onloadend = () =>
+              resolve(typeof reader.result === "string" ? reader.result : null);
+            reader.onerror = () => resolve(null);
+            reader.readAsDataURL(blob);
+          });
+        }
+      }
+    } catch (_error) {
+      dataUri = null;
+    }
+    fontDataUriCache.set(url, dataUri);
+    return dataUri;
+  }
+
+  function collectFontFaceRuleTexts() {
+    const rules = [];
+    for (const sheet of document.styleSheets) {
+      let cssRules;
+      try {
+        cssRules = sheet.cssRules;
+      } catch (_error) {
+        continue;
+      }
+      if (!cssRules) continue;
+      for (const rule of cssRules) {
+        const cssText = rule.cssText || "";
+        if (cssText.startsWith("@font-face")) rules.push(cssText);
+      }
+    }
+    return rules;
+  }
+
+  async function buildInlinedFontCss() {
+    const ruleTexts = collectFontFaceRuleTexts();
+    if (ruleTexts.length === 0) return null;
+
+    const resolved = ruleTexts.map((cssText) => {
+      if (!SRC_DECLARATION_RE.test(cssText)) return null;
+      const srcMatch = cssText.match(/src\s*:\s*([^;}]+)[;}]/i);
+      if (!srcMatch) return null;
+      const url = extractFontUrl(srcMatch[1]);
+      if (!url) return null;
+      try {
+        return { cssText, url: new URL(url, document.baseURI).href };
+      } catch (_error) {
+        return null;
+      }
+    });
+
+    const dataUris = await Promise.all(
+      resolved.map((entry) => (entry ? fetchAsDataUri(entry.url) : Promise.resolve(null))),
+    );
+
+    const inlined = [];
+    let totalBytes = 0;
+    for (let index = 0; index < resolved.length; index += 1) {
+      const entry = resolved[index];
+      const dataUri = dataUris[index];
+      if (!entry || !dataUri) continue;
+      const approxBytes = dataUri.length * 0.75;
+      if (totalBytes + approxBytes > MAX_TOTAL_FONT_BYTES) break;
+      totalBytes += approxBytes;
+      inlined.push(entry.cssText.replace(SRC_DECLARATION_RE, `src: url("${dataUri}")`));
+    }
+    return inlined.length > 0 ? inlined.join("\n") : null;
+  }
+
+  function stripExternal(clone) {
+    const images = clone.querySelectorAll("img");
+    for (let index = 0; index < images.length; index += 1) {
+      const src = images[index].getAttribute("src");
+      if (src && !src.startsWith("data:")) images[index].removeAttribute("src");
+    }
+
+    const elements = clone.querySelectorAll("*");
+    for (let index = 0; index < elements.length; index += 1) {
+      const style = elements[index].style.cssText;
+      if (style && style.includes("url(")) {
+        elements[index].style.cssText = style.replace(
+          /url\(["']?(?!data:)[^)"']*["']?\)/gi,
+          "none",
+        );
+      }
+    }
+  }
+
+  function emitScroll() {
+    scrollRaf = 0;
+    if (!scrollForwarding) return;
+    postToTrustedTop({
+      type: "INLINE_EDIT_SCROLL",
+      scrollX: window.scrollX,
+      scrollY: window.scrollY,
+    });
+  }
+
+  window.addEventListener(
+    "scroll",
+    function () {
+      if (!scrollForwarding || scrollRaf) return;
+      scrollRaf = requestAnimationFrame(emitScroll);
+    },
+    { passive: true, capture: true },
+  );
+
+  async function handleCaptureRequest(event) {
+    const requestId = event.data.requestId;
+    const scrollX = window.scrollX;
+    const scrollY = window.scrollY;
+    const width = window.innerWidth;
+    const height = window.innerHeight;
+
+    function postResult(dataUrl) {
+      postToTrustedTop({
+        type: "INLINE_EDIT_SCREENSHOT_RESULT",
+        requestId,
+        dataUrl,
+        scrollX,
+        scrollY,
+      });
+    }
+
+    try {
+      // Wait for any pending web fonts to resolve so both inline metrics and
+      // the @font-face inlining below see the same loaded faces.
+      if (document.fonts && document.fonts.ready) {
+        try {
+          await document.fonts.ready;
+        } catch (_error) {}
+      }
+
+      const clone = document.documentElement.cloneNode(true);
+      inlineAll(document.documentElement, clone);
+
+      const removedNodes = clone.querySelectorAll("script,link[rel=\"stylesheet\"],style");
+      for (let index = 0; index < removedNodes.length; index += 1) {
+        removedNodes[index].remove();
+      }
+
+      stripExternal(clone);
+
+      // Re-embed web fonts as data-URI @font-face rules so the SVG rasterizer
+      // can resolve them — external font URLs aren't fetched during
+      // foreignObject rendering, which would otherwise force a fallback face
+      // and change text metrics.
+      const inlinedFontCss = await buildInlinedFontCss();
+      if (inlinedFontCss) {
+        const styleEl = document.createElement("style");
+        styleEl.textContent = inlinedFontCss;
+        const head = clone.querySelector("head");
+        if (head) head.appendChild(styleEl);
+        else clone.insertBefore(styleEl, clone.firstChild);
+      }
+
+      const html = new XMLSerializer().serializeToString(clone);
+      const svg =
+        `<svg xmlns="http://www.w3.org/2000/svg" width="${width}" height="${height}">` +
+        '<foreignObject width="100%" height="100%">' +
+        `<div xmlns="http://www.w3.org/1999/xhtml" style="width:${width}px;height:${height}px;overflow:hidden">` +
+        `<div style="transform:translate(-${scrollX}px,-${scrollY}px);transform-origin:top left">` +
+        html +
+        "</div></div></foreignObject></svg>";
+      const svgUrl = `data:image/svg+xml;charset=utf-8,${encodeURIComponent(svg)}`;
+      const image = new Image();
+      image.onload = function () {
+        const canvas = document.createElement("canvas");
+        canvas.width = width;
+        canvas.height = height;
+        canvas.getContext("2d").drawImage(image, 0, 0);
+        postResult(canvas.toDataURL("image/png"));
+      };
+      image.onerror = function () {
+        postResult(null);
+      };
+      image.src = svgUrl;
+    } catch (_error) {
+      postResult(null);
+    }
+  }
+
+  window.addEventListener("message", function (event) {
+    if (!event.data) return;
+    // Only accept messages from the direct parent frame. Blocks sibling /
+    // unrelated-window postMessage senders that could otherwise reach us.
+    if (event.source !== window.parent) return;
+
+    const trustedParentOrigin = getTrustedParentOrigin(event);
+    if (!trustedParentOrigin) return;
+    trustedTopOrigin = trustedParentOrigin;
+
+    if (event.data.type === "INLINE_EDIT_SCROLL_START") {
+      scrollForwarding = true;
+      emitScroll();
+      return;
+    }
+
+    if (event.data.type === "INLINE_EDIT_SCROLL_STOP") {
+      scrollForwarding = false;
+      if (scrollRaf) cancelAnimationFrame(scrollRaf);
+      scrollRaf = 0;
+      return;
+    }
+
+    if (event.data.type !== "INLINE_EDIT_CAPTURE_REQUEST") return;
+
+    handleCaptureRequest(event);
+  });
+})();
+
+
+</script></body>
+</html>

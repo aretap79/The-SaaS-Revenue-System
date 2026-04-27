@@ -1,0 +1,660 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Revenue Capacity Modeling & Headcount Planning — SaaS Revenue System</title>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="../assets/shared.css"/>
+  <style>
+    .page-hero { background: #6E522B; }
+    .model-inputs {
+      background: var(--surface);
+      border: 1.5px solid var(--border);
+      border-radius: 10px;
+      overflow: hidden;
+      margin: 20px 0;
+    }
+    .mi-header { background: #6E522B; color: #fff; padding: 14px 20px; font-size: 14px; font-weight: 700; }
+    .mi-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 0; }
+    .mi-item {
+      padding: 16px 20px;
+      border-bottom: 1px solid var(--border);
+      border-right: 1px solid var(--border);
+    }
+    .mi-item:nth-child(even) { border-right: none; }
+    .mi-item:nth-last-child(-n+2) { border-bottom: none; }
+    .mi-number { font-size: 32px; font-weight: 700; color: #6E522B; margin-bottom: 4px; }
+    .mi-name { font-size: 14px; font-weight: 700; margin-bottom: 4px; }
+    .mi-formula { font-size: 12px; color: #006494; font-family: 'Courier New', monospace; margin-bottom: 6px; }
+    .mi-desc { font-size: 12px; color: var(--text-muted); line-height: 1.5; }
+    .worked-example {
+      background: #1C1B19;
+      color: #CDCCCA;
+      border-radius: 10px;
+      padding: 24px;
+      margin: 20px 0;
+    }
+    .we-title { font-size: 12px; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase; color: #4F98A3; margin-bottom: 16px; }
+    .we-table { width: 100%; border-collapse: collapse; margin-bottom: 16px; }
+    .we-table th { background: #252420; color: #CDCCCA; padding: 8px 12px; font-size: 11px; text-align: left; letter-spacing: 0.5px; border-bottom: 1px solid #333; }
+    .we-table td { padding: 10px 12px; font-size: 13px; border-bottom: 1px solid #2a2a28; color: #CDCCCA; }
+    .we-table .highlight td { color: #fff; font-weight: 700; }
+    .we-total { font-size: 18px; font-weight: 700; color: #78BE36; padding-top: 12px; border-top: 1px solid #333; }
+    .hockey-stick {
+      background: #fff8f0;
+      border: 2px solid #964219;
+      border-radius: 10px;
+      padding: 20px;
+      margin: 20px 0;
+    }
+    .hs-title { font-size: 13px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px; color: #964219; margin-bottom: 10px; }
+    .sdr-ae-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 16px 0;
+    }
+    .sdr-ae-table th { background: #6E522B; color: #fff; padding: 10px 14px; font-size: 12px; text-align: left; }
+    .sdr-ae-table td { padding: 12px 14px; font-size: 13px; border-bottom: 1px solid var(--border); line-height: 1.6; }
+    .sdr-ae-table tr:nth-child(even) td { background: #fafaf8; }
+    .stage-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 16px 0;
+    }
+    .stage-table th { background: #6E522B; color: #fff; padding: 10px 14px; font-size: 12px; text-align: left; }
+    .stage-table td { padding: 12px 14px; font-size: 13px; border-bottom: 1px solid var(--border); line-height: 1.6; vertical-align: top; }
+    .stage-table tr:nth-child(even) td { background: #fafaf8; }
+    .calendar-timeline {
+      background: var(--surface);
+      border: 1.5px solid var(--border);
+      border-radius: 10px;
+      overflow: hidden;
+      margin: 16px 0;
+    }
+    .ct-header { background: #6E522B; color: #fff; padding: 12px 18px; font-size: 13px; font-weight: 700; }
+    .ct-quarters { display: grid; grid-template-columns: 1fr 1fr 1fr 1fr; }
+    .ct-q {
+      padding: 16px 14px;
+      border-right: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+    }
+    .ct-q:last-child { border-right: none; }
+    .ct-q-label { font-size: 11px; font-weight: 700; letter-spacing: 1px; text-transform: uppercase; color: var(--text-muted); margin-bottom: 8px; }
+    .ct-q-activity { font-size: 12px; line-height: 1.6; }
+    .ct-q-activity li { list-style: none; padding: 3px 0 3px 12px; position: relative; }
+    .ct-q-activity li::before { content: '›'; position: absolute; left: 0; color: #6E522B; font-weight: 700; }
+    .ct-q-result { font-size: 12px; font-weight: 700; color: #6E522B; margin-top: 8px; padding-top: 8px; border-top: 1px solid var(--border); }
+    .revops-scale {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+      gap: 12px;
+      margin: 16px 0;
+    }
+    .rs-card {
+      background: var(--surface);
+      border: 1.5px solid var(--border);
+      border-radius: 8px;
+      padding: 14px;
+    }
+    .rs-arrlevel { font-size: 11px; font-weight: 700; letter-spacing: 1px; text-transform: uppercase; color: #6E522B; margin-bottom: 4px; }
+    .rs-title { font-size: 13px; font-weight: 700; margin-bottom: 6px; }
+    .rs-desc { font-size: 12px; color: var(--text-muted); line-height: 1.5; }
+  </style>
+</head>
+<body>
+<nav class="nav">
+  <span class="nav-logo">SaaS <span>Revenue System</span></span>
+  <span class="nav-sep">|</span>
+  <a href="../index.html" class="nav-back">← Home</a>
+  <span class="nav-sep">|</span>
+  <a href="../pages/phase5.html" class="nav-back">Phase 5: Scale</a>
+  <span class="nav-sep">|</span>
+  <span class="nav-current">Headcount Planning</span>
+</nav>
+<div class="page-hero" style="background:#6E522B">
+  <div class="hero-phase-label">Phase 5 — Scale</div>
+  <div class="hero-title">Revenue Capacity Modeling & Headcount Planning</div>
+  <div class="hero-subtitle">The Bottoms-Up Capacity Model — 7 Inputs, Hiring Calendar, and the Hockey Stick Problem</div>
+</div>
+<div class="content-wrap">
+  <div class="breadcrumb">
+    <a href="../index.html">Home</a><span class="sep">›</span>
+    <a href="../pages/phase5.html">Phase 5: Scale</a><span class="sep">›</span>
+    <span class="current">Revenue Capacity Modeling & Headcount Planning</span>
+  </div>
+
+  <h2 class="section-title">What Revenue Capacity Modeling Is</h2>
+  <div class="subsection">
+    <p>Revenue capacity modeling is the process of projecting future revenue output based on the human and process inputs of your go-to-market engine — before that revenue is earned. It answers the question: "Given our current team size, ramp schedule, attrition rate, and average productivity, how much revenue can we realistically generate next quarter and next year?"</p>
+    <p>Most companies forecast revenue from the top down — start with a target and work backward to see if it's achievable. Capacity modeling works from the bottom up — start with the actual human assets in the GTM engine and model what they will produce. The bottoms-up model is more accurate and more operationally actionable because it connects revenue forecasts to specific hiring and enablement decisions.</p>
+    <div class="callout callout-definition">
+      <div class="callout-title">The Bottoms-Up Capacity Formula</div>
+      <p>Expected Revenue = Σ across all reps: (Quota × Ramp Adjustment Factor × Attrition Adjustment Factor)</p>
+    </div>
+  </div>
+
+  <h2 class="section-title">The 7 Model Inputs</h2>
+  <div class="model-inputs">
+    <div class="mi-header">Revenue Capacity Model — 7 Required Inputs</div>
+    <div class="mi-grid">
+      <div class="mi-item">
+        <div class="mi-number">1</div>
+        <div class="mi-name">Fully-Ramp Rep Count</div>
+        <div class="mi-formula">FTE × % Ramped (Month ≥ Ramp Threshold)</div>
+        <div class="mi-desc">Count only reps who are past their ramp period. Ramping reps are tracked separately with their expected partial productivity. Reps who joined 2 months ago on a 5-month ramp are 40% productive — not 100%.</div>
+      </div>
+      <div class="mi-item">
+        <div class="mi-number">2</div>
+        <div class="mi-name">Average Rep Quota</div>
+        <div class="mi-formula">ACV × Deals/Quarter Target</div>
+        <div class="mi-desc">Full quota for the current period. If quotas vary by segment (SMB AEs have lower quota than Enterprise AEs), model each segment separately. Use attainable quota — not aspirational quota set 25% above market.</div>
+      </div>
+      <div class="mi-item">
+        <div class="mi-number">3</div>
+        <div class="mi-name">Expected Team Attainment Rate</div>
+        <div class="mi-formula">Historical attainment × trend adjustment</div>
+        <div class="mi-desc">What percentage of quota will the average rep achieve? Use trailing 4-quarter average — not best-quarter cherry-picking. If team historically attains 78%, model at 78%, not 100%. This is the most important "realism check" input.</div>
+      </div>
+      <div class="mi-item">
+        <div class="mi-number">4</div>
+        <div class="mi-name">Ramp Curve by Month</div>
+        <div class="mi-formula">Productivity%(Month N) × Quota</div>
+        <div class="mi-desc">For every rep hired in the period, apply the segment-specific ramp curve. A rep hired in Month 1 of Q1 will contribute ~20% of quota in Q1, ~60% in Q2, ~90% in Q3, and full quota in Q4. This creates the "ramp lag" that surprises most companies in their annual plans.</div>
+      </div>
+      <div class="mi-item">
+        <div class="mi-number">5</div>
+        <div class="mi-name">Attrition Rate</div>
+        <div class="mi-formula">Annual Attrition % / 4 (per quarter)</div>
+        <div class="mi-desc">Involuntary (PIP exits) + voluntary (resigned) attrition, annualized. Industry average is 25-35% for AEs. Attrition removes reps from your capacity calculation — and replacing them takes hiring time + ramp time before capacity is restored. Model 20-30% per year as a baseline.</div>
+      </div>
+      <div class="mi-item">
+        <div class="mi-number">6</div>
+        <div class="mi-name">Time-to-Hire</div>
+        <div class="mi-formula">Days from job req open to Day 1</div>
+        <div class="mi-desc">Average time to fill an open position. This determines how far in advance you must open a requisition to have a rep productive by a target date. Typical ranges: SDR 4-6 weeks; MM AE 6-10 weeks; Enterprise AE 8-14 weeks. Longer in competitive markets.</div>
+      </div>
+      <div class="mi-item">
+        <div class="mi-number">7</div>
+        <div class="mi-name">Planned Hires</div>
+        <div class="mi-formula">Req Plan × Expected Fill Rate × Start Month</div>
+        <div class="mi-desc">The specific hiring plan: how many reps you plan to add, in which segment, and in which month. Combined with ramp curves, this determines when those reps become productive contributors. Planned hires must be multiplied by an expected fill rate (typically 80-85% — not all reqs close on time).</div>
+      </div>
+    </div>
+  </div>
+
+  <h2 class="section-title">Worked Numeric Example</h2>
+  <div class="worked-example">
+    <div class="we-title">Annual Revenue Capacity Model — Mid-Market AE Team</div>
+    <table class="we-table">
+      <thead>
+        <tr><th>Cohort</th><th>Count</th><th>Quota/Q</th><th>Attainment</th><th>Ramp Factor</th><th>Effective Revenue/Q</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>Fully Ramped (10+ mo tenure)</td><td>8</td><td>$300K</td><td>78%</td><td>100%</td><td>8 × $300K × 78% = $1,872K</td></tr>
+        <tr><td>Ramping — Month 7-9 (2 reps)</td><td>2</td><td>$300K</td><td>78%</td><td>90%</td><td>2 × $300K × 78% × 90% = $421K</td></tr>
+        <tr><td>Ramping — Month 4-6 (2 reps)</td><td>2</td><td>$300K</td><td>78%</td><td>60%</td><td>2 × $300K × 78% × 60% = $280K</td></tr>
+        <tr><td>Ramping — Month 1-3 (1 rep)</td><td>1</td><td>$300K</td><td>78%</td><td>20%</td><td>1 × $300K × 78% × 20% = $47K</td></tr>
+        <tr class="highlight"><td>Attrition reduction (−25% annual = −3 reps)</td><td>−3 FTE equivalent</td><td>—</td><td>—</td><td>—</td><td>−3 × $300K × 78% × avg 65% ramp = −$456K</td></tr>
+      </tbody>
+    </table>
+    <div class="we-total">Total Q Capacity: $1,872K + $421K + $280K + $47K − $456K = $2,164K</div>
+    <div style="font-size:13px; color:#CDCCCA; margin-top:8px;">vs. Revenue Target: $2,400K/quarter → Gap of $236K → Need 1 additional fully-ramped rep or faster ramp for current cohort</div>
+  </div>
+
+  <h2 class="section-title">SDR:AE Ratio Benchmarks</h2>
+  <table class="sdr-ae-table">
+    <thead>
+      <tr><th>Segment</th><th>SDR:AE Ratio</th><th>Rationale</th></tr>
+    </thead>
+    <tbody>
+      <tr><td>SMB / High-Velocity</td><td>1:3 to 1:5 (one SDR per 3-5 AEs)</td><td>AEs handle both inbound qualification and closing. Low ACV deals don't justify SDR investment per deal. SDRs support volume prospecting for multiple AEs.</td></tr>
+      <tr><td>Mid-Market</td><td>1:2 to 1:3</td><td>Standard enterprise-lite model. SDR generates pipeline via outbound + inbound handling. AE closes and manages accounts. Pipeline demand requires dedicated SDR support.</td></tr>
+      <tr><td>Enterprise / Strategic</td><td>1:1 to 1:2</td><td>Long cycles mean AEs need more pipeline constantly replenished by dedicated SDR. Strategic accounts require significant outreach investment per account. Some enterprise teams use a 2:1 SDR:AE ratio to maintain 4x pipeline coverage targets.</td></tr>
+      <tr><td>Product-Led (PLS)</td><td>0.5:1 (shared SDR)</td><td>PLG motion reduces inbound SDR qualification load — product does pre-qualification. SDR only works PQA (product-qualified account) pipeline, which is much higher conversion than cold outbound.</td></tr>
+    </tbody>
+  </table>
+
+  <h2 class="section-title">The Hockey Stick Problem</h2>
+  <div class="hockey-stick">
+    <div class="hs-title">Why Revenue Growth Curves Feel Like Hockey Sticks</div>
+    <p>The hockey stick — where revenue grows slowly for months then suddenly jumps — is not a natural market phenomenon. It is an artifact of hiring decisions made too late. Companies that wait until Q2 or Q3 to validate whether they need more headcount, then hire aggressively in Q3, will see the revenue from those hires only in Q1-Q2 of the next year (because of ramp lag).</p>
+    <p>Meanwhile, they relied on existing reps for Q2-Q3 results — leading to quarter-end crunches, over-discounting, and burnout. Then new reps arrive and pipeline starts building — creating the sudden growth jump in the following year that appears to be market validation but is actually just delayed headcount becoming productive.</p>
+    <p><strong>The prevention:</strong> Run the capacity model 4-5 quarters forward at the beginning of every annual planning cycle. Identify when each planned hire cohort will be productive. Open reqs exactly (time-to-hire + ramp time) months before you need the revenue. This converts the hockey stick into a steady growth curve.</p>
+  </div>
+
+  <h2 class="section-title">Hiring Calendar: From Revenue Target to Req Open Date</h2>
+  <div class="calendar-timeline">
+    <div class="ct-header">Example: Need 3 additional Enterprise AEs productive by Q4 start (October 1)</div>
+    <div class="ct-quarters">
+      <div class="ct-q">
+        <div class="ct-q-label">January</div>
+        <ul class="ct-q-activity">
+          <li>Open 3 Enterprise AE reqs</li>
+          <li>Brief recruiters on ICP for hire</li>
+          <li>Prepare onboarding materials</li>
+        </ul>
+        <div class="ct-q-result">Q1: Req open</div>
+      </div>
+      <div class="ct-q">
+        <div class="ct-q-label">March</div>
+        <ul class="ct-q-activity">
+          <li>Reps hired (8 weeks time-to-fill)</li>
+          <li>Start onboarding March 1</li>
+          <li>Product + ICP certification months 1-2</li>
+        </ul>
+        <div class="ct-q-result">Q1: Hired, starting ramp</div>
+      </div>
+      <div class="ct-q">
+        <div class="ct-q-label">April–July</div>
+        <ul class="ct-q-activity">
+          <li>Months 2-5 of ramp</li>
+          <li>First deals begin closing (month 4)</li>
+          <li>Pipeline building rapidly</li>
+          <li>Manager co-selling support</li>
+        </ul>
+        <div class="ct-q-result">Q2: 30-60% productive</div>
+      </div>
+      <div class="ct-q">
+        <div class="ct-q-label">October</div>
+        <ul class="ct-q-activity">
+          <li>Month 7-8 of ramp</li>
+          <li>Fully productive by October</li>
+          <li>Q4 closes at full quota</li>
+        </ul>
+        <div class="ct-q-result">Q4: Full productivity ✓</div>
+      </div>
+    </div>
+  </div>
+
+  <h2 class="section-title">Headcount Planning at Series A vs. B vs. C</h2>
+  <table class="stage-table">
+    <thead>
+      <tr><th>Stage</th><th>Planning Horizon</th><th>Headcount Focus</th><th>Key Question</th></tr>
+    </thead>
+    <tbody>
+      <tr><td>Series A ($1M–$5M ARR)</td><td>2-3 quarters</td><td>Prove the sales motion: hire 3-5 AEs with consistent ICP, test ramp thesis, validate quota model. Don't scale prematurely.</td><td>Can a new rep follow the playbook and reach quota within the expected ramp period?</td></tr>
+      <tr><td>Series B ($5M–$25M ARR)</td><td>4-6 quarters</td><td>Scale what's working: double down on proven segments and motions. Add SDRs, Customer Success, and first RevOps hire. Build hiring process to support consistent volume.</td><td>Can we hire 10-20 reps/year without degrading quality? What is our cost per ramped rep?</td></tr>
+      <tr><td>Series C ($25M–$100M ARR)</td><td>6-8 quarters</td><td>Multi-segment scaling: separate SMB, MM, and Enterprise motions with dedicated teams. International expansion headcount. Management layer investment. Full RevOps team.</td><td>Are we building distinct motions for each segment or blending them sub-optimally?</td></tr>
+      <tr><td>Series D+ (Pre-IPO)</td><td>8-12 quarters</td><td>Infrastructure for IPO: predictable growth engine, investor-grade metrics, revenue operations excellence. Headcount planning ties directly to financial model and board KPIs.</td><td>Does our headcount plan support the growth rate and efficiency ratios expected at IPO?</td></tr>
+    </tbody>
+  </table>
+
+  <h2 class="section-title">RevOps Infrastructure Requirements by Headcount Scale</h2>
+  <div class="revops-scale">
+    <div class="rs-card">
+      <div class="rs-arrlevel">0–$5M ARR</div>
+      <div class="rs-title">Founder/CRO + Contractor</div>
+      <div class="rs-desc">CRM (Salesforce or HubSpot), basic reporting, manual processes. RevOps as part-time function. Hire first dedicated RevOps at $3-5M ARR.</div>
+    </div>
+    <div class="rs-card">
+      <div class="rs-arrlevel">$5M–$20M ARR</div>
+      <div class="rs-title">1 RevOps Manager</div>
+      <div class="rs-desc">CRM admin, basic automation, pipeline reporting, comp tracking, territory management. First RevOps hire often reports to CRO.</div>
+    </div>
+    <div class="rs-card">
+      <div class="rs-arrlevel">$20M–$50M ARR</div>
+      <div class="rs-title">RevOps Team (3-4)</div>
+      <div class="rs-desc">VP RevOps + Sales Ops + Marketing Ops + CS Ops. Full Salesforce implementation, BI tool (Tableau/Looker), attribution model, forecasting cadence.</div>
+    </div>
+    <div class="rs-card">
+      <div class="rs-arrlevel">$50M+ ARR</div>
+      <div class="rs-title">Full RevOps Organization (8+)</div>
+      <div class="rs-desc">Dedicated analytics, data engineering, sales productivity, enablement technology. Data warehouse integration. Advanced forecasting (AI-assisted). Investor-grade reporting.</div>
+    </div>
+  </div>
+
+  <div class="formula-block">
+    <div class="formula-label">Capacity Model Summary Formula</div>
+    <div class="formula-main">Revenue Capacity = Σ(Rep Quota × Ramp% × Team Attainment%) − Attrition Impact + Expansion (from existing customers)</div>
+    <div class="formula-note">Run quarterly. Compare to board-committed revenue target. If gap exists, identify specific hiring, ramp, or expansion actions to close it — and model when those actions produce revenue given lead times.</div>
+  </div>
+
+  <div class="indicator-row">
+    <span class="indicator-tag ind-leading">Leading: Open reqs, time-to-fill, 30/60/90 onboarding completion rate, ramp efficiency at month 3</span>
+    <span class="indicator-tag ind-lagging">Lagging: Revenue per AE, team attainment %, annual attrition rate, capacity gap vs. target</span>
+    <span class="indicator-tag ind-formula">Capacity = Headcount × Quota × Attainment × Ramp Adj × (1 − Attrition)</span>
+  </div>
+
+  <div class="related-section">
+    <div class="related-title">Related Sections</div>
+    <div class="related-links">
+      <a href="ramp-time.html" class="related-link">Ramp Time</a>
+      <a href="hiring-formula.html" class="related-link">Hiring Formula</a>
+      <a href="quota-attainment.html" class="related-link">Quota Attainment</a>
+      <a href="cac-payback.html" class="related-link">CAC Payback</a>
+      <a href="repeatability-test.html" class="related-link">Repeatability Test</a>
+      <a href="compensation-design.html" class="related-link">Compensation Design</a>
+    </div>
+  </div>
+</div>
+<script data-pplx-inline-edit>
+(function () {
+  if (window === window.top) return;
+
+  const allowedParentOrigins = ["https://www.perplexity.ai","https://perplexity.ai","https://testing.perplexity.ai","https://staging.perplexity.ai","https://*.preview.i.perplexity.ai","http://localhost:3000","http://127.0.0.1:3000","http://localhost:5173","http://127.0.0.1:5173"];
+  const MAX_FONT_BYTES = 500 * 1024;
+  const MAX_TOTAL_FONT_BYTES = 2 * 1024 * 1024;
+  let scrollForwarding = false;
+  let scrollRaf = 0;
+  let trustedTopOrigin = null;
+
+  // Allow entries like "https://*.preview.i.perplexity.ai" — the wildcard
+  // matches a single DNS label (no dots), so "https://*.foo" cannot stretch
+  // across multiple labels.
+  function matchesAllowedOrigin(origin) {
+    if (!origin) return false;
+    for (const entry of allowedParentOrigins) {
+      if (!entry.includes("*")) {
+        if (entry === origin) return true;
+        continue;
+      }
+      const pattern = new RegExp(
+        "^" +
+          entry.replace(/[.+?^${}()|[\]\\]/g, "\\$&").replace(/\*/g, "[^.]+") +
+          "$",
+      );
+      if (pattern.test(origin)) return true;
+    }
+    return false;
+  }
+
+  // Trust decision: when the sender is same-origin-visible (event.origin is a
+  // real origin like https://www.perplexity.ai) we trust event.origin directly.
+  // When event.origin is "null" (opaque broker srcdoc), we fall back to the
+  // broker's stamped `parentOrigin` to identify the top window. The fallback
+  // is claim-only — we rely on the browser's native `targetOrigin` enforcement
+  // on the response path (see postToTrustedTop) to ensure replies can't be
+  // delivered to anyone but the actual top window of that claimed origin.
+  function getTrustedParentOrigin(event) {
+    const forwardedParentOrigin =
+      typeof event.data.parentOrigin === "string" ? event.data.parentOrigin : null;
+    const parentOrigin = event.origin === "null" ? forwardedParentOrigin : event.origin;
+    return matchesAllowedOrigin(parentOrigin) ? parentOrigin : null;
+  }
+
+  // All responses go to window.top with targetOrigin = the allowlisted origin.
+  // An attacker that iframes us inside their own null-origin broker can claim
+  // any parentOrigin they like, but the browser will drop the reply whenever
+  // the real top's origin doesn't match — so the screenshot never leaves.
+  function postToTrustedTop(message) {
+    if (!trustedTopOrigin) return;
+    try {
+      window.top.postMessage(message, trustedTopOrigin);
+    } catch (_error) {}
+  }
+
+  function inlineAll(original, clone) {
+    if (original.nodeType !== 1 || clone.nodeType !== 1) return;
+
+    try {
+      const computedStyle = getComputedStyle(original);
+      // cssText on a computed style is the serialized declaration in modern
+      // Chromium/Safari — a single read beats enumerating ~400 longhand
+      // properties. Firefox returns "" here, so we fall back on empty.
+      const serialized = computedStyle.cssText;
+      if (serialized) {
+        clone.style.cssText = serialized;
+      } else {
+        const parts = new Array(computedStyle.length);
+        for (let index = 0; index < computedStyle.length; index += 1) {
+          const property = computedStyle[index];
+          parts[index] = `${property}:${computedStyle.getPropertyValue(property)};`;
+        }
+        clone.style.cssText = parts.join("");
+      }
+    } catch (_error) {}
+
+    const originalChildren = original.children;
+    const clonedChildren = clone.children;
+    for (
+      let index = 0;
+      index < originalChildren.length && index < clonedChildren.length;
+      index += 1
+    ) {
+      inlineAll(originalChildren[index], clonedChildren[index]);
+    }
+  }
+
+  function extractFontUrl(srcValue) {
+    const matches = [
+      ...srcValue.matchAll(
+        /url\(["']?([^"')]+)["']?\)(?:\s*format\(["']?([^"')]+)["']?\))?/gi,
+      ),
+    ];
+    if (matches.length === 0) return null;
+    const woff2 = matches.find((m) => m[2] && m[2].toLowerCase().includes("woff2"));
+    if (woff2) return woff2[1];
+    const woff = matches.find((m) => m[2] && m[2].toLowerCase().includes("woff"));
+    if (woff) return woff[1];
+    return matches[0][1];
+  }
+
+  // Cache resolved font URL -> data URI across captures. Fonts on a page
+  // essentially never change, and a batch run emits multiple captures back to
+  // back — without this we'd refetch + re-base64 every time.
+  const fontDataUriCache = new Map();
+  const SRC_DECLARATION_RE = /src\s*:\s*[^;}]+/i;
+
+  async function fetchAsDataUri(url) {
+    if (fontDataUriCache.has(url)) return fontDataUriCache.get(url);
+    let dataUri = null;
+    try {
+      const response = await fetch(url, { mode: "cors", credentials: "omit" });
+      if (response.ok) {
+        const blob = await response.blob();
+        if (blob.size <= MAX_FONT_BYTES) {
+          dataUri = await new Promise((resolve) => {
+            const reader = new FileReader();
+            reader.onloadend = () =>
+              resolve(typeof reader.result === "string" ? reader.result : null);
+            reader.onerror = () => resolve(null);
+            reader.readAsDataURL(blob);
+          });
+        }
+      }
+    } catch (_error) {
+      dataUri = null;
+    }
+    fontDataUriCache.set(url, dataUri);
+    return dataUri;
+  }
+
+  function collectFontFaceRuleTexts() {
+    const rules = [];
+    for (const sheet of document.styleSheets) {
+      let cssRules;
+      try {
+        cssRules = sheet.cssRules;
+      } catch (_error) {
+        continue;
+      }
+      if (!cssRules) continue;
+      for (const rule of cssRules) {
+        const cssText = rule.cssText || "";
+        if (cssText.startsWith("@font-face")) rules.push(cssText);
+      }
+    }
+    return rules;
+  }
+
+  async function buildInlinedFontCss() {
+    const ruleTexts = collectFontFaceRuleTexts();
+    if (ruleTexts.length === 0) return null;
+
+    const resolved = ruleTexts.map((cssText) => {
+      if (!SRC_DECLARATION_RE.test(cssText)) return null;
+      const srcMatch = cssText.match(/src\s*:\s*([^;}]+)[;}]/i);
+      if (!srcMatch) return null;
+      const url = extractFontUrl(srcMatch[1]);
+      if (!url) return null;
+      try {
+        return { cssText, url: new URL(url, document.baseURI).href };
+      } catch (_error) {
+        return null;
+      }
+    });
+
+    const dataUris = await Promise.all(
+      resolved.map((entry) => (entry ? fetchAsDataUri(entry.url) : Promise.resolve(null))),
+    );
+
+    const inlined = [];
+    let totalBytes = 0;
+    for (let index = 0; index < resolved.length; index += 1) {
+      const entry = resolved[index];
+      const dataUri = dataUris[index];
+      if (!entry || !dataUri) continue;
+      const approxBytes = dataUri.length * 0.75;
+      if (totalBytes + approxBytes > MAX_TOTAL_FONT_BYTES) break;
+      totalBytes += approxBytes;
+      inlined.push(entry.cssText.replace(SRC_DECLARATION_RE, `src: url("${dataUri}")`));
+    }
+    return inlined.length > 0 ? inlined.join("\n") : null;
+  }
+
+  function stripExternal(clone) {
+    const images = clone.querySelectorAll("img");
+    for (let index = 0; index < images.length; index += 1) {
+      const src = images[index].getAttribute("src");
+      if (src && !src.startsWith("data:")) images[index].removeAttribute("src");
+    }
+
+    const elements = clone.querySelectorAll("*");
+    for (let index = 0; index < elements.length; index += 1) {
+      const style = elements[index].style.cssText;
+      if (style && style.includes("url(")) {
+        elements[index].style.cssText = style.replace(
+          /url\(["']?(?!data:)[^)"']*["']?\)/gi,
+          "none",
+        );
+      }
+    }
+  }
+
+  function emitScroll() {
+    scrollRaf = 0;
+    if (!scrollForwarding) return;
+    postToTrustedTop({
+      type: "INLINE_EDIT_SCROLL",
+      scrollX: window.scrollX,
+      scrollY: window.scrollY,
+    });
+  }
+
+  window.addEventListener(
+    "scroll",
+    function () {
+      if (!scrollForwarding || scrollRaf) return;
+      scrollRaf = requestAnimationFrame(emitScroll);
+    },
+    { passive: true, capture: true },
+  );
+
+  async function handleCaptureRequest(event) {
+    const requestId = event.data.requestId;
+    const scrollX = window.scrollX;
+    const scrollY = window.scrollY;
+    const width = window.innerWidth;
+    const height = window.innerHeight;
+
+    function postResult(dataUrl) {
+      postToTrustedTop({
+        type: "INLINE_EDIT_SCREENSHOT_RESULT",
+        requestId,
+        dataUrl,
+        scrollX,
+        scrollY,
+      });
+    }
+
+    try {
+      // Wait for any pending web fonts to resolve so both inline metrics and
+      // the @font-face inlining below see the same loaded faces.
+      if (document.fonts && document.fonts.ready) {
+        try {
+          await document.fonts.ready;
+        } catch (_error) {}
+      }
+
+      const clone = document.documentElement.cloneNode(true);
+      inlineAll(document.documentElement, clone);
+
+      const removedNodes = clone.querySelectorAll("script,link[rel=\"stylesheet\"],style");
+      for (let index = 0; index < removedNodes.length; index += 1) {
+        removedNodes[index].remove();
+      }
+
+      stripExternal(clone);
+
+      // Re-embed web fonts as data-URI @font-face rules so the SVG rasterizer
+      // can resolve them — external font URLs aren't fetched during
+      // foreignObject rendering, which would otherwise force a fallback face
+      // and change text metrics.
+      const inlinedFontCss = await buildInlinedFontCss();
+      if (inlinedFontCss) {
+        const styleEl = document.createElement("style");
+        styleEl.textContent = inlinedFontCss;
+        const head = clone.querySelector("head");
+        if (head) head.appendChild(styleEl);
+        else clone.insertBefore(styleEl, clone.firstChild);
+      }
+
+      const html = new XMLSerializer().serializeToString(clone);
+      const svg =
+        `<svg xmlns="http://www.w3.org/2000/svg" width="${width}" height="${height}">` +
+        '<foreignObject width="100%" height="100%">' +
+        `<div xmlns="http://www.w3.org/1999/xhtml" style="width:${width}px;height:${height}px;overflow:hidden">` +
+        `<div style="transform:translate(-${scrollX}px,-${scrollY}px);transform-origin:top left">` +
+        html +
+        "</div></div></foreignObject></svg>";
+      const svgUrl = `data:image/svg+xml;charset=utf-8,${encodeURIComponent(svg)}`;
+      const image = new Image();
+      image.onload = function () {
+        const canvas = document.createElement("canvas");
+        canvas.width = width;
+        canvas.height = height;
+        canvas.getContext("2d").drawImage(image, 0, 0);
+        postResult(canvas.toDataURL("image/png"));
+      };
+      image.onerror = function () {
+        postResult(null);
+      };
+      image.src = svgUrl;
+    } catch (_error) {
+      postResult(null);
+    }
+  }
+
+  window.addEventListener("message", function (event) {
+    if (!event.data) return;
+    // Only accept messages from the direct parent frame. Blocks sibling /
+    // unrelated-window postMessage senders that could otherwise reach us.
+    if (event.source !== window.parent) return;
+
+    const trustedParentOrigin = getTrustedParentOrigin(event);
+    if (!trustedParentOrigin) return;
+    trustedTopOrigin = trustedParentOrigin;
+
+    if (event.data.type === "INLINE_EDIT_SCROLL_START") {
+      scrollForwarding = true;
+      emitScroll();
+      return;
+    }
+
+    if (event.data.type === "INLINE_EDIT_SCROLL_STOP") {
+      scrollForwarding = false;
+      if (scrollRaf) cancelAnimationFrame(scrollRaf);
+      scrollRaf = 0;
+      return;
+    }
+
+    if (event.data.type !== "INLINE_EDIT_CAPTURE_REQUEST") return;
+
+    handleCaptureRequest(event);
+  });
+})();
+
+
+</script></body>
+</html>

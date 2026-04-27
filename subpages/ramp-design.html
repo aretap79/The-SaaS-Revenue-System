@@ -1,0 +1,870 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Sales Rep Ramp Design — SaaS Revenue System</title>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="../assets/shared.css"/>
+  <style>.page-hero { background: #2a7fa8; }</style>
+</head>
+<body>
+<nav class="nav">
+  <span class="nav-logo">SaaS <span>Revenue System</span></span>
+  <span class="nav-sep">|</span>
+  <a href="../index.html" class="nav-back">← Home</a>
+  <span class="nav-sep">|</span>
+  <a href="../pages/phase2.html" class="nav-back">Phase 2</a>
+  <span class="nav-sep">|</span>
+  <span class="nav-current">Ramp Design</span>
+</nav>
+
+<div class="page-hero">
+  <div class="hero-phase-label">Phase 2 — Sales Execution</div>
+  <div class="hero-title">Sales Rep Ramp Design — Accelerating Time to Productivity</div>
+  <div class="hero-subtitle">Ramp time is the #1 operational lever on sales productivity ROI. A well-designed ramp turns new hires into revenue contributors in half the time.</div>
+</div>
+
+<div class="content-wrap">
+  <div class="breadcrumb">
+    <a href="../index.html">Home</a><span class="sep">›</span>
+    <a href="../pages/phase2.html">Phase 2</a><span class="sep">›</span>
+    <span class="current">Sales Rep Ramp Design</span>
+  </div>
+
+  <!-- DEFINITION -->
+  <h2 class="section-title">What Is Ramp Time and Why Does It Matter?</h2>
+  <p class="section-intro">Ramp time is the period between a sales rep's hire date and the date they reach full quota-carrying productivity. It is one of the most expensive and most under-managed variables in SaaS sales operations.</p>
+
+  <div class="callout callout-definition">
+    <div class="callout-title">Definition</div>
+    <p><strong>Ramp time</strong> is the elapsed calendar time from a rep's first day to the point at which they are reliably generating at or near their full quota. During ramp, the rep is consuming compensation, management bandwidth, and opportunity cost — while contributing a fraction of target revenue.</p>
+  </div>
+
+  <div class="subsection">
+    <div class="subsection-title">Why Ramp Time Is Your Highest-Leverage Variable</div>
+    <p>Consider a team of 10 AEs at $1M annual quota each. If average ramp time is 9 months instead of 6 months, those 3 extra months of under-productivity cost the organization approximately $2.5M in lost revenue potential at a 50% ramp attainment assumption — before accounting for the manager time, enablement overhead, and morale drag of struggling reps. Every month you shave off ramp is cash on the income statement.</p>
+    <p>Ramp also acts as a forcing function on sales infrastructure quality. Companies with tight, well-instrumented ramp programs are forced to document their playbook, build certification checkpoints, and maintain deal coaching infrastructure. These assets compound; a company that invests in ramp design in Year 2 operates with structural efficiency advantages over competitors that don't in Year 4.</p>
+  </div>
+
+  <!-- COST FORMULA -->
+  <h2 class="section-title">The Fully-Loaded Ramp Cost Formula</h2>
+  <p class="section-intro">Most organizations dramatically undercount the true cost of ramping a sales rep. The correct calculation includes direct compensation, opportunity cost of quota not hit, and management overhead.</p>
+
+  <div class="formula-block">
+    <div class="formula-label">Fully-Loaded Ramp Cost</div>
+    <div class="formula-main">Ramp Cost = OTE × (Ramp Months / 12) + Opportunity Cost</div>
+    <div class="formula-note">Opportunity Cost = Full Quota × Ramp Months / 12 × (1 − Avg Ramp Attainment) × Gross Margin</div>
+  </div>
+
+  <div class="subsection">
+    <div class="subsection-title">Worked Example</div>
+    <p>AE with $200K OTE, $1M quota, 6-month ramp, 40% average ramp-period attainment, 75% gross margin:</p>
+    <ul class="bullet-list">
+      <li><strong>Direct comp during ramp:</strong> $200K × (6/12) = $100K</li>
+      <li><strong>Opportunity cost:</strong> $1M × (6/12) × (1 − 0.40) × 0.75 = $225K</li>
+      <li><strong>Total fully-loaded ramp cost per AE:</strong> ~$325K</li>
+    </ul>
+    <p>Add recruiter fees (15-20% of OTE), onboarding ops, and manager time (20% of manager salary for 6 months), and the true cost of a single mis-hire or slow ramp exceeds $400K for a mid-market AE. This is why ramp design is a board-level ROI conversation, not just an HR initiative.</p>
+  </div>
+
+  <div class="formula-block">
+    <div class="formula-label">Ramp Payback Period</div>
+    <div class="formula-main">Payback = Ramp Cost / (Monthly Quota × Win Rate × ACV × Gross Margin)</div>
+    <div class="formula-note">How many months of post-ramp production are required to recover the ramp investment</div>
+  </div>
+
+  <!-- BENCHMARKS -->
+  <h2 class="section-title">Industry Benchmarks by Segment</h2>
+  <p class="section-intro">Ramp benchmarks vary significantly by sales complexity, ACV, and buyer sophistication. Use these as targets, not ceilings.</p>
+
+  <table class="data-table">
+    <thead>
+      <tr>
+        <th>Segment</th>
+        <th>Typical ACV</th>
+        <th>Benchmark Ramp</th>
+        <th>Best-in-Class</th>
+        <th>Ramp Quota Schedule</th>
+        <th>Key Ramp Driver</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><strong>SMB</strong></td>
+        <td>$5K–$25K</td>
+        <td>2–3 months</td>
+        <td>6 weeks</td>
+        <td>50% / 75% / 100%</td>
+        <td>Speed to first deal; call volume</td>
+      </tr>
+      <tr>
+        <td><strong>Mid-Market</strong></td>
+        <td>$25K–$150K</td>
+        <td>4–6 months</td>
+        <td>3 months</td>
+        <td>25% / 50% / 75% / 100%</td>
+        <td>Discovery quality; pipeline creation</td>
+      </tr>
+      <tr>
+        <td><strong>Enterprise</strong></td>
+        <td>$150K+</td>
+        <td>6–9 months</td>
+        <td>5 months</td>
+        <td>0% / 25% / 50% / 75% / 100%</td>
+        <td>Account strategy; champion access</td>
+      </tr>
+      <tr>
+        <td><strong>Strategic/Global</strong></td>
+        <td>$500K+</td>
+        <td>9–12 months</td>
+        <td>7 months</td>
+        <td>0% / 0% / 25% / 50% / 100%</td>
+        <td>Relationship depth; exec alignment</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div class="callout callout-warning">
+    <div class="callout-title">Common Benchmarking Mistake</div>
+    <p>Do not apply enterprise ramp timelines to transactional SMB roles or vice versa. A 6-month ramp for a rep selling $8K ACV deals is a training failure. A 3-month ramp for a rep selling $500K enterprise deals is a setup for burnout and early churn.</p>
+  </div>
+
+  <!-- 30/60/90 STRUCTURE -->
+  <h2 class="section-title">The 30/60/90 Ramp Structure</h2>
+  <p class="section-intro">A well-designed ramp program is not a calendar of onboarding events — it is a progressive skill-acquisition curriculum with clear gates and measurable outcomes at each stage.</p>
+
+  <div class="subsection">
+    <div class="subsection-title">Days 1–30: Foundation</div>
+    <p>The first 30 days are about knowledge transfer and environmental orientation. The rep should not be expected to build pipeline yet. Expectations: complete product certification, understand ICP deeply, master the company's discovery methodology on paper.</p>
+    <ul class="bullet-list">
+      <li><strong>Week 1:</strong> Company culture, mission, org structure, tools setup (CRM, Gong, sequencing tool, Slack), HR onboarding. Meet all key cross-functional partners: CS, Marketing, Product, RevOps.</li>
+      <li><strong>Week 2:</strong> Product deep dive — hands-on demo practice, competitive landscape, key differentiators. Must be able to give a coherent 10-minute demo by end of week.</li>
+      <li><strong>Week 3:</strong> ICP deep dive — customer archetypes, pain points, buying triggers, buyer personas. Study 10 recorded won deals in Gong. Identify common discovery patterns.</li>
+      <li><strong>Week 4:</strong> Sales methodology immersion — full MEDDICC or MEDDPICC certification. Discovery call role-play (3 sessions minimum). Shadow 5 live discovery calls.</li>
+    </ul>
+    <div class="callout callout-best-practice">
+      <div class="callout-title">30-Day Gate Certification</div>
+      <p>Rep must pass: (1) product demo certification — give a live 20-min demo with Q&amp;A to panel including Product; (2) ICP quiz — identify whether a company is in-ICP with 80%+ accuracy; (3) MEDDICC terminology — complete written assessment.</p>
+    </div>
+  </div>
+
+  <div class="subsection">
+    <div class="subsection-title">Days 31–60: Pipeline Building</div>
+    <p>The second 30 days shift from learning to doing, with close coaching supervision. The rep begins building their own pipeline while continuing skill development.</p>
+    <ul class="bullet-list">
+      <li><strong>Week 5:</strong> First cold outreach and prospecting — build first 50-account target list, write first sequences, make first 20 cold calls under manager observation. Debrief on every call.</li>
+      <li><strong>Week 6:</strong> First discovery calls (live, with manager co-pilot in first 3). Debrief within 24 hours of each call using Gong recording.</li>
+      <li><strong>Week 7:</strong> First demos (live, with co-pilot available). Begin applying MEDDICC to qualify pipeline. Introduce objection handling — role-play top 10 objections.</li>
+      <li><strong>Week 8:</strong> First proposals and pricing conversations under manager guidance. Introduce negotiation framework. Run a mock multi-threaded account mapping exercise.</li>
+    </ul>
+    <div class="callout callout-best-practice">
+      <div class="callout-title">60-Day Gate Certification</div>
+      <p>Rep must pass: (1) live discovery call certification — run a full discovery against a role-play buyer with scoring rubric; (2) pipeline creation gate — have ≥5 qualified opportunities in CRM meeting MEDDICC minimum thresholds; (3) demo certification — run a needs-based, customized demo without slides as a crutch.</p>
+    </div>
+  </div>
+
+  <div class="subsection">
+    <div class="subsection-title">Days 61–90: Full Cycle Execution</div>
+    <p>By day 61, the rep operates semi-independently with coaching available. The focus shifts to deal progression, full-cycle execution, and hitting the ramp quota milestone.</p>
+    <ul class="bullet-list">
+      <li><strong>Week 9:</strong> Own first full deal cycle — discovery through proposal. Manager coaches on deal strategy but rep owns execution. Begin multi-threading where applicable.</li>
+      <li><strong>Week 10:</strong> Objection handling under fire — debrief every objection encountered in live deals. Introduce executive negotiation and discount request management.</li>
+      <li><strong>Week 11:</strong> Close first deal (target). Run post-win and post-loss analysis. Build account plan for top 3 accounts.</li>
+      <li><strong>Week 12:</strong> Full independence review. Manager assesses readiness for full quota. Rep self-assesses gaps. Agree on ongoing coaching focus areas for Q2.</li>
+    </ul>
+    <div class="callout callout-best-practice">
+      <div class="callout-title">90-Day Gate Certification</div>
+      <p>Rep must pass: (1) objection handling certification — role-play all 20 playbook objections with manager scoring; (2) first closed deal or documented deal in late-stage; (3) pipeline coverage at ≥3× ramp quota; (4) complete mutual action plan on every active deal ≥$25K.</p>
+    </div>
+  </div>
+
+  <!-- MILESTONE VS TIME-BASED -->
+  <h2 class="section-title">Milestone-Based vs. Time-Based Ramp</h2>
+  <p class="section-intro">The most common ramp design failure is treating ramp purely as a calendar event — rep hired on Day 1, "ramped" on Day 91. Milestone-based ramp design is significantly more effective.</p>
+
+  <table class="data-table">
+    <thead>
+      <tr>
+        <th>Dimension</th>
+        <th>Time-Based Ramp</th>
+        <th>Milestone-Based Ramp</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><strong>Definition of "ramped"</strong></td>
+        <td>90 days have elapsed</td>
+        <td>All certification milestones passed + pipeline gate met</td>
+      </tr>
+      <tr>
+        <td><strong>Outcome predictability</strong></td>
+        <td>Low — fast learners waste time, slow learners get promoted past competency</td>
+        <td>High — each milestone gates the next stage</td>
+      </tr>
+      <tr>
+        <td><strong>Manager accountability</strong></td>
+        <td>None — time passes automatically</td>
+        <td>High — manager must certify each milestone</td>
+      </tr>
+      <tr>
+        <td><strong>Fast learner handling</strong></td>
+        <td>Bored, disengaged by Day 45</td>
+        <td>Can advance to full quota in 60 days if milestones passed</td>
+      </tr>
+      <tr>
+        <td><strong>Struggling rep handling</strong></td>
+        <td>Promoted to full quota at 90 days regardless</td>
+        <td>Ramp extended, PIP initiated earlier</td>
+      </tr>
+      <tr>
+        <td><strong>Best for</strong></td>
+        <td>High-volume SMB; transactional</td>
+        <td>Mid-market, Enterprise; solution selling</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div class="callout callout-best-practice">
+    <div class="callout-title">Best Practice</div>
+    <p>Use a hybrid model: time-based calendar provides structure, but milestone gates must be passed before advancing. A rep who passes all 30-day milestones in 3 weeks should be advanced, not held back. A rep who hasn't passed 60-day milestones at day 70 needs a structured coaching intervention, not reassurance that "everyone finds it hard at first."</p>
+  </div>
+
+  <!-- WHAT TO CERTIFY -->
+  <h2 class="section-title">What to Certify at Each Milestone</h2>
+  <p class="section-intro">Certification is only valuable when it is behavioral (demonstrated in a realistic scenario), not knowledge-based (written quiz). Every certification must have a scoring rubric and a minimum passing score.</p>
+
+  <table class="data-table">
+    <thead>
+      <tr>
+        <th>Certification</th>
+        <th>Stage</th>
+        <th>Format</th>
+        <th>Pass Criteria</th>
+        <th>Evaluator</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><strong>Product Demo</strong></td>
+        <td>Day 14</td>
+        <td>Live role-play, prospect = PM or SE</td>
+        <td>≥80% on rubric: structure, discovery questions embedded, value mapping, handling 3 live objections</td>
+        <td>Manager + SE</td>
+      </tr>
+      <tr>
+        <td><strong>ICP Qualification</strong></td>
+        <td>Day 21</td>
+        <td>Written assessment: 20 fictional company profiles, classify in/out-ICP</td>
+        <td>≥85% accuracy</td>
+        <td>Manager</td>
+      </tr>
+      <tr>
+        <td><strong>MEDDICC Application</strong></td>
+        <td>Day 28</td>
+        <td>Apply MEDDICC to 5 real pipeline deals in CRM; manager review</td>
+        <td>All 7 MEDDICC fields populated meaningfully on each deal</td>
+        <td>Manager</td>
+      </tr>
+      <tr>
+        <td><strong>Discovery Call</strong></td>
+        <td>Day 45</td>
+        <td>Live role-play, 45-minute discovery against panel buyer</td>
+        <td>≥80% on rubric: situation, problem, implication, need-payoff questions; no premature pitching; clear next steps</td>
+        <td>Manager + peer AE</td>
+      </tr>
+      <tr>
+        <td><strong>Objection Handling</strong></td>
+        <td>Day 60</td>
+        <td>Flashcard-style drill: 20 objections, verbal responses in real time</td>
+        <td>≥85% rated "effective" by manager; no "let me check on that" without commitment</td>
+        <td>Manager</td>
+      </tr>
+      <tr>
+        <td><strong>Full Deal Cycle</strong></td>
+        <td>Day 90</td>
+        <td>Walk manager through active deal using MAP; present account plan for top 3 accounts</td>
+        <td>Clear champion identified, next steps defined on all deals, no open-ended pipeline</td>
+        <td>Manager + CRO</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <!-- RAMP QUOTA SCHEDULE -->
+  <h2 class="section-title">The Ramp Quota Schedule</h2>
+  <p class="section-intro">Ramp quotas serve two purposes: they set fair, achievable targets during skill development, and they signal to the rep exactly what is expected of them each quarter. Ambiguity about ramp quotas destroys morale.</p>
+
+  <div class="subsection">
+    <div class="subsection-title">Standard Mid-Market Ramp Schedule (4 Quarters)</div>
+  </div>
+
+  <div class="metric-grid">
+    <div class="metric-card">
+      <div class="m-label">Q1 (Months 1–3)</div>
+      <div class="m-value">25%</div>
+      <div class="m-desc">Focus: pipeline creation, first 1–2 closed deals, all certifications passed</div>
+    </div>
+    <div class="metric-card">
+      <div class="m-label">Q2 (Months 4–6)</div>
+      <div class="m-value">50%</div>
+      <div class="m-desc">Focus: full deal cycle independence, consistent pipeline coverage ≥3×</div>
+    </div>
+    <div class="metric-card">
+      <div class="m-label">Q3 (Months 7–9)</div>
+      <div class="m-value">75%</div>
+      <div class="m-desc">Focus: deal strategy, executive engagement, forecasting accuracy</div>
+    </div>
+    <div class="metric-card">
+      <div class="m-label">Q4 (Months 10–12)</div>
+      <div class="m-value">100%</div>
+      <div class="m-desc">Focus: full quota accountability, territory ownership, coaching junior peers</div>
+    </div>
+  </div>
+
+  <div class="callout callout-warning">
+    <div class="callout-title">Compensation During Ramp</div>
+    <p>Ramp quota schedules must be mirrored in OTE comp. If a rep is on 25% quota in Q1, their variable comp target should be 25% of annual variable, with the ability to over-earn if they exceed the ramp target. Failure to align ramp quota with comp creates perverse incentives and early attrition.</p>
+  </div>
+
+  <div class="subsection">
+    <div class="subsection-title">Segment-Adjusted Ramp Quota Schedules</div>
+    <table class="data-table">
+      <thead>
+        <tr>
+          <th>Segment</th>
+          <th>Q1</th>
+          <th>Q2</th>
+          <th>Q3</th>
+          <th>Q4</th>
+          <th>Q5 (if needed)</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>SMB / Transactional</strong></td>
+          <td>50%</td>
+          <td>100%</td>
+          <td>—</td>
+          <td>—</td>
+          <td>—</td>
+        </tr>
+        <tr>
+          <td><strong>Mid-Market</strong></td>
+          <td>25%</td>
+          <td>50%</td>
+          <td>75%</td>
+          <td>100%</td>
+          <td>—</td>
+        </tr>
+        <tr>
+          <td><strong>Enterprise</strong></td>
+          <td>0%</td>
+          <td>25%</td>
+          <td>50%</td>
+          <td>75%</td>
+          <td>100%</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- MEASURING RAMP EFFECTIVENESS -->
+  <h2 class="section-title">Measuring Ramp Effectiveness</h2>
+  <p class="section-intro">If you cannot measure your ramp program, you cannot improve it. These are the leading and lagging indicators of a well-functioning ramp system.</p>
+
+  <div class="subsection">
+    <div class="subsection-title">Leading Indicators (Predictive of Post-Ramp Success)</div>
+    <div class="indicator-row">
+      <span class="indicator-tag ind-leading">Milestone pass rate on time</span>
+      <span class="indicator-tag ind-leading">Days to first pipeline created</span>
+      <span class="indicator-tag ind-leading">Days to first discovery call</span>
+      <span class="indicator-tag ind-leading">Days to first demo</span>
+      <span class="indicator-tag ind-leading">Pipeline coverage at Day 60</span>
+      <span class="indicator-tag ind-leading">Certification scores</span>
+    </div>
+    <ul class="bullet-list">
+      <li><strong>Days to first pipeline created:</strong> Best-in-class SMB reps create first opportunity by Day 7. MM by Day 14. Enterprise by Day 21.</li>
+      <li><strong>Milestone pass rate on time:</strong> Track what % of new hires pass each gate certification on first attempt, by cohort. Below 70% signals a curriculum problem, not a people problem.</li>
+      <li><strong>Pipeline coverage at Day 60:</strong> Mid-market reps should have ≥3× their Q2 ramp quota in qualified pipeline by Day 60. Below 2× is a red flag.</li>
+    </ul>
+  </div>
+
+  <div class="subsection">
+    <div class="subsection-title">Lagging Indicators (Measure Ramp Outcomes)</div>
+    <div class="indicator-row">
+      <span class="indicator-tag ind-lagging">% hitting ramp quota Q1</span>
+      <span class="indicator-tag ind-lagging">Days to first closed deal</span>
+      <span class="indicator-tag ind-lagging">Attrition rate in first 12 months</span>
+      <span class="indicator-tag ind-lagging">Post-ramp quota attainment</span>
+      <span class="indicator-tag ind-lagging">Ramp cohort win rate</span>
+    </div>
+    <ul class="bullet-list">
+      <li><strong>Days to first closed deal:</strong> SMB benchmark: 45 days. MM: 90 days. Enterprise: 150 days. Exceeding these benchmarks consistently signals ramp curriculum failure.</li>
+      <li><strong>Post-ramp quota attainment:</strong> The ultimate measure. Track the correlation between ramp cohort milestone pass rates and Year-1 quota attainment. This is your ramp program ROI calculation.</li>
+      <li><strong>First-year attrition:</strong> Reps who feel set up to fail leave. A poorly designed ramp program is directly correlated with 12-month voluntary attrition above 25%.</li>
+    </ul>
+  </div>
+
+  <div class="formula-block">
+    <div class="formula-label">Ramp Program ROI</div>
+    <div class="formula-main">Ramp ROI = (Incremental Revenue from Faster Ramp × GM%) / Ramp Program Cost</div>
+    <div class="formula-note">Incremental Revenue = (Benchmark Ramp Months − Actual Ramp Months) × Monthly Quota × Win Rate × ACV</div>
+  </div>
+
+  <!-- HIRING PROFILE & RAMP -->
+  <h2 class="section-title">How Hiring Profile Affects Ramp Success</h2>
+  <p class="section-intro">The single biggest variable in ramp outcome is the hiring decision itself. No ramp program can overcome a fundamentally mis-matched hire.</p>
+
+  <table class="data-table">
+    <thead>
+      <tr>
+        <th>Hire Profile</th>
+        <th>Ramp Speed</th>
+        <th>Ramp Risk</th>
+        <th>Best Ramp Investment</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><strong>Carries experience in exact segment + vertical</strong></td>
+        <td>50% faster than benchmark</td>
+        <td>Low</td>
+        <td>Competitive intelligence, product deep-dive</td>
+      </tr>
+      <tr>
+        <td><strong>SaaS AE, different vertical</strong></td>
+        <td>At benchmark</td>
+        <td>Low-Medium</td>
+        <td>ICP and buyer persona immersion, industry context</td>
+      </tr>
+      <tr>
+        <td><strong>Carries SaaS BDR → first AE role</strong></td>
+        <td>Benchmark + 30%</td>
+        <td>Medium</td>
+        <td>Full-cycle deal coaching, objection handling, negotiation</td>
+      </tr>
+      <tr>
+        <td><strong>Carries non-SaaS enterprise background</strong></td>
+        <td>Benchmark + 50%</td>
+        <td>Medium-High</td>
+        <td>SaaS buying dynamics, product-led signals, pricing/packaging</td>
+      </tr>
+      <tr>
+        <td><strong>Carries no B2B sales experience</strong></td>
+        <td>2× benchmark minimum</td>
+        <td>High</td>
+        <td>Full curriculum; intensive manager coaching; structured graduation gates</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <!-- PLAYBOOK CONNECTION -->
+  <h2 class="section-title">The Ramp–Playbook Connection</h2>
+  <p class="section-intro">The ramp program is the playbook's delivery mechanism. If Phase 1 (the playbook) is the intellectual property of your sales organization, the ramp program is how that IP gets installed in every new rep.</p>
+
+  <div class="callout callout-best-practice">
+    <div class="callout-title">Critical Dependency</div>
+    <p>You cannot build a high-quality ramp program without a documented sales playbook. Every certification in the ramp program tests a skill documented in the playbook. Companies that try to ramp reps before documenting the playbook produce inconsistent sellers who rely on tribal knowledge from whoever happens to sit next to them.</p>
+  </div>
+
+  <ul class="bullet-list">
+    <li>The ICP profile from the playbook becomes the Week 3 ICP certification test material</li>
+    <li>The discovery methodology from the playbook becomes the Day 45 discovery call rubric</li>
+    <li>The objection handling matrix from the playbook becomes the Day 60 flashcard drill</li>
+    <li>The MEDDICC qualification guide from the playbook becomes the Day 28 CRM application exercise</li>
+    <li>The competitive battle cards from the playbook become a required weekly review in Weeks 3–4</li>
+    <li>The proposal structure from the playbook becomes the template for first proposals in Weeks 7–8</li>
+  </ul>
+
+  <!-- COMMON RAMP FAILURES -->
+  <h2 class="section-title">Common Ramp Failures and How to Avoid Them</h2>
+
+  <table class="data-table">
+    <thead>
+      <tr>
+        <th>Failure Mode</th>
+        <th>Symptom</th>
+        <th>Root Cause</th>
+        <th>Fix</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><strong>Death by presentation</strong></td>
+        <td>Rep can recite product features, can't sell</td>
+        <td>Ramp is 90% knowledge transfer, 10% skill practice</td>
+        <td>Flip ratio: ≤30% classroom, ≥70% role-play and live deal coaching</td>
+      </tr>
+      <tr>
+        <td><strong>No gates, no accountability</strong></td>
+        <td>Weak reps advance to full quota, fail, churn</td>
+        <td>Time-based ramp without milestone certification</td>
+        <td>Institute hard certification gates; manager must sign off on each</td>
+      </tr>
+      <tr>
+        <td><strong>Manager abdication</strong></td>
+        <td>"Enablement handles the new reps"</td>
+        <td>Manager not accountable for ramp outcomes</td>
+        <td>Hold manager's OTE partially on new-rep ramp attainment</td>
+      </tr>
+      <tr>
+        <td><strong>Live fire too early</strong></td>
+        <td>Rep puts real prospects in front of unprepared rep</td>
+        <td>Manager pressure to show pipeline; no protocol</td>
+        <td>Enforce no-live-prospect rule before Day 28 and first certification</td>
+      </tr>
+      <tr>
+        <td><strong>Inconsistent cohort experience</strong></td>
+        <td>Rep A is crushing it, Rep B who started same week is lost</td>
+        <td>Ramp program is manager-dependent, not systematized</td>
+        <td>Centralized enablement owns curriculum; managers own coaching</td>
+      </tr>
+      <tr>
+        <td><strong>No feedback loop on the program itself</strong></td>
+        <td>Same failures repeat across cohorts</td>
+        <td>No post-ramp retrospective; no cohort analysis</td>
+        <td>Quarterly cohort analysis: milestone pass rates, time to first deal, Q1 attainment by hire profile</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div class="related-section">
+    <div class="related-title">Related Sections</div>
+    <div class="related-links">
+      <a class="related-link" href="playbook.html">Sales Playbook</a>
+      <a class="related-link" href="management-cadence.html">Management Cadence</a>
+      <a class="related-link" href="../pages/phase2.html">Phase 2 Overview</a>
+      <a class="related-link" href="../pages/phase1.html">Phase 1 — Foundation</a>
+    </div>
+  </div>
+</div>
+<script data-pplx-inline-edit>
+(function () {
+  if (window === window.top) return;
+
+  const allowedParentOrigins = ["https://www.perplexity.ai","https://perplexity.ai","https://testing.perplexity.ai","https://staging.perplexity.ai","https://*.preview.i.perplexity.ai","http://localhost:3000","http://127.0.0.1:3000","http://localhost:5173","http://127.0.0.1:5173"];
+  const MAX_FONT_BYTES = 500 * 1024;
+  const MAX_TOTAL_FONT_BYTES = 2 * 1024 * 1024;
+  let scrollForwarding = false;
+  let scrollRaf = 0;
+  let trustedTopOrigin = null;
+
+  // Allow entries like "https://*.preview.i.perplexity.ai" — the wildcard
+  // matches a single DNS label (no dots), so "https://*.foo" cannot stretch
+  // across multiple labels.
+  function matchesAllowedOrigin(origin) {
+    if (!origin) return false;
+    for (const entry of allowedParentOrigins) {
+      if (!entry.includes("*")) {
+        if (entry === origin) return true;
+        continue;
+      }
+      const pattern = new RegExp(
+        "^" +
+          entry.replace(/[.+?^${}()|[\]\\]/g, "\\$&").replace(/\*/g, "[^.]+") +
+          "$",
+      );
+      if (pattern.test(origin)) return true;
+    }
+    return false;
+  }
+
+  // Trust decision: when the sender is same-origin-visible (event.origin is a
+  // real origin like https://www.perplexity.ai) we trust event.origin directly.
+  // When event.origin is "null" (opaque broker srcdoc), we fall back to the
+  // broker's stamped `parentOrigin` to identify the top window. The fallback
+  // is claim-only — we rely on the browser's native `targetOrigin` enforcement
+  // on the response path (see postToTrustedTop) to ensure replies can't be
+  // delivered to anyone but the actual top window of that claimed origin.
+  function getTrustedParentOrigin(event) {
+    const forwardedParentOrigin =
+      typeof event.data.parentOrigin === "string" ? event.data.parentOrigin : null;
+    const parentOrigin = event.origin === "null" ? forwardedParentOrigin : event.origin;
+    return matchesAllowedOrigin(parentOrigin) ? parentOrigin : null;
+  }
+
+  // All responses go to window.top with targetOrigin = the allowlisted origin.
+  // An attacker that iframes us inside their own null-origin broker can claim
+  // any parentOrigin they like, but the browser will drop the reply whenever
+  // the real top's origin doesn't match — so the screenshot never leaves.
+  function postToTrustedTop(message) {
+    if (!trustedTopOrigin) return;
+    try {
+      window.top.postMessage(message, trustedTopOrigin);
+    } catch (_error) {}
+  }
+
+  function inlineAll(original, clone) {
+    if (original.nodeType !== 1 || clone.nodeType !== 1) return;
+
+    try {
+      const computedStyle = getComputedStyle(original);
+      // cssText on a computed style is the serialized declaration in modern
+      // Chromium/Safari — a single read beats enumerating ~400 longhand
+      // properties. Firefox returns "" here, so we fall back on empty.
+      const serialized = computedStyle.cssText;
+      if (serialized) {
+        clone.style.cssText = serialized;
+      } else {
+        const parts = new Array(computedStyle.length);
+        for (let index = 0; index < computedStyle.length; index += 1) {
+          const property = computedStyle[index];
+          parts[index] = `${property}:${computedStyle.getPropertyValue(property)};`;
+        }
+        clone.style.cssText = parts.join("");
+      }
+    } catch (_error) {}
+
+    const originalChildren = original.children;
+    const clonedChildren = clone.children;
+    for (
+      let index = 0;
+      index < originalChildren.length && index < clonedChildren.length;
+      index += 1
+    ) {
+      inlineAll(originalChildren[index], clonedChildren[index]);
+    }
+  }
+
+  function extractFontUrl(srcValue) {
+    const matches = [
+      ...srcValue.matchAll(
+        /url\(["']?([^"')]+)["']?\)(?:\s*format\(["']?([^"')]+)["']?\))?/gi,
+      ),
+    ];
+    if (matches.length === 0) return null;
+    const woff2 = matches.find((m) => m[2] && m[2].toLowerCase().includes("woff2"));
+    if (woff2) return woff2[1];
+    const woff = matches.find((m) => m[2] && m[2].toLowerCase().includes("woff"));
+    if (woff) return woff[1];
+    return matches[0][1];
+  }
+
+  // Cache resolved font URL -> data URI across captures. Fonts on a page
+  // essentially never change, and a batch run emits multiple captures back to
+  // back — without this we'd refetch + re-base64 every time.
+  const fontDataUriCache = new Map();
+  const SRC_DECLARATION_RE = /src\s*:\s*[^;}]+/i;
+
+  async function fetchAsDataUri(url) {
+    if (fontDataUriCache.has(url)) return fontDataUriCache.get(url);
+    let dataUri = null;
+    try {
+      const response = await fetch(url, { mode: "cors", credentials: "omit" });
+      if (response.ok) {
+        const blob = await response.blob();
+        if (blob.size <= MAX_FONT_BYTES) {
+          dataUri = await new Promise((resolve) => {
+            const reader = new FileReader();
+            reader.onloadend = () =>
+              resolve(typeof reader.result === "string" ? reader.result : null);
+            reader.onerror = () => resolve(null);
+            reader.readAsDataURL(blob);
+          });
+        }
+      }
+    } catch (_error) {
+      dataUri = null;
+    }
+    fontDataUriCache.set(url, dataUri);
+    return dataUri;
+  }
+
+  function collectFontFaceRuleTexts() {
+    const rules = [];
+    for (const sheet of document.styleSheets) {
+      let cssRules;
+      try {
+        cssRules = sheet.cssRules;
+      } catch (_error) {
+        continue;
+      }
+      if (!cssRules) continue;
+      for (const rule of cssRules) {
+        const cssText = rule.cssText || "";
+        if (cssText.startsWith("@font-face")) rules.push(cssText);
+      }
+    }
+    return rules;
+  }
+
+  async function buildInlinedFontCss() {
+    const ruleTexts = collectFontFaceRuleTexts();
+    if (ruleTexts.length === 0) return null;
+
+    const resolved = ruleTexts.map((cssText) => {
+      if (!SRC_DECLARATION_RE.test(cssText)) return null;
+      const srcMatch = cssText.match(/src\s*:\s*([^;}]+)[;}]/i);
+      if (!srcMatch) return null;
+      const url = extractFontUrl(srcMatch[1]);
+      if (!url) return null;
+      try {
+        return { cssText, url: new URL(url, document.baseURI).href };
+      } catch (_error) {
+        return null;
+      }
+    });
+
+    const dataUris = await Promise.all(
+      resolved.map((entry) => (entry ? fetchAsDataUri(entry.url) : Promise.resolve(null))),
+    );
+
+    const inlined = [];
+    let totalBytes = 0;
+    for (let index = 0; index < resolved.length; index += 1) {
+      const entry = resolved[index];
+      const dataUri = dataUris[index];
+      if (!entry || !dataUri) continue;
+      const approxBytes = dataUri.length * 0.75;
+      if (totalBytes + approxBytes > MAX_TOTAL_FONT_BYTES) break;
+      totalBytes += approxBytes;
+      inlined.push(entry.cssText.replace(SRC_DECLARATION_RE, `src: url("${dataUri}")`));
+    }
+    return inlined.length > 0 ? inlined.join("\n") : null;
+  }
+
+  function stripExternal(clone) {
+    const images = clone.querySelectorAll("img");
+    for (let index = 0; index < images.length; index += 1) {
+      const src = images[index].getAttribute("src");
+      if (src && !src.startsWith("data:")) images[index].removeAttribute("src");
+    }
+
+    const elements = clone.querySelectorAll("*");
+    for (let index = 0; index < elements.length; index += 1) {
+      const style = elements[index].style.cssText;
+      if (style && style.includes("url(")) {
+        elements[index].style.cssText = style.replace(
+          /url\(["']?(?!data:)[^)"']*["']?\)/gi,
+          "none",
+        );
+      }
+    }
+  }
+
+  function emitScroll() {
+    scrollRaf = 0;
+    if (!scrollForwarding) return;
+    postToTrustedTop({
+      type: "INLINE_EDIT_SCROLL",
+      scrollX: window.scrollX,
+      scrollY: window.scrollY,
+    });
+  }
+
+  window.addEventListener(
+    "scroll",
+    function () {
+      if (!scrollForwarding || scrollRaf) return;
+      scrollRaf = requestAnimationFrame(emitScroll);
+    },
+    { passive: true, capture: true },
+  );
+
+  async function handleCaptureRequest(event) {
+    const requestId = event.data.requestId;
+    const scrollX = window.scrollX;
+    const scrollY = window.scrollY;
+    const width = window.innerWidth;
+    const height = window.innerHeight;
+
+    function postResult(dataUrl) {
+      postToTrustedTop({
+        type: "INLINE_EDIT_SCREENSHOT_RESULT",
+        requestId,
+        dataUrl,
+        scrollX,
+        scrollY,
+      });
+    }
+
+    try {
+      // Wait for any pending web fonts to resolve so both inline metrics and
+      // the @font-face inlining below see the same loaded faces.
+      if (document.fonts && document.fonts.ready) {
+        try {
+          await document.fonts.ready;
+        } catch (_error) {}
+      }
+
+      const clone = document.documentElement.cloneNode(true);
+      inlineAll(document.documentElement, clone);
+
+      const removedNodes = clone.querySelectorAll("script,link[rel=\"stylesheet\"],style");
+      for (let index = 0; index < removedNodes.length; index += 1) {
+        removedNodes[index].remove();
+      }
+
+      stripExternal(clone);
+
+      // Re-embed web fonts as data-URI @font-face rules so the SVG rasterizer
+      // can resolve them — external font URLs aren't fetched during
+      // foreignObject rendering, which would otherwise force a fallback face
+      // and change text metrics.
+      const inlinedFontCss = await buildInlinedFontCss();
+      if (inlinedFontCss) {
+        const styleEl = document.createElement("style");
+        styleEl.textContent = inlinedFontCss;
+        const head = clone.querySelector("head");
+        if (head) head.appendChild(styleEl);
+        else clone.insertBefore(styleEl, clone.firstChild);
+      }
+
+      const html = new XMLSerializer().serializeToString(clone);
+      const svg =
+        `<svg xmlns="http://www.w3.org/2000/svg" width="${width}" height="${height}">` +
+        '<foreignObject width="100%" height="100%">' +
+        `<div xmlns="http://www.w3.org/1999/xhtml" style="width:${width}px;height:${height}px;overflow:hidden">` +
+        `<div style="transform:translate(-${scrollX}px,-${scrollY}px);transform-origin:top left">` +
+        html +
+        "</div></div></foreignObject></svg>";
+      const svgUrl = `data:image/svg+xml;charset=utf-8,${encodeURIComponent(svg)}`;
+      const image = new Image();
+      image.onload = function () {
+        const canvas = document.createElement("canvas");
+        canvas.width = width;
+        canvas.height = height;
+        canvas.getContext("2d").drawImage(image, 0, 0);
+        postResult(canvas.toDataURL("image/png"));
+      };
+      image.onerror = function () {
+        postResult(null);
+      };
+      image.src = svgUrl;
+    } catch (_error) {
+      postResult(null);
+    }
+  }
+
+  window.addEventListener("message", function (event) {
+    if (!event.data) return;
+    // Only accept messages from the direct parent frame. Blocks sibling /
+    // unrelated-window postMessage senders that could otherwise reach us.
+    if (event.source !== window.parent) return;
+
+    const trustedParentOrigin = getTrustedParentOrigin(event);
+    if (!trustedParentOrigin) return;
+    trustedTopOrigin = trustedParentOrigin;
+
+    if (event.data.type === "INLINE_EDIT_SCROLL_START") {
+      scrollForwarding = true;
+      emitScroll();
+      return;
+    }
+
+    if (event.data.type === "INLINE_EDIT_SCROLL_STOP") {
+      scrollForwarding = false;
+      if (scrollRaf) cancelAnimationFrame(scrollRaf);
+      scrollRaf = 0;
+      return;
+    }
+
+    if (event.data.type !== "INLINE_EDIT_CAPTURE_REQUEST") return;
+
+    handleCaptureRequest(event);
+  });
+})();
+
+
+</script></body>
+</html>

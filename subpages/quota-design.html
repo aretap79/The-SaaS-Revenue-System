@@ -1,0 +1,824 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Quota Design — SaaS Revenue System</title>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="../assets/shared.css"/>
+  <style>
+    .page-hero { background: #01696F; }
+    .method-card {
+      background: var(--surface);
+      border: 1.5px solid var(--border);
+      border-radius: 10px;
+      margin-bottom: 22px;
+      overflow: hidden;
+    }
+    .method-header {
+      padding: 18px 24px;
+      border-bottom: 1.5px solid var(--border);
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
+    .method-badge {
+      min-width: 44px;
+      height: 44px;
+      border-radius: 8px;
+      background: #01696F;
+      color: #fff;
+      font-size: 13px;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      line-height: 1.2;
+      flex-shrink: 0;
+    }
+    .method-name { font-size: 17px; font-weight: 700; margin-bottom: 2px; }
+    .method-tagline { font-size: 13px; color: var(--text-muted); }
+    .method-body { padding: 20px 24px; }
+    .method-body p { font-size: 14px; line-height: 1.75; margin-bottom: 12px; }
+    .pro-con-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+      margin: 12px 0;
+    }
+    .pc-box {
+      border-radius: 6px;
+      padding: 12px 14px;
+    }
+    .pc-pro { background: #f0fff4; border: 1px solid #c8e8c8; }
+    .pc-con { background: #fff5f5; border: 1px solid #f5c0c0; }
+    .pc-title { font-size: 11px; font-weight: 700; letter-spacing: 1px; text-transform: uppercase; margin-bottom: 6px; }
+    .pc-pro .pc-title { color: #437A22; }
+    .pc-con .pc-title { color: #A13544; }
+    .pc-box ul { list-style: none; padding: 0; margin: 0; }
+    .pc-box ul li { font-size: 13px; line-height: 1.6; padding: 2px 0; }
+    .ramp-table-wrap { overflow-x: auto; margin: 16px 0; }
+    .attainment-dist {
+      display: flex;
+      align-items: flex-end;
+      gap: 6px;
+      height: 120px;
+      margin: 16px 0;
+    }
+    .att-bar-group { display: flex; flex-direction: column; align-items: center; gap: 4px; flex: 1; }
+    .att-bar {
+      width: 100%;
+      border-radius: 4px 4px 0 0;
+      background: #01696F;
+      position: relative;
+    }
+    .att-bar.below50 { background: #A13544; }
+    .att-bar.below100 { background: #964219; }
+    .att-bar.at100 { background: #437A22; }
+    .att-bar.over100 { background: #006494; }
+    .att-label { font-size: 10px; font-weight: 700; color: var(--text-muted); text-align: center; }
+    .att-pct { font-size: 11px; font-weight: 700; color: var(--text); text-align: center; }
+    .territory-card {
+      background: var(--surface);
+      border: 1.5px solid var(--border);
+      border-radius: 8px;
+      padding: 18px 22px;
+      margin-bottom: 14px;
+    }
+    .territory-title { font-size: 15px; font-weight: 700; margin-bottom: 8px; }
+    .territory-body { font-size: 14px; line-height: 1.7; color: var(--text); }
+    .calendar-row {
+      display: flex;
+      gap: 0;
+      margin: 16px 0;
+    }
+    .cal-quarter {
+      flex: 1;
+      border: 1.5px solid var(--border);
+      padding: 14px 12px;
+      text-align: center;
+    }
+    .cal-quarter:first-child { border-radius: 8px 0 0 8px; }
+    .cal-quarter:last-child { border-radius: 0 8px 8px 0; }
+    .cal-quarter.active { background: #01696F; color: #fff; border-color: #01696F; }
+    .cal-q-label { font-size: 11px; font-weight: 700; letter-spacing: 1px; text-transform: uppercase; margin-bottom: 6px; }
+    .cal-q-title { font-size: 13px; font-weight: 700; margin-bottom: 4px; }
+    .cal-q-desc { font-size: 11px; line-height: 1.5; opacity: 0.85; }
+    @media (max-width: 640px) {
+      .pro-con-grid { grid-template-columns: 1fr; }
+      .calendar-row { flex-direction: column; }
+      .cal-quarter:first-child { border-radius: 8px 8px 0 0; }
+      .cal-quarter:last-child { border-radius: 0 0 8px 8px; }
+    }
+  </style>
+</head>
+<body>
+<nav class="nav">
+  <span class="nav-logo">SaaS <span>Revenue System</span></span>
+  <span class="nav-sep">|</span>
+  <a href="../index.html" class="nav-back">← Home</a>
+  <span class="nav-sep">|</span>
+  <a href="../pages/revops.html" class="nav-back">RevOps</a>
+  <span class="nav-sep">|</span>
+  <span class="nav-current">Quota Design</span>
+</nav>
+
+<div class="page-hero">
+  <div class="hero-phase-label">REVENUE OPERATIONS</div>
+  <div class="hero-title">Quota Design</div>
+  <div class="hero-subtitle">Calibrating the Number That Drives Everything — Setting Quotas That Are Achievable, Motivating, and Aligned with Company Growth</div>
+</div>
+
+<div class="content-wrap">
+  <div class="breadcrumb">
+    <a href="../index.html">Home</a><span class="sep">›</span>
+    <a href="../pages/revops.html">RevOps</a><span class="sep">›</span>
+    <span class="current">Quota Design</span>
+  </div>
+
+  <!-- WHY QUOTA IS THE MOST IMPACTFUL VARIABLE -->
+  <h2 class="section-title">Why Quota Is the Most Impactful Variable in Sales System Design</h2>
+  <div class="section-intro">Everything in sales operations flows from one number: the individual quota. Get it right and you have a motivated, focused, fairly compensated team. Get it wrong and you break everything downstream.</div>
+
+  <div class="subsection">
+    <p>Quota is the operating system of a sales organization. Every other system — comp, territory, pipeline management, coaching, hiring — runs on top of it. When the quota is wrong, nothing else can compensate. A rep with an unachievable quota will disengage, underperform, and eventually leave — even if every other element of their experience is excellent. A rep with an easy quota will hit their number without stretching, costing the company growth opportunity and creating a false sense of health in revenue reporting.</p>
+    <p>The quota number represents a contract between the company and the rep: "If you perform at this level, you will earn your OTE (On-Target Earnings). If you exceed it, you will earn more. If you fall short, you will earn less." For this contract to work, both parties must believe the quota is achievable by a consistently performing rep. If reps believe the number is arbitrary, set top-down without reference to their territory potential, or manipulated to reduce comp payout — the contract is broken and the compensation plan loses its motivational power.</p>
+  </div>
+
+  <div class="callout callout-warning">
+    <div class="callout-title">The Broken Quota Signal</div>
+    <p>If fewer than 55% of your reps are hitting quota in a given quarter, the quota is almost certainly wrong — not the reps. A well-designed quota should be achievable by 60–70% of a properly hired, properly trained, properly supported team in a given quarter. If your attainment distribution is consistently below 55%, investigate the quota before you investigate the people.</p>
+  </div>
+
+  <div class="metric-grid">
+    <div class="metric-card">
+      <div class="m-label">Quota Attainment Target</div>
+      <div class="m-value">60–70%</div>
+      <div class="m-desc">Percentage of reps who should hit 100%+ quota each quarter. Below 55% = quota likely too high.</div>
+    </div>
+    <div class="metric-card">
+      <div class="m-label">OTE Quota Multiple</div>
+      <div class="m-value">4×–6×</div>
+      <div class="m-desc">Standard quota-to-OTE ratio in B2B SaaS. Ratio varies by ACV, sales cycle, and segment.</div>
+    </div>
+    <div class="metric-card">
+      <div class="m-label">Over-Assignment</div>
+      <div class="m-value">110–120%</div>
+      <div class="m-desc">Total assigned quota as % of company target. Hedge for attrition and underperformance.</div>
+    </div>
+    <div class="metric-card">
+      <div class="m-label">Full Ramp Period</div>
+      <div class="m-value">5 Quarters</div>
+      <div class="m-desc">Typical time from hire to 100% quota contribution. Varies by ACV and motion complexity.</div>
+    </div>
+  </div>
+
+  <!-- THE THREE QUOTA-SETTING METHODOLOGIES -->
+  <h2 class="section-title">The Three Quota-Setting Methodologies</h2>
+  <div class="section-intro">No methodology is perfect in isolation. The best practice is a hybrid that anchors in reality (bottoms-up) while aligning with growth objectives (top-down).</div>
+
+  <!-- TOP DOWN -->
+  <div class="method-card">
+    <div class="method-header">
+      <div class="method-badge">TD</div>
+      <div>
+        <div class="method-name">Top-Down: The CFO Gives a Number</div>
+        <div class="method-tagline">Fast but often disconnected from the reality of what each territory can generate</div>
+      </div>
+    </div>
+    <div class="method-body">
+      <p>In the top-down method, the CFO and board set an annual revenue target based on investor expectations, growth rate targets, and capital deployment plans. This number is then divided by the number of quota-carrying reps (AEs, AMs, or CSMs depending on the motion) to produce an individual quota. The math looks simple: $40M target ÷ 20 AEs = $2M per AE.</p>
+      <p>The problem is that this math is financial modeling, not capacity planning. It assumes every AE has the same territory opportunity, the same tenure level, and that the headcount plan will be fully executed. None of these assumptions hold in the real world. A senior AE with a mature enterprise territory and a new hire in an untested segment do not have the same $2M quota potential.</p>
+      <div class="pro-con-grid">
+        <div class="pc-box pc-pro">
+          <div class="pc-title">Advantages</div>
+          <ul>
+            <li>Fast to produce — can be done in hours</li>
+            <li>Aligned with board/investor expectations by definition</li>
+            <li>Simple to communicate</li>
+            <li>Useful as a starting point or constraint</li>
+          </ul>
+        </div>
+        <div class="pc-box pc-con">
+          <div class="pc-title">Disadvantages</div>
+          <ul>
+            <li>Ignores territory potential differences</li>
+            <li>Ignores rep tenure and ramp</li>
+            <li>Often produces unachievable quotas for new hires</li>
+            <li>Destroys credibility and motivation when perceived as arbitrary</li>
+            <li>May overstate capacity if headcount plan slips</li>
+          </ul>
+        </div>
+      </div>
+      <p><strong>When to use top-down:</strong> As the upper bound in a hybrid model. The company cannot assign total quota below the company target — so the top-down number sets the floor. The bottoms-up number should meet or exceed it. If it doesn't, you have a capacity gap that must be resolved by headcount additions, productivity improvement assumptions, or revising the company target.</p>
+    </div>
+  </div>
+
+  <!-- BOTTOMS UP -->
+  <div class="method-card">
+    <div class="method-header">
+      <div class="method-badge">BU</div>
+      <div>
+        <div class="method-name">Bottoms-Up: Sum of Territory Capacity</div>
+        <div class="method-tagline">Accurate to reality but can fall short of growth ambitions if not challenged</div>
+      </div>
+    </div>
+    <div class="method-body">
+      <p>The bottoms-up method starts with individual territory analysis: how much ARR can this specific territory realistically generate next year, given its TAM, the existing pipeline, the rep's tenure and historical productivity, and the planned activities? You build a quota for each rep based on their territory's potential and your expectations of their productivity, then sum to the company level.</p>
+      <p>This is the most rigorous and fair method. It produces quotas that are grounded in reality for each rep. Its weakness is that it can produce a sum that is below the company target — either because some territories are genuinely smaller than others, or because the team is more cautious in their estimates than the company's growth rate requires.</p>
+      <div class="pro-con-grid">
+        <div class="pc-box pc-pro">
+          <div class="pc-title">Advantages</div>
+          <ul>
+            <li>Quotas tied to actual territory opportunity</li>
+            <li>Builds rep buy-in — they participated in the logic</li>
+            <li>Reveals real capacity gaps (territory imbalances, understaffed segments)</li>
+            <li>Most accurate for predicting actual attainment distribution</li>
+          </ul>
+        </div>
+        <div class="pc-box pc-con">
+          <div class="pc-title">Disadvantages</div>
+          <ul>
+            <li>Time-intensive — requires individual territory analysis</li>
+            <li>May produce a sum below company target</li>
+            <li>Susceptible to rep sandbagging in the input data</li>
+            <li>Requires territory potential analysis infrastructure</li>
+          </ul>
+        </div>
+      </div>
+      <p><strong>Territory capacity inputs for bottoms-up:</strong> (1) TAM of the territory (accounts in ICP with employee range matching the segment), (2) Existing pipeline: what is already in the funnel for this territory heading into next year, (3) Expected new pipeline generation: based on the rep's historical pipeline generation rate, (4) Expected win rate: based on the rep's historical win rate, (5) Average deal size for the segment. The product of these five inputs is the bottoms-up capacity estimate for that territory.</p>
+    </div>
+  </div>
+
+  <!-- HYBRID -->
+  <div class="method-card">
+    <div class="method-header">
+      <div class="method-badge" style="background:#437A22;">HY</div>
+      <div>
+        <div class="method-name">Hybrid: Meet in the Middle (Best Practice)</div>
+        <div class="method-tagline">Anchor in territory reality, challenge against growth targets, resolve gaps explicitly</div>
+      </div>
+    </div>
+    <div class="method-body">
+      <p>The hybrid method runs both top-down and bottoms-up in parallel, then uses the gap between them as the operational challenge to resolve. The bottoms-up sum is the starting point. The top-down number is the constraint. If the bottoms-up sum is below the top-down target, leadership must explicitly decide: are we going to close the gap with headcount additions, productivity stretch, or a revised target?</p>
+      <p>This makes the capacity gap visible and forces an honest conversation. It prevents the common failure mode where the finance team sets an aspirational target, the CRO accepts it to avoid conflict, and the sales team is given unachievable quotas that destroy morale — all because nobody did the math explicitly.</p>
+      <div class="formula-block">
+        <div class="formula-label">The Hybrid Gap Analysis</div>
+        <div class="formula-main">Capacity Gap = Company Target − Bottoms-Up Sum</div>
+        <div class="formula-note">If Capacity Gap &gt; 0: Resolve by: (a) Adding headcount at cost of ramp lag, (b) Applying a productivity stretch assumption (e.g., +10% on all bottoms-up estimates), (c) Revising the company target — the only honest option if the gap is large and headcount can't be added. Gap should never be papered over with "we'll figure it out."</div>
+      </div>
+      <p><strong>How to run the hybrid process:</strong> Start bottoms-up in October (for a January fiscal year start). RevOps builds the territory capacity model. Each manager reviews and adds their judgment. Sum is presented to CRO and CFO in November alongside the board's top-down number. The negotiation between these two numbers — done explicitly with data — produces the final quota allocation by January planning cycle.</p>
+    </div>
+  </div>
+
+  <!-- QUOTA-TO-OTE RATIO -->
+  <h2 class="section-title">The Quota-to-OTE Ratio</h2>
+  <div class="section-intro">The relationship between quota and on-target earnings signals whether the economic contract with the rep is realistic.</div>
+
+  <div class="subsection">
+    <p>The OTE multiplier (sometimes called quota multiple or OTE leverage) is the ratio of the rep's quota to their OTE. An AE with a $1.2M quota and $200K OTE has a 6× multiple. This means the company expects to pay 1/6th (16.7%) of the revenue the AE generates as their total compensation at plan — in addition to other costs of selling.</p>
+  </div>
+
+  <table class="data-table">
+    <thead>
+      <tr><th>OTE Multiple</th><th>Interpretation</th><th>Common Context</th></tr>
+    </thead>
+    <tbody>
+      <tr><td>3×–4×</td><td>Low multiple — either ACV is very large (enterprise) and deals are rare, or the quota is conservative. Reps well-compensated relative to quota.</td><td>Enterprise deals ($250K+ ACV), early-stage companies with low quotas, high-commission-rate structures</td></tr>
+      <tr><td>4×–6×</td><td>Standard range for B2B SaaS AEs. Balances revenue generation expectation with competitive comp.</td><td>Mid-market AEs ($50K–$150K ACV), established SaaS companies with defined territories</td></tr>
+      <tr><td>6×–8×</td><td>Aggressive multiple — reps are generating significantly more revenue relative to their comp. Works if quotas are achievable and OTE is competitive.</td><td>High-velocity SMB, strong inbound-assisted motion, lower ACV with high volume</td></tr>
+      <tr><td>&gt;8×</td><td>Red flag. Either the quota is unachievable, the OTE is below market, or both. Expect high attrition.</td><td>Occurs when company growth targets exceed what territory supports. Not sustainable.</td></tr>
+    </tbody>
+  </table>
+
+  <div class="callout callout-best-practice">
+    <div class="callout-title">The Comp Benchmarking Discipline</div>
+    <p>Run an annual comp benchmarking exercise (use Radford, Levels.fyi SaaS data, or peer CRO comp data) to confirm your OTE is in the 50th–65th percentile for your segment and ACV band. If you're consistently at the 35th percentile, you're losing talent in the final stages of your hiring process and you don't know it. If you're at the 80th percentile, you're overpaying — dollars better deployed in additional headcount or quota relief.</p>
+  </div>
+
+  <!-- RAMPED QUOTA SCHEDULE -->
+  <h2 class="section-title">The Ramped Quota Schedule</h2>
+  <div class="section-intro">Giving a new hire 100% quota in month 1 is not ambitious — it's incoherent. A rep who hasn't built their pipeline yet cannot close deals they haven't started. Ramp schedules are a fairness mechanism and a retention tool.</div>
+
+  <div class="subsection">
+    <p>A ramp schedule gives new hires a gradually increasing quota during their first several quarters as they build territory knowledge, establish relationships, and build their pipeline. The ramp percent represents the fraction of the full quota they are expected to hit in each period. Ramp periods vary significantly by ACV and sales cycle length:</p>
+  </div>
+
+  <div class="ramp-table-wrap">
+    <table class="data-table">
+      <thead>
+        <tr><th>Quarter</th><th>SMB (&lt;$20K ACV)</th><th>Mid-Market ($20K–$100K ACV)</th><th>Enterprise (&gt;$100K ACV)</th><th>What's Happening</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>Q1 (hire quarter)</td><td>0–25%</td><td>0%</td><td>0%</td><td>Onboarding, product training, territory orientation. Pipeline building. No quota expectation for enterprise. SMB ramp can start because deals close fast.</td></tr>
+        <tr><td>Q2</td><td>50%</td><td>25%</td><td>0–10%</td><td>First deals should be closing for SMB. Mid-market rep beginning active pipeline. Enterprise rep still in early pipeline stage — typical enterprise cycle is 6–9 months.</td></tr>
+        <tr><td>Q3</td><td>75%</td><td>50%</td><td>25–50%</td><td>All segments building momentum. First enterprise deals may close. SMB rep near full productivity if hired and onboarded correctly.</td></tr>
+        <tr><td>Q4</td><td>100%</td><td>75%</td><td>50–75%</td><td>SMB at full quota. Mid-market approaching. Enterprise still below full quota — long cycle means pipeline from Q1 of hire year is only now converting.</td></tr>
+        <tr><td>Q5+</td><td>100%</td><td>100%</td><td>100%</td><td>Full quota for all segments. Any rep not reaching 80% attainment by this point requires a performance improvement conversation.</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="callout callout-definition">
+    <div class="callout-title">The Ramp Quota vs. The Ramp Draw</div>
+    <p>There are two ways to handle ramp: <strong>Ramp Quota</strong> (reduce the quota for the ramp period, so the rep is evaluated and compensated against the lower number) vs. <strong>Ramp Draw</strong> (full quota, but the rep receives a guaranteed base salary draw during the ramp period regardless of commission earned). Ramp quota is simpler and more transparent. Ramp draw is sometimes used in high-ACV enterprise roles where commission timing can create cashflow issues for new hires. Best practice is ramp quota — it's more honest about expectations and easier to administer.</p>
+  </div>
+
+  <!-- TERRITORY-BASED QUOTA -->
+  <h2 class="section-title">Territory-Based Quota: Equity Principles</h2>
+  <div class="section-intro">When territory sizes are unequal, flat per-rep quotas are unjust — they create structural winners and losers based on territory assignment, not performance.</div>
+
+  <div class="subsection">
+    <p>In most SaaS companies, territory potential is not equal across AEs. A rep covering a large metropolitan tech hub has dramatically more ICP accounts in their territory than a rep covering a rural region or a nascent vertical. Setting both at the same quota is unfair and produces distorted performance data — the tech hub rep looks like a star, the rural rep looks like an underperformer, and the actual difference is their territory, not their skill.</p>
+  </div>
+
+  <div class="territory-card">
+    <div class="territory-title">Step 1: Territory Potential Analysis</div>
+    <div class="territory-body">For each territory, count the number of accounts that match your ICP (segment, industry, employee range, technographic fit). Multiply by your average first-year ACV for that segment. This is the total addressable opportunity in the territory. Then apply a realistic penetration rate (what % of ICP accounts can a single AE realistically reach and sell in a year) — typically 3–8% for enterprise, 10–20% for mid-market. The result is the territory-adjusted capacity figure.</div>
+  </div>
+
+  <div class="territory-card">
+    <div class="territory-title">Step 2: Quota Adjustment by Territory Potential</div>
+    <div class="territory-body">Adjust individual quotas proportional to territory potential. A territory with 1.5× the average potential should carry 1.5× the average quota (if OTE scales proportionally) or the same quota with lower OTE (if OTE is fixed). Be explicit about this — reps in high-potential territories should understand they're carrying more quota because they have more opportunity, not because the company is trying to reduce their comp payout.</div>
+  </div>
+
+  <div class="territory-card">
+    <div class="territory-title">Step 3: Equity Review</div>
+    <div class="territory-body">Every quota planning cycle, RevOps should run an equity analysis: are there any reps whose quota would require them to capture more than 25–30% of their territory's TAM at current ACV to hit quota? If yes, the quota is mathematically impossible given the territory constraint. Reduce the quota or reassign accounts. Structural impossibility destroys morale faster than any other management failure.</div>
+  </div>
+
+  <!-- ATTAINMENT DISTRIBUTION -->
+  <h2 class="section-title">The Attainment Distribution Test</h2>
+  <div class="section-intro">The distribution of quota attainment across your team is the most honest diagnostic of whether your quota design is working.</div>
+
+  <div class="subsection">
+    <p>A healthy attainment distribution in B2B SaaS should look approximately like this: a small percentage of reps significantly underperform (they are the bottom performers who need management action), the majority cluster around and above 100%, and a small percentage significantly outperform. If the distribution is skewed left (most reps well below 100%), the quota is wrong. If it's skewed right (almost everyone over 100%), the quota is sandbagged.</p>
+  </div>
+
+  <div style="background: var(--surface); border: 1.5px solid var(--border); border-radius: 10px; padding: 20px 24px; margin: 16px 0;">
+    <div style="font-size:13px; font-weight:700; margin-bottom:16px; color:var(--text-muted);">TARGET ATTAINMENT DISTRIBUTION (Fully Ramped Reps)</div>
+    <div class="attainment-dist">
+      <div class="att-bar-group"><div class="att-bar below50" style="height:25px;"></div><div class="att-pct">5%</div><div class="att-label">&lt;50%</div></div>
+      <div class="att-bar-group"><div class="att-bar below100" style="height:40px;"></div><div class="att-pct">10%</div><div class="att-label">50–74%</div></div>
+      <div class="att-bar-group"><div class="att-bar below100" style="height:55px;"></div><div class="att-pct">15%</div><div class="att-label">75–99%</div></div>
+      <div class="att-bar-group"><div class="att-bar at100" style="height:100px;"></div><div class="att-pct">40%</div><div class="att-label">100–124%</div></div>
+      <div class="att-bar-group"><div class="att-bar over100" style="height:70px;"></div><div class="att-pct">20%</div><div class="att-label">125–149%</div></div>
+      <div class="att-bar-group"><div class="att-bar over100" style="height:40px;"></div><div class="att-pct">10%</div><div class="att-label">150%+</div></div>
+    </div>
+    <p style="font-size:12px; color:var(--text-muted); margin-top:8px;">Target: 60–70% of fully-ramped reps at 100%+. If &lt;55% at 100%+: quota design problem. If &gt;80% at 100%+: sandbagged quota, or quota needs to be raised.</p>
+  </div>
+
+  <table class="data-table">
+    <thead>
+      <tr><th>Distribution Pattern</th><th>Diagnosis</th><th>Action</th></tr>
+    </thead>
+    <tbody>
+      <tr><td>&lt;55% of reps at 100%+</td><td>Quota too high OR reps undertrained OR territory design broken OR ICP mismatch</td><td>Run root cause analysis: separate territory equity issues from performance issues from quota design issues. Do not assume it's the reps.</td></tr>
+      <tr><td>&gt;80% of reps at 100%+</td><td>Quota too low (sandbagged) OR market conditions exceptionally favorable</td><td>Raise quotas for next year. Be careful not to over-correct. Investigate whether the favorable conditions are structural or temporary.</td></tr>
+      <tr><td>Bi-modal distribution (cluster near 60% and cluster near 130%)</td><td>Structural territory inequity — some reps have great territories, others don't</td><td>Rebalance territories. Apply territory-adjusted quotas. The bi-modal pattern is a territory design failure, not a performance problem.</td></tr>
+      <tr><td>Normal distribution centered at 90%</td><td>Quota slightly too high. Most reps are close but not hitting.</td><td>Consider a 5–10% quota reduction for next year. Or invest in additional pipeline support (SDRs, better marketing) to close the 10% gap.</td></tr>
+    </tbody>
+  </table>
+
+  <!-- OVER-ASSIGNMENT -->
+  <h2 class="section-title">The Over-Assignment Problem</h2>
+  <div class="section-intro">The company's revenue target and the sum of individual quotas should not be equal. They should be intentionally mismatched — in a carefully calculated way.</div>
+
+  <div class="subsection">
+    <p>Over-assignment means setting the total sum of all individual quotas at 110–120% of the company's revenue target. This hedge exists because in any given quarter: some reps will leave (attrition takes them off the quota-carrying roster mid-year), some reps will underperform (the bottom 10–15% of performers), and some territories will be temporarily understaffed due to hiring lag.</p>
+  </div>
+
+  <div class="formula-block">
+    <div class="formula-label">Over-Assignment Calculation</div>
+    <div class="formula-main">Total Quota Assigned = Company Target × (1 + Over-Assignment Buffer)</div>
+    <div class="formula-note">Typical over-assignment: 110–120%. So a $40M company target → assign $44M–$48M in total quota. The buffer should be calculated based on your historical attrition rate and average attainment. Higher attrition (20%+ annualized) requires higher over-assignment (120%+). Low attrition + strong average attainment → lower buffer needed (110%).</div>
+  </div>
+
+  <div class="callout callout-warning">
+    <div class="callout-title">The Over-Assignment Communication Problem</div>
+    <p>Over-assignment is sometimes misunderstood by reps as a way to underpay them — "the company assigns 115% of target so they can hit 100% while most reps miss quota." This is wrong, but the perception matters. Over-assignment should be communicated transparently: "We assign more total quota than our target because we know not everyone will hit their number. Those who do hit are compensated fully at OTE. Those who exceed are compensated above OTE. This is standard practice and not a mechanism to reduce your payout." Companies that are secretive about over-assignment breed justified resentment.</p>
+  </div>
+
+  <!-- MID-YEAR CHANGES -->
+  <h2 class="section-title">Mid-Year Quota Changes</h2>
+  <div class="section-intro">Nothing destroys trust faster than raising a rep's quota mid-year after they're on track to crush it. But sometimes market reality requires adjustments. Here's how to handle it.</div>
+
+  <div class="subsection">
+    <p>The principle is simple: quotas should not change once the year begins, except in cases of material changes to the rep's territory, compensation structure, or role. "Changing the rules mid-game" is one of the top 3 reasons experienced reps leave — it signals that the company will claw back comp after the rep has done the work.</p>
+  </div>
+
+  <table class="data-table">
+    <thead>
+      <tr><th>Scenario</th><th>Appropriate Action</th><th>Not Appropriate</th></tr>
+    </thead>
+    <tbody>
+      <tr><td>Rep is dramatically over quota midyear due to one large deal</td><td>Accelerators kick in automatically (as designed in comp plan). Do not revise quota.</td><td>Raising quota or "re-balancing" the territory mid-year to reduce payout.</td></tr>
+      <tr><td>Company misses H1 targets significantly</td><td>Adjust next year's planning. Potentially add pipeline resources (SDRs, marketing) to support H2. Do not raise quotas.</td><td>Raising quotas for H2 to "make up the difference" — this will trigger attrition of your best reps who see it coming.</td></tr>
+      <tr><td>Territory loses major accounts (customer churn, acquisition)</td><td>Reduce quota proportionally to the lost TAM. This is a legitimate territory change that warrants quota adjustment.</td><td>Maintaining the same quota when the territory has materially shrunk — this is setting a rep up to fail through no fault of their own.</td></tr>
+      <tr><td>Rep is promoted, changes role, or territory is restructured</td><td>New quota for new role. Clearly document effective date and pro-rate if mid-quarter.</td><td>Grandfathering an inappropriate quota into a new role because it's administratively convenient.</td></tr>
+    </tbody>
+  </table>
+
+  <!-- QUOTA PLANNING CALENDAR -->
+  <h2 class="section-title">The Quota Planning Calendar</h2>
+  <div class="section-intro">Quota for next fiscal year should be finalized by the first week of Q4 of the current year — not in December. Starting late creates chaos, lowers rep trust, and rushes analysis that should be careful.</div>
+
+  <div class="calendar-row">
+    <div class="cal-quarter">
+      <div class="cal-q-label">Q2</div>
+      <div class="cal-q-title">Territory Audit</div>
+      <div class="cal-q-desc">Run territory potential analysis. Identify imbalances. Note which territories are over/under-served by headcount. Begin territory redesign if major restructuring planned.</div>
+    </div>
+    <div class="cal-quarter">
+      <div class="cal-q-label">Q3</div>
+      <div class="cal-q-title">Bottoms-Up Build</div>
+      <div class="cal-q-desc">RevOps builds bottoms-up capacity model. Finance delivers top-down target. Gap analysis presented to CRO/CFO. Headcount plan finalized. Scenario modeling: 3 scenarios (base/bull/bear).</div>
+    </div>
+    <div class="cal-quarter active">
+      <div class="cal-q-label">Q4 (Critical)</div>
+      <div class="cal-q-title">Finalize & Communicate</div>
+      <div class="cal-q-desc">Individual quotas finalized by week 6 of Q4. Reviewed with each manager. Any appeals process completed by week 9. All quotas communicated to reps by week 12 — never after fiscal year start.</div>
+    </div>
+    <div class="cal-quarter">
+      <div class="cal-q-label">Q1 New Year</div>
+      <div class="cal-q-title">Launch</div>
+      <div class="cal-q-desc">Quotas active from Day 1. No retroactive adjustments for Q1. Kickoff presentation explains quota methodology — transparency builds buy-in. Track attainment from Week 1.</div>
+    </div>
+  </div>
+
+  <div class="callout callout-definition">
+    <div class="callout-title">The Communication Principle</div>
+    <p>When you communicate quotas, also communicate the methodology. Reps who understand how their quota was set — that it was based on territory potential analysis, compared against historical attainment, and benchmarked against a fair OTE multiple — are more likely to accept it, even if they find it challenging. Reps who receive a quota with no explanation assume it was arbitrary, and they're often right. Transparency is not weakness — it is the foundation of the compensation contract.</p>
+  </div>
+
+  <!-- KEY FORMULAS -->
+  <h2 class="section-title">Key Formulas, Benchmarks, and Diagnostics</h2>
+
+  <div class="formula-block">
+    <div class="formula-label">Annual Quota from Bottoms-Up</div>
+    <div class="formula-main">Territory Quota = (ICP Accounts × Reach Rate × Win Rate × ACV) + Existing Pipeline × Win Rate</div>
+    <div class="formula-note">Reach Rate: realistic % of ICP accounts an AE can actively engage in a year (typically 15–25% for MM, 10–15% for Enterprise). Win Rate: segment-specific historical rate. ACV: expected deal size for segment.</div>
+  </div>
+
+  <div class="formula-block">
+    <div class="formula-label">OTE Multiple Check</div>
+    <div class="formula-main">OTE Multiple = Annual Quota ÷ OTE</div>
+    <div class="formula-note">If multiple &gt;7× at 100% attainment, the company is extracting excessive value relative to the rep's comp. Expect attrition from your best performers who can do the math. If &lt;3×, the economics of the sales org may not support growth — revisit pricing, ACV, or comp structure.</div>
+  </div>
+
+  <div class="formula-block">
+    <div class="formula-label">Quota Attainment Rate</div>
+    <div class="formula-main">Attainment Rate = Closed ARR ÷ Quota × 100</div>
+    <div class="formula-note">Track at rep, manager, and company level. Company attainment rate consistently below 90% = quota is wrong. Company attainment rate consistently above 110% = either the quota is too low or the team is exceptional (verify with comp benchmarking).</div>
+  </div>
+
+  <div class="formula-block">
+    <div class="formula-label">Capacity Planning Check</div>
+    <div class="formula-main">Effective Capacity = Σ (Rep Quota × Ramp %) for all AEs</div>
+    <div class="formula-note">In any given quarter, sum the quota of each AE weighted by their ramp percentage (new hires contribute less). This is the company's realistic revenue capacity — the maximum the team can generate. If revenue target &gt; effective capacity, you have a structural headcount gap.</div>
+  </div>
+
+  <div class="related-section">
+    <div class="related-title">Related Sections</div>
+    <div class="related-links">
+      <a href="compensation-design.html" class="related-link">Compensation Design</a>
+      <a href="territory-design.html" class="related-link">Territory Design</a>
+      <a href="ramp-design.html" class="related-link">Ramp Design</a>
+      <a href="revenue-reporting.html" class="related-link">Revenue Reporting</a>
+      <a href="performance-standards.html" class="related-link">Performance Standards</a>
+      <a href="forecast-methodology.html" class="related-link">Forecast Methodology</a>
+      <a href="../pages/revops.html" class="related-link">← RevOps Overview</a>
+    </div>
+  </div>
+</div>
+<script data-pplx-inline-edit>
+(function () {
+  if (window === window.top) return;
+
+  const allowedParentOrigins = ["https://www.perplexity.ai","https://perplexity.ai","https://testing.perplexity.ai","https://staging.perplexity.ai","https://*.preview.i.perplexity.ai","http://localhost:3000","http://127.0.0.1:3000","http://localhost:5173","http://127.0.0.1:5173"];
+  const MAX_FONT_BYTES = 500 * 1024;
+  const MAX_TOTAL_FONT_BYTES = 2 * 1024 * 1024;
+  let scrollForwarding = false;
+  let scrollRaf = 0;
+  let trustedTopOrigin = null;
+
+  // Allow entries like "https://*.preview.i.perplexity.ai" — the wildcard
+  // matches a single DNS label (no dots), so "https://*.foo" cannot stretch
+  // across multiple labels.
+  function matchesAllowedOrigin(origin) {
+    if (!origin) return false;
+    for (const entry of allowedParentOrigins) {
+      if (!entry.includes("*")) {
+        if (entry === origin) return true;
+        continue;
+      }
+      const pattern = new RegExp(
+        "^" +
+          entry.replace(/[.+?^${}()|[\]\\]/g, "\\$&").replace(/\*/g, "[^.]+") +
+          "$",
+      );
+      if (pattern.test(origin)) return true;
+    }
+    return false;
+  }
+
+  // Trust decision: when the sender is same-origin-visible (event.origin is a
+  // real origin like https://www.perplexity.ai) we trust event.origin directly.
+  // When event.origin is "null" (opaque broker srcdoc), we fall back to the
+  // broker's stamped `parentOrigin` to identify the top window. The fallback
+  // is claim-only — we rely on the browser's native `targetOrigin` enforcement
+  // on the response path (see postToTrustedTop) to ensure replies can't be
+  // delivered to anyone but the actual top window of that claimed origin.
+  function getTrustedParentOrigin(event) {
+    const forwardedParentOrigin =
+      typeof event.data.parentOrigin === "string" ? event.data.parentOrigin : null;
+    const parentOrigin = event.origin === "null" ? forwardedParentOrigin : event.origin;
+    return matchesAllowedOrigin(parentOrigin) ? parentOrigin : null;
+  }
+
+  // All responses go to window.top with targetOrigin = the allowlisted origin.
+  // An attacker that iframes us inside their own null-origin broker can claim
+  // any parentOrigin they like, but the browser will drop the reply whenever
+  // the real top's origin doesn't match — so the screenshot never leaves.
+  function postToTrustedTop(message) {
+    if (!trustedTopOrigin) return;
+    try {
+      window.top.postMessage(message, trustedTopOrigin);
+    } catch (_error) {}
+  }
+
+  function inlineAll(original, clone) {
+    if (original.nodeType !== 1 || clone.nodeType !== 1) return;
+
+    try {
+      const computedStyle = getComputedStyle(original);
+      // cssText on a computed style is the serialized declaration in modern
+      // Chromium/Safari — a single read beats enumerating ~400 longhand
+      // properties. Firefox returns "" here, so we fall back on empty.
+      const serialized = computedStyle.cssText;
+      if (serialized) {
+        clone.style.cssText = serialized;
+      } else {
+        const parts = new Array(computedStyle.length);
+        for (let index = 0; index < computedStyle.length; index += 1) {
+          const property = computedStyle[index];
+          parts[index] = `${property}:${computedStyle.getPropertyValue(property)};`;
+        }
+        clone.style.cssText = parts.join("");
+      }
+    } catch (_error) {}
+
+    const originalChildren = original.children;
+    const clonedChildren = clone.children;
+    for (
+      let index = 0;
+      index < originalChildren.length && index < clonedChildren.length;
+      index += 1
+    ) {
+      inlineAll(originalChildren[index], clonedChildren[index]);
+    }
+  }
+
+  function extractFontUrl(srcValue) {
+    const matches = [
+      ...srcValue.matchAll(
+        /url\(["']?([^"')]+)["']?\)(?:\s*format\(["']?([^"')]+)["']?\))?/gi,
+      ),
+    ];
+    if (matches.length === 0) return null;
+    const woff2 = matches.find((m) => m[2] && m[2].toLowerCase().includes("woff2"));
+    if (woff2) return woff2[1];
+    const woff = matches.find((m) => m[2] && m[2].toLowerCase().includes("woff"));
+    if (woff) return woff[1];
+    return matches[0][1];
+  }
+
+  // Cache resolved font URL -> data URI across captures. Fonts on a page
+  // essentially never change, and a batch run emits multiple captures back to
+  // back — without this we'd refetch + re-base64 every time.
+  const fontDataUriCache = new Map();
+  const SRC_DECLARATION_RE = /src\s*:\s*[^;}]+/i;
+
+  async function fetchAsDataUri(url) {
+    if (fontDataUriCache.has(url)) return fontDataUriCache.get(url);
+    let dataUri = null;
+    try {
+      const response = await fetch(url, { mode: "cors", credentials: "omit" });
+      if (response.ok) {
+        const blob = await response.blob();
+        if (blob.size <= MAX_FONT_BYTES) {
+          dataUri = await new Promise((resolve) => {
+            const reader = new FileReader();
+            reader.onloadend = () =>
+              resolve(typeof reader.result === "string" ? reader.result : null);
+            reader.onerror = () => resolve(null);
+            reader.readAsDataURL(blob);
+          });
+        }
+      }
+    } catch (_error) {
+      dataUri = null;
+    }
+    fontDataUriCache.set(url, dataUri);
+    return dataUri;
+  }
+
+  function collectFontFaceRuleTexts() {
+    const rules = [];
+    for (const sheet of document.styleSheets) {
+      let cssRules;
+      try {
+        cssRules = sheet.cssRules;
+      } catch (_error) {
+        continue;
+      }
+      if (!cssRules) continue;
+      for (const rule of cssRules) {
+        const cssText = rule.cssText || "";
+        if (cssText.startsWith("@font-face")) rules.push(cssText);
+      }
+    }
+    return rules;
+  }
+
+  async function buildInlinedFontCss() {
+    const ruleTexts = collectFontFaceRuleTexts();
+    if (ruleTexts.length === 0) return null;
+
+    const resolved = ruleTexts.map((cssText) => {
+      if (!SRC_DECLARATION_RE.test(cssText)) return null;
+      const srcMatch = cssText.match(/src\s*:\s*([^;}]+)[;}]/i);
+      if (!srcMatch) return null;
+      const url = extractFontUrl(srcMatch[1]);
+      if (!url) return null;
+      try {
+        return { cssText, url: new URL(url, document.baseURI).href };
+      } catch (_error) {
+        return null;
+      }
+    });
+
+    const dataUris = await Promise.all(
+      resolved.map((entry) => (entry ? fetchAsDataUri(entry.url) : Promise.resolve(null))),
+    );
+
+    const inlined = [];
+    let totalBytes = 0;
+    for (let index = 0; index < resolved.length; index += 1) {
+      const entry = resolved[index];
+      const dataUri = dataUris[index];
+      if (!entry || !dataUri) continue;
+      const approxBytes = dataUri.length * 0.75;
+      if (totalBytes + approxBytes > MAX_TOTAL_FONT_BYTES) break;
+      totalBytes += approxBytes;
+      inlined.push(entry.cssText.replace(SRC_DECLARATION_RE, `src: url("${dataUri}")`));
+    }
+    return inlined.length > 0 ? inlined.join("\n") : null;
+  }
+
+  function stripExternal(clone) {
+    const images = clone.querySelectorAll("img");
+    for (let index = 0; index < images.length; index += 1) {
+      const src = images[index].getAttribute("src");
+      if (src && !src.startsWith("data:")) images[index].removeAttribute("src");
+    }
+
+    const elements = clone.querySelectorAll("*");
+    for (let index = 0; index < elements.length; index += 1) {
+      const style = elements[index].style.cssText;
+      if (style && style.includes("url(")) {
+        elements[index].style.cssText = style.replace(
+          /url\(["']?(?!data:)[^)"']*["']?\)/gi,
+          "none",
+        );
+      }
+    }
+  }
+
+  function emitScroll() {
+    scrollRaf = 0;
+    if (!scrollForwarding) return;
+    postToTrustedTop({
+      type: "INLINE_EDIT_SCROLL",
+      scrollX: window.scrollX,
+      scrollY: window.scrollY,
+    });
+  }
+
+  window.addEventListener(
+    "scroll",
+    function () {
+      if (!scrollForwarding || scrollRaf) return;
+      scrollRaf = requestAnimationFrame(emitScroll);
+    },
+    { passive: true, capture: true },
+  );
+
+  async function handleCaptureRequest(event) {
+    const requestId = event.data.requestId;
+    const scrollX = window.scrollX;
+    const scrollY = window.scrollY;
+    const width = window.innerWidth;
+    const height = window.innerHeight;
+
+    function postResult(dataUrl) {
+      postToTrustedTop({
+        type: "INLINE_EDIT_SCREENSHOT_RESULT",
+        requestId,
+        dataUrl,
+        scrollX,
+        scrollY,
+      });
+    }
+
+    try {
+      // Wait for any pending web fonts to resolve so both inline metrics and
+      // the @font-face inlining below see the same loaded faces.
+      if (document.fonts && document.fonts.ready) {
+        try {
+          await document.fonts.ready;
+        } catch (_error) {}
+      }
+
+      const clone = document.documentElement.cloneNode(true);
+      inlineAll(document.documentElement, clone);
+
+      const removedNodes = clone.querySelectorAll("script,link[rel=\"stylesheet\"],style");
+      for (let index = 0; index < removedNodes.length; index += 1) {
+        removedNodes[index].remove();
+      }
+
+      stripExternal(clone);
+
+      // Re-embed web fonts as data-URI @font-face rules so the SVG rasterizer
+      // can resolve them — external font URLs aren't fetched during
+      // foreignObject rendering, which would otherwise force a fallback face
+      // and change text metrics.
+      const inlinedFontCss = await buildInlinedFontCss();
+      if (inlinedFontCss) {
+        const styleEl = document.createElement("style");
+        styleEl.textContent = inlinedFontCss;
+        const head = clone.querySelector("head");
+        if (head) head.appendChild(styleEl);
+        else clone.insertBefore(styleEl, clone.firstChild);
+      }
+
+      const html = new XMLSerializer().serializeToString(clone);
+      const svg =
+        `<svg xmlns="http://www.w3.org/2000/svg" width="${width}" height="${height}">` +
+        '<foreignObject width="100%" height="100%">' +
+        `<div xmlns="http://www.w3.org/1999/xhtml" style="width:${width}px;height:${height}px;overflow:hidden">` +
+        `<div style="transform:translate(-${scrollX}px,-${scrollY}px);transform-origin:top left">` +
+        html +
+        "</div></div></foreignObject></svg>";
+      const svgUrl = `data:image/svg+xml;charset=utf-8,${encodeURIComponent(svg)}`;
+      const image = new Image();
+      image.onload = function () {
+        const canvas = document.createElement("canvas");
+        canvas.width = width;
+        canvas.height = height;
+        canvas.getContext("2d").drawImage(image, 0, 0);
+        postResult(canvas.toDataURL("image/png"));
+      };
+      image.onerror = function () {
+        postResult(null);
+      };
+      image.src = svgUrl;
+    } catch (_error) {
+      postResult(null);
+    }
+  }
+
+  window.addEventListener("message", function (event) {
+    if (!event.data) return;
+    // Only accept messages from the direct parent frame. Blocks sibling /
+    // unrelated-window postMessage senders that could otherwise reach us.
+    if (event.source !== window.parent) return;
+
+    const trustedParentOrigin = getTrustedParentOrigin(event);
+    if (!trustedParentOrigin) return;
+    trustedTopOrigin = trustedParentOrigin;
+
+    if (event.data.type === "INLINE_EDIT_SCROLL_START") {
+      scrollForwarding = true;
+      emitScroll();
+      return;
+    }
+
+    if (event.data.type === "INLINE_EDIT_SCROLL_STOP") {
+      scrollForwarding = false;
+      if (scrollRaf) cancelAnimationFrame(scrollRaf);
+      scrollRaf = 0;
+      return;
+    }
+
+    if (event.data.type !== "INLINE_EDIT_CAPTURE_REQUEST") return;
+
+    handleCaptureRequest(event);
+  });
+})();
+
+
+</script></body>
+</html>

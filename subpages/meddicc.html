@@ -1,0 +1,1054 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>MEDDICC — SaaS Revenue System</title>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="../assets/shared.css"/>
+  <style>
+    .page-hero { background: #964219; }
+    .element-card {
+      background: var(--surface);
+      border: 1.5px solid var(--border);
+      border-radius: 10px;
+      padding: 24px 28px;
+      margin-bottom: 24px;
+    }
+    .element-header {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      margin-bottom: 16px;
+    }
+    .element-letter {
+      width: 48px;
+      height: 48px;
+      border-radius: 10px;
+      background: #964219;
+      color: #fff;
+      font-size: 22px;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+    .element-name {
+      font-size: 18px;
+      font-weight: 700;
+      color: var(--text);
+      margin-bottom: 2px;
+    }
+    .element-tagline {
+      font-size: 13px;
+      color: var(--text-muted);
+    }
+    .element-card p {
+      font-size: 15px;
+      line-height: 1.75;
+      color: var(--text);
+      margin-bottom: 12px;
+    }
+    .score-bar {
+      display: flex;
+      gap: 8px;
+      margin: 12px 0;
+    }
+    .score-cell {
+      flex: 1;
+      padding: 10px 12px;
+      border-radius: 6px;
+      text-align: center;
+    }
+    .score-0 { background: #fce8e6; }
+    .score-1 { background: #fff8e1; }
+    .score-2 { background: #e6f4ea; }
+    .score-cell .sc-num {
+      font-size: 18px;
+      font-weight: 700;
+      margin-bottom: 2px;
+    }
+    .score-cell .sc-label {
+      font-size: 11px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+    .score-0 .sc-num { color: #A13544; }
+    .score-1 .sc-num { color: #8a6a00; }
+    .score-2 .sc-num { color: #437A22; }
+    .score-0 .sc-label { color: #A13544; }
+    .score-1 .sc-label { color: #8a6a00; }
+    .score-2 .sc-label { color: #437A22; }
+    .map-step {
+      display: grid;
+      grid-template-columns: 28px 1fr;
+      gap: 12px;
+      margin-bottom: 12px;
+      align-items: start;
+    }
+    .map-num {
+      width: 28px;
+      height: 28px;
+      border-radius: 50%;
+      background: #964219;
+      color: #fff;
+      font-size: 12px;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .map-text { font-size: 15px; line-height: 1.65; padding-top: 3px; }
+    .map-text strong { display: block; margin-bottom: 2px; }
+    .forecast-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 8px;
+      margin: 20px 0;
+    }
+    .forecast-cell {
+      padding: 14px 12px;
+      border-radius: 8px;
+      text-align: center;
+      background: var(--surface);
+      border: 1.5px solid var(--border);
+    }
+    .fc-score {
+      font-size: 20px;
+      font-weight: 700;
+      margin-bottom: 4px;
+    }
+    .fc-label {
+      font-size: 11px;
+      color: var(--text-muted);
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      margin-bottom: 4px;
+    }
+    .fc-prob {
+      font-size: 13px;
+      color: var(--text-muted);
+    }
+    .interview-q {
+      background: #f8f6f0;
+      border-radius: 6px;
+      padding: 10px 14px;
+      margin: 6px 0;
+      font-size: 14px;
+      font-style: italic;
+      color: var(--text);
+    }
+    .interview-q::before {
+      content: '"';
+      color: #964219;
+      font-weight: 700;
+      font-style: normal;
+    }
+    .interview-q::after {
+      content: '"';
+      color: #964219;
+      font-weight: 700;
+      font-style: normal;
+    }
+  </style>
+</head>
+<body>
+<nav class="nav">
+  <span class="nav-logo">SaaS <span>Revenue System</span></span>
+  <span class="nav-sep">|</span>
+  <a href="../index.html" class="nav-back">← Home</a>
+  <span class="nav-sep">|</span>
+  <a href="../pages/phase4.html" class="nav-back">Phase 4: Execution</a>
+  <span class="nav-sep">|</span>
+  <span class="nav-current">MEDDICC</span>
+</nav>
+
+<div class="page-hero">
+  <div class="hero-phase-label">Phase 4 — Sales Execution & Deal Management</div>
+  <div class="hero-title">MEDDICC — The Complete Deal Qualification Framework</div>
+  <div class="hero-subtitle">Andy Whyte's MEDDICC is the most rigorous deal qualification framework in enterprise SaaS. It is not a checklist — it is a discipline.</div>
+</div>
+
+<div class="content-wrap">
+  <div class="breadcrumb">
+    <a href="../index.html">Home</a>
+    <span class="sep">›</span>
+    <a href="../pages/phase4.html">Phase 4</a>
+    <span class="sep">›</span>
+    <span class="current">MEDDICC</span>
+  </div>
+
+  <!-- ORIGIN -->
+  <h2 class="section-title">History & Evolution: MEDDIC → MEDDICC → MEDDPICC</h2>
+  <p class="section-intro">MEDDIC was born at PTC in the early 1990s when Dick Dunkel, Jack Napoli, and Brian Halligan needed a systematic approach to control forecast accuracy in complex enterprise deals. PTC grew from $300M to $1B+ in large part by enforcing MEDDIC as a discipline across its sales organization.</p>
+
+  <div class="subsection">
+    <p>The original acronym — <strong>M</strong>etrics, <strong>E</strong>conomic Buyer, <strong>D</strong>ecision Criteria, <strong>D</strong>ecision Process, <strong>I</strong>dentify Pain, <strong>C</strong>hampion — proved so effective that it spread through the enterprise SaaS world. Companies including Salesforce, Workday, and hundreds of venture-backed SaaS companies adopted it as the lingua franca of enterprise deal management.</p>
+
+    <p><strong>MEDDICC</strong> added a second C — Competition — recognizing that in modern SaaS deals, how you position against alternatives (including the do-nothing option) is a fundamental qualification dimension. <strong>MEDDPICC</strong> adds P — Paper Process — explicitly calling out legal, procurement, and contract complexity as a qualification element in regulated industries and large enterprise deals.</p>
+
+    <div class="callout callout-definition">
+      <div class="callout-title">Why Qualification Frameworks Exist</div>
+      <p>The average enterprise SaaS AE has 3–5x more pipeline than they can realistically close in a given quarter. Without a qualification framework, reps work everything equally, spreading effort across deals that will never close. MEDDICC forces a brutal prioritization of time, resource, and management attention on deals that are genuinely qualified.</p>
+    </div>
+
+    <p>Research consistently shows that deals with a fully articulated MEDDICC score close at 2–3x the rate of deals where elements are unknown or assumed. The framework works because it makes invisible information visible — and invisible information is the primary cause of forecast misses.</p>
+
+    <table class="data-table">
+      <thead><tr><th>Framework</th><th>Era</th><th>Added Element</th><th>Why It Was Added</th></tr></thead>
+      <tbody>
+        <tr><td><strong>MEDDIC</strong></td><td>1990s PTC</td><td>Original 6 elements</td><td>Control enterprise deal quality and forecast accuracy</td></tr>
+        <tr><td><strong>MEDDICC</strong></td><td>2000s–2010s SaaS</td><td>+ Competition</td><td>Multi-vendor evaluations became standard; ignoring competition = forecast blind spot</td></tr>
+        <tr><td><strong>MEDDPICC</strong></td><td>2010s–present</td><td>+ Paper Process</td><td>Legal/procurement complexity in large enterprise deals became a separate qualification dimension</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- COST OF UNQUALIFIED PIPELINE -->
+  <h2 class="section-title">The Cost of Unqualified Pipeline</h2>
+  <div class="subsection">
+    <p>Unqualified pipeline is the most dangerous object in a CRO's forecast. It creates false confidence, misallocates sales engineering and exec resources, and produces the two most damaging words in revenue leadership: "late-stage slip."</p>
+
+    <div class="metric-grid">
+      <div class="metric-card">
+        <div class="m-label">Forecast Miss Rate</div>
+        <div class="m-value">40–60%</div>
+        <div class="m-desc">Typical Q-end forecast miss rate at companies without MEDDICC discipline</div>
+      </div>
+      <div class="metric-card">
+        <div class="m-label">Win Rate Lift</div>
+        <div class="m-value">2–3×</div>
+        <div class="m-desc">Win rate improvement when deals have full MEDDICC coverage vs. partial</div>
+      </div>
+      <div class="metric-card">
+        <div class="m-label">Cycle Compression</div>
+        <div class="m-value">15–25%</div>
+        <div class="m-desc">Sales cycle reduction when MEDDICC + MAP is enforced early in the process</div>
+      </div>
+      <div class="metric-card">
+        <div class="m-label">Champion Access</div>
+        <div class="m-value">#1 Gap</div>
+        <div class="m-desc">Most common unqualified element in deal reviews; absent champion = deal stalls</div>
+      </div>
+    </div>
+
+    <div class="callout callout-warning">
+      <div class="callout-title">The Forecasting Lie</div>
+      <p>When reps forecast deals without fully qualified MEDDICC, they are forecasting their hope, not the deal's probability. Managers who accept incomplete MEDDICC in commit-stage deals are accepting lies in their forecast. The entire value of the framework is that it forces honesty about what is known and unknown.</p>
+    </div>
+  </div>
+
+  <!-- THE 7 ELEMENTS -->
+  <h2 class="section-title">The Seven Elements — Deep Dive</h2>
+  <p class="section-intro">Each element is both a qualification gate and a coaching dimension. Unknown elements are not neutral — they are risks. The job of the rep and manager in a deal review is to name what is unknown and build a plan to learn it.</p>
+
+  <!-- M — METRICS -->
+  <div class="element-card">
+    <div class="element-header">
+      <div class="element-letter">M</div>
+      <div>
+        <div class="element-name">Metrics — Quantified Business Value</div>
+        <div class="element-tagline">If you can't put a number on it, you don't have metrics. You have a story.</div>
+      </div>
+    </div>
+
+    <p>Metrics is not about your product's features. It is about what the customer's business will measurably look like before and after your solution. Without metrics, the deal has no business case, the Economic Buyer has no reason to approve budget, and you have no defense against "we'll revisit in Q3."</p>
+
+    <h4 class="subsection-title">The Three Categories of Metrics</h4>
+    <table class="data-table">
+      <thead><tr><th>Category</th><th>Examples</th><th>Who Cares</th><th>How to Quantify</th></tr></thead>
+      <tbody>
+        <tr>
+          <td><strong>Revenue Growth</strong></td>
+          <td>New pipeline generated, faster sales cycles, higher win rates, more cross-sell revenue</td>
+          <td>CRO, CEO, Board</td>
+          <td>Current baseline × improvement % × deal volume × ACV</td>
+        </tr>
+        <tr>
+          <td><strong>Cost Reduction</strong></td>
+          <td>Headcount avoided, manual process hours eliminated, infrastructure savings, reduced churn cost</td>
+          <td>CFO, COO, VP Ops</td>
+          <td>FTE hours saved × fully loaded cost; license/infra cost eliminated</td>
+        </tr>
+        <tr>
+          <td><strong>Risk Mitigation</strong></td>
+          <td>Compliance penalty avoided, security breach cost reduced, SLA breach exposure lowered</td>
+          <td>CRO, CFO, Legal, CISO</td>
+          <td>Probability × cost of event × coverage reduction factor</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <h4 class="subsection-title">ROI Modeling — How to Build It With the Customer</h4>
+    <p>The worst ROI models are built by the vendor in a vacuum and presented to the customer. The best ROI models are built collaboratively with the champion, using the customer's own data. A customer who co-builds the model owns the number — and will defend it to the Economic Buyer.</p>
+
+    <div class="formula-block">
+      <div class="formula-label">3-Year ROI Formula</div>
+      <div class="formula-main">ROI = ((3-Year Benefits − Total Cost of Ownership) / Total Cost of Ownership) × 100</div>
+      <div class="formula-note">Benefits = revenue impact + cost savings + risk-adjusted value. TCO = implementation + licenses + training + migration + ongoing admin.</div>
+    </div>
+
+    <div class="formula-block">
+      <div class="formula-label">Payback Period</div>
+      <div class="formula-main">Payback (months) = Total Investment / Monthly Benefit Run-Rate</div>
+      <div class="formula-note">Target: under 12 months for SMB/Mid-Market; under 18 months for Enterprise. Longer payback = harder to get EB approval without strong strategic justification.</div>
+    </div>
+
+    <h4 class="subsection-title">How to Validate Metrics With the Economic Buyer</h4>
+    <p>A champion can tell you the operational metrics. The Economic Buyer's validation is what transforms a number into a budget justification. Walk the EB through the model directly: "We worked with your team to calculate $2.4M in productivity gains over 3 years. Does that align with how you'd think about the value here?" If the EB pushes back on the model, that is critical discovery — not failure. You are learning what they actually care about.</p>
+
+    <div class="callout callout-warning">
+      <div class="callout-title">The "We'll Figure Out ROI Later" Trap</div>
+      <p>This is the most common and most dangerous metrics failure mode. If the customer says they'll figure out ROI later, it means: (a) the champion doesn't know how to build a business case, (b) there isn't a compelling enough problem to justify the spend yet, or (c) they're collecting information and have no real budget authority. Push back: "We've found that deals move fastest when we align on value metrics early. Can we spend 30 minutes building a rough model together? If the numbers don't make sense, you'll know immediately."</p>
+    </div>
+  </div>
+
+  <!-- E — ECONOMIC BUYER -->
+  <div class="element-card">
+    <div class="element-header">
+      <div class="element-letter">E</div>
+      <div>
+        <div class="element-name">Economic Buyer — The Person Who Signs</div>
+        <div class="element-tagline">The Economic Buyer is the single individual who can say yes when everyone else says no — and no when everyone else says yes.</div>
+      </div>
+    </div>
+
+    <p>There is exactly one Economic Buyer in any deal. They control the budget. They have ultimate approval authority. They are not always the most senior person in the room, but they are the person whose signature releases the purchase order. Confusing the EB with a champion, influencer, or committee is a leading cause of late-stage deal failures.</p>
+
+    <h4 class="subsection-title">EB vs. Champion vs. Influencer vs. User</h4>
+    <table class="data-table">
+      <thead><tr><th>Role</th><th>Definition</th><th>Their Power</th><th>Your Goal With Them</th></tr></thead>
+      <tbody>
+        <tr>
+          <td><strong>Economic Buyer</strong></td>
+          <td>Budget owner, final approval authority</td>
+          <td>Can approve or kill the deal unilaterally</td>
+          <td>Get direct access; validate metrics; remove deal blockers</td>
+        </tr>
+        <tr>
+          <td><strong>Champion</strong></td>
+          <td>Internal advocate who wants the project to succeed</td>
+          <td>Can influence; cannot approve budget</td>
+          <td>Develop, equip with ROI story, test with the 5 champion tests</td>
+        </tr>
+        <tr>
+          <td><strong>Influencer</strong></td>
+          <td>Technical evaluator, department head, compliance officer</td>
+          <td>Can block (veto) but cannot approve</td>
+          <td>Identify and address objections; do not treat as EB</td>
+        </tr>
+        <tr>
+          <td><strong>User</strong></td>
+          <td>End user of the product</td>
+          <td>Can create grass-roots support or resistance</td>
+          <td>Build user advocates; do not conflate with EB</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <h4 class="subsection-title">The Budget Holder Test</h4>
+    <p>To test whether you've identified the real EB, ask your champion: <em>"If you wanted to approve this purchase today, would you need anyone else's sign-off?"</em> If yes — that other person is the EB. Keep going up the org chart until you find the person who answers no.</p>
+
+    <h4 class="subsection-title">How to Gain EB Access When Blocked</h4>
+    <p>Champions often resist introducing you to the EB because they fear losing control of the process. The frame that works: "Help me help you. The most common reason deals stall is that the EB hears about the project for the first time when they're asked to sign. A 30-minute intro now will make your internal process 10x smoother. I'll make you look good."</p>
+
+    <div class="callout callout-best-practice">
+      <div class="callout-title">EB Access by Deal Stage</div>
+      <p><strong>Discovery:</strong> Identify who the EB is, confirm via budget holder test. <strong>Qualification:</strong> Validate metrics with EB, confirm strategic priority. <strong>Proposal:</strong> Present business case to EB directly; never present only to champion. <strong>Negotiation:</strong> EB involvement is non-negotiable — procurement alone cannot commit without EB.</p>
+    </div>
+  </div>
+
+  <!-- D — DECISION CRITERIA -->
+  <div class="element-card">
+    <div class="element-header">
+      <div class="element-letter">D</div>
+      <div>
+        <div class="element-name">Decision Criteria — How They Will Choose</div>
+        <div class="element-tagline">Formal criteria are written. Informal criteria are the ones that actually matter.</div>
+      </div>
+    </div>
+
+    <p>Decision Criteria are the explicit and implicit standards by which the customer will evaluate vendors. Understanding them is table stakes. Shaping them before they're locked is the real skill.</p>
+
+    <h4 class="subsection-title">Formal vs. Informal Criteria</h4>
+    <table class="data-table">
+      <thead><tr><th>Type</th><th>What It Looks Like</th><th>Your Strategy</th></tr></thead>
+      <tbody>
+        <tr>
+          <td><strong>Formal</strong></td>
+          <td>Written RFP, scoring rubric, vendor questionnaire, procurement requirements</td>
+          <td>Respond completely. Identify where you're strong and where you're weak. Get help from champion to understand weighting.</td>
+        </tr>
+        <tr>
+          <td><strong>Informal</strong></td>
+          <td>Unstated preferences, cultural fit, prior vendor experience, champion's personal preferences, internal politics</td>
+          <td>Surface via relationship depth. Ask champion: "What's really important to [EB name] that might not be in the RFP?"</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <h4 class="subsection-title">The Criteria Influence Window</h4>
+    <p>The window to influence decision criteria closes as the evaluation formalizes. Early in discovery (pre-RFP), you can shape what criteria matter and how they're weighted. Once an RFP is issued, the criteria are largely locked. This is why leading reps prioritize discovery conversations before the formal evaluation kicks off — they help customers build evaluation frameworks that align with where they're strongest.</p>
+
+    <div class="callout callout-best-practice">
+      <div class="callout-title">Criteria Shaping Technique</div>
+      <p>During early discovery, introduce your differentiators as questions: "Have you thought about how you'd evaluate data portability? Some of our customers found that was a sleeper issue at implementation." You're not pitching — you're helping them think clearly. If they add it to the criteria, you've shaped the evaluation in your favor.</p>
+    </div>
+  </div>
+
+  <!-- D — DECISION PROCESS -->
+  <div class="element-card">
+    <div class="element-header">
+      <div class="element-letter">D</div>
+      <div>
+        <div class="element-name">Decision Process — How the Decision Gets Made</div>
+        <div class="element-tagline">Winning on merit is not enough. You must navigate the process.</div>
+      </div>
+    </div>
+
+    <p>Decision Process maps every step the customer must take from "vendor selected" to "contract signed." This includes not just business approval but legal review, security review, IT review, procurement, and executive sign-off. Missing any step will cause a surprise slip at end of quarter.</p>
+
+    <h4 class="subsection-title">The Full Procurement Map</h4>
+    <ol class="step-list">
+      <li><div class="step-content"><span class="step-title">Business Approval</span>Champion's team agrees on vendor selection. Who specifically approves? Is it a committee or an individual?</div></li>
+      <li><div class="step-content"><span class="step-title">EB Sign-off</span>Economic Buyer approves the business case and authorizes budget. Have you presented directly to the EB?</div></li>
+      <li><div class="step-content"><span class="step-title">Security Review</span>Infosec team reviews vendor questionnaire, SOC 2, penetration test results, data handling practices. How long does this take? Who owns it?</div></li>
+      <li><div class="step-content"><span class="step-title">IT/Infrastructure Review</span>IT assesses integration requirements, SSO, data residency, and technical architecture. Involves your SE. Timeline: 2–4 weeks at enterprise.</div></li>
+      <li><div class="step-content"><span class="step-title">Legal Review</span>Legal redlines your MSA/DPA. Average time: 3–6 weeks at mid-market; 6–12 weeks at enterprise. Ask: "Does your legal team have capacity now, or is there a queue?"</div></li>
+      <li><div class="step-content"><span class="step-title">Procurement / Finance</span>PO issuance, budget code, vendor registration, payment terms negotiation. This step alone can add 2–4 weeks at large enterprises.</div></li>
+      <li><div class="step-content"><span class="step-title">Executive Sign-off</span>Any deal above a threshold (often $50K–$100K) requires C-suite or VP-level approval. Map this in advance.</div></li>
+    </ol>
+
+    <h4 class="subsection-title">The Mutual Action Plan (MAP)</h4>
+    <p>A MAP is a shared document between the vendor and the customer that maps every remaining step to a named owner and a specific date. It transforms the decision process from something the vendor observes to something both parties own together. See the full MAP section below for construction details.</p>
+
+    <div class="callout callout-warning">
+      <div class="callout-title">Red Flag Signals in Decision Process</div>
+      <p><strong>1.</strong> "We haven't done security review yet" at Stage 4 — adds 4–8 weeks minimum. <strong>2.</strong> "Our legal team is really backed up right now" — typical 6–10 week slip. <strong>3.</strong> "We'll need to register you as a new vendor" — procurement delay of 2–4 weeks. <strong>4.</strong> Committee approval with no named decision-maker — process can loop indefinitely. <strong>5.</strong> Champion unsure of EB's approval threshold — deal may require more levels of sign-off than expected.</p>
+    </div>
+  </div>
+
+  <!-- I — IDENTIFY PAIN -->
+  <div class="element-card">
+    <div class="element-header">
+      <div class="element-letter">I</div>
+      <div>
+        <div class="element-name">Identify Pain — The Problem Worth Solving</div>
+        <div class="element-tagline">No pain, no deal. The strength of a deal is proportional to the urgency of the pain it solves.</div>
+      </div>
+    </div>
+
+    <p>Pain is the business problem that is costing the customer something real — time, money, competitive position, or risk exposure. Pain is not the customer saying "we'd like to improve our reporting." Pain is "we lost three enterprise deals last quarter because we couldn't produce the compliance reports they required."</p>
+
+    <h4 class="subsection-title">The SPIN Connection</h4>
+    <p>Neil Rackham's SPIN Selling (Situation → Problem → Implication → Need-Payoff) is the discovery methodology that surfaces MEDDICC's "I" element. The implication questions are the most powerful: they force the customer to articulate what the problem is costing them in terms the organization will act on.</p>
+
+    <table class="data-table">
+      <thead><tr><th>SPIN Type</th><th>Purpose</th><th>Example Question</th></tr></thead>
+      <tbody>
+        <tr><td><strong>Situation</strong></td><td>Establish context and baseline</td><td>"Walk me through how you're currently managing X today?"</td></tr>
+        <tr><td><strong>Problem</strong></td><td>Surface dissatisfaction with current state</td><td>"Where do you feel the most friction in that process?"</td></tr>
+        <tr><td><strong>Implication</strong></td><td>Expand the cost of the problem</td><td>"What does it cost you when that breaks down? How does it affect the team downstream?"</td></tr>
+        <tr><td><strong>Need-Payoff</strong></td><td>Get customer to articulate value of solution</td><td>"If you could eliminate that bottleneck entirely, what would that mean for the business?"</td></tr>
+      </tbody>
+    </table>
+
+    <h4 class="subsection-title">Three Types of Pain</h4>
+    <table class="data-table">
+      <thead><tr><th>Pain Type</th><th>Definition</th><th>Who Feels It</th><th>How to Surface It</th></tr></thead>
+      <tbody>
+        <tr>
+          <td><strong>Organizational</strong></td>
+          <td>Business-level problem: lost revenue, excess cost, competitive disadvantage</td>
+          <td>CxO, VP, Board</td>
+          <td>Financial data, industry benchmarks, competitive intelligence</td>
+        </tr>
+        <tr>
+          <td><strong>Individual</strong></td>
+          <td>Personal pain the champion feels: too much manual work, looks bad to leadership, job security</td>
+          <td>Champion, Manager</td>
+          <td>Relationship conversations; ask "what does this mean for you personally?"</td>
+        </tr>
+        <tr>
+          <td><strong>Political</strong></td>
+          <td>Internal tensions between departments; someone is being blamed; turf wars</td>
+          <td>Champions, managers, cross-functional stakeholders</td>
+          <td>Ask about what happened in the past; who owns this problem; who is affected</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <h4 class="subsection-title">The Pain Urgency Spectrum</h4>
+    <p>Not all pain creates buying urgency. Pain that is old, tolerated, or unclear in cost rarely drives a procurement process. The pain that closes deals is recent, visible to leadership, getting worse, and has a dollar figure attached to it.</p>
+
+    <div class="formula-block">
+      <div class="formula-label">Pain Quantification Formula</div>
+      <div class="formula-main">Annual Cost of Pain = (# of affected FTEs × hours lost/week × 52 × fully loaded hourly rate) + (revenue impact from problem × probability)</div>
+      <div class="formula-note">Example: 20 ops analysts × 10 hours/week × 52 weeks × $75/hr = $780,000/year in productivity cost alone — before revenue impact.</div>
+    </div>
+
+    <div class="callout callout-warning">
+      <div class="callout-title">When There Is No Pain</div>
+      <p>If a prospect cannot articulate a specific pain — a problem with real cost, urgency, and organizational visibility — there is no deal. "Nice to have" projects get killed in budget cuts. "We need to fix this or it will cost us X by Q3" projects get funded. Reps who continue working painless deals are wasting time that should go to qualified pipeline.</p>
+    </div>
+  </div>
+
+  <!-- C — CHAMPION -->
+  <div class="element-card">
+    <div class="element-header">
+      <div class="element-letter">C</div>
+      <div>
+        <div class="element-name">Champion — Your Internal Seller</div>
+        <div class="element-tagline">A champion is not someone who likes you. A champion is someone who sells for you when you're not in the room.</div>
+      </div>
+    </div>
+
+    <p>The champion is the most misidentified element in MEDDICC. Reps routinely mistake their main contact, their most responsive contact, or the person who invited them in for the champion. These are not the same person. A true champion has specific attributes — and the absence of any one of them means you don't have a champion, you have a contact.</p>
+
+    <h4 class="subsection-title">The 5 Tests of a True Champion</h4>
+    <ol class="step-list">
+      <li><div class="step-content"><span class="step-title">Has Organizational Power</span>The champion is respected internally. When they advocate for a project, people listen. They have a track record of getting things done. A junior analyst who loves your product is not a champion — they're a user advocate.</div></li>
+      <li><div class="step-content"><span class="step-title">Wants You to Win</span>The champion has a personal stake in your success. This is usually because your solution solves their pain (Test 3 of SPIN — individual pain). They want the project to happen, and they want you specifically to be the vendor.</div></li>
+      <li><div class="step-content"><span class="step-title">Will Fight for You</span>When the deal hits internal resistance — budget cuts, competing priorities, competitive pressure — the champion pushes back. Test this with light pressure: "There's a competing priority for that budget — what will you do if your CFO asks you to defer to Q2?" A true champion answers without hesitation.</div></li>
+      <li><div class="step-content"><span class="step-title">Has Access to the Economic Buyer</span>The champion must be able to get a meeting with the EB and present the business case. If your champion can't get EB time, you are locked out of the deal's critical approval path.</div></li>
+      <li><div class="step-content"><span class="step-title">Will Share Inside Information</span>The champion tells you what's really happening: who the internal competition is, what the real budget is, what the EB actually cares about, where the risks are. If your contact only tells you what they'd tell any vendor, they're not a champion — they're a gatekeeper.</div></li>
+    </ol>
+
+    <h4 class="subsection-title">Champion vs. Coach</h4>
+    <p>A coach is a friendly contact who gives you information but cannot or will not advocate. A champion advocates. Many deals have coaches and no champion — a genuinely dangerous position. The presence of a coach can mask the absence of a champion. Always test for Test 3 (will fight) and Test 5 (will share inside info) to distinguish the two.</p>
+
+    <h4 class="subsection-title">How to Develop a Champion</h4>
+    <p>Champions are not found — they are developed. The development process follows a progression: first build genuine trust and understand their personal pain (not just organizational pain), then co-build the business case so they own the numbers, then equip them with the internal presentation materials they need to advocate, then test their advocacy progressively with low-stakes asks before high-stakes asks.</p>
+
+    <div class="callout callout-warning">
+      <div class="callout-title">When the Champion Goes Quiet</div>
+      <p>A champion who stops responding is a critical red flag. Possible causes: (1) Internal competitor killed the project. (2) Budget was cut. (3) The champion lost political power or left the company. (4) A competing vendor has a better champion. Do not wait — escalate to a secondary contact, ask a peer in a different function, or reach out directly to the EB with a value-forward message. Silence kills deals. The champion going quiet is almost never neutral.</p>
+    </div>
+
+    <h4 class="subsection-title">Multiple Champions in Enterprise Deals</h4>
+    <p>Enterprise deals typically involve stakeholders across 6–10 functions. Each key function should ideally have an internal advocate for your solution. Map champions across: the buying team (champion), IT (technical champion), Finance/CFO office (ROI champion), Security (compliance champion), and End Users (user champion). The more advocates you have across functions, the more resilient the deal is to internal disruption.</p>
+  </div>
+
+  <!-- C — COMPETITION -->
+  <div class="element-card">
+    <div class="element-header">
+      <div class="element-letter">C</div>
+      <div>
+        <div class="element-name">Competition — The Full Competitive Landscape</div>
+        <div class="element-tagline">The most dangerous competitor is the one you're ignoring: the status quo.</div>
+      </div>
+    </div>
+
+    <p>Competition in MEDDICC covers three categories, and failing to qualify all three creates forecast blind spots.</p>
+
+    <table class="data-table">
+      <thead><tr><th>Type</th><th>Who</th><th>How They Win</th><th>How You Counter</th></tr></thead>
+      <tbody>
+        <tr>
+          <td><strong>Direct</strong></td>
+          <td>Named competitors in the same category</td>
+          <td>Price, features, existing relationships, marketing dominance</td>
+          <td>Win/loss data, battlecards, champion coaching, differentiated POC</td>
+        </tr>
+        <tr>
+          <td><strong>Indirect</strong></td>
+          <td>Adjacent solutions or build-your-own alternatives</td>
+          <td>"We can cobble this together with tools we already have"</td>
+          <td>TCO analysis showing hidden costs; risk-adjusted build vs. buy calculation</td>
+        </tr>
+        <tr>
+          <td><strong>Do-Nothing</strong></td>
+          <td>The status quo; no decision</td>
+          <td>Inertia, risk aversion, budget pressure, changing priorities</td>
+          <td>Cost of delay calculation; urgency creation via business event deadline</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <h4 class="subsection-title">Competitive Intelligence Sources</h4>
+    <ul class="bullet-list">
+      <li>Win/loss analysis: interview every recently lost deal (external win/loss firm or structured internal calls)</li>
+      <li>G2, TrustRadius, and Gartner Peer Insights: competitor reviews reveal real customer objections</li>
+      <li>LinkedIn job postings: what competitors are hiring for reveals product strategy</li>
+      <li>Your champion: ask directly "Who else are you evaluating? What's their pitch?"</li>
+      <li>SEC filings and earnings calls for public competitors: strategy shifts, customer wins, pricing changes</li>
+      <li>Former employees of competitors (ethically, via LinkedIn conversations and rep hires)</li>
+    </ul>
+
+    <h4 class="subsection-title">The "Why Us vs. Them" Framework</h4>
+    <p>Every AE should be able to answer, in 90 seconds, why a specific customer should choose your product over Competitor X on the dimensions that customer has said they care about most. Generic "why us" decks don't work. Personalized positioning — "Given that you told us data security is your #1 criterion, here is how we compare on that dimension specifically" — does.</p>
+
+    <div class="callout callout-warning">
+      <div class="callout-title">The Competitive Trap to Avoid</div>
+      <p>Never speak negatively about a competitor without evidence. Every unsubstantiated negative claim risks your credibility. Instead, use contrast questions: "Have you asked Competitor X how they handle [your key differentiator]?" Let the customer discover the gap themselves. When they find it, it's their insight — and it's much more powerful than your assertion.</p>
+    </div>
+  </div>
+
+  <!-- MEDDICC SCORING -->
+  <h2 class="section-title">MEDDICC Scoring System</h2>
+  <div class="subsection">
+    <p>Every element is scored on a 0–2 scale in deal reviews. The score is not a grade — it is a map of what is known and unknown. Managers use it to direct coaching effort to the highest-risk gaps.</p>
+
+    <div class="score-bar">
+      <div class="score-cell score-0"><div class="sc-num">0</div><div class="sc-label">Unknown</div></div>
+      <div class="score-cell score-1"><div class="sc-num">1</div><div class="sc-label">Partial</div></div>
+      <div class="score-cell score-2"><div class="sc-num">2</div><div class="sc-label">Complete</div></div>
+    </div>
+
+    <table class="data-table">
+      <thead><tr><th>Element</th><th>Score 0 (Unknown)</th><th>Score 1 (Partial)</th><th>Score 2 (Complete)</th></tr></thead>
+      <tbody>
+        <tr><td><strong>Metrics</strong></td><td>No business case or ROI model exists</td><td>High-level value story; no specific numbers validated</td><td>Specific, quantified business case validated by EB or champion with data</td></tr>
+        <tr><td><strong>Economic Buyer</strong></td><td>EB not identified</td><td>EB identified; no direct access or engagement</td><td>EB met directly; metrics validated; deal priority confirmed</td></tr>
+        <tr><td><strong>Decision Criteria</strong></td><td>No criteria known</td><td>High-level criteria known; weighting unclear</td><td>All formal and informal criteria known; mapped to your strengths; shaped where possible</td></tr>
+        <tr><td><strong>Decision Process</strong></td><td>No process mapped</td><td>Rough timeline; some steps unknown</td><td>Full procurement map with named owners, dates, all steps from select to sign</td></tr>
+        <tr><td><strong>Identify Pain</strong></td><td>No specific pain articulated</td><td>Pain identified; not quantified; urgency unclear</td><td>Pain quantified in dollars; tied to business event; EB acknowledges and prioritizes</td></tr>
+        <tr><td><strong>Champion</strong></td><td>No champion identified</td><td>Friendly contact; not validated against 5 tests</td><td>Validated champion: passes all 5 tests; has shared inside info; has EB access</td></tr>
+        <tr><td><strong>Competition</strong></td><td>No competitive intelligence</td><td>Know who's in the deal; no strategy</td><td>Full competitive map including do-nothing; tailored positioning; champion briefed on differentiation</td></tr>
+      </tbody>
+    </table>
+
+    <h4 class="subsection-title">Total Score and Forecast Interpretation</h4>
+    <div class="forecast-grid">
+      <div class="forecast-cell">
+        <div class="fc-score" style="color:#A13544">0–4</div>
+        <div class="fc-label">Pipeline</div>
+        <div class="fc-prob">Win probability: &lt;15%</div>
+      </div>
+      <div class="forecast-cell">
+        <div class="fc-score" style="color:#8a6a00">5–8</div>
+        <div class="fc-label">Best Case</div>
+        <div class="fc-prob">Win probability: 15–40%</div>
+      </div>
+      <div class="forecast-cell">
+        <div class="fc-score" style="color:#437A22">9–11</div>
+        <div class="fc-label">Commit</div>
+        <div class="fc-prob">Win probability: 60–80%</div>
+      </div>
+      <div class="forecast-cell">
+        <div class="fc-score" style="color:#964219">12–14</div>
+        <div class="fc-label">Closed Won</div>
+        <div class="fc-prob">Win probability: 85%+</div>
+      </div>
+    </div>
+
+    <div class="callout callout-best-practice">
+      <div class="callout-title">Score Usage Rule</div>
+      <p>No deal should be in the commit forecast with a MEDDICC score below 9. Any deal in commit with an unknown Champion (score 0 on C1) or unknown Economic Buyer (score 0 on E) should be immediately moved to Best Case regardless of stage. Stage is a lagging indicator. MEDDICC score is the leading indicator of close probability.</p>
+    </div>
+  </div>
+
+  <!-- MUTUAL ACTION PLAN -->
+  <h2 class="section-title">The Mutual Action Plan (MAP)</h2>
+  <div class="subsection">
+    <p>The MAP is the operational expression of a qualified Decision Process. It is a shared, co-built document that maps every remaining milestone — with named owners on both sides — to specific dates. The word "mutual" is critical: a plan that only the vendor uses is a project tracker. A plan that both parties co-own is a commitment.</p>
+
+    <h4 class="subsection-title">How to Build a MAP</h4>
+    <ol class="step-list">
+      <li><div class="step-content"><span class="step-title">Anchor on the Target Close Date (TCD)</span>Start from the desired go-live date or contract start date and work backwards. Ask: "When do you need this live? What's driving that date?" A business event (board meeting, compliance deadline, budget reset) gives urgency. "Someday" is not a TCD.</div></li>
+      <li><div class="step-content"><span class="step-title">Map All Required Steps to TCD</span>Include every step from current stage to contract signature: proof of concept, security review, legal, procurement, EB approval. Include your steps (solution design, proposals, SOW) and their steps (internal reviews, approvals).</div></li>
+      <li><div class="step-content"><span class="step-title">Assign Named Owners and Dates</span>Each step has one named owner on their side and one on yours. Shared ownership means no one owns it. A date without an owner is not a commitment.</div></li>
+      <li><div class="step-content"><span class="step-title">Share and Confirm</span>Send the MAP to your champion and ask them to confirm the steps and dates are correct. "I want to make sure I haven't missed anything. Can you review this and tell me what we should add or adjust?" This act of sharing transfers co-ownership.</div></li>
+      <li><div class="step-content"><span class="step-title">Reference It in Every Interaction</span>Every customer call, email, and deal review references the MAP. If a step slips, you have a structured, non-adversarial way to discuss it: "According to our plan, the security review was supposed to start this week. What's the status?" You are managing to a shared commitment, not pressuring the prospect.</div></li>
+    </ol>
+
+    <div class="formula-block">
+      <div class="formula-label">MAP Cycle Compression Effect</div>
+      <div class="formula-main">Average sales cycle with MAP: 15–25% shorter than without</div>
+      <div class="formula-note">Source: SalesHacker research on enterprise deal cycle time. Primary mechanism: MAP eliminates "waiting for the customer to remember the next step" time and makes slippage visible and discussable before it causes quarter-end surprises.</div>
+    </div>
+  </div>
+
+  <!-- DEAL REVIEWS -->
+  <h2 class="section-title">MEDDICC in Deal Reviews</h2>
+  <div class="subsection">
+    <p>The deal review is where MEDDICC earns its keep as a management tool. The structure forces the rep to surface what they know, what they don't know, and what they plan to do about the gaps — rather than telling a story that sounds good but hides critical unknowns.</p>
+
+    <h4 class="subsection-title">The MEDDICC Deal Review Template</h4>
+    <table class="data-table">
+      <thead><tr><th>Element</th><th>Rep Answers</th><th>Score</th><th>Coaching Question</th></tr></thead>
+      <tbody>
+        <tr><td><strong>Metrics</strong></td><td>What is the specific, quantified business case? Validated by whom?</td><td>0 / 1 / 2</td><td>"Who has verified this number? Has the EB seen it?"</td></tr>
+        <tr><td><strong>Economic Buyer</strong></td><td>Who is the EB? When did you last speak directly?</td><td>0 / 1 / 2</td><td>"What did the EB say about strategic priority? Can they approve this quarter?"</td></tr>
+        <tr><td><strong>Decision Criteria</strong></td><td>What are the top 3 formal and informal criteria?</td><td>0 / 1 / 2</td><td>"What criteria might work against you? How are you addressing it?"</td></tr>
+        <tr><td><strong>Decision Process</strong></td><td>What steps remain? Who owns each? What are the dates?</td><td>0 / 1 / 2</td><td>"Show me the MAP. What's the biggest timeline risk?"</td></tr>
+        <tr><td><strong>Identify Pain</strong></td><td>What is the specific pain? What does it cost them? Who feels it?</td><td>0 / 1 / 2</td><td>"Is this pain an EB-level priority? What's the urgency driver?"</td></tr>
+        <tr><td><strong>Champion</strong></td><td>Who is the champion? How have they demonstrated all 5 tests?</td><td>0 / 1 / 2</td><td>"When did they last share internal intel with you? What's their personal stake in this?"</td></tr>
+        <tr><td><strong>Competition</strong></td><td>Who is in the deal? What's their position? What's your play?</td><td>0 / 1 / 2</td><td>"Has the champion told you who they're leaning toward? What's the status quo threat?"</td></tr>
+      </tbody>
+    </table>
+
+    <h4 class="subsection-title">Manager Coaching Philosophy in MEDDICC Reviews</h4>
+    <p>The manager's job in a MEDDICC review is not to challenge the rep's optimism — it is to make the unknown unknowns visible. The most powerful coaching questions are not "are you sure?" but "what would have to be true for this to slip?" This reframe forces the rep to identify risks they've been unconsciously suppressing.</p>
+  </div>
+
+  <!-- LEADING/LAGGING INDICATORS -->
+  <h2 class="section-title">Leading &amp; Lagging Indicators</h2>
+  <div class="subsection">
+    <div class="callout callout-definition">
+      <div class="callout-title">Leading Indicators (Predictive)</div>
+      <p>
+        <strong>Average MEDDICC score by stage</strong> — tracks qualification health of the pipeline as a whole. Should increase as deals advance.<br><br>
+        <strong>% of Stage 3+ deals with validated champion</strong> — champion absence at Stage 3 is the leading indicator of late-stage slip.<br><br>
+        <strong>% of deals with direct EB engagement</strong> — EB access rate predicts close rate more reliably than deal stage.<br><br>
+        <strong>MAP completion rate</strong> — % of active deals with a co-signed MAP; predicts forecast accuracy.<br><br>
+        <strong>Competitive coverage rate</strong> — % of deals where competitive position is known and documented.
+      </p>
+    </div>
+
+    <div class="callout callout-warning">
+      <div class="callout-title">Lagging Indicators (Outcome)</div>
+      <p>
+        <strong>Win rate</strong> — ultimate MEDDICC output; track by segment, rep, and MEDDICC score tier.<br><br>
+        <strong>Forecast accuracy</strong> — % variance between commit forecast and actual bookings; should be &lt;10% with disciplined MEDDICC use.<br><br>
+        <strong>Average sales cycle</strong> — should decrease as MAP adoption increases.<br><br>
+        <strong>Average MEDDICC score of won vs. lost deals</strong> — benchmark to calibrate scoring standards and identify which elements most predict outcomes in your specific motion.<br><br>
+        <strong>Slip rate</strong> — % of commit-stage deals that slip beyond TCD; direct measure of decision process qualification quality.
+      </p>
+    </div>
+  </div>
+
+  <div class="related-section">
+    <div class="related-title">Related Pages</div>
+    <div class="related-links">
+      <a href="icp.html" class="related-link">Ideal Customer Profile</a>
+      <a href="../subpages/discovery.html" class="related-link">Discovery Framework</a>
+      <a href="../subpages/forecasting.html" class="related-link">Forecasting Methodology</a>
+      <a href="../subpages/pipeline-management.html" class="related-link">Pipeline Management</a>
+      <a href="../pages/phase4.html" class="related-link">← Phase 4 Overview</a>
+    </div>
+  </div>
+</div>
+<script data-pplx-inline-edit>
+(function () {
+  if (window === window.top) return;
+
+  const allowedParentOrigins = ["https://www.perplexity.ai","https://perplexity.ai","https://testing.perplexity.ai","https://staging.perplexity.ai","https://*.preview.i.perplexity.ai","http://localhost:3000","http://127.0.0.1:3000","http://localhost:5173","http://127.0.0.1:5173"];
+  const MAX_FONT_BYTES = 500 * 1024;
+  const MAX_TOTAL_FONT_BYTES = 2 * 1024 * 1024;
+  let scrollForwarding = false;
+  let scrollRaf = 0;
+  let trustedTopOrigin = null;
+
+  // Allow entries like "https://*.preview.i.perplexity.ai" — the wildcard
+  // matches a single DNS label (no dots), so "https://*.foo" cannot stretch
+  // across multiple labels.
+  function matchesAllowedOrigin(origin) {
+    if (!origin) return false;
+    for (const entry of allowedParentOrigins) {
+      if (!entry.includes("*")) {
+        if (entry === origin) return true;
+        continue;
+      }
+      const pattern = new RegExp(
+        "^" +
+          entry.replace(/[.+?^${}()|[\]\\]/g, "\\$&").replace(/\*/g, "[^.]+") +
+          "$",
+      );
+      if (pattern.test(origin)) return true;
+    }
+    return false;
+  }
+
+  // Trust decision: when the sender is same-origin-visible (event.origin is a
+  // real origin like https://www.perplexity.ai) we trust event.origin directly.
+  // When event.origin is "null" (opaque broker srcdoc), we fall back to the
+  // broker's stamped `parentOrigin` to identify the top window. The fallback
+  // is claim-only — we rely on the browser's native `targetOrigin` enforcement
+  // on the response path (see postToTrustedTop) to ensure replies can't be
+  // delivered to anyone but the actual top window of that claimed origin.
+  function getTrustedParentOrigin(event) {
+    const forwardedParentOrigin =
+      typeof event.data.parentOrigin === "string" ? event.data.parentOrigin : null;
+    const parentOrigin = event.origin === "null" ? forwardedParentOrigin : event.origin;
+    return matchesAllowedOrigin(parentOrigin) ? parentOrigin : null;
+  }
+
+  // All responses go to window.top with targetOrigin = the allowlisted origin.
+  // An attacker that iframes us inside their own null-origin broker can claim
+  // any parentOrigin they like, but the browser will drop the reply whenever
+  // the real top's origin doesn't match — so the screenshot never leaves.
+  function postToTrustedTop(message) {
+    if (!trustedTopOrigin) return;
+    try {
+      window.top.postMessage(message, trustedTopOrigin);
+    } catch (_error) {}
+  }
+
+  function inlineAll(original, clone) {
+    if (original.nodeType !== 1 || clone.nodeType !== 1) return;
+
+    try {
+      const computedStyle = getComputedStyle(original);
+      // cssText on a computed style is the serialized declaration in modern
+      // Chromium/Safari — a single read beats enumerating ~400 longhand
+      // properties. Firefox returns "" here, so we fall back on empty.
+      const serialized = computedStyle.cssText;
+      if (serialized) {
+        clone.style.cssText = serialized;
+      } else {
+        const parts = new Array(computedStyle.length);
+        for (let index = 0; index < computedStyle.length; index += 1) {
+          const property = computedStyle[index];
+          parts[index] = `${property}:${computedStyle.getPropertyValue(property)};`;
+        }
+        clone.style.cssText = parts.join("");
+      }
+    } catch (_error) {}
+
+    const originalChildren = original.children;
+    const clonedChildren = clone.children;
+    for (
+      let index = 0;
+      index < originalChildren.length && index < clonedChildren.length;
+      index += 1
+    ) {
+      inlineAll(originalChildren[index], clonedChildren[index]);
+    }
+  }
+
+  function extractFontUrl(srcValue) {
+    const matches = [
+      ...srcValue.matchAll(
+        /url\(["']?([^"')]+)["']?\)(?:\s*format\(["']?([^"')]+)["']?\))?/gi,
+      ),
+    ];
+    if (matches.length === 0) return null;
+    const woff2 = matches.find((m) => m[2] && m[2].toLowerCase().includes("woff2"));
+    if (woff2) return woff2[1];
+    const woff = matches.find((m) => m[2] && m[2].toLowerCase().includes("woff"));
+    if (woff) return woff[1];
+    return matches[0][1];
+  }
+
+  // Cache resolved font URL -> data URI across captures. Fonts on a page
+  // essentially never change, and a batch run emits multiple captures back to
+  // back — without this we'd refetch + re-base64 every time.
+  const fontDataUriCache = new Map();
+  const SRC_DECLARATION_RE = /src\s*:\s*[^;}]+/i;
+
+  async function fetchAsDataUri(url) {
+    if (fontDataUriCache.has(url)) return fontDataUriCache.get(url);
+    let dataUri = null;
+    try {
+      const response = await fetch(url, { mode: "cors", credentials: "omit" });
+      if (response.ok) {
+        const blob = await response.blob();
+        if (blob.size <= MAX_FONT_BYTES) {
+          dataUri = await new Promise((resolve) => {
+            const reader = new FileReader();
+            reader.onloadend = () =>
+              resolve(typeof reader.result === "string" ? reader.result : null);
+            reader.onerror = () => resolve(null);
+            reader.readAsDataURL(blob);
+          });
+        }
+      }
+    } catch (_error) {
+      dataUri = null;
+    }
+    fontDataUriCache.set(url, dataUri);
+    return dataUri;
+  }
+
+  function collectFontFaceRuleTexts() {
+    const rules = [];
+    for (const sheet of document.styleSheets) {
+      let cssRules;
+      try {
+        cssRules = sheet.cssRules;
+      } catch (_error) {
+        continue;
+      }
+      if (!cssRules) continue;
+      for (const rule of cssRules) {
+        const cssText = rule.cssText || "";
+        if (cssText.startsWith("@font-face")) rules.push(cssText);
+      }
+    }
+    return rules;
+  }
+
+  async function buildInlinedFontCss() {
+    const ruleTexts = collectFontFaceRuleTexts();
+    if (ruleTexts.length === 0) return null;
+
+    const resolved = ruleTexts.map((cssText) => {
+      if (!SRC_DECLARATION_RE.test(cssText)) return null;
+      const srcMatch = cssText.match(/src\s*:\s*([^;}]+)[;}]/i);
+      if (!srcMatch) return null;
+      const url = extractFontUrl(srcMatch[1]);
+      if (!url) return null;
+      try {
+        return { cssText, url: new URL(url, document.baseURI).href };
+      } catch (_error) {
+        return null;
+      }
+    });
+
+    const dataUris = await Promise.all(
+      resolved.map((entry) => (entry ? fetchAsDataUri(entry.url) : Promise.resolve(null))),
+    );
+
+    const inlined = [];
+    let totalBytes = 0;
+    for (let index = 0; index < resolved.length; index += 1) {
+      const entry = resolved[index];
+      const dataUri = dataUris[index];
+      if (!entry || !dataUri) continue;
+      const approxBytes = dataUri.length * 0.75;
+      if (totalBytes + approxBytes > MAX_TOTAL_FONT_BYTES) break;
+      totalBytes += approxBytes;
+      inlined.push(entry.cssText.replace(SRC_DECLARATION_RE, `src: url("${dataUri}")`));
+    }
+    return inlined.length > 0 ? inlined.join("\n") : null;
+  }
+
+  function stripExternal(clone) {
+    const images = clone.querySelectorAll("img");
+    for (let index = 0; index < images.length; index += 1) {
+      const src = images[index].getAttribute("src");
+      if (src && !src.startsWith("data:")) images[index].removeAttribute("src");
+    }
+
+    const elements = clone.querySelectorAll("*");
+    for (let index = 0; index < elements.length; index += 1) {
+      const style = elements[index].style.cssText;
+      if (style && style.includes("url(")) {
+        elements[index].style.cssText = style.replace(
+          /url\(["']?(?!data:)[^)"']*["']?\)/gi,
+          "none",
+        );
+      }
+    }
+  }
+
+  function emitScroll() {
+    scrollRaf = 0;
+    if (!scrollForwarding) return;
+    postToTrustedTop({
+      type: "INLINE_EDIT_SCROLL",
+      scrollX: window.scrollX,
+      scrollY: window.scrollY,
+    });
+  }
+
+  window.addEventListener(
+    "scroll",
+    function () {
+      if (!scrollForwarding || scrollRaf) return;
+      scrollRaf = requestAnimationFrame(emitScroll);
+    },
+    { passive: true, capture: true },
+  );
+
+  async function handleCaptureRequest(event) {
+    const requestId = event.data.requestId;
+    const scrollX = window.scrollX;
+    const scrollY = window.scrollY;
+    const width = window.innerWidth;
+    const height = window.innerHeight;
+
+    function postResult(dataUrl) {
+      postToTrustedTop({
+        type: "INLINE_EDIT_SCREENSHOT_RESULT",
+        requestId,
+        dataUrl,
+        scrollX,
+        scrollY,
+      });
+    }
+
+    try {
+      // Wait for any pending web fonts to resolve so both inline metrics and
+      // the @font-face inlining below see the same loaded faces.
+      if (document.fonts && document.fonts.ready) {
+        try {
+          await document.fonts.ready;
+        } catch (_error) {}
+      }
+
+      const clone = document.documentElement.cloneNode(true);
+      inlineAll(document.documentElement, clone);
+
+      const removedNodes = clone.querySelectorAll("script,link[rel=\"stylesheet\"],style");
+      for (let index = 0; index < removedNodes.length; index += 1) {
+        removedNodes[index].remove();
+      }
+
+      stripExternal(clone);
+
+      // Re-embed web fonts as data-URI @font-face rules so the SVG rasterizer
+      // can resolve them — external font URLs aren't fetched during
+      // foreignObject rendering, which would otherwise force a fallback face
+      // and change text metrics.
+      const inlinedFontCss = await buildInlinedFontCss();
+      if (inlinedFontCss) {
+        const styleEl = document.createElement("style");
+        styleEl.textContent = inlinedFontCss;
+        const head = clone.querySelector("head");
+        if (head) head.appendChild(styleEl);
+        else clone.insertBefore(styleEl, clone.firstChild);
+      }
+
+      const html = new XMLSerializer().serializeToString(clone);
+      const svg =
+        `<svg xmlns="http://www.w3.org/2000/svg" width="${width}" height="${height}">` +
+        '<foreignObject width="100%" height="100%">' +
+        `<div xmlns="http://www.w3.org/1999/xhtml" style="width:${width}px;height:${height}px;overflow:hidden">` +
+        `<div style="transform:translate(-${scrollX}px,-${scrollY}px);transform-origin:top left">` +
+        html +
+        "</div></div></foreignObject></svg>";
+      const svgUrl = `data:image/svg+xml;charset=utf-8,${encodeURIComponent(svg)}`;
+      const image = new Image();
+      image.onload = function () {
+        const canvas = document.createElement("canvas");
+        canvas.width = width;
+        canvas.height = height;
+        canvas.getContext("2d").drawImage(image, 0, 0);
+        postResult(canvas.toDataURL("image/png"));
+      };
+      image.onerror = function () {
+        postResult(null);
+      };
+      image.src = svgUrl;
+    } catch (_error) {
+      postResult(null);
+    }
+  }
+
+  window.addEventListener("message", function (event) {
+    if (!event.data) return;
+    // Only accept messages from the direct parent frame. Blocks sibling /
+    // unrelated-window postMessage senders that could otherwise reach us.
+    if (event.source !== window.parent) return;
+
+    const trustedParentOrigin = getTrustedParentOrigin(event);
+    if (!trustedParentOrigin) return;
+    trustedTopOrigin = trustedParentOrigin;
+
+    if (event.data.type === "INLINE_EDIT_SCROLL_START") {
+      scrollForwarding = true;
+      emitScroll();
+      return;
+    }
+
+    if (event.data.type === "INLINE_EDIT_SCROLL_STOP") {
+      scrollForwarding = false;
+      if (scrollRaf) cancelAnimationFrame(scrollRaf);
+      scrollRaf = 0;
+      return;
+    }
+
+    if (event.data.type !== "INLINE_EDIT_CAPTURE_REQUEST") return;
+
+    handleCaptureRequest(event);
+  });
+})();
+
+
+</script></body>
+</html>

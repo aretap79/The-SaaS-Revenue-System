@@ -1,0 +1,900 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Demand Generation — SaaS Revenue System</title>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="../assets/shared.css"/>
+  <style>
+    .page-hero { background: #437A22; }
+    .channel-block {
+      background: var(--surface);
+      border: 1.5px solid var(--border);
+      border-radius: 10px;
+      padding: 20px 24px;
+      margin-bottom: 16px;
+    }
+    .channel-block .ch-label {
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      color: #437A22;
+      margin-bottom: 4px;
+    }
+    .channel-block .ch-title {
+      font-size: 16px;
+      font-weight: 700;
+      color: var(--text);
+      margin-bottom: 8px;
+    }
+    .channel-block p {
+      font-size: 14px;
+      line-height: 1.7;
+      color: var(--text);
+      margin-bottom: 10px;
+    }
+    .channel-block p:last-child { margin-bottom: 0; }
+    .channel-group-header {
+      font-size: 13px;
+      font-weight: 700;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      margin: 32px 0 12px;
+      padding-bottom: 6px;
+      border-bottom: 1px solid var(--border);
+    }
+    .stage-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+      margin: 16px 0;
+    }
+    .stage-card {
+      background: var(--surface);
+      border: 1.5px solid var(--border);
+      border-radius: 8px;
+      padding: 14px 16px;
+    }
+    .stage-card .sc-label {
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      margin-bottom: 4px;
+    }
+    .stage-card .sc-val {
+      font-size: 18px;
+      font-weight: 700;
+      color: #437A22;
+      margin-bottom: 4px;
+    }
+    .stage-card p { font-size: 13px; color: var(--text-muted); line-height: 1.4; margin: 0; }
+    .abm-tier {
+      display: flex;
+      gap: 16px;
+      padding: 14px 0;
+      border-bottom: 1px solid var(--border);
+      align-items: flex-start;
+    }
+    .abm-tier:last-child { border-bottom: none; }
+    .abm-tier .tier-badge {
+      min-width: 52px;
+      text-align: center;
+      padding: 6px 0;
+      border-radius: 6px;
+      font-size: 13px;
+      font-weight: 700;
+      flex-shrink: 0;
+    }
+    .tier-1 { background: #f0fff4; color: #437A22; border: 1.5px solid #437A22; }
+    .tier-2 { background: #f0f8ff; color: #20808D; border: 1.5px solid #20808D; }
+    .tier-3 { background: #fafafa; color: #7A7974; border: 1.5px solid var(--border); }
+    .abm-tier .tier-body { font-size: 14px; line-height: 1.65; }
+    .abm-tier .tier-body strong { display: block; margin-bottom: 4px; font-size: 15px; }
+    .budget-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 10px 0;
+      border-bottom: 1px solid var(--border);
+      font-size: 14px;
+    }
+    .budget-row:last-child { border-bottom: none; }
+    .budget-row .br-channel { font-weight: 600; }
+    .budget-row .br-pct { font-weight: 700; color: #437A22; }
+    .budget-row .br-note { font-size: 12px; color: var(--text-muted); margin-top: 2px; }
+    .plg-card {
+      background: linear-gradient(135deg, #f0fff4 0%, #e8f5e9 100%);
+      border: 1.5px solid #437A22;
+      border-radius: 10px;
+      padding: 20px 24px;
+      margin: 16px 0;
+    }
+    .plg-card h4 { font-size: 16px; font-weight: 700; color: #437A22; margin-bottom: 8px; }
+    .plg-card p { font-size: 14px; line-height: 1.7; margin-bottom: 10px; }
+    .plg-card p:last-child { margin-bottom: 0; }
+    @media(max-width:768px) { .stage-grid { grid-template-columns: 1fr; } }
+  </style>
+</head>
+<body>
+<nav class="nav">
+  <span class="nav-logo">SaaS <span>Revenue System</span></span>
+  <span class="nav-sep">|</span>
+  <a href="../index.html" class="nav-back">← Home</a>
+  <span class="nav-sep">|</span>
+  <a href="../pages/phase3.html" class="nav-back">Phase 3: Demand Gen</a>
+  <span class="nav-sep">|</span>
+  <span class="nav-current">Demand Generation</span>
+</nav>
+<div class="page-hero" style="background:#437A22">
+  <div class="hero-phase-label">Phase 3 — Demand Generation</div>
+  <div class="hero-title">Demand Generation — Building the Pipeline Creation Engine</div>
+  <div class="hero-subtitle">Roberge's Demand Gen Formula: every marketing investment must be traceable to pipeline and revenue, not just awareness.</div>
+</div>
+<div class="content-wrap">
+  <div class="breadcrumb">
+    <a href="../index.html">Home</a><span class="sep">›</span>
+    <a href="../pages/phase3.html">Phase 3</a><span class="sep">›</span>
+    <span class="current">Demand Generation</span>
+  </div>
+
+  <!-- THE DEMAND GEN MANDATE -->
+  <h2 class="section-title">The Demand Gen Mandate</h2>
+  <p class="section-intro">Demand generation is not a sub-function of marketing — it is the engine that determines whether a SaaS company can grow predictably. Mark Roberge's foundational insight from HubSpot's scaling period is that every dollar invested in marketing must be traceable to pipeline and ultimately to revenue. Awareness without pipeline conversion is a vanity exercise.</p>
+
+  <div class="subsection">
+    <div class="subsection-title">Pipeline-First vs. Awareness-First</div>
+    <p>The debate between pipeline-first and awareness-first marketing is often a false binary. In practice, both matter — but the sequencing is critical. At early-to-mid stage SaaS (under $50M ARR), every marketing dollar must be able to answer: "Did this generate pipeline?" Brand investment that cannot be tied to pipeline within 12-18 months is a luxury. By $50M+ ARR and beyond, the model shifts — brand becomes a pipeline amplifier that reduces CAC by increasing inbound pull.</p>
+    <p>The practical implication: a demand gen team at a $5M ARR company should allocate 80-90% of budget to measurable, pipeline-generating programs. Brand investment increases as ARR scales, but never at the expense of the core pipeline generation machine.</p>
+    <p>Why this matters practically: if a company is targeting $5M in new ARR with an ACV of $50K, they need 100 new customers. If the win rate is 20% and the SQL-to-opportunity conversion is 60%, they need 833 SQLs. If the MQL-to-SQL rate is 15%, they need 5,556 MQLs. Every program in demand gen must be evaluated on its contribution to that number.</p>
+  </div>
+
+  <div class="callout callout-best-practice">
+    <div class="callout-title">The Demand Gen CEO Test</div>
+    <p>Every marketing program should be able to answer one question: "If we double the investment in this program, does pipeline double?" Programs that pass this test get scaled. Programs that cannot connect spend to pipeline get cut. Brand investment is the exception — it is justified by its downstream impact on conversion rates and CAC efficiency across all other programs.</p>
+  </div>
+
+  <!-- DEMAND GEN CHANNELS -->
+  <h2 class="section-title">Demand Gen Channels — The Complete Playbook</h2>
+  <p class="section-intro">The best-performing SaaS companies operate across multiple demand generation channels simultaneously. No single channel dominates. The goal is a diversified, measurable portfolio where you understand the CPL, CAC, and pipeline velocity of each channel and can optimize allocation accordingly.</p>
+
+  <div class="channel-group-header">Inbound Channels</div>
+
+  <div class="channel-block">
+    <div class="ch-label">Inbound</div>
+    <div class="ch-title">Content Marketing & SEO</div>
+    <p>Content marketing and SEO are the highest-leverage long-term demand gen investments in SaaS. The compounding effect of organic content — unlike paid — means cost per lead decreases over time as domain authority builds. The HubSpot model, which Roberge helped design, proved that educational content targeting buyer intent keywords could generate massive inbound pipeline at scale.</p>
+    <p><strong>Keyword Strategy:</strong> Start with bottom-of-funnel (BOFU) keywords — "best [category] software," "[category] software for [use case]," "[competitor] alternative." These have lower volume but high purchase intent. Layer in middle-of-funnel (MOFU) educational keywords that address pain points your ICP searches for. Top-of-funnel (TOFU) brand-building content drives volume but converts slowly.</p>
+    <p><strong>Topic Clusters & Pillar Pages:</strong> Google's algorithm rewards content authority. Build pillar pages (comprehensive 3,000-5,000 word guides on core topics) supported by cluster pages (more specific sub-topics that link back to the pillar). Example: a sales engagement platform builds a pillar page on "Sales Engagement" and cluster pages on cold email, sequence design, and sales automation — each linking back to the pillar and internally to the product.</p>
+    <p><strong>Conversion Optimization:</strong> Traffic without conversion is waste. Every high-traffic page needs a clear CTA — demo request, free trial, content download, or newsletter signup. A/B test headlines, CTA placement, and offer types. Install HotJar or FullStory to see where visitors drop off. Aim for a 2-5% visitor-to-MQL conversion rate on organic traffic; premium content offers (calculators, templates) can convert at 10-20%.</p>
+    <p><strong>Benchmarks:</strong> For a well-executed content SEO program, expect 12-18 months to see meaningful pipeline impact. Once mature, organic can generate 30-50% of all inbound MQLs at a CPL 60-80% lower than paid channels.</p>
+  </div>
+
+  <div class="channel-block">
+    <div class="ch-label">Inbound</div>
+    <div class="ch-title">Paid Search (Google Ads / SEM)</div>
+    <p>Paid search is the fastest way to generate bottom-of-funnel intent-based leads. The purchase intent signal from search queries ("buy [software category]," "best [tool] for [use case]") is unmatched. But SEM in B2B SaaS is expensive — average CPCs for competitive software categories range from $15-$80+, and CPLs often run $200-$800 for qualified leads.</p>
+    <p><strong>Campaign Structure:</strong> Separate campaigns by intent level: brand keywords (defend your brand against competitors bidding on it — critical), competitor keywords (bid on competitor brand terms with comparison messaging), category keywords (high-intent "best [category]" terms), and feature keywords (pain-point-specific terms like "automate sales reports" or "reduce churn").</p>
+    <p><strong>Match Types:</strong> Use exact match for high-value BOFU terms where you need tight control. Phrase match for moderate variation. Broad match modified only when you have enough conversion data to trust Google's algorithm. Negative keyword hygiene is critical — review search term reports weekly to exclude irrelevant traffic.</p>
+    <p><strong>Conversion Tracking:</strong> Track micro-conversions (content downloads, pricing page views) AND macro-conversions (demo requests, trial signups). Import CRM data back to Google Ads to optimize for pipeline-qualified leads, not just form fills. ROAS in B2B SaaS is measured over 90-180 days, not immediately.</p>
+    <p><strong>ROAS Benchmarks:</strong> For B2B SaaS SEM, target a CAC-to-LTV ratio of 3:1 minimum. If LTV is $150K (30-month retention × $5K/month), acceptable CAC via SEM is up to $50K — meaning you can spend heavily if conversion rates hold. Most early-stage teams target SEM CPL of $150-400 for SMB, $400-1,200 for mid-market.</p>
+  </div>
+
+  <div class="channel-block">
+    <div class="ch-label">Inbound</div>
+    <div class="ch-title">Paid Social — LinkedIn for B2B</div>
+    <p>LinkedIn is the dominant paid social channel for B2B SaaS targeting professional buyers. Unlike Facebook/Instagram (which reach people in personal mindset), LinkedIn reaches professionals in work mode, with targeting by job title, seniority, company size, industry, and even specific companies. This precision makes it expensive but highly qualified — LinkedIn CPCs typically run $8-25+, and CPLs for B2B SaaS range from $150-600 for well-optimized campaigns.</p>
+    <p><strong>Campaign Types:</strong> Sponsored Content (single image, carousel, video) for awareness and consideration — drives traffic or lead gen form fills. Message Ads (InMail) for direct outreach to targeted personas — effective but limited by frequency caps. Conversation Ads for multi-step interactive sequences. Lead Gen Forms are particularly effective because they auto-populate contact data from LinkedIn profiles, reducing friction dramatically — conversion rates 2-3x higher than driving to a landing page.</p>
+    <p><strong>Targeting Best Practices:</strong> Build audiences by job function + seniority (e.g., VP+ in Sales, Marketing, or Finance at companies 200-5,000 employees in your target industries). Use Matched Audiences to retarget website visitors, upload CRM lists for look-alike expansion, or target specific companies for ABM plays. Audience sizes below 50,000 become expensive due to frequency limitations.</p>
+    <p><strong>Cost Benchmarks:</strong> Average LinkedIn CPM is $25-45. For lead gen forms, expect 6-12% open rate and 10-20% form completion rate. Blended CPL for well-targeted LinkedIn campaigns: $100-400 for lower-ACV segments, $300-800 for enterprise.</p>
+  </div>
+
+  <div class="channel-block">
+    <div class="ch-label">Inbound</div>
+    <div class="ch-title">Content Syndication</div>
+    <p>Content syndication platforms (TechTarget, Bombora, Netline, IDG, Demand Science) distribute your whitepapers, ebooks, and reports to audiences on third-party publisher sites. Leads are generated when readers download your content and their contact information is passed to you. This is a volume play — syndicators can generate significant MQL volume but with variable quality.</p>
+    <p><strong>How It Works:</strong> You provide gated content (typically a research report, benchmark study, or comprehensive guide) and targeting parameters (job title, company size, industry, intent keywords). The syndicator distributes it across their publisher network. Leads are delivered to your CRM, often with basic enrichment data. Cost is typically CPL-based, ranging from $30-100 per lead depending on the syndicator and targeting specificity.</p>
+    <p><strong>Quality Issues:</strong> Syndicated leads are often lower intent — the prospect downloaded content but may not be actively evaluating your category. These require aggressive nurturing sequences and should have separate scoring thresholds. Validate deliverability and company size accuracy. Many teams use syndication for list building and top-of-funnel rather than direct pipeline generation. Expect low SAL rates (5-15%) from syndicated leads compared to 30-60% from SEO or direct demo requests.</p>
+  </div>
+
+  <div class="channel-block">
+    <div class="ch-label">Inbound</div>
+    <div class="ch-title">Review Sites — G2, Capterra, TrustRadius</div>
+    <p>Review sites have become critical demand gen channels for SaaS. 85-90% of B2B software buyers read reviews before purchasing, and review sites often rank on page 1 for "[category] software" searches. Being well-positioned on G2, Capterra, and TrustRadius is table stakes — but great positioning on these platforms actively generates inbound pipeline.</p>
+    <p><strong>Profile Optimization:</strong> Complete every field — description, features, use cases, pricing (even if "contact for pricing"), screenshots, and videos. Categories matter enormously — ensure you're in every relevant G2 category and sub-category. The G2 Grid position (Leader, High Performer, Contender, Niche) directly impacts click-through rates. Leaders receive 3-5x more profile visitors than Contenders.</p>
+    <p><strong>Review Generation Strategy:</strong> Volume and recency both matter in G2's algorithm. Build a systematic review generation program: identify NPS promoters from your CS data, trigger review requests after successful QBRs or major milestones, integrate review asks into onboarding completion flows, and offer incentives where platform policies allow (G2 permits gift card incentives up to $25). Target 30+ reviews minimum to appear on grids; 100+ reviews for strong grid positioning.</p>
+    <p><strong>Buyer Intent Data:</strong> G2 Buyer Intent, Capterra Intent, and TrustRadius Intent products identify when companies are researching your category or specifically viewing your profile. This is high-signal data — a company researching on G2 is 3-5x more likely to be in an active buying cycle. Route these signals immediately to SDRs for outbound or trigger personalized ad sequences.</p>
+    <p><strong>Lead Gen on Review Sites:</strong> G2 and Capterra offer lead generation products — sponsored listings, comparison ads, and category sponsorships. CPLs vary by category ($50-300) but these leads have high purchase intent. Many companies generate 15-30% of their inbound pipeline through review site placements.</p>
+  </div>
+
+  <div class="channel-block">
+    <div class="ch-label">Inbound</div>
+    <div class="ch-title">Webinars & Virtual Events</div>
+    <p>Webinars are one of the most underrated demand gen channels — they combine education, social proof, and product demonstration in a single touchpoint. Live webinars with strong speakers regularly generate 200-1,000 registrants, and on-demand replays compound value over time. The average B2B webinar generates a CPL of $50-150 (excluding production costs).</p>
+    <p><strong>Formats That Work:</strong> Educational webinars ("The Complete Guide to X") attract top-of-funnel audiences and build brand authority. Customer case study webinars with two or three customer speakers drive bottom-of-funnel conversion — prospects hear directly from peers. Panel webinars with industry experts attract broader audiences. Product demos are effective for engaged mid-funnel leads but should be scheduled separately from top-of-funnel education webinars.</p>
+    <p><strong>Promotion Playbook:</strong> Promote via email list (your existing contacts), LinkedIn organic and paid (sponsored ads targeting your ICP), SDR outreach (personalized invitations to target accounts), co-marketing with partners (their list + yours), and LinkedIn events page for organic reach. Announce 3-4 weeks in advance; send reminder emails 1 week, 1 day, and 1 hour before.</p>
+    <p><strong>Follow-Up Sequence:</strong> The webinar list is your highest-quality nurture audience. Send the replay within 24 hours with key takeaways. Follow up 3-5 days later with related content. Trigger a demo offer at day 7 for engaged viewers (watched 50%+ of the webinar). SDR sequence for attendees at target accounts.</p>
+  </div>
+
+  <div class="channel-group-header">Outbound Channels</div>
+
+  <div class="channel-block">
+    <div class="ch-label">Outbound</div>
+    <div class="ch-title">Cold Email — Sequence Design & Deliverability</div>
+    <p>Cold email remains one of the highest-ROI outbound channels when executed correctly. The key insight from practitioners like Aaron Ross (Predictable Revenue) and Jason Lemkin (SaaStr) is that cold email is not about volume — it is about relevance, personalization, and persistence. A 1,000-email spray-and-pray campaign to a dirty list generates more harm than good. A 100-email hyper-personalized campaign to the right ICPs generates pipeline.</p>
+    <p><strong>Sequence Design:</strong> Best-in-class cold email sequences run 7-10 touches across 3-4 weeks, combining email, LinkedIn, and optionally phone calls. The first email should be short (3-5 sentences), hyper-relevant to the specific prospect, and contain a low-commitment CTA ("Would it make sense to talk for 15 minutes?"). Subsequent emails provide social proof (customer names, results), a different angle on the value prop, or a break-up email at the end ("I'll stop bothering you after this — but wanted to make sure this wasn't lost..."). Break-up emails frequently generate the best reply rates.</p>
+    <p><strong>Deliverability Infrastructure:</strong> The fastest way to destroy a cold email program is to land in spam. Critical deliverability practices: (1) Warm up new domains over 30 days before full deployment — use tools like Lemlist, Instantly, or Mailreach. (2) Maintain separate sending domains (yourcompany-mail.com, trycompany.com) from your primary company domain to protect brand reputation. (3) Keep sending volume below 100-150 emails/day per mailbox. (4) Monitor spam rates via Google Postmaster Tools — keep below 0.1%. (5) Authenticate every domain with SPF, DKIM, and DMARC records.</p>
+    <p><strong>Copy Frameworks:</strong> The PAS framework (Problem → Agitate → Solution) works well for cold email. The "Spear Email" framework (specific opening line personalized to the prospect + one-sentence value prop + social proof + CTA) from Justin Michael generates high reply rates. Avoid all-caps subject lines, excessive links, and HTML-heavy templates — plain text converts better in cold email.</p>
+    <p><strong>Benchmarks:</strong> Strong cold email programs achieve 3-8% reply rates and 0.5-2% meeting-booked rates. For every 1,000 cold emails, expect 5-20 meetings booked. CPM (cost per meeting) typically runs $300-1,500 when including SDR time and tool costs.</p>
+  </div>
+
+  <div class="channel-block">
+    <div class="ch-label">Outbound</div>
+    <div class="ch-title">Cold Calling</div>
+    <p>Cold calling is experiencing a resurgence in B2B SaaS, particularly for mid-market and enterprise segments. While cold email inbox competition has intensified, phone call pickup rates — while lower than a decade ago — still generate meaningful pipeline when used correctly. The practitioners at Bridge Group and TOPO (now Gartner) consistently find that multi-channel outbound (email + phone + LinkedIn) generates 2-3x the meeting rate of single-channel outbound.</p>
+    <p><strong>What Works in Cold Calling:</strong> The best cold calls are short (under 60 seconds to get permission to continue), highly relevant to the prospect's current situation, and end with a specific ask. The "Pattern Interrupt" opener (something unexpected and genuinely interesting rather than "Hi, is this a good time?") is the best-performing structure. Research your prospect for 3-5 minutes before calling — a relevant trigger event (new funding, new hire, job posting) dramatically increases conversion rates.</p>
+    <p><strong>Call Volumes:</strong> Modern SDRs make 40-80 calls per day to generate 8-15 connects and 1-3 qualified meetings. Quality of targeting matters more than raw volume — a targeted list of 200 ideal-fit companies converted at 2% beats 2,000 names converted at 0.1%.</p>
+  </div>
+
+  <div class="channel-block">
+    <div class="ch-label">Outbound</div>
+    <div class="ch-title">LinkedIn Outreach & Video Prospecting</div>
+    <p>LinkedIn outreach — connection requests followed by personalized direct messages — is a high-relevance channel with strong personal authenticity signals. When done correctly (genuine personalization, not automation spam), LinkedIn DMs generate 5-15% reply rates, significantly higher than cold email. The channel is limited by throughput — LinkedIn limits connection requests to ~100/week — so it works best for high-ACV enterprise deals or as a supplement to email and phone in a multi-channel sequence.</p>
+    <p><strong>LinkedIn Sales Navigator:</strong> Navigator is the standard toolset for outbound sales, enabling precise search by job title, company size, seniority, geography, recent activity, and account criteria. TeamLink (seeing shared connections) and Job Change alerts are particularly valuable — job changes are the #1 trigger event for SaaS purchases, and 30-40% of buyers change jobs annually.</p>
+    <p><strong>Video Prospecting:</strong> Personalized video messages (via Vidyard, Loom, or Drift Video) sent through LinkedIn or email generate 3-5x higher reply rates than text-only equivalents. The format demonstrates genuine effort and stands out dramatically in crowded inboxes. A 60-90 second video referencing the prospect's LinkedIn profile, company news, or a specific pain point converts consistently well. Best used for high-ACV mid-market and enterprise prospecting where the CAC math supports the extra time investment.</p>
+  </div>
+
+  <div class="channel-block">
+    <div class="ch-label">Outbound</div>
+    <div class="ch-title">Direct Mail & Gifting</div>
+    <p>Direct mail and gifting platforms (Sendoso, Reachdesk, PFL) are high-impact, low-volume outbound channels best suited for enterprise deals with long cycles. When a prospect has gone dark, when you need to break through to a c-suite executive, or when you want to trigger a response from a high-value account that isn't responding to digital outreach — physical mail and gifts cut through the noise.</p>
+    <p><strong>When It Works:</strong> (1) ABM Tier 1 accounts where the deal size justifies $50-200 per package. (2) Re-engagement of previously engaged prospects who have gone cold. (3) Pre-meeting gift to a CxO who agreed to a call. (4) Post-meeting thank-you to reinforce relationship. (5) Event follow-up for prospects who attended a hosted dinner or roundtable.</p>
+    <p><strong>ROI Framework:</strong> At $150/package sent to 50 tier-1 accounts, total cost is $7,500. If 15% book a meeting (7-8 meetings), and 20% of those close at $100K ACV, that's 1.5 deals × $100K = $150K in pipeline-influenced revenue — a 20:1 ROI. The math works when ACV is high enough and targeting is tight enough.</p>
+  </div>
+
+  <div class="channel-group-header">Field Events</div>
+
+  <div class="channel-block">
+    <div class="ch-label">Field Events</div>
+    <div class="ch-title">Conference Sponsorships, Hosted Events & Executive Roundtables</div>
+    <p>Field events — whether attending conferences, sponsoring them, hosting your own dinners, or running executive roundtables — are among the highest-quality pipeline generators in SaaS, particularly for enterprise and mid-market segments. The in-person relationship signal is irreplaceable. Deals sourced from or influenced by field events typically close at higher rates and with better win rates than purely digital-sourced pipeline.</p>
+    <p><strong>Conference Sponsorships:</strong> Evaluate conferences based on the quality and density of your ICP in attendance, not just attendance size. A 1,000-person vertical industry conference can outperform a 20,000-person technology trade show if 80% of attendees match your ICP. Sponsorship tiers range from logo placements ($5-15K) to premium speaking slots with booth ($50-200K+). Calculate pipeline yield per event — track opportunities created and closed from event interactions, with 12-month attribution window.</p>
+    <p><strong>Hosted Events:</strong> Small, curated dinners (8-12 people) or executive roundtables are the highest-converting field event format for enterprise sales. The key insight: people attend for the peer network, not for your product. Structure the event as a facilitated peer conversation around a relevant executive challenge, not a product pitch. Have 1-2 sales leaders present, not just marketing. These events generate meeting-booked rates of 40-70% from attendees and close rates 2-3x higher than cold-sourced pipeline.</p>
+    <p><strong>ROI Measurement Framework:</strong> Event ROI = (Pipeline Generated from Event × Win Rate × ACV) / Total Event Cost. For a $50K sponsored conference package, if you generate $500K in pipeline with a 20% win rate, that's $100K in expected revenue — a 2:1 ROI. Track events with a 90-day and 180-day attribution window. Use Salesforce campaigns or HubSpot events with multi-touch attribution. Target a pipeline-to-cost ratio of 5:1 minimum; great events achieve 10:1.</p>
+  </div>
+
+  <div class="channel-group-header">Partner-Sourced Demand</div>
+
+  <div class="channel-block">
+    <div class="ch-label">Partner-Sourced</div>
+    <div class="ch-title">Referral Programs, Technology Partners & Channel Partners</div>
+    <p>Partner-sourced pipeline is typically the highest-converting and lowest-CAC demand generation channel available to SaaS companies. A referral from a trusted integration partner or satisfied customer closes at 2-3x the rate of cold-sourced pipeline and has materially shorter sales cycles. The challenge is building the ecosystem and the operational infrastructure to make partner-sourced demand reliable and scalable.</p>
+    <p><strong>Customer Referral Programs:</strong> Your happiest customers are your best salespeople. A structured referral program — with clear incentives (cash, credits, swag), easy submission mechanics (a dedicated referral page in your product or portal), and a responsive follow-up process — can generate 10-20% of net new pipeline at near-zero CAC. Trigger referral asks at peak satisfaction moments: post-successful onboarding, after a positive QBR, after an NPS 9-10 response, after a customer achieves a major milestone.</p>
+    <p><strong>Technology Partner Co-Marketing:</strong> Integration partners (your product integrates with Salesforce, HubSpot, Slack, etc.) represent a co-marketing opportunity — each partner's customer base is a pre-qualified audience of potential buyers. Joint webinars, co-authored content, AppExchange/Marketplace listings, and email co-promotions can generate meaningful pipeline at minimal cost. The key is reciprocity — ensure both partners are motivated to promote the relationship, which requires that the integration genuinely delivers value to end users.</p>
+    <p><strong>Channel Partners (VARs/Resellers):</strong> Channel partner demand gen is a later-stage growth lever (typically $20M+ ARR) requiring significant investment in partner enablement: sales training, co-selling resources, deal registration systems, and partner-specific marketing funds (MDF — Market Development Funds). Channel partners are most effective in geographies or verticals where you lack direct sales coverage.</p>
+  </div>
+
+  <div class="channel-group-header">Product-Led Growth (PLG)</div>
+
+  <div class="channel-block">
+    <div class="ch-label">Product-Led</div>
+    <div class="ch-title">Free Trial, Freemium, Product Virality & the PLG → Sales Motion</div>
+    <p>Product-Led Growth (PLG) flips the traditional demand gen model: instead of marketing generating leads that sales converts into customers, the product itself drives acquisition, activation, and conversion. Slack, Zoom, Figma, Dropbox, and Atlassian are canonical PLG successes — all grew primarily through product virality and self-serve adoption before building enterprise sales motions on top.</p>
+
+    <div class="plg-card">
+      <h4>When PLG Works</h4>
+      <p>PLG works when: (1) The product delivers value quickly — ideally within minutes or a single session (time-to-value is under 15 minutes). (2) Individual users can adopt the product without IT approval or organizational buy-in. (3) The product has natural viral loops — collaboration features, sharing, inviting teammates. (4) The product solves a pain clearly enough that users self-select based on a clear need. (5) The free tier is genuinely useful, not crippled to the point of frustration.</p>
+      <p>PLG struggles when: The product requires long onboarding or data migration to deliver value. Value is organizational rather than individual. The buyer is not the user. The product requires IT or security approval before adoption. Average deal sizes are below $5K ACV (the economics of a high-touch sales team don't support high PLG volumes below certain thresholds).</p>
+    </div>
+
+    <p><strong>Free Trial vs. Freemium:</strong> Free trials (time-limited access to full features, typically 14-30 days) work best when the product is complex enough to require evaluation but can deliver clear value in the trial period. Freemium (permanent free tier with feature or usage limits) works best when there is a natural "power user" upgrade trigger — collaborative features that require paid teammates, storage or volume limits that active users hit organically. Free trial conversion rates typically run 15-25%; freemium conversion to paid typically runs 2-5%.</p>
+    <p><strong>Product Virality:</strong> Design for viral growth. Collaboration features (invite a teammate), visible branding in outputs ("Made with [Product]"), sharing mechanics that expose the product to non-users, and in-product referral programs all drive organic growth. Calculate your viral coefficient (K-factor) — K = invites per user × invite conversion rate. If K > 1, the product grows without external demand gen. Even K = 0.3 dramatically reduces paid acquisition costs.</p>
+    <p><strong>PLG → Sales-Assist Motion:</strong> Pure PLG companies typically hit a ceiling where self-serve cannot close large enterprise deals. The modern model layers a sales team on top of the PLG motion — identifying high-intent product users (PQLs — Product Qualified Leads), monitoring usage signals (frequent logins, team invitations, feature adoption breadth), and routing high-fit accounts to sales reps who reach out with additional support, custom pricing, and security/compliance documentation enterprise buyers require. Slack, Figma, and Zoom all successfully layered enterprise sales motions on top of PLG foundations.</p>
+  </div>
+
+  <!-- DEMAND GEN BUDGET MODEL -->
+  <h2 class="section-title">The Demand Gen Budget Model</h2>
+  <p class="section-intro">There is no universal demand gen budget formula — but there are principles that hold across stages. The core principle: allocate based on demonstrated pipeline yield, not on channel preference or industry convention. Run experiments to establish CPL and pipeline-to-close metrics for each channel, then concentrate dollars in highest-yield programs.</p>
+
+  <div class="subsection">
+    <div class="subsection-title">Budget Allocation Framework by ARR Stage</div>
+    <p>The right allocation changes dramatically as a company scales. Early-stage companies should concentrate on one or two channels they can execute excellently, not spread thin across many channels they execute poorly.</p>
+  </div>
+
+  <table class="data-table">
+    <thead>
+      <tr>
+        <th>ARR Stage</th>
+        <th>Primary Channels (60-70%)</th>
+        <th>Secondary Channels (20-30%)</th>
+        <th>Experimental (10-15%)</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><strong>$0-3M ARR</strong></td>
+        <td>Outbound (cold email + LinkedIn), Founder-led content, Referrals</td>
+        <td>Paid search (branded + 2-3 BOFU terms), Review sites (G2/Capterra profile)</td>
+        <td>1-2 webinars, test one paid social campaign</td>
+      </tr>
+      <tr>
+        <td><strong>$3-10M ARR</strong></td>
+        <td>Outbound SDR team, Content SEO building, Paid search expanding</td>
+        <td>LinkedIn paid, Webinar program, Review site optimization + intent</td>
+        <td>Events (1-2 targeted), Content syndication test, PLG if applicable</td>
+      </tr>
+      <tr>
+        <td><strong>$10-30M ARR</strong></td>
+        <td>Paid search (scaled), Content SEO (compounding), SDR outbound</td>
+        <td>LinkedIn paid, Field events, ABM (Tier 1 & 2), Partner pipeline</td>
+        <td>Brand awareness, Direct mail, User conference</td>
+      </tr>
+      <tr>
+        <td><strong>$30M+ ARR</strong></td>
+        <td>Multi-channel balanced portfolio, Content SEO, Paid search + social</td>
+        <td>ABM at scale, Field events (owned + sponsored), Channel partners</td>
+        <td>Brand investment, Analyst relations (Gartner/Forrester), Community</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div class="subsection">
+    <div class="subsection-title">The Test-and-Scale Methodology</div>
+    <p>Before scaling any channel, prove its unit economics. Run a 90-day test with a defined budget ($10-20K minimum to get statistical significance), track CPL and pipeline-to-close rate, then extrapolate: "If I triple this budget, does pipeline triple?" If the answer is yes and the CAC is within target, scale aggressively. If the channel shows diminishing returns at higher volumes (common with niche LinkedIn audiences and highly targeted SEM), cap investment and redeploy excess to other channels.</p>
+  </div>
+
+  <div class="formula-block">
+    <div class="formula-label">Budget Allocation Formula</div>
+    <div class="formula-main">Optimal Channel Budget = (Target Pipeline from Channel) × (CPL / MQL-to-Pipeline Conversion Rate)</div>
+    <div class="formula-note">Example: Target $2M pipeline from SEM. CPL = $400. MQL-to-Pipeline = 20%.
+Required MQLs = $2M pipeline / ($50K ACV × 4 pipeline-to-MQL ratio) = 1,000 MQLs.
+SEM Budget = 1,000 MQLs × $400 CPL = $400,000.</div>
+  </div>
+
+  <!-- ABM -->
+  <h2 class="section-title">Account-Based Marketing (ABM) as a Demand Gen Strategy</h2>
+  <p class="section-intro">ABM inverts the traditional funnel: instead of casting a wide net and filtering down, ABM starts with a defined list of target accounts and runs coordinated, personalized marketing and sales campaigns against those specific accounts. For mid-market and enterprise SaaS with ACVs above $20K, ABM consistently outperforms inbound-only demand gen strategies.</p>
+
+  <div class="subsection">
+    <div class="subsection-title">The ABM Tier Model</div>
+  </div>
+
+  <div style="background: var(--surface); border: 1.5px solid var(--border); border-radius: 10px; padding: 16px 20px; margin-bottom: 20px;">
+    <div class="abm-tier">
+      <div class="tier-badge tier-1">Tier 1</div>
+      <div class="tier-body">
+        <strong>1:1 ABM — Named Accounts (10-50 accounts)</strong>
+        Fully bespoke programs for highest-priority accounts. Custom landing pages, personalized direct mail, executive dinner invitations, custom research reports, dedicated SDR attention, and AE co-selling. Investment: $2,000-10,000 per account per quarter. Requires deep account intelligence. Coordinated across marketing, SDR, AE, and executive sponsor. This is the territory where deals are $250K+ ACV.
+      </div>
+    </div>
+    <div class="abm-tier">
+      <div class="tier-badge tier-2">Tier 2</div>
+      <div class="tier-body">
+        <strong>1:Few ABM — Segment Clusters (50-200 accounts)</strong>
+        Personalized by industry or use case cluster. Industry-specific content, targeted LinkedIn campaigns by company list, personalized email sequences referencing industry pain points, event invitations. Investment: $200-1,000 per account per quarter. SDR attention 2-3x per quarter. ACV target: $50K-250K.
+      </div>
+    </div>
+    <div class="abm-tier">
+      <div class="tier-badge tier-3">Tier 3</div>
+      <div class="tier-body">
+        <strong>1:Many ABM — Programmatic (200-1,000 accounts)</strong>
+        Automated personalization at scale — personalized ad sequences based on company characteristics, intent data-triggered outreach, industry-specific nurture tracks. Investment: $50-200 per account per quarter. Technology-heavy: 6sense or Demandbase for ad targeting, Bombora for intent signals. ACV target: $20K-50K.
+      </div>
+    </div>
+  </div>
+
+  <div class="subsection">
+    <div class="subsection-title">Intent Data — Bombora, 6sense, G2 Buyer Intent</div>
+    <p>Intent data identifies companies that are actively researching topics related to your product — even before they visit your website. Bombora aggregates content consumption data across 4,000+ B2B publisher sites. 6sense uses AI to predict buying stage based on first-party and third-party signals. G2 Buyer Intent shows which companies are viewing your profile or category.</p>
+    <p>A company "surging" on intent topics related to your product is 3-5x more likely to be in an active buying cycle. Route intent signals immediately: (1) to SDRs for outbound outreach with a relevant opener ("We noticed you've been researching [category]..."), (2) to paid retargeting campaigns across display and LinkedIn, (3) to field sales as an account alert for accounts in active pipeline.</p>
+    <p>Intent data quality varies. Bombora is the industry standard for B2B; 6sense combines intent with predictive AI for buying stage prediction. Most companies see 15-30% higher conversion rates when outbound is triggered by intent signals vs. cold targeting.</p>
+  </div>
+
+  <div class="subsection">
+    <div class="subsection-title">ABM Metrics</div>
+  </div>
+  <div class="metric-grid">
+    <div class="metric-card">
+      <div class="m-label">Account Engagement Score</div>
+      <div class="m-value">Goal: Rising</div>
+      <div class="m-desc">Composite score of all touchpoints — web visits, ad engagements, email opens, event attendance — aggregated at the account level</div>
+    </div>
+    <div class="metric-card">
+      <div class="m-label">Multi-Thread %</div>
+      <div class="m-value">&gt; 3 contacts</div>
+      <div class="m-desc">Percentage of target accounts with 3+ active contacts engaged. Single-threaded accounts have 60% higher churn risk</div>
+    </div>
+    <div class="metric-card">
+      <div class="m-label">Pipeline from Target Accounts</div>
+      <div class="m-value">40-60%+</div>
+      <div class="m-desc">Percentage of total pipeline generated from ABM target account list; benchmark for mature ABM programs</div>
+    </div>
+    <div class="metric-card">
+      <div class="m-label">Target Account Coverage</div>
+      <div class="m-value">&gt; 80%</div>
+      <div class="m-desc">Percentage of Tier 1 accounts with at least one active opportunity or recent meaningful engagement</div>
+    </div>
+  </div>
+
+  <!-- DEMAND GEN FUNNEL -->
+  <h2 class="section-title">The Demand Gen Funnel — MQL Math & Revenue Backwards Planning</h2>
+  <p class="section-intro">The most powerful planning tool in demand gen is working backwards from revenue targets to required MQL volume. This converts the abstract goal ("generate more pipeline") into a specific operational imperative ("we need X MQLs from Y channels by Z date").</p>
+
+  <div class="formula-block">
+    <div class="formula-label">Required MQL Volume (Working Backwards from Quota)</div>
+    <div class="formula-main">Required MQLs = (New ARR Target / ACV) / (Win Rate × MQL-to-SQL Rate × SQL-to-Opp Rate)</div>
+    <div class="formula-note">Example: $5M new ARR target. ACV = $50K → need 100 new customers.
+Win rate = 20%. MQL-to-SQL = 15%. SQL-to-Opp = 70%.
+Required MQLs = 100 / (0.20 × 0.15 × 0.70) = 100 / 0.021 = 4,762 MQLs needed for the year.
+Monthly MQL target = 4,762 / 12 ≈ 397 MQLs/month.</div>
+  </div>
+
+  <div class="subsection">
+    <div class="subsection-title">MQL Definition & Lead Scoring</div>
+    <p>An MQL (Marketing Qualified Lead) is a lead that has been scored against a defined threshold that correlates with sales-readiness. Lead scoring combines demographic fit (are they the right person at the right type of company?) and behavioral intent (what have they done that signals purchase intent?).</p>
+    <p><strong>Demographic Scoring (Fit):</strong> Job title match to buyer persona (+15-25 pts), Company size in target range (+10-20 pts), Industry match (+10-15 pts), Geography covered (+5-10 pts), Technology stack match (+5-10 pts). Negative scores for disqualifying attributes: company too small (-20 pts), competitor domain (-50 pts), free email domain (-15 pts).</p>
+    <p><strong>Behavioral Scoring (Intent):</strong> Demo request (+50 pts — highest intent), Pricing page view (+30 pts), Contact page view (+20 pts), Webinar attendance (+20 pts), Case study download (+15 pts), Third webinar/whitepaper download (+15 pts), Email click (+5 pts), Web page visit (+2 pts). Score decay for inactivity — remove 10% of score per month of no engagement.</p>
+    <p><strong>MQL Threshold:</strong> Typically set at 50-75 points, calibrated by analyzing historical data on which score thresholds correlate with SAL acceptance rates above 60% and SQL conversion rates above 20%. Review threshold quarterly and adjust based on sales feedback.</p>
+  </div>
+
+  <!-- MEASURING DEMAND GEN -->
+  <h2 class="section-title">Measuring Demand Gen — The Attribution Framework</h2>
+  <p class="section-intro">Measurement is where most demand gen programs fail. The mistake is measuring outputs (MQL volume, traffic) without connecting to outcomes (pipeline, revenue). The complete demand gen measurement system tracks both lead generation metrics (volume, cost) and revenue metrics (pipeline, CAC, influenced revenue).</p>
+
+  <div class="formula-block">
+    <div class="formula-label">Core Demand Gen Formulas</div>
+    <div class="formula-main">CPL (Cost Per Lead) = Total Channel Spend / Total Leads Generated
+
+CAC by Channel = Total Channel Spend / New Customers Sourced from Channel
+
+Pipeline Generated by Channel = Sum of all opportunities where channel is first-touch or last-touch source
+
+MQL-to-Pipeline Rate = SQLs that become pipeline opportunities / Total MQLs × 100
+
+Marketing-Sourced Revenue % = Revenue from marketing-first-touch deals / Total Revenue × 100</div>
+  </div>
+
+  <div class="subsection">
+    <div class="subsection-title">Attribution Models — Choosing the Right One</div>
+    <p>Attribution is the process of assigning credit for a conversion to the marketing touchpoints that influenced it. No attribution model is perfect — each tells a different story about which channels matter.</p>
+  </div>
+
+  <table class="data-table">
+    <thead>
+      <tr>
+        <th>Attribution Model</th>
+        <th>How It Works</th>
+        <th>Best For</th>
+        <th>Limitation</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><strong>First Touch</strong></td>
+        <td>100% credit to the first touchpoint that introduced the prospect</td>
+        <td>Measuring top-of-funnel demand creation</td>
+        <td>Ignores nurture and mid-funnel conversion drivers</td>
+      </tr>
+      <tr>
+        <td><strong>Last Touch</strong></td>
+        <td>100% credit to the final touchpoint before conversion</td>
+        <td>Measuring bottom-of-funnel conversion programs</td>
+        <td>Ignores awareness and early engagement</td>
+      </tr>
+      <tr>
+        <td><strong>Linear</strong></td>
+        <td>Equal credit to every touchpoint in the journey</td>
+        <td>Fair multi-channel comparison</td>
+        <td>Doesn't reflect real influence variance between touchpoints</td>
+      </tr>
+      <tr>
+        <td><strong>Time-Decay</strong></td>
+        <td>More credit to touchpoints closer to conversion</td>
+        <td>Long B2B sales cycles where recency matters</td>
+        <td>Undervalues early-stage demand creation</td>
+      </tr>
+      <tr>
+        <td><strong>W-Shaped</strong></td>
+        <td>40% each to first touch and opportunity creation; 20% split across others</td>
+        <td>B2B SaaS with distinct acquisition + nurture phases</td>
+        <td>Still simplifies a complex multi-touch reality</td>
+      </tr>
+      <tr>
+        <td><strong>Data-Driven</strong></td>
+        <td>ML-based credit allocation based on actual conversion lift data</td>
+        <td>Companies with sufficient conversion volume (500+ conversions/month)</td>
+        <td>Requires data volume; black-box model</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div class="callout callout-best-practice">
+    <div class="callout-title">Practical Attribution Recommendation</div>
+    <p>For most SaaS companies under $50M ARR: use first-touch for measuring demand creation programs (SEO, paid social, events) and last-touch for measuring conversion programs (SEM, review sites, demo invites). Report both simultaneously. Do not obsess over the "perfect" attribution model — consistent measurement of the same model over time is far more valuable than switching models frequently. The goal is relative channel comparison, not absolute credit assignment.</p>
+  </div>
+
+  <!-- INDICATORS -->
+  <h2 class="section-title">Key Indicators</h2>
+
+  <div class="subsection">
+    <div class="subsection-title">Leading Indicators</div>
+    <div class="indicator-row">
+      <span class="indicator-tag ind-leading">MQL Volume by Channel</span>
+      <span class="indicator-tag ind-leading">Website Traffic</span>
+      <span class="indicator-tag ind-leading">Email Engagement Rate</span>
+      <span class="indicator-tag ind-leading">Intent Signal Volume</span>
+      <span class="indicator-tag ind-leading">Webinar Registrants</span>
+      <span class="indicator-tag ind-leading">SDR Activities</span>
+      <span class="indicator-tag ind-leading">Content Downloads</span>
+      <span class="indicator-tag ind-leading">G2/Review Profile Views</span>
+    </div>
+  </div>
+
+  <div class="subsection">
+    <div class="subsection-title">Lagging Indicators</div>
+    <div class="indicator-row">
+      <span class="indicator-tag ind-lagging">Pipeline Generated by Channel</span>
+      <span class="indicator-tag ind-lagging">Marketing-Sourced Revenue %</span>
+      <span class="indicator-tag ind-lagging">CAC by Channel</span>
+      <span class="indicator-tag ind-lagging">Pipeline-to-Close Rate by Source</span>
+      <span class="indicator-tag ind-lagging">MQL-to-SQL Rate</span>
+      <span class="indicator-tag ind-lagging">CPL Trend</span>
+    </div>
+  </div>
+
+  <div class="subsection">
+    <div class="subsection-title">Key Formulas Summary</div>
+    <div class="indicator-row">
+      <span class="indicator-tag ind-formula">CPL = Spend / Leads</span>
+      <span class="indicator-tag ind-formula">CAC = Spend / New Customers</span>
+      <span class="indicator-tag ind-formula">Required MQLs = (Quota/ACV) / (Win Rate × MQL-to-SQL)</span>
+      <span class="indicator-tag ind-formula">Pipeline Yield = MQLs × MQL-to-Pipeline Rate × ACV</span>
+    </div>
+  </div>
+
+  <div class="related-section">
+    <div class="related-title">Related Sections</div>
+    <div class="related-links">
+      <a href="funnel-architecture.html" class="related-link">Funnel Architecture</a>
+      <a href="sdr-function.html" class="related-link">SDR Function</a>
+      <a href="lead-scoring.html" class="related-link">Lead Scoring</a>
+      <a href="revenue-attribution.html" class="related-link">Revenue Attribution</a>
+      <a href="abm-strategy.html" class="related-link">ABM Strategy</a>
+      <a href="../pages/phase3.html" class="related-link">Phase 3 Overview</a>
+    </div>
+  </div>
+</div>
+<script data-pplx-inline-edit>
+(function () {
+  if (window === window.top) return;
+
+  const allowedParentOrigins = ["https://www.perplexity.ai","https://perplexity.ai","https://testing.perplexity.ai","https://staging.perplexity.ai","https://*.preview.i.perplexity.ai","http://localhost:3000","http://127.0.0.1:3000","http://localhost:5173","http://127.0.0.1:5173"];
+  const MAX_FONT_BYTES = 500 * 1024;
+  const MAX_TOTAL_FONT_BYTES = 2 * 1024 * 1024;
+  let scrollForwarding = false;
+  let scrollRaf = 0;
+  let trustedTopOrigin = null;
+
+  // Allow entries like "https://*.preview.i.perplexity.ai" — the wildcard
+  // matches a single DNS label (no dots), so "https://*.foo" cannot stretch
+  // across multiple labels.
+  function matchesAllowedOrigin(origin) {
+    if (!origin) return false;
+    for (const entry of allowedParentOrigins) {
+      if (!entry.includes("*")) {
+        if (entry === origin) return true;
+        continue;
+      }
+      const pattern = new RegExp(
+        "^" +
+          entry.replace(/[.+?^${}()|[\]\\]/g, "\\$&").replace(/\*/g, "[^.]+") +
+          "$",
+      );
+      if (pattern.test(origin)) return true;
+    }
+    return false;
+  }
+
+  // Trust decision: when the sender is same-origin-visible (event.origin is a
+  // real origin like https://www.perplexity.ai) we trust event.origin directly.
+  // When event.origin is "null" (opaque broker srcdoc), we fall back to the
+  // broker's stamped `parentOrigin` to identify the top window. The fallback
+  // is claim-only — we rely on the browser's native `targetOrigin` enforcement
+  // on the response path (see postToTrustedTop) to ensure replies can't be
+  // delivered to anyone but the actual top window of that claimed origin.
+  function getTrustedParentOrigin(event) {
+    const forwardedParentOrigin =
+      typeof event.data.parentOrigin === "string" ? event.data.parentOrigin : null;
+    const parentOrigin = event.origin === "null" ? forwardedParentOrigin : event.origin;
+    return matchesAllowedOrigin(parentOrigin) ? parentOrigin : null;
+  }
+
+  // All responses go to window.top with targetOrigin = the allowlisted origin.
+  // An attacker that iframes us inside their own null-origin broker can claim
+  // any parentOrigin they like, but the browser will drop the reply whenever
+  // the real top's origin doesn't match — so the screenshot never leaves.
+  function postToTrustedTop(message) {
+    if (!trustedTopOrigin) return;
+    try {
+      window.top.postMessage(message, trustedTopOrigin);
+    } catch (_error) {}
+  }
+
+  function inlineAll(original, clone) {
+    if (original.nodeType !== 1 || clone.nodeType !== 1) return;
+
+    try {
+      const computedStyle = getComputedStyle(original);
+      // cssText on a computed style is the serialized declaration in modern
+      // Chromium/Safari — a single read beats enumerating ~400 longhand
+      // properties. Firefox returns "" here, so we fall back on empty.
+      const serialized = computedStyle.cssText;
+      if (serialized) {
+        clone.style.cssText = serialized;
+      } else {
+        const parts = new Array(computedStyle.length);
+        for (let index = 0; index < computedStyle.length; index += 1) {
+          const property = computedStyle[index];
+          parts[index] = `${property}:${computedStyle.getPropertyValue(property)};`;
+        }
+        clone.style.cssText = parts.join("");
+      }
+    } catch (_error) {}
+
+    const originalChildren = original.children;
+    const clonedChildren = clone.children;
+    for (
+      let index = 0;
+      index < originalChildren.length && index < clonedChildren.length;
+      index += 1
+    ) {
+      inlineAll(originalChildren[index], clonedChildren[index]);
+    }
+  }
+
+  function extractFontUrl(srcValue) {
+    const matches = [
+      ...srcValue.matchAll(
+        /url\(["']?([^"')]+)["']?\)(?:\s*format\(["']?([^"')]+)["']?\))?/gi,
+      ),
+    ];
+    if (matches.length === 0) return null;
+    const woff2 = matches.find((m) => m[2] && m[2].toLowerCase().includes("woff2"));
+    if (woff2) return woff2[1];
+    const woff = matches.find((m) => m[2] && m[2].toLowerCase().includes("woff"));
+    if (woff) return woff[1];
+    return matches[0][1];
+  }
+
+  // Cache resolved font URL -> data URI across captures. Fonts on a page
+  // essentially never change, and a batch run emits multiple captures back to
+  // back — without this we'd refetch + re-base64 every time.
+  const fontDataUriCache = new Map();
+  const SRC_DECLARATION_RE = /src\s*:\s*[^;}]+/i;
+
+  async function fetchAsDataUri(url) {
+    if (fontDataUriCache.has(url)) return fontDataUriCache.get(url);
+    let dataUri = null;
+    try {
+      const response = await fetch(url, { mode: "cors", credentials: "omit" });
+      if (response.ok) {
+        const blob = await response.blob();
+        if (blob.size <= MAX_FONT_BYTES) {
+          dataUri = await new Promise((resolve) => {
+            const reader = new FileReader();
+            reader.onloadend = () =>
+              resolve(typeof reader.result === "string" ? reader.result : null);
+            reader.onerror = () => resolve(null);
+            reader.readAsDataURL(blob);
+          });
+        }
+      }
+    } catch (_error) {
+      dataUri = null;
+    }
+    fontDataUriCache.set(url, dataUri);
+    return dataUri;
+  }
+
+  function collectFontFaceRuleTexts() {
+    const rules = [];
+    for (const sheet of document.styleSheets) {
+      let cssRules;
+      try {
+        cssRules = sheet.cssRules;
+      } catch (_error) {
+        continue;
+      }
+      if (!cssRules) continue;
+      for (const rule of cssRules) {
+        const cssText = rule.cssText || "";
+        if (cssText.startsWith("@font-face")) rules.push(cssText);
+      }
+    }
+    return rules;
+  }
+
+  async function buildInlinedFontCss() {
+    const ruleTexts = collectFontFaceRuleTexts();
+    if (ruleTexts.length === 0) return null;
+
+    const resolved = ruleTexts.map((cssText) => {
+      if (!SRC_DECLARATION_RE.test(cssText)) return null;
+      const srcMatch = cssText.match(/src\s*:\s*([^;}]+)[;}]/i);
+      if (!srcMatch) return null;
+      const url = extractFontUrl(srcMatch[1]);
+      if (!url) return null;
+      try {
+        return { cssText, url: new URL(url, document.baseURI).href };
+      } catch (_error) {
+        return null;
+      }
+    });
+
+    const dataUris = await Promise.all(
+      resolved.map((entry) => (entry ? fetchAsDataUri(entry.url) : Promise.resolve(null))),
+    );
+
+    const inlined = [];
+    let totalBytes = 0;
+    for (let index = 0; index < resolved.length; index += 1) {
+      const entry = resolved[index];
+      const dataUri = dataUris[index];
+      if (!entry || !dataUri) continue;
+      const approxBytes = dataUri.length * 0.75;
+      if (totalBytes + approxBytes > MAX_TOTAL_FONT_BYTES) break;
+      totalBytes += approxBytes;
+      inlined.push(entry.cssText.replace(SRC_DECLARATION_RE, `src: url("${dataUri}")`));
+    }
+    return inlined.length > 0 ? inlined.join("\n") : null;
+  }
+
+  function stripExternal(clone) {
+    const images = clone.querySelectorAll("img");
+    for (let index = 0; index < images.length; index += 1) {
+      const src = images[index].getAttribute("src");
+      if (src && !src.startsWith("data:")) images[index].removeAttribute("src");
+    }
+
+    const elements = clone.querySelectorAll("*");
+    for (let index = 0; index < elements.length; index += 1) {
+      const style = elements[index].style.cssText;
+      if (style && style.includes("url(")) {
+        elements[index].style.cssText = style.replace(
+          /url\(["']?(?!data:)[^)"']*["']?\)/gi,
+          "none",
+        );
+      }
+    }
+  }
+
+  function emitScroll() {
+    scrollRaf = 0;
+    if (!scrollForwarding) return;
+    postToTrustedTop({
+      type: "INLINE_EDIT_SCROLL",
+      scrollX: window.scrollX,
+      scrollY: window.scrollY,
+    });
+  }
+
+  window.addEventListener(
+    "scroll",
+    function () {
+      if (!scrollForwarding || scrollRaf) return;
+      scrollRaf = requestAnimationFrame(emitScroll);
+    },
+    { passive: true, capture: true },
+  );
+
+  async function handleCaptureRequest(event) {
+    const requestId = event.data.requestId;
+    const scrollX = window.scrollX;
+    const scrollY = window.scrollY;
+    const width = window.innerWidth;
+    const height = window.innerHeight;
+
+    function postResult(dataUrl) {
+      postToTrustedTop({
+        type: "INLINE_EDIT_SCREENSHOT_RESULT",
+        requestId,
+        dataUrl,
+        scrollX,
+        scrollY,
+      });
+    }
+
+    try {
+      // Wait for any pending web fonts to resolve so both inline metrics and
+      // the @font-face inlining below see the same loaded faces.
+      if (document.fonts && document.fonts.ready) {
+        try {
+          await document.fonts.ready;
+        } catch (_error) {}
+      }
+
+      const clone = document.documentElement.cloneNode(true);
+      inlineAll(document.documentElement, clone);
+
+      const removedNodes = clone.querySelectorAll("script,link[rel=\"stylesheet\"],style");
+      for (let index = 0; index < removedNodes.length; index += 1) {
+        removedNodes[index].remove();
+      }
+
+      stripExternal(clone);
+
+      // Re-embed web fonts as data-URI @font-face rules so the SVG rasterizer
+      // can resolve them — external font URLs aren't fetched during
+      // foreignObject rendering, which would otherwise force a fallback face
+      // and change text metrics.
+      const inlinedFontCss = await buildInlinedFontCss();
+      if (inlinedFontCss) {
+        const styleEl = document.createElement("style");
+        styleEl.textContent = inlinedFontCss;
+        const head = clone.querySelector("head");
+        if (head) head.appendChild(styleEl);
+        else clone.insertBefore(styleEl, clone.firstChild);
+      }
+
+      const html = new XMLSerializer().serializeToString(clone);
+      const svg =
+        `<svg xmlns="http://www.w3.org/2000/svg" width="${width}" height="${height}">` +
+        '<foreignObject width="100%" height="100%">' +
+        `<div xmlns="http://www.w3.org/1999/xhtml" style="width:${width}px;height:${height}px;overflow:hidden">` +
+        `<div style="transform:translate(-${scrollX}px,-${scrollY}px);transform-origin:top left">` +
+        html +
+        "</div></div></foreignObject></svg>";
+      const svgUrl = `data:image/svg+xml;charset=utf-8,${encodeURIComponent(svg)}`;
+      const image = new Image();
+      image.onload = function () {
+        const canvas = document.createElement("canvas");
+        canvas.width = width;
+        canvas.height = height;
+        canvas.getContext("2d").drawImage(image, 0, 0);
+        postResult(canvas.toDataURL("image/png"));
+      };
+      image.onerror = function () {
+        postResult(null);
+      };
+      image.src = svgUrl;
+    } catch (_error) {
+      postResult(null);
+    }
+  }
+
+  window.addEventListener("message", function (event) {
+    if (!event.data) return;
+    // Only accept messages from the direct parent frame. Blocks sibling /
+    // unrelated-window postMessage senders that could otherwise reach us.
+    if (event.source !== window.parent) return;
+
+    const trustedParentOrigin = getTrustedParentOrigin(event);
+    if (!trustedParentOrigin) return;
+    trustedTopOrigin = trustedParentOrigin;
+
+    if (event.data.type === "INLINE_EDIT_SCROLL_START") {
+      scrollForwarding = true;
+      emitScroll();
+      return;
+    }
+
+    if (event.data.type === "INLINE_EDIT_SCROLL_STOP") {
+      scrollForwarding = false;
+      if (scrollRaf) cancelAnimationFrame(scrollRaf);
+      scrollRaf = 0;
+      return;
+    }
+
+    if (event.data.type !== "INLINE_EDIT_CAPTURE_REQUEST") return;
+
+    handleCaptureRequest(event);
+  });
+})();
+
+
+</script></body>
+</html>

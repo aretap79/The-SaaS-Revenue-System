@@ -1,0 +1,982 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Ideal Customer Profile — SaaS Revenue System</title>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="../assets/shared.css"/>
+  <style>
+    .page-hero { background: #20808D; }
+    .criteria-card {
+      background: var(--surface);
+      border: 1.5px solid var(--border);
+      border-radius: 10px;
+      padding: 20px 24px;
+      margin-bottom: 16px;
+    }
+    .criteria-card .criteria-header {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 10px;
+    }
+    .criteria-badge {
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      padding: 3px 10px;
+      border-radius: 20px;
+      background: #e0f4f5;
+      color: #20808D;
+    }
+    .criteria-card h4 {
+      font-size: 15px;
+      font-weight: 700;
+      color: var(--text);
+      margin: 0;
+    }
+    .criteria-card p {
+      font-size: 15px;
+      line-height: 1.75;
+      margin-bottom: 10px;
+      color: var(--text);
+    }
+    .grade-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 8px;
+      margin: 20px 0;
+    }
+    .grade-cell {
+      padding: 16px 12px;
+      border-radius: 8px;
+      text-align: center;
+    }
+    .grade-a { background: #e6f4ea; border: 2px solid #437A22; }
+    .grade-b { background: #e8f0fe; border: 2px solid #2a7fa8; }
+    .grade-c { background: #fff8e1; border: 2px solid #8a6a00; }
+    .grade-d { background: #fce8e6; border: 2px solid #A13544; }
+    .grade-letter {
+      font-size: 24px;
+      font-weight: 700;
+      margin-bottom: 4px;
+    }
+    .grade-a .grade-letter { color: #437A22; }
+    .grade-b .grade-letter { color: #2a7fa8; }
+    .grade-c .grade-letter { color: #8a6a00; }
+    .grade-d .grade-letter { color: #A13544; }
+    .grade-score {
+      font-size: 12px;
+      font-weight: 600;
+      margin-bottom: 4px;
+    }
+    .grade-action {
+      font-size: 11px;
+      color: var(--text-muted);
+      line-height: 1.3;
+    }
+    .trigger-card {
+      background: var(--surface);
+      border: 1.5px solid var(--border);
+      border-radius: 8px;
+      padding: 16px 20px;
+      margin-bottom: 12px;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+    }
+    .trigger-type {
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      margin-bottom: 6px;
+    }
+    .trigger-example {
+      font-size: 14px;
+      color: var(--text);
+      line-height: 1.6;
+    }
+    .feedback-flow {
+      display: flex;
+      align-items: stretch;
+      gap: 0;
+      margin: 20px 0;
+      flex-wrap: wrap;
+    }
+    .flow-box {
+      flex: 1;
+      min-width: 140px;
+      background: var(--surface);
+      border: 1.5px solid var(--border);
+      padding: 14px 16px;
+      text-align: center;
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--text);
+    }
+    .flow-box:first-child { border-radius: 8px 0 0 8px; }
+    .flow-box:last-child { border-radius: 0 8px 8px 0; }
+    .flow-arrow {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 28px;
+      background: #e0f4f5;
+      color: #20808D;
+      font-weight: 700;
+      font-size: 18px;
+      flex-shrink: 0;
+    }
+    .flow-sub {
+      font-size: 11px;
+      color: var(--text-muted);
+      margin-top: 4px;
+      font-weight: 400;
+    }
+    .segment-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 12px;
+      margin: 20px 0;
+    }
+    .segment-card {
+      background: var(--surface);
+      border: 1.5px solid var(--border);
+      border-radius: 8px;
+      padding: 18px;
+    }
+    .seg-label {
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      color: #20808D;
+      margin-bottom: 8px;
+    }
+    .seg-title {
+      font-size: 15px;
+      font-weight: 700;
+      margin-bottom: 8px;
+    }
+    .seg-content {
+      font-size: 13px;
+      color: var(--text-muted);
+      line-height: 1.6;
+    }
+    @media (max-width: 768px) {
+      .grade-grid { grid-template-columns: repeat(2, 1fr); }
+      .trigger-card { grid-template-columns: 1fr; }
+      .segment-grid { grid-template-columns: 1fr; }
+      .feedback-flow { flex-direction: column; }
+      .flow-arrow { transform: rotate(90deg); width: 100%; height: 28px; }
+    }
+  </style>
+</head>
+<body>
+<nav class="nav">
+  <span class="nav-logo">SaaS <span>Revenue System</span></span>
+  <span class="nav-sep">|</span>
+  <a href="../index.html" class="nav-back">← Home</a>
+  <span class="nav-sep">|</span>
+  <a href="../pages/phase1.html" class="nav-back">Phase 1: Foundation</a>
+  <span class="nav-sep">|</span>
+  <span class="nav-current">Ideal Customer Profile</span>
+</nav>
+
+<div class="page-hero">
+  <div class="hero-phase-label">Phase 1 — GTM Foundation</div>
+  <div class="hero-title">Ideal Customer Profile (ICP) — Who You Exist to Serve</div>
+  <div class="hero-subtitle">The ICP is the single most important strategic decision in your GTM. Every downstream function — demand gen, territory, hiring, CS — is built on it.</div>
+</div>
+
+<div class="content-wrap">
+  <div class="breadcrumb">
+    <a href="../index.html">Home</a>
+    <span class="sep">›</span>
+    <a href="../pages/phase1.html">Phase 1</a>
+    <span class="sep">›</span>
+    <span class="current">Ideal Customer Profile</span>
+  </div>
+
+  <!-- DEFINITION -->
+  <h2 class="section-title">Definition: ICP, Persona, and TAM — How They Differ</h2>
+  <p class="section-intro">These three terms are used interchangeably in sloppy GTM planning, and the confusion leads to wasted spend. They are distinct and operate at different levels of abstraction.</p>
+
+  <div class="subsection">
+    <table class="data-table">
+      <thead><tr><th>Concept</th><th>Definition</th><th>Level</th><th>Primary Use</th></tr></thead>
+      <tbody>
+        <tr>
+          <td><strong>TAM (Total Addressable Market)</strong></td>
+          <td>Every company in the world that could theoretically benefit from your product</td>
+          <td>Market sizing (investor narrative)</td>
+          <td>Fundraising, market entry decisions, board reporting</td>
+        </tr>
+        <tr>
+          <td><strong>ICP (Ideal Customer Profile)</strong></td>
+          <td>The specific type of company most likely to succeed with your product, expand, and stay</td>
+          <td>Company-level targeting (GTM strategy)</td>
+          <td>Territory design, demand gen targeting, account prioritization, CS resource allocation</td>
+        </tr>
+        <tr>
+          <td><strong>Buyer Persona</strong></td>
+          <td>The individual human at an ICP company who evaluates, champions, and buys your product</td>
+          <td>Person-level targeting (sales/marketing tactics)</td>
+          <td>Messaging, content, outreach, LinkedIn targeting, SDR sequencing</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <div class="callout callout-definition">
+      <div class="callout-title">The Critical ICP Insight</div>
+      <p>ICP is about <em>who succeeds with your product</em>, not just who buys it. Companies that buy but don't succeed become churned customers and negative references. The ideal customer is the one where your product creates undeniable value quickly, they expand within 12 months, they refer peers, and they stay. Churn data is as important as win data in ICP construction.</p>
+    </div>
+  </div>
+
+  <!-- BUILDING ICP FROM DATA -->
+  <h2 class="section-title">How to Build an ICP From Data</h2>
+  <p class="section-intro">The most common mistake is building an ICP from opinions: "We think we should go after mid-market financial services." The right approach is data-first, then validation. Start with your existing customer base — the data is already there.</p>
+
+  <div class="subsection">
+    <h4 class="subsection-title">Step-by-Step Data Process</h4>
+    <ol class="step-list">
+      <li><div class="step-content">
+        <span class="step-title">Pull All Closed-Won Customers from CRM</span>
+        Export every closed-won account from the last 24–36 months. Include close date, ACV, segment, and account owner. 36 months gives you enough cohort data to see expansion and churn patterns. Filter out one-time wins that were anomalous (a relationship deal, a product-market mismatch you knew about).
+      </div></li>
+      <li><div class="step-content">
+        <span class="step-title">Enrich with Firmographic Data</span>
+        Use Clearbit, ZoomInfo, Apollo, or LinkedIn Sales Navigator to append: employee count at time of sale, revenue (estimated), industry (2-digit NAICS or SIC), geography/region, tech stack (from BuiltWith or Datanyze), business model (B2B/B2C), and funding stage/amount. This transforms your CRM rows from names into profiles.
+      </div></li>
+      <li><div class="step-content">
+        <span class="step-title">Overlay NRR Data</span>
+        From your billing system (Stripe, Chargebee, Salesforce CPQ), calculate Net Revenue Retention for each customer cohort. Which firmographic clusters have NRR above 120%? Those are your expansion ICP segments. NRR is the most important ICP signal because it tells you who gets more value over time — not just who was willing to buy.
+      </div></li>
+      <li><div class="step-content">
+        <span class="step-title">Overlay Churn Data</span>
+        Flag every churned account. Identify the firmographic pattern of churners. Common findings: companies below a certain employee threshold can't fully adopt the product; companies in a specific industry have regulatory constraints that limit value; startups that raised Series A but not Series B churn at 2× the rate of Series B+ companies. The churn pattern is your negative ICP — the segments to deprioritize.
+      </div></li>
+      <li><div class="step-content">
+        <span class="step-title">Run Cluster Analysis</span>
+        Group customers by firmographic similarity. This can be done in Excel/Sheets with pivot tables, or more rigorously in Python with k-means clustering. Look for clusters where: (a) win rate was above average, (b) time to value (TTV) was short, (c) NRR is above 110%, and (d) churn rate is below average. These clusters define your ICP tiers.
+      </div></li>
+      <li><div class="step-content">
+        <span class="step-title">Define the "Best Customer" Archetype</span>
+        From your top cluster, write a one-paragraph narrative that describes the ideal company: "A B2B SaaS company with 50–250 employees, Series B or C funded, US-based, using Salesforce + HubSpot in their GTM stack, growing at 30%+ YoY, with a VP of Sales who owns a revenue target and has direct budget authority." This is your ICP hypothesis — validate it against your 20 best customers.
+      </div></li>
+    </ol>
+
+    <div class="formula-block">
+      <div class="formula-label">ICP Quality Score (per customer)</div>
+      <div class="formula-main">ICP Quality = (NRR Weight × NRR Score) + (TTV Weight × TTV Score) + (Expansion Weight × Expansion Score) + (Reference Weight × Reference Score)</div>
+      <div class="formula-note">Use this to rank all existing customers; the top quartile defines your ICP. Typical weights: NRR 35%, Time-to-Value 25%, Expansion 25%, Reference/Advocacy 15%.</div>
+    </div>
+  </div>
+
+  <!-- FIRMOGRAPHIC CRITERIA -->
+  <h2 class="section-title">Firmographic Criteria — The Structural Filters</h2>
+  <p class="section-intro">Firmographic criteria are the observable, verifiable attributes of a company. They form the top of the ICP scoring model — necessary but not sufficient conditions for an ideal customer.</p>
+
+  <div class="subsection">
+    <div class="criteria-card">
+      <div class="criteria-header">
+        <span class="criteria-badge">Employee Count</span>
+        <h4>Why Headcount Is Your Most Reliable Proxy</h4>
+      </div>
+      <p>Employee count is the most consistently available firmographic signal and a reliable proxy for organizational complexity, budget, and your product's required depth. Define your ranges based on your product's value surface area.</p>
+      <table class="data-table">
+        <thead><tr><th>Range</th><th>Segment Label</th><th>Typical Budget Behavior</th><th>Common Risks</th></tr></thead>
+        <tbody>
+          <tr><td>1–50</td><td>VSB / Startup</td><td>Founder-controlled; project-based</td><td>Churn at funding milestones; outgrows your product; cash-flow constrained</td></tr>
+          <tr><td>51–250</td><td>SMB</td><td>One budget owner; faster cycle; less process</td><td>Annual budget resets kill deals; limited implementation resources</td></tr>
+          <tr><td>251–1000</td><td>Mid-Market</td><td>Multiple budget owners; VP-level authority; formal procurement emerging</td><td>Committee dynamics; IT review adds 4–8 weeks</td></tr>
+          <tr><td>1001–5000</td><td>Upper Mid-Market / Commercial</td><td>Departmental budgets; director/VP authority to ~$250K</td><td>Longer cycles; security/legal review standard; multi-stakeholder</td></tr>
+          <tr><td>5001+</td><td>Enterprise</td><td>Separate opex/capex budgets; CxO approval often required; multi-year commitments possible</td><td>12–18 month cycles; complex procurement; legal/security heavy</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="criteria-card">
+      <div class="criteria-header">
+        <span class="criteria-badge">Revenue</span>
+        <h4>ARR / Revenue as Budget Signal</h4>
+      </div>
+      <p>Company revenue (or ARR for SaaS companies) is the most direct proxy for budget availability. A $10M ARR company will allocate a fundamentally different budget to your product than a $100M ARR company. Use revenue ranges in combination with employee count — the ratio (revenue per employee) also tells you about the company's efficiency and model.</p>
+      <p>Target revenue ranges should be set so that your ACV represents 0.5%–3% of the prospect's annual revenue. Below 0.5%, the deal may not warrant their process overhead. Above 3%, you're a significant enough spend that budget scrutiny becomes a risk.</p>
+    </div>
+
+    <div class="criteria-card">
+      <div class="criteria-header">
+        <span class="criteria-badge">Tech Stack</span>
+        <h4>Technology Signals: Integrations and Intent</h4>
+      </div>
+      <p>What software a company already uses is one of the strongest predictors of fit for SaaS solutions. Tech stack signals two things: (1) organizational maturity and investment in the category, and (2) integration compatibility. Use BuiltWith, Datanyze, HubSpot's free technology checker, or Apollo's intent data to identify prospects using complementary or prerequisite technologies.</p>
+      <table class="data-table">
+        <thead><tr><th>Signal Type</th><th>What It Means</th><th>Example</th></tr></thead>
+        <tbody>
+          <tr><td><strong>Complementary Stack</strong></td><td>They already use tools that integrate with yours — lower friction to value</td><td>Salesforce + your product in the revenue stack</td></tr>
+          <tr><td><strong>Replacing Stack</strong></td><td>They use your competitor — active evaluation possible</td><td>Using Competitor X + recent G2 review activity</td></tr>
+          <tr><td><strong>Intent Signal</strong></td><td>Recent category research or content engagement</td><td>Bombora surge score in your category</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="criteria-card">
+      <div class="criteria-header">
+        <span class="criteria-badge">Growth Stage</span>
+        <h4>Stage and Funding as GTM Trigger</h4>
+      </div>
+      <p>For B2B SaaS, funding stage is one of the highest-signal ICP attributes because it predicts budget availability and GTM investment. Series B and Series C companies are typically in the growth phase where they're building out their GTM stack and have both the budget and the urgency to buy. Use Crunchbase, PitchBook, and LinkedIn for funding data.</p>
+      <table class="data-table">
+        <thead><tr><th>Stage</th><th>Typical Behavior</th><th>ICP Relevance</th></tr></thead>
+        <tbody>
+          <tr><td>Pre-Seed / Seed</td><td>Founder-led; no GTM budget; building product</td><td>Likely too early; high churn risk</td></tr>
+          <tr><td>Series A</td><td>Hiring first GTM team; proving repeatability</td><td>Good fit if your product enables first-time GTM build-out</td></tr>
+          <tr><td>Series B–C</td><td>Scaling GTM; investing in enablement, analytics, automation</td><td>Sweet spot for most B2B SaaS products</td></tr>
+          <tr><td>Growth / Pre-IPO</td><td>Institutionalizing processes; enterprise-grade requirements</td><td>High ACV potential; complex requirements; longer cycle</td></tr>
+          <tr><td>Public / Enterprise</td><td>Rigid procurement; large budgets; multi-year deals possible</td><td>Fits if you have enterprise capabilities</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- BEHAVIORAL/PSYCHOGRAPHIC CRITERIA -->
+  <h2 class="section-title">Behavioral &amp; Psychographic Criteria</h2>
+  <p class="section-intro">Firmographic criteria tell you who the company is. Behavioral and psychographic criteria tell you whether they're ready to buy now. The same firmographic profile can be either a hot prospect or a dead lead depending on where they are in the buying journey.</p>
+
+  <div class="subsection">
+    <h4 class="subsection-title">Buying Triggers — Events That Create Urgency</h4>
+    <p>A buying trigger is any organizational event that creates urgency to solve a specific problem. Identifying the triggers most correlated with ICP purchases is one of the highest-ROI activities in demand generation and outbound sales.</p>
+
+    <div class="trigger-card">
+      <div>
+        <div class="trigger-type">Organizational Trigger</div>
+        <div class="trigger-example">New funding round closed (Series A–C)</div>
+      </div>
+      <div>
+        <div class="trigger-type">Why It Works</div>
+        <div class="trigger-example">Fresh capital signals budget availability and growth mandate; new CFO or CRO hired to scale</div>
+      </div>
+    </div>
+    <div class="trigger-card">
+      <div>
+        <div class="trigger-type">Leadership Change Trigger</div>
+        <div class="trigger-example">New CRO, VP Sales, VP Marketing, CFO hired in last 90 days</div>
+      </div>
+      <div>
+        <div class="trigger-type">Why It Works</div>
+        <div class="trigger-example">New leaders typically have 90-day mandates to prove impact; they evaluate and replace tools in the first quarter</div>
+      </div>
+    </div>
+    <div class="trigger-card">
+      <div>
+        <div class="trigger-type">Headcount Trigger</div>
+        <div class="trigger-example">Job postings for roles your product enables (e.g., 5+ SDR job postings)</div>
+      </div>
+      <div>
+        <div class="trigger-type">Why It Works</div>
+        <div class="trigger-example">Scaling a function creates immediate need for tools that support it; job postings are publicly observable buying signals</div>
+      </div>
+    </div>
+    <div class="trigger-card">
+      <div>
+        <div class="trigger-type">Competitive Displacement Trigger</div>
+        <div class="trigger-example">Negative G2/Capterra review of competitor; competitor pricing change</div>
+      </div>
+      <div>
+        <div class="trigger-type">Why It Works</div>
+        <div class="trigger-example">Active dissatisfaction with current solution creates evaluation window; timing advantage for inbound SDR outreach</div>
+      </div>
+    </div>
+    <div class="trigger-card">
+      <div>
+        <div class="trigger-type">Business Model Trigger</div>
+        <div class="trigger-example">IPO filing, M&A activity, entering new market or product line</div>
+      </div>
+      <div>
+        <div class="trigger-type">Why It Works</div>
+        <div class="trigger-example">Structural business changes require operational infrastructure upgrades; creates C-suite level urgency</div>
+      </div>
+    </div>
+
+    <h4 class="subsection-title">Organizational Maturity and Change Readiness</h4>
+    <p>Two companies with identical firmographic profiles can have radically different success rates with your product based on their organizational maturity. A company that has never used structured processes will require far more change management — and is at much higher churn risk — than a company with documented workflows and a track record of technology adoption.</p>
+    <p>Proxy indicators of change readiness: documented processes, named internal project owner, executive sponsorship for the initiative, dedicated implementation budget, and previous successful technology deployments in the same function.</p>
+
+    <h4 class="subsection-title">Budget Cycle Timing</h4>
+    <p>Most companies have annual budget cycles. Understanding when your ICP customers make budget decisions allows you to align outbound campaigns, pipeline generation, and the timing of ABM investments. For US companies: most fiscal years end December 31, with Q4 budget planning in October–November. Mid-cycle adds (unplanned purchases) require a compelling enough ROI to justify budget reallocation — this is where strong metrics qualification (MEDDICC's M) becomes especially critical.</p>
+  </div>
+
+  <!-- FIT SCORING MODEL -->
+  <h2 class="section-title">ICP Fit Scoring Model</h2>
+  <p class="section-intro">A numeric fit score transforms the ICP from a qualitative description into an operational tool. Every inbound lead and outbound target receives a score; scores drive lead routing, prioritization, and rep time allocation.</p>
+
+  <div class="subsection">
+    <h4 class="subsection-title">Building the Score</h4>
+    <p>Define 6–10 criteria that predict customer success. For each criterion, assign a weight (weights must sum to 100%) and a scoring function (0 = no match, 1 = partial match, 2 = strong match). The criteria and weights should be derived from your ICP data analysis — not from intuition.</p>
+
+    <table class="data-table">
+      <thead><tr><th>Criterion</th><th>Typical Weight</th><th>Score 0</th><th>Score 1</th><th>Score 2</th></tr></thead>
+      <tbody>
+        <tr><td>Company size (employees)</td><td>20%</td><td>Outside target range</td><td>Adjacent range</td><td>Core ICP range</td></tr>
+        <tr><td>Industry / vertical</td><td>15%</td><td>Not in target verticals</td><td>Adjacent vertical</td><td>Primary target vertical</td></tr>
+        <tr><td>Funding stage</td><td>15%</td><td>Pre-seed or bootstrapped</td><td>Seed / Series A</td><td>Series B+ or profitable growth</td></tr>
+        <tr><td>Tech stack match</td><td>15%</td><td>No integrations</td><td>1–2 integrations</td><td>3+ integrations, key CRM match</td></tr>
+        <tr><td>Buying trigger present</td><td>15%</td><td>No trigger identified</td><td>Weak trigger</td><td>Strong trigger (new leader, funding, job posts)</td></tr>
+        <tr><td>Geography</td><td>10%</td><td>Outside territory</td><td>Secondary territory</td><td>Primary territory</td></tr>
+        <tr><td>Annual revenue range</td><td>10%</td><td>Outside target range</td><td>Adjacent range</td><td>Core target range</td></tr>
+      </tbody>
+    </table>
+
+    <div class="formula-block">
+      <div class="formula-label">ICP Fit Score Formula</div>
+      <div class="formula-main">Fit Score = Σ (Criterion Score × Criterion Weight) × 50</div>
+      <div class="formula-note">Multiply by 50 to convert the 0–2 range to a 0–100 scale. Example: if all criteria score 2 with weights summing to 100%, score = (2 × 1.0) × 50 = 100.</div>
+    </div>
+
+    <h4 class="subsection-title">Grade Tiers and Routing Rules</h4>
+    <div class="grade-grid">
+      <div class="grade-cell grade-a">
+        <div class="grade-letter">A</div>
+        <div class="grade-score">Score: 80–100</div>
+        <div class="grade-action">Route to AE immediately. Priority outbound. Named account territory.</div>
+      </div>
+      <div class="grade-cell grade-b">
+        <div class="grade-letter">B</div>
+        <div class="grade-score">Score: 60–79</div>
+        <div class="grade-action">Route to SDR for qualification. Include in ABM programs. Standard follow-up.</div>
+      </div>
+      <div class="grade-cell grade-c">
+        <div class="grade-letter">C</div>
+        <div class="grade-score">Score: 40–59</div>
+        <div class="grade-action">Nurture sequence only. Low-touch outbound. Do not assign AE.</div>
+      </div>
+      <div class="grade-cell grade-d">
+        <div class="grade-letter">D</div>
+        <div class="grade-score">Score: 0–39</div>
+        <div class="grade-action">Disqualify or direct to self-serve. Do not invest sales resources.</div>
+      </div>
+    </div>
+
+    <div class="callout callout-best-practice">
+      <div class="callout-title">The 80/20 ICP Rule</div>
+      <p>In a healthy GTM, A-grade accounts (typically 15–25% of your total addressable list) should represent 70–80% of your pipeline and bookings. If your A-grade accounts are representing less than 50% of bookings, your scoring model is miscalibrated, your ICP is wrong, or your reps are not prioritizing high-fit accounts. Audit quarterly.</p>
+    </div>
+  </div>
+
+  <!-- ICP BY SEGMENT -->
+  <h2 class="section-title">ICP by Segment — SMB vs. Mid-Market vs. Enterprise</h2>
+  <p class="section-intro">The same product can have meaningfully different ICPs across market segments. Each segment has a different buyer profile, value driver, and organizational context. Treating them as one ICP leads to messaging that resonates with no one.</p>
+
+  <div class="subsection">
+    <div class="segment-grid">
+      <div class="segment-card">
+        <div class="seg-label">SMB</div>
+        <div class="seg-title">Simplicity, Speed, Self-Serve</div>
+        <div class="seg-content">
+          <strong>Size:</strong> 10–250 employees<br>
+          <strong>Buyer:</strong> Founder or functional head; budget authority = one person<br>
+          <strong>Pain:</strong> Too much manual work; limited resources; needs to compete with larger companies<br>
+          <strong>Value driver:</strong> Time savings, automation, ease of use<br>
+          <strong>Key ICP signal:</strong> Rapid growth (doubling headcount), clear operational bottleneck<br>
+          <strong>Risk:</strong> Churn at inflection points; outgrows product; cash crunch
+        </div>
+      </div>
+      <div class="segment-card">
+        <div class="seg-label">Mid-Market</div>
+        <div class="seg-title">Scalability, Integration, ROI</div>
+        <div class="seg-content">
+          <strong>Size:</strong> 250–2000 employees<br>
+          <strong>Buyer:</strong> VP or Director; budget authority shared with CFO on larger deals<br>
+          <strong>Pain:</strong> Processes breaking at scale; multiple disconnected tools; need for reporting visibility<br>
+          <strong>Value driver:</strong> Efficiency at scale, data consolidation, executive visibility<br>
+          <strong>Key ICP signal:</strong> Recent reorganization, new VP, multiple tool stack, growth mandate<br>
+          <strong>Risk:</strong> Committee decisions; IT friction; implementation drag
+        </div>
+      </div>
+      <div class="segment-card">
+        <div class="seg-label">Enterprise</div>
+        <div class="seg-title">Security, Compliance, Configurability</div>
+        <div class="seg-content">
+          <strong>Size:</strong> 2000+ employees<br>
+          <strong>Buyer:</strong> C-suite (CRO, CFO, CTO); multi-stakeholder committee<br>
+          <strong>Pain:</strong> Compliance risk, operational inefficiency at massive scale, lack of standardization across regions/BUs<br>
+          <strong>Value driver:</strong> Risk reduction, compliance, cross-BU standardization, strategic leverage<br>
+          <strong>Key ICP signal:</strong> Audit finding, regulatory change, global expansion, M&A integration<br>
+          <strong>Risk:</strong> Long cycles; competitive POCs; heavy security/legal review; multi-year commitment pressure
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ICP DRIFT -->
+  <h2 class="section-title">ICP Drift — How to Detect and Correct</h2>
+  <p class="section-intro">ICPs drift when products evolve, markets shift, or sales organizations begin chasing growth in adjacent segments without updating the playbook. Undetected drift causes declining win rates, rising churn, and mission creep in product development.</p>
+
+  <div class="subsection">
+    <h4 class="subsection-title">Signs of ICP Drift</h4>
+    <ul class="bullet-list">
+      <li><strong>Win rate declining in previously strong verticals</strong> — the market has changed or a competitor has moved in</li>
+      <li><strong>NRR declining for newer cohorts vs. older ones</strong> — newer customers look different from your ICP and don't expand as expected</li>
+      <li><strong>Time to first value increasing</strong> — product-market fit is degrading for newer segments you're entering</li>
+      <li><strong>CS escalation rate rising</strong> — misfit customers create disproportionate support burden</li>
+      <li><strong>Increasing deal size variation</strong> — reps are chasing opportunistic deals outside ICP because core pipeline is thin</li>
+    </ul>
+
+    <h4 class="subsection-title">Annual ICP Audit Process</h4>
+    <ol class="step-list">
+      <li><div class="step-content"><span class="step-title">Quarterly Data Pull</span>Refresh the closed-won + NRR + churn analysis every quarter. Flag any statistical shifts in the firmographic profile of your best vs. worst customers.</div></li>
+      <li><div class="step-content"><span class="step-title">Win/Loss Review</span>Review the last 50 closed-won and 50 closed-lost deals. Are the lost deals outside ICP (expected loss) or inside ICP (concerning)? What's changing in both populations?</div></li>
+      <li><div class="step-content"><span class="step-title">CS Health Score Correlation</span>Map CS health scores (or NRR) to ICP grade. If B-grade or C-grade accounts have significantly lower health scores, your grade calibration is correct. If A-grade accounts have poor health scores, your ICP model is wrong.</div></li>
+      <li><div class="step-content"><span class="step-title">Hypothesis Revision</span>Update the ICP hypothesis with any new findings. Communicate changes to marketing (targeting), SDR leadership (outbound criteria), AE team (qualification criteria), and CS (onboarding playbook).</div></li>
+    </ol>
+  </div>
+
+  <!-- ICP AND SALES QUALIFICATION -->
+  <h2 class="section-title">ICP and Sales Qualification — The Connection to MEDDICC</h2>
+  <div class="subsection">
+    <p>ICP fit score is not a replacement for MEDDICC — it is the filter applied before MEDDICC investment is warranted. The logic: MEDDICC qualification is expensive. It requires discovery time, SE involvement, executive attention, and legal cycles. Investing MEDDICC qualification effort in a D-grade ICP account is resource destruction.</p>
+
+    <div class="callout callout-definition">
+      <div class="callout-title">The Two-Gate Qualification Model</div>
+      <p><strong>Gate 1: ICP Fit Score</strong> — Applied at lead/account level. Determines whether to invest discovery effort. A-grade: full MEDDICC qualification. B-grade: qualify with SDR, pass to AE if pain confirmed. C-grade: nurture. D-grade: disqualify.<br><br>
+      <strong>Gate 2: MEDDICC Score</strong> — Applied at opportunity level. Determines whether to invest deal progression resources (SE, exec, legal, custom pricing). A deal with ICP A-grade and MEDDICC score &lt;5 stays in pipeline until qualification improves. A deal with ICP C-grade should not get to MEDDICC scoring.</p>
+    </div>
+
+    <p>MEDDICC's "Identify Pain" element directly validates ICP fit: if the pain you uncover in discovery doesn't match the pain category your ICP is supposed to have, either your ICP model is wrong or you're talking to the wrong company. The pain qualification and ICP qualification should be mutually reinforcing.</p>
+  </div>
+
+  <!-- THE FEEDBACK LOOP -->
+  <h2 class="section-title">The ICP Feedback Loop</h2>
+  <p class="section-intro">The ICP is not a one-time definition. It is a living hypothesis that gets sharper with every customer cohort, every win/loss analysis, and every CS health score review.</p>
+
+  <div class="subsection">
+    <div class="feedback-flow">
+      <div class="flow-box">
+        CS Health Scores
+        <div class="flow-sub">Segment by firmographic ICP criteria</div>
+      </div>
+      <div class="flow-arrow">→</div>
+      <div class="flow-box">
+        ICP Audit
+        <div class="flow-sub">Correlate health/NRR with ICP grade</div>
+      </div>
+      <div class="flow-arrow">→</div>
+      <div class="flow-box">
+        Model Update
+        <div class="flow-sub">Revise criteria, weights, grade thresholds</div>
+      </div>
+      <div class="flow-arrow">→</div>
+      <div class="flow-box">
+        GTM Alignment
+        <div class="flow-sub">Update targeting, scoring, routing</div>
+      </div>
+      <div class="flow-arrow">→</div>
+      <div class="flow-box">
+        New Customers
+        <div class="flow-sub">Measure outcomes, feed back to CS</div>
+      </div>
+    </div>
+
+    <h4 class="subsection-title">The Churn → ICP Update Cycle</h4>
+    <p>Every churned customer is an ICP signal. Conduct a structured churn post-mortem for every churned account above your median ACV. The post-mortem asks: (1) What was this account's ICP grade at time of close? (2) What was the stated reason for churn? (3) What was the real reason (derived from CS exit interview)? (4) What firmographic or behavioral attribute would have predicted this churn? (5) Does this finding suggest a scoring model change?</p>
+
+    <p>Over time, the churn post-mortem database becomes one of your most valuable GTM assets. Patterns emerge that allow you to reject accounts at the ICP scoring stage that would have churned — avoiding the acquisition cost, implementation cost, CS cost, and negative reference risk of bad-fit customers.</p>
+  </div>
+
+  <!-- FORMULAS AND BENCHMARKS -->
+  <h2 class="section-title">Key Formulas &amp; Benchmarks</h2>
+  <div class="subsection">
+    <div class="formula-block">
+      <div class="formula-label">ICP Win Rate Benchmark</div>
+      <div class="formula-main">A-Grade Win Rate Target: ≥ 40% (vs. 15–25% overall average in enterprise SaaS)</div>
+      <div class="formula-note">If A-grade win rate is below 30%, either the ICP model is miscalibrated or the sales motion needs work. Audit which element is failing before adjusting ICP.</div>
+    </div>
+    <div class="formula-block">
+      <div class="formula-label">ICP NRR Benchmark</div>
+      <div class="formula-main">A-Grade NRR Target: ≥ 120% | B-Grade: ≥ 105% | C-Grade: ≥ 90%</div>
+      <div class="formula-note">Companies where ICP A-grade NRR is below 110% are typically experiencing product-market fit erosion in their core segment or have miscalibrated their ICP criteria.</div>
+    </div>
+    <div class="formula-block">
+      <div class="formula-label">ACV-to-Revenue Ratio</div>
+      <div class="formula-main">Ideal ACV = 0.5%–3.0% of prospect annual revenue</div>
+      <div class="formula-note">Below 0.5%: administrative overhead exceeds value perception. Above 3.0%: budget scrutiny dramatically lengthens sales cycle. Sweet spot at 1%–2%.</div>
+    </div>
+    <div class="formula-block">
+      <div class="formula-label">A-Grade Account Pipeline Concentration</div>
+      <div class="formula-main">A-Grade Account % of Bookings Target: ≥ 70%</div>
+      <div class="formula-note">Measure monthly. If declining below 60%, investigate whether marketing and SDR are targeting off-ICP accounts, or whether reps are chasing oversized or undersized deals.</div>
+    </div>
+  </div>
+
+  <!-- LEADING/LAGGING INDICATORS -->
+  <h2 class="section-title">Leading &amp; Lagging Indicators</h2>
+  <div class="subsection">
+    <div class="callout callout-definition">
+      <div class="callout-title">Leading Indicators</div>
+      <p>
+        <strong>% of new pipeline from A-grade ICP accounts</strong> — measures how well demand gen is targeting; leading indicator of future bookings quality.<br><br>
+        <strong>Average ICP fit score of new inbound leads</strong> — measures marketing targeting efficiency; should increase as ICP-aligned campaigns launch.<br><br>
+        <strong>% of SDR-qualified pipeline that passes ICP gate</strong> — measures SDR qualification accuracy; low rate signals SDR training gap.<br><br>
+        <strong>Time-to-ICP-score for inbound leads</strong> — operational metric; leads scored within 24 hours convert 7× more than leads scored after 24 hours (InsideSales.com benchmark).<br><br>
+        <strong>Trigger event coverage</strong> — % of target accounts with identified buying trigger; measures sales intelligence quality.
+      </p>
+    </div>
+
+    <div class="callout callout-warning">
+      <div class="callout-title">Lagging Indicators</div>
+      <p>
+        <strong>Win rate by ICP grade</strong> — ultimate validation of ICP model accuracy; A-grade win rate should be 2–4× overall rate.<br><br>
+        <strong>NRR by ICP grade cohort</strong> — validation of ICP quality prediction; should show clear stratification by grade.<br><br>
+        <strong>Churn rate by ICP grade</strong> — A-grade churn should be 3–5× lower than C-grade churn in a well-calibrated model.<br><br>
+        <strong>Sales cycle by ICP grade</strong> — A-grade cycles should be 20–35% shorter due to stronger pain fit and champion quality.<br><br>
+        <strong>Logo retention rate by ICP grade</strong> — gross logo retention should be ≥95% for A-grade, ≥85% for B-grade.
+      </p>
+    </div>
+  </div>
+
+  <div class="related-section">
+    <div class="related-title">Related Pages</div>
+    <div class="related-links">
+      <a href="meddicc.html" class="related-link">MEDDICC Framework</a>
+      <a href="../subpages/territory-design.html" class="related-link">Territory Design</a>
+      <a href="../subpages/demand-gen.html" class="related-link">Demand Generation</a>
+      <a href="../subpages/cs-playbook.html" class="related-link">CS Playbook</a>
+      <a href="../pages/phase1.html" class="related-link">← Phase 1 Overview</a>
+    </div>
+  </div>
+</div>
+<script data-pplx-inline-edit>
+(function () {
+  if (window === window.top) return;
+
+  const allowedParentOrigins = ["https://www.perplexity.ai","https://perplexity.ai","https://testing.perplexity.ai","https://staging.perplexity.ai","https://*.preview.i.perplexity.ai","http://localhost:3000","http://127.0.0.1:3000","http://localhost:5173","http://127.0.0.1:5173"];
+  const MAX_FONT_BYTES = 500 * 1024;
+  const MAX_TOTAL_FONT_BYTES = 2 * 1024 * 1024;
+  let scrollForwarding = false;
+  let scrollRaf = 0;
+  let trustedTopOrigin = null;
+
+  // Allow entries like "https://*.preview.i.perplexity.ai" — the wildcard
+  // matches a single DNS label (no dots), so "https://*.foo" cannot stretch
+  // across multiple labels.
+  function matchesAllowedOrigin(origin) {
+    if (!origin) return false;
+    for (const entry of allowedParentOrigins) {
+      if (!entry.includes("*")) {
+        if (entry === origin) return true;
+        continue;
+      }
+      const pattern = new RegExp(
+        "^" +
+          entry.replace(/[.+?^${}()|[\]\\]/g, "\\$&").replace(/\*/g, "[^.]+") +
+          "$",
+      );
+      if (pattern.test(origin)) return true;
+    }
+    return false;
+  }
+
+  // Trust decision: when the sender is same-origin-visible (event.origin is a
+  // real origin like https://www.perplexity.ai) we trust event.origin directly.
+  // When event.origin is "null" (opaque broker srcdoc), we fall back to the
+  // broker's stamped `parentOrigin` to identify the top window. The fallback
+  // is claim-only — we rely on the browser's native `targetOrigin` enforcement
+  // on the response path (see postToTrustedTop) to ensure replies can't be
+  // delivered to anyone but the actual top window of that claimed origin.
+  function getTrustedParentOrigin(event) {
+    const forwardedParentOrigin =
+      typeof event.data.parentOrigin === "string" ? event.data.parentOrigin : null;
+    const parentOrigin = event.origin === "null" ? forwardedParentOrigin : event.origin;
+    return matchesAllowedOrigin(parentOrigin) ? parentOrigin : null;
+  }
+
+  // All responses go to window.top with targetOrigin = the allowlisted origin.
+  // An attacker that iframes us inside their own null-origin broker can claim
+  // any parentOrigin they like, but the browser will drop the reply whenever
+  // the real top's origin doesn't match — so the screenshot never leaves.
+  function postToTrustedTop(message) {
+    if (!trustedTopOrigin) return;
+    try {
+      window.top.postMessage(message, trustedTopOrigin);
+    } catch (_error) {}
+  }
+
+  function inlineAll(original, clone) {
+    if (original.nodeType !== 1 || clone.nodeType !== 1) return;
+
+    try {
+      const computedStyle = getComputedStyle(original);
+      // cssText on a computed style is the serialized declaration in modern
+      // Chromium/Safari — a single read beats enumerating ~400 longhand
+      // properties. Firefox returns "" here, so we fall back on empty.
+      const serialized = computedStyle.cssText;
+      if (serialized) {
+        clone.style.cssText = serialized;
+      } else {
+        const parts = new Array(computedStyle.length);
+        for (let index = 0; index < computedStyle.length; index += 1) {
+          const property = computedStyle[index];
+          parts[index] = `${property}:${computedStyle.getPropertyValue(property)};`;
+        }
+        clone.style.cssText = parts.join("");
+      }
+    } catch (_error) {}
+
+    const originalChildren = original.children;
+    const clonedChildren = clone.children;
+    for (
+      let index = 0;
+      index < originalChildren.length && index < clonedChildren.length;
+      index += 1
+    ) {
+      inlineAll(originalChildren[index], clonedChildren[index]);
+    }
+  }
+
+  function extractFontUrl(srcValue) {
+    const matches = [
+      ...srcValue.matchAll(
+        /url\(["']?([^"')]+)["']?\)(?:\s*format\(["']?([^"')]+)["']?\))?/gi,
+      ),
+    ];
+    if (matches.length === 0) return null;
+    const woff2 = matches.find((m) => m[2] && m[2].toLowerCase().includes("woff2"));
+    if (woff2) return woff2[1];
+    const woff = matches.find((m) => m[2] && m[2].toLowerCase().includes("woff"));
+    if (woff) return woff[1];
+    return matches[0][1];
+  }
+
+  // Cache resolved font URL -> data URI across captures. Fonts on a page
+  // essentially never change, and a batch run emits multiple captures back to
+  // back — without this we'd refetch + re-base64 every time.
+  const fontDataUriCache = new Map();
+  const SRC_DECLARATION_RE = /src\s*:\s*[^;}]+/i;
+
+  async function fetchAsDataUri(url) {
+    if (fontDataUriCache.has(url)) return fontDataUriCache.get(url);
+    let dataUri = null;
+    try {
+      const response = await fetch(url, { mode: "cors", credentials: "omit" });
+      if (response.ok) {
+        const blob = await response.blob();
+        if (blob.size <= MAX_FONT_BYTES) {
+          dataUri = await new Promise((resolve) => {
+            const reader = new FileReader();
+            reader.onloadend = () =>
+              resolve(typeof reader.result === "string" ? reader.result : null);
+            reader.onerror = () => resolve(null);
+            reader.readAsDataURL(blob);
+          });
+        }
+      }
+    } catch (_error) {
+      dataUri = null;
+    }
+    fontDataUriCache.set(url, dataUri);
+    return dataUri;
+  }
+
+  function collectFontFaceRuleTexts() {
+    const rules = [];
+    for (const sheet of document.styleSheets) {
+      let cssRules;
+      try {
+        cssRules = sheet.cssRules;
+      } catch (_error) {
+        continue;
+      }
+      if (!cssRules) continue;
+      for (const rule of cssRules) {
+        const cssText = rule.cssText || "";
+        if (cssText.startsWith("@font-face")) rules.push(cssText);
+      }
+    }
+    return rules;
+  }
+
+  async function buildInlinedFontCss() {
+    const ruleTexts = collectFontFaceRuleTexts();
+    if (ruleTexts.length === 0) return null;
+
+    const resolved = ruleTexts.map((cssText) => {
+      if (!SRC_DECLARATION_RE.test(cssText)) return null;
+      const srcMatch = cssText.match(/src\s*:\s*([^;}]+)[;}]/i);
+      if (!srcMatch) return null;
+      const url = extractFontUrl(srcMatch[1]);
+      if (!url) return null;
+      try {
+        return { cssText, url: new URL(url, document.baseURI).href };
+      } catch (_error) {
+        return null;
+      }
+    });
+
+    const dataUris = await Promise.all(
+      resolved.map((entry) => (entry ? fetchAsDataUri(entry.url) : Promise.resolve(null))),
+    );
+
+    const inlined = [];
+    let totalBytes = 0;
+    for (let index = 0; index < resolved.length; index += 1) {
+      const entry = resolved[index];
+      const dataUri = dataUris[index];
+      if (!entry || !dataUri) continue;
+      const approxBytes = dataUri.length * 0.75;
+      if (totalBytes + approxBytes > MAX_TOTAL_FONT_BYTES) break;
+      totalBytes += approxBytes;
+      inlined.push(entry.cssText.replace(SRC_DECLARATION_RE, `src: url("${dataUri}")`));
+    }
+    return inlined.length > 0 ? inlined.join("\n") : null;
+  }
+
+  function stripExternal(clone) {
+    const images = clone.querySelectorAll("img");
+    for (let index = 0; index < images.length; index += 1) {
+      const src = images[index].getAttribute("src");
+      if (src && !src.startsWith("data:")) images[index].removeAttribute("src");
+    }
+
+    const elements = clone.querySelectorAll("*");
+    for (let index = 0; index < elements.length; index += 1) {
+      const style = elements[index].style.cssText;
+      if (style && style.includes("url(")) {
+        elements[index].style.cssText = style.replace(
+          /url\(["']?(?!data:)[^)"']*["']?\)/gi,
+          "none",
+        );
+      }
+    }
+  }
+
+  function emitScroll() {
+    scrollRaf = 0;
+    if (!scrollForwarding) return;
+    postToTrustedTop({
+      type: "INLINE_EDIT_SCROLL",
+      scrollX: window.scrollX,
+      scrollY: window.scrollY,
+    });
+  }
+
+  window.addEventListener(
+    "scroll",
+    function () {
+      if (!scrollForwarding || scrollRaf) return;
+      scrollRaf = requestAnimationFrame(emitScroll);
+    },
+    { passive: true, capture: true },
+  );
+
+  async function handleCaptureRequest(event) {
+    const requestId = event.data.requestId;
+    const scrollX = window.scrollX;
+    const scrollY = window.scrollY;
+    const width = window.innerWidth;
+    const height = window.innerHeight;
+
+    function postResult(dataUrl) {
+      postToTrustedTop({
+        type: "INLINE_EDIT_SCREENSHOT_RESULT",
+        requestId,
+        dataUrl,
+        scrollX,
+        scrollY,
+      });
+    }
+
+    try {
+      // Wait for any pending web fonts to resolve so both inline metrics and
+      // the @font-face inlining below see the same loaded faces.
+      if (document.fonts && document.fonts.ready) {
+        try {
+          await document.fonts.ready;
+        } catch (_error) {}
+      }
+
+      const clone = document.documentElement.cloneNode(true);
+      inlineAll(document.documentElement, clone);
+
+      const removedNodes = clone.querySelectorAll("script,link[rel=\"stylesheet\"],style");
+      for (let index = 0; index < removedNodes.length; index += 1) {
+        removedNodes[index].remove();
+      }
+
+      stripExternal(clone);
+
+      // Re-embed web fonts as data-URI @font-face rules so the SVG rasterizer
+      // can resolve them — external font URLs aren't fetched during
+      // foreignObject rendering, which would otherwise force a fallback face
+      // and change text metrics.
+      const inlinedFontCss = await buildInlinedFontCss();
+      if (inlinedFontCss) {
+        const styleEl = document.createElement("style");
+        styleEl.textContent = inlinedFontCss;
+        const head = clone.querySelector("head");
+        if (head) head.appendChild(styleEl);
+        else clone.insertBefore(styleEl, clone.firstChild);
+      }
+
+      const html = new XMLSerializer().serializeToString(clone);
+      const svg =
+        `<svg xmlns="http://www.w3.org/2000/svg" width="${width}" height="${height}">` +
+        '<foreignObject width="100%" height="100%">' +
+        `<div xmlns="http://www.w3.org/1999/xhtml" style="width:${width}px;height:${height}px;overflow:hidden">` +
+        `<div style="transform:translate(-${scrollX}px,-${scrollY}px);transform-origin:top left">` +
+        html +
+        "</div></div></foreignObject></svg>";
+      const svgUrl = `data:image/svg+xml;charset=utf-8,${encodeURIComponent(svg)}`;
+      const image = new Image();
+      image.onload = function () {
+        const canvas = document.createElement("canvas");
+        canvas.width = width;
+        canvas.height = height;
+        canvas.getContext("2d").drawImage(image, 0, 0);
+        postResult(canvas.toDataURL("image/png"));
+      };
+      image.onerror = function () {
+        postResult(null);
+      };
+      image.src = svgUrl;
+    } catch (_error) {
+      postResult(null);
+    }
+  }
+
+  window.addEventListener("message", function (event) {
+    if (!event.data) return;
+    // Only accept messages from the direct parent frame. Blocks sibling /
+    // unrelated-window postMessage senders that could otherwise reach us.
+    if (event.source !== window.parent) return;
+
+    const trustedParentOrigin = getTrustedParentOrigin(event);
+    if (!trustedParentOrigin) return;
+    trustedTopOrigin = trustedParentOrigin;
+
+    if (event.data.type === "INLINE_EDIT_SCROLL_START") {
+      scrollForwarding = true;
+      emitScroll();
+      return;
+    }
+
+    if (event.data.type === "INLINE_EDIT_SCROLL_STOP") {
+      scrollForwarding = false;
+      if (scrollRaf) cancelAnimationFrame(scrollRaf);
+      scrollRaf = 0;
+      return;
+    }
+
+    if (event.data.type !== "INLINE_EDIT_CAPTURE_REQUEST") return;
+
+    handleCaptureRequest(event);
+  });
+})();
+
+
+</script></body>
+</html>
