@@ -1,0 +1,1094 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Leadership, Vision, Culture & Communication — SaaS Revenue System</title>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="../assets/shared.css"/>
+  <style>
+    .page-hero { background: #1B474D; }
+    .phase0-accent { color: #1B474D; }
+    .timeline-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+      margin: 20px 0;
+    }
+    .timeline-card {
+      background: var(--surface);
+      border: 1.5px solid var(--border);
+      border-radius: 8px;
+      padding: 18px 20px;
+    }
+    .timeline-card .tc-label {
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 1.2px;
+      text-transform: uppercase;
+      color: #1B474D;
+      margin-bottom: 8px;
+    }
+    .timeline-card .tc-title {
+      font-size: 15px;
+      font-weight: 700;
+      margin-bottom: 8px;
+    }
+    .timeline-card ul {
+      list-style: none;
+      margin: 0;
+      padding: 0;
+    }
+    .timeline-card ul li {
+      font-size: 14px;
+      line-height: 1.6;
+      padding: 3px 0 3px 16px;
+      position: relative;
+      color: var(--text);
+    }
+    .timeline-card ul li::before {
+      content: '·';
+      position: absolute;
+      left: 0;
+      color: #1B474D;
+      font-weight: 700;
+      font-size: 18px;
+      line-height: 1.2;
+    }
+    .five-components {
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      gap: 10px;
+      margin: 20px 0;
+    }
+    .component-card {
+      background: #1B474D;
+      color: #fff;
+      border-radius: 8px;
+      padding: 16px 14px;
+      text-align: center;
+    }
+    .component-card .cc-num {
+      font-size: 24px;
+      font-weight: 700;
+      opacity: 0.4;
+      line-height: 1;
+      margin-bottom: 8px;
+    }
+    .component-card .cc-title {
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: 0.5px;
+      line-height: 1.35;
+    }
+    .mistake-list {
+      margin: 16px 0;
+    }
+    .mistake-item {
+      background: #fff8f0;
+      border-left: 4px solid var(--ph4);
+      border-radius: 0 6px 6px 0;
+      padding: 12px 16px;
+      margin-bottom: 10px;
+      font-size: 14px;
+      line-height: 1.6;
+    }
+    .mistake-item strong { color: var(--ph4); display: block; margin-bottom: 3px; }
+    .cascade-box {
+      background: #fce8e6;
+      border: 1.5px solid #e9b8b5;
+      border-radius: 8px;
+      padding: 18px 20px;
+      margin: 20px 0;
+    }
+    .cascade-box .cb-title {
+      font-size: 13px;
+      font-weight: 700;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      color: #A13544;
+      margin-bottom: 12px;
+    }
+    .cascade-row {
+      display: flex;
+      align-items: flex-start;
+      gap: 12px;
+      margin-bottom: 8px;
+      font-size: 14px;
+      line-height: 1.6;
+    }
+    .cascade-arrow { color: #A13544; font-weight: 700; flex-shrink: 0; margin-top: 1px; }
+    @media (max-width: 768px) {
+      .timeline-grid { grid-template-columns: 1fr; }
+      .five-components { grid-template-columns: 1fr 1fr; }
+    }
+
+    /* Science of Scaling context banner */
+    .sos-context-banner {
+      background: linear-gradient(135deg, #0D5C63 0%, #0a4a50 100%);
+      border-radius: 10px;
+      padding: 20px 24px;
+      margin-bottom: 32px;
+      display: grid;
+      grid-template-columns: 200px 1fr auto;
+      gap: 20px;
+      align-items: start;
+    }
+    .sos-cb-stage { border-right: 1px solid rgba(255,255,255,0.2); padding-right: 20px; }
+    .sos-cb-label { font-size: 10px; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase; color: rgba(255,255,255,0.6); margin-bottom: 4px; }
+    .sos-cb-title { font-size: 18px; font-weight: 700; color: #fff; line-height: 1.3; }
+    .sos-cb-content { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+    .sos-cb-item { background: rgba(255,255,255,0.08); border-radius: 6px; padding: 10px 12px; }
+    .sos-cb-item-label { font-size: 10px; font-weight: 700; letter-spacing: 0.8px; text-transform: uppercase; color: rgba(255,255,255,0.55); margin-bottom: 3px; }
+    .sos-cb-item-value { font-size: 12px; color: rgba(255,255,255,0.85); line-height: 1.5; }
+    .sos-cb-link { background: rgba(255,255,255,0.15); color: #fff; font-size: 12px; font-weight: 700; padding: 8px 14px; border-radius: 6px; text-decoration: none; white-space: nowrap; align-self: center; transition: background 0.15s; }
+    .sos-cb-link:hover { background: rgba(255,255,255,0.28); color: #fff; text-decoration: none; }
+
+    /* Tools grid */
+    .tools-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+      gap: 12px;
+      margin: 16px 0 40px;
+    }
+    .tool-card {
+      background: var(--surface);
+      border: 1.5px solid var(--border);
+      border-radius: 8px;
+      padding: 14px 16px;
+      text-decoration: none;
+      display: block;
+      transition: all 0.15s;
+    }
+    .tool-card:hover { text-decoration: none; transform: translateY(-1px); box-shadow: 0 3px 10px rgba(0,0,0,0.08); }
+    .tc-sos { border-left: 3px solid #0D5C63; }
+    .tc-sos:hover { border-color: #0D5C63; }
+    .tc-res { border-left: 3px solid #2C5F8A; }
+    .tc-res:hover { border-color: #2C5F8A; }
+    .tc-phase { font-size: 10px; font-weight: 700; letter-spacing: 0.8px; text-transform: uppercase; color: var(--text-muted); margin-bottom: 4px; }
+    .tc-sos .tc-phase { color: #0D5C63; }
+    .tc-res .tc-phase { color: #2C5F8A; }
+    .tc-title { font-size: 13px; font-weight: 700; color: var(--text); margin-bottom: 4px; line-height: 1.3; }
+    .tc-desc { font-size: 11px; color: var(--text-muted); line-height: 1.5; }
+  </style>
+</head>
+<body>
+<nav class="nav">
+  <span class="nav-logo">SaaS <span>Revenue System</span></span>
+  <span class="nav-sep">|</span>
+  <a href="../index.html" class="nav-back">← Home</a>
+  <span class="nav-sep">|</span>
+  <span class="nav-current">Phase 0 — Foundation</span>
+</nav>
+
+<div class="page-hero">
+  <div class="hero-phase-label">PHASE 0 — THE FOUNDATION</div>
+  <div class="hero-title">Leadership, Vision, Culture &amp; Communication</div>
+  <div class="hero-subtitle">The prerequisite to everything. No sales system survives weak leadership, unclear vision, or a broken culture. Phase 0 is not a "soft skills" module — it is the structural load-bearing wall of the entire revenue organization.</div>
+  <div class="hero-tags">
+    <a href="../subpages/compelling-vision.html" class="hero-tag">Compelling Vision</a>
+    <a href="../subpages/performance-standards.html" class="hero-tag">Performance Standards</a>
+    <a href="../subpages/trust-accountability.html" class="hero-tag">Trust &amp; Accountability</a>
+    <a href="../subpages/coaching.html" class="hero-tag">Coaching</a>
+    <a href="../subpages/communication-cadence.html" class="hero-tag">Communication Cadence</a>
+  </div>
+</div>
+
+<div class="content-wrap">
+
+  <!-- Science of Scaling Integration -->
+  <div class="sos-context-banner">
+    <div class="sos-cb-stage">
+      <div class="sos-cb-label">Science of Scaling</div>
+      <div class="sos-cb-title">Foundation — Required at Every Stage</div>
+    </div>
+    <div class="sos-cb-content">
+      <div class="sos-cb-item">
+        <div class="sos-cb-item-label">Applies to</div>
+        <div class="sos-cb-item-value">Stage 1 (PMF) · Stage 2 (GTM Fit) · Stage 3 (Growth &amp; Moat)</div>
+      </div>
+      <div class="sos-cb-item">
+        <div class="sos-cb-item-label">Roberge's Insight</div>
+        <div class="sos-cb-item-value">Leadership and culture are not "soft" prerequisites — they are the operating conditions that determine whether LIR programs, playbooks, and hiring scorecards actually get executed. A technically perfect GTM motion fails in a low-trust environment.</div>
+      </div>
+      <div class="sos-cb-item">
+        <div class="sos-cb-item-label">Common Failure Mode</div>
+        <div class="sos-cb-item-value">Attempting to scale (Stage 3) with a leadership team that rewards activity over outcomes — masking bad culture with headcount.</div>
+      </div>
+    </div>
+    <a href="../pages/science-of-scaling.html" class="sos-cb-link">Science of Scaling Framework →</a>
+  </div>
+
+  <!-- WHAT IS PHASE 0 -->
+  <h2 class="section-title">What Is Phase 0 — And Why Iannarino Places It First</h2>
+  <p class="section-intro">Anthony Iannarino's framework for the modern Chief Revenue Officer begins not with quota math or territory design, but with the one thing every downstream system depends on: the quality of leadership and the health of the team's operating environment. Phase 0 is the recognition that strategy without culture is a document, and process without trust is friction.</p>
+
+  <div class="subsection">
+    <div class="subsection-title">The Iannarino Logic</div>
+    <p>Iannarino's central thesis in <em>The Sales Blog</em> and <em>The Lost Art of Closing</em> is that underperformance in revenue organizations is almost always diagnosed at the symptom layer — pipeline coverage, conversion rates, deal size — when the root cause lives one level up, in the operating environment the leader creates. You can have a perfect ICP, a polished playbook, and a scientifically designed comp plan, and still fail if the team doesn't trust leadership, doesn't believe in the vision, or operates in a culture that tolerates mediocrity.</p>
+    <p>Phase 0 is "before Phase 1" because no amount of downstream optimization can compensate for a broken foundation. A new CRO's first obligation is to answer three questions for every person on the team: <em>Where are we going? Why does it matter? What does excellence look like here?</em> Until those questions are answered credibly and consistently, nothing else sticks.</p>
+  </div>
+
+  <div class="callout callout-definition">
+    <div class="callout-title">Core Definition</div>
+    <p><strong>Phase 0</strong> is the set of leadership, cultural, and communication conditions that must exist before a sales organization can execute reliably. It encompasses: a shared and aspirational vision, codified performance standards, a culture of accountable excellence, a coaching infrastructure, and communication systems that create alignment and psychological safety simultaneously.</p>
+  </div>
+
+  <!-- VISION -->
+  <h2 class="section-title">Vision — The Leader as Chief Storyteller</h2>
+  <p class="section-intro">Vision is the North Star that gives individual reps a reason to perform beyond commission. It answers the question: "What are we building, and why does it matter enough to be hard?" Without a compelling vision, you manage a mercenary team. With one, you lead a committed one.</p>
+
+  <div class="subsection">
+    <div class="subsection-title">Vision vs. Mission: The Critical Distinction</div>
+    <p><strong>Mission</strong> describes what you do and for whom — it is operational and present-tense. "We help mid-market logistics companies reduce shipping costs through AI-powered routing." A mission statement is useful for alignment but it does not inspire. It answers "what" not "why" or "where."</p>
+    <p><strong>Vision</strong> describes the future state you are building toward — it is aspirational and future-tense. "We will become the operating system for last-mile logistics in North America, changing how 50,000 companies move goods and putting months of wasted time back into the hands of operations teams." Vision answers: "What does winning look like, and what changes in the world when we get there?"</p>
+    <p>Sales leaders confuse the two constantly. The mission lives in the employee handbook. The vision must live in every team meeting, every 1:1, every onboarding session, and every difficult conversation. The mission explains; the vision motivates.</p>
+  </div>
+
+  <div class="subsection">
+    <div class="subsection-title">How to Craft a Sales Vision in 5 Steps</div>
+    <ol class="step-list">
+      <li>
+        <div class="step-content">
+          <span class="step-title">Ground it in the customer transformation, not the product</span>
+          Start with the specific, measurable change you create for customers. Not "we sell sales software" but "we eliminate the 11 hours a week sales reps waste on non-selling activities, giving them the equivalent of an extra workday every week." The more concrete and human the customer outcome, the more your team can see themselves as important.
+        </div>
+      </li>
+      <li>
+        <div class="step-content">
+          <span class="step-title">Anchor it to the company's 3–5 year aspiration</span>
+          The sales vision must ladder up to the company vision — usually ARR targets, market position, or category leadership. A CRO who talks about "becoming the category leader in X" while the CEO talks about "being acquired in 18 months" creates cognitive dissonance. Align with leadership on the horizon before you craft the narrative.
+        </div>
+      </li>
+      <li>
+        <div class="step-content">
+          <span class="step-title">Connect it explicitly to individual rep growth</span>
+          The most powerful sales visions describe what winning means for the individual, not just the company. "When we hit $50M ARR, every AE here will have built the career credentials to go anywhere they want in SaaS." Connect the company vision to individual professional development, financial upside, and skill-building. Reps must see themselves in the story.
+        </div>
+      </li>
+      <li>
+        <div class="step-content">
+          <span class="step-title">Make it specific and falsifiable</span>
+          "Be the best" is not a vision — it's marketing copy. A real vision has enough specificity to be either achieved or not achieved. "We will be the #1 revenue intelligence platform for Series A–C SaaS companies in North America by end of FY26 with $80M ARR and 120% NRR." Specificity creates accountability and urgency.
+        </div>
+      </li>
+      <li>
+        <div class="step-content">
+          <span class="step-title">Pressure-test it with the "so what" and "why should I care" questions</span>
+          Present a draft to 3–5 frontline reps and ask them directly: "Does this make you want to work harder? Does this make you proud of what we're building?" If the answer is indifferent, the vision is still a mission statement in disguise.
+        </div>
+      </li>
+    </ol>
+  </div>
+
+  <div class="subsection">
+    <div class="subsection-title">The Leader as Chief Storyteller</div>
+    <p>Iannarino's concept of the "leader as chief storyteller" holds that communicating vision is not a one-time event (a kickoff slide, a Notion doc) but an ongoing narrative responsibility. The CRO's primary communication job is to keep the story alive, relevant, and emotionally resonant — especially when results are hard. This requires:</p>
+    <ul class="bullet-list">
+      <li><strong>Repetition without boredom</strong> — repeat the vision at every forum, but contextualize it with fresh examples, recent wins, and evolving market dynamics so it never feels stale</li>
+      <li><strong>Personalization</strong> — link the organizational vision to individual rep stories ("Sarah's deal with Acme last month is exactly the kind of transformation we're talking about")</li>
+      <li><strong>Honesty in adversity</strong> — when the team misses quota, the storyteller's job is to acknowledge reality while re-anchoring to the longer arc: "We're behind. Here's what it means, here's what we're changing, and here's why the destination is still worth it"</li>
+      <li><strong>Enrollment, not declaration</strong> — vision delivered as a monologue creates compliance; vision delivered as a conversation creates ownership. Ask the team: "How does this land for you? What's missing?"</li>
+    </ul>
+  </div>
+
+  <div class="subsection">
+    <div class="subsection-title">Vision Communication: Cadence and Forums</div>
+    <table class="data-table">
+      <thead>
+        <tr><th>Forum</th><th>Frequency</th><th>Vision Content</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>All-hands / QBR</td><td>Quarterly</td><td>Full vision restatement, progress to milestones, next chapter of the story</td></tr>
+        <tr><td>Weekly team meeting</td><td>Weekly</td><td>Brief vision anchor (2–3 min), connect week's wins/losses to the larger mission</td></tr>
+        <tr><td>Manager 1:1s</td><td>Bi-weekly</td><td>Check alignment: "Does the team believe in where we're going? What's eroding belief?"</td></tr>
+        <tr><td>New hire onboarding</td><td>Day 1</td><td>Vision is the first substantive content — before product, process, or quota</td></tr>
+        <tr><td>Performance conversations</td><td>As needed</td><td>"Here's why this performance gap matters to the mission, and here's what I see in you"</td></tr>
+        <tr><td>Written (Slack/email)</td><td>Monthly</td><td>CRO narrative memo: where we are, what we learned, what matters next</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- CULTURE -->
+  <h2 class="section-title">Culture — What You Build Through What You Tolerate</h2>
+  <p class="section-intro">Sales culture is not the values poster in the conference room. It is the actual behavioral norms that govern how the team operates under pressure — how they treat each other, how they respond to adversity, what they celebrate, and what they quietly excuse. Culture is built through the daily accumulation of what leadership rewards, what it tolerates, and what it models.</p>
+
+  <div class="subsection">
+    <div class="subsection-title">The 5 Components of a High-Performance Sales Culture</div>
+    <div class="five-components">
+      <div class="component-card">
+        <div class="cc-num">01</div>
+        <div class="cc-title">Standards of Performance</div>
+      </div>
+      <div class="component-card">
+        <div class="cc-num">02</div>
+        <div class="cc-title">Accountability Without Blame</div>
+      </div>
+      <div class="component-card">
+        <div class="cc-num">03</div>
+        <div class="cc-title">Competitive Hunger</div>
+      </div>
+      <div class="component-card">
+        <div class="cc-num">04</div>
+        <div class="cc-title">Coachability</div>
+      </div>
+      <div class="component-card">
+        <div class="cc-num">05</div>
+        <div class="cc-title">Trust</div>
+      </div>
+    </div>
+
+    <p><strong>1. Standards of Performance</strong> — The explicit, written definition of what good looks like in this organization. Not "be a top performer" but: activity minimums, pipeline hygiene standards, quality of customer interactions, response time SLAs, forecasting accuracy expectations. Standards cannot be implicit. Every rep must be able to answer: "What does excellent look like here, and how would I know if I'm living it?" When standards are fuzzy, culture defaults to the lowest common denominator.</p>
+
+    <p><strong>2. Accountability Without Blame</strong> — The distinction between accountability and blame is one of the most important cultural variables. Blame is punitive, retroactive, and creates a culture of fear and data manipulation ("if I put it in the CRM, leadership will see I'm behind, so I won't put it in"). Accountability is forward-looking, assumes positive intent, and focuses on: "What happened, what did we learn, what changes?" A culture of accountability is psychologically safe. Reps raise their hand when they're in trouble — which is when coaching intervention has the most leverage.</p>
+
+    <p><strong>3. Competitive Hunger</strong> — Elite sales cultures are competitive — against the market, against personal bests, against the company's historical performance. Healthy competition is energizing. Toxic competition (stack-ranking with visible humiliation, commission clawbacks, forced distribution PIP policies) destroys collaboration and produces short-term spikes followed by attrition. The CRO's job is to channel competitive energy toward the market and away from internal politics.</p>
+
+    <p><strong>4. Coachability</strong> — A culture of coachability means that feedback is welcomed, skill development is expected, and vulnerability in learning is modeled by leaders. The CRO who says "I'm trying to get better at X and here's how" creates permission for reps to admit their gaps and engage with coaching. Coachability is a hiring criterion and a cultural norm simultaneously.</p>
+
+    <p><strong>5. Trust</strong> — Trust is the hardest to build and the fastest to destroy. In a sales organization, trust operates at three levels: trust between reps and their managers, trust between sales and other departments (marketing, CS, product), and trust between the team and the CRO. Trust is built through consistent behavior over time — keeping promises, sharing bad news honestly, protecting your team in difficult moments, and making decisions that prioritize team wellbeing even when it's costly.</p>
+  </div>
+
+  <div class="subsection">
+    <div class="subsection-title">The Tolerance Principle: Culture Is What You Excuse</div>
+    <p>The most important cultural mechanism is often invisible: what leadership tolerates. Tolerating a high performer who bullies colleagues tells the team that results trump values. Tolerating CRM non-compliance tells the team that process is optional. Tolerating an AE who blames prospects for every lost deal tells the team that victim thinking is acceptable. Every tolerance is a cultural statement.</p>
+
+    <div class="callout callout-warning">
+      <div class="callout-title">The Culture Decay Equation</div>
+      <p>Culture decays when: (1) high performers are exempt from standards, (2) leaders say one thing and do another, (3) bad news is punished rather than welcomed, (4) credit goes to leaders and blame goes to reps, or (5) comp plan changes create distrust faster than trust was built. One of these is enough to unwind months of culture-building.</p>
+    </div>
+  </div>
+
+  <div class="subsection">
+    <div class="subsection-title">How to Assess Your Current Culture</div>
+    <p>When a new CRO joins or when culture problems are suspected, conduct a culture diagnostic within the first 30 days. This is a listening exercise, not a judgment exercise:</p>
+    <ol class="step-list">
+      <li><div class="step-content"><span class="step-title">Anonymous pulse survey</span> — Ask: "Do you trust your manager to advocate for you? Do you know what outstanding performance looks like here? Do you feel comfortable raising problems with your manager?" Use a 1–5 scale and benchmark against SaaS industry norms (culture survey benchmarks: trust &gt;4.0/5.0 = healthy; &lt;3.5 = critical).</div></li>
+      <li><div class="step-content"><span class="step-title">Skip-level conversations</span> — Meet with 5–8 individual contributors without their managers present. Ask: "What's working? What's getting in your way? What would you change first?" Listen for patterns, not outliers.</div></li>
+      <li><div class="step-content"><span class="step-title">Attrition analysis</span> — Categorize all departures in the last 12 months: voluntary vs. involuntary, high performer vs. low performer, reason given vs. reason likely. A pattern of voluntary departures among high performers is the single most reliable cultural signal.</div></li>
+      <li><div class="step-content"><span class="step-title">Win/loss pattern review</span> — Culture problems manifest in deal behavior: excessive discounting (fear of rejection), poor CRM hygiene (distrust of management), sandbagging (distrust of forecast scrutiny), pipeline inflation (fear of being seen as behind). The data tells the cultural story.</div></li>
+    </ol>
+  </div>
+
+  <div class="subsection">
+    <div class="subsection-title">How to Change a Broken Culture</div>
+    <p>Culture change is one of the most difficult leadership challenges because culture is self-reinforcing. The existing norms select for and reward people who fit them, making change feel threatening to incumbents. The CRO who inherits a broken culture faces a specific sequence:</p>
+    <ul class="bullet-list">
+      <li><strong>Name it without blame</strong> — "Here is the pattern I'm observing. I am not here to prosecute history. I am here to build something different. Here is what that looks like."</li>
+      <li><strong>Change the inputs, not just the outputs</strong> — Don't just declare "we're accountable now." Change the rituals, the meeting structures, the metrics you celebrate, and the stories you tell. Culture lives in daily habits.</li>
+      <li><strong>Make one highly visible change early</strong> — Find one thing that represents the old culture and change it visibly and publicly. This signals intent more powerfully than any speech.</li>
+      <li><strong>Protect early adopters</strong> — The first reps who embrace the new norms will be tested by peer pressure. The CRO must visibly support and celebrate them.</li>
+      <li><strong>Accept that some people will leave</strong> — Culture change always produces attrition among those who benefited from the old norms. This is not a failure — it's a signal that change is real.</li>
+      <li><strong>Measure and report on cultural metrics alongside business metrics</strong> — Quarterly eNPS, manager trust scores, and voluntary attrition rate belong in the CRO's operating review alongside pipeline and quota attainment.</li>
+    </ul>
+  </div>
+
+  <div class="subsection">
+    <div class="subsection-title">Culture as a Retention Tool</div>
+    <p>In a market where SaaS AEs receive multiple recruiter approaches per month, comp alone does not retain talent. The top three retention factors for high-performing sales reps, consistently, are: (1) quality of their direct manager, (2) belief in the company's direction and leadership, and (3) career growth trajectory. Culture drives all three. The CRO who builds a culture of growth, accountability, and trust creates a competitive moat in talent acquisition that no comp plan can replicate.</p>
+
+    <div class="metric-grid">
+      <div class="metric-card">
+        <div class="m-label">Healthy Voluntary Attrition</div>
+        <div class="m-value">&lt;15%</div>
+        <div class="m-desc">Annual voluntary attrition for quota-carrying roles in SaaS</div>
+      </div>
+      <div class="metric-card">
+        <div class="m-label">Regrettable Attrition Benchmark</div>
+        <div class="m-value">&lt;8%</div>
+        <div class="m-desc">High-performer (top 25%) voluntary departures — culture warning if exceeded</div>
+      </div>
+      <div class="metric-card">
+        <div class="m-label">Manager Trust Score</div>
+        <div class="m-value">4.0+/5.0</div>
+        <div class="m-desc">Anonymous pulse survey benchmark for a healthy sales org</div>
+      </div>
+      <div class="metric-card">
+        <div class="m-label">Culture Survey Frequency</div>
+        <div class="m-value">Quarterly</div>
+        <div class="m-desc">Minimum cadence for monitoring cultural health metrics</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- LEADERSHIP -->
+  <h2 class="section-title">Leadership — The Distinction That Changes Everything</h2>
+  <p class="section-intro">The single most common failure mode of new CROs — especially those promoted from top-performing AE or manager roles — is confusing management with leadership. Both are necessary. Neither is sufficient alone. Understanding the distinction, and building the behaviors of both, is the technical core of Phase 0.</p>
+
+  <div class="subsection">
+    <div class="subsection-title">Managing vs. Leading: The Core Distinction</div>
+    <table class="data-table">
+      <thead>
+        <tr><th>Management Behaviors</th><th>Leadership Behaviors</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>Tracking activity and output metrics</td><td>Setting the standard and modeling it personally</td></tr>
+        <tr><td>Conducting performance reviews</td><td>Developing people as their primary agenda</td></tr>
+        <tr><td>Building forecasts and reports</td><td>Creating the conditions for others to exceed their own expectations</td></tr>
+        <tr><td>Running pipeline reviews</td><td>Having uncomfortable conversations before they become crises</td></tr>
+        <tr><td>Administering comp plans</td><td>Connecting individual work to meaningful purpose</td></tr>
+        <tr><td>Enforcing processes</td><td>Explaining the "why" behind every process</td></tr>
+        <tr><td>Removing non-performers</td><td>Creating an environment where non-performance is visible and addressed early</td></tr>
+        <tr><td>Setting quotas</td><td>Building belief that the quota is attainable and worth pursuing</td></tr>
+      </tbody>
+    </table>
+    <p>Effective CROs do both. The ratio shifts by organizational maturity: early-stage requires more leadership (establishing norms, building belief) and less management (fewer processes to enforce). At scale, management systems carry more of the load — but leadership must never atrophy, because culture decays when leaders stop leading and only manage.</p>
+  </div>
+
+  <div class="subsection">
+    <div class="subsection-title">Iannarino's "Leader Goes First" Principle</div>
+    <p>Iannarino articulates a simple but powerful rule: the leader must be willing to do whatever they ask of their team. The CRO who calls for more prospecting activity but never makes calls themselves has already told the team what the real standard is. The manager who demands CRM hygiene but never opens the CRM in a team meeting has signaled its optional status.</p>
+    <p>"Leader goes first" means:</p>
+    <ul class="bullet-list">
+      <li>Be present in the hardest deals — not to take over, but to model what good looks like</li>
+      <li>Participate in training and skill-building alongside your team, not above it</li>
+      <li>Acknowledge your own mistakes and development areas publicly and specifically</li>
+      <li>Accept accountability for team performance — not just individual reps' performance</li>
+      <li>Be the first to change your behavior when a new standard is established</li>
+    </ul>
+  </div>
+
+  <div class="subsection">
+    <div class="subsection-title">Servant Leadership in Sales</div>
+    <p>The servant leadership model (Greenleaf, adapted for sales by Iannarino) holds that the CRO's job is to remove obstacles, provide resources, and create conditions for the team to succeed — not to be the smartest person in the room or the top producer. Practically, this means:</p>
+    <ul class="bullet-list">
+      <li><strong>Obstacle removal</strong> — Track the top 3 things getting in your reps' way (bad leads, broken processes, missing tools, poor marketing alignment) and drive them to resolution every week</li>
+      <li><strong>Resource provision</strong> — Ensure reps have the training, tools, content, and support they need to execute at the level you're asking for</li>
+      <li><strong>Shield function</strong> — Protect your team from organizational dysfunction, excessive administrative load, and leadership volatility. Reps should be able to focus on selling.</li>
+      <li><strong>Career investment</strong> — Spend time helping reps build skills and careers, even if that means they eventually leave for bigger opportunities. The reputation of developing great talent becomes a recruiting advantage.</li>
+    </ul>
+  </div>
+
+  <div class="subsection">
+    <div class="subsection-title">Leading Difficult Conversations</div>
+    <p>The willingness to have difficult conversations with honesty and care is the single most differentiating leadership behavior. The CRO who avoids difficult conversations allows problems to compound — an underperforming rep who needed coaching in month 2 becomes a PIP in month 6. The frameworks:</p>
+    <div class="callout callout-best-practice">
+      <div class="callout-title">The SBI Model for Difficult Feedback</div>
+      <p><strong>Situation</strong> (specific, objective) → <strong>Behavior</strong> (what was observed, not inferred) → <strong>Impact</strong> (the business or relationship consequence). "In last week's QBR [S], you consistently gave updates without referencing any data [B], and two executives told me afterward they don't trust the numbers [I]. I want to talk about what's happening and how to fix it."</p>
+    </div>
+    <p>The model prevents the two most common failures: vagueness ("you need to be more prepared") and character attacks ("you don't take this seriously"). Specific, behavioral, impact-anchored feedback is both more actionable and more respectful.</p>
+  </div>
+
+  <div class="subsection">
+    <div class="subsection-title">When Leaders Don't Live the Values</div>
+    <p>When a leader's behavior contradicts stated values, the damage is exponential. The team internalizes two lessons simultaneously: (1) the values are theater, and (2) the leader lacks self-awareness or integrity. Both are devastating. Common failure examples:</p>
+    <ul class="bullet-list">
+      <li>Preaching pipeline hygiene while approving "ghost deals" in your own forecast to hit coverage numbers</li>
+      <li>Calling for psychological safety while punishing reps for delivering bad news in public meetings</li>
+      <li>Declaring "people are our greatest asset" while leading a surprise RIF without severance</li>
+      <li>Demanding collaborative culture while accepting credit for team wins and deflecting blame for misses</li>
+    </ul>
+    <p>Every violation of modeled values costs three to five times the trust it took to build. The only recovery is a specific, public acknowledgment followed by sustained behavior change over 60–90 days.</p>
+  </div>
+
+  <!-- COMMUNICATION -->
+  <h2 class="section-title">Communication — The Infrastructure of Trust</h2>
+  <p class="section-intro">Communication in a sales organization is not about information transfer. It is about alignment creation, trust maintenance, and culture transmission. A CRO who communicates poorly will produce a team that misaligns, distrusts, and drifts — regardless of how good the strategy is.</p>
+
+  <div class="subsection">
+    <div class="subsection-title">The 4 Principles of Sales Leadership Communication</div>
+
+    <p><strong>1. Clarity</strong> — Every communication must answer: "What do you need to know, what do you need to do, and what does good look like?" Ambiguity is the enemy. Reps who don't know what's expected will default to what's comfortable, not what's optimal. Be specific about numbers, timelines, behaviors, and consequences. "Do better on prospecting" is not a clear communication. "I need you at 15 new first conversations per month by the end of Q2, and here is the support structure to get there" is.</p>
+
+    <p><strong>2. Consistency</strong> — Mixed messages destroy credibility faster than silence. If Q1 priorities are different from Q2 priorities without explanation, the team concludes that leadership doesn't know what it's doing. Consistency doesn't mean rigidity — it means acknowledging when the message has changed and explaining why. "Last quarter we said X. Here's what we've learned and why the priority is now Y." Change is acceptable; unexplained change is corrosive.</p>
+
+    <p><strong>3. Listening</strong> — Communication is bidirectional. The CRO who only broadcasts creates a team that learns to tell them what they want to hear. Active listening — in 1:1s, in pipeline reviews, in skip-levels — means following up on what you heard, acting on legitimate concerns, and reporting back: "You raised X in our last conversation. Here's what I did with it." This behavior transforms listening into a trust-building act.</p>
+
+    <p><strong>4. Transparency</strong> — Share more than feels comfortable. Share company financials (at an appropriate level), strategic challenges, board dynamics (sanitized but honest), product gaps, and your own uncertainty. The team already knows more than you think, and they fill information gaps with worst-case assumptions. Proactive transparency — "here's a challenge we're navigating, here's how I'm thinking about it" — is almost always better than reactive damage control.</p>
+  </div>
+
+  <div class="subsection">
+    <div class="subsection-title">How to Run Effective Team Meetings</div>
+    <p>The weekly team meeting is the single most leveraged communication vehicle in a sales organization. Done well, it aligns, energizes, and informs. Done poorly, it wastes 45 minutes and signals that leadership values attendance over outcomes. The structure that works:</p>
+    <table class="data-table">
+      <thead>
+        <tr><th>Segment</th><th>Time</th><th>Purpose</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>Vision anchor / narrative moment</td><td>3–5 min</td><td>Connect the week to the mission. Celebrate a win that exemplifies the values.</td></tr>
+        <tr><td>Business update / metric pulse</td><td>5–7 min</td><td>Where are we vs. plan? What changed this week? No spin — honest state of the business.</td></tr>
+        <tr><td>Pipeline spotlight / deal review</td><td>10–15 min</td><td>Rotating: one deal deconstructed for learning, not status. "What's the coaching moment here?"</td></tr>
+        <tr><td>Skills / knowledge segment</td><td>10–15 min</td><td>One tactic, framework, or customer insight the whole team can apply this week.</td></tr>
+        <tr><td>Announcements / logistics</td><td>3–5 min</td><td>Administrative items — keep it brief.</td></tr>
+        <tr><td>Open Q&amp;A</td><td>5 min</td><td>Anything on the team's mind. The leader answers honestly.</td></tr>
+      </tbody>
+    </table>
+    <p>Critical rules: start on time, end on time, no meeting recap emails for people who attended (it signals the meeting wasn't worth attending), and never use the team meeting to publicly embarrass underperformers. Public accountability is motivational; public humiliation is toxic.</p>
+  </div>
+
+  <div class="subsection">
+    <div class="subsection-title">The 1:1 Meeting — The Most Important Meeting You Have</div>
+    <p>The manager 1:1 is where culture is transmitted person by person, where early problems are identified, and where the relationship that drives retention is built. The most common mistakes: (1) making it a pipeline review (it's not — use separate pipeline reviews), (2) canceling it when busy (it should be the last meeting to cancel), and (3) talking more than you listen.</p>
+    <p>Effective 1:1 structure for a manager of AEs:</p>
+    <ul class="bullet-list">
+      <li><strong>Their agenda first (15 min)</strong> — "What's on your mind? What's getting in your way?" Let them drive. Your job is to listen, ask follow-up questions, and take notes.</li>
+      <li><strong>Coaching moment (10 min)</strong> — Pick one skill or behavior to develop based on your observations from the week. Make it specific and forward-looking.</li>
+      <li><strong>Career and development (5 min, not every session)</strong> — "How are you growing? What do you want to be doing in 18 months?"</li>
+      <li><strong>Your updates (5 min)</strong> — Share relevant company or team news. Ask for their reaction.</li>
+    </ul>
+  </div>
+
+  <div class="subsection">
+    <div class="subsection-title">How to Communicate Bad News</div>
+    <p>Bad news communicated poorly is one of the fastest destroyers of leadership trust. The principles:</p>
+    <ul class="bullet-list">
+      <li><strong>Early and direct</strong> — Communicate bad news as soon as you have clarity. Delaying to "protect" the team backfires when they find out you knew. They always find out.</li>
+      <li><strong>Own the context</strong> — Lead with the business reality, not with mitigation. "We missed plan by 18% this quarter. Here's what happened." Then explain causes, then response.</li>
+      <li><strong>Have the plan ready, but not too polished</strong> — Come with a draft response plan, but show vulnerability. "Here's how I'm thinking about this. I want your input." Reps who feel consulted during hard moments feel invested in the recovery.</li>
+      <li><strong>Don't blame externalities alone</strong> — "The market was tough" may be true and may also be an excuse. Reps know whether the problems were external or internal. Honest attribution builds credibility. Spin destroys it.</li>
+      <li><strong>Re-anchor to the vision</strong> — End difficult communications with the North Star: "This is a setback, not a terminus. Here's why we still believe in where we're going."</li>
+    </ul>
+  </div>
+
+  <!-- INDICATORS -->
+  <h2 class="section-title">Phase 0 Metrics: Leading and Lagging Indicators</h2>
+
+  <div class="subsection">
+    <div class="subsection-title">Leading Indicators — What Predicts Future Cultural Health</div>
+    <div class="indicator-row">
+      <span class="indicator-tag ind-leading">LEADING</span>
+    </div>
+    <table class="data-table">
+      <thead>
+        <tr><th>Metric</th><th>How to Measure</th><th>Benchmark</th><th>Action Threshold</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>Employee NPS (eNPS)</td><td>Quarterly anonymous pulse: "Would you recommend working here to a friend in sales?" Score: Promoters % − Detractors %</td><td>eNPS &gt; 20 = good; &gt; 40 = excellent</td><td>Below 10 triggers culture audit</td></tr>
+        <tr><td>Manager NPS</td><td>Anonymous: "How likely are you to recommend your manager as someone to work for?" 0–10 scale</td><td>Score &gt; 8.0/10.0 average</td><td>Any manager below 6.0 gets development plan</td></tr>
+        <tr><td>Coaching session completion rate</td><td>Scheduled coaching sessions completed / Scheduled sessions</td><td>&gt;85% completion rate</td><td>Below 70% indicates scheduling or priority problem</td></tr>
+        <tr><td>Team meeting attendance rate</td><td>% of team members attending weekly meetings</td><td>&gt;90%</td><td>Below 80% signals engagement problem</td></tr>
+        <tr><td>Skip-level feedback volume</td><td>Number of concerns raised in skip-level conversations per quarter</td><td>Qualitative — more concerns = healthier (people feel safe raising them)</td><td>Zero concerns in skip-levels is a red flag, not a green one</td></tr>
+        <tr><td>Internal transfer requests</td><td>Number of reps requesting manager change per quarter</td><td>Near zero in healthy orgs</td><td>2+ in one manager's team triggers manager coaching</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="subsection">
+    <div class="subsection-title">Lagging Indicators — What Confirms Cultural Outcomes</div>
+    <div class="indicator-row">
+      <span class="indicator-tag ind-lagging">LAGGING</span>
+    </div>
+    <table class="data-table">
+      <thead>
+        <tr><th>Metric</th><th>Definition</th><th>Healthy Benchmark</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>Quota Attainment Distribution</td><td>% of reps hitting 100%+ of quota; distribution across &lt;50%, 50–75%, 75–100%, 100%+</td><td>60–65% of reps at 100%+ in a healthy sales org; bell curve skewing right</td></tr>
+        <tr><td>Voluntary Attrition Rate (Annualized)</td><td>(Voluntary departures / Average headcount) × 100</td><td>&lt;15% for all reps; &lt;8% for high performers</td></tr>
+        <tr><td>Time-to-Productivity (TTP)</td><td>Days from hire start to first closed deal; or days to reaching 50% of ramp quota</td><td>SMB: 90–120 days; MM: 120–180 days; Enterprise: 180–270 days</td></tr>
+        <tr><td>Regrettable Attrition Rate</td><td>(High-performer voluntary departures / Total high performers) × 100</td><td>&lt;8% annually; above 15% is a cultural emergency</td></tr>
+        <tr><td>Annual Culture Survey Score</td><td>Composite of trust, clarity, growth, and belonging subscales — typically administered via Lattice, Culture Amp, or Glint</td><td>75th percentile vs. SaaS industry benchmark</td></tr>
+        <tr><td>Manager Retention Rate</td><td>% of managers still in role after 24 months</td><td>&gt;75%; high manager turnover cascades into rep turnover</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- CASCADE EFFECTS -->
+  <h2 class="section-title">How Phase 0 Failures Cascade Downstream</h2>
+  <p class="section-intro">Phase 0 problems are systemic amplifiers. They don't just affect the leadership layer — they degrade every downstream revenue system. Understanding the cascade mechanisms is essential for root-cause diagnosis.</p>
+
+  <div class="cascade-box">
+    <div class="cb-title">Phase 0 Failure Cascade Map</div>
+    <div class="cascade-row">
+      <span class="cascade-arrow">→</span>
+      <span><strong>Unclear vision</strong> → reps optimize for personal metrics rather than company priorities → sandbagging, gaming comp, high-discount culture → NRR erosion and mis-aligned customer portfolio</span>
+    </div>
+    <div class="cascade-row">
+      <span class="cascade-arrow">→</span>
+      <span><strong>Blame culture</strong> → CRM data becomes unreliable (reps hide real pipeline status) → forecast accuracy collapses → board loses confidence in CRO → board pressure increases → culture worsens further</span>
+    </div>
+    <div class="cascade-row">
+      <span class="cascade-arrow">→</span>
+      <span><strong>Weak standards</strong> → inconsistent sales behaviors → unpredictable pipeline conversion rates → forecast methodology fails → resource allocation decisions are wrong → capacity mismatches</span>
+    </div>
+    <div class="cascade-row">
+      <span class="cascade-arrow">→</span>
+      <span><strong>Low coaching quality</strong> → reps don't improve → time-to-productivity extends → ramping costs increase → ROI on sales hiring falls → CFO questions headcount growth</span>
+    </div>
+    <div class="cascade-row">
+      <span class="cascade-arrow">→</span>
+      <span><strong>Trust deficit between sales and CS</strong> → deals are closed with mismatched expectations → churn increases → NRR declines → company growth rate slows disproportionately to new logo growth</span>
+    </div>
+    <div class="cascade-row">
+      <span class="cascade-arrow">→</span>
+      <span><strong>High regrettable attrition</strong> → institutional knowledge walks out the door → new hires ramp slowly → productivity gap in Q1–Q3 every year → constant underperformance against plan</span>
+    </div>
+  </div>
+
+  <!-- COMMON MISTAKES -->
+  <h2 class="section-title">Common Mistakes New Sales Leaders Make in Phase 0</h2>
+  <div class="mistake-list">
+    <div class="mistake-item">
+      <strong>Mistake 1: Declaring culture before earning it</strong>
+      Announcing new cultural values in the first week, before the team has any basis to believe in your leadership, creates cynicism. Culture credibility is earned through behavior, not declared through messaging. Declare intentions; earn culture.
+    </div>
+    <div class="mistake-item">
+      <strong>Mistake 2: Prioritizing metrics over relationships in the first 90 days</strong>
+      The temptation to immediately fix pipeline, change quotas, or restructure territories is almost always a mistake. Before you can change the system, you need to understand it — and to understand it, you need the team to trust you enough to tell you the truth. Relationship-first in 90 days, systems-change in 90–180 days.
+    </div>
+    <div class="mistake-item">
+      <strong>Mistake 3: Inheriting the previous leader's culture by inertia</strong>
+      Not actively shaping culture is itself a cultural act — it preserves the existing norms. If the previous leader had a blame culture, silence endorses it. New leaders must name the culture they intend to build, even if they can't change it overnight.
+    </div>
+    <div class="mistake-item">
+      <strong>Mistake 4: Using the all-hands for performance public humiliation</strong>
+      Naming individual underperformers in team meetings is the fastest way to destroy psychological safety. Public recognition is powerful. Public accountability for process (without naming individuals) is appropriate. Personal performance criticism must always be private.
+    </div>
+    <div class="mistake-item">
+      <strong>Mistake 5: Canceling 1:1s when busy</strong>
+      The first canceled 1:1 tells each rep exactly how important they are relative to your other priorities. 1:1s are the trust maintenance mechanism of the entire leadership system. They get canceled last, not first.
+    </div>
+    <div class="mistake-item">
+      <strong>Mistake 6: Setting vision once and assuming it sticks</strong>
+      Vision requires constant, contextual reinforcement. The leader who presents vision at the SKO in January and doesn't mention it again until the next SKO has communicated that vision is ceremonial rather than operational.
+    </div>
+    <div class="mistake-item">
+      <strong>Mistake 7: Promoting on results alone, without evaluating leadership potential</strong>
+      The most common source of management layer problems in sales organizations. Top-performing AEs are promoted to management because of their ability to close deals, not their ability to develop others. The skills are different and partially inversely correlated (the best closers are often individualistic and competitive, which does not naturally translate to servant leadership). Require demonstrated coaching and team-building behaviors before promoting.
+    </div>
+    <div class="mistake-item">
+      <strong>Mistake 8: Believing that comp plan changes culture</strong>
+      Comp plan changes behavior in the short term. Culture changes behavior in the long term. A CRO who relies on comp plan engineering to solve cultural problems will find that the incentive produces the desired behavior — and nothing else. Culture creates discretionary effort. Comp plans create compliant effort.
+    </div>
+  </div>
+
+  <!-- 90-DAY PLAN -->
+  <h2 class="section-title">The 90-Day Phase 0 Plan for a New CRO</h2>
+  <p class="section-intro">The first 90 days are a diagnostic and foundation-setting period. The goal is not to transform the organization — it is to understand it deeply enough to make good decisions, and to establish enough relational trust that those decisions will be followed.</p>
+
+  <div class="timeline-grid">
+    <div class="timeline-card">
+      <div class="tc-label">Days 1–30 — Listen &amp; Diagnose</div>
+      <div class="tc-title">Establish presence and gather intelligence</div>
+      <ul>
+        <li>1:1s with every direct report within week 1</li>
+        <li>Skip-level conversations with 8–10 individual contributors</li>
+        <li>Shadow 3–5 sales calls per week — observe, don't coach yet</li>
+        <li>Review last 12 months of pipeline and win/loss data</li>
+        <li>Analyze attrition patterns: voluntary, regrettable, tenure distribution</li>
+        <li>Attend every team meeting as observer, not presenter</li>
+        <li>Map the informal influence network — who do reps trust?</li>
+        <li>Administer anonymous culture pulse survey</li>
+        <li>Interview CS, Marketing, and Product leaders on their sales partnership experience</li>
+      </ul>
+    </div>
+    <div class="timeline-card">
+      <div class="tc-label">Days 30–60 — Synthesize &amp; Signal</div>
+      <div class="tc-title">Communicate your findings and intent</div>
+      <ul>
+        <li>Present culture diagnosis to leadership team (honest, no blame)</li>
+        <li>Communicate vision and standards to the full team in all-hands format</li>
+        <li>Identify and address one visible cultural problem immediately and publicly</li>
+        <li>Establish weekly 1:1 cadence with all managers</li>
+        <li>Implement weekly team meeting with new structure</li>
+        <li>Begin calibrating performance — identify top 25%, middle 50%, bottom 25%</li>
+        <li>Make one early, symbolic resource decision that demonstrates your priorities (e.g., prioritize coaching time, invest in a team training, fix a broken tool)</li>
+        <li>Draft initial set of performance standards — circulate for team input</li>
+      </ul>
+    </div>
+    <div class="timeline-card">
+      <div class="tc-label">Days 60–90 — Commit &amp; Establish</div>
+      <div class="tc-title">Lock in operating norms and begin Phase 1</div>
+      <ul>
+        <li>Finalize and publish written performance standards</li>
+        <li>Begin formal coaching program — weekly per manager</li>
+        <li>Address performance outliers with clear, documented expectations</li>
+        <li>Present 90-day findings and H1 operating plan to board/CEO</li>
+        <li>Establish cross-functional communication rhythms (CS, Marketing, Product)</li>
+        <li>Conduct first formal 360-degree feedback on direct reports</li>
+        <li>Establish Phase 0 metric dashboard (eNPS, coaching completion, attrition)</li>
+        <li>Begin Phase 1 work with Phase 0 foundation in place</li>
+      </ul>
+    </div>
+    <div class="timeline-card">
+      <div class="tc-label">Ongoing — After Day 90</div>
+      <div class="tc-title">Culture maintenance is never done</div>
+      <ul>
+        <li>Quarterly culture survey and review with leadership team</li>
+        <li>Monthly CRO narrative memo to full team</li>
+        <li>Weekly 1:1s with all direct reports (no exceptions)</li>
+        <li>Quarterly vision refresh — connect to business results</li>
+        <li>Annual performance standards review and update</li>
+        <li>Semi-annual manager quality review (360 feedback)</li>
+        <li>Monthly review of attrition data with root-cause analysis</li>
+        <li>Bi-annual "culture retrospective" — what's working, what's drifting?</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="callout callout-best-practice">
+    <div class="callout-title">The CRO's North Star Test for Phase 0</div>
+    <p>At the end of every quarter, ask yourself three questions: (1) Does every person on my team know exactly where we're going and why it matters? (2) Does every person on my team believe I will tell them the truth, especially when it's hard? (3) Does every person on my team know what outstanding performance looks like and believe they can achieve it? If any answer is "no" or "I'm not sure," Phase 0 work is not complete — and Phase 1 through Phase 6 are built on sand.</p>
+  </div>
+
+  <!-- Relevant Tools -->
+  <div class="section-title">Relevant Frameworks &amp; Tools</div>
+  <p class="section-intro">These tools from the Science of Scaling framework apply directly to Phase 0 work. Culture and leadership quality are prerequisites for LIR achievement and LIUE maintenance at every stage.</p>
+  <div class="tools-grid">
+    <a href="../pages/science-of-scaling.html" class="tool-card">
+      <div class="tc-phase">Science of Scaling</div>
+      <div class="tc-title">3-Stage Framework Overview</div>
+      <div class="tc-desc">Understand the sequencing logic that Phase 0 enables — leadership is the foundation for LIR, LIUE, and every stage gate.</div>
+    </a>
+    <a href="../subpages/sos-checklist.html" class="tool-card">
+      <div class="tc-phase">Stage Gate</div>
+      <div class="tc-title">GTM Scaling Readiness Checklist</div>
+      <div class="tc-desc">Leadership and team readiness items in Gate 1 and Gate 2 — culture affects whether scale is safe to attempt.</div>
+    </a>
+    <a href="../subpages/sos-hiring-sales-leader.html" class="tool-card">
+      <div class="tc-phase">Stage 2 Tool</div>
+      <div class="tc-title">Hiring the First Sales Leader</div>
+      <div class="tc-desc">The most consequential Phase 0 decision — hiring a leader who builds culture vs. one who installs their prior company's playbook.</div>
+    </a>
+    <a href="../subpages/template-scorecard-sales-leader.html" class="tool-card">
+      <div class="tc-phase">Template</div>
+      <div class="tc-title">Sales Leader Scorecard</div>
+      <div class="tc-desc">Evaluate culture-fit, coaching ability, and leadership alongside analytical skills — the 7-skill weighted rubric.</div>
+    </a>
+  </div>
+
+  <div class="related-section">
+    <div class="related-title">Related Sections</div>
+    <div class="related-links">
+      <a href="phase1.html" class="related-link">Phase 1 — ICP, Messaging &amp; Playbook</a>
+      <a href="phase2.html" class="related-link">Phase 2 — Hiring &amp; Onboarding</a>
+      <a href="phase3.html" class="related-link">Phase 3 — GTM Execution</a>
+      <a href="revops.html" class="related-link">RevOps — Operating Layer</a>
+      <a href="phase4.html" class="related-link">Phase 4 — Deal Execution</a>
+      <a href="phase5.html" class="related-link">Phase 5 — Forecasting</a>
+      <a href="../pages/science-of-scaling.html" class="related-link">Science of Scaling Framework</a>
+      <a href="../subpages/sos-checklist.html" class="related-link">GTM Scaling Checklist</a>
+    </div>
+  </div>
+
+</div>
+<script data-pplx-inline-edit>
+(function () {
+  if (window === window.top) return;
+
+  const allowedParentOrigins = ["https://www.perplexity.ai","https://perplexity.ai","https://testing.perplexity.ai","https://staging.perplexity.ai","https://*.preview.i.perplexity.ai","http://localhost:3000","http://127.0.0.1:3000","http://localhost:5173","http://127.0.0.1:5173"];
+  const MAX_FONT_BYTES = 500 * 1024;
+  const MAX_TOTAL_FONT_BYTES = 2 * 1024 * 1024;
+  let scrollForwarding = false;
+  let scrollRaf = 0;
+  let trustedTopOrigin = null;
+
+  // Allow entries like "https://*.preview.i.perplexity.ai" — the wildcard
+  // matches a single DNS label (no dots), so "https://*.foo" cannot stretch
+  // across multiple labels.
+  function matchesAllowedOrigin(origin) {
+    if (!origin) return false;
+    for (const entry of allowedParentOrigins) {
+      if (!entry.includes("*")) {
+        if (entry === origin) return true;
+        continue;
+      }
+      const pattern = new RegExp(
+        "^" +
+          entry.replace(/[.+?^${}()|[\]\\]/g, "\\$&").replace(/\*/g, "[^.]+") +
+          "$",
+      );
+      if (pattern.test(origin)) return true;
+    }
+    return false;
+  }
+
+  // Trust decision: when the sender is same-origin-visible (event.origin is a
+  // real origin like https://www.perplexity.ai) we trust event.origin directly.
+  // When event.origin is "null" (opaque broker srcdoc), we fall back to the
+  // broker's stamped `parentOrigin` to identify the top window. The fallback
+  // is claim-only — we rely on the browser's native `targetOrigin` enforcement
+  // on the response path (see postToTrustedTop) to ensure replies can't be
+  // delivered to anyone but the actual top window of that claimed origin.
+  function getTrustedParentOrigin(event) {
+    const forwardedParentOrigin =
+      typeof event.data.parentOrigin === "string" ? event.data.parentOrigin : null;
+    const parentOrigin = event.origin === "null" ? forwardedParentOrigin : event.origin;
+    return matchesAllowedOrigin(parentOrigin) ? parentOrigin : null;
+  }
+
+  // All responses go to window.top with targetOrigin = the allowlisted origin.
+  // An attacker that iframes us inside their own null-origin broker can claim
+  // any parentOrigin they like, but the browser will drop the reply whenever
+  // the real top's origin doesn't match — so the screenshot never leaves.
+  function postToTrustedTop(message) {
+    if (!trustedTopOrigin) return;
+    try {
+      window.top.postMessage(message, trustedTopOrigin);
+    } catch (_error) {}
+  }
+
+  function inlineAll(original, clone) {
+    if (original.nodeType !== 1 || clone.nodeType !== 1) return;
+
+    try {
+      const computedStyle = getComputedStyle(original);
+      // cssText on a computed style is the serialized declaration in modern
+      // Chromium/Safari — a single read beats enumerating ~400 longhand
+      // properties. Firefox returns "" here, so we fall back on empty.
+      const serialized = computedStyle.cssText;
+      if (serialized) {
+        clone.style.cssText = serialized;
+      } else {
+        const parts = new Array(computedStyle.length);
+        for (let index = 0; index < computedStyle.length; index += 1) {
+          const property = computedStyle[index];
+          parts[index] = `${property}:${computedStyle.getPropertyValue(property)};`;
+        }
+        clone.style.cssText = parts.join("");
+      }
+    } catch (_error) {}
+
+    const originalChildren = original.children;
+    const clonedChildren = clone.children;
+    for (
+      let index = 0;
+      index < originalChildren.length && index < clonedChildren.length;
+      index += 1
+    ) {
+      inlineAll(originalChildren[index], clonedChildren[index]);
+    }
+  }
+
+  function extractFontUrl(srcValue) {
+    const matches = [
+      ...srcValue.matchAll(
+        /url\(["']?([^"')]+)["']?\)(?:\s*format\(["']?([^"')]+)["']?\))?/gi,
+      ),
+    ];
+    if (matches.length === 0) return null;
+    const woff2 = matches.find((m) => m[2] && m[2].toLowerCase().includes("woff2"));
+    if (woff2) return woff2[1];
+    const woff = matches.find((m) => m[2] && m[2].toLowerCase().includes("woff"));
+    if (woff) return woff[1];
+    return matches[0][1];
+  }
+
+  // Cache resolved font URL -> data URI across captures. Fonts on a page
+  // essentially never change, and a batch run emits multiple captures back to
+  // back — without this we'd refetch + re-base64 every time.
+  const fontDataUriCache = new Map();
+  const SRC_DECLARATION_RE = /src\s*:\s*[^;}]+/i;
+
+  async function fetchAsDataUri(url) {
+    if (fontDataUriCache.has(url)) return fontDataUriCache.get(url);
+    let dataUri = null;
+    try {
+      const response = await fetch(url, { mode: "cors", credentials: "omit" });
+      if (response.ok) {
+        const blob = await response.blob();
+        if (blob.size <= MAX_FONT_BYTES) {
+          dataUri = await new Promise((resolve) => {
+            const reader = new FileReader();
+            reader.onloadend = () =>
+              resolve(typeof reader.result === "string" ? reader.result : null);
+            reader.onerror = () => resolve(null);
+            reader.readAsDataURL(blob);
+          });
+        }
+      }
+    } catch (_error) {
+      dataUri = null;
+    }
+    fontDataUriCache.set(url, dataUri);
+    return dataUri;
+  }
+
+  function collectFontFaceRuleTexts() {
+    const rules = [];
+    for (const sheet of document.styleSheets) {
+      let cssRules;
+      try {
+        cssRules = sheet.cssRules;
+      } catch (_error) {
+        continue;
+      }
+      if (!cssRules) continue;
+      for (const rule of cssRules) {
+        const cssText = rule.cssText || "";
+        if (cssText.startsWith("@font-face")) rules.push(cssText);
+      }
+    }
+    return rules;
+  }
+
+  async function buildInlinedFontCss() {
+    const ruleTexts = collectFontFaceRuleTexts();
+    if (ruleTexts.length === 0) return null;
+
+    const resolved = ruleTexts.map((cssText) => {
+      if (!SRC_DECLARATION_RE.test(cssText)) return null;
+      const srcMatch = cssText.match(/src\s*:\s*([^;}]+)[;}]/i);
+      if (!srcMatch) return null;
+      const url = extractFontUrl(srcMatch[1]);
+      if (!url) return null;
+      try {
+        return { cssText, url: new URL(url, document.baseURI).href };
+      } catch (_error) {
+        return null;
+      }
+    });
+
+    const dataUris = await Promise.all(
+      resolved.map((entry) => (entry ? fetchAsDataUri(entry.url) : Promise.resolve(null))),
+    );
+
+    const inlined = [];
+    let totalBytes = 0;
+    for (let index = 0; index < resolved.length; index += 1) {
+      const entry = resolved[index];
+      const dataUri = dataUris[index];
+      if (!entry || !dataUri) continue;
+      const approxBytes = dataUri.length * 0.75;
+      if (totalBytes + approxBytes > MAX_TOTAL_FONT_BYTES) break;
+      totalBytes += approxBytes;
+      inlined.push(entry.cssText.replace(SRC_DECLARATION_RE, `src: url("${dataUri}")`));
+    }
+    return inlined.length > 0 ? inlined.join("\n") : null;
+  }
+
+  function stripExternal(clone) {
+    const images = clone.querySelectorAll("img");
+    for (let index = 0; index < images.length; index += 1) {
+      const src = images[index].getAttribute("src");
+      if (src && !src.startsWith("data:")) images[index].removeAttribute("src");
+    }
+
+    const elements = clone.querySelectorAll("*");
+    for (let index = 0; index < elements.length; index += 1) {
+      const style = elements[index].style.cssText;
+      if (style && style.includes("url(")) {
+        elements[index].style.cssText = style.replace(
+          /url\(["']?(?!data:)[^)"']*["']?\)/gi,
+          "none",
+        );
+      }
+    }
+  }
+
+  function emitScroll() {
+    scrollRaf = 0;
+    if (!scrollForwarding) return;
+    postToTrustedTop({
+      type: "INLINE_EDIT_SCROLL",
+      scrollX: window.scrollX,
+      scrollY: window.scrollY,
+    });
+  }
+
+  window.addEventListener(
+    "scroll",
+    function () {
+      if (!scrollForwarding || scrollRaf) return;
+      scrollRaf = requestAnimationFrame(emitScroll);
+    },
+    { passive: true, capture: true },
+  );
+
+  async function handleCaptureRequest(event) {
+    const requestId = event.data.requestId;
+    const scrollX = window.scrollX;
+    const scrollY = window.scrollY;
+    const width = window.innerWidth;
+    const height = window.innerHeight;
+
+    function postResult(dataUrl) {
+      postToTrustedTop({
+        type: "INLINE_EDIT_SCREENSHOT_RESULT",
+        requestId,
+        dataUrl,
+        scrollX,
+        scrollY,
+      });
+    }
+
+    try {
+      // Wait for any pending web fonts to resolve so both inline metrics and
+      // the @font-face inlining below see the same loaded faces.
+      if (document.fonts && document.fonts.ready) {
+        try {
+          await document.fonts.ready;
+        } catch (_error) {}
+      }
+
+      const clone = document.documentElement.cloneNode(true);
+      inlineAll(document.documentElement, clone);
+
+      const removedNodes = clone.querySelectorAll("script,link[rel=\"stylesheet\"],style");
+      for (let index = 0; index < removedNodes.length; index += 1) {
+        removedNodes[index].remove();
+      }
+
+      stripExternal(clone);
+
+      // Re-embed web fonts as data-URI @font-face rules so the SVG rasterizer
+      // can resolve them — external font URLs aren't fetched during
+      // foreignObject rendering, which would otherwise force a fallback face
+      // and change text metrics.
+      const inlinedFontCss = await buildInlinedFontCss();
+      if (inlinedFontCss) {
+        const styleEl = document.createElement("style");
+        styleEl.textContent = inlinedFontCss;
+        const head = clone.querySelector("head");
+        if (head) head.appendChild(styleEl);
+        else clone.insertBefore(styleEl, clone.firstChild);
+      }
+
+      const html = new XMLSerializer().serializeToString(clone);
+      const svg =
+        `<svg xmlns="http://www.w3.org/2000/svg" width="${width}" height="${height}">` +
+        '<foreignObject width="100%" height="100%">' +
+        `<div xmlns="http://www.w3.org/1999/xhtml" style="width:${width}px;height:${height}px;overflow:hidden">` +
+        `<div style="transform:translate(-${scrollX}px,-${scrollY}px);transform-origin:top left">` +
+        html +
+        "</div></div></foreignObject></svg>";
+      const svgUrl = `data:image/svg+xml;charset=utf-8,${encodeURIComponent(svg)}`;
+      const image = new Image();
+      image.onload = function () {
+        const canvas = document.createElement("canvas");
+        canvas.width = width;
+        canvas.height = height;
+        canvas.getContext("2d").drawImage(image, 0, 0);
+        postResult(canvas.toDataURL("image/png"));
+      };
+      image.onerror = function () {
+        postResult(null);
+      };
+      image.src = svgUrl;
+    } catch (_error) {
+      postResult(null);
+    }
+  }
+
+  window.addEventListener("message", function (event) {
+    if (!event.data) return;
+    // Only accept messages from the direct parent frame. Blocks sibling /
+    // unrelated-window postMessage senders that could otherwise reach us.
+    if (event.source !== window.parent) return;
+
+    const trustedParentOrigin = getTrustedParentOrigin(event);
+    if (!trustedParentOrigin) return;
+    trustedTopOrigin = trustedParentOrigin;
+
+    if (event.data.type === "INLINE_EDIT_SCROLL_START") {
+      scrollForwarding = true;
+      emitScroll();
+      return;
+    }
+
+    if (event.data.type === "INLINE_EDIT_SCROLL_STOP") {
+      scrollForwarding = false;
+      if (scrollRaf) cancelAnimationFrame(scrollRaf);
+      scrollRaf = 0;
+      return;
+    }
+
+    if (event.data.type !== "INLINE_EDIT_CAPTURE_REQUEST") return;
+
+    handleCaptureRequest(event);
+  });
+})();
+
+
+</script></body>
+</html>

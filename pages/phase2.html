@@ -1,0 +1,1472 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Phase 2: Team — SaaS Revenue System</title>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="../assets/shared.css"/>
+  <style>
+    .page-hero { background: #2a7fa8; }
+    .sos-context-banner {
+      background: linear-gradient(135deg, #0D5C63 0%, #0a4a50 100%);
+      border-radius: 10px;
+      padding: 20px 24px;
+      margin-bottom: 32px;
+      display: grid;
+      grid-template-columns: 200px 1fr auto;
+      gap: 20px;
+      align-items: start;
+    }
+    .sos-cb-stage { border-right: 1px solid rgba(255,255,255,0.2); padding-right: 20px; }
+    .sos-cb-label { font-size: 10px; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase; color: rgba(255,255,255,0.6); margin-bottom: 4px; }
+    .sos-cb-title { font-size: 18px; font-weight: 700; color: #fff; line-height: 1.3; }
+    .sos-cb-content { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+    .sos-cb-item { background: rgba(255,255,255,0.08); border-radius: 6px; padding: 10px 12px; }
+    .sos-cb-item-label { font-size: 10px; font-weight: 700; letter-spacing: 0.8px; text-transform: uppercase; color: rgba(255,255,255,0.55); margin-bottom: 3px; }
+    .sos-cb-item-value { font-size: 12px; color: rgba(255,255,255,0.85); line-height: 1.5; }
+    .sos-cb-link { background: rgba(255,255,255,0.15); color: #fff; font-size: 12px; font-weight: 700; padding: 8px 14px; border-radius: 6px; text-decoration: none; white-space: nowrap; align-self: center; transition: background 0.15s; }
+    .sos-cb-link:hover { background: rgba(255,255,255,0.28); color: #fff; text-decoration: none; }
+    .tools-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 12px; margin: 16px 0 40px; }
+    .tool-card { background: var(--surface); border: 1.5px solid var(--border); border-radius: 8px; padding: 14px 16px; text-decoration: none; display: block; transition: all 0.15s; }
+    .tool-card:hover { text-decoration: none; transform: translateY(-1px); box-shadow: 0 3px 10px rgba(0,0,0,0.08); }
+    .tc-sos { border-left: 3px solid #0D5C63; }
+    .tc-sos:hover { border-color: #0D5C63; }
+    .tc-res { border-left: 3px solid #2C5F8A; }
+    .tc-res:hover { border-color: #2C5F8A; }
+    .tc-phase { font-size: 10px; font-weight: 700; letter-spacing: 0.8px; text-transform: uppercase; color: var(--text-muted); margin-bottom: 4px; }
+    .tc-sos .tc-phase { color: #0D5C63; }
+    .tc-res .tc-phase { color: #2C5F8A; }
+    .tc-title { font-size: 13px; font-weight: 700; color: var(--text); margin-bottom: 4px; line-height: 1.3; }
+    .tc-desc { font-size: 11px; color: var(--text-muted); line-height: 1.5; }
+  </style>
+</head>
+<body>
+<nav class="nav">
+  <span class="nav-logo">SaaS <span>Revenue System</span></span>
+  <span class="nav-sep">|</span>
+  <a href="../index.html" class="nav-back">← Home</a>
+  <span class="nav-sep">|</span>
+  <span class="nav-current">Phase 2 — Team</span>
+</nav>
+
+<div class="page-hero">
+  <div class="hero-phase-label">PHASE 2 — TEAM</div>
+  <div class="hero-title">Hiring, Ramp, Management Cadence &amp; Compensation</div>
+  <div class="hero-subtitle">Sales results are a lagging indicator of people decisions made 6–12 months earlier.</div>
+  <div class="hero-tags">
+    <a href="../subpages/hiring-formula.html" class="hero-tag">Hiring Formula</a>
+    <a href="../subpages/ramp-design.html" class="hero-tag">Ramp Design</a>
+    <a href="../subpages/management-cadence.html" class="hero-tag">Management Cadence</a>
+    <a href="../subpages/quota-design.html" class="hero-tag">Quota Design</a>
+    <a href="../subpages/compensation-design.html" class="hero-tag">Compensation Design</a>
+  </div>
+</div>
+
+<div class="content-wrap">
+
+  <div class="sos-context-banner">
+    <div class="sos-cb-stage">
+      <div class="sos-cb-label">Science of Scaling — Stage 1→2</div>
+      <div class="sos-cb-title">PMF Bridge to GTM Fit</div>
+    </div>
+    <div class="sos-cb-content">
+      <div class="sos-cb-item">
+        <div class="sos-cb-item-label">Stage 1 Hiring Mode</div>
+        <div class="sos-cb-item-value">PM+AE hybrid — hire to DISCOVER the playbook. 1–2 people only. Comp tied to LIR (50% at close, 50% at LIR event). Do NOT scale headcount before PMF.</div>
+      </div>
+      <div class="sos-cb-item">
+        <div class="sos-cb-item-label">Stage 2 Hiring Mode</div>
+        <div class="sos-cb-item-value">Process Builder — hire to CODIFY and scale the playbook. 2 reps/month pace. Scorecard-driven. Comp retains LIR component + LIUE health factor.</div>
+      </div>
+      <div class="sos-cb-item">
+        <div class="sos-cb-item-label">Stage 3 Hiring Mode</div>
+        <div class="sos-cb-item-value">Process Executor — hire to EXECUTE the codified playbook at scale. Add promotion path (AE1→AE2→Senior AE→Team Lead) with objective criteria.</div>
+      </div>
+      <div class="sos-cb-item">
+        <div class="sos-cb-item-label">Critical Gate Rule</div>
+        <div class="sos-cb-item-value">Do NOT move to the Stage 2 "2 reps/month" pace until LIUE &gt; 3 for 2 consecutive quarters AND LIR ≥ threshold. Hiring before GTM Fit destroys unit economics.</div>
+      </div>
+    </div>
+    <a href="../subpages/sos-gtm-fit.html" class="sos-cb-link">Stage 2: GTM Fit →</a>
+  </div>
+
+  <!-- ═══════════════════════════════════════════════════
+       SECTION 1: THE HIRING FORMULA
+  ════════════════════════════════════════════════════ -->
+  <div class="section-title">The Hiring Formula</div>
+  <div class="section-intro">Mark Roberge's hiring formula is the most rigorous framework available for building predictable sales teams. Its central insight: stop hiring on gut feel and industry experience, and start hiring on a data-driven competency scorecard built from your own top performers.</div>
+
+  <div class="subsection">
+    <div class="subsection-title">Why Most Companies Hire Wrong</div>
+    <p>The default hiring pattern in SaaS sales is dangerously flawed. Hiring managers routinely overweight:</p>
+    <ul class="bullet-list">
+      <li><strong>Industry experience</strong> — believing domain knowledge transfers to sales skill. It rarely does. Most domain knowledge can be taught in 30 days; sales habits cannot.</li>
+      <li><strong>Company brand on resume</strong> — assuming someone who sold at Salesforce or Gartner will replicate that performance in a different motion, at a different price point, with a different buyer.</li>
+      <li><strong>Charisma and likability in the interview</strong> — selecting for the traits that make people good at interviewing, not at selling.</li>
+      <li><strong>Years of experience</strong> — seniority is a proxy for track record, but track record in a mismatched motion is worse than a blank slate.</li>
+    </ul>
+    <p>The result: high variance in rep quality, unpredictable ramp, and attrition driven by rep-role misfit — all of which masquerade as a pipeline problem or a product problem. They are actually hiring problems.</p>
+
+    <div class="callout callout-warning">
+      <div class="callout-title">Root Cause Warning</div>
+      <p>If your team shows high variance in quota attainment (some reps at 150%, most below 60%), the first diagnostic question is not "what are we doing wrong in coaching?" — it is "did we hire correctly?" Coaching cannot fix a competency mismatch.</p>
+    </div>
+  </div>
+
+  <div class="subsection">
+    <div class="subsection-title">The 5 Competencies That Predict Rep Success</div>
+    <p>Roberge's research, derived from building HubSpot's sales team from zero to $100M, identified five universal predictors of sales rep success. These should be the backbone of every hiring scorecard:</p>
+
+    <table class="data-table">
+      <thead>
+        <tr>
+          <th>Competency</th>
+          <th>What It Means</th>
+          <th>How to Assess It</th>
+          <th>Why It Matters</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>Coachability</strong></td>
+          <td>The ability to receive feedback, internalize it, and apply it rapidly — without defensiveness</td>
+          <td>Role-play + structured feedback: give a correction mid-exercise, observe response</td>
+          <td>The entire ramp is a coaching process. An uncoachable rep cannot be developed.</td>
+        </tr>
+        <tr>
+          <td><strong>Work Ethic &amp; Drive</strong></td>
+          <td>Intrinsic motivation; willingness to outwork the problem when results aren't coming</td>
+          <td>Behavioral: "Tell me about a time you failed and what you did next." Look for self-directed action without being managed.</td>
+          <td>Sales is a grind. Motivated reps survive rough quarters; unmotivated ones churn at 6 months.</td>
+        </tr>
+        <tr>
+          <td><strong>Prior Success Pattern</strong></td>
+          <td>A history of setting goals and achieving them — in any domain (sports, academics, prior roles)</td>
+          <td>Evidence-based questions. Require specifics: numbers, ranks, outcomes. "Top 10% of class" or "quota 3 years running."</td>
+          <td>Past pattern of achievement is the single best predictor of future achievement, regardless of context.</td>
+        </tr>
+        <tr>
+          <td><strong>Intelligence</strong></td>
+          <td>Ability to rapidly process new information, spot patterns, and adapt in complex buyer conversations</td>
+          <td>Ask them to explain a complex concept simply; walk through a case scenario; observe how quickly they synthesize feedback</td>
+          <td>Complex SaaS deals require strategic thinking, not just script execution. Low intelligence is a ceiling.</td>
+        </tr>
+        <tr>
+          <td><strong>Preparation</strong></td>
+          <td>The discipline to research before acting — showing up to interviews, calls, and demos informed</td>
+          <td>What did they research before this interview? Can they speak to your product, your customers, your market?</td>
+          <td>Prepared reps run better discovery, handle objections with evidence, and close faster. Lazy reps wing it.</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <div class="callout callout-best-practice">
+      <div class="callout-title">Roberge's Principle</div>
+      <p>The competencies that matter most are NOT generic — they must be calibrated to your specific sales motion. Run a correlation analysis: score your current top performers on these dimensions and identify which competencies are most predictive in your context. Then weight your scorecard accordingly.</p>
+    </div>
+  </div>
+
+  <div class="subsection">
+    <div class="subsection-title">Building the Competency Scorecard</div>
+    <p>A competency scorecard converts subjective impressions into structured, comparable data. Every interviewer rates every candidate on the same dimensions using the same rubric. This eliminates recency bias, halo effects, and the interviewer's personal preferences.</p>
+
+    <ol class="step-list">
+      <li>
+        <div class="step-content">
+          <span class="step-title">Identify your top 5–8 performers</span>
+          Retrospectively score them on the 5 competencies. Find where they cluster. That cluster defines your "A player" profile for this motion.
+        </div>
+      </li>
+      <li>
+        <div class="step-content">
+          <span class="step-title">Weight the competencies</span>
+          If coachability is the bottleneck in your ramp (because your motion changes frequently), weight it at 25%. If intelligence is critical for enterprise deal complexity, weight it higher. Weights should sum to 100.
+        </div>
+      </li>
+      <li>
+        <div class="step-content">
+          <span class="step-title">Define behavioral anchors</span>
+          For each competency, define what a 1, 3, and 5 looks like with specific observable behaviors. "Demonstrates curiosity" is not a behavioral anchor. "Asked 3 follow-up questions after receiving feedback, then applied correction correctly on the next rep" is.
+        </div>
+      </li>
+      <li>
+        <div class="step-content">
+          <span class="step-title">Assign interview questions to competencies</span>
+          Each interviewer owns specific competencies. They ask the same questions every time. This creates cross-candidate comparability.
+        </div>
+      </li>
+      <li>
+        <div class="step-content">
+          <span class="step-title">Score independently before debriefing</span>
+          All interviewers submit scores before the debrief meeting. This prevents anchoring (the first person to speak shapes everyone else's opinion).
+        </div>
+      </li>
+      <li>
+        <div class="step-content">
+          <span class="step-title">Track predictive validity over time</span>
+          Compare hiring scorecard scores to 12-month quota attainment. Refine the model. The scorecard improves as you accumulate data.
+        </div>
+      </li>
+    </ol>
+  </div>
+
+  <div class="subsection">
+    <div class="subsection-title">The Structured Interview Process</div>
+    <p>Structured interviews are 2× more predictive of job performance than unstructured interviews (Schmidt &amp; Hunter meta-analysis). Every step must be standardized.</p>
+
+    <table class="data-table">
+      <thead>
+        <tr>
+          <th>Stage</th>
+          <th>Format</th>
+          <th>Purpose</th>
+          <th>Who Conducts</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>Screen</strong></td>
+          <td>30-min phone/video</td>
+          <td>Baseline fit, communication quality, preparation signal</td>
+          <td>Recruiter or SDR Manager</td>
+        </tr>
+        <tr>
+          <td><strong>Behavioral Interview</strong></td>
+          <td>60-min structured</td>
+          <td>Score coachability, work ethic, prior success using STAR-method questions</td>
+          <td>Hiring Manager</td>
+        </tr>
+        <tr>
+          <td><strong>Role Play</strong></td>
+          <td>30-min live simulation</td>
+          <td>Cold call opener, discovery call, or demo segment — scores intelligence, preparation, coachability in real time</td>
+          <td>Hiring Manager + Peer</td>
+        </tr>
+        <tr>
+          <td><strong>Panel / Culture</strong></td>
+          <td>45-min cross-functional</td>
+          <td>Team dynamics, values alignment, how they handle ambiguity</td>
+          <td>2–3 team members</td>
+        </tr>
+        <tr>
+          <td><strong>Reference Checks</strong></td>
+          <td>15–20 min per reference</td>
+          <td>Validate claims, probe for performance patterns, surface blind spots</td>
+          <td>Hiring Manager</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="subsection">
+    <div class="subsection-title">The Reference Check Framework</div>
+    <p>Most reference checks are performative — a quick call where everyone says nice things. Done correctly, references are one of the most valuable data sources you have. The key is asking the right questions.</p>
+    <ul class="bullet-list">
+      <li><strong>Work with them directly?</strong> Confirm the relationship. How closely did they work together? Direct manager carries far more weight than a colleague.</li>
+      <li><strong>"What did [candidate] do better than most people at that level?"</strong> Surfaces genuine strengths, not platitudes.</li>
+      <li><strong>"What would you coach them on if you could?"</strong> A good reference will tell you a real weakness. If they can't name one, probe harder or discount the reference.</li>
+      <li><strong>"How did they respond to tough feedback or a down quarter?"</strong> The most predictive reference question for coachability and resilience.</li>
+      <li><strong>"Would you hire them again, and into what role?"</strong> The closing question. If they wouldn't rehire or hedge significantly, that's a signal.</li>
+      <li><strong>Ask for references not on their list.</strong> Request a back-channel reference — someone you can identify yourself who worked with this person. These conversations are unfiltered.</li>
+    </ul>
+  </div>
+
+  <div class="subsection">
+    <div class="subsection-title">The "Hiring Bar" Concept — Never Lower It</div>
+    <p>The hiring bar is the minimum acceptable score on your competency scorecard. It should never be lowered because of pipeline pressure, urgency, or competitive offers. This is the single most important discipline in building a world-class sales team.</p>
+
+    <div class="callout callout-warning">
+      <div class="callout-title">The Cost of Lowering the Bar</div>
+      <p>Every below-bar hire triggers a cascade: delayed ramp → underperformance → management distraction → team morale damage → eventual PIP or termination → backfill cycle. The fully-loaded cost of a bad hire is typically 1.5–3× OTE. A role left open for 60 days costs far less than a below-bar hire who leaves at month 8.</p>
+    </div>
+
+    <p>The practical rule: <strong>If the team isn't unanimously excited about the candidate, pass.</strong> "They're good enough" is not a passing grade. Urgency to fill a seat is a solvable problem. A below-bar hire creates problems that cannot be easily solved.</p>
+  </div>
+
+  <div class="subsection">
+    <div class="subsection-title">How ICP &amp; Motion Dictate the Hiring Profile</div>
+    <p>Phase 1 (the sales system design) determines who you should hire in Phase 2. The ICP and motion are not abstract — they impose specific requirements on every rep you hire.</p>
+
+    <table class="data-table">
+      <thead>
+        <tr>
+          <th>ICP / Motion</th>
+          <th>Rep Profile Implications</th>
+          <th>Competencies to Overweight</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>SMB / High-velocity</strong></td>
+          <td>High call volume, fast cycles, low deal complexity — need energy, resilience, coachability, script discipline</td>
+          <td>Work ethic, coachability, prior success in volume roles</td>
+        </tr>
+        <tr>
+          <td><strong>Mid-Market / Hybrid</strong></td>
+          <td>Multi-stakeholder, 30–90 day cycles, mix of inbound and outbound — need adaptability and process discipline</td>
+          <td>Intelligence, preparation, coachability</td>
+        </tr>
+        <tr>
+          <td><strong>Enterprise / Complex</strong></td>
+          <td>12–18 month cycles, C-suite buyers, procurement, legal — need strategic thinking, executive presence, patience</td>
+          <td>Intelligence, prior success in complex deals, preparation</td>
+        </tr>
+        <tr>
+          <td><strong>PLG / Land &amp; Expand</strong></td>
+          <td>Starting from product usage signals — need data fluency, consultative selling, low-ego expansion approach</td>
+          <td>Intelligence, coachability, preparation (in product usage data)</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- ═══════════════════════════════════════════════════
+       SECTION 2: RAMP DESIGN
+  ════════════════════════════════════════════════════ -->
+  <div class="section-title">Ramp Design</div>
+  <div class="section-intro">Ramp is the period between a rep's start date and the date they are expected to carry full quota. It is not a period of forgiveness — it is a structured program with measurable milestones. Poor ramp design is one of the most expensive and invisible sources of revenue leakage in SaaS.</div>
+
+  <div class="subsection">
+    <div class="subsection-title">What Ramp Is and Why It Matters</div>
+    <p>Ramp time is the number of months it takes a new rep to achieve full productivity (100% of quota run rate). Every month a rep is not at full productivity represents foregone revenue. In a team of 10 reps with a 6-month ramp at 50% average productivity during ramp, the opportunity cost is enormous.</p>
+
+    <div class="formula-block">
+      <div class="formula-label">Fully-Loaded Ramp Cost</div>
+      <div class="formula-main">Ramp Cost = (OTE × ramp months / 12) + Opportunity Cost</div>
+      <div class="formula-note">Opportunity Cost = Pipeline Capacity × (1 − Avg Productivity During Ramp)<br/>
+      Pipeline Capacity = the fully-ramped rep's expected closed revenue per month<br/>
+      Example: OTE $120K, 5-month ramp, $80K/mo capacity, 40% avg productivity during ramp<br/>
+      → Salary cost = $120K × 5/12 = $50K<br/>
+      → Opportunity cost = $80K × 5 × (1 − 0.40) = $240K<br/>
+      → Total ramp cost = ~$290K per hire</div>
+    </div>
+
+    <p>This math makes the stakes clear: every week shaved off ramp time, and every point of productivity improvement during ramp, has substantial financial value. A well-designed ramp program is not a training budget item — it is a revenue investment.</p>
+  </div>
+
+  <div class="subsection">
+    <div class="subsection-title">Industry Benchmarks by Segment</div>
+    <div class="metric-grid">
+      <div class="metric-card">
+        <div class="m-label">SMB</div>
+        <div class="m-value">2–3 mo</div>
+        <div class="m-desc">High-velocity motion, shorter cycle, faster feedback loop on rep quality</div>
+      </div>
+      <div class="metric-card">
+        <div class="m-label">Mid-Market</div>
+        <div class="m-value">4–6 mo</div>
+        <div class="m-desc">Moderate complexity, multi-stakeholder discovery, longer deal cycles</div>
+      </div>
+      <div class="metric-card">
+        <div class="m-label">Enterprise</div>
+        <div class="m-value">6–9 mo</div>
+        <div class="m-desc">Long cycles mean a rep may close their first deal in month 8+</div>
+      </div>
+      <div class="metric-card">
+        <div class="m-label">SDR</div>
+        <div class="m-value">1–2 mo</div>
+        <div class="m-desc">Activity-based, faster feedback, pipeline contribution visible quickly</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="subsection">
+    <div class="subsection-title">Milestone-Based vs. Time-Based Ramp</div>
+    <p>Most companies operate on time-based ramp: at month 3, the rep is at 50% quota; at month 6, 100%. This is structurally wrong. Time passes regardless of competency development. Milestone-based ramp ties quota exposure to demonstrated capability.</p>
+
+    <div class="callout callout-best-practice">
+      <div class="callout-title">Best Practice</div>
+      <p>Design ramp certification milestones. A rep does not move to month-2 quota until they have passed month-1 certifications (product pitch, ICP quiz, first X discovery calls completed). This protects the company and gives reps a clear roadmap. It also makes underperformance visible earlier, enabling faster intervention or offboarding.</p>
+    </div>
+  </div>
+
+  <div class="subsection">
+    <div class="subsection-title">The 30/60/90 Ramp Framework</div>
+    <p>A well-designed ramp moves through four phases. The cadence below applies to Mid-Market AEs; compress for SMB, extend for Enterprise.</p>
+
+    <table class="data-table">
+      <thead>
+        <tr>
+          <th>Period</th>
+          <th>Focus</th>
+          <th>Key Activities</th>
+          <th>Certification Milestone</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>Weeks 1–2</strong></td>
+          <td>Foundation: Product, Market, ICP</td>
+          <td>Product demo certification prep; shadow 5 discovery calls; ICP persona deep dive; competitive landscape; company history and positioning</td>
+          <td>Pass product knowledge quiz (80%+); deliver 10-min product demo independently</td>
+        </tr>
+        <tr>
+          <td><strong>Weeks 3–4</strong></td>
+          <td>Methodology &amp; Playbook</td>
+          <td>Learn the sales methodology (MEDDIC, Challenger, SPIN — whichever is used); study the playbook; objection handling practice; pricing and packaging walk-through; CRM workflow training</td>
+          <td>Complete 2 mock discovery calls with passing score; demonstrate CRM hygiene standards</td>
+        </tr>
+        <tr>
+          <td><strong>Weeks 5–8</strong></td>
+          <td>Live Deals with Active Coaching</td>
+          <td>Take over inbound leads or assigned pipeline; manager joins first 3 discovery calls live; debrief every call; weekly 1:1 focused on specific skill gaps; build initial pipeline to 3× quota</td>
+          <td>First meeting booked independently; first demo delivered; pipeline at 2× quota coverage</td>
+        </tr>
+        <tr>
+          <td><strong>Weeks 9–12</strong></td>
+          <td>Ramped Quota &amp; Independent Operation</td>
+          <td>Carry 50–75% of full quota; manager joins calls on request only; pipeline management discipline; forecast accuracy; multi-threading practice in active deals</td>
+          <td>First deal closed; forecast accuracy within 20% of actual; pipeline at 3× quota</td>
+        </tr>
+        <tr>
+          <td><strong>Month 4+</strong></td>
+          <td>Full Quota</td>
+          <td>100% quota; coaching transitions from foundational to advanced; begin specialization (industry verticals, enterprise expansion, etc.)</td>
+          <td>Quarterly attainment tracking begins in earnest</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="subsection">
+    <div class="subsection-title">Measuring Ramp Effectiveness</div>
+    <div class="indicator-row">
+      <span class="indicator-tag ind-leading">Milestone Completion Rate</span>
+      <span class="indicator-tag ind-leading">Pipeline Generated in Ramp Period</span>
+      <span class="indicator-tag ind-leading">Coaching Session Frequency</span>
+      <span class="indicator-tag ind-leading">Call Conversion Rate (Month 1 vs. Month 3)</span>
+      <span class="indicator-tag ind-lagging">Time to First Closed Deal</span>
+      <span class="indicator-tag ind-lagging">Quota Attainment at Month 6, 9, 12</span>
+      <span class="indicator-tag ind-lagging">Voluntary Attrition in First 12 Months</span>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════════════
+       SECTION 3: MANAGEMENT CADENCE
+  ════════════════════════════════════════════════════ -->
+  <div class="section-title">Management Cadence</div>
+  <div class="section-intro">The difference between a sales team that performs and one that doesn't is usually the cadence of management — not the quality of reps. Management cadence is the operating rhythm: the structured, repeatable set of meetings, reviews, and coaching touchpoints that keep execution aligned and performance visible.</div>
+
+  <div class="subsection">
+    <div class="subsection-title">Management vs. Coaching: The Critical Distinction</div>
+    <p>Most sales managers conflate management and coaching. They are fundamentally different activities that require different skills and different time allocation.</p>
+
+    <table class="data-table">
+      <thead>
+        <tr>
+          <th>Dimension</th>
+          <th>Management</th>
+          <th>Coaching</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>Purpose</strong></td>
+          <td>Ensure process adherence, pipeline accuracy, forecast predictability</td>
+          <td>Develop skill — discovery quality, objection handling, negotiation, executive presence</td>
+        </tr>
+        <tr>
+          <td><strong>Focus</strong></td>
+          <td>Deals and numbers</td>
+          <td>People and behaviors</td>
+        </tr>
+        <tr>
+          <td><strong>Outcome</strong></td>
+          <td>This quarter's number</td>
+          <td>Next year's performance ceiling</td>
+        </tr>
+        <tr>
+          <td><strong>Primary tool</strong></td>
+          <td>CRM review, pipeline inspection, forecast calls</td>
+          <td>Call recording review, live call joins, role play</td>
+        </tr>
+        <tr>
+          <td><strong>Failure mode</strong></td>
+          <td>Micromanagement — killing rep autonomy and morale</td>
+          <td>Absence — reps plateau, top performers leave for development opportunities</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <p>World-class sales managers spend roughly 50% of their time on each. Most spend 80% on management (pipeline inspection) and 20% or less on coaching. This produces teams that can hit this quarter but cannot grow.</p>
+  </div>
+
+  <div class="subsection">
+    <div class="subsection-title">The Weekly 1:1 Structure</div>
+    <p>The 1:1 is the most important recurring meeting in sales management. It should be 45–60 minutes per rep, weekly, inviolable. Never cancel it for a deal call.</p>
+
+    <table class="data-table">
+      <thead>
+        <tr>
+          <th>Segment</th>
+          <th>Time</th>
+          <th>Content</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>Rep's Agenda First</strong></td>
+          <td>10–15 min</td>
+          <td>What does the rep need help with? Blockers, questions, morale check. This signals the 1:1 is for the rep, not for the manager.</td>
+        </tr>
+        <tr>
+          <td><strong>Pipeline Review</strong></td>
+          <td>15–20 min</td>
+          <td>Walk each deal in the current quarter. Use MEDDIC or equivalent: Economic Buyer confirmed? Decision criteria? Timeline real? Is the deal moving or stalling? Inspect what you expect.</td>
+        </tr>
+        <tr>
+          <td><strong>Skill Development</strong></td>
+          <td>15–20 min</td>
+          <td>Review one call recording together. Identify one skill to work on this week. Role play the specific moment — the missed question, the fumbled objection, the executive intro that fell flat.</td>
+        </tr>
+        <tr>
+          <td><strong>Commitments</strong></td>
+          <td>5 min</td>
+          <td">What will the rep do differently this week? What will the manager provide? Write it down and review it next 1:1.</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="subsection">
+    <div class="subsection-title">Full Management Cadence</div>
+
+    <table class="data-table">
+      <thead>
+        <tr>
+          <th>Cadence</th>
+          <th>Frequency</th>
+          <th>Participants</th>
+          <th>Purpose</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>Rep 1:1</strong></td>
+          <td>Weekly</td>
+          <td>Manager + Rep</td>
+          <td>Pipeline + skill coaching (see above)</td>
+        </tr>
+        <tr>
+          <td><strong>Team Standup</strong></td>
+          <td>Daily or 3×/week</td>
+          <td>Full team</td>
+          <td>Activity metrics, wins, blockers — keep to 15 min max</td>
+        </tr>
+        <tr>
+          <td><strong>Deal Review</strong></td>
+          <td>Weekly or biweekly</td>
+          <td>Manager + Rep + CS/SE if needed</td>
+          <td>Deep dive on strategic deals: multi-thread, competitive, pricing strategy</td>
+        </tr>
+        <tr>
+          <td><strong>Forecast Call</strong></td>
+          <td>Weekly (in-quarter)</td>
+          <td>Manager → VP → CRO rollup</td>
+          <td>Commit / Best Case / Upside categorization; week-over-week movement; risk identification</td>
+        </tr>
+        <tr>
+          <td><strong>Team Meeting</strong></td>
+          <td>Weekly</td>
+          <td>Full team</td>
+          <td>Win/loss reviews, methodology training, competitive updates, morale</td>
+        </tr>
+        <tr>
+          <td><strong>QBR</strong></td>
+          <td>Quarterly</td>
+          <td">Rep presents to Manager + VPs</td>
+          <td>Previous quarter retrospective; next quarter strategy, territory plan, development goals</td>
+        </tr>
+        <tr>
+          <td><strong>Field Coaching</strong></td>
+          <td>2–4× per month per rep</td>
+          <td">Manager joins rep on call or in person</td>
+          <td>Live observation → specific debrief → one improvement committed</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="subsection">
+    <div class="subsection-title">The QBR Structure</div>
+    <p>A well-run QBR is not a recitation of CRM data. It is a structured strategic review that develops rep ownership and planning capability. The rep presents — the manager listens and challenges.</p>
+    <ol class="step-list">
+      <li>
+        <div class="step-content">
+          <span class="step-title">Previous Quarter Retrospective (15 min)</span>
+          Performance vs. quota. Wins: what drove them? Losses: root cause analysis, not excuses. Deals that slipped: why, and what changed?
+        </div>
+      </li>
+      <li>
+        <div class="step-content">
+          <span class="step-title">Pipeline Review (10 min)</span>
+          Current pipeline health. Coverage ratio. Confidence in each deal. Aging pipeline callout — deals stalled &gt;45 days.
+        </div>
+      </li>
+      <li>
+        <div class="step-content">
+          <span class="step-title">Next Quarter Territory Plan (15 min)</span>
+          Which accounts will be prioritized? What is the outbound strategy? What marketing campaigns are planned? What is the pipeline build plan?
+        </div>
+      </li>
+      <li>
+        <div class="step-content">
+          <span class="step-title">Development Goals (10 min)</span>
+          One or two specific skills the rep will work on. How will progress be measured? What support does the manager commit to providing?
+        </div>
+      </li>
+    </ol>
+  </div>
+
+  <div class="subsection">
+    <div class="subsection-title">Span of Control: How Many Reps Per Manager</div>
+    <p>Span of control defines how many reps one manager can effectively support. Get this wrong and either reps are under-managed (manager has too many) or over-managed (manager has too few and micromanages).</p>
+
+    <div class="metric-grid">
+      <div class="metric-card">
+        <div class="m-label">Field / Enterprise AEs</div>
+        <div class="m-value">5–7 reps</div>
+        <div class="m-desc">Complex deals require high coaching intensity per rep</div>
+      </div>
+      <div class="metric-card">
+        <div class="m-label">Inside Sales / MM AEs</div>
+        <div class="m-value">7–10 reps</div>
+        <div class="m-desc">Moderate coaching intensity, more standardized process</div>
+      </div>
+      <div class="metric-card">
+        <div class="m-label">SDRs / BDRs</div>
+        <div class="m-value">8–12 reps</div>
+        <div class="m-desc">Activity-focused; coaching is more repetitive and scalable</div>
+      </div>
+      <div class="metric-card">
+        <div class="m-label">CS / Account Mgmt</div>
+        <div class="m-value">8–15 reps</div>
+        <div class="m-desc">Depends heavily on account complexity and expansion motion</div>
+      </div>
+    </div>
+
+    <div class="callout callout-definition">
+      <div class="callout-title">The Inspect What You Expect Principle</div>
+      <p>Every metric you care about must be reviewed in a cadence meeting. If you care about multi-threading (contacts per opportunity), inspect it weekly. If you care about next-step quality (every deal has a scheduled next step), inspect it in the 1:1. You will get the behaviors you measure and reward. Uninspected metrics decay rapidly in any sales team.</p>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════════════
+       SECTION 4: QUOTA DESIGN
+  ════════════════════════════════════════════════════ -->
+  <div class="section-title">Quota Design</div>
+  <div class="section-intro">Quota is the single most powerful lever in a sales compensation system. It determines behavior, morale, retention, and ultimately revenue. Poorly designed quotas produce the wrong outcomes even with good people. Correct quota design is both a science and an art.</div>
+
+  <div class="subsection">
+    <div class="subsection-title">Top-Down vs. Bottoms-Up Quota Setting</div>
+
+    <table class="data-table">
+      <thead>
+        <tr>
+          <th>Approach</th>
+          <th>How It Works</th>
+          <th>Strengths</th>
+          <th>Weaknesses</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>Top-Down</strong></td>
+          <td>Board/CEO sets revenue target → CFO divides by average ACV × expected headcount → individual quota emerges</td>
+          <td>Simple, fast, aligned with investor expectations</td>
+          <td>Ignores territory quality, rep experience, pipeline reality — produces "aspirational" quotas disconnected from what's achievable</td>
+        </tr>
+        <tr>
+          <td><strong>Bottoms-Up</strong></td>
+          <td>Analyze historical attainment, pipeline velocity, territory potential → build a model of what each rep/territory can produce → aggregate to team quota</td>
+          <td>Grounded in reality, identifies where the ceiling actually is</td>
+          <td>Can understate ambition if historical data is from an underperforming team</td>
+        </tr>
+        <tr>
+          <td><strong>Hybrid (Best Practice)</strong></td>
+          <td>Build bottoms-up model → present to leadership → negotiate gap if bottoms-up falls short of top-down → identify levers (more headcount, better territory, demand gen) to close gap</td>
+          <td>Combines ambition with accountability; surfaces resource gaps early</td>
+          <td>Requires more analytical work; requires honesty in both directions</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="subsection">
+    <div class="subsection-title">The Quota-to-OTE Ratio</div>
+    <p>The quota-to-OTE ratio (also called the "productivity ratio" or "multiple") is one of the most important numbers in sales compensation design. It answers: how many dollars of revenue should one dollar of OTE produce?</p>
+
+    <div class="formula-block">
+      <div class="formula-label">Quota-to-OTE Ratio</div>
+      <div class="formula-main">Quota Multiple = Annual Quota / OTE</div>
+      <div class="formula-note">Industry benchmarks:<br/>
+      → SMB AE: 4x–6x OTE (e.g., $120K OTE, $480K–$720K quota)<br/>
+      → Mid-Market AE: 3x–5x OTE (e.g., $160K OTE, $480K–$800K quota)<br/>
+      → Enterprise AE: 2.5x–4x OTE (e.g., $200K OTE, $500K–$800K quota)<br/>
+      → SDR: N/A for closed revenue; measured on pipeline created vs. salary cost<br/><br/>
+      Rule of thumb: If your quota multiple is below 2.5x, the cost of sales is too high for the motion to be profitable. If it's above 7x, reps will perceive quota as unachievable and disengage.</div>
+    </div>
+  </div>
+
+  <div class="subsection">
+    <div class="subsection-title">The 60–70% Attainment Distribution Target</div>
+    <p>The most diagnostically important metric in quota design is the attainment distribution across your team. The goal is for 60–70% of your reps to hit 100% of quota in a given year.</p>
+
+    <table class="data-table">
+      <thead>
+        <tr>
+          <th>Scenario</th>
+          <th>What It Means</th>
+          <th>Correct Response</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>&lt;50% attainment rate</strong></td>
+          <td>Quota is too high, territory is too thin, demand gen is insufficient, or ramp is broken. Reps are demoralized. Top performers are being recruited by competitors offering achievable quotas.</td>
+          <td>Audit each factor. Don't reflexively cut quotas — identify the root cause. Usually it's pipeline coverage, not quota level.</td>
+        </tr>
+        <tr>
+          <td><strong>60–70% attainment rate</strong></td>
+          <td>Target zone. Quota is stretching reps without demoralizing them. Accelerator economics work. The distribution is healthy.</td>
+          <td>Maintain. Continue refining for equity across territories.</td>
+        </tr>
+        <tr>
+          <td><strong>&gt;80% attainment rate</strong></td>
+          <td>Quota is too low. The company is overpaying for results it could get with higher expectations. Leaves revenue on the table and signals to the board that the team is sandbagging.</td>
+          <td">Raise quota for next period. Do this carefully — sudden quota increases destroy trust and drive attrition of top performers who feel the rules changed.</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="subsection">
+    <div class="subsection-title">Ramped Quota Schedules</div>
+    <p>New reps should not carry full quota from day one — that is punitive and mathematically unrealistic given ramp time. A ramped quota schedule aligns expectations to productivity development.</p>
+
+    <table class="data-table">
+      <thead>
+        <tr>
+          <th>Month</th>
+          <th>SMB (3-mo ramp)</th>
+          <th>Mid-Market (5-mo ramp)</th>
+          <th>Enterprise (8-mo ramp)</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr><td>Month 1</td><td>0%</td><td>0%</td><td>0%</td></tr>
+        <tr><td>Month 2</td><td>25%</td><td>0%</td><td>0%</td></tr>
+        <tr><td>Month 3</td><td>75%</td><td>25%</td><td>0%</td></tr>
+        <tr><td>Month 4</td><td>100%</td><td>50%</td><td>25%</td></tr>
+        <tr><td>Month 5</td><td>100%</td><td>75%</td><td>25%</td></tr>
+        <tr><td>Month 6</td><td>100%</td><td>100%</td><td>50%</td></tr>
+        <tr><td>Month 7+</td><td>100%</td><td>100%</td><td>75–100%</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="subsection">
+    <div class="subsection-title">Territory-Based vs. Role-Based Quota</div>
+    <p>Territory-based quota assigns each rep a different quota based on the assessed value of their territory. Role-based quota gives every rep in the same role the same number. Each has tradeoffs.</p>
+    <ul class="bullet-list">
+      <li><strong>Role-based</strong> is simpler to administer but produces attainment variance driven by territory quality differences rather than rep performance. It is inherently unfair and creates resentment.</li>
+      <li><strong>Territory-based</strong> requires rigorous territory assessment (account potential scoring, historical penetration, competitive presence) but is more equitable and produces a cleaner performance signal.</li>
+      <li><strong>Best practice</strong>: Use territory-based quota for enterprise and named account models. Use role-based with territory equity reviews for SMB/round-robin models.</li>
+    </ul>
+  </div>
+
+  <div class="subsection">
+    <div class="subsection-title">Mid-Year Quota Changes</div>
+    <p>Never change quota mid-year unless there is a structural change to the role, territory, or product offering that materially alters productivity expectations. Changing quotas mid-year because the team is tracking to exceed plan (the "sandbagging problem") destroys trust, drives attrition of your best performers, and signals that the comp plan is not a real contract. The correct lever for mid-year upside is SPIFs and accelerators, not quota resets.</p>
+  </div>
+
+  <!-- ═══════════════════════════════════════════════════
+       SECTION 5: COMPENSATION DESIGN
+  ════════════════════════════════════════════════════ -->
+  <div class="section-title">Compensation Design</div>
+  <div class="section-intro">Compensation is the most powerful behavioral lever available to sales leadership. Every element of a comp plan — base, variable, accelerators, SPIFs, clawbacks — sends a signal. Reps are economically rational agents who will optimize for the plan you design. Design it incorrectly and they will optimize for the wrong things.</div>
+
+  <div class="subsection">
+    <div class="subsection-title">OTE Structure and Base:Variable Ratio</div>
+    <p>On-Target Earnings (OTE) is the total cash compensation a rep earns when they hit exactly 100% of quota. It comprises a base salary (fixed, paid regardless of performance) and a variable component (commission or bonus, earned through performance).</p>
+
+    <div class="formula-block">
+      <div class="formula-label">OTE Formula</div>
+      <div class="formula-main">OTE = Base Salary + Variable (at 100% attainment)</div>
+      <div class="formula-note">Commission rate at 100% = Variable / Quota<br/>
+      Example: OTE $160K, 60/40 split → Base $96K, Variable $64K<br/>
+      If quota = $800K → commission rate = $64K / $800K = 8% on every dollar closed</div>
+    </div>
+
+    <table class="data-table">
+      <thead>
+        <tr>
+          <th>Role</th>
+          <th>Typical Base:Variable</th>
+          <th>Rationale</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>Enterprise AE (Field)</strong></td>
+          <td>50:50</td>
+          <td>High deal complexity, long cycles — greater rep control over outcome justifies high variable leverage</td>
+        </tr>
+        <tr>
+          <td><strong>Mid-Market / Inside Sales AE</strong></td>
+          <td>60:40</td>
+          <td>Moderate cycle lengths; variable is meaningful but base recognizes process-driven nature</td>
+        </tr>
+        <tr>
+          <td><strong>SDR / BDR</strong></td>
+          <td>70:30</td>
+          <td>Activity-driven role with limited control over deal outcomes; high base prevents churn, moderate variable drives activity</td>
+        </tr>
+        <tr>
+          <td><strong>Sales Manager</strong></td>
+          <td>70:30 or 75:25</td>
+          <td>Management is a team sport; variable tied to team attainment, not individual closing</td>
+        </tr>
+        <tr>
+          <td><strong>VP of Sales / CRO</strong></td>
+          <td>50:50 or 60:40</td>
+          <td>Executive accountability for the number; higher variable leverage appropriate at this level</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="subsection">
+    <div class="subsection-title">Accelerators Above 100%</div>
+    <p>Accelerators are higher commission rates that apply above quota attainment thresholds. They are among the most powerful motivational tools in sales compensation — and among the most misdesigned.</p>
+
+    <table class="data-table">
+      <thead>
+        <tr>
+          <th>Attainment Tier</th>
+          <th>Commission Rate (Example)</th>
+          <th>Purpose</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>0–50% of quota</td>
+          <td>4% (below threshold — reduced rate or draw)</td>
+          <td>Discourages coasting at low attainment; creates urgency to reach threshold</td>
+        </tr>
+        <tr>
+          <td>50–100% of quota</td>
+          <td>8% (base commission rate)</td>
+          <td>Standard rate; earns "at-plan" variable</td>
+        </tr>
+        <tr>
+          <td>100–125% of quota</td>
+          <td>12% (1.5× accelerator)</td>
+          <td>Rewards overperformance meaningfully; makes it worth pushing hard above 100%</td>
+        </tr>
+        <tr>
+          <td>125–150% of quota</td>
+          <td>16% (2× accelerator)</td>
+          <td>Creates "President's Club" economics; top performers earn disproportionate upside</td>
+        </tr>
+        <tr>
+          <td>&gt;150% of quota</td>
+          <td>20%+ (2.5× or uncapped)</td>
+          <td>Legendary performers earn legendary money — retains your 10x reps</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <div class="callout callout-warning">
+      <div class="callout-title">Accelerator Design Mistake</div>
+      <p>Many companies cap commission at 150% of OTE. This is strategically wrong. Your top 10% of performers generate 25–40% of revenue. Capping their upside signals that the company doesn't want to pay for extraordinary results — these reps will find plans at competitors that don't cap. Uncapped commission for top performers is a retention and recruitment strategy, not just a comp policy.</p>
+    </div>
+  </div>
+
+  <div class="subsection">
+    <div class="subsection-title">SPIFs: Proper Design and Use</div>
+    <p>A SPIF (Sales Performance Incentive Fund) is a short-term incentive layered on top of the base comp plan to drive a specific behavior over a defined period.</p>
+    <ul class="bullet-list">
+      <li><strong>Right use:</strong> Product launch adoption ("$500 bonus for first deal on new product"), quarter-end acceleration ("extra 2% on all deals closed in the last 2 weeks"), pipeline building sprints ("$100 per qualified meeting booked this week")</li>
+      <li><strong>Wrong use:</strong> Substituting for a broken comp plan; running SPIFs constantly (they lose their signal value); using SPIFs to make reps care about things that aren't in their quota — this signals misalignment between what you measure and what you're paying for</li>
+      <li><strong>Duration:</strong> 2–4 weeks maximum. Longer than that and it becomes expected baseline behavior, not a sprint incentive.</li>
+      <li><strong>Visibility:</strong> Announce via live team call, post a leaderboard, send daily updates. SPIFs work through social competition and urgency — quiet SPIFs do nothing.</li>
+    </ul>
+  </div>
+
+  <div class="subsection">
+    <div class="subsection-title">Clawback Provisions</div>
+    <p>A clawback is a provision that requires a rep to return commission if a deal cancels or churns within a specified period after close. Clawbacks align rep incentives with customer success — not just deal signing.</p>
+    <ul class="bullet-list">
+      <li><strong>Typical clawback period:</strong> 90–180 days after contract signature. Any churn within this period triggers a partial or full commission recapture.</li>
+      <li><strong>Why they matter:</strong> Without clawbacks, reps are incentivized to close bad-fit customers, over-promise on capabilities, and discount aggressively to close — since they bear none of the downstream cost.</li>
+      <li><strong>Implementation note:</strong> Communicate clawbacks clearly in the offer letter and comp plan document. Surprise clawbacks destroy trust and create legal exposure. Define the trigger conditions precisely.</li>
+      <li><strong>Enterprise deals:</strong> Multi-year contracts may use pro-rated clawbacks (if deal churns in month 3 of a 12-month contract, claw back 75% of commission).</li>
+    </ul>
+  </div>
+
+  <div class="subsection">
+    <div class="subsection-title">Commission Timing: When Does the Rep Get Paid?</div>
+    <table class="data-table">
+      <thead>
+        <tr>
+          <th>Timing Method</th>
+          <th>How It Works</th>
+          <th>Pros</th>
+          <th>Cons</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>On Booking</strong></td>
+          <td>Commission paid when contract is signed, regardless of payment</td>
+          <td>Maximizes rep motivation; simplest to administer</td>
+          <td>Company absorbs risk if customer doesn't pay; disconnects rep from collection outcome</td>
+        </tr>
+        <tr>
+          <td><strong>On Invoice / Payment</strong></td>
+          <td">Commission paid when customer pays their first invoice</td>
+          <td>Aligns rep incentive with cash collection; reduces bad debt risk</td>
+          <td>Delays commission by 30–60 days; creates cash flow anxiety for reps; complex for multi-year prepay deals</td>
+        </tr>
+        <tr>
+          <td><strong>On Activation / Go-Live</strong></td>
+          <td>Commission paid when customer activates the product (common in PLG or implementation-heavy SaaS)</td>
+          <td>Aligns rep incentive with customer success; reduces churn risk from over-sold deals</td>
+          <td>Can delay significantly; rep has limited control over implementation timeline</td>
+        </tr>
+      </tbody>
+    </table>
+    <p><strong>Best practice:</strong> Pay on booking with clawback provisions. This maximizes rep motivation while using the clawback to manage quality. Avoid activation-based timing unless implementation is directly tied to rep behavior.</p>
+  </div>
+
+  <div class="subsection">
+    <div class="subsection-title">Modeling Comp Plan Scenarios</div>
+    <p>Every comp plan should be modeled before rollout. Build a scenario model that shows what a rep earns at 50%, 75%, 100%, 125%, and 150% of quota. Then ask three diagnostic questions:</p>
+    <ol class="step-list">
+      <li>
+        <div class="step-content">
+          <span class="step-title">Is at-plan earnings competitive?</span>
+          Benchmark OTE at 100% against market data (Radford, CompTrak, Glassdoor, LinkedIn salary benchmarks). If your OTE is 15% below market, you cannot hire well.
+        </div>
+      </li>
+      <li>
+        <div class="step-content">
+          <span class="step-title">Is the upside meaningful?</span>
+          At 150% attainment, is the rep earning 150%+ of OTE? If accelerators are weak, there is no economic reason to push beyond 100%.
+        </div>
+      </li>
+      <li>
+        <div class="step-content">
+          <span class="step-title">What does the company pay at each scenario?</span>
+          Model total commission cost as a % of revenue at each attainment level. Make sure the plan is sustainable. At 150% attainment and 2× accelerators, total sales cost should still be within the unit economics model.
+        </div>
+      </li>
+    </ol>
+  </div>
+
+  <!-- ═══════════════════════════════════════════════════
+       SECTION 6: INDICATORS
+  ════════════════════════════════════════════════════ -->
+  <div class="section-title">Key Indicators — Phase 2</div>
+
+  <div class="subsection">
+    <div class="subsection-title">Leading Indicators</div>
+    <div class="indicator-row">
+      <span class="indicator-tag ind-leading">Ramp Milestone Completion Rate</span>
+      <span class="indicator-tag ind-leading">Pipeline Generated in Ramp Period</span>
+      <span class="indicator-tag ind-leading">Coaching Session Frequency</span>
+      <span class="indicator-tag ind-leading">Call Volume (Weeks 1–4)</span>
+      <span class="indicator-tag ind-leading">Interview Scorecard Completion Rate</span>
+      <span class="indicator-tag ind-leading">Offer Acceptance Rate</span>
+    </div>
+  </div>
+
+  <div class="subsection">
+    <div class="subsection-title">Lagging Indicators</div>
+    <div class="indicator-row">
+      <span class="indicator-tag ind-lagging">Time to First Closed Deal</span>
+      <span class="indicator-tag ind-lagging">Quota Attainment at 6, 9, 12 Months</span>
+      <span class="indicator-tag ind-lagging">Voluntary Attrition Rate (12 months)</span>
+      <span class="indicator-tag ind-lagging">Attainment Distribution (% at 100%+)</span>
+      <span class="indicator-tag ind-lagging">Regrettable Attrition Rate</span>
+      <span class="indicator-tag ind-lagging">Average Ramp Cost per Rep</span>
+    </div>
+  </div>
+
+  <div class="subsection">
+    <div class="subsection-title">Key Formulas</div>
+
+    <div class="formula-block">
+      <div class="formula-label">Fully-Loaded Ramp Cost</div>
+      <div class="formula-main">Ramp Cost = (OTE × ramp_months / 12) + (monthly_pipeline_capacity × ramp_months × (1 − avg_productivity))</div>
+    </div>
+
+    <div class="formula-block">
+      <div class="formula-label">Commission Rate</div>
+      <div class="formula-main">Commission Rate = Variable Comp (at 100%) / Annual Quota</div>
+    </div>
+
+    <div class="formula-block">
+      <div class="formula-label">Quota Multiple</div>
+      <div class="formula-main">Quota Multiple = Annual Quota / OTE</div>
+      <div class="formula-note">Healthy range: 3x–5x for Mid-Market, 2.5x–4x for Enterprise, 4x–6x for SMB</div>
+    </div>
+
+    <div class="formula-block">
+      <div class="formula-label">Quota Coverage Model</div>
+      <div class="formula-main">Team Quota = Sum of individual rep quotas × quota coverage factor (typically 1.1–1.25×)</div>
+      <div class="formula-note">The coverage factor accounts for ramp time, attrition, and under-attainment. If your target is $5M and you carry 1.15× coverage, you need $5.75M in assigned quota across your team.</div>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════════════
+       SECTION 7: COMMON MISTAKES
+  ════════════════════════════════════════════════════ -->
+  <div class="section-title">Common Mistakes in Phase 2</div>
+  <div class="subsection">
+    <table class="data-table">
+      <thead>
+        <tr>
+          <th>Mistake</th>
+          <th>What It Looks Like</th>
+          <th>Consequence</th>
+          <th>Correction</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>Hiring too fast</strong></td>
+          <td>Lowering the bar to hit a headcount target. "We need bodies." Skipping reference checks, compressing the process.</td>
+          <td>High variance team, high attrition, management distraction — you spend 60% of your time on your bottom 20% of reps.</td>
+          <td>Maintain the bar. Open fewer seats if necessary. A small team of A-players outperforms a large team of mediocre reps every time.</td>
+        </tr>
+        <tr>
+          <td><strong>Hiring too slow</strong></td>
+          <td>Perfectionists who reject every candidate because they aren't the "ideal" — leaving quota capacity unfilled for 6+ months.</td>
+          <td>Missed revenue target. Surviving reps burn out carrying excess quota. Loss of competitive position.</td>
+          <td>Set a hiring SLA (fill in 60 days). Track time-to-fill and time-to-productivity. Accept that good enough + good ramp &gt; perfect hire at month 9.</td>
+        </tr>
+        <tr>
+          <td><strong>Lowering the bar</strong></td>
+          <td>Third-round interview, candidate is "fine," manager says "let's just see how they do."</td>
+          <td>The cascade: subpar ramp → underperformance → PIP → termination → backfill. Costs 2–3× OTE and 12 months of opportunity.</td>
+          <td>Define the bar numerically on the scorecard. A score below X is a no-hire — no exceptions, regardless of urgency.</td>
+        </tr>
+        <tr>
+          <td><strong>Unstructured ramp</strong></td>
+          <td>New reps are handed a Salesforce login and told to figure it out. No formal program. "Just shadow some calls."</td>
+          <td>2× the ramp time, high new-hire attrition (they leave before they ramp), poor pipeline quality from unguided prospecting.</td>
+          <td>Build a 90-day structured program with weekly milestones and certification checkpoints before the next hire starts.</td>
+        </tr>
+        <tr>
+          <td><strong>Quota miscalibration</strong></td>
+          <td>Setting quota from a spreadsheet without territory analysis. Every rep gets $800K. Some territories can support $1.2M, others $400K.</td>
+          <td>High variance in attainment unrelated to rep performance. Top reps in thin territories quit. Bottom reps in rich territories overperform and think they're good.</td>
+          <td>Build a territory potential model. Score accounts by firmographic fit, headcount signal, intent data, and historical win rates in that segment.</td>
+        </tr>
+        <tr>
+          <td><strong>Comp plan complexity</strong></td>
+          <td>Six different multipliers, SPIFs running constantly, multiple product overlays, cap structures that no one understands.</td>
+          <td>Reps don't know what to optimize for. Complex plans favor reps who game the system, not reps who produce the most value.</td>
+          <td>A great comp plan fits on one page. Simple, predictable, transparent. Reps should be able to calculate their expected earnings in their head.</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="section-title">Science of Scaling Tools for This Phase</div>
+  <p class="section-intro">Phase 2 hiring and compensation decisions must be calibrated to your current Science of Scaling stage. The right hire in Stage 3 is catastrophically wrong in Stage 1.</p>
+  <div class="tools-grid">
+    <a href="../subpages/sos-pmf.html" class="tool-card tc-sos">
+      <div class="tc-phase">Stage 1 Context</div>
+      <div class="tc-title">PMF — Hiring in Stage 1</div>
+      <div class="tc-desc">Stage 1 comp structure: 50% at close + 50% at LIR achievement. Stage 1 hire profile: PM+AE hybrid who discovers the playbook, not executes it.</div>
+    </a>
+    <a href="../subpages/sos-gtm-fit.html" class="tool-card tc-sos">
+      <div class="tc-phase">Stage 2 Context</div>
+      <div class="tc-title">GTM Fit — Hiring in Stage 2</div>
+      <div class="tc-desc">The "2 reps/month for 6 months" pace. Process Builder profile. Scorecard iteration at month 6. Comp adds LIUE health component.</div>
+    </a>
+    <a href="../subpages/sos-growth-moat.html" class="tool-card tc-sos">
+      <div class="tc-phase">Stage 3 Context</div>
+      <div class="tc-title">Growth &amp; Moat — Hiring at Scale</div>
+      <div class="tc-desc">Process Executor profile. Data-driven promotion path. Cohort-based scorecard iteration. Scale as fast as possible without losing GTM Fit.</div>
+    </a>
+    <a href="../subpages/sos-hiring-sales-leader.html" class="tool-card tc-sos">
+      <div class="tc-phase">Stage 2 · Critical Hire</div>
+      <div class="tc-title">Hiring the First Sales Leader</div>
+      <div class="tc-desc">3-step process, 7-skill scorecard, 6-stage evaluation, red flags. The most consequential GTM hire — only make it after GTM Fit is proven.</div>
+    </a>
+    <a href="../subpages/template-scorecard-sales.html" class="tool-card tc-res">
+      <div class="tc-phase">Template · All Stages</div>
+      <div class="tc-title">Sales Rep Scorecard</div>
+      <div class="tc-desc">Roberge's 10-attribute formula (580 pts). Coachability weighted highest. Iterate at month 6 of each hiring cohort based on what actually predicted success.</div>
+    </a>
+    <a href="../subpages/template-scorecard-sales-leader.html" class="tool-card tc-res">
+      <div class="tc-phase">Template · Stage 2</div>
+      <div class="tc-title">Sales Leader Scorecard</div>
+      <div class="tc-desc">7-skill weighted rubric: Hiring, Coaching, Sales Methodology, Leadership, Analytical, Teamwork, Culture Fit. Only use after LIUE &gt; 3.</div>
+    </a>
+    <a href="../subpages/template-scorecard-gtm.html" class="tool-card tc-res">
+      <div class="tc-phase">Template · Stage 1</div>
+      <div class="tc-title">First GTM Hire Scorecard</div>
+      <div class="tc-desc">For pre-GTM-Fit companies: the founding AE who can discover AND codify the playbook. 5 criteria including technical depth and consultative approach.</div>
+    </a>
+    <a href="../subpages/sos-bottoms-up.html" class="tool-card tc-sos">
+      <div class="tc-phase">Stage 2–3 · Planning</div>
+      <div class="tc-title">GTM Bottoms-Up Model</div>
+      <div class="tc-desc">Build the hiring plan from rep productivity data (SQLs/rep/month, ramp time, quota attainment). Never hire ahead of LIUE validation.</div>
+    </a>
+  </div>
+
+  <!-- Related -->
+  <div class="related-section">
+    <div class="related-title">Related Pages</div>
+    <div class="related-links">
+      <a href="phase1.html" class="related-link">Phase 1 — Sales System Design</a>
+      <a href="phase3.html" class="related-link">Phase 3 — Go-To-Market</a>
+      <a href="revops.html" class="related-link">Revenue Operations</a>
+      <a href="../subpages/metrics.html" class="related-link">Metrics &amp; Analytics</a>
+      <a href="../subpages/hiring-formula.html" class="related-link">Hiring Formula Deep Dive</a>
+      <a href="../subpages/compensation-design.html" class="related-link">Compensation Design Deep Dive</a>
+      <a href="../subpages/ramp-design.html" class="related-link">Ramp Design Deep Dive</a>
+      <a href="../subpages/sos-gtm-fit.html" class="related-link">Stage 2: GTM Fit</a>
+      <a href="../subpages/sos-hiring-sales-leader.html" class="related-link">Hiring the First Sales Leader</a>
+      <a href="../subpages/template-scorecard-sales.html" class="related-link">Sales Rep Scorecard</a>
+      <a href="../subpages/template-scorecard-sales-leader.html" class="related-link">Sales Leader Scorecard</a>
+    </div>
+  </div>
+
+</div>
+<script data-pplx-inline-edit>
+(function () {
+  if (window === window.top) return;
+
+  const allowedParentOrigins = ["https://www.perplexity.ai","https://perplexity.ai","https://testing.perplexity.ai","https://staging.perplexity.ai","https://*.preview.i.perplexity.ai","http://localhost:3000","http://127.0.0.1:3000","http://localhost:5173","http://127.0.0.1:5173"];
+  const MAX_FONT_BYTES = 500 * 1024;
+  const MAX_TOTAL_FONT_BYTES = 2 * 1024 * 1024;
+  let scrollForwarding = false;
+  let scrollRaf = 0;
+  let trustedTopOrigin = null;
+
+  // Allow entries like "https://*.preview.i.perplexity.ai" — the wildcard
+  // matches a single DNS label (no dots), so "https://*.foo" cannot stretch
+  // across multiple labels.
+  function matchesAllowedOrigin(origin) {
+    if (!origin) return false;
+    for (const entry of allowedParentOrigins) {
+      if (!entry.includes("*")) {
+        if (entry === origin) return true;
+        continue;
+      }
+      const pattern = new RegExp(
+        "^" +
+          entry.replace(/[.+?^${}()|[\]\\]/g, "\\$&").replace(/\*/g, "[^.]+") +
+          "$",
+      );
+      if (pattern.test(origin)) return true;
+    }
+    return false;
+  }
+
+  // Trust decision: when the sender is same-origin-visible (event.origin is a
+  // real origin like https://www.perplexity.ai) we trust event.origin directly.
+  // When event.origin is "null" (opaque broker srcdoc), we fall back to the
+  // broker's stamped `parentOrigin` to identify the top window. The fallback
+  // is claim-only — we rely on the browser's native `targetOrigin` enforcement
+  // on the response path (see postToTrustedTop) to ensure replies can't be
+  // delivered to anyone but the actual top window of that claimed origin.
+  function getTrustedParentOrigin(event) {
+    const forwardedParentOrigin =
+      typeof event.data.parentOrigin === "string" ? event.data.parentOrigin : null;
+    const parentOrigin = event.origin === "null" ? forwardedParentOrigin : event.origin;
+    return matchesAllowedOrigin(parentOrigin) ? parentOrigin : null;
+  }
+
+  // All responses go to window.top with targetOrigin = the allowlisted origin.
+  // An attacker that iframes us inside their own null-origin broker can claim
+  // any parentOrigin they like, but the browser will drop the reply whenever
+  // the real top's origin doesn't match — so the screenshot never leaves.
+  function postToTrustedTop(message) {
+    if (!trustedTopOrigin) return;
+    try {
+      window.top.postMessage(message, trustedTopOrigin);
+    } catch (_error) {}
+  }
+
+  function inlineAll(original, clone) {
+    if (original.nodeType !== 1 || clone.nodeType !== 1) return;
+
+    try {
+      const computedStyle = getComputedStyle(original);
+      // cssText on a computed style is the serialized declaration in modern
+      // Chromium/Safari — a single read beats enumerating ~400 longhand
+      // properties. Firefox returns "" here, so we fall back on empty.
+      const serialized = computedStyle.cssText;
+      if (serialized) {
+        clone.style.cssText = serialized;
+      } else {
+        const parts = new Array(computedStyle.length);
+        for (let index = 0; index < computedStyle.length; index += 1) {
+          const property = computedStyle[index];
+          parts[index] = `${property}:${computedStyle.getPropertyValue(property)};`;
+        }
+        clone.style.cssText = parts.join("");
+      }
+    } catch (_error) {}
+
+    const originalChildren = original.children;
+    const clonedChildren = clone.children;
+    for (
+      let index = 0;
+      index < originalChildren.length && index < clonedChildren.length;
+      index += 1
+    ) {
+      inlineAll(originalChildren[index], clonedChildren[index]);
+    }
+  }
+
+  function extractFontUrl(srcValue) {
+    const matches = [
+      ...srcValue.matchAll(
+        /url\(["']?([^"')]+)["']?\)(?:\s*format\(["']?([^"')]+)["']?\))?/gi,
+      ),
+    ];
+    if (matches.length === 0) return null;
+    const woff2 = matches.find((m) => m[2] && m[2].toLowerCase().includes("woff2"));
+    if (woff2) return woff2[1];
+    const woff = matches.find((m) => m[2] && m[2].toLowerCase().includes("woff"));
+    if (woff) return woff[1];
+    return matches[0][1];
+  }
+
+  // Cache resolved font URL -> data URI across captures. Fonts on a page
+  // essentially never change, and a batch run emits multiple captures back to
+  // back — without this we'd refetch + re-base64 every time.
+  const fontDataUriCache = new Map();
+  const SRC_DECLARATION_RE = /src\s*:\s*[^;}]+/i;
+
+  async function fetchAsDataUri(url) {
+    if (fontDataUriCache.has(url)) return fontDataUriCache.get(url);
+    let dataUri = null;
+    try {
+      const response = await fetch(url, { mode: "cors", credentials: "omit" });
+      if (response.ok) {
+        const blob = await response.blob();
+        if (blob.size <= MAX_FONT_BYTES) {
+          dataUri = await new Promise((resolve) => {
+            const reader = new FileReader();
+            reader.onloadend = () =>
+              resolve(typeof reader.result === "string" ? reader.result : null);
+            reader.onerror = () => resolve(null);
+            reader.readAsDataURL(blob);
+          });
+        }
+      }
+    } catch (_error) {
+      dataUri = null;
+    }
+    fontDataUriCache.set(url, dataUri);
+    return dataUri;
+  }
+
+  function collectFontFaceRuleTexts() {
+    const rules = [];
+    for (const sheet of document.styleSheets) {
+      let cssRules;
+      try {
+        cssRules = sheet.cssRules;
+      } catch (_error) {
+        continue;
+      }
+      if (!cssRules) continue;
+      for (const rule of cssRules) {
+        const cssText = rule.cssText || "";
+        if (cssText.startsWith("@font-face")) rules.push(cssText);
+      }
+    }
+    return rules;
+  }
+
+  async function buildInlinedFontCss() {
+    const ruleTexts = collectFontFaceRuleTexts();
+    if (ruleTexts.length === 0) return null;
+
+    const resolved = ruleTexts.map((cssText) => {
+      if (!SRC_DECLARATION_RE.test(cssText)) return null;
+      const srcMatch = cssText.match(/src\s*:\s*([^;}]+)[;}]/i);
+      if (!srcMatch) return null;
+      const url = extractFontUrl(srcMatch[1]);
+      if (!url) return null;
+      try {
+        return { cssText, url: new URL(url, document.baseURI).href };
+      } catch (_error) {
+        return null;
+      }
+    });
+
+    const dataUris = await Promise.all(
+      resolved.map((entry) => (entry ? fetchAsDataUri(entry.url) : Promise.resolve(null))),
+    );
+
+    const inlined = [];
+    let totalBytes = 0;
+    for (let index = 0; index < resolved.length; index += 1) {
+      const entry = resolved[index];
+      const dataUri = dataUris[index];
+      if (!entry || !dataUri) continue;
+      const approxBytes = dataUri.length * 0.75;
+      if (totalBytes + approxBytes > MAX_TOTAL_FONT_BYTES) break;
+      totalBytes += approxBytes;
+      inlined.push(entry.cssText.replace(SRC_DECLARATION_RE, `src: url("${dataUri}")`));
+    }
+    return inlined.length > 0 ? inlined.join("\n") : null;
+  }
+
+  function stripExternal(clone) {
+    const images = clone.querySelectorAll("img");
+    for (let index = 0; index < images.length; index += 1) {
+      const src = images[index].getAttribute("src");
+      if (src && !src.startsWith("data:")) images[index].removeAttribute("src");
+    }
+
+    const elements = clone.querySelectorAll("*");
+    for (let index = 0; index < elements.length; index += 1) {
+      const style = elements[index].style.cssText;
+      if (style && style.includes("url(")) {
+        elements[index].style.cssText = style.replace(
+          /url\(["']?(?!data:)[^)"']*["']?\)/gi,
+          "none",
+        );
+      }
+    }
+  }
+
+  function emitScroll() {
+    scrollRaf = 0;
+    if (!scrollForwarding) return;
+    postToTrustedTop({
+      type: "INLINE_EDIT_SCROLL",
+      scrollX: window.scrollX,
+      scrollY: window.scrollY,
+    });
+  }
+
+  window.addEventListener(
+    "scroll",
+    function () {
+      if (!scrollForwarding || scrollRaf) return;
+      scrollRaf = requestAnimationFrame(emitScroll);
+    },
+    { passive: true, capture: true },
+  );
+
+  async function handleCaptureRequest(event) {
+    const requestId = event.data.requestId;
+    const scrollX = window.scrollX;
+    const scrollY = window.scrollY;
+    const width = window.innerWidth;
+    const height = window.innerHeight;
+
+    function postResult(dataUrl) {
+      postToTrustedTop({
+        type: "INLINE_EDIT_SCREENSHOT_RESULT",
+        requestId,
+        dataUrl,
+        scrollX,
+        scrollY,
+      });
+    }
+
+    try {
+      // Wait for any pending web fonts to resolve so both inline metrics and
+      // the @font-face inlining below see the same loaded faces.
+      if (document.fonts && document.fonts.ready) {
+        try {
+          await document.fonts.ready;
+        } catch (_error) {}
+      }
+
+      const clone = document.documentElement.cloneNode(true);
+      inlineAll(document.documentElement, clone);
+
+      const removedNodes = clone.querySelectorAll("script,link[rel=\"stylesheet\"],style");
+      for (let index = 0; index < removedNodes.length; index += 1) {
+        removedNodes[index].remove();
+      }
+
+      stripExternal(clone);
+
+      // Re-embed web fonts as data-URI @font-face rules so the SVG rasterizer
+      // can resolve them — external font URLs aren't fetched during
+      // foreignObject rendering, which would otherwise force a fallback face
+      // and change text metrics.
+      const inlinedFontCss = await buildInlinedFontCss();
+      if (inlinedFontCss) {
+        const styleEl = document.createElement("style");
+        styleEl.textContent = inlinedFontCss;
+        const head = clone.querySelector("head");
+        if (head) head.appendChild(styleEl);
+        else clone.insertBefore(styleEl, clone.firstChild);
+      }
+
+      const html = new XMLSerializer().serializeToString(clone);
+      const svg =
+        `<svg xmlns="http://www.w3.org/2000/svg" width="${width}" height="${height}">` +
+        '<foreignObject width="100%" height="100%">' +
+        `<div xmlns="http://www.w3.org/1999/xhtml" style="width:${width}px;height:${height}px;overflow:hidden">` +
+        `<div style="transform:translate(-${scrollX}px,-${scrollY}px);transform-origin:top left">` +
+        html +
+        "</div></div></foreignObject></svg>";
+      const svgUrl = `data:image/svg+xml;charset=utf-8,${encodeURIComponent(svg)}`;
+      const image = new Image();
+      image.onload = function () {
+        const canvas = document.createElement("canvas");
+        canvas.width = width;
+        canvas.height = height;
+        canvas.getContext("2d").drawImage(image, 0, 0);
+        postResult(canvas.toDataURL("image/png"));
+      };
+      image.onerror = function () {
+        postResult(null);
+      };
+      image.src = svgUrl;
+    } catch (_error) {
+      postResult(null);
+    }
+  }
+
+  window.addEventListener("message", function (event) {
+    if (!event.data) return;
+    // Only accept messages from the direct parent frame. Blocks sibling /
+    // unrelated-window postMessage senders that could otherwise reach us.
+    if (event.source !== window.parent) return;
+
+    const trustedParentOrigin = getTrustedParentOrigin(event);
+    if (!trustedParentOrigin) return;
+    trustedTopOrigin = trustedParentOrigin;
+
+    if (event.data.type === "INLINE_EDIT_SCROLL_START") {
+      scrollForwarding = true;
+      emitScroll();
+      return;
+    }
+
+    if (event.data.type === "INLINE_EDIT_SCROLL_STOP") {
+      scrollForwarding = false;
+      if (scrollRaf) cancelAnimationFrame(scrollRaf);
+      scrollRaf = 0;
+      return;
+    }
+
+    if (event.data.type !== "INLINE_EDIT_CAPTURE_REQUEST") return;
+
+    handleCaptureRequest(event);
+  });
+})();
+
+
+</script></body>
+</html>

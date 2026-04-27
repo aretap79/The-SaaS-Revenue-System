@@ -1,0 +1,988 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Pipeline Discipline, MEDDICC, Forecasting & Win/Loss — SaaS Revenue System</title>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="../assets/shared.css"/>
+  <style>
+    .page-hero { background: #964219; }
+    .meddicc-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      gap: 14px;
+      margin: 24px 0;
+    }
+    .meddicc-card {
+      background: var(--surface);
+      border: 1.5px solid var(--border);
+      border-radius: 10px;
+      padding: 18px 20px;
+      position: relative;
+      overflow: hidden;
+    }
+    .meddicc-card::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 4px;
+      background: #964219;
+    }
+    .meddicc-letter {
+      font-size: 28px;
+      font-weight: 700;
+      color: #964219;
+      line-height: 1;
+      margin-bottom: 2px;
+    }
+    .meddicc-name {
+      font-size: 13px;
+      font-weight: 700;
+      color: var(--text);
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      margin-bottom: 10px;
+    }
+    .meddicc-card p {
+      font-size: 14px;
+      line-height: 1.6;
+      color: var(--text);
+      margin-bottom: 8px;
+    }
+    .meddicc-card p:last-child { margin-bottom: 0; }
+    .scorecard-table td:first-child {
+      font-weight: 600;
+      width: 35%;
+    }
+    .score-badge {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 28px;
+      height: 28px;
+      border-radius: 50%;
+      font-size: 12px;
+      font-weight: 700;
+      margin-right: 6px;
+    }
+    .score-strong { background: #e6f4ea; color: #437A22; }
+    .score-partial { background: #fff8e1; color: #9a6c00; }
+    .score-missing { background: #fce8e6; color: #A13544; }
+    .two-col {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+      margin: 16px 0;
+    }
+    @media(max-width:640px) { .two-col { grid-template-columns: 1fr; } .meddicc-grid { grid-template-columns: 1fr; } }
+    .coverage-visual {
+      background: var(--surface);
+      border: 1.5px solid var(--border);
+      border-radius: 8px;
+      padding: 20px;
+      margin: 16px 0;
+    }
+    .coverage-bar-wrap {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin: 10px 0;
+    }
+    .coverage-label { font-size: 13px; font-weight: 600; width: 80px; flex-shrink: 0; }
+    .coverage-bar-bg {
+      flex: 1;
+      height: 20px;
+      background: #f0ede6;
+      border-radius: 4px;
+      overflow: hidden;
+    }
+    .coverage-bar { height: 100%; border-radius: 4px; display: flex; align-items: center; padding-left: 8px; font-size: 11px; font-weight: 700; color: #fff; }
+    .bar-danger { background: #A13544; }
+    .bar-ok { background: #9a6c00; }
+    .bar-good { background: #437A22; }
+    .bar-great { background: #01696F; }
+    .sos-context-banner {
+  background: linear-gradient(135deg, #0D5C63 0%, #0a4a50 100%);
+  border-radius: 10px;
+  padding: 20px 24px;
+  margin-bottom: 32px;
+  display: grid;
+  grid-template-columns: 200px 1fr auto;
+  gap: 20px;
+  align-items: start;
+}
+.sos-cb-stage { border-right: 1px solid rgba(255,255,255,0.2); padding-right: 20px; }
+.sos-cb-label { font-size: 10px; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase; color: rgba(255,255,255,0.6); margin-bottom: 4px; }
+.sos-cb-title { font-size: 18px; font-weight: 700; color: #fff; line-height: 1.3; }
+.sos-cb-content { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+.sos-cb-item { background: rgba(255,255,255,0.08); border-radius: 6px; padding: 10px 12px; }
+.sos-cb-item-label { font-size: 10px; font-weight: 700; letter-spacing: 0.8px; text-transform: uppercase; color: rgba(255,255,255,0.55); margin-bottom: 3px; }
+.sos-cb-item-value { font-size: 12px; color: rgba(255,255,255,0.85); line-height: 1.5; }
+.sos-cb-link { background: rgba(255,255,255,0.15); color: #fff; font-size: 12px; font-weight: 700; padding: 8px 14px; border-radius: 6px; text-decoration: none; white-space: nowrap; align-self: center; transition: background 0.15s; }
+.sos-cb-link:hover { background: rgba(255,255,255,0.28); color: #fff; text-decoration: none; }
+.tools-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 12px; margin: 16px 0 40px; }
+.tool-card { background: var(--surface); border: 1.5px solid var(--border); border-radius: 8px; padding: 14px 16px; text-decoration: none; display: block; transition: all 0.15s; }
+.tool-card:hover { text-decoration: none; transform: translateY(-1px); box-shadow: 0 3px 10px rgba(0,0,0,0.08); }
+.tc-sos { border-left: 3px solid #0D5C63; }
+.tc-sos:hover { border-color: #0D5C63; }
+.tc-res { border-left: 3px solid #2C5F8A; }
+.tc-res:hover { border-color: #2C5F8A; }
+.tc-phase { font-size: 10px; font-weight: 700; letter-spacing: 0.8px; text-transform: uppercase; color: var(--text-muted); margin-bottom: 4px; }
+.tc-sos .tc-phase { color: #0D5C63; }
+.tc-res .tc-phase { color: #2C5F8A; }
+.tc-title { font-size: 13px; font-weight: 700; color: var(--text); margin-bottom: 4px; line-height: 1.3; }
+.tc-desc { font-size: 11px; color: var(--text-muted); line-height: 1.5; }
+  </style>
+</head>
+<body>
+<nav class="nav">
+  <span class="nav-logo">SaaS <span>Revenue System</span></span>
+  <span class="nav-sep">|</span>
+  <a href="../index.html" class="nav-back">← Home</a>
+  <span class="nav-sep">|</span>
+  <span class="nav-current">Phase 4 — Execution</span>
+</nav>
+
+<div class="page-hero">
+  <div class="hero-phase-label">PHASE 4 — EXECUTION</div>
+  <div class="hero-title">Pipeline Discipline, MEDDICC, Forecasting &amp; Win/Loss</div>
+  <div class="hero-subtitle">Execution is where strategy meets reality. The disciplines in this phase determine whether you make the number.</div>
+  <div class="hero-tags">
+    <a href="../subpages/pipeline-generation.html" class="hero-tag">Pipeline Generation</a>
+    <a href="../subpages/meddicc.html" class="hero-tag">MEDDICC Framework</a>
+    <a href="../subpages/champion-building.html" class="hero-tag">Champion Building</a>
+    <a href="../subpages/forecast-integrity.html" class="hero-tag">Forecast Integrity</a>
+    <a href="../subpages/win-loss-analysis.html" class="hero-tag">Win/Loss Analysis</a>
+    <a href="../subpages/deal-review.html" class="hero-tag">Deal Review</a>
+  </div>
+</div>
+
+<div class="content-wrap">
+
+<div class="sos-context-banner">
+  <div class="sos-cb-stage">
+    <div class="sos-cb-label">Science of Scaling — Stage 2</div>
+    <div class="sos-cb-title">GTM Fit — Execution Layer</div>
+  </div>
+  <div class="sos-cb-content">
+    <div class="sos-cb-item">
+      <div class="sos-cb-item-label">LIUE Input Metrics</div>
+      <div class="sos-cb-item-value">Phase 4 directly generates LIUE's CAC inputs: SQL-to-Customer% (from pipeline management), Cost per SQL (from demand gen tracking), and SQLs per Rep per Month (from prospecting discipline).</div>
+    </div>
+    <div class="sos-cb-item">
+      <div class="sos-cb-item-label">LIR &amp; Sales Comp</div>
+      <div class="sos-cb-item-value">In Stage 2, 50% of rep commission is paid at close; 50% is paid when the customer achieves LIR within T days. MEDDICC qualification helps predict which deals will produce LIR-achieving customers.</div>
+    </div>
+    <div class="sos-cb-item">
+      <div class="sos-cb-item-label">Film Reviews</div>
+      <div class="sos-cb-item-value">Daily during Stage 2 (GTM Fit): listen to recorded calls, identify patterns, update the GTM Playbook in real-time. The mechanism for continuously improving SQL-to-Customer rate.</div>
+    </div>
+    <div class="sos-cb-item">
+      <div class="sos-cb-item-label">Forecast &amp; GTM Fit</div>
+      <div class="sos-cb-item-value">Forecast accuracy in Stage 2 validates that the sales motion is repeatable — a prerequisite for declaring GTM Fit and scaling headcount. High forecast variance = motion not yet codified.</div>
+    </div>
+  </div>
+  <a href="../subpages/sos-liue.html" class="sos-cb-link">LIUE Formula →</a>
+</div>
+
+  <!-- ── 1. PIPELINE GENERATION DISCIPLINE ── -->
+  <h2 class="section-title">Pipeline Generation Discipline</h2>
+  <p class="section-intro">Anthony Iannarino's foundational principle: pipeline creation is the single most important activity in sales. Everything else — qualification, discovery, negotiation, closing — is downstream of having enough qualified opportunities. You cannot close what you haven't created. A rep who is excellent at closing but poor at prospecting will always underperform against a rep who is great at prospecting but merely competent at closing.</p>
+
+  <div class="subsection">
+    <div class="subsection-title">Prospecting as Non-Negotiable</div>
+    <p>Prospecting must be treated as a professional obligation, not an optional activity. The moment a rep believes that prospecting is someone else's job — the SDR team's, marketing's, or leadership's — that rep has accepted mediocrity. Even in organizations with dedicated SDR functions, AEs who prospect for themselves consistently outperform those who rely exclusively on inbound or SDR-sourced pipeline.</p>
+    <p>The discipline is simple and unforgiving: block time daily for prospecting (typically 60–90 minutes in the morning before reactive work begins), protect that time from calendar intrusion, and hold it sacred regardless of how full the existing pipeline appears. Iannarino calls this the "One More Call" principle — the rep who makes one more outreach attempt than their peers, compounded over a year, generates dramatically more pipeline.</p>
+    <div class="callout callout-warning">
+      <div class="callout-title">The Feast-and-Famine Trap</div>
+      <p>The most common pipeline failure pattern: a rep goes heads-down on late-stage deals, stops prospecting for 6–8 weeks, and then closes. The resulting pipeline famine hits 90 days later when the closed deals produce no replacements. Pipeline generation must be consistent even when the funnel looks full — because a full funnel today reflects 90-day-old prospecting.</p>
+    </div>
+  </div>
+
+  <div class="subsection">
+    <div class="subsection-title">SDR vs. AE Prospecting</div>
+    <p>In most SaaS organizations, the Sales Development Representative (SDR) function handles top-of-funnel prospecting — outbound sequences, inbound response, and initial qualification — before handing qualified opportunities to Account Executives. This division of labor improves efficiency, but creates a dangerous dependency if AEs stop prospecting entirely.</p>
+    <p><strong>SDR responsibilities:</strong> High-volume outbound at target accounts, inbound lead qualification, multi-touch cadences, booking discovery or intro calls, CRM hygiene on lead and contact records.</p>
+    <p><strong>AE prospecting responsibilities:</strong> Strategic outreach to specific high-value contacts at named accounts, follow-up on existing relationship touchpoints, referral cultivation, event-driven prospecting, re-engagement of stalled opportunities. AE prospecting is lower volume but higher quality — it is targeted, relationship-driven, and value-first.</p>
+    <p>The best-performing AEs in enterprise SaaS typically self-source 25–40% of their own pipeline, even when a well-funded SDR team exists. This percentage rises as deal size increases, because SDR-generated pipeline tends to skew toward smaller, faster-moving opportunities.</p>
+  </div>
+
+  <div class="subsection">
+    <div class="subsection-title">Multi-Channel Outreach & Cadence Design</div>
+    <p>Modern B2B prospecting is inherently multi-channel. No single channel — email, phone, LinkedIn, video — achieves sufficient response rates on its own. The science of cadence design requires coordinating touches across channels at appropriate frequency and spacing to generate responses without triggering spam filters or annoying prospects into permanently ignoring you.</p>
+    <table class="data-table">
+      <thead>
+        <tr><th>Channel</th><th>Best Use</th><th>Avg. Open/Response Rate</th><th>Key Principle</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>Email</td><td>Initial outreach, pattern interrupts, value-led follow-up</td><td>20–35% open, 2–5% reply</td><td>Relevance over volume. One clear idea per email. Subject line is everything.</td></tr>
+        <tr><td>Phone / Cold Call</td><td>Breaking through silence, post-email follow-up, senior buyers</td><td>2–5% connect rate</td><td>Call with a reason. Voicemail drives callback &lt;2% — leave for brand impression only.</td></tr>
+        <tr><td>LinkedIn</td><td>Warm touch, content engagement, connection requests</td><td>15–25% acceptance, 5–10% InMail reply</td><td>Personalization non-negotiable. Generic InMail = ignored.</td></tr>
+        <tr><td>Video (Loom/BombBomb)</td><td>Breaking through crowded inboxes, demo previews</td><td>3–8x email reply lift when used</td><td>30–90 seconds max. Personalized thumbnail. Name the prospect's problem in first 5 sec.</td></tr>
+        <tr><td>Direct Mail</td><td>ABM at named accounts, executive outreach</td><td>Variable — very high when done well</td><td>Used sparingly for high-value targets. Tactile pattern interrupt.</td></tr>
+      </tbody>
+    </table>
+    <p><strong>Cadence structure best practice (Outbound SDR/AE):</strong> A 15–20 touch cadence over 30–45 days, mixing email, phone, and LinkedIn. Start with a value-led email, follow with a LinkedIn connection, then a call, then another value email with a case study or insight. Increase the value of each touch; don't repeat the same ask. The final touch ("breakup email") often generates the highest response rate by creating finality.</p>
+  </div>
+
+  <div class="subsection">
+    <div class="subsection-title">The Pipeline Generation Meeting</div>
+    <p>High-performing sales leaders institutionalize a weekly pipeline generation meeting — typically 30–45 minutes — focused exclusively on top-of-funnel activity. This is distinct from the forecast call, which looks at late-stage opportunities. The pipeline generation meeting reviews prospecting activity metrics, target account prioritization, and early-stage opportunity creation.</p>
+    <p>Agenda: (1) Review prospecting activity from the prior week (calls made, emails sent, LinkedIn touches, responses received). (2) Review new opportunities created. (3) Address blockers on specific target accounts. (4) Identify which accounts need manager involvement or different strategy. (5) Commit to specific prospecting actions for the coming week.</p>
+    <p>The key principle: inspect activity, not just outcomes. A rep who made 80 calls and created no opportunities this week is different from a rep who made 8 calls and created no opportunities. The first needs coaching on messaging; the second needs coaching on activity discipline.</p>
+  </div>
+
+  <div class="subsection">
+    <div class="subsection-title">Pipeline Coverage Ratio</div>
+    <p>Pipeline coverage is the ratio of total pipeline value to quota for a given period. It is the foundational metric of pipeline health and the primary early warning system for a revenue shortfall 1–2 quarters out.</p>
+    <div class="formula-block">
+      <div class="formula-label">Pipeline Coverage Ratio</div>
+      <div class="formula-main">Pipeline Coverage = Total Pipeline Value / Quota</div>
+      <div class="formula-note">Example: $3.2M in pipeline / $1M quota = 3.2x coverage</div>
+    </div>
+    <div class="coverage-visual">
+      <div style="font-size:13px;font-weight:700;margin-bottom:12px;text-transform:uppercase;letter-spacing:.5px;color:var(--text-muted)">Coverage Ratio Benchmarks</div>
+      <div class="coverage-bar-wrap">
+        <span class="coverage-label">1.0–1.5x</span>
+        <div class="coverage-bar-bg"><div class="coverage-bar bar-danger" style="width:25%">Critical</div></div>
+      </div>
+      <div class="coverage-bar-wrap">
+        <span class="coverage-label">1.5–2.5x</span>
+        <div class="coverage-bar-bg"><div class="coverage-bar bar-ok" style="width:45%">Insufficient</div></div>
+      </div>
+      <div class="coverage-bar-wrap">
+        <span class="coverage-label">3.0–4.0x</span>
+        <div class="coverage-bar-bg"><div class="coverage-bar bar-good" style="width:70%">Standard</div></div>
+      </div>
+      <div class="coverage-bar-wrap">
+        <span class="coverage-label">4.0–5.0x</span>
+        <div class="coverage-bar-bg"><div class="coverage-bar bar-great" style="width:90%">Best-in-Class</div></div>
+      </div>
+      <p style="font-size:12px;color:var(--text-muted);margin-top:12px">The 3x–4x standard assumes a win rate of 25–33%. Higher win rates allow lower coverage ratios; lower win rates require higher coverage to hit quota. Always calibrate coverage targets to actual historical win rates, not assumed win rates.</p>
+    </div>
+    <div class="callout callout-best-practice">
+      <div class="callout-title">Coverage Ratio by Stage</div>
+      <p>Aggregate pipeline coverage masks pipeline quality problems. A 4x coverage ratio where 80% of pipeline is in Stage 1 (suspect/unqualified) is actually worse than a 2.5x ratio with 60% in Stages 3–4 (qualified, with next steps). Always segment coverage by stage and by quarter of expected close.</p>
+    </div>
+  </div>
+
+  <div class="subsection">
+    <div class="subsection-title">Pipeline Velocity</div>
+    <p>Pipeline velocity measures how fast revenue is moving through the pipeline — the rate at which deals convert to revenue. It is the most diagnostic pipeline metric because it captures four dimensions simultaneously.</p>
+    <div class="formula-block">
+      <div class="formula-label">Pipeline Velocity Formula</div>
+      <div class="formula-main">Pipeline Velocity = (# Opportunities × Win Rate × ACV) / Sales Cycle Length (days)</div>
+      <div class="formula-note">Result = Revenue generated per day from the pipeline. Example: (50 opps × 28% win rate × $48,000 ACV) / 120 days = $5,600/day in pipeline velocity</div>
+    </div>
+    <p>The power of this formula lies in identifying which lever to pull. If pipeline velocity is below target, you can increase it by: (1) adding more opportunities, (2) improving win rate, (3) increasing ACV, or (4) shortening the sales cycle. Each lever has different cost and time-to-impact implications.</p>
+  </div>
+
+  <div class="subsection">
+    <div class="subsection-title">Pipeline Aging and Decay</div>
+    <p>Deals that sit in a stage too long without forward movement are deteriorating in probability — whether or not that decay is reflected in the CRM. Pipeline aging analysis identifies deals that have been in the same stage beyond the average stage duration, flagging them as at risk of going dark or stalling indefinitely.</p>
+    <p>Typical aging thresholds (adjust based on your sales cycle): Stage 1 (Discovery) > 14 days with no next step booked = at risk. Stage 2 (Qualification) > 21 days without MEDDICC progress = stalled. Stage 3 (Proposal/Demo) > 30 days without active evaluation = likely dead. Any deal with no activity logged in 14+ days needs immediate manager attention.</p>
+    <p>Aging pipeline creates false coverage — it inflates the numerator of your coverage ratio with deals that have no real probability of closing. Quarterly pipeline hygiene reviews should remove or heavily discount opportunities that exceed 1.5× the average sales cycle in duration.</p>
+  </div>
+
+  <!-- ── 2. MEDDICC ── -->
+  <h2 class="section-title">MEDDICC in Full Detail</h2>
+  <p class="section-intro">MEDDICC (Metrics, Economic Buyer, Decision Criteria, Decision Process, Identify Pain, Champion, Competition) is the qualification and deal-management framework developed by Jack Napoli at PTC in the 1990s and later systematized by Andy Whyte in his 2020 book <em>MEDDICC: The Ultimate Guide to Staying One Step Ahead in the Complex Sale</em>. It is not merely a qualification checklist — it is a diagnostic instrument for understanding deal health, forecasting accuracy, and coaching focus. A deal with incomplete MEDDICC is not a deal; it is a hope.</p>
+
+  <div class="meddicc-grid">
+    <div class="meddicc-card">
+      <div class="meddicc-letter">M</div>
+      <div class="meddicc-name">Metrics</div>
+      <p><strong>Core question:</strong> What is the quantifiable business impact of this solution?</p>
+      <p>Metrics are the financial language your champion uses to justify the investment to the economic buyer. Without hard metrics, the discussion remains qualitative — and qualitative business cases lose to budget constraints and competing priorities. The rep's job is to co-create the financial model with the champion, not simply present ROI claims.</p>
+      <p><strong>Hard metrics:</strong> Revenue increase (e.g., "Our customers see 18% faster sales cycles"), cost savings (e.g., "Eliminate 3 FTE in manual reconciliation"), risk reduction (e.g., "Eliminate $400K/year in compliance exposure"). These are defensible in front of CFOs.</p>
+      <p><strong>Soft metrics:</strong> Improved visibility, better collaboration, time savings for individual contributors. These matter to users but rarely justify procurement decisions alone.</p>
+      <p><strong>How to build the business case:</strong> Start with the prospect's current-state data (their numbers, not your benchmarks). Walk backward from the outcome they want. Build a shared spreadsheet model. Validate every assumption with the economic buyer before presenting. The champion must own the numbers, not just repeat yours.</p>
+    </div>
+    <div class="meddicc-card">
+      <div class="meddicc-letter">E</div>
+      <div class="meddicc-name">Economic Buyer</div>
+      <p><strong>Core question:</strong> Who controls the budget and can say yes?</p>
+      <p>The Economic Buyer (EB) is the individual with budget authority and the organizational power to make the final investment decision. In SMB (&lt;$50K ACV), this is often a VP or C-level. In enterprise ($100K+ ACV), it is typically a C-suite executive, SVP, or Division President. The EB may not be the most engaged contact — they often enter late in the process and expect a concise value narrative, not a feature walkthrough.</p>
+      <p><strong>Identifying the EB:</strong> Ask your champion directly: "Who owns the budget for this initiative?" and "Who will ultimately sign off on this decision?" Watch for language like "I'll need to take this to [name]" — that person is likely the EB. EB identification requires asking; don't assume based on title.</p>
+      <p><strong>Gaining access:</strong> Use the QBR, executive briefing, or champion-brokered introduction. Frame the meeting as value-alignment, not sales. Prepare an executive briefing document (1-2 pages maximum) that speaks in financial and strategic language — revenue impact, strategic alignment, risk, timeline.</p>
+      <p><strong>If you can't reach the EB:</strong> This is a serious red flag. A deal where the rep never meets the economic buyer has a dramatically lower win probability. Push the champion to facilitate access. If access is genuinely blocked, reassess the deal's validity in the forecast.</p>
+    </div>
+    <div class="meddicc-card">
+      <div class="meddicc-letter">D</div>
+      <div class="meddicc-name">Decision Criteria</div>
+      <p><strong>Core question:</strong> How will they evaluate and select a vendor?</p>
+      <p>Decision criteria are the factors the buying organization will use to evaluate options and select a winner. They include both formal criteria (scorecards, RFP requirements, technical specifications) and informal criteria (relationship quality, trust, rep credibility, existing vendor preference, internal political dynamics).</p>
+      <p><strong>Influencing criteria before they're set:</strong> The best time to influence decision criteria is before the prospect has formalized their evaluation process. Ask early: "What will the most important factors be in your decision?" Then proactively make the case for criteria where you win — ease of integration, time-to-value, customer success quality, specific feature depth — so those criteria are weighted heavily when the formal evaluation begins.</p>
+      <p><strong>RFP implications:</strong> If an RFP arrives that you did not help shape, you are almost certainly behind. Prospects who issue RFPs for a solution they have already mentally chosen still want the process to appear objective. Your goal in responding to a reactive RFP is to (a) qualify whether the deal is truly competitive or wired, and (b) use the response to differentiate on dimensions the incumbent cannot match.</p>
+      <p><strong>Mapping strengths to criteria:</strong> Build a competitive matrix that cross-references your evaluated criteria against your capabilities vs. competitors. Share this with your champion so they can defend your position internally in rooms you don't attend.</p>
+    </div>
+    <div class="meddicc-card">
+      <div class="meddicc-letter">D</div>
+      <div class="meddicc-name">Decision Process</div>
+      <p><strong>Core question:</strong> How and when will they make the decision?</p>
+      <p>The Decision Process is the formal sequence of events — from current stage to signed contract — including every stakeholder, approval layer, and procurement step. Without a mapped decision process, close dates in the CRM are fabricated — they reflect what the rep wants, not what the buyer's organization requires.</p>
+      <p><strong>Typical enterprise decision process steps:</strong> Evaluation committee review → Security/infosec review → Legal contract review → Procurement negotiation → Finance sign-off → Executive approval → Legal execution. Each step has a duration. A rep who sets a close date of "end of quarter" without mapping these steps is guessing.</p>
+      <p><strong>How to map it:</strong> Ask the champion: "What are all the steps that need to happen between now and signature?" Then work backward from the prospect's desired go-live date (not your quarter end) to set a realistic close date. The champion should be able to name who owns each step and how long it typically takes.</p>
+      <p><strong>Red flags:</strong> Champion says "it shouldn't take long" without specifics. Legal/procurement has not been introduced at late stage. No security review scheduled for a data-intensive platform. These are signs the process is undiscovered, not simple — and the deal will slip.</p>
+    </div>
+    <div class="meddicc-card">
+      <div class="meddicc-letter">I</div>
+      <div class="meddicc-name">Identify Pain</div>
+      <p><strong>Core question:</strong> What is the compelling business problem that demands a solution?</p>
+      <p>Pain identification is the most foundational element of MEDDICC. Without clear, quantified pain, there is no urgency — and without urgency, the deal will slip indefinitely. The goal is not to identify <em>any</em> pain, but to identify pain that (a) has business consequences if unsolved, (b) is quantifiable in dollar or time terms, and (c) creates urgency at the decision-maker level.</p>
+      <p><strong>Surface pain vs. root cause:</strong> A prospect saying "our sales team wastes too much time on manual data entry" is surface pain. The root cause might be "we have no single source of truth for pipeline data, leading to 25% inaccurate forecasts, which caused a $3M revenue miss last year and exposed the CRO to the board." That root cause has urgency, financial stakes, and organizational visibility that surface pain does not.</p>
+      <p><strong>SPIN connection:</strong> Neil Rackham's SPIN (Situation, Problem, Implication, Need-Payoff) framework operationalizes pain discovery. Implication questions — "what happens to your renewal rate if this problem continues?" — transform surface pain into explicit business consequence, making the cost of inaction visible and emotionally resonant for the buyer.</p>
+      <p><strong>Pain urgency:</strong> Ask directly: "Is there a date by which this needs to be resolved?" and "What happens to the business if this isn't addressed in the next 6 months?" If there is no answer with consequence, there is no urgency — and the deal has no natural close date.</p>
+    </div>
+    <div class="meddicc-card">
+      <div class="meddicc-letter">C</div>
+      <div class="meddicc-name">Champion</div>
+      <p><strong>Core question:</strong> Who is selling for us internally?</p>
+      <p>A Champion is a contact inside the buying organization who (a) believes in the value of your solution, (b) has organizational credibility and influence, and (c) is willing to actively advocate for you in internal conversations you cannot attend. A Coach is someone who is helpful and shares information but will not go to bat for you politically. The distinction is critical: champions close deals, coaches just keep you informed.</p>
+      <p><strong>Identifying a true champion:</strong> The champion is typically the person who initiated the evaluation, has the most at stake if the status quo continues, and who introduces you to additional stakeholders. They ask for materials they can use in internal meetings — a sign they are presenting your solution without you present.</p>
+      <p><strong>Champion tests:</strong> (1) Do they share political and organizational intelligence? (2) Do they advocate for you in meetings you don't attend? (3) Do they introduce you to the economic buyer? (4) Do they tell you the truth about where you stand competitively? (5) Do they push for a mutual success plan? If the answer to 3 of 5 is yes, you have a champion.</p>
+      <p><strong>Developing a champion:</strong> Enable them with a business case, executive briefing deck, competitive defense brief, and a clear mutual success plan. Make their internal advocacy easy by equipping them with the right language and data. Help them look smart in front of their leadership.</p>
+    </div>
+    <div class="meddicc-card">
+      <div class="meddicc-letter">C</div>
+      <div class="meddicc-name">Competition</div>
+      <p><strong>Core question:</strong> Who or what are we competing against?</p>
+      <p>Competition in MEDDICC encompasses three categories: (1) Direct competitors — other vendors in your category. (2) Indirect competitors — alternative solutions (build internally, use a spreadsheet, hire a consultant). (3) Do nothing — the status quo, which is the most common "competitor" in complex B2B sales and the one most often underestimated.</p>
+      <p><strong>Competitive intelligence in-deal:</strong> Your champion should be able to tell you who else is in the evaluation. If they won't, that itself is diagnostic. Map the competitive landscape for each deal and build differentiated positioning around the specific weaknesses of the incumbent or frontrunner.</p>
+      <p><strong>Why Us, Why Now framework:</strong> "Why us" = the unique value differentiation relative to alternatives. "Why now" = the consequence of delay. Both must be articulated clearly and owned by the champion. If neither question has a crisp answer, urgency is low and competitive positioning is weak.</p>
+      <p><strong>Handling FUD:</strong> Fear, Uncertainty, and Doubt (FUD) is competitive misinformation spread by competitors — about your product stability, company viability, support quality, or security. The counter is proactive social proof: reference customers, G2/Gartner reviews, case studies, and third-party validation. Enable your champion to neutralize FUD with factual responses before it reaches the economic buyer.</p>
+    </div>
+  </div>
+
+  <div class="callout callout-best-practice">
+    <div class="callout-title">MEDDICC Completeness = Forecast Accuracy</div>
+    <p>Research consistently shows that MEDDICC score completeness is the single strongest predictor of forecast accuracy in complex sales. Deals with all seven elements documented and validated have 3–4× higher close rates at the forecast date than deals with 3 or fewer elements complete. CRM stages alone are a poor predictor of close; MEDDICC completeness is not.</p>
+  </div>
+
+  <!-- ── 3. CHAMPION BUILDING ── -->
+  <h2 class="section-title">Champion Building — The Full Science</h2>
+  <p class="section-intro">Champion building is the highest-leverage skill in enterprise sales. A well-developed champion can close deals you never attend, provide competitive intelligence that changes the entire pursuit strategy, and create access to economic buyers who would otherwise be unreachable. Champions are not found — they are developed through deliberate investment.</p>
+
+  <div class="subsection">
+    <div class="subsection-title">Identifying a Potential Champion Early</div>
+    <p>The earliest signal of a potential champion is a contact who reaches out proactively — who initiated the evaluation, who responds to your outreach with genuine engagement, or who asks questions that go beyond surface discovery ("Can you walk me through how customers in our industry have structured the rollout?" signals someone thinking about implementation, not just evaluation).</p>
+    <p>The ideal champion profile: mid-to-senior level individual contributor or manager (typically VP or Director) with organizational credibility, direct pain from the status quo, and an incentive to champion change. C-suite contacts can be champions, but are more typically economic buyers — they lack the operational involvement and day-to-day engagement to function as true champions in most cases.</p>
+    <p>Early champion signals: (1) They self-identify as "the internal sponsor" for this project. (2) They tell you information that isn't in the public domain — internal politics, competitive vendor experiences, budget dynamics. (3) They introduce you to colleagues unprompted. (4) They ask for materials they can "share internally." Any one of these signals warrants champion investment.</p>
+  </div>
+
+  <div class="subsection">
+    <div class="subsection-title">The 5 Tests of a True Champion</div>
+    <ol class="step-list">
+      <li><div class="step-content"><span class="step-title">The Intelligence Test</span>Do they share organizational intelligence you cannot get from public sources? A true champion tells you who the real decision-maker is, what competitors are in the evaluation, what happened with the last vendor decision, and what internal politics are at play. A coach tells you what they think you want to hear.</div></li>
+      <li><div class="step-content"><span class="step-title">The Advocacy Test</span>Do they advocate for you in meetings you don't attend? Ask directly: "Are you comfortable presenting this internally without me present?" Their answer — and how they answer — is revealing. True champions have already started advocating; they'll say "I've already told my manager about this."</div></li>
+      <li><div class="step-content"><span class="step-title">The Access Test</span>Will they introduce you to the economic buyer? A champion who cannot or will not facilitate an executive introduction either lacks influence or lacks conviction in your solution. Both are problems. A champion who facilitates the EB meeting is demonstrating political capital and genuine belief.</div></li>
+      <li><div class="step-content"><span class="step-title">The Truth Test</span>Do they tell you the truth about your competitive position? A coach will say "you're doing great, I don't see any issues." A champion will say "Competitor X is strong on the integration story — you need to address that specifically when you meet with the CTO." Champions give you the hard truths because they want you to win.</div></li>
+      <li><div class="step-content"><span class="step-title">The Investment Test</span>Are they willing to invest their own time in the success plan? A champion who co-authors the mutual success plan, pushes back on your timeline because they know the procurement process better, and aligns your go-live to a business milestone they own — that is a champion. Passive acceptance of your deliverables is a coach behavior, not a champion behavior.</div></li>
+    </ol>
+  </div>
+
+  <div class="subsection">
+    <div class="subsection-title">Enabling Your Champion</div>
+    <p>The most important insight about champion development is this: your champion is making internal presentations on your behalf in rooms you will never enter. Your job is to make them maximally effective in those rooms. This means equipping them with:</p>
+    <ul class="bullet-list">
+      <li><strong>A financial business case</strong> — built on their data, validated with them, defensible to the CFO</li>
+      <li><strong>An executive briefing document</strong> — 1–2 pages, written in the EB's language (revenue, risk, strategic alignment), not product features</li>
+      <li><strong>Competitive defense points</strong> — specific, factual responses to the 3–4 objections competitors will raise</li>
+      <li><strong>Reference customers</strong> — similar in industry, size, and use case, with documented outcomes that mirror their desired metrics</li>
+      <li><strong>A mutual success plan (MSP)</strong> — a co-authored document that outlines the path from signature to go-live to value realization, giving the champion a narrative about post-sale execution</li>
+    </ul>
+    <div class="callout callout-best-practice">
+      <div class="callout-title">The Champion Enabling Principle</div>
+      <p>If your champion has to create their own materials to advocate for you internally, you have failed them. Every ask you make of a champion should be matched with a resource you provide that makes their job easier, not harder. Champions are busy; the moment your deal requires more of their time than the value you provide in return, you lose their active sponsorship.</p>
+    </div>
+  </div>
+
+  <div class="subsection">
+    <div class="subsection-title">When a Champion Goes Dark or Leaves</div>
+    <p>Champion departure is one of the most reliable predictors of deal failure in enterprise sales. When a champion leaves — through promotion, reorganization, or departure from the company — the institutional knowledge, internal relationships, and advocacy they provided disappears immediately. The deal does not automatically die, but it requires a restart of champion development with a new contact, which takes time the close date may not accommodate.</p>
+    <p><strong>Mitigation strategy:</strong> Multi-thread the deal from the start. Never rely on a single champion, especially in enterprise accounts. Develop at least two internal advocates at different levels and in different functional areas. This creates resilience against role changes, and it also reflects a more realistic view of complex organizational buying — decisions are rarely made by a single person.</p>
+    <p><strong>When a champion goes dark:</strong> First, understand why — are they busy, have they lost conviction, has the organizational priority shifted, or is a competitor actively working them? Ask directly: "I noticed our cadence has slowed — can you share what's changed internally?" A champion who genuinely cares about the project will respond. A champion who has mentally disengaged will not. If they don't respond to two outreach attempts, escalate internally to your manager or executive sponsor for a parallel executive-to-executive touch.</p>
+  </div>
+
+  <!-- ── 4. FORECAST INTEGRITY ── -->
+  <h2 class="section-title">Forecast Integrity</h2>
+  <p class="section-intro">The forecast is the most important communication between the sales organization and the rest of the company. It is used by Finance for resource planning, by Operations for capacity planning, by the Board for expectation setting, and by the CEO for strategic decisions. A manipulated or inaccurate forecast does not just affect commission — it cascades into bad decisions across the entire organization.</p>
+
+  <div class="subsection">
+    <div class="subsection-title">Pipeline vs. Forecast</div>
+    <p>Pipeline and forecast are different things that are frequently confused. <strong>Pipeline</strong> is the total universe of opportunities in your CRM at any given stage, weighted or unweighted. <strong>Forecast</strong> is the subset of that pipeline that the rep (and then the manager) has explicitly committed to closing in a defined period — typically the current quarter. The forecast represents conviction, not probability.</p>
+    <p>The most common forecasting error is conflating pipeline with forecast. A CRM with $2M in stage 3–5 opportunities does not mean $2M is forecastable. Forecast requires explicit judgment about which deals will close, validated against MEDDICC completeness, champion quality, and the customer's decision process timeline.</p>
+  </div>
+
+  <div class="subsection">
+    <div class="subsection-title">Forecast Categories</div>
+    <table class="data-table">
+      <thead>
+        <tr><th>Category</th><th>Definition</th><th>Manager Action</th></tr>
+      </thead>
+      <tbody>
+        <tr><td><strong>Commit</strong></td><td>Deals the rep is willing to stake their credibility on closing this quarter. High MEDDICC completeness, champion validated, decision process mapped to quarter-end. Rep says "I will close this."</td><td>Accept or challenge based on MEDDICC completeness. Ask: "Can they sign by [date] given their procurement process?" Add to manager-level commit only after validation.</td></tr>
+        <tr><td><strong>Best Case</strong></td><td>Deals that <em>could</em> close this quarter if everything goes well — champion engaged, some MEDDICC gaps, decision process not fully mapped. Risk-weighted probability: 40–60%.</td><td>Identify the specific condition that must be met for Best Case to move to Commit. Assign a date checkpoint: "If [condition] is met by [date], this moves to commit."</td></tr>
+        <tr><td><strong>Pipeline</strong></td><td>Active opportunities that are qualified and progressing but are not expected to close this quarter. Valid part of the coverage ratio but excluded from current quarter forecast.</td><td>Review for stage accuracy and aging. Ensure next steps are documented. Monitor for pull-forward opportunities if early-stage deals accelerate.</td></tr>
+        <tr><td><strong>Omitted</strong></td><td>Deals that are in the CRM but the rep has determined will not close — stalled, unresponsive, or disqualified. Should be explicitly removed from forecast and flagged for review or closure.</td><td>Confirm the disqualification rationale. Archive or recycle appropriately. High omitted rate signals pipeline quality problems upstream.</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="subsection">
+    <div class="subsection-title">Stage-Weighted vs. Commit-Based Forecasting</div>
+    <p><strong>Stage-weighted forecasting</strong> assigns a probability percentage to each CRM stage (e.g., Stage 1 = 10%, Stage 2 = 25%, Stage 3 = 50%, Stage 4 = 75%) and generates a forecast by multiplying deal value × stage probability. This approach is mechanical, scalable, and useful for aggregate pipeline reporting. Its weakness: it treats all deals in a stage equally, ignoring MEDDICC completeness, champion quality, and competitive dynamics. A $500K deal with no champion in Stage 3 gets the same weight as a $500K deal with a strong champion in Stage 3 — which is obviously wrong.</p>
+    <p><strong>Commit-based (judgment) forecasting</strong> asks each rep to explicitly declare which deals will close this quarter and at what value, with their personal credibility attached to the commitment. Managers then apply their own judgment layer, adjusting upward or downward based on their independent assessment. This produces a more accurate near-term forecast for experienced teams. Its weakness: it can be gamed by conservative or overoptimistic reps, and it requires strong manager engagement to function.</p>
+    <p><strong>Best practice:</strong> Use stage-weighted forecasting for pipeline health reporting and trend analysis. Use commit-based forecasting for official period-end forecasting with manager validation. The two should diverge meaningfully when pipeline quality varies — and that divergence is itself diagnostic information.</p>
+  </div>
+
+  <div class="subsection">
+    <div class="subsection-title">How to Run a Forecast Call</div>
+    <ol class="step-list">
+      <li><div class="step-content"><span class="step-title">Require CRM hygiene before the call</span>All opportunities in the forecast must be updated: stage, close date, next step, and last activity must be current. Reps who come to forecast with stale CRM data are not prepared. The call should be reviewing data, not collecting it.</div></li>
+      <li><div class="step-content"><span class="step-title">Review commit deals first</span>For each commit deal, ask: (a) What is the next step and when? (b) Who is the champion and have they confirmed the timeline? (c) Is the decision process mapped to quarter-end? (d) What is the risk that pushes this out? Do not allow vague optimism — require specific next steps and dates.</div></li>
+      <li><div class="step-content"><span class="step-title">Challenge close dates</span>Every close date must be defensible based on the buyer's decision process, not the seller's quarter end. Ask: "Has the customer confirmed they can execute procurement by [date]?" If the answer is "I think so," the deal is Best Case, not Commit.</div></li>
+      <li><div class="step-content"><span class="step-title">Review best case deals for pull-forward potential</span>Identify 2–3 Best Case deals where a specific action (getting to the EB, resolving a legal issue, providing a specific technical validation) could accelerate closure into this quarter. Assign those actions and own the deadline.</div></li>
+      <li><div class="step-content"><span class="step-title">Build the manager number bottom-up</span>The manager's forecast number should be built from individual rep commits plus a risk-adjusted view of the best case. It should not be a top-down number rationalized backward. Any gap between the manager's bottom-up number and the quota should be visible and explicitly addressed.</div></li>
+    </ol>
+  </div>
+
+  <div class="subsection">
+    <div class="subsection-title">Common Forecast Manipulation Behaviors</div>
+    <ul class="bullet-list">
+      <li><strong>Sandbagging:</strong> Deliberately under-forecasting to create the appearance of overperformance. Classic sandbagger behavior: low commit, then close additional deals at end of quarter, appear as a hero. The tell: consistent pattern of closing 130%+ of commit with no Best Case visibility pre-month.</li>
+      <li><strong>Happy ears:</strong> Overforecasting based on positive prospect signals without validating MEDDICC. Optimistic reps hear "this looks interesting" and forecast it as a commit. The tell: commit list includes deals with missing champions, unmapped decision processes, and no identified pain.</li>
+      <li><strong>Pushing close dates forward without cause:</strong> Moving a deal from Q3 to Q4 without a documented reason from the buyer. Often done to avoid difficult pipeline conversations. The tell: same deals appear in commit for 2+ consecutive quarters with no stage change.</li>
+      <li><strong>Inflating deal size:</strong> Recording the upside scenario ACV rather than the most likely ACV. The tell: closed deals consistently come in 20–30% below CRM value.</li>
+    </ul>
+    <div class="callout callout-warning">
+      <div class="callout-title">Forecasting Integrity is Cultural</div>
+      <p>Forecast manipulation behaviors emerge when reps fear consequences for accurate reporting of bad news. If managers punish reps for honest pipeline assessments — by assigning more pipeline generation work, increasing scrutiny, or using forecast accuracy as a punitive metric — reps will learn to manage the manager's emotions rather than tell the truth. The manager's response to bad news is the most important variable in forecast culture.</p>
+    </div>
+  </div>
+
+  <div class="subsection">
+    <div class="subsection-title">Forecast Accuracy Formula</div>
+    <div class="formula-block">
+      <div class="formula-label">Forecast Accuracy</div>
+      <div class="formula-main">Forecast Accuracy = 1 - (|Forecasted Revenue - Actual Revenue| / Actual Revenue)</div>
+      <div class="formula-note">Example: Forecast $1.2M, Actual $1.05M → |1.2M - 1.05M| / 1.05M = 14.3% error → 85.7% accuracy. Best-in-class: &gt;90% accuracy at 4-week-out forecast. Industry average: ~70–80%.</div>
+    </div>
+  </div>
+
+  <!-- ── 5. WIN/LOSS ANALYSIS ── -->
+  <h2 class="section-title">Win/Loss Analysis</h2>
+  <p class="section-intro">Win/loss analysis is the systematic process of understanding why deals are won and lost — not from the rep's perspective, but from the buyer's. It is the highest-ROI feedback loop in the revenue organization because it validates or invalidates every assumption embedded in the ICP, playbook, competitive positioning, and messaging. Organizations that run systematic win/loss programs outperform those that rely on anecdotal rep reports by a significant margin.</p>
+
+  <div class="subsection">
+    <div class="subsection-title">Why Win/Loss Must Be Systematic</div>
+    <p>The self-reported win/loss data collected by reps is almost always wrong. After a loss, reps attribute the outcome to price (it was too expensive), product gaps (we were missing a feature), or competitive factors (they went with a bigger brand). Rarely do they attribute it to qualification failures, weak champion development, or their own discovery quality. After a win, reps attribute success to their relationship skills and product superiority — rarely to competitive weakness or pricing advantage.</p>
+    <p>Buyer-side win/loss interviews tell a different story. Research by Gartner and win/loss firms like Primary Intelligence consistently shows that the top reasons buyers state for choosing a competitor include: (1) The sales process itself — the competitor's rep was more responsive, asked better questions, understood our business better. (2) Better reference customers or case studies in their specific industry. (3) Perception of lower implementation risk. (4) Economic buyer preference formed early and never challenged. These insights never surface from rep-reported data.</p>
+  </div>
+
+  <div class="subsection">
+    <div class="subsection-title">Who Should Conduct Win/Loss Interviews</div>
+    <p>The interviews must not be conducted by the sales rep who worked the deal. Prospects who chose a competitor will not give honest feedback to the person they rejected — they will soften the message and fabricate diplomatic reasons to avoid an uncomfortable conversation. Similarly, prospects who chose you will over-emphasize validation to be supportive, masking the near-misses and weaknesses they noticed.</p>
+    <p>Best practice: Win/loss interviews should be conducted by Product Marketing, a dedicated analyst, a third-party win/loss firm, or a senior RevOps professional with no direct stake in the outcome. The interviewer introduces themselves as conducting research on behalf of the company (not the sales team), frames the conversation as a learning exercise, and maintains a non-defensive, genuinely curious posture throughout.</p>
+  </div>
+
+  <div class="subsection">
+    <div class="subsection-title">Win/Loss Interview Structure</div>
+    <ol class="step-list">
+      <li><div class="step-content"><span class="step-title">Context-setting (5 minutes)</span>Understand what prompted the evaluation. What was the pain or trigger that started the buying process? What was the priority level of the initiative internally?</div></li>
+      <li><div class="step-content"><span class="step-title">Evaluation process (10 minutes)</span>Who was involved in the evaluation? How was the shortlist formed? What criteria were most important? Were the criteria formalized (RFP) or informal?</div></li>
+      <li><div class="step-content"><span class="step-title">Vendor comparison (10 minutes)</span>How did you perceive us versus the alternatives on each key criterion? Were there specific capabilities or gaps that were decisive? How did the sales experience compare across vendors?</div></li>
+      <li><div class="step-content"><span class="step-title">Decision factors (10 minutes)</span>What ultimately drove the decision? If you won: what were the 2–3 most important factors? If you lost: what would have needed to change for us to win? Was price a real factor or a proxy for a different concern?</div></li>
+      <li><div class="step-content"><span class="step-title">Reflection (5 minutes)</span>What could we have done differently that would have changed the outcome? Is there anything about the other vendor's approach that stood out positively?</div></li>
+    </ol>
+  </div>
+
+  <div class="subsection">
+    <div class="subsection-title">Categorizing and Trending Win/Loss Data</div>
+    <p>Individual interviews are anecdotes. The value emerges from patterns across 20, 50, and 100+ interviews. Build a taxonomy with consistent categories: Sales Execution, Product Capability, Pricing/Value, Competitive Positioning, Customer Success/Post-Sale Trust, Relationship/Brand, and Implementation Risk. Assign each interview 1–3 primary and secondary factors.</p>
+    <p>Track trends over time and by segment. If win/loss data shows that you consistently lose to Competitor X in deals with CFOs as the economic buyer, that is a strategic insight — the CFO messaging, ROI modeling, and executive engagement approach needs to change. If you consistently win in Series B companies but lose in enterprise accounts, your ICP signal is clear.</p>
+    <p>Review win/loss findings with the full go-to-market team quarterly: Product Marketing uses it to refine competitive positioning and messaging; Product uses it to prioritize the roadmap; Sales Enablement uses it to update the playbook; CS uses it to understand early churn risk signals; the CRO uses it to validate ICP assumptions.</p>
+  </div>
+
+  <!-- ── 6. DEAL REVIEW ── -->
+  <h2 class="section-title">Deal Review</h2>
+  <p class="section-intro">The deal review is the manager's primary tool for both coaching reps and maintaining an accurate understanding of pipeline health. Done well, it develops rep capability while producing better forecasts. Done poorly — as a status report rather than a coaching dialogue — it is a waste of everyone's time that creates resentment and superficial CRM updates.</p>
+
+  <div class="subsection">
+    <div class="subsection-title">Inspection vs. Coaching — The Critical Distinction</div>
+    <p>Most deal reviews are primarily inspection exercises: the manager asks "where are we with this deal?" and the rep summarizes the situation. The manager looks for reasons to be optimistic or pessimistic about the close date. No learning occurs, no new thinking is introduced, and the rep leaves with the same plan they arrived with.</p>
+    <p>Coaching-oriented deal reviews use the deal as a vehicle for developing the rep's skills and thinking. The manager asks: "What haven't we done yet to validate the champion?" or "Have you identified the root cause of pain or only the surface symptom?" or "What does the decision process look like from their side — not from ours?" These questions force the rep to think more deeply, discover gaps in their own preparation, and develop more sophisticated deal strategy.</p>
+  </div>
+
+  <div class="subsection">
+    <div class="subsection-title">The MEDDICC Deal Scorecard</div>
+    <p>Structure each deal review around a MEDDICC completeness score. For each element, rate the deal as Strong (validated), Partial (some information, not fully qualified), or Missing (no information). This produces an honest diagnostic of deal health and makes it immediately clear where to focus coaching and next steps.</p>
+    <table class="data-table scorecard-table">
+      <thead>
+        <tr><th>MEDDICC Element</th><th>Strong</th><th>Partial</th><th>Missing</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>Metrics</td><td><span class="score-badge score-strong">✓</span> Quantified ROI co-built with champion</td><td><span class="score-badge score-partial">~</span> Claimed ROI, not validated</td><td><span class="score-badge score-missing">✗</span> No business case</td></tr>
+        <tr><td>Economic Buyer</td><td><span class="score-badge score-strong">✓</span> EB identified and met</td><td><span class="score-badge score-partial">~</span> EB identified, not met</td><td><span class="score-badge score-missing">✗</span> Unknown</td></tr>
+        <tr><td>Decision Criteria</td><td><span class="score-badge score-strong">✓</span> Criteria mapped and influenced</td><td><span class="score-badge score-partial">~</span> Criteria known, not influenced</td><td><span class="score-badge score-missing">✗</span> Not discussed</td></tr>
+        <tr><td>Decision Process</td><td><span class="score-badge score-strong">✓</span> Full process mapped with dates</td><td><span class="score-badge score-partial">~</span> Partial steps known</td><td><span class="score-badge score-missing">✗</span> Unknown</td></tr>
+        <tr><td>Identify Pain</td><td><span class="score-badge score-strong">✓</span> Root cause quantified</td><td><span class="score-badge score-partial">~</span> Surface pain only</td><td><span class="score-badge score-missing">✗</span> No defined pain</td></tr>
+        <tr><td>Champion</td><td><span class="score-badge score-strong">✓</span> Tested champion confirmed</td><td><span class="score-badge score-partial">~</span> Likely champion, untested</td><td><span class="score-badge score-missing">✗</span> No champion</td></tr>
+        <tr><td>Competition</td><td><span class="score-badge score-strong">✓</span> Competitive landscape mapped</td><td><span class="score-badge score-partial">~</span> Partial intelligence</td><td><span class="score-badge score-missing">✗</span> Unknown competitors</td></tr>
+      </tbody>
+    </table>
+    <div class="callout callout-definition">
+      <div class="callout-title">Reviewability Standard</div>
+      <p>A deal is only reviewable in a forecast call if it has a Strong or Partial rating on at least 5 of 7 MEDDICC elements, with Strong ratings on Champion and Economic Buyer. A deal with 3 or more Missing elements is not a forecast deal — it is a pipeline development priority.</p>
+    </div>
+  </div>
+
+  <!-- ── INDICATORS ── -->
+  <h2 class="section-title">Key Indicators — Phase 4</h2>
+  <div class="two-col">
+    <div>
+      <p style="font-size:13px;font-weight:700;letter-spacing:.5px;text-transform:uppercase;color:var(--text-muted);margin-bottom:10px">Leading Indicators</p>
+      <div class="indicator-row" style="flex-direction:column;gap:8px;">
+        <div class="indicator-tag ind-leading" style="display:block">Pipeline Coverage Ratio (target 3x–4x quota)</div>
+        <div class="indicator-tag ind-leading" style="display:block">MEDDICC Completeness Score per deal</div>
+        <div class="indicator-tag ind-leading" style="display:block"># of Champions Identified and Tested</div>
+        <div class="indicator-tag ind-leading" style="display:block"># of Economic Buyer Meetings Completed</div>
+        <div class="indicator-tag ind-leading" style="display:block">Prospecting Activity Rate (calls + emails/week)</div>
+        <div class="indicator-tag ind-leading" style="display:block">New Pipeline Created (week over week)</div>
+      </div>
+    </div>
+    <div>
+      <p style="font-size:13px;font-weight:700;letter-spacing:.5px;text-transform:uppercase;color:var(--text-muted);margin-bottom:10px">Lagging Indicators</p>
+      <div class="indicator-row" style="flex-direction:column;gap:8px;">
+        <div class="indicator-tag ind-lagging" style="display:block">Win Rate (total and by segment/rep)</div>
+        <div class="indicator-tag ind-lagging" style="display:block">Average Sales Cycle Length</div>
+        <div class="indicator-tag ind-lagging" style="display:block">Forecast Accuracy % (4-week out)</div>
+        <div class="indicator-tag ind-lagging" style="display:block">Deal Slip Rate (% of commit that pushed)</div>
+        <div class="indicator-tag ind-lagging" style="display:block">Average ACV vs. Target ACV</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── FORMULAS SUMMARY ── -->
+  <h2 class="section-title">Formula Reference</h2>
+  <div class="formula-block">
+    <div class="formula-label">Pipeline Coverage Ratio</div>
+    <div class="formula-main">Coverage = Total Pipeline Value / Quota</div>
+    <div class="formula-note">Standard benchmark: 3x–4x. Segment by stage for meaningful analysis.</div>
+  </div>
+  <div class="formula-block">
+    <div class="formula-label">Pipeline Velocity</div>
+    <div class="formula-main">Velocity = (# Opportunities × Win Rate × ACV) / Sales Cycle Length (days)</div>
+    <div class="formula-note">Result = Revenue generated per day. Improving any input variable increases velocity.</div>
+  </div>
+  <div class="formula-block">
+    <div class="formula-label">Forecast Accuracy</div>
+    <div class="formula-main">Accuracy = 1 - (|Forecasted - Actual| / Actual)</div>
+    <div class="formula-note">Best-in-class: &gt;90% at 4-week look-ahead. Measure at rep and manager level separately.</div>
+  </div>
+
+  <!-- ── COMMON MISTAKES ── -->
+  <h2 class="section-title">Common Execution Mistakes</h2>
+  <div class="callout callout-warning">
+    <div class="callout-title">No Champion</div>
+    <p>The single most common cause of deal loss in enterprise sales. Reps who have a "contact" who is helpful but not a champion are flying blind. Without someone selling for you internally, every competitors' champion is winning conversations you don't know are happening. <strong>Fix:</strong> Never leave a deal review without explicitly naming the champion and passing the 5-test validation. If no champion exists, the deal is not in forecast.</p>
+  </div>
+  <div class="callout callout-warning">
+    <div class="callout-title">No Economic Buyer Access</div>
+    <p>Selling exclusively to users and managers while the economic buyer is unknown or unmet is the second most common enterprise deal failure mode. The EB will make the decision regardless of whether you've met them — and if you haven't shaped their understanding of value, someone else has. <strong>Fix:</strong> EB meeting is a non-negotiable requirement for Commit status in deals above $50K ACV.</p>
+  </div>
+  <div class="callout callout-warning">
+    <div class="callout-title">Close Dates Driven by Month-End, Not Customer Process</div>
+    <p>Setting close dates by the seller's quarter end rather than the buyer's decision process creates deceptive forecasts and destroys rep credibility with management over time. A deal that slips from Q3 to Q4 because "the customer couldn't get procurement done" is a deal where the decision process was never mapped. <strong>Fix:</strong> Every close date must be backed by a specific customer-confirmed procurement timeline, not optimistic assumption.</p>
+  </div>
+  <div class="callout callout-warning">
+    <div class="callout-title">Not Quantifying Pain</div>
+    <p>Reps who identify surface pain ("they said they have too many manual processes") but never quantify it in business terms ("that manual process costs them $400K/year in labor and produces a 15% error rate affecting customer invoices") are creating qualitative deals that cannot survive a budget freeze. <strong>Fix:</strong> Every deal in Stage 3+ must have a quantified pain statement in the opportunity record, validated with the champion, not just asserted by the rep.</p>
+  </div>
+
+<div class="section-title">Science of Scaling Tools for This Phase</div>
+<p class="section-intro">Phase 4 execution metrics are the direct inputs to LIUE. Every improvement in SQL-to-customer rate, sales cycle length, and rep productivity compounds into better unit economics and a faster path to GTM Fit.</p>
+<div class="tools-grid">
+  <a href="../subpages/sos-liue.html" class="tool-card tc-sos">
+    <div class="tc-phase">Stage 2 · Core Metric</div>
+    <div class="tc-title">LIUE — Leading Indicator of Unit Economics</div>
+    <div class="tc-desc">SQL-to-Customer% and SQLs per Rep per Month from Phase 4 are direct LIUE denominator inputs. Improving these metrics directly improves LIUE.</div>
+  </a>
+  <a href="../subpages/sos-gtm-playbook.html" class="tool-card tc-sos">
+    <div class="tc-phase">Stage 2 · Framework</div>
+    <div class="tc-title">GTM Playbook — Film Reviews</div>
+    <div class="tc-desc">Daily call review process that uses pipeline data to continuously improve the discovery and presentation components of the playbook. Run daily in Stage 2.</div>
+  </a>
+  <a href="../subpages/template-discovery.html" class="tool-card tc-res">
+    <div class="tc-phase">GTM Playbook Tool</div>
+    <div class="tc-title">Discovery Guide (MEDDICC)</div>
+    <div class="tc-desc">MEDDICC discovery framework with full question library, call structure, scoring rubric, and common mistakes. The execution tool for pipeline qualification.</div>
+  </a>
+  <a href="../subpages/template-presentation.html" class="tool-card tc-res">
+    <div class="tc-phase">GTM Playbook Tool</div>
+    <div class="tc-title">Presentation &amp; Demo Guide</div>
+    <div class="tc-desc">6-step framework, swim lane design, objection handling, Film Review protocol. Drives SQL-to-Customer% improvement — the key LIUE CAC lever.</div>
+  </a>
+  <a href="../subpages/template-forecasting.html" class="tool-card tc-res">
+    <div class="tc-phase">Template · Stage 2–3</div>
+    <div class="tc-title">Demand-Driven Forecasting Model</div>
+    <div class="tc-desc">Bottom-up forecast by segment × source with close rate distributions. In Stage 2, forecast accuracy is a readiness indicator for declaring GTM Fit.</div>
+  </a>
+  <a href="../subpages/sos-bottoms-up.html" class="tool-card tc-sos">
+    <div class="tc-phase">Stage 2–3 · Model</div>
+    <div class="tc-title">GTM Bottoms-Up Revenue Model</div>
+    <div class="tc-desc">Build pipeline and hiring plans from Phase 4 productivity data: SQLs/rep/month, ramp time, quota attainment. Rooted in actual rep performance, not top-down targets.</div>
+  </a>
+</div>
+
+  <!-- ── RELATED SECTION ── -->
+  <div class="related-section">
+    <div class="related-title">Related Topics</div>
+    <div class="related-links">
+      <a href="phase3.html" class="related-link">← Phase 3: Discovery &amp; Qualification</a>
+      <a href="phase5.html" class="related-link">Phase 5: Scale →</a>
+      <a href="../subpages/customer-success.html" class="related-link">Customer Success</a>
+      <a href="../subpages/meddicc.html" class="related-link">MEDDICC Deep-Dive</a>
+      <a href="../subpages/champion-building.html" class="related-link">Champion Building</a>
+      <a href="../subpages/forecast-integrity.html" class="related-link">Forecast Integrity</a>
+      <a href="../subpages/win-loss-analysis.html" class="related-link">Win/Loss Analysis</a>
+      <a href="../subpages/deal-review.html" class="related-link">Deal Review</a>
+      <a href="../subpages/sos-liue.html" class="related-link">LIUE — Unit Economics Metric</a>
+      <a href="../subpages/template-discovery.html" class="related-link">Discovery Guide (MEDDICC)</a>
+      <a href="../subpages/template-presentation.html" class="related-link">Presentation Guide</a>
+      <a href="../subpages/template-forecasting.html" class="related-link">Demand-Driven Forecasting Model</a>
+    </div>
+  </div>
+
+</div>
+<script data-pplx-inline-edit>
+(function () {
+  if (window === window.top) return;
+
+  const allowedParentOrigins = ["https://www.perplexity.ai","https://perplexity.ai","https://testing.perplexity.ai","https://staging.perplexity.ai","https://*.preview.i.perplexity.ai","http://localhost:3000","http://127.0.0.1:3000","http://localhost:5173","http://127.0.0.1:5173"];
+  const MAX_FONT_BYTES = 500 * 1024;
+  const MAX_TOTAL_FONT_BYTES = 2 * 1024 * 1024;
+  let scrollForwarding = false;
+  let scrollRaf = 0;
+  let trustedTopOrigin = null;
+
+  // Allow entries like "https://*.preview.i.perplexity.ai" — the wildcard
+  // matches a single DNS label (no dots), so "https://*.foo" cannot stretch
+  // across multiple labels.
+  function matchesAllowedOrigin(origin) {
+    if (!origin) return false;
+    for (const entry of allowedParentOrigins) {
+      if (!entry.includes("*")) {
+        if (entry === origin) return true;
+        continue;
+      }
+      const pattern = new RegExp(
+        "^" +
+          entry.replace(/[.+?^${}()|[\]\\]/g, "\\$&").replace(/\*/g, "[^.]+") +
+          "$",
+      );
+      if (pattern.test(origin)) return true;
+    }
+    return false;
+  }
+
+  // Trust decision: when the sender is same-origin-visible (event.origin is a
+  // real origin like https://www.perplexity.ai) we trust event.origin directly.
+  // When event.origin is "null" (opaque broker srcdoc), we fall back to the
+  // broker's stamped `parentOrigin` to identify the top window. The fallback
+  // is claim-only — we rely on the browser's native `targetOrigin` enforcement
+  // on the response path (see postToTrustedTop) to ensure replies can't be
+  // delivered to anyone but the actual top window of that claimed origin.
+  function getTrustedParentOrigin(event) {
+    const forwardedParentOrigin =
+      typeof event.data.parentOrigin === "string" ? event.data.parentOrigin : null;
+    const parentOrigin = event.origin === "null" ? forwardedParentOrigin : event.origin;
+    return matchesAllowedOrigin(parentOrigin) ? parentOrigin : null;
+  }
+
+  // All responses go to window.top with targetOrigin = the allowlisted origin.
+  // An attacker that iframes us inside their own null-origin broker can claim
+  // any parentOrigin they like, but the browser will drop the reply whenever
+  // the real top's origin doesn't match — so the screenshot never leaves.
+  function postToTrustedTop(message) {
+    if (!trustedTopOrigin) return;
+    try {
+      window.top.postMessage(message, trustedTopOrigin);
+    } catch (_error) {}
+  }
+
+  function inlineAll(original, clone) {
+    if (original.nodeType !== 1 || clone.nodeType !== 1) return;
+
+    try {
+      const computedStyle = getComputedStyle(original);
+      // cssText on a computed style is the serialized declaration in modern
+      // Chromium/Safari — a single read beats enumerating ~400 longhand
+      // properties. Firefox returns "" here, so we fall back on empty.
+      const serialized = computedStyle.cssText;
+      if (serialized) {
+        clone.style.cssText = serialized;
+      } else {
+        const parts = new Array(computedStyle.length);
+        for (let index = 0; index < computedStyle.length; index += 1) {
+          const property = computedStyle[index];
+          parts[index] = `${property}:${computedStyle.getPropertyValue(property)};`;
+        }
+        clone.style.cssText = parts.join("");
+      }
+    } catch (_error) {}
+
+    const originalChildren = original.children;
+    const clonedChildren = clone.children;
+    for (
+      let index = 0;
+      index < originalChildren.length && index < clonedChildren.length;
+      index += 1
+    ) {
+      inlineAll(originalChildren[index], clonedChildren[index]);
+    }
+  }
+
+  function extractFontUrl(srcValue) {
+    const matches = [
+      ...srcValue.matchAll(
+        /url\(["']?([^"')]+)["']?\)(?:\s*format\(["']?([^"')]+)["']?\))?/gi,
+      ),
+    ];
+    if (matches.length === 0) return null;
+    const woff2 = matches.find((m) => m[2] && m[2].toLowerCase().includes("woff2"));
+    if (woff2) return woff2[1];
+    const woff = matches.find((m) => m[2] && m[2].toLowerCase().includes("woff"));
+    if (woff) return woff[1];
+    return matches[0][1];
+  }
+
+  // Cache resolved font URL -> data URI across captures. Fonts on a page
+  // essentially never change, and a batch run emits multiple captures back to
+  // back — without this we'd refetch + re-base64 every time.
+  const fontDataUriCache = new Map();
+  const SRC_DECLARATION_RE = /src\s*:\s*[^;}]+/i;
+
+  async function fetchAsDataUri(url) {
+    if (fontDataUriCache.has(url)) return fontDataUriCache.get(url);
+    let dataUri = null;
+    try {
+      const response = await fetch(url, { mode: "cors", credentials: "omit" });
+      if (response.ok) {
+        const blob = await response.blob();
+        if (blob.size <= MAX_FONT_BYTES) {
+          dataUri = await new Promise((resolve) => {
+            const reader = new FileReader();
+            reader.onloadend = () =>
+              resolve(typeof reader.result === "string" ? reader.result : null);
+            reader.onerror = () => resolve(null);
+            reader.readAsDataURL(blob);
+          });
+        }
+      }
+    } catch (_error) {
+      dataUri = null;
+    }
+    fontDataUriCache.set(url, dataUri);
+    return dataUri;
+  }
+
+  function collectFontFaceRuleTexts() {
+    const rules = [];
+    for (const sheet of document.styleSheets) {
+      let cssRules;
+      try {
+        cssRules = sheet.cssRules;
+      } catch (_error) {
+        continue;
+      }
+      if (!cssRules) continue;
+      for (const rule of cssRules) {
+        const cssText = rule.cssText || "";
+        if (cssText.startsWith("@font-face")) rules.push(cssText);
+      }
+    }
+    return rules;
+  }
+
+  async function buildInlinedFontCss() {
+    const ruleTexts = collectFontFaceRuleTexts();
+    if (ruleTexts.length === 0) return null;
+
+    const resolved = ruleTexts.map((cssText) => {
+      if (!SRC_DECLARATION_RE.test(cssText)) return null;
+      const srcMatch = cssText.match(/src\s*:\s*([^;}]+)[;}]/i);
+      if (!srcMatch) return null;
+      const url = extractFontUrl(srcMatch[1]);
+      if (!url) return null;
+      try {
+        return { cssText, url: new URL(url, document.baseURI).href };
+      } catch (_error) {
+        return null;
+      }
+    });
+
+    const dataUris = await Promise.all(
+      resolved.map((entry) => (entry ? fetchAsDataUri(entry.url) : Promise.resolve(null))),
+    );
+
+    const inlined = [];
+    let totalBytes = 0;
+    for (let index = 0; index < resolved.length; index += 1) {
+      const entry = resolved[index];
+      const dataUri = dataUris[index];
+      if (!entry || !dataUri) continue;
+      const approxBytes = dataUri.length * 0.75;
+      if (totalBytes + approxBytes > MAX_TOTAL_FONT_BYTES) break;
+      totalBytes += approxBytes;
+      inlined.push(entry.cssText.replace(SRC_DECLARATION_RE, `src: url("${dataUri}")`));
+    }
+    return inlined.length > 0 ? inlined.join("\n") : null;
+  }
+
+  function stripExternal(clone) {
+    const images = clone.querySelectorAll("img");
+    for (let index = 0; index < images.length; index += 1) {
+      const src = images[index].getAttribute("src");
+      if (src && !src.startsWith("data:")) images[index].removeAttribute("src");
+    }
+
+    const elements = clone.querySelectorAll("*");
+    for (let index = 0; index < elements.length; index += 1) {
+      const style = elements[index].style.cssText;
+      if (style && style.includes("url(")) {
+        elements[index].style.cssText = style.replace(
+          /url\(["']?(?!data:)[^)"']*["']?\)/gi,
+          "none",
+        );
+      }
+    }
+  }
+
+  function emitScroll() {
+    scrollRaf = 0;
+    if (!scrollForwarding) return;
+    postToTrustedTop({
+      type: "INLINE_EDIT_SCROLL",
+      scrollX: window.scrollX,
+      scrollY: window.scrollY,
+    });
+  }
+
+  window.addEventListener(
+    "scroll",
+    function () {
+      if (!scrollForwarding || scrollRaf) return;
+      scrollRaf = requestAnimationFrame(emitScroll);
+    },
+    { passive: true, capture: true },
+  );
+
+  async function handleCaptureRequest(event) {
+    const requestId = event.data.requestId;
+    const scrollX = window.scrollX;
+    const scrollY = window.scrollY;
+    const width = window.innerWidth;
+    const height = window.innerHeight;
+
+    function postResult(dataUrl) {
+      postToTrustedTop({
+        type: "INLINE_EDIT_SCREENSHOT_RESULT",
+        requestId,
+        dataUrl,
+        scrollX,
+        scrollY,
+      });
+    }
+
+    try {
+      // Wait for any pending web fonts to resolve so both inline metrics and
+      // the @font-face inlining below see the same loaded faces.
+      if (document.fonts && document.fonts.ready) {
+        try {
+          await document.fonts.ready;
+        } catch (_error) {}
+      }
+
+      const clone = document.documentElement.cloneNode(true);
+      inlineAll(document.documentElement, clone);
+
+      const removedNodes = clone.querySelectorAll("script,link[rel=\"stylesheet\"],style");
+      for (let index = 0; index < removedNodes.length; index += 1) {
+        removedNodes[index].remove();
+      }
+
+      stripExternal(clone);
+
+      // Re-embed web fonts as data-URI @font-face rules so the SVG rasterizer
+      // can resolve them — external font URLs aren't fetched during
+      // foreignObject rendering, which would otherwise force a fallback face
+      // and change text metrics.
+      const inlinedFontCss = await buildInlinedFontCss();
+      if (inlinedFontCss) {
+        const styleEl = document.createElement("style");
+        styleEl.textContent = inlinedFontCss;
+        const head = clone.querySelector("head");
+        if (head) head.appendChild(styleEl);
+        else clone.insertBefore(styleEl, clone.firstChild);
+      }
+
+      const html = new XMLSerializer().serializeToString(clone);
+      const svg =
+        `<svg xmlns="http://www.w3.org/2000/svg" width="${width}" height="${height}">` +
+        '<foreignObject width="100%" height="100%">' +
+        `<div xmlns="http://www.w3.org/1999/xhtml" style="width:${width}px;height:${height}px;overflow:hidden">` +
+        `<div style="transform:translate(-${scrollX}px,-${scrollY}px);transform-origin:top left">` +
+        html +
+        "</div></div></foreignObject></svg>";
+      const svgUrl = `data:image/svg+xml;charset=utf-8,${encodeURIComponent(svg)}`;
+      const image = new Image();
+      image.onload = function () {
+        const canvas = document.createElement("canvas");
+        canvas.width = width;
+        canvas.height = height;
+        canvas.getContext("2d").drawImage(image, 0, 0);
+        postResult(canvas.toDataURL("image/png"));
+      };
+      image.onerror = function () {
+        postResult(null);
+      };
+      image.src = svgUrl;
+    } catch (_error) {
+      postResult(null);
+    }
+  }
+
+  window.addEventListener("message", function (event) {
+    if (!event.data) return;
+    // Only accept messages from the direct parent frame. Blocks sibling /
+    // unrelated-window postMessage senders that could otherwise reach us.
+    if (event.source !== window.parent) return;
+
+    const trustedParentOrigin = getTrustedParentOrigin(event);
+    if (!trustedParentOrigin) return;
+    trustedTopOrigin = trustedParentOrigin;
+
+    if (event.data.type === "INLINE_EDIT_SCROLL_START") {
+      scrollForwarding = true;
+      emitScroll();
+      return;
+    }
+
+    if (event.data.type === "INLINE_EDIT_SCROLL_STOP") {
+      scrollForwarding = false;
+      if (scrollRaf) cancelAnimationFrame(scrollRaf);
+      scrollRaf = 0;
+      return;
+    }
+
+    if (event.data.type !== "INLINE_EDIT_CAPTURE_REQUEST") return;
+
+    handleCaptureRequest(event);
+  });
+})();
+
+
+</script></body>
+</html>

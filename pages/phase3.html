@@ -1,0 +1,1322 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Phase 3: Go-To-Market — SaaS Revenue System</title>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="../assets/shared.css"/>
+  <style>
+    .page-hero { background: #437A22; }
+    .sos-context-banner {
+      background: linear-gradient(135deg, #0D5C63 0%, #0a4a50 100%);
+      border-radius: 10px;
+      padding: 20px 24px;
+      margin-bottom: 32px;
+      display: grid;
+      grid-template-columns: 200px 1fr auto;
+      gap: 20px;
+      align-items: start;
+    }
+    .sos-cb-stage { border-right: 1px solid rgba(255,255,255,0.2); padding-right: 20px; }
+    .sos-cb-label { font-size: 10px; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase; color: rgba(255,255,255,0.6); margin-bottom: 4px; }
+    .sos-cb-title { font-size: 18px; font-weight: 700; color: #fff; line-height: 1.3; }
+    .sos-cb-content { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+    .sos-cb-item { background: rgba(255,255,255,0.08); border-radius: 6px; padding: 10px 12px; }
+    .sos-cb-item-label { font-size: 10px; font-weight: 700; letter-spacing: 0.8px; text-transform: uppercase; color: rgba(255,255,255,0.55); margin-bottom: 3px; }
+    .sos-cb-item-value { font-size: 12px; color: rgba(255,255,255,0.85); line-height: 1.5; }
+    .sos-cb-link { background: rgba(255,255,255,0.15); color: #fff; font-size: 12px; font-weight: 700; padding: 8px 14px; border-radius: 6px; text-decoration: none; white-space: nowrap; align-self: center; transition: background 0.15s; }
+    .sos-cb-link:hover { background: rgba(255,255,255,0.28); color: #fff; text-decoration: none; }
+    .tools-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 12px; margin: 16px 0 40px; }
+    .tool-card { background: var(--surface); border: 1.5px solid var(--border); border-radius: 8px; padding: 14px 16px; text-decoration: none; display: block; transition: all 0.15s; }
+    .tool-card:hover { text-decoration: none; transform: translateY(-1px); box-shadow: 0 3px 10px rgba(0,0,0,0.08); }
+    .tc-sos { border-left: 3px solid #0D5C63; }
+    .tc-sos:hover { border-color: #0D5C63; }
+    .tc-res { border-left: 3px solid #2C5F8A; }
+    .tc-res:hover { border-color: #2C5F8A; }
+    .tc-phase { font-size: 10px; font-weight: 700; letter-spacing: 0.8px; text-transform: uppercase; color: var(--text-muted); margin-bottom: 4px; }
+    .tc-sos .tc-phase { color: #0D5C63; }
+    .tc-res .tc-phase { color: #2C5F8A; }
+    .tc-title { font-size: 13px; font-weight: 700; color: var(--text); margin-bottom: 4px; line-height: 1.3; }
+    .tc-desc { font-size: 11px; color: var(--text-muted); line-height: 1.5; }
+  </style>
+</head>
+<body>
+<nav class="nav">
+  <span class="nav-logo">SaaS <span>Revenue System</span></span>
+  <span class="nav-sep">|</span>
+  <a href="../index.html" class="nav-back">← Home</a>
+  <span class="nav-sep">|</span>
+  <span class="nav-current">Phase 3 — Go-To-Market</span>
+</nav>
+
+<div class="page-hero">
+  <div class="hero-phase-label">PHASE 3 — GO-TO-MARKET</div>
+  <div class="hero-title">Segmentation, Demand Gen, Funnel Architecture &amp; Channel Strategy</div>
+  <div class="hero-subtitle">GTM is the system that connects your product to the market at scale. Misalignment here makes everything downstream harder.</div>
+  <div class="hero-tags">
+    <a href="../subpages/segmentation.html" class="hero-tag">Segmentation</a>
+    <a href="../subpages/demand-generation.html" class="hero-tag">Demand Generation</a>
+    <a href="../subpages/funnel-architecture.html" class="hero-tag">Funnel Architecture</a>
+    <a href="../subpages/channel-strategy.html" class="hero-tag">Channel Strategy</a>
+    <a href="../subpages/territory-design.html" class="hero-tag">Territory Design</a>
+    <a href="../subpages/lead-routing.html" class="hero-tag">Lead Routing</a>
+  </div>
+</div>
+
+<div class="content-wrap">
+
+  <div class="sos-context-banner">
+    <div class="sos-cb-stage">
+      <div class="sos-cb-label">Science of Scaling — Stage 2</div>
+      <div class="sos-cb-title">GTM Fit</div>
+    </div>
+    <div class="sos-cb-content">
+      <div class="sos-cb-item">
+        <div class="sos-cb-item-label">Stage Goal</div>
+        <div class="sos-cb-item-value">Scalable Unit Economics — prove that you can acquire ICP customers profitably and repeatably. LIUE &gt; 3 for 2 consecutive quarters.</div>
+      </div>
+      <div class="sos-cb-item">
+        <div class="sos-cb-item-label">Governing Metric</div>
+        <div class="sos-cb-item-value"><strong>LIUE = LTV / CAC &gt; 3.</strong> Every demand gen channel, segmentation decision, and funnel design in Phase 3 directly determines your LIUE numerator and denominator.</div>
+      </div>
+      <div class="sos-cb-item">
+        <div class="sos-cb-item-label">Stage 2 Demand Gen Rule</div>
+        <div class="sos-cb-item-value">Start with ONE scalable, measurable channel. 4 criteria: ICP alignment, measurability, rapid testability, customer success alignment (channel SQLs must achieve LIR at threshold rate).</div>
+      </div>
+      <div class="sos-cb-item">
+        <div class="sos-cb-item-label">Segmentation &amp; LIUE</div>
+        <div class="sos-cb-item-value">Calculate LIUE separately for each segment. A blended LIUE of 4 can mask an SMB segment at LIUE 0.8. Stage 3 Scale/Experiment/Ignore decisions are made at the segment level.</div>
+      </div>
+    </div>
+    <a href="../subpages/sos-gtm-fit.html" class="sos-cb-link">Stage 2: GTM Fit →</a>
+  </div>
+
+  <!-- ═══════════════════════════════════════════════════
+       SECTION 1: SEGMENTATION
+  ════════════════════════════════════════════════════ -->
+  <div class="section-title">Market Segmentation</div>
+  <div class="section-intro">Segmentation is the first GTM decision. Everything else — staffing, motion, pricing, demand gen, channel mix — flows from the segment you choose to attack. Getting segmentation wrong is the root cause of more GTM failures than any other single factor.</div>
+
+  <div class="subsection">
+    <div class="subsection-title">SMB, Mid-Market, and Enterprise: Standard Definitions</div>
+    <p>While definitions vary by industry and company, the SaaS industry has converged on rough boundaries that determine the sales motion required:</p>
+
+    <table class="data-table">
+      <thead>
+        <tr>
+          <th>Segment</th>
+          <th>Employee Count</th>
+          <th>Annual Revenue</th>
+          <th>ACV Range</th>
+          <th>Typical Sales Cycle</th>
+          <th>Decision Makers</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>SMB</strong></td>
+          <td>1–200</td>
+          <td>&lt;$10M</td>
+          <td>$1K–$15K</td>
+          <td>7–30 days</td>
+          <td>1–2 (often the owner)</td>
+        </tr>
+        <tr>
+          <td><strong>Mid-Market</strong></td>
+          <td>200–2,000</td>
+          <td>$10M–$500M</td>
+          <td>$15K–$150K</td>
+          <td>30–90 days</td>
+          <td>3–7 (VP + Manager + Procurement)</td>
+        </tr>
+        <tr>
+          <td><strong>Enterprise</strong></td>
+          <td>2,000+</td>
+          <td>&gt;$500M</td>
+          <td>$150K–$1M+</td>
+          <td>3–18 months</td>
+          <td>7–20+ (IT, Legal, Security, C-Suite, Procurement)</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <p>These numbers are approximate. The more important distinction is <em>deal complexity</em>: how many stakeholders, how much procurement process, and how much technical evaluation is required. A 50-person fintech startup can have an enterprise-complexity procurement process. A 5,000-employee retailer buying a point solution might close in 30 days.</p>
+  </div>
+
+  <div class="subsection">
+    <div class="subsection-title">Why Segmentation Drives Motion, Staffing, and Economics</div>
+    <p>Your segment determines virtually every downstream resource decision:</p>
+
+    <table class="data-table">
+      <thead>
+        <tr>
+          <th>Dimension</th>
+          <th>SMB</th>
+          <th>Mid-Market</th>
+          <th>Enterprise</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>Sales Motion</strong></td>
+          <td>High-velocity, transactional — often self-serve or inside sales with light touch</td>
+          <td>Consultative inside or hybrid — discovery, demo, proposal</td>
+          <td>Strategic account selling — executive relationships, custom proposals, procurement navigation</td>
+        </tr>
+        <tr>
+          <td><strong>Rep Profile</strong></td>
+          <td>High-energy, resilient, coachable at volume</td>
+          <td>Multi-threaded, process-disciplined, intelligent</td>
+          <td>Strategic, patient, executive presence, politically savvy</td>
+        </tr>
+        <tr>
+          <td><strong>Demand Gen</strong></td>
+          <td>Content, SEO, SEM — scalable inbound; outbound for expansion</td>
+          <td>Inbound + outbound; ABM for priority accounts</td>
+          <td>Named account ABM, events, exec relationships, referrals</td>
+        </tr>
+        <tr>
+          <td><strong>CAC Target</strong></td>
+          <td>Low — must recover in &lt;12 months; often &lt;$5K CAC</td>
+          <td>Moderate — 12–18 month CAC payback acceptable</td>
+          <td>High — 18–36 month payback is common; justified by LTV</td>
+        </tr>
+        <tr>
+          <td><strong>CS Motion</strong></td>
+          <td>Digital/pooled — low-touch, automated onboarding</td>
+          <td>Named CSM per portfolio of accounts</td>
+          <td>Dedicated CSM + executive sponsor program</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <div class="callout callout-warning">
+      <div class="callout-title">The Deadly GTM Sin</div>
+      <p>Building an enterprise-style motion (long discovery, custom proposals, executive selling) to sell to SMB customers is fatal. The economics don't work — you're spending $8K to acquire a $6K ACV customer. The reverse is equally damaging: a product-led or high-velocity inside sales motion for enterprise customers loses deals to competitors willing to do the strategic selling work. Segment first, then design the motion.</p>
+    </div>
+  </div>
+
+  <div class="subsection">
+    <div class="subsection-title">Horizontal vs. Vertical GTM</div>
+    <p>Beyond size-based segmentation, you must choose whether to go horizontal (selling the same product across many industries) or vertical (focusing deeply on one or two specific verticals).</p>
+
+    <table class="data-table">
+      <thead>
+        <tr>
+          <th>Approach</th>
+          <th>Definition</th>
+          <th>Advantages</th>
+          <th>When to Choose</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>Horizontal GTM</strong></td>
+          <td>Product solves a common problem across many industries (e.g., HubSpot CRM, Slack, DocuSign)</td>
+          <td>Larger TAM, more diversified risk, faster growth ceiling</td>
+          <td>When the pain is universal and the product is genuinely applicable across industries without customization</td>
+        </tr>
+        <tr>
+          <td><strong>Vertical GTM</strong></td>
+          <td>Product is purpose-built for a specific industry (e.g., Veeva for pharma, Procore for construction, Toast for restaurants)</td>
+          <td>Higher win rates, faster sales cycles, better NPS, stronger referral networks, easier pricing (industry-specific ROI)</td>
+          <td>When deep workflow integration and industry-specific compliance, data structures, or buyer vocabulary matter; early-stage companies often start vertical to win before expanding horizontal</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="subsection">
+    <div class="subsection-title">Which Segment to Attack First</div>
+    <p>The sequencing decision — which market to attack first — is one of the most consequential early-stage GTM choices. The wrong answer is "all of them simultaneously."</p>
+    <ol class="step-list">
+      <li>
+        <div class="step-content">
+          <span class="step-title">Identify where you have the strongest product-market fit signal</span>
+          Where are your happiest customers? What segment do your top 10 customers represent? That is your beachhead segment — regardless of where you think the biggest opportunity is.
+        </div>
+      </li>
+      <li>
+        <div class="step-content">
+          <span class="step-title">Assess unit economics by segment</span>
+          Which segment has the best LTV:CAC ratio given your current product and sales capability? Often this is the segment that least resembles your aspiration but most closely matches your current reality.
+        </div>
+      </li>
+      <li>
+        <div class="step-content">
+          <span class="step-title">Evaluate speed-to-revenue</span>
+          In early-stage companies, short cycles (SMB, product-led) generate faster feedback loops and faster cash. Enterprise cycles can be a 12-month experiment with one reference customer. The cost of being wrong is too high.
+        </div>
+      </li>
+      <li>
+        <div class="step-content">
+          <span class="step-title">Dominate before expanding</span>
+          The goal is to become the recognized leader in your first segment before expanding. "Best in the world for mid-market HR software in healthcare" is achievable. "Great for all companies" is not a defensible position at Series A.
+        </div>
+      </li>
+    </ol>
+  </div>
+
+  <!-- ═══════════════════════════════════════════════════
+       SECTION 2: TAM/SAM/SOM
+  ════════════════════════════════════════════════════ -->
+  <div class="section-title">TAM / SAM / SOM</div>
+  <div class="section-intro">The three market-sizing frameworks are a standard part of investor presentations and strategic planning. Understanding how to calculate and use them is foundational to territory planning, board communication, and investment prioritization.</div>
+
+  <div class="subsection">
+    <div class="subsection-title">Definitions and Calculation Methods</div>
+
+    <table class="data-table">
+      <thead>
+        <tr>
+          <th>Metric</th>
+          <th>Definition</th>
+          <th>How to Calculate</th>
+          <th>What Investors Look For</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>TAM — Total Addressable Market</strong></td>
+          <td>The total revenue opportunity available if your product achieved 100% market share — every company that could theoretically buy it</td>
+          <td>Top-down: use industry analyst reports (Gartner, IDC, Forrester). Bottom-up: (# of target companies worldwide) × ACV</td>
+          <td>TAM should be &gt;$1B for venture-scale outcomes. Investors are skeptical of TAMs below $500M at Series A.</td>
+        </tr>
+        <tr>
+          <td><strong>SAM — Serviceable Addressable Market</strong></td>
+          <td>The portion of TAM you can actually reach with your current product, language, geographic presence, and sales motion</td>
+          <td>Filter TAM by: geographies where you sell, languages supported, product-fit segments, regulatory constraints. Example: TAM is all HR software globally; SAM is English-speaking mid-market companies in North America.</td>
+          <td>The SAM is what you're actually competing in. It should be credibly grounded — not just "well, we could expand everywhere."</td>
+        </tr>
+        <tr>
+          <td><strong>SOM — Serviceable Obtainable Market</strong></td>
+          <td>The portion of SAM you can realistically capture in your planning horizon (typically 3–5 years) given current resources, competition, and GTM capacity</td>
+          <td>SOM = SAM × realistic market share %. Ground this in: competitive win rates, sales capacity (headcount × quota), and growth trajectory. A company at $10M ARR targeting 3% of a $500M SAM over 3 years = ~$15M ARR target.</td>
+          <td>Investors evaluate whether your financial projections are consistent with your SOM claim. If your 5-year plan requires 40% SAM capture, it will be challenged.</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <div class="formula-block">
+      <div class="formula-label">Bottom-Up TAM Formula</div>
+      <div class="formula-main">TAM = (# of target companies in addressable universe) × (Average Contract Value)</div>
+      <div class="formula-note">Example: 50,000 mid-market HR departments in North America × $40,000 ACV = $2B TAM<br/>
+      Note: this assumes 100% penetration — a theoretical maximum, not a projection. SAM and SOM are the actionable numbers.</div>
+    </div>
+  </div>
+
+  <div class="subsection">
+    <div class="subsection-title">Using TAM/SAM/SOM in Territory Planning</div>
+    <p>Market sizing frameworks are not just for pitch decks — they are the foundation of territory design. Divide your SAM across territories to ensure each rep has an addressable universe that can support their quota target.</p>
+    <ul class="bullet-list">
+      <li>If a rep's territory contains 800 accounts and their annual quota is $1M, and average ACV is $40K, they need to close 25 deals from 800 accounts — a 3.1% close rate requirement. Is that achievable given typical conversion rates in your motion?</li>
+      <li>If the math doesn't work, the territory is too small and you need to either expand it, adjust quota, or increase pipeline coverage ratios.</li>
+      <li>Territory whitespace analysis: which accounts in each rep's territory have never been touched? That is the floor of outbound opportunity.</li>
+    </ul>
+  </div>
+
+  <!-- ═══════════════════════════════════════════════════
+       SECTION 3: TERRITORY DESIGN
+  ════════════════════════════════════════════════════ -->
+  <div class="section-title">Territory Design</div>
+  <div class="section-intro">Territory design is the process of dividing the addressable market into defined ownership areas for sales reps. Poor territory design creates inequity, drives attrition of top performers, and produces attainment variance that looks like a talent problem but is actually a structural one.</div>
+
+  <div class="subsection">
+    <div class="subsection-title">Territory Model Types</div>
+
+    <table class="data-table">
+      <thead>
+        <tr>
+          <th>Model</th>
+          <th>How It Works</th>
+          <th>Best For</th>
+          <th>Weaknesses</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>Geographic</strong></td>
+          <td>Rep owns all accounts within a defined geography (state, region, country)</td>
+          <td>Field sales with in-person requirements; local market relationships matter; broad horizontal product</td>
+          <td>Geographic account density is uneven — New York vs. rural Midwest has wildly different account density; ignores vertical clustering</td>
+        </tr>
+        <tr>
+          <td><strong>Named Account</strong></td>
+          <td>Rep owns a specific list of named accounts, regardless of geography</td>
+          <td>Enterprise sales; accounts require deep multi-year relationships; account potential is concentrated</td>
+          <td>Account assignment is political; some lists have more potential than others; requires rigorous account scoring</td>
+        </tr>
+        <tr>
+          <td><strong>Vertical / Industry</strong></td>
+          <td">Rep owns all accounts in a specific industry vertical</td>
+          <td>When vertical expertise matters for credibility; Veeva (pharma), Procore (construction), Toast (restaurants)</td>
+          <td>Vertical account density varies by geography; requires reps with vertical knowledge</td>
+        </tr>
+        <tr>
+          <td><strong>Hybrid</strong></td>
+          <td>Combination — geographic regions + named enterprise accounts pulled out; or vertical pods within regions</td>
+          <td>Companies with both SMB/MM velocity and enterprise strategic motion running simultaneously</td>
+          <td>Complex to administer; requires clear rules for account ownership disputes</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="subsection">
+    <div class="subsection-title">Balancing Territories for Equity</div>
+    <p>Territory equity is the degree to which every rep has an equal opportunity to hit quota. Perfect equity is unachievable — but variance should be managed to prevent structural attrition of top performers assigned to thin territories.</p>
+
+    <ol class="step-list">
+      <li>
+        <div class="step-content">
+          <span class="step-title">Score every account in your CRM</span>
+          Build an account potential score using: firmographic fit (ICP match), employee count, revenue signal, industry, technology stack (e.g., using Clearbit, ZoomInfo, BuiltWith), intent data. Each account has a weighted potential value.
+        </div>
+      </li>
+      <li>
+        <div class="step-content">
+          <span class="step-title">Sum potential by territory</span>
+          Total account potential per territory gives a relative territory value index. If rep A's territory has 150 potential units and rep B's has 80, that's an 88% gap — the quota assignments should reflect this, or the territory should be rebalanced.
+        </div>
+      </li>
+      <li>
+        <div class="step-content">
+          <span class="step-title">Rebalance annually at plan design</span>
+          Territory rebalancing should happen at the start of each fiscal year — not mid-year. Mid-year changes disrupt active deal cycles and destroy trust.
+        </div>
+      </li>
+      <li>
+        <div class="step-content">
+          <span class="step-title">Protect relationship equity</span>
+          When rebalancing, consider rep-account relationships. Pulling a large account out of a rep's territory the week before it closes is a trust-destroying move that will cost you the rep. Build clear rules for how in-flight deals are handled during territory changes.
+        </div>
+      </li>
+    </ol>
+  </div>
+
+  <div class="subsection">
+    <div class="subsection-title">White Space Analysis</div>
+    <p>White space is the portion of a rep's territory that has never been contacted, touched, or pursued. In most SaaS companies, 60–80% of the SAM is white space — untouched potential. White space analysis identifies where outbound effort should be concentrated.</p>
+    <ul class="bullet-list">
+      <li>Filter accounts by: zero opportunity history, zero email/call history in CRM, ICP score above threshold</li>
+      <li>Prioritize white space by: intent signals (G2, Bombora, 6sense), technographic signals (using competitor products), trigger events (new funding, new hire, company expansion)</li>
+      <li>White space is not a pipeline problem — it is an activity direction problem. Reps who work existing pipeline die by single-threading. Reps who work white space build sustainable pipeline health.</li>
+    </ul>
+  </div>
+
+  <!-- ═══════════════════════════════════════════════════
+       SECTION 4: DEMAND GENERATION
+  ════════════════════════════════════════════════════ -->
+  <div class="section-title">Demand Generation</div>
+  <div class="section-intro">Roberge's core principle: every marketing investment must be traceable to pipeline. Demand generation is not brand awareness — it is the systematic creation of qualified sales opportunities. Everything else is a vanity metric.</div>
+
+  <div class="subsection">
+    <div class="subsection-title">Inbound vs. Outbound Demand Generation</div>
+
+    <table class="data-table">
+      <thead>
+        <tr>
+          <th>Dimension</th>
+          <th>Inbound</th>
+          <th>Outbound</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>Definition</strong></td>
+          <td>Buyers find you — through content, SEO, word of mouth, community, PLG</td>
+          <td>You find buyers — through cold outreach, prospecting, direct mail, events, SDR calls</td>
+        </tr>
+        <tr>
+          <td><strong>Lead Quality</strong></td>
+          <td>Higher intent — they came to you because they have the problem</td>
+          <td>Variable intent — you are interrupting their day; must create urgency and relevance</td>
+        </tr>
+        <tr>
+          <td><strong>Economics</strong></td>
+          <td>Lower CPL at scale; high fixed cost (content, SEO investment upfront), low marginal cost per lead</td>
+          <td>Higher CPL but predictable; directly scalable with headcount; delivers ICP precision</td>
+        </tr>
+        <tr>
+          <td><strong>Time to Results</strong></td>
+          <td>6–18 months to build; not a fast solution</td>
+          <td>Immediate — first campaigns can generate leads in week 1</td>
+        </tr>
+        <tr>
+          <td><strong>Best Used When</strong></td>
+          <td>Strong product-market fit, clear ICP, growing brand awareness; Series B+ when inbound machine is built</td>
+          <td>Early-stage testing of ICP hypotheses; enterprise segment where buyers don't search; segment expansion into new verticals</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="subsection">
+    <div class="subsection-title">Building a Demand Gen Engine from Scratch</div>
+
+    <ol class="step-list">
+      <li>
+        <div class="step-content">
+          <span class="step-title">Define your MQL (Marketing Qualified Lead)</span>
+          An MQL is not someone who opened an email. An MQL is a person who matches your ICP profile and has taken an action indicating they have the problem your product solves. The MQL definition must be co-owned by marketing and sales. Marketing generates MQLs; sales must agree they are worth pursuing. Misalignment here is the root cause of the "marketing generates garbage leads" conflict.
+        </div>
+      </li>
+      <li>
+        <div class="step-content">
+          <span class="step-title">Identify the 2–3 channels most likely to reach your ICP</span>
+          B2B SaaS options: content/SEO (buyers researching solutions), LinkedIn ads (targeting by job title/company size), events (where your buyers congregate), outbound SDRs (direct prospecting), partner referrals. Start with the channels where your buyers spend time, not the channels you're comfortable with.
+        </div>
+      </li>
+      <li>
+        <div class="step-content">
+          <span class="step-title">Build tracking infrastructure before spending</span>
+          UTM parameters on every URL, CRM campaign tracking for every marketing source, attribution model agreed upon before the first dollar is spent. Without this, you cannot measure which channels produce pipeline, and you'll continue spending on the wrong things.
+        </div>
+      </li>
+      <li>
+        <div class="step-content">
+          <span class="step-title">Run experiments with defined success metrics</span>
+          Each channel test should have: a minimum spend ($), a time horizon (60–90 days), and a success threshold (e.g., CPL &lt; $X, MQL-to-SQL conversion &gt; Y%). Kill channels that don't meet thresholds. Scale channels that exceed them.
+        </div>
+      </li>
+      <li>
+        <div class="step-content">
+          <span class="step-title">Build feedback loops between sales and marketing</span>
+          Sales should report back on every MQL: was it a fit? What was the quality? This feedback refines lead scoring models and MQL definitions. Monthly sales-marketing alignment meetings are the operational mechanism.
+        </div>
+      </li>
+    </ol>
+  </div>
+
+  <!-- ═══════════════════════════════════════════════════
+       SECTION 5: ABM
+  ════════════════════════════════════════════════════ -->
+  <div class="section-title">Account-Based Marketing (ABM)</div>
+  <div class="section-intro">ABM flips the traditional marketing funnel. Instead of casting wide and filtering down, ABM starts with a precisely defined list of target accounts and coordinates marketing and sales activity specifically toward those accounts.</div>
+
+  <div class="subsection">
+    <div class="subsection-title">The Three ABM Tiers</div>
+
+    <table class="data-table">
+      <thead>
+        <tr>
+          <th>Tier</th>
+          <th>Account Count</th>
+          <th>Approach</th>
+          <th>Resources Required</th>
+          <th>Example Activity</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>Tier 1 — 1:1</strong></td>
+          <td>5–20 accounts</td>
+          <td>Fully customized, bespoke campaigns for each account. Custom content, custom events, executive relationship building.</td>
+          <td>High — dedicated marketing resources per account; AE + SDR + Marketing + exec sponsor per account</td>
+          <td>Custom micro-site for the target company, executive dinner in their city, bespoke ROI analysis using their own data, personalized video from CRO to CHRO</td>
+        </tr>
+        <tr>
+          <td><strong>Tier 2 — 1:Few</strong></td>
+          <td>50–200 accounts</td>
+          <td>Light personalization — segment-specific content adapted for each account cluster. Industry-specific case studies, persona-specific emails.</td>
+          <td>Medium — cluster accounts by vertical/persona, create templates that allow quick personalization</td>
+          <td>Industry-specific webinar + follow-up sequence; LinkedIn ad campaign targeting named contacts at target accounts; SDR sequences with personalized first lines</td>
+        </tr>
+        <tr>
+          <td><strong>Tier 3 — 1:Many</strong></td>
+          <td>500–2,000 accounts</td>
+          <td>Programmatic — use targeting technology to show relevant content to contacts at target accounts. Minimal manual personalization.</td>
+          <td>Low per account — technology-driven (6sense, Demandbase, LinkedIn ABM lists)</td>
+          <td>Retargeting ads to anyone from a target company who visited your site; LinkedIn matched audiences campaigns; behavioral email sequences triggered by intent signals</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="subsection">
+    <div class="subsection-title">ABM Account List Construction</div>
+    <p>The quality of your ABM program is entirely determined by the quality of your target account list. A poorly constructed list wastes resources on accounts that will never buy.</p>
+    <ul class="bullet-list">
+      <li><strong>Start with ICP criteria</strong> — firmographics (industry, size, revenue, geography), technographics (current tools), business model signals</li>
+      <li><strong>Layer in intent data</strong> — use Bombora, G2 Buyer Intent, or 6sense to identify companies actively researching your category. An ICP-fit company showing intent is a Tier 1 or 2 candidate immediately.</li>
+      <li><strong>Score by trigger events</strong> — new funding round (budget available), executive hire (new decision maker), company expansion, regulatory change affecting their industry</li>
+      <li><strong>Validate with sales</strong> — the sales team knows which accounts are actively considering your category. They should co-build the Tier 1 list.</li>
+    </ul>
+  </div>
+
+  <div class="subsection">
+    <div class="subsection-title">Measuring ABM</div>
+    <div class="indicator-row">
+      <span class="indicator-tag ind-leading">Account Engagement Score (contacts touched, content consumed, meetings booked)</span>
+      <span class="indicator-tag ind-leading">Multi-Thread Engagement (% of accounts with 3+ contacts engaged)</span>
+      <span class="indicator-tag ind-leading">Intent Signal Volume (accounts showing category intent)</span>
+      <span class="indicator-tag ind-lagging">Pipeline Influenced from Target Accounts</span>
+      <span class="indicator-tag ind-lagging">Win Rate — Target ABM Accounts vs. Non-ABM</span>
+      <span class="indicator-tag ind-lagging">Account Penetration Rate (% of Tier 1 list with open opportunities)</span>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════════════
+       SECTION 6: FUNNEL ARCHITECTURE
+  ════════════════════════════════════════════════════ -->
+  <div class="section-title">Funnel Architecture</div>
+  <div class="section-intro">A funnel is only as reliable as its stage definitions. The most common source of forecasting inaccuracy in SaaS is not dishonest reps or bad data — it is undefined or inconsistently applied stage criteria. Stage inflation (moving deals forward without meeting entry criteria) destroys forecast predictability.</div>
+
+  <div class="subsection">
+    <div class="subsection-title">Every Stage: Entry Criteria and Exit Criteria</div>
+
+    <table class="data-table">
+      <thead>
+        <tr>
+          <th>Stage</th>
+          <th>Definition</th>
+          <th>Entry Criteria</th>
+          <th>Exit Criteria</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>MQL</strong></td>
+          <td>A lead that meets ICP criteria and has taken a qualifying action — owned by Marketing</td>
+          <td>ICP demographic fit + qualifying behavioral signal (demo request, content download + form fill + score threshold)</td>
+          <td>Reviewed and accepted by Sales as a Sales-Accepted Lead (SAL) OR rejected with reason code</td>
+        </tr>
+        <tr>
+          <td><strong>SAL</strong></td>
+          <td>Sales has accepted the lead and committed to making first contact — transition from Marketing ownership to Sales ownership</td>
+          <td>Sales rep or SDR has reviewed the lead, confirmed ICP fit, and accepted responsibility for outreach within SLA (typically 5–60 min)</td>
+          <td>First contact made; qualifying call completed; either qualified as SQL or disqualified with reason</td>
+        </tr>
+        <tr>
+          <td><strong>SQL</strong></td>
+          <td>Sales Qualified Lead — confirmed that the prospect has a genuine need, budget exists, decision-making authority identified, and a timeline is plausible</td>
+          <td>BANT or MEDDIC qualification confirmed: Budget (or funding pathway), Authority (knows the decision maker), Need (confirmed pain/problem), Timeline (realistic within 12 months)</td>
+          <td>Discovery call booked and completed; moves to Stage 1</td>
+        </tr>
+        <tr>
+          <td><strong>Stage 1 — Discovery</strong></td>
+          <td>Active discovery of the prospect's problem, current state, desired future state, and decision-making process</td>
+          <td>SQL criteria met; discovery call scheduled</td>
+          <td>Champion identified; core problem validated; budget range confirmed; discovery complete and documented in CRM</td>
+        </tr>
+        <tr>
+          <td><strong>Stage 2 — Evaluation</strong></td>
+          <td>Prospect is actively evaluating your product — demo delivered, technical validation, proof of concept</td>
+          <td>Champion has agreed to run a formal evaluation; decision criteria defined; key stakeholders mapped</td>
+          <td>Demo completed; technical questions answered; PoC (if required) complete with success criteria met; economic buyer engaged</td>
+        </tr>
+        <tr>
+          <td><strong>Stage 3 — Proposal</strong></td>
+          <td>Formal proposal delivered; pricing discussed; procurement process engaged</td>
+          <td>Economic buyer has been presented to; pricing accepted in principle; legal/security review initiated (if required)</td>
+          <td>Proposal accepted; verbal commitment from economic buyer; legal redlines complete or in progress</td>
+        </tr>
+        <tr>
+          <td><strong>Stage 4 — Negotiation</strong></td>
+          <td>Commercial terms being finalized; legal, procurement, or IT review in progress</td>
+          <td>Verbal commitment received; contract sent; negotiation points identified</td>
+          <td>Contract signed; Closed Won OR Closed Lost</td>
+        </tr>
+        <tr>
+          <td><strong>Closed Won</strong></td>
+          <td>Contract executed, deal booked to CRM</td>
+          <td>Signed agreement; payment terms confirmed</td>
+          <td>Handed to CS for onboarding; account record updated</td>
+        </tr>
+        <tr>
+          <td><strong>Closed Lost</strong></td>
+          <td>Deal will not proceed in this cycle</td>
+          <td>Prospect confirmed no purchase; or opportunity inactive &gt;45 days with no response</td>
+          <td>Loss reason documented (mandatory); future re-engagement date set if applicable</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <div class="callout callout-warning">
+      <div class="callout-title">The Stage Inflation Problem</div>
+      <p>Stage inflation happens when reps move deals forward without meeting exit criteria — typically to protect their pipeline from scrutiny. A deal in "Stage 3 — Proposal" where no economic buyer has been engaged is a Stage 1 deal being miscategorized. Solving this requires CRM field enforcement (required fields at each stage transition) and manager inspection in weekly 1:1s.</p>
+    </div>
+  </div>
+
+  <div class="subsection">
+    <div class="subsection-title">Funnel Leakage Audit</div>
+    <p>A funnel audit identifies where prospects are leaving the funnel at rates higher than expected, indicating a systemic problem at that stage.</p>
+
+    <div class="formula-block">
+      <div class="formula-label">Stage Conversion Rate</div>
+      <div class="formula-main">Stage N Conversion = Opportunities Entering Stage N+1 / Opportunities Entering Stage N</div>
+      <div class="formula-note">Example benchmarks (vary widely by segment and product):<br/>
+      MQL → SQL: 15–25% (lower is OK if MQL volume is high; higher is better with precise targeting)<br/>
+      SQL → Stage 1: 60–80% (most qualified leads should enter discovery)<br/>
+      Stage 1 → Stage 2: 40–60% (significant drop here = discovery quality problem)<br/>
+      Stage 2 → Stage 3: 50–70% (major drop here = evaluation failure or competitive loss)<br/>
+      Stage 3 → Closed Won: 35–60% (varies massively by segment)</div>
+    </div>
+
+    <p>When you see a conversion rate well below benchmark at any stage, investigate the specific failure mode. Ask: what are the three most common reasons deals stall or die at this stage? The answers reveal coaching priorities, product gaps, and messaging failures.</p>
+  </div>
+
+  <!-- ═══════════════════════════════════════════════════
+       SECTION 7: CHANNEL STRATEGY
+  ════════════════════════════════════════════════════ -->
+  <div class="section-title">Channel Strategy</div>
+  <div class="section-intro">A channel is the vehicle through which you reach and close customers. Each channel has different economics, different speed-to-revenue, and different strategic implications. The biggest GTM mistake is investing in channels without understanding their unit economics.</div>
+
+  <div class="subsection">
+    <div class="subsection-title">Channel Economics Comparison</div>
+
+    <table class="data-table">
+      <thead>
+        <tr>
+          <th>Channel</th>
+          <th>How It Works</th>
+          <th>CAC Profile</th>
+          <th>Best For</th>
+          <th>Risks</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>Direct Sales</strong></td>
+          <td>Your own reps prospect, qualify, and close deals</td>
+          <td>High — full salary + benefits + tools + management overhead</td>
+          <td>Enterprise, complex products, high ACV where the economics justify the cost</td>
+          <td>Not scalable without proportional headcount; high fixed cost</td>
+        </tr>
+        <tr>
+          <td><strong>Reseller / Channel Partners</strong></td>
+          <td>Third-party companies sell your product (VARs, MSPs, consultants)</td>
+          <td>Low direct CAC — you pay a revenue share (typically 15–30%). Moderate indirect cost (partner enablement, program management).</td>
+          <td>Geographic reach beyond your sales capacity; verticals where the partner has trusted relationships (e.g., accounting firms selling accounting software)</td>
+          <td>Channel conflict with direct team; partners may not prioritize your product; partner quality control is hard</td>
+        </tr>
+        <tr>
+          <td><strong>Technology Alliances</strong></td>
+          <td>Integrations with complementary tools generate co-marketing, co-selling, and referrals</td>
+          <td>Low — primarily an engineering and partnership investment; no per-lead cost</td>
+          <td>Products embedded in a broader stack (CRM → email tools → CS platforms); marketplace exposure</td>
+          <td>Partner prioritization; integration maintenance overhead; partner gets customer data context you don't</td>
+        </tr>
+        <tr>
+          <td><strong>Product-Led Growth (PLG)</strong></td>
+          <td>Product is the primary acquisition vehicle — free trial, freemium, or self-serve purchase</td>
+          <td>Very low CAC for the initial acquisition; higher CAC for conversion of free-to-paid if it requires sales assist</td>
+          <td>Products with fast time-to-value, low implementation complexity, individual user use cases that expand (Slack, Notion, Figma, Zoom)</td>
+          <td>Conversion rate management is critical; PLG without a strong activation experience = high churn; difficult to support enterprise deals without a sales overlay</td>
+        </tr>
+        <tr>
+          <td><strong>Marketplace</strong></td>
+          <td>Listed on Salesforce AppExchange, AWS Marketplace, G2, etc.</td>
+          <td>Low acquisition cost but marketplace takes 15–30% revenue share; customer acquisition is through the marketplace's traffic</td>
+          <td>Products that complement Salesforce, AWS, or other platform ecosystems; buyers who use trusted marketplaces for procurement</td>
+          <td>Dependent on marketplace algorithm and policies; limited customer relationship ownership; pricing pressure</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <div class="formula-block">
+      <div class="formula-label">CAC by Channel</div>
+      <div class="formula-main">CAC (Channel X) = Total Spend on Channel X / New Customers Acquired via Channel X</div>
+      <div class="formula-note">Include all costs: ad spend, salaries of people running the channel, tools, events, commissions, partner program costs.<br/>
+      Compare against LTV by channel — a channel with 2× higher CAC but 3× higher LTV is strategically superior.<br/>
+      Track CAC payback period: CAC / (ACV × Gross Margin %). Target: &lt;18 months for SaaS.</div>
+    </div>
+  </div>
+
+  <div class="subsection">
+    <div class="subsection-title">When to Invest in Channel vs. Direct</div>
+    <ul class="bullet-list">
+      <li><strong>Direct first</strong> — until you understand your motion, ICP, and deal economics deeply, direct sales gives you the fastest feedback loop. Every channel partner interaction adds a layer of distance between you and the buyer.</li>
+      <li><strong>Add channel when</strong> — you have a proven, repeatable direct motion; the geographic or vertical reach of partners adds accounts you can't access directly; ACV economics support the revenue share; and you have the bandwidth to enable and manage partners properly.</li>
+      <li><strong>Never add channel to fix a broken direct motion</strong> — if your direct sales conversion rates are poor, channel partners will experience the same issues. Fix the product-market fit and motion first.</li>
+    </ul>
+  </div>
+
+  <!-- ═══════════════════════════════════════════════════
+       SECTION 8: LEAD ROUTING
+  ════════════════════════════════════════════════════ -->
+  <div class="section-title">Lead Routing</div>
+  <div class="section-intro">Lead routing is the process of assigning incoming leads to the right sales rep or SDR. It sounds operational and unglamorous — which is why it is consistently under-designed. Poorly routed leads result in delayed follow-up, wrong rep assignments, and permanent lost revenue.</div>
+
+  <div class="subsection">
+    <div class="subsection-title">Routing Models</div>
+
+    <table class="data-table">
+      <thead>
+        <tr>
+          <th>Model</th>
+          <th>How It Works</th>
+          <th>Best For</th>
+          <th>Failure Modes</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>Round Robin</strong></td>
+          <td>Leads are distributed sequentially across available reps, ensuring equal volume per rep</td>
+          <td>SMB, homogeneous rep teams, inbound volume too high for ownership-based routing</td>
+          <td>Distributes good and bad leads equally; doesn't account for rep availability, skill, or territory fit</td>
+        </tr>
+        <tr>
+          <td><strong>Ownership-Based</strong></td>
+          <td>Leads from accounts owned by a specific rep or in their territory are automatically routed to that rep</td>
+          <td>Mid-Market and Enterprise where territory ownership is established; ABM target account models</td>
+          <td>Requires accurate account ownership data in CRM; ownership gaps create leads that fall through the cracks</td>
+        </tr>
+        <tr>
+          <td><strong>Scoring-Based</strong></td>
+          <td>Leads are scored on ICP fit and intent, and routed to the most qualified rep (highest performer, enterprise specialist, etc.) based on score</td>
+          <td>Teams with differentiated rep tiers; routing high-value inbound leads to senior reps</td>
+          <td>Scoring model must be maintained; creates inequality in volume that can breed resentment</td>
+        </tr>
+        <tr>
+          <td><strong>Skills/Segment-Based</strong></td>
+          <td>Leads are routed based on the segment, vertical, or language match (a French-speaking lead goes to a French-speaking rep)</td>
+          <td>Multi-product or multi-segment companies; international teams; vertical specialists</td>
+          <td>More complex routing logic; requires accurate data on the lead's attributes at the point of submission</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="subsection">
+    <div class="subsection-title">Speed-to-Lead: The 5-Minute Rule</div>
+    <p>A landmark Harvard Business Review study found that responding to a lead within 5 minutes is 9× more likely to result in meaningful contact than responding after 10 minutes. After 1 hour, the likelihood of reaching the lead drops by 60×.</p>
+
+    <div class="callout callout-definition">
+      <div class="callout-title">Speed-to-Lead Benchmark</div>
+      <p>The SLA for inbound MQL follow-up should be:<br/>
+      <strong>Business hours:</strong> 5 minutes for high-score leads (demo request, pricing page), 60 minutes for standard MQLs<br/>
+      <strong>After hours:</strong> Acknowledge immediately with automated email + calendar link; call at start of next business day<br/>
+      The single biggest driver of lead conversion improvement is usually not the quality of the pitch — it is simply responding faster.</p>
+    </div>
+  </div>
+
+  <div class="subsection">
+    <div class="subsection-title">Enforcing Lead Routing Rules in CRM</div>
+    <ul class="bullet-list">
+      <li>Use CRM workflow automation (Salesforce, HubSpot) to create automated lead assignment rules — don't rely on manual processes</li>
+      <li>Build alerts for SLA violations: if an MQL is uncontacted after 60 minutes, trigger a manager notification</li>
+      <li>Track lead response time as a managed metric — publish it in the weekly team standup</li>
+      <li>Build an SLA report showing the distribution of response times. Most companies are shocked to discover that 30% of inbound MQLs are not contacted within 24 hours.</li>
+      <li>Create a "fallback" routing rule for leads that don't match any ownership criteria — these should never fall through to "unassigned"</li>
+    </ul>
+  </div>
+
+  <!-- ═══════════════════════════════════════════════════
+       SECTION 9: FORMULAS & INDICATORS
+  ════════════════════════════════════════════════════ -->
+  <div class="section-title">Key Formulas — Phase 3</div>
+
+  <div class="subsection">
+    <div class="formula-block">
+      <div class="formula-label">TAM (Bottom-Up)</div>
+      <div class="formula-main">TAM = (# of target companies in addressable universe) × ACV</div>
+    </div>
+
+    <div class="formula-block">
+      <div class="formula-label">Pipeline Coverage Ratio</div>
+      <div class="formula-main">Pipeline Coverage = Open Pipeline (all stages) / Remaining Quota</div>
+      <div class="formula-note">Target: 3× coverage minimum. At 2× you are likely to miss. At 4–5×, you have buffer for deals that slip.<br/>
+      Note: Weight pipeline by stage and probability. A 3× coverage ratio of early-stage deals is not the same as 3× of late-stage deals.</div>
+    </div>
+
+    <div class="formula-block">
+      <div class="formula-label">MQL-to-SQL Conversion Rate</div>
+      <div class="formula-main">MQL → SQL Conversion = SQLs Generated / MQLs Received × 100%</div>
+      <div class="formula-note">Industry benchmark: 10–20%. Below 10% = MQL definition is too loose or ICP targeting is off. Above 30% = MQL bar may be too high, leaving qualified leads on the table.</div>
+    </div>
+
+    <div class="formula-block">
+      <div class="formula-label">Funnel Velocity Formula</div>
+      <div class="formula-main">Velocity = (# of Opportunities × Win Rate × ACV) / Average Sales Cycle Length (days)</div>
+      <div class="formula-note">This tells you how many dollars of revenue your funnel produces per day.<br/>
+      Improving any of the four inputs improves velocity.<br/>
+      Example: 100 opps × 25% win rate × $40K ACV / 60 days = $16,667/day in expected revenue</div>
+    </div>
+
+    <div class="formula-block">
+      <div class="formula-label">CAC by Channel</div>
+      <div class="formula-main">CAC = Total Channel Investment / New Customers from That Channel</div>
+      <div class="formula-note">Include: ad spend, headcount cost (% of time), tools, event costs, partner fees<br/>
+      CAC Payback = CAC / (MRR per Customer × Gross Margin %)</div>
+    </div>
+  </div>
+
+  <div class="section-title">Key Indicators — Phase 3</div>
+
+  <div class="subsection">
+    <div class="subsection-title">Leading Indicators</div>
+    <div class="indicator-row">
+      <span class="indicator-tag ind-leading">MQL Volume by Source</span>
+      <span class="indicator-tag ind-leading">MQL-to-SAL Conversion Rate</span>
+      <span class="indicator-tag ind-leading">Pipeline by Source (marketing-sourced vs. outbound)</span>
+      <span class="indicator-tag ind-leading">Outbound Activity (calls, emails, meetings booked)</span>
+      <span class="indicator-tag ind-leading">Account Engagement Score (ABM accounts)</span>
+      <span class="indicator-tag ind-leading">Lead Response Time (speed-to-lead)</span>
+      <span class="indicator-tag ind-formula">Funnel Velocity = (Opps × Win Rate × ACV) / Cycle Days</span>
+    </div>
+  </div>
+
+  <div class="subsection">
+    <div class="subsection-title">Lagging Indicators</div>
+    <div class="indicator-row">
+      <span class="indicator-tag ind-lagging">Pipeline Coverage Ratio</span>
+      <span class="indicator-tag ind-lagging">Win Rate by Source</span>
+      <span class="indicator-tag ind-lagging">CAC by Channel</span>
+      <span class="indicator-tag ind-lagging">Pipeline-to-Revenue Ratio (pipeline converted to closed won)</span>
+      <span class="indicator-tag ind-lagging">Average Sales Cycle by Segment</span>
+      <span class="indicator-tag ind-lagging">Revenue by Channel</span>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════════════
+       SECTION 10: COMMON MISTAKES
+  ════════════════════════════════════════════════════ -->
+  <div class="section-title">Common GTM Mistakes</div>
+  <div class="subsection">
+    <table class="data-table">
+      <thead>
+        <tr>
+          <th>Mistake</th>
+          <th>What It Looks Like</th>
+          <th>Consequence</th>
+          <th>Correction</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>Spray-and-pray demand gen</strong></td>
+          <td>Running 8 marketing channels simultaneously, optimizing for impressions and clicks, no MQL definition, "more leads = better"</td>
+          <td>High CAC, low conversion, sales team overwhelmed with unqualified leads, marketing-sales conflict, no learnable signal from the data</td>
+          <td>Narrow to 2–3 channels. Define MQL. Track pipeline generated per channel, not leads. Kill everything below CAC threshold.</td>
+        </tr>
+        <tr>
+          <td><strong>Undefined funnel stages</strong></td>
+          <td>Stage names exist in CRM but there are no written entry/exit criteria. Every rep decides for themselves when a deal "moves forward."</td>
+          <td>Forecast is noise. Pipeline reviews are theater. Win/loss analysis is impossible. Coaching cannot target specific stage failure points.</td>
+          <td>Write stage criteria document. Build required CRM fields at each transition. Review in management training. Audit quarterly.</td>
+        </tr>
+        <tr>
+          <td><strong>Ignoring channel economics</strong></td>
+          <td>Continuing to invest in a channel because "it feels like it's working" without tracking CAC, LTV, or payback period by channel</td>
+          <td>Misallocated marketing budget; investing in expensive channels while cheap channels are underinvested; cannot make rational reallocation decisions</td>
+          <td>Build a channel economics dashboard. Track CAC and payback period monthly per channel. Review in monthly marketing/sales alignment.</td>
+        </tr>
+        <tr>
+          <td><strong>Attacking all segments simultaneously</strong></td>
+          <td>Building an SMB self-serve motion, a mid-market inside sales motion, and an enterprise field motion all at once with a 15-person team</td>
+          <td>No segment is done well. Resources are spread too thin. Three different ICPs means unclear messaging, unclear comp, unclear hiring. Nothing achieves escape velocity.</td>
+          <td>Pick one segment. Dominate it. Build the proof points and infrastructure. Then expand methodically.</td>
+        </tr>
+        <tr>
+          <td><strong>MQL definition mismatch</strong></td>
+          <td>Marketing defines MQLs by form submissions and email opens. Sales considers most of these unqualified. Marketing gets credit for 500 MQLs/month; sales only works 50 of them.</td>
+          <td>Marketing-sales conflict. Marketing appears productive but pipeline doesn't grow. Trust breaks down between functions.</td>
+          <td>Co-create the MQL definition in a joint marketing-sales workshop. The definition must pass the "sales would be excited to receive this lead" test.</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="section-title">Science of Scaling Tools for This Phase</div>
+  <p class="section-intro">Every element of Phase 3 — segmentation, demand gen, funnel design, channel strategy — has a direct counterpart in Stage 2 of the Science of Scaling framework. Use these tools to build a GTM motion that is measurable, LIUE-positive, and LIR-aligned.</p>
+  <div class="tools-grid">
+    <a href="../subpages/sos-gtm-fit.html" class="tool-card tc-sos">
+      <div class="tc-phase">Stage 2 · Core Framework</div>
+      <div class="tc-title">GTM Fit Deep Dive</div>
+      <div class="tc-desc">LIUE formula, 5-component playbook, demand gen criteria, pricing lenses, and the GTM Fit speedometer. The scientific framework behind Phase 3.</div>
+    </a>
+    <a href="../subpages/sos-liue.html" class="tool-card tc-sos">
+      <div class="tc-phase">Stage 2 · Core Metric</div>
+      <div class="tc-title">LIUE — Leading Indicator of Unit Economics</div>
+      <div class="tc-desc">Full formula decomposition, worked examples, threshold benchmarks, and how to improve each lever. Every Phase 3 decision should be traced back to LIUE impact.</div>
+    </a>
+    <a href="../subpages/template-demand-gen-channels.html" class="tool-card tc-res">
+      <div class="tc-phase">Template · Stage 2</div>
+      <div class="tc-title">Demand Gen Channel Guide</div>
+      <div class="tc-desc">4-criteria channel selection framework, channel comparison matrix, deep-dives on outbound, SEO, paid, events, and partner. In Stage 2, pick ONE channel first.</div>
+    </a>
+    <a href="../subpages/template-gtm-plan.html" class="tool-card tc-res">
+      <div class="tc-phase">Template · Stage 2</div>
+      <div class="tc-title">Annual GTM Plan</div>
+      <div class="tc-desc">4 GTM drivers, LIUE table, demand gen by channel, headcount model, LIR slide, OKRs. The master planning document for Phase 3 execution.</div>
+    </a>
+    <a href="../subpages/sos-gtm-playbook.html" class="tool-card tc-sos">
+      <div class="tc-phase">Stage 2 · Framework</div>
+      <div class="tc-title">GTM Playbook Framework</div>
+      <div class="tc-desc">How to build the outside-in, codified playbook that turns Phase 3's demand gen into predictable pipeline. 5 components, swim lanes, Film Reviews.</div>
+    </a>
+    <a href="../subpages/template-prospecting.html" class="tool-card tc-res">
+      <div class="tc-phase">GTM Playbook Tool</div>
+      <div class="tc-title">Prospecting Guide</div>
+      <div class="tc-desc">4-step permission-based framework, multi-touch sequences, channel tactics, personalization at scale. The top-of-funnel execution layer for Phase 3 demand gen.</div>
+    </a>
+    <a href="../subpages/template-content-marketing.html" class="tool-card tc-res">
+      <div class="tc-phase">Template · Stage 2–3</div>
+      <div class="tc-title">Content Marketing Worksheet</div>
+      <div class="tc-desc">Topic/author/distribution planning. In Stage 2, focus on one content format. In Stage 3, diversify across multiple formats aligned to buyer journey stages.</div>
+    </a>
+    <a href="../subpages/template-plg.html" class="tool-card tc-res">
+      <div class="tc-phase">Template · PLG Motion</div>
+      <div class="tc-title">PLG Funnel Worksheet</div>
+      <div class="tc-desc">AARRR framework: Awareness, Acquisition, Activation (LIR equivalent), Retention, Referral, Monetization. Activation rate = PLG's LIR metric.</div>
+    </a>
+    <a href="../subpages/sos-checklist.html" class="tool-card tc-sos">
+      <div class="tc-phase">Stage Gate</div>
+      <div class="tc-title">GTM Scaling Readiness Checklist</div>
+      <div class="tc-desc">Gate 2 — GTM Fit to Growth &amp; Moat. Includes demand gen, playbook, unit economics, and team readiness checks. Use before scaling Phase 3 headcount.</div>
+    </a>
+  </div>
+
+  <!-- Related -->
+  <div class="related-section">
+    <div class="related-title">Related Pages</div>
+    <div class="related-links">
+      <a href="phase2.html" class="related-link">Phase 2 — Team</a>
+      <a href="phase4.html" class="related-link">Phase 4 — Sales Execution</a>
+      <a href="marketing.html" class="related-link">Marketing — Pipeline Creation</a>
+      <a href="revops.html" class="related-link">Revenue Operations</a>
+      <a href="../subpages/metrics.html" class="related-link">Metrics &amp; Analytics</a>
+      <a href="../subpages/demand-generation.html" class="related-link">Demand Generation Deep Dive</a>
+      <a href="../subpages/funnel-architecture.html" class="related-link">Funnel Architecture Deep Dive</a>
+      <a href="../subpages/abm.html" class="related-link">ABM Deep Dive</a>
+      <a href="../subpages/sos-gtm-fit.html" class="related-link">Stage 2: GTM Fit</a>
+      <a href="../subpages/sos-liue.html" class="related-link">LIUE — Unit Economics Metric</a>
+      <a href="../subpages/template-demand-gen-channels.html" class="related-link">Demand Gen Channel Guide</a>
+      <a href="../subpages/template-gtm-plan.html" class="related-link">Annual GTM Plan Template</a>
+    </div>
+  </div>
+
+</div>
+<script data-pplx-inline-edit>
+(function () {
+  if (window === window.top) return;
+
+  const allowedParentOrigins = ["https://www.perplexity.ai","https://perplexity.ai","https://testing.perplexity.ai","https://staging.perplexity.ai","https://*.preview.i.perplexity.ai","http://localhost:3000","http://127.0.0.1:3000","http://localhost:5173","http://127.0.0.1:5173"];
+  const MAX_FONT_BYTES = 500 * 1024;
+  const MAX_TOTAL_FONT_BYTES = 2 * 1024 * 1024;
+  let scrollForwarding = false;
+  let scrollRaf = 0;
+  let trustedTopOrigin = null;
+
+  // Allow entries like "https://*.preview.i.perplexity.ai" — the wildcard
+  // matches a single DNS label (no dots), so "https://*.foo" cannot stretch
+  // across multiple labels.
+  function matchesAllowedOrigin(origin) {
+    if (!origin) return false;
+    for (const entry of allowedParentOrigins) {
+      if (!entry.includes("*")) {
+        if (entry === origin) return true;
+        continue;
+      }
+      const pattern = new RegExp(
+        "^" +
+          entry.replace(/[.+?^${}()|[\]\\]/g, "\\$&").replace(/\*/g, "[^.]+") +
+          "$",
+      );
+      if (pattern.test(origin)) return true;
+    }
+    return false;
+  }
+
+  // Trust decision: when the sender is same-origin-visible (event.origin is a
+  // real origin like https://www.perplexity.ai) we trust event.origin directly.
+  // When event.origin is "null" (opaque broker srcdoc), we fall back to the
+  // broker's stamped `parentOrigin` to identify the top window. The fallback
+  // is claim-only — we rely on the browser's native `targetOrigin` enforcement
+  // on the response path (see postToTrustedTop) to ensure replies can't be
+  // delivered to anyone but the actual top window of that claimed origin.
+  function getTrustedParentOrigin(event) {
+    const forwardedParentOrigin =
+      typeof event.data.parentOrigin === "string" ? event.data.parentOrigin : null;
+    const parentOrigin = event.origin === "null" ? forwardedParentOrigin : event.origin;
+    return matchesAllowedOrigin(parentOrigin) ? parentOrigin : null;
+  }
+
+  // All responses go to window.top with targetOrigin = the allowlisted origin.
+  // An attacker that iframes us inside their own null-origin broker can claim
+  // any parentOrigin they like, but the browser will drop the reply whenever
+  // the real top's origin doesn't match — so the screenshot never leaves.
+  function postToTrustedTop(message) {
+    if (!trustedTopOrigin) return;
+    try {
+      window.top.postMessage(message, trustedTopOrigin);
+    } catch (_error) {}
+  }
+
+  function inlineAll(original, clone) {
+    if (original.nodeType !== 1 || clone.nodeType !== 1) return;
+
+    try {
+      const computedStyle = getComputedStyle(original);
+      // cssText on a computed style is the serialized declaration in modern
+      // Chromium/Safari — a single read beats enumerating ~400 longhand
+      // properties. Firefox returns "" here, so we fall back on empty.
+      const serialized = computedStyle.cssText;
+      if (serialized) {
+        clone.style.cssText = serialized;
+      } else {
+        const parts = new Array(computedStyle.length);
+        for (let index = 0; index < computedStyle.length; index += 1) {
+          const property = computedStyle[index];
+          parts[index] = `${property}:${computedStyle.getPropertyValue(property)};`;
+        }
+        clone.style.cssText = parts.join("");
+      }
+    } catch (_error) {}
+
+    const originalChildren = original.children;
+    const clonedChildren = clone.children;
+    for (
+      let index = 0;
+      index < originalChildren.length && index < clonedChildren.length;
+      index += 1
+    ) {
+      inlineAll(originalChildren[index], clonedChildren[index]);
+    }
+  }
+
+  function extractFontUrl(srcValue) {
+    const matches = [
+      ...srcValue.matchAll(
+        /url\(["']?([^"')]+)["']?\)(?:\s*format\(["']?([^"')]+)["']?\))?/gi,
+      ),
+    ];
+    if (matches.length === 0) return null;
+    const woff2 = matches.find((m) => m[2] && m[2].toLowerCase().includes("woff2"));
+    if (woff2) return woff2[1];
+    const woff = matches.find((m) => m[2] && m[2].toLowerCase().includes("woff"));
+    if (woff) return woff[1];
+    return matches[0][1];
+  }
+
+  // Cache resolved font URL -> data URI across captures. Fonts on a page
+  // essentially never change, and a batch run emits multiple captures back to
+  // back — without this we'd refetch + re-base64 every time.
+  const fontDataUriCache = new Map();
+  const SRC_DECLARATION_RE = /src\s*:\s*[^;}]+/i;
+
+  async function fetchAsDataUri(url) {
+    if (fontDataUriCache.has(url)) return fontDataUriCache.get(url);
+    let dataUri = null;
+    try {
+      const response = await fetch(url, { mode: "cors", credentials: "omit" });
+      if (response.ok) {
+        const blob = await response.blob();
+        if (blob.size <= MAX_FONT_BYTES) {
+          dataUri = await new Promise((resolve) => {
+            const reader = new FileReader();
+            reader.onloadend = () =>
+              resolve(typeof reader.result === "string" ? reader.result : null);
+            reader.onerror = () => resolve(null);
+            reader.readAsDataURL(blob);
+          });
+        }
+      }
+    } catch (_error) {
+      dataUri = null;
+    }
+    fontDataUriCache.set(url, dataUri);
+    return dataUri;
+  }
+
+  function collectFontFaceRuleTexts() {
+    const rules = [];
+    for (const sheet of document.styleSheets) {
+      let cssRules;
+      try {
+        cssRules = sheet.cssRules;
+      } catch (_error) {
+        continue;
+      }
+      if (!cssRules) continue;
+      for (const rule of cssRules) {
+        const cssText = rule.cssText || "";
+        if (cssText.startsWith("@font-face")) rules.push(cssText);
+      }
+    }
+    return rules;
+  }
+
+  async function buildInlinedFontCss() {
+    const ruleTexts = collectFontFaceRuleTexts();
+    if (ruleTexts.length === 0) return null;
+
+    const resolved = ruleTexts.map((cssText) => {
+      if (!SRC_DECLARATION_RE.test(cssText)) return null;
+      const srcMatch = cssText.match(/src\s*:\s*([^;}]+)[;}]/i);
+      if (!srcMatch) return null;
+      const url = extractFontUrl(srcMatch[1]);
+      if (!url) return null;
+      try {
+        return { cssText, url: new URL(url, document.baseURI).href };
+      } catch (_error) {
+        return null;
+      }
+    });
+
+    const dataUris = await Promise.all(
+      resolved.map((entry) => (entry ? fetchAsDataUri(entry.url) : Promise.resolve(null))),
+    );
+
+    const inlined = [];
+    let totalBytes = 0;
+    for (let index = 0; index < resolved.length; index += 1) {
+      const entry = resolved[index];
+      const dataUri = dataUris[index];
+      if (!entry || !dataUri) continue;
+      const approxBytes = dataUri.length * 0.75;
+      if (totalBytes + approxBytes > MAX_TOTAL_FONT_BYTES) break;
+      totalBytes += approxBytes;
+      inlined.push(entry.cssText.replace(SRC_DECLARATION_RE, `src: url("${dataUri}")`));
+    }
+    return inlined.length > 0 ? inlined.join("\n") : null;
+  }
+
+  function stripExternal(clone) {
+    const images = clone.querySelectorAll("img");
+    for (let index = 0; index < images.length; index += 1) {
+      const src = images[index].getAttribute("src");
+      if (src && !src.startsWith("data:")) images[index].removeAttribute("src");
+    }
+
+    const elements = clone.querySelectorAll("*");
+    for (let index = 0; index < elements.length; index += 1) {
+      const style = elements[index].style.cssText;
+      if (style && style.includes("url(")) {
+        elements[index].style.cssText = style.replace(
+          /url\(["']?(?!data:)[^)"']*["']?\)/gi,
+          "none",
+        );
+      }
+    }
+  }
+
+  function emitScroll() {
+    scrollRaf = 0;
+    if (!scrollForwarding) return;
+    postToTrustedTop({
+      type: "INLINE_EDIT_SCROLL",
+      scrollX: window.scrollX,
+      scrollY: window.scrollY,
+    });
+  }
+
+  window.addEventListener(
+    "scroll",
+    function () {
+      if (!scrollForwarding || scrollRaf) return;
+      scrollRaf = requestAnimationFrame(emitScroll);
+    },
+    { passive: true, capture: true },
+  );
+
+  async function handleCaptureRequest(event) {
+    const requestId = event.data.requestId;
+    const scrollX = window.scrollX;
+    const scrollY = window.scrollY;
+    const width = window.innerWidth;
+    const height = window.innerHeight;
+
+    function postResult(dataUrl) {
+      postToTrustedTop({
+        type: "INLINE_EDIT_SCREENSHOT_RESULT",
+        requestId,
+        dataUrl,
+        scrollX,
+        scrollY,
+      });
+    }
+
+    try {
+      // Wait for any pending web fonts to resolve so both inline metrics and
+      // the @font-face inlining below see the same loaded faces.
+      if (document.fonts && document.fonts.ready) {
+        try {
+          await document.fonts.ready;
+        } catch (_error) {}
+      }
+
+      const clone = document.documentElement.cloneNode(true);
+      inlineAll(document.documentElement, clone);
+
+      const removedNodes = clone.querySelectorAll("script,link[rel=\"stylesheet\"],style");
+      for (let index = 0; index < removedNodes.length; index += 1) {
+        removedNodes[index].remove();
+      }
+
+      stripExternal(clone);
+
+      // Re-embed web fonts as data-URI @font-face rules so the SVG rasterizer
+      // can resolve them — external font URLs aren't fetched during
+      // foreignObject rendering, which would otherwise force a fallback face
+      // and change text metrics.
+      const inlinedFontCss = await buildInlinedFontCss();
+      if (inlinedFontCss) {
+        const styleEl = document.createElement("style");
+        styleEl.textContent = inlinedFontCss;
+        const head = clone.querySelector("head");
+        if (head) head.appendChild(styleEl);
+        else clone.insertBefore(styleEl, clone.firstChild);
+      }
+
+      const html = new XMLSerializer().serializeToString(clone);
+      const svg =
+        `<svg xmlns="http://www.w3.org/2000/svg" width="${width}" height="${height}">` +
+        '<foreignObject width="100%" height="100%">' +
+        `<div xmlns="http://www.w3.org/1999/xhtml" style="width:${width}px;height:${height}px;overflow:hidden">` +
+        `<div style="transform:translate(-${scrollX}px,-${scrollY}px);transform-origin:top left">` +
+        html +
+        "</div></div></foreignObject></svg>";
+      const svgUrl = `data:image/svg+xml;charset=utf-8,${encodeURIComponent(svg)}`;
+      const image = new Image();
+      image.onload = function () {
+        const canvas = document.createElement("canvas");
+        canvas.width = width;
+        canvas.height = height;
+        canvas.getContext("2d").drawImage(image, 0, 0);
+        postResult(canvas.toDataURL("image/png"));
+      };
+      image.onerror = function () {
+        postResult(null);
+      };
+      image.src = svgUrl;
+    } catch (_error) {
+      postResult(null);
+    }
+  }
+
+  window.addEventListener("message", function (event) {
+    if (!event.data) return;
+    // Only accept messages from the direct parent frame. Blocks sibling /
+    // unrelated-window postMessage senders that could otherwise reach us.
+    if (event.source !== window.parent) return;
+
+    const trustedParentOrigin = getTrustedParentOrigin(event);
+    if (!trustedParentOrigin) return;
+    trustedTopOrigin = trustedParentOrigin;
+
+    if (event.data.type === "INLINE_EDIT_SCROLL_START") {
+      scrollForwarding = true;
+      emitScroll();
+      return;
+    }
+
+    if (event.data.type === "INLINE_EDIT_SCROLL_STOP") {
+      scrollForwarding = false;
+      if (scrollRaf) cancelAnimationFrame(scrollRaf);
+      scrollRaf = 0;
+      return;
+    }
+
+    if (event.data.type !== "INLINE_EDIT_CAPTURE_REQUEST") return;
+
+    handleCaptureRequest(event);
+  });
+})();
+
+
+</script></body>
+</html>

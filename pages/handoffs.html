@@ -1,0 +1,1607 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>The Three Critical Handoffs — SaaS Revenue System</title>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="../assets/shared.css"/>
+  <style>
+    .page-hero { background: #28251D; }
+
+    /* Handoff section header */
+    .handoff-header {
+      background: var(--text);
+      color: #fff;
+      border-radius: 10px 10px 0 0;
+      padding: 18px 24px;
+      margin-top: 40px;
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
+    .handoff-number {
+      background: rgba(255,255,255,0.15);
+      color: #fff;
+      border-radius: 6px;
+      width: 36px;
+      height: 36px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 15px;
+      font-weight: 700;
+      flex-shrink: 0;
+    }
+    .handoff-header-text h2 {
+      font-size: 18px;
+      font-weight: 700;
+      margin: 0 0 2px;
+      color: #fff;
+    }
+    .handoff-header-text p {
+      font-size: 13px;
+      color: rgba(255,255,255,0.6);
+      margin: 0;
+    }
+    .handoff-body {
+      background: var(--surface);
+      border: 1.5px solid var(--border);
+      border-top: none;
+      border-radius: 0 0 10px 10px;
+      padding: 24px;
+    }
+
+    /* Flow diagram */
+    .flow-diagram {
+      display: flex;
+      align-items: center;
+      gap: 0;
+      margin: 24px 0;
+      flex-wrap: wrap;
+    }
+    .flow-node {
+      background: var(--bg);
+      border: 2px solid var(--border);
+      border-radius: 8px;
+      padding: 12px 16px;
+      text-align: center;
+      min-width: 120px;
+    }
+    .flow-node .fn-label {
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.8px;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      margin-bottom: 4px;
+    }
+    .flow-node .fn-name {
+      font-size: 14px;
+      font-weight: 700;
+      color: var(--text);
+    }
+    .flow-arrow {
+      font-size: 20px;
+      color: var(--primary);
+      padding: 0 8px;
+      font-weight: 700;
+    }
+    .flow-handoff-node {
+      background: var(--primary);
+      border: 2px solid var(--primary);
+      border-radius: 8px;
+      padding: 12px 16px;
+      text-align: center;
+      min-width: 120px;
+    }
+    .flow-handoff-node .fn-label {
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.8px;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.7);
+      margin-bottom: 4px;
+    }
+    .flow-handoff-node .fn-name {
+      font-size: 14px;
+      font-weight: 700;
+      color: #fff;
+    }
+
+    /* Two-col layout */
+    .two-col {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 20px;
+      margin: 16px 0;
+    }
+    .col-box {
+      background: #fafaf8;
+      border-radius: 8px;
+      padding: 14px 16px;
+    }
+    .col-box h4 {
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      margin-bottom: 10px;
+    }
+    .col-box ul {
+      list-style: none;
+      margin: 0;
+    }
+    .col-box ul li {
+      font-size: 13px;
+      line-height: 1.6;
+      padding: 3px 0 3px 16px;
+      position: relative;
+      color: var(--text);
+    }
+    .col-box ul li::before {
+      content: '·';
+      position: absolute;
+      left: 0;
+      color: var(--primary);
+      font-size: 16px;
+      line-height: 1.4;
+    }
+
+    /* SLA box */
+    .sla-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+      margin: 16px 0;
+    }
+    .sla-card {
+      border-radius: 8px;
+      padding: 14px 16px;
+      border: 1.5px solid;
+    }
+    .sla-marketing {
+      background: #e8f4fd;
+      border-color: #2a7fa8;
+    }
+    .sla-sales {
+      background: #e8f8ee;
+      border-color: #437A22;
+    }
+    .sla-cs {
+      background: #ede7f6;
+      border-color: #7A39BB;
+    }
+    .sla-ae {
+      background: #fff3e0;
+      border-color: #964219;
+    }
+    .sla-card h4 {
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: 0.8px;
+      text-transform: uppercase;
+      margin-bottom: 8px;
+    }
+    .sla-marketing h4 { color: #2a7fa8; }
+    .sla-sales h4 { color: #437A22; }
+    .sla-cs h4 { color: #7A39BB; }
+    .sla-ae h4 { color: #964219; }
+    .sla-card ul {
+      list-style: none;
+      margin: 0;
+    }
+    .sla-card ul li {
+      font-size: 13px;
+      line-height: 1.6;
+      padding: 3px 0;
+      border-bottom: 1px solid rgba(0,0,0,0.06);
+    }
+    .sla-card ul li:last-child { border-bottom: none; }
+
+    /* Handoff doc fields */
+    .field-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+      gap: 10px;
+      margin: 16px 0;
+    }
+    .field-item {
+      background: var(--bg);
+      border: 1.5px solid var(--border);
+      border-radius: 6px;
+      padding: 10px 12px;
+    }
+    .field-item .fi-name {
+      font-size: 13px;
+      font-weight: 700;
+      color: var(--text);
+      margin-bottom: 2px;
+    }
+    .field-item .fi-why {
+      font-size: 12px;
+      color: var(--text-muted);
+      line-height: 1.4;
+    }
+    .field-item.required {
+      border-color: var(--primary);
+      border-left: 3px solid var(--primary);
+    }
+
+    /* Metrics dashboard */
+    .metrics-dashboard {
+      margin: 24px 0;
+      overflow-x: auto;
+    }
+
+    /* Seam problem visual */
+    .seam-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+      gap: 12px;
+      margin: 20px 0;
+    }
+    .seam-card {
+      background: var(--surface);
+      border: 1.5px solid var(--border);
+      border-radius: 8px;
+      padding: 14px 16px;
+    }
+    .seam-card .sc-icon {
+      font-size: 20px;
+      margin-bottom: 8px;
+    }
+    .seam-card .sc-problem {
+      font-size: 13px;
+      font-weight: 700;
+      color: var(--text);
+      margin-bottom: 4px;
+    }
+    .seam-card .sc-detail {
+      font-size: 12px;
+      color: var(--text-muted);
+      line-height: 1.5;
+    }
+
+    /* Expansion triggers */
+    .trigger-list {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+      gap: 10px;
+      margin: 16px 0;
+    }
+    .trigger-item {
+      background: var(--bg);
+      border: 1.5px solid var(--border);
+      border-radius: 8px;
+      padding: 12px 14px;
+      font-size: 13px;
+    }
+    .trigger-item .ti-trigger {
+      font-weight: 700;
+      color: var(--text);
+      margin-bottom: 4px;
+    }
+    .trigger-item .ti-action {
+      color: var(--text-muted);
+      line-height: 1.4;
+    }
+
+    @media (max-width: 768px) {
+      .two-col { grid-template-columns: 1fr; }
+      .sla-grid { grid-template-columns: 1fr; }
+      .flow-diagram { gap: 4px; }
+    }
+  </style>
+</head>
+<body>
+<nav class="nav">
+  <span class="nav-logo">SaaS <span>Revenue System</span></span>
+  <span class="nav-sep">|</span>
+  <a href="../index.html" class="nav-back">← Home</a>
+  <span class="nav-sep">|</span>
+  <span class="nav-current">The Three Critical Handoffs</span>
+</nav>
+
+<div class="page-hero">
+  <div class="hero-phase-label">REVENUE SYSTEM</div>
+  <div class="hero-title">The Three Critical Handoffs</div>
+  <div class="hero-subtitle">The most commonly broken processes in a SaaS revenue system. Where handoffs break down, revenue leaks.</div>
+  <div class="hero-tags">
+    <a href="../subpages/mql-handoff.html" class="hero-tag">Marketing → Sales (MQL)</a>
+    <a href="../subpages/sales-cs-handoff.html" class="hero-tag">Sales → CS (Close)</a>
+    <a href="../subpages/expansion-handoff.html" class="hero-tag">CS → Sales (Expansion)</a>
+  </div>
+</div>
+
+<div class="content-wrap">
+
+  <!-- WHY HANDOFFS BREAK -->
+  <h2 class="section-title">Why Handoffs Break</h2>
+  <p class="section-intro">In a SaaS revenue system, Marketing, Sales, and Customer Success are three separate organizations with different leaders, different metrics, different tools, and different vocabularies. Every point where the customer journey crosses from one organization to another is a "seam" — and seams are where revenue leaks.</p>
+
+  <div class="callout callout-definition">
+    <div class="callout-title">The Organizational Seam Problem</div>
+    <p>The handoff problem is structural, not individual. Even with great people on both sides, a handoff fails when two teams have different definitions of success (OKRs), different data systems (CRM vs. MAP vs. CS platform), different vocabulary ("lead" means different things to marketing and sales), and different compensation incentives. The only solution is an explicit, documented, mutually-committed process — not asking people to try harder.</p>
+  </div>
+
+  <div class="seam-grid">
+    <div class="seam-card">
+      <div class="sc-problem">Misaligned OKRs</div>
+      <div class="sc-detail">Marketing is measured on MQL volume. Sales is measured on ACV closed. These incentives create conflict at the handoff — marketing wants quantity, sales wants quality.</div>
+    </div>
+    <div class="seam-card">
+      <div class="sc-problem">Vocabulary Gaps</div>
+      <div class="sc-detail">"MQL," "qualified lead," "demo ready," and "champion" mean different things to different people without a shared definitions document. Ambiguity kills accountability.</div>
+    </div>
+    <div class="seam-card">
+      <div class="sc-problem">System Silos</div>
+      <div class="sc-detail">Marketing runs Marketo. Sales runs Salesforce. CS runs Gainsight. Data doesn't flow between them without explicit integration work — and most companies haven't done it.</div>
+    </div>
+    <div class="seam-card">
+      <div class="sc-problem">No Accountability Loop</div>
+      <div class="sc-detail">When a handoff fails, there's no feedback mechanism. Marketing doesn't know which MQLs converted. Sales doesn't report back quality. CS doesn't tell sales why customers churn.</div>
+    </div>
+    <div class="seam-card">
+      <div class="sc-problem">Comp Misalignment</div>
+      <div class="sc-detail">AEs are comp'd to close, not to hand off well. CSMs are comp'd on retention, not on setting sales up with expansion opportunities. Nobody is comp'd on handoff quality.</div>
+    </div>
+    <div class="seam-card">
+      <div class="sc-problem">Speed Mismatch</div>
+      <div class="sc-detail">Marketing generates leads in bursts (campaigns). Sales follows up linearly (rep capacity). The gap between lead generation and follow-up is where the fastest decay happens.</div>
+    </div>
+  </div>
+
+  <div class="callout callout-warning">
+    <div class="callout-title">The #1 Source of Revenue Leakage</div>
+    <p>SiriusDecisions research consistently shows that 80% of MQLs never receive adequate follow-up. Harvard Business School research shows that responding to a lead within 5 minutes vs. 30 minutes creates a 9x difference in contact rate. The gap between lead generation and first contact is the single highest-ROI improvement most SaaS companies can make — and it costs almost nothing.</p>
+  </div>
+
+  <p style="font-size:15px;line-height:1.75;color:var(--text);">The solution to handoff failures is not motivational — it's structural. RevOps owns the design, documentation, and enforcement of all three handoffs. Each handoff requires: a shared definition of what's being passed, a documented process for how it's passed, a two-way SLA with commitments from both teams, a CRM workflow that enforces compliance, and a feedback loop that routes quality data back to the originating team.</p>
+
+  <!-- HANDOFF 1: MARKETING TO SALES -->
+  <div class="handoff-header">
+    <div class="handoff-number">1</div>
+    <div class="handoff-header-text">
+      <h2>Marketing → Sales: The MQL Handoff</h2>
+      <p>The first and most contested handoff in the revenue system — where marketing stops and sales begins.</p>
+    </div>
+  </div>
+  <div class="handoff-body">
+
+    <div class="flow-diagram">
+      <div class="flow-node">
+        <div class="fn-label">Stage</div>
+        <div class="fn-name">Raw Lead</div>
+      </div>
+      <div class="flow-arrow">→</div>
+      <div class="flow-node">
+        <div class="fn-label">Stage</div>
+        <div class="fn-name">MQL</div>
+      </div>
+      <div class="flow-arrow">→</div>
+      <div class="flow-handoff-node">
+        <div class="fn-label">Handoff Point</div>
+        <div class="fn-name">SAL Gate</div>
+      </div>
+      <div class="flow-arrow">→</div>
+      <div class="flow-node">
+        <div class="fn-label">Stage</div>
+        <div class="fn-name">SQL</div>
+      </div>
+      <div class="flow-arrow">→</div>
+      <div class="flow-node">
+        <div class="fn-label">Stage</div>
+        <div class="fn-name">Opportunity</div>
+      </div>
+    </div>
+
+    <h3 class="subsection-title">The MQL Definition Problem</h3>
+    <p style="font-size:15px;line-height:1.75;color:var(--text);">Marketing and sales almost always disagree on what constitutes a "good lead" — because they have different incentives. Marketing is measured on MQL volume; they want to include more leads. Sales is measured on closed revenue; they want only the hottest leads. Both are rational given their incentives. The solution isn't to debate what counts — it's to define it jointly and contractually through a shared SLA, backed by data on what characteristics actually correlate with higher win rates.</p>
+
+    <div class="two-col">
+      <div class="col-box">
+        <h4>Demographic Scoring (Fit)</h4>
+        <ul>
+          <li>Company size match to ICP (employees, revenue) — up to 25 pts</li>
+          <li>Industry match to ICP target verticals — up to 20 pts</li>
+          <li>Persona/title match (Champion or EB role) — up to 20 pts</li>
+          <li>Geography in target market — up to 10 pts</li>
+          <li>Tech stack signals (uses complementary tools) — up to 10 pts</li>
+          <li>Growth signals (hiring, funding, expansion) — up to 15 pts</li>
+        </ul>
+      </div>
+      <div class="col-box">
+        <h4>Behavioral Scoring (Intent)</h4>
+        <ul>
+          <li>Demo request or contact form — 40 pts (auto-MQL)</li>
+          <li>Pricing page visit — 20 pts</li>
+          <li>Case study or ROI calculator viewed — 15 pts</li>
+          <li>Webinar attended — 10 pts</li>
+          <li>Multiple blog visits in a session — 8 pts</li>
+          <li>Trial signup or free plan activation — 30 pts</li>
+          <li>Email sequence click (mid-funnel content) — 5 pts per</li>
+          <li>G2/Capterra review page visit — 15 pts</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="callout callout-definition">
+      <div class="callout-title">MQL Threshold Design</div>
+      <p>Set the MQL threshold at the score that produces a 13–15% SQL conversion rate — the typical industry benchmark. If your threshold produces 20% SQL conversion, you're being too restrictive (leaving good leads for SDRs). If it produces 8% SQL conversion, you're sending too many bad leads and wasting SDR capacity. Calibrate quarterly using actual conversion data.</p>
+    </div>
+
+    <h3 class="subsection-title">The MQL Service Level Agreement (SLA)</h3>
+    <p style="font-size:15px;line-height:1.75;color:var(--text);">The SLA is a bilateral commitment: marketing commits to volume and quality, sales commits to follow-up speed and attempt depth. Without this document, the disagreement is permanent. With it, the disagreement becomes measurable — and therefore manageable.</p>
+
+    <div class="sla-grid">
+      <div class="sla-card sla-marketing">
+        <h4>Marketing Commits To</h4>
+        <ul>
+          <li>Minimum X MQLs per month (target agreed by both teams)</li>
+          <li>Minimum MQL quality threshold (ICP score ≥ 40)</li>
+          <li>Lead data completeness: company, title, email required fields</li>
+          <li>Intent signal present (not just form fill + company fit)</li>
+          <li>Monthly reporting on MQL volume, source, and ICP match rate</li>
+          <li>Quarterly calibration meeting with sales to review SAL rejection reasons</li>
+        </ul>
+      </div>
+      <div class="sla-card sla-sales">
+        <h4>Sales Commits To</h4>
+        <ul>
+          <li>First contact attempt within 5 minutes of MQL creation (business hours)</li>
+          <li>Minimum 6–8 outreach attempts over 10–14 days before disposition</li>
+          <li>SAL accept or reject within 24 hours with a rejection reason recorded</li>
+          <li>No "cherry picking" — all MQLs in assigned territory worked in order</li>
+          <li>Monthly reporting on SAL accept/reject rates and primary rejection reasons</li>
+          <li>Closed-loop reporting: feed Closed Won and Lost data back to marketing</li>
+        </ul>
+      </div>
+    </div>
+
+    <h3 class="subsection-title">The SAL: Sales Accepted Lead</h3>
+    <p style="font-size:15px;line-height:1.75;color:var(--text);">The SAL (Sales Accepted Lead) is the most important concept in the MQL handoff — and the most often skipped. When a rep receives an MQL, they must formally accept it (SAL = "I've reviewed this and confirm it meets our definition") or reject it (with a reason code: not ICP, wrong persona, already a customer, bad contact data, etc.). This creates the feedback loop that lets marketing improve.</p>
+    <p style="font-size:15px;line-height:1.75;color:var(--text);">Without the SAL mechanism, sales can ignore MQLs silently and marketing has no visibility. With SAL, rejection rates and reasons become the primary optimization signal for the marketing team. A 30% rejection rate on a specific campaign tells marketing to rethink targeting. A 5% rejection rate suggests the scoring model is working.</p>
+
+    <h3 class="subsection-title">Speed-to-Lead: The Harvard Research</h3>
+    <div class="callout callout-formula">
+      <div class="callout-title">Speed-to-Lead Impact</div>
+      <p>Harvard Business School research (Oldroyd et al.) found that responding to an inbound lead within 5 minutes vs. 30 minutes creates a 9x difference in contact rate. After one hour, contact rates drop by 7x. The data is unambiguous: the highest-leverage improvement in most MQL programs is not lead quality — it's response speed.</p>
+    </div>
+
+    <p style="font-size:15px;line-height:1.75;color:var(--text);">Achieving 5-minute response requires automation, not heroics. The workflow: MQL created in MAP (Marketo/HubSpot) → trigger fires instantly → lead assigned in Salesforce via round-robin or territory rules → Slack notification sent to assigned rep and their manager → automated email + LinkedIn connection sent by rep template → rep has 5 minutes to make first call. Build this in your MAP and CRM before expecting reps to do it manually.</p>
+
+    <h3 class="subsection-title">CRM Setup: Routing and Workflow</h3>
+    <div class="two-col">
+      <div class="col-box">
+        <h4>Lead Routing Logic</h4>
+        <ul>
+          <li>Named account match → goes to Account Owner immediately</li>
+          <li>ICP company match (by segment) → routed to segment's SDR queue</li>
+          <li>Demo request / high intent → auto-booked via Calendly/Chili Piper</li>
+          <li>Round-robin within segment queue (capacity-weighted)</li>
+          <li>Re-routing rule: unworked MQL after 4 hours → manager alert</li>
+          <li>Recycle rule: uncontacted after 14 days → back to marketing nurture</li>
+        </ul>
+      </div>
+      <div class="col-box">
+        <h4>Required CRM Fields</h4>
+        <ul>
+          <li>Lead Score (auto-populated from MAP)</li>
+          <li>Lead Source (first touch, last touch)</li>
+          <li>SAL Status (pending, accepted, rejected)</li>
+          <li>SAL Rejection Reason (dropdown)</li>
+          <li>MQL Date and SAL Date (time-to-accept tracking)</li>
+          <li>First Contact Attempt Date/Time</li>
+          <li>Number of Outreach Attempts</li>
+        </ul>
+      </div>
+    </div>
+
+    <h3 class="subsection-title">Auditing This Handoff</h3>
+    <table class="data-table">
+      <thead>
+        <tr>
+          <th>Metric</th>
+          <th>Definition</th>
+          <th>Benchmark</th>
+          <th>If Below Benchmark</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>MQL → SAL Rate</strong></td>
+          <td>SALs created / MQLs received</td>
+          <td>60–80%</td>
+          <td>Review MQL definition; may need to raise ICP score threshold</td>
+        </tr>
+        <tr>
+          <td><strong>SAL Rejection Rate</strong></td>
+          <td>Rejected SALs / Total SALs reviewed</td>
+          <td>&lt;25%</td>
+          <td>Analyze rejection reasons; retrain scoring model with actual conversion data</td>
+        </tr>
+        <tr>
+          <td><strong>SAL → SQL Rate</strong></td>
+          <td>SQLs created / SALs accepted</td>
+          <td>30–50%</td>
+          <td>Review SDR discovery quality; listen to connection calls</td>
+        </tr>
+        <tr>
+          <td><strong>Time-to-First-Contact</strong></td>
+          <td>Minutes from MQL creation to first outreach attempt</td>
+          <td>&lt;5 min (inbound demo); &lt;60 min (all MQL)</td>
+          <td>Audit routing speed; implement auto-assignment + Slack alerts</td>
+        </tr>
+        <tr>
+          <td><strong>MQL-to-Closed-Won Rate</strong></td>
+          <td>Closed Won from MQL source / Total MQLs</td>
+          <td>1–3% (varies by segment)</td>
+          <td>Full funnel analysis: where is the biggest conversion drop?</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <h3 class="subsection-title">Common Failure Modes and Fixes</h3>
+    <table class="data-table">
+      <thead>
+        <tr>
+          <th>Failure Mode</th>
+          <th>Symptom</th>
+          <th>Fix</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Slow follow-up</td>
+          <td>Time-to-first-contact &gt;1 hour</td>
+          <td>Auto-assignment + Slack notification + Calendly auto-book for demo requests</td>
+        </tr>
+        <tr>
+          <td>MQL quality disputes</td>
+          <td>SDRs consistently reject MQLs, blame marketing</td>
+          <td>Hold joint MQL calibration session monthly; rebuild scoring with actual conversion data</td>
+        </tr>
+        <tr>
+          <td>No feedback loop</td>
+          <td>Marketing doesn't know which MQLs converted</td>
+          <td>Build CRM-to-MAP sync; share closed-won source data with marketing in weekly report</td>
+        </tr>
+        <tr>
+          <td>SAL skipped</td>
+          <td>Reps move MQLs to SQL without formal acceptance</td>
+          <td>Make SAL a required stage; manager reviews all rejections; include in forecast review</td>
+        </tr>
+        <tr>
+          <td>Cherry-picking</td>
+          <td>High-score MQLs worked; low-score ignored</td>
+          <td>FIFO routing rules in CRM; manager audit of unworked leads weekly</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <div class="indicator-row">
+      <span class="indicator-tag ind-leading">Leading: Time-to-First-Contact</span>
+      <span class="indicator-tag ind-leading">Leading: SAL Acceptance Rate</span>
+      <span class="indicator-tag ind-lagging">Lagging: MQL-to-Closed-Won Rate</span>
+      <span class="indicator-tag ind-lagging">Lagging: MQL → Opportunity Conversion</span>
+    </div>
+  </div>
+
+  <!-- HANDOFF 2: SALES TO CS -->
+  <div class="handoff-header">
+    <div class="handoff-number">2</div>
+    <div class="handoff-header-text">
+      <h2>Sales → Customer Success: The Close Handoff</h2>
+      <p>The handoff that determines whether a customer succeeds — and whether they renew, expand, or churn.</p>
+    </div>
+  </div>
+  <div class="handoff-body">
+
+    <div class="flow-diagram">
+      <div class="flow-node">
+        <div class="fn-label">Stage</div>
+        <div class="fn-name">Late Stage Deal</div>
+      </div>
+      <div class="flow-arrow">→</div>
+      <div class="flow-node">
+        <div class="fn-label">Stage</div>
+        <div class="fn-name">Verbal Close</div>
+      </div>
+      <div class="flow-arrow">→</div>
+      <div class="flow-handoff-node">
+        <div class="fn-label">Handoff Point</div>
+        <div class="fn-name">Closed Won → CS</div>
+      </div>
+      <div class="flow-arrow">→</div>
+      <div class="flow-node">
+        <div class="fn-label">Stage</div>
+        <div class="fn-name">Onboarding</div>
+      </div>
+      <div class="flow-arrow">→</div>
+      <div class="flow-node">
+        <div class="fn-label">Stage</div>
+        <div class="fn-name">First Value</div>
+      </div>
+    </div>
+
+    <h3 class="subsection-title">Why This Handoff Fails</h3>
+    <p style="font-size:15px;line-height:1.75;color:var(--text);">Sales reps have strong incentives to close deals and weak incentives to hand them off well. The commission is paid at Closed Won; the effort required for a thorough handoff feels like uncompensated work. Meanwhile, CS receives the customer cold — with no context about what pain the customer had, what was promised, who the real stakeholders are, or what success looks like. The customer's first experience with the company after buying is often confusion, delayed onboarding, and broken expectations. This is where churn seeds are planted.</p>
+
+    <div class="callout callout-warning">
+      <div class="callout-title">The Promise Problem</div>
+      <p>The single biggest cause of early churn (within 90 days) is promises made during the sales process that the product cannot keep. A rep trying to close a deal will say "yes" to things that are on the roadmap, partially true, or just untrue. CS inherits these promises with no documentation, and the customer expects them to be delivered. Without a structured handoff document, there is no accountability and no way to flag these promises before they become a crisis.</p>
+    </div>
+
+    <h3 class="subsection-title">The Sales-to-CS Handoff Document: Required Fields</h3>
+    <p style="font-size:15px;line-height:1.75;color:var(--text);">This document must be completed by the AE before an opportunity can be marked Closed Won in the CRM. It is not optional, and CRM workflow automation should enforce it. CS should review it before the first onboarding call and use it as the foundation for the mutual success plan.</p>
+
+    <div class="field-grid">
+      <div class="field-item required">
+        <div class="fi-name">Champion Name + Contact</div>
+        <div class="fi-why">Who is the primary internal advocate? Will they still be here in 6 months?</div>
+      </div>
+      <div class="field-item required">
+        <div class="fi-name">Economic Buyer</div>
+        <div class="fi-why">Who approved the budget? CS needs to know who to engage for renewal.</div>
+      </div>
+      <div class="field-item required">
+        <div class="fi-name">Pain Identified</div>
+        <div class="fi-why">What specific, quantified problem did the customer buy to solve?</div>
+      </div>
+      <div class="field-item required">
+        <div class="fi-name">Success Criteria</div>
+        <div class="fi-why">What measurable outcomes did the customer agree to? How will they define ROI at month 6?</div>
+      </div>
+      <div class="field-item required">
+        <div class="fi-name">Implementation Timeline</div>
+        <div class="fi-why">What did we commit to for go-live? Customer has this date in mind.</div>
+      </div>
+      <div class="field-item required">
+        <div class="fi-name">Products Purchased</div>
+        <div class="fi-why">Exact SKUs, seats, modules — CS needs to know what was sold and licensed.</div>
+      </div>
+      <div class="field-item">
+        <div class="fi-name">Customizations Promised</div>
+        <div class="fi-why">Any "we can do X" statements made in the sales process that may require product/services effort.</div>
+      </div>
+      <div class="field-item">
+        <div class="fi-name">Red Flags</div>
+        <div class="fi-why">Anything the AE noticed during the sale that CS should know: procurement friction, stakeholder conflict, executive skepticism.</div>
+      </div>
+      <div class="field-item">
+        <div class="fi-name">Competitive Context</div>
+        <div class="fi-why">What alternatives did they evaluate? Are they partially using a competitor tool today?</div>
+      </div>
+      <div class="field-item">
+        <div class="fi-name">Key Stakeholder Map</div>
+        <div class="fi-why">All contacts beyond the champion: IT sponsor, finance contact, end-users group.</div>
+      </div>
+      <div class="field-item">
+        <div class="fi-name">QBR Expectations</div>
+        <div class="fi-why">Did the customer request or expect a quarterly review? What format?</div>
+      </div>
+      <div class="field-item">
+        <div class="fi-name">Expansion Potential</div>
+        <div class="fi-why">Are there additional use cases, teams, or geographies that could expand? What's the timeline signal?</div>
+      </div>
+    </div>
+    <p style="font-size:12px;color:var(--text-muted);margin-top:-8px;">Fields with green border = required before Closed Won. Others = strongly recommended.</p>
+
+    <h3 class="subsection-title">The Mutual Success Plan (MSP)</h3>
+    <p style="font-size:15px;line-height:1.75;color:var(--text);">The MSP is a co-created document between the AE and the customer champion during the final stage of the sales process. It contains: the customer's defined success metrics, the implementation timeline with milestones, who owns what on each side, the agreed schedule for check-ins and QBRs, and the criteria for evaluating ROI at 90 days and 12 months. The AE hands this document to CS as the foundation for the onboarding relationship. It removes ambiguity and gives CS a ready-made agenda for the first call.</p>
+
+    <div class="callout callout-best-practice">
+      <div class="callout-title">MSP at Close = Lower Churn</div>
+      <p>Companies that implement a formal MSP process at close report 20–35% lower early churn rates (within 90 days). The mechanism is straightforward: the customer has made explicit commitments about how they'll define success, which forces them to engage seriously with onboarding rather than treating it as a checkbox.</p>
+    </div>
+
+    <h3 class="subsection-title">The Warm Handoff Call</h3>
+    <p style="font-size:15px;line-height:1.75;color:var(--text);">The warm handoff call is a 30-minute call where the AE introduces the assigned CSM to the champion. The AE recaps the key context (pain, success criteria, timeline) and formally passes the relationship. This call does two things: it gives the CSM immediate credibility (they arrive already knowing the customer's context) and it signals to the customer that they're valued enough to receive a structured transition. Cold intros — a calendar invite from CS with no context — damage trust immediately.</p>
+
+    <div class="two-col">
+      <div class="col-box">
+        <h4>Warm Handoff Call Agenda</h4>
+        <ul>
+          <li>AE: Recap the business pain and why the customer bought (2 min)</li>
+          <li>AE: Introduce CSM and their role (1 min)</li>
+          <li>CSM: Confirm understanding of success criteria (3 min)</li>
+          <li>CSM: Walk through the onboarding plan and timeline (5 min)</li>
+          <li>CSM: Set up the first implementation meeting (2 min)</li>
+          <li>Customer: Open Q&A (5 min)</li>
+          <li>AE: Express confidence in CS, close out relationship (2 min)</li>
+        </ul>
+      </div>
+      <div class="col-box">
+        <h4>Shadow CS Model</h4>
+        <ul>
+          <li>CS leader joins the final demo and scoping call</li>
+          <li>CS validates that implementation promises are deliverable</li>
+          <li>CS introduces themselves to the champion before close</li>
+          <li>CS co-creates the MSP with the AE in the final sales stage</li>
+          <li>Result: CS arrives at handoff with full context and relationship already established</li>
+          <li>Churn data: Shadow CS companies see 15–25% lower 90-day churn</li>
+        </ul>
+      </div>
+    </div>
+
+    <h3 class="subsection-title">CRM Implementation Requirements</h3>
+    <p style="font-size:15px;line-height:1.75;color:var(--text);">The handoff document must be enforced by the CRM — not by honor system. Build a required-field validation in Salesforce that prevents an opportunity from moving to Closed Won unless: (1) all required handoff fields are completed, (2) the MSP document is attached or linked, and (3) the assigned CSM is populated. Add a workflow trigger: when Closed Won, automatically create an Onboarding Case in Salesforce/Gainsight assigned to the CSM with the handoff document linked.</p>
+
+    <h3 class="subsection-title">Auditing This Handoff</h3>
+    <table class="data-table">
+      <thead>
+        <tr>
+          <th>Metric</th>
+          <th>Definition</th>
+          <th>Benchmark</th>
+          <th>If Below Benchmark</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>Days Close → Onboarding Kick-Off</strong></td>
+          <td>Calendar days from Closed Won to first onboarding call</td>
+          <td>&lt;7 days (SMB); &lt;14 days (MM/ENT)</td>
+          <td>CSM allocation review; automate kickoff scheduling at Close Won trigger</td>
+        </tr>
+        <tr>
+          <td><strong>Time-to-First-Value (TTFV)</strong></td>
+          <td>Days from Closed Won to customer achieving first defined value milestone</td>
+          <td>&lt;30 days (SMB); &lt;60 days (MM); &lt;90 days (ENT)</td>
+          <td>Audit onboarding process; reduce implementation complexity; add dedicated onboarding engineers</td>
+        </tr>
+        <tr>
+          <td><strong>90-Day Churn Rate</strong></td>
+          <td>% of customers churning within 90 days of close</td>
+          <td>&lt;3%</td>
+          <td>Audit handoff quality for churned accounts; investigate ICP mismatch and promise gap</td>
+        </tr>
+        <tr>
+          <td><strong>Handoff Doc Completeness Rate</strong></td>
+          <td>% of Closed Won deals with all required fields complete</td>
+          <td>100%</td>
+          <td>Add CRM validation rule; make required fields mandatory before stage advancement</td>
+        </tr>
+        <tr>
+          <td><strong>Warm Handoff Call Completion Rate</strong></td>
+          <td>% of Closed Won deals with a recorded warm handoff call</td>
+          <td>&gt;85%</td>
+          <td>Make warm handoff call a Closed Won checklist item; manager reviews</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <h3 class="subsection-title">Common Failure Modes and Fixes</h3>
+    <table class="data-table">
+      <thead>
+        <tr>
+          <th>Failure Mode</th>
+          <th>Symptom</th>
+          <th>Fix</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>AE disappears at close</td>
+          <td>CS has no context; customer feels abandoned</td>
+          <td>Require warm handoff call; include handoff quality in AE performance review</td>
+        </tr>
+        <tr>
+          <td>Over-promised features</td>
+          <td>Customer expects functionality that doesn't exist</td>
+          <td>Shadow CS model; AE promises must be documented in handoff doc and reviewed by CS before close</td>
+        </tr>
+        <tr>
+          <td>Wrong champion</td>
+          <td>Champion leaves company; CS has no other contacts</td>
+          <td>Multi-thread: require 3+ stakeholder contacts documented before close</td>
+        </tr>
+        <tr>
+          <td>No success criteria defined</td>
+          <td>Customer can't articulate ROI at renewal; churns by default</td>
+          <td>MSP required at close; CS confirms success criteria in onboarding kick-off</td>
+        </tr>
+        <tr>
+          <td>CS overloaded</td>
+          <td>Customers not contacted for 2+ weeks after close</td>
+          <td>Review CSM-to-customer ratio (benchmark: 1:10 ENT, 1:50 MM, 1:150 SMB)</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <div class="indicator-row">
+      <span class="indicator-tag ind-leading">Leading: Handoff Doc Completeness</span>
+      <span class="indicator-tag ind-leading">Leading: Days to Onboarding Kick-Off</span>
+      <span class="indicator-tag ind-leading">Leading: Time-to-First-Value</span>
+      <span class="indicator-tag ind-lagging">Lagging: 90-Day Churn Rate</span>
+      <span class="indicator-tag ind-lagging">Lagging: 12-Month NRR</span>
+    </div>
+  </div>
+
+  <!-- HANDOFF 3: CS TO SALES (EXPANSION) -->
+  <div class="handoff-header">
+    <div class="handoff-number">3</div>
+    <div class="handoff-header-text">
+      <h2>CS → Sales: The Expansion Handoff</h2>
+      <p>The highest-ROI motion in a SaaS business — and the most consistently under-executed.</p>
+    </div>
+  </div>
+  <div class="handoff-body">
+
+    <div class="flow-diagram">
+      <div class="flow-node">
+        <div class="fn-label">Stage</div>
+        <div class="fn-name">Expansion Trigger</div>
+      </div>
+      <div class="flow-arrow">→</div>
+      <div class="flow-node">
+        <div class="fn-label">Stage</div>
+        <div class="fn-name">CS Qualifies</div>
+      </div>
+      <div class="flow-arrow">→</div>
+      <div class="flow-handoff-node">
+        <div class="fn-label">Handoff Point</div>
+        <div class="fn-name">CS → AE</div>
+      </div>
+      <div class="flow-arrow">→</div>
+      <div class="flow-node">
+        <div class="fn-label">Stage</div>
+        <div class="fn-name">AE Qualifies</div>
+      </div>
+      <div class="flow-arrow">→</div>
+      <div class="flow-node">
+        <div class="fn-label">Stage</div>
+        <div class="fn-name">Expansion Close</div>
+      </div>
+    </div>
+
+    <h3 class="subsection-title">Why Expansion Is the Highest-ROI Motion</h3>
+    <div class="metric-grid">
+      <div class="metric-card">
+        <div class="m-label">CAC vs. New Logo</div>
+        <div class="m-value">5–10x</div>
+        <div class="m-desc">Lower cost to acquire expansion revenue vs. new logo revenue</div>
+      </div>
+      <div class="metric-card">
+        <div class="m-label">Win Rate</div>
+        <div class="m-value">60–80%</div>
+        <div class="m-desc">Expansion win rate vs. 20–30% new logo win rate</div>
+      </div>
+      <div class="metric-card">
+        <div class="m-label">Sales Cycle</div>
+        <div class="m-value">50% shorter</div>
+        <div class="m-desc">Expansion cycles typically half the length of new logo cycles</div>
+      </div>
+      <div class="metric-card">
+        <div class="m-label">NRR Impact</div>
+        <div class="m-value">Every $1 expansion NRR = $1.5 new ARR equivalent in valuation</div>
+        <div class="m-desc">Because it's recurring and more predictable, markets value it higher</div>
+      </div>
+    </div>
+
+    <p style="font-size:15px;line-height:1.75;color:var(--text);">Despite this math, most SaaS companies leave expansion revenue on the table because: (1) CSMs aren't comfortable selling, (2) AEs don't want to depend on CS to source deals, (3) there's no clear process for when CS owns vs. when AE owns, and (4) there's no comp structure that incentivizes the handoff. Fixing this requires a clear SLA, a comp model that works for both teams, and a qualification framework that fits expansion deals.</p>
+
+    <h3 class="subsection-title">Expansion Triggers</h3>
+    <p style="font-size:15px;line-height:1.75;color:var(--text);">CSMs need a specific list of events that should prompt them to flag an expansion opportunity. Without this list, expansion identification relies on luck and a CSM's intuition — both of which are highly variable.</p>
+
+    <div class="trigger-list">
+      <div class="trigger-item">
+        <div class="ti-trigger">Usage Threshold Crossed</div>
+        <div class="ti-action">Customer hits 80% of license capacity → CSM flags expansion conversation</div>
+      </div>
+      <div class="trigger-item">
+        <div class="ti-trigger">New Stakeholder Entry</div>
+        <div class="ti-action">A new VP, director, or team joins the account → expansion to new team/use case</div>
+      </div>
+      <div class="trigger-item">
+        <div class="ti-trigger">Renewal within 90 Days</div>
+        <div class="ti-action">Renewal window opens commercial conversation — natural upsell moment</div>
+      </div>
+      <div class="trigger-item">
+        <div class="ti-trigger">QBR Success Milestone</div>
+        <div class="ti-action">Customer reports strong ROI at QBR → immediately ask "where else could this apply?"</div>
+      </div>
+      <div class="trigger-item">
+        <div class="ti-trigger">Company Growth Event</div>
+        <div class="ti-action">Customer announces funding, acquisition, headcount growth, new office</div>
+      </div>
+      <div class="trigger-item">
+        <div class="ti-trigger">Product Launch</div>
+        <div class="ti-action">Your company launches new feature or module that solves a known customer pain</div>
+      </div>
+      <div class="trigger-item">
+        <div class="ti-trigger">Competitive Displacement Window</div>
+        <div class="ti-action">Customer mentions a competitor contract expiring or a competitor-caused pain</div>
+      </div>
+      <div class="trigger-item">
+        <div class="ti-trigger">Internal Champion Promotion</div>
+        <div class="ti-action">Champion is promoted and now has expanded authority → expand scope of relationship</div>
+      </div>
+    </div>
+
+    <h3 class="subsection-title">The Expansion SLA: CS vs. AE Ownership</h3>
+    <p style="font-size:15px;line-height:1.75;color:var(--text);">The most common failure mode in expansion is role confusion: CS and AE both expect the other to drive the deal, so nobody does. The SLA must define explicitly when CS owns the conversation and when it escalates to AE. The primary dividing lines are deal size and deal complexity.</p>
+
+    <div class="sla-grid">
+      <div class="sla-card sla-cs">
+        <h4>CS Owns (Self-Serve Expansion)</h4>
+        <ul>
+          <li>Deal &lt;$X (typically &lt;$15–25K for Mid-Market)</li>
+          <li>Same product/module — seat or license expansion</li>
+          <li>Existing champion has authority to approve</li>
+          <li>No new procurement or legal review required</li>
+          <li>CSM has commercial conversation authority in comp model</li>
+          <li>Timeline: handle within renewal or at QBR</li>
+        </ul>
+      </div>
+      <div class="sla-card sla-ae">
+        <h4>AE Owns (Assisted Expansion)</h4>
+        <ul>
+          <li>Deal &gt;$X threshold (deal-size tier)</li>
+          <li>New product module or service requiring a new demo</li>
+          <li>New economic buyer or department involved</li>
+          <li>Procurement or security review required</li>
+          <li>CSM surfaces the opportunity; AE leads the commercial process</li>
+          <li>CSM stays involved as the relationship anchor throughout</li>
+        </ul>
+      </div>
+    </div>
+
+    <h3 class="subsection-title">Co-Owned Expansion Quota: Comp Design</h3>
+    <p style="font-size:15px;line-height:1.75;color:var(--text);">The comp model must create incentives for both CS and AE to make the expansion handoff work. Common models:</p>
+
+    <table class="data-table">
+      <thead>
+        <tr>
+          <th>Model</th>
+          <th>How It Works</th>
+          <th>Best For</th>
+          <th>Risk</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>CS-Sourced Bonus</strong></td>
+          <td>CSM earns a flat bonus or % of ACV for opportunities they source that the AE closes</td>
+          <td>Companies where CSMs have commercial conversations but AEs close</td>
+          <td>CSM may over-count sources; AE may undervalue CS-sourced deals</td>
+        </tr>
+        <tr>
+          <td><strong>Shared Commission</strong></td>
+          <td>AE and CSM split the expansion commission (e.g., 70/30 or 60/40)</td>
+          <td>High-touch enterprise with deeply involved CSMs</td>
+          <td>Comp complexity; arguments over split attribution</td>
+        </tr>
+        <tr>
+          <td><strong>NRR as CS Quota</strong></td>
+          <td>CSM is measured on net revenue retention (churn + expansion combined)</td>
+          <td>CS-led expansion motion with small deal sizes</td>
+          <td>CSM may sacrifice churn prevention for expansion pursuit</td>
+        </tr>
+        <tr>
+          <td><strong>CS-Owned Expansion Quota</strong></td>
+          <td>CSM has a defined expansion quota (upsell + cross-sell) separate from retention</td>
+          <td>Scale-out model with high volumes, self-serve expansion</td>
+          <td>CSM feels like a salesperson; can damage trust relationship</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <h3 class="subsection-title">The Expansion MEDDICC</h3>
+    <p style="font-size:15px;line-height:1.75;color:var(--text);">Expansion deals deserve the same rigor as new logo deals. A CSM who surfaces an "expansion opportunity" with no economic buyer identified, no defined success criteria for the expansion, and no compelling event is not a pipeline — it's a wish list. Apply abbreviated MEDDICC to all expansion deals before AE takes ownership:</p>
+
+    <div class="two-col">
+      <div class="col-box">
+        <h4>Expansion MEDDICC Checklist</h4>
+        <ul>
+          <li><strong>Metrics:</strong> What measurable outcome does the expansion solve? (Quantified)</li>
+          <li><strong>Economic Buyer:</strong> Who needs to approve? Are they engaged?</li>
+          <li><strong>Decision Criteria:</strong> What does the customer need to see to expand?</li>
+          <li><strong>Decision Process:</strong> What's the approval path and timeline?</li>
+          <li><strong>Champion:</strong> Who is pulling this deal internally?</li>
+          <li><strong>Compelling Event:</strong> Why now? What's the consequence of waiting?</li>
+        </ul>
+      </div>
+      <div class="col-box">
+        <h4>Expansion Pipeline Qualification Gate</h4>
+        <ul>
+          <li>Usage trigger or growth event documented</li>
+          <li>Expansion use case identified and pain confirmed</li>
+          <li>Champion has expressed intent to expand</li>
+          <li>Economic buyer identified (even if not yet engaged)</li>
+          <li>Approximate deal size estimated (even if rough)</li>
+          <li>Timeline signal: "by end of Q" or "next fiscal year"</li>
+        </ul>
+      </div>
+    </div>
+
+    <h3 class="subsection-title">Auditing This Handoff</h3>
+    <table class="data-table">
+      <thead>
+        <tr>
+          <th>Metric</th>
+          <th>Definition</th>
+          <th>Benchmark</th>
+          <th>If Below Benchmark</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>Expansion Pipeline from CS</strong></td>
+          <td>$ pipeline created from CS-sourced expansion triggers per quarter</td>
+          <td>20–30% of total pipeline (mature orgs)</td>
+          <td>Add expansion triggers to CSM playbook; include in CSM QBR agenda</td>
+        </tr>
+        <tr>
+          <td><strong>Expansion Win Rate</strong></td>
+          <td>Closed Expansion Won / (Closed Won + Closed Lost) for expansion opps</td>
+          <td>60–80%</td>
+          <td>Review whether expansion timing is wrong (too early, too late); improve trigger detection</td>
+        </tr>
+        <tr>
+          <td><strong>Avg Expansion Deal Size</strong></td>
+          <td>Average ACV of expansion deals</td>
+          <td>25–50% of initial deal ACV</td>
+          <td>Are CSMs identifying small add-on upsells only? Train on product cross-sell motions.</td>
+        </tr>
+        <tr>
+          <td><strong>Trigger → Pipeline (Days)</strong></td>
+          <td>Days from expansion trigger detected to opportunity created in CRM</td>
+          <td>&lt;14 days</td>
+          <td>Add automation: usage threshold alert → CSM task created automatically</td>
+        </tr>
+        <tr>
+          <td><strong>Expansion NRR Contribution</strong></td>
+          <td>Expansion ARR / Starting ARR × 100%</td>
+          <td>15–25%+ (world-class orgs)</td>
+          <td>Full expansion motion audit: triggers, CS training, AE alignment, comp model review</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <h3 class="subsection-title">Common Failure Modes and Fixes</h3>
+    <table class="data-table">
+      <thead>
+        <tr>
+          <th>Failure Mode</th>
+          <th>Symptom</th>
+          <th>Fix</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>CSM won't have commercial conversations</td>
+          <td>Expansion opportunities never surfaced; CSM avoids money topic</td>
+          <td>Training + comp incentive; give CSMs scripts for introducing expansion naturally</td>
+        </tr>
+        <tr>
+          <td>AE doesn't trust CS-sourced pipeline</td>
+          <td>AE ignores CS handoffs or doesn't follow up promptly</td>
+          <td>Joint pipeline review; show AE win rate data on CS-sourced deals</td>
+        </tr>
+        <tr>
+          <td>Role conflict at renewal</td>
+          <td>CS and AE both in the same meeting with conflicting messages</td>
+          <td>Define who leads renewal conversation vs. expansion conversation explicitly in the SLA</td>
+        </tr>
+        <tr>
+          <td>No expansion trigger detection</td>
+          <td>Expansion opportunities identified only ad hoc</td>
+          <td>Build usage-based alerts in Gainsight/Totango; automate trigger-to-task workflow</td>
+        </tr>
+        <tr>
+          <td>Expansion forecast not tracked</td>
+          <td>Leadership can't see expansion pipeline separate from new logo</td>
+          <td>Add "Expansion" opportunity type in CRM; report expansion pipeline separately in weekly forecast</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <div class="indicator-row">
+      <span class="indicator-tag ind-leading">Leading: Usage Threshold Alerts Fired</span>
+      <span class="indicator-tag ind-leading">Leading: Expansion Pipeline Created</span>
+      <span class="indicator-tag ind-leading">Leading: Trigger → Opportunity Days</span>
+      <span class="indicator-tag ind-lagging">Lagging: Expansion ARR</span>
+      <span class="indicator-tag ind-lagging">Lagging: NRR %</span>
+      <span class="indicator-tag ind-lagging">Lagging: Expansion Win Rate</span>
+    </div>
+  </div>
+
+  <!-- FULL HANDOFF METRICS DASHBOARD -->
+  <h2 class="section-title">Full Handoff Metrics Dashboard</h2>
+  <p class="section-intro">All handoff KPIs, SLAs, and audit questions in one reference table — for use in RevOps weekly reporting.</p>
+
+  <div class="metrics-dashboard">
+    <table class="data-table">
+      <thead>
+        <tr>
+          <th>Handoff</th>
+          <th>KPI</th>
+          <th>SLA / Target</th>
+          <th>Audit Frequency</th>
+          <th>Owner</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td rowspan="5"><strong>Marketing → Sales</strong></td>
+          <td>Time-to-First-Contact</td>
+          <td>&lt;5 min (inbound); &lt;1 hr (all MQL)</td>
+          <td>Daily</td>
+          <td>SDR Manager</td>
+        </tr>
+        <tr>
+          <td>MQL → SAL Rate</td>
+          <td>60–80%</td>
+          <td>Weekly</td>
+          <td>Marketing Ops</td>
+        </tr>
+        <tr>
+          <td>SAL Rejection Rate + Reasons</td>
+          <td>&lt;25% rejection; reasons logged 100%</td>
+          <td>Weekly</td>
+          <td>RevOps</td>
+        </tr>
+        <tr>
+          <td>SAL → SQL Conversion</td>
+          <td>30–50%</td>
+          <td>Monthly</td>
+          <td>SDR Manager + Marketing</td>
+        </tr>
+        <tr>
+          <td>MQL-to-Closed-Won Rate</td>
+          <td>1–3% (segment-dependent)</td>
+          <td>Quarterly</td>
+          <td>RevOps</td>
+        </tr>
+        <tr>
+          <td rowspan="5"><strong>Sales → CS</strong></td>
+          <td>Handoff Doc Completeness</td>
+          <td>100% before Closed Won</td>
+          <td>Per deal</td>
+          <td>AE + Sales Manager</td>
+        </tr>
+        <tr>
+          <td>Days Close → Onboarding Kick-Off</td>
+          <td>&lt;7 days (SMB); &lt;14 days (MM/ENT)</td>
+          <td>Weekly</td>
+          <td>CS Manager</td>
+        </tr>
+        <tr>
+          <td>Time-to-First-Value</td>
+          <td>&lt;30/60/90 days by segment</td>
+          <td>Monthly</td>
+          <td>CS Manager</td>
+        </tr>
+        <tr>
+          <td>90-Day Churn Rate</td>
+          <td>&lt;3%</td>
+          <td>Monthly</td>
+          <td>CRO / VP CS</td>
+        </tr>
+        <tr>
+          <td>Warm Handoff Call Rate</td>
+          <td>&gt;85%</td>
+          <td>Monthly</td>
+          <td>Sales Manager</td>
+        </tr>
+        <tr>
+          <td rowspan="5"><strong>CS → Sales</strong></td>
+          <td>Expansion Pipeline from CS</td>
+          <td>20–30% of total pipeline</td>
+          <td>Weekly</td>
+          <td>CS Manager + RevOps</td>
+        </tr>
+        <tr>
+          <td>Trigger → Pipeline Days</td>
+          <td>&lt;14 days</td>
+          <td>Monthly</td>
+          <td>RevOps</td>
+        </tr>
+        <tr>
+          <td>Expansion Win Rate</td>
+          <td>60–80%</td>
+          <td>Quarterly</td>
+          <td>RevOps</td>
+        </tr>
+        <tr>
+          <td>Expansion ARR / NRR Contribution</td>
+          <td>NRR &gt;110% for expansion credit</td>
+          <td>Monthly</td>
+          <td>Finance + RevOps</td>
+        </tr>
+        <tr>
+          <td>CS-to-AE Handoff SLA Compliance</td>
+          <td>AE follows up within 48 hrs of CS-sourced opp</td>
+          <td>Weekly</td>
+          <td>AE Manager + CS Manager</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- REVOPS GOVERNANCE -->
+  <h2 class="section-title">How RevOps Governs All Three Handoffs</h2>
+  <p class="section-intro">RevOps is the architecture team for the revenue system. They design the processes, build the technical infrastructure, set the measurement framework, and run the governance cadence that keeps all three handoffs operating properly.</p>
+
+  <ol class="step-list">
+    <li>
+      <div class="step-content">
+        <span class="step-title">Design and document the process</span>
+        Each handoff needs a written playbook that defines: who does what, when, with what data, using what tools, and what constitutes a pass or fail. RevOps writes these playbooks with input from all three functions. They are living documents, reviewed quarterly.
+      </div>
+    </li>
+    <li>
+      <div class="step-content">
+        <span class="step-title">Build the technical infrastructure</span>
+        MAP-to-CRM sync, CRM-to-CS platform sync, lead routing rules, stage validation requirements, automated alerts, and closed-loop reporting must all be built and maintained by RevOps. Handoff quality is only as good as the systems that enforce it.
+      </div>
+    </li>
+    <li>
+      <div class="step-content">
+        <span class="step-title">Own the metrics dashboard</span>
+        RevOps publishes a weekly handoff health dashboard that shows all three handoff KPIs in one view — visible to the CRO, VP Marketing, and VP CS simultaneously. Visibility creates accountability.
+      </div>
+    </li>
+    <li>
+      <div class="step-content">
+        <span class="step-title">Run the monthly handoff review</span>
+        Monthly cross-functional meeting: Marketing + Sales + CS + RevOps review handoff metrics, identify failures, and own action items. This is where SAL rejection reasons get analyzed, churn post-mortems get reviewed, and expansion SLA compliance gets discussed.
+      </div>
+    </li>
+    <li>
+      <div class="step-content">
+        <span class="step-title">Quarterly calibration</span>
+        Every quarter, recalibrate SLAs, scoring thresholds, and ownership boundaries based on what the data shows. Handoff processes that made sense at $5M ARR don't work at $50M ARR. RevOps drives these calibration sessions and owns the change management process.
+      </div>
+    </li>
+  </ol>
+
+  <div class="related-section">
+    <div class="related-title">Related Topics</div>
+    <div class="related-links">
+      <a href="phase6.html" class="related-link">Revenue Problem Diagnostics</a>
+      <a href="north-star-metrics.html" class="related-link">North Star Metrics</a>
+      <a href="revops.html" class="related-link">Revenue Operations</a>
+      <a href="../subpages/meddicc.html" class="related-link">MEDDICC Framework</a>
+      <a href="../subpages/icp.html" class="related-link">Ideal Customer Profile</a>
+      <a href="../subpages/customer-success.html" class="related-link">Customer Success</a>
+      <a href="../subpages/sdr-playbook.html" class="related-link">SDR Playbook</a>
+      <a href="../subpages/nrr-metric.html" class="related-link">NRR Deep Dive</a>
+      <a href="../subpages/forecasting.html" class="related-link">Forecasting</a>
+    </div>
+  </div>
+
+</div>
+<script data-pplx-inline-edit>
+(function () {
+  if (window === window.top) return;
+
+  const allowedParentOrigins = ["https://www.perplexity.ai","https://perplexity.ai","https://testing.perplexity.ai","https://staging.perplexity.ai","https://*.preview.i.perplexity.ai","http://localhost:3000","http://127.0.0.1:3000","http://localhost:5173","http://127.0.0.1:5173"];
+  const MAX_FONT_BYTES = 500 * 1024;
+  const MAX_TOTAL_FONT_BYTES = 2 * 1024 * 1024;
+  let scrollForwarding = false;
+  let scrollRaf = 0;
+  let trustedTopOrigin = null;
+
+  // Allow entries like "https://*.preview.i.perplexity.ai" — the wildcard
+  // matches a single DNS label (no dots), so "https://*.foo" cannot stretch
+  // across multiple labels.
+  function matchesAllowedOrigin(origin) {
+    if (!origin) return false;
+    for (const entry of allowedParentOrigins) {
+      if (!entry.includes("*")) {
+        if (entry === origin) return true;
+        continue;
+      }
+      const pattern = new RegExp(
+        "^" +
+          entry.replace(/[.+?^${}()|[\]\\]/g, "\\$&").replace(/\*/g, "[^.]+") +
+          "$",
+      );
+      if (pattern.test(origin)) return true;
+    }
+    return false;
+  }
+
+  // Trust decision: when the sender is same-origin-visible (event.origin is a
+  // real origin like https://www.perplexity.ai) we trust event.origin directly.
+  // When event.origin is "null" (opaque broker srcdoc), we fall back to the
+  // broker's stamped `parentOrigin` to identify the top window. The fallback
+  // is claim-only — we rely on the browser's native `targetOrigin` enforcement
+  // on the response path (see postToTrustedTop) to ensure replies can't be
+  // delivered to anyone but the actual top window of that claimed origin.
+  function getTrustedParentOrigin(event) {
+    const forwardedParentOrigin =
+      typeof event.data.parentOrigin === "string" ? event.data.parentOrigin : null;
+    const parentOrigin = event.origin === "null" ? forwardedParentOrigin : event.origin;
+    return matchesAllowedOrigin(parentOrigin) ? parentOrigin : null;
+  }
+
+  // All responses go to window.top with targetOrigin = the allowlisted origin.
+  // An attacker that iframes us inside their own null-origin broker can claim
+  // any parentOrigin they like, but the browser will drop the reply whenever
+  // the real top's origin doesn't match — so the screenshot never leaves.
+  function postToTrustedTop(message) {
+    if (!trustedTopOrigin) return;
+    try {
+      window.top.postMessage(message, trustedTopOrigin);
+    } catch (_error) {}
+  }
+
+  function inlineAll(original, clone) {
+    if (original.nodeType !== 1 || clone.nodeType !== 1) return;
+
+    try {
+      const computedStyle = getComputedStyle(original);
+      // cssText on a computed style is the serialized declaration in modern
+      // Chromium/Safari — a single read beats enumerating ~400 longhand
+      // properties. Firefox returns "" here, so we fall back on empty.
+      const serialized = computedStyle.cssText;
+      if (serialized) {
+        clone.style.cssText = serialized;
+      } else {
+        const parts = new Array(computedStyle.length);
+        for (let index = 0; index < computedStyle.length; index += 1) {
+          const property = computedStyle[index];
+          parts[index] = `${property}:${computedStyle.getPropertyValue(property)};`;
+        }
+        clone.style.cssText = parts.join("");
+      }
+    } catch (_error) {}
+
+    const originalChildren = original.children;
+    const clonedChildren = clone.children;
+    for (
+      let index = 0;
+      index < originalChildren.length && index < clonedChildren.length;
+      index += 1
+    ) {
+      inlineAll(originalChildren[index], clonedChildren[index]);
+    }
+  }
+
+  function extractFontUrl(srcValue) {
+    const matches = [
+      ...srcValue.matchAll(
+        /url\(["']?([^"')]+)["']?\)(?:\s*format\(["']?([^"')]+)["']?\))?/gi,
+      ),
+    ];
+    if (matches.length === 0) return null;
+    const woff2 = matches.find((m) => m[2] && m[2].toLowerCase().includes("woff2"));
+    if (woff2) return woff2[1];
+    const woff = matches.find((m) => m[2] && m[2].toLowerCase().includes("woff"));
+    if (woff) return woff[1];
+    return matches[0][1];
+  }
+
+  // Cache resolved font URL -> data URI across captures. Fonts on a page
+  // essentially never change, and a batch run emits multiple captures back to
+  // back — without this we'd refetch + re-base64 every time.
+  const fontDataUriCache = new Map();
+  const SRC_DECLARATION_RE = /src\s*:\s*[^;}]+/i;
+
+  async function fetchAsDataUri(url) {
+    if (fontDataUriCache.has(url)) return fontDataUriCache.get(url);
+    let dataUri = null;
+    try {
+      const response = await fetch(url, { mode: "cors", credentials: "omit" });
+      if (response.ok) {
+        const blob = await response.blob();
+        if (blob.size <= MAX_FONT_BYTES) {
+          dataUri = await new Promise((resolve) => {
+            const reader = new FileReader();
+            reader.onloadend = () =>
+              resolve(typeof reader.result === "string" ? reader.result : null);
+            reader.onerror = () => resolve(null);
+            reader.readAsDataURL(blob);
+          });
+        }
+      }
+    } catch (_error) {
+      dataUri = null;
+    }
+    fontDataUriCache.set(url, dataUri);
+    return dataUri;
+  }
+
+  function collectFontFaceRuleTexts() {
+    const rules = [];
+    for (const sheet of document.styleSheets) {
+      let cssRules;
+      try {
+        cssRules = sheet.cssRules;
+      } catch (_error) {
+        continue;
+      }
+      if (!cssRules) continue;
+      for (const rule of cssRules) {
+        const cssText = rule.cssText || "";
+        if (cssText.startsWith("@font-face")) rules.push(cssText);
+      }
+    }
+    return rules;
+  }
+
+  async function buildInlinedFontCss() {
+    const ruleTexts = collectFontFaceRuleTexts();
+    if (ruleTexts.length === 0) return null;
+
+    const resolved = ruleTexts.map((cssText) => {
+      if (!SRC_DECLARATION_RE.test(cssText)) return null;
+      const srcMatch = cssText.match(/src\s*:\s*([^;}]+)[;}]/i);
+      if (!srcMatch) return null;
+      const url = extractFontUrl(srcMatch[1]);
+      if (!url) return null;
+      try {
+        return { cssText, url: new URL(url, document.baseURI).href };
+      } catch (_error) {
+        return null;
+      }
+    });
+
+    const dataUris = await Promise.all(
+      resolved.map((entry) => (entry ? fetchAsDataUri(entry.url) : Promise.resolve(null))),
+    );
+
+    const inlined = [];
+    let totalBytes = 0;
+    for (let index = 0; index < resolved.length; index += 1) {
+      const entry = resolved[index];
+      const dataUri = dataUris[index];
+      if (!entry || !dataUri) continue;
+      const approxBytes = dataUri.length * 0.75;
+      if (totalBytes + approxBytes > MAX_TOTAL_FONT_BYTES) break;
+      totalBytes += approxBytes;
+      inlined.push(entry.cssText.replace(SRC_DECLARATION_RE, `src: url("${dataUri}")`));
+    }
+    return inlined.length > 0 ? inlined.join("\n") : null;
+  }
+
+  function stripExternal(clone) {
+    const images = clone.querySelectorAll("img");
+    for (let index = 0; index < images.length; index += 1) {
+      const src = images[index].getAttribute("src");
+      if (src && !src.startsWith("data:")) images[index].removeAttribute("src");
+    }
+
+    const elements = clone.querySelectorAll("*");
+    for (let index = 0; index < elements.length; index += 1) {
+      const style = elements[index].style.cssText;
+      if (style && style.includes("url(")) {
+        elements[index].style.cssText = style.replace(
+          /url\(["']?(?!data:)[^)"']*["']?\)/gi,
+          "none",
+        );
+      }
+    }
+  }
+
+  function emitScroll() {
+    scrollRaf = 0;
+    if (!scrollForwarding) return;
+    postToTrustedTop({
+      type: "INLINE_EDIT_SCROLL",
+      scrollX: window.scrollX,
+      scrollY: window.scrollY,
+    });
+  }
+
+  window.addEventListener(
+    "scroll",
+    function () {
+      if (!scrollForwarding || scrollRaf) return;
+      scrollRaf = requestAnimationFrame(emitScroll);
+    },
+    { passive: true, capture: true },
+  );
+
+  async function handleCaptureRequest(event) {
+    const requestId = event.data.requestId;
+    const scrollX = window.scrollX;
+    const scrollY = window.scrollY;
+    const width = window.innerWidth;
+    const height = window.innerHeight;
+
+    function postResult(dataUrl) {
+      postToTrustedTop({
+        type: "INLINE_EDIT_SCREENSHOT_RESULT",
+        requestId,
+        dataUrl,
+        scrollX,
+        scrollY,
+      });
+    }
+
+    try {
+      // Wait for any pending web fonts to resolve so both inline metrics and
+      // the @font-face inlining below see the same loaded faces.
+      if (document.fonts && document.fonts.ready) {
+        try {
+          await document.fonts.ready;
+        } catch (_error) {}
+      }
+
+      const clone = document.documentElement.cloneNode(true);
+      inlineAll(document.documentElement, clone);
+
+      const removedNodes = clone.querySelectorAll("script,link[rel=\"stylesheet\"],style");
+      for (let index = 0; index < removedNodes.length; index += 1) {
+        removedNodes[index].remove();
+      }
+
+      stripExternal(clone);
+
+      // Re-embed web fonts as data-URI @font-face rules so the SVG rasterizer
+      // can resolve them — external font URLs aren't fetched during
+      // foreignObject rendering, which would otherwise force a fallback face
+      // and change text metrics.
+      const inlinedFontCss = await buildInlinedFontCss();
+      if (inlinedFontCss) {
+        const styleEl = document.createElement("style");
+        styleEl.textContent = inlinedFontCss;
+        const head = clone.querySelector("head");
+        if (head) head.appendChild(styleEl);
+        else clone.insertBefore(styleEl, clone.firstChild);
+      }
+
+      const html = new XMLSerializer().serializeToString(clone);
+      const svg =
+        `<svg xmlns="http://www.w3.org/2000/svg" width="${width}" height="${height}">` +
+        '<foreignObject width="100%" height="100%">' +
+        `<div xmlns="http://www.w3.org/1999/xhtml" style="width:${width}px;height:${height}px;overflow:hidden">` +
+        `<div style="transform:translate(-${scrollX}px,-${scrollY}px);transform-origin:top left">` +
+        html +
+        "</div></div></foreignObject></svg>";
+      const svgUrl = `data:image/svg+xml;charset=utf-8,${encodeURIComponent(svg)}`;
+      const image = new Image();
+      image.onload = function () {
+        const canvas = document.createElement("canvas");
+        canvas.width = width;
+        canvas.height = height;
+        canvas.getContext("2d").drawImage(image, 0, 0);
+        postResult(canvas.toDataURL("image/png"));
+      };
+      image.onerror = function () {
+        postResult(null);
+      };
+      image.src = svgUrl;
+    } catch (_error) {
+      postResult(null);
+    }
+  }
+
+  window.addEventListener("message", function (event) {
+    if (!event.data) return;
+    // Only accept messages from the direct parent frame. Blocks sibling /
+    // unrelated-window postMessage senders that could otherwise reach us.
+    if (event.source !== window.parent) return;
+
+    const trustedParentOrigin = getTrustedParentOrigin(event);
+    if (!trustedParentOrigin) return;
+    trustedTopOrigin = trustedParentOrigin;
+
+    if (event.data.type === "INLINE_EDIT_SCROLL_START") {
+      scrollForwarding = true;
+      emitScroll();
+      return;
+    }
+
+    if (event.data.type === "INLINE_EDIT_SCROLL_STOP") {
+      scrollForwarding = false;
+      if (scrollRaf) cancelAnimationFrame(scrollRaf);
+      scrollRaf = 0;
+      return;
+    }
+
+    if (event.data.type !== "INLINE_EDIT_CAPTURE_REQUEST") return;
+
+    handleCaptureRequest(event);
+  });
+})();
+
+
+</script></body>
+</html>

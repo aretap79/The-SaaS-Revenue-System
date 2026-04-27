@@ -1,0 +1,1688 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>North Star Metrics — SaaS Revenue System</title>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="../assets/shared.css"/>
+  <style>
+    .page-hero { background: #28251D; }
+
+    /* Metric section header */
+    .metric-section-header {
+      background: var(--text);
+      color: #fff;
+      border-radius: 10px 10px 0 0;
+      padding: 16px 24px;
+      margin-top: 40px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .msn-badge {
+      background: rgba(255,255,255,0.12);
+      color: rgba(255,255,255,0.85);
+      border-radius: 6px;
+      padding: 3px 10px;
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      white-space: nowrap;
+    }
+    .metric-section-header h2 {
+      font-size: 19px;
+      font-weight: 700;
+      color: #fff;
+      margin: 0 0 2px;
+    }
+    .metric-section-header p {
+      font-size: 13px;
+      color: rgba(255,255,255,0.55);
+      margin: 0;
+    }
+    .msh-text { flex: 1; }
+
+    .metric-body {
+      background: var(--surface);
+      border: 1.5px solid var(--border);
+      border-top: none;
+      border-radius: 0 0 10px 10px;
+      padding: 24px;
+    }
+
+    /* Formula hero */
+    .formula-hero {
+      background: #1C1B19;
+      border-radius: 8px;
+      padding: 20px 24px;
+      margin: 16px 0;
+    }
+    .fh-label {
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      color: #4F98A3;
+      margin-bottom: 6px;
+      font-family: 'DM Sans', sans-serif;
+    }
+    .fh-formula {
+      font-family: 'Courier New', monospace;
+      font-size: 16px;
+      color: #fff;
+      font-weight: 600;
+      margin-bottom: 8px;
+    }
+    .fh-note {
+      font-size: 13px;
+      color: #797876;
+      font-family: 'DM Sans', sans-serif;
+      line-height: 1.55;
+    }
+
+    /* Benchmark bar */
+    .benchmark-table {
+      width: 100%;
+      margin: 16px 0;
+      border-collapse: collapse;
+      font-size: 13px;
+    }
+    .benchmark-table th {
+      background: #f0f0ec;
+      padding: 8px 14px;
+      text-align: left;
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.5px;
+      text-transform: uppercase;
+      color: var(--text-muted);
+    }
+    .benchmark-table td {
+      padding: 10px 14px;
+      border-bottom: 1px solid var(--border);
+      vertical-align: top;
+      line-height: 1.5;
+    }
+    .benchmark-table tr:last-child td { border-bottom: none; }
+    .bm-good { color: #437A22; font-weight: 700; }
+    .bm-ok { color: #964219; font-weight: 700; }
+    .bm-bad { color: #A13544; font-weight: 700; }
+
+    /* Four-col drivers */
+    .drivers-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 14px;
+      margin: 16px 0;
+    }
+    .driver-box {
+      background: #fafaf8;
+      border-radius: 8px;
+      padding: 14px 16px;
+      border: 1.5px solid var(--border);
+    }
+    .driver-box h4 {
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: 0.8px;
+      text-transform: uppercase;
+      margin-bottom: 8px;
+    }
+    .driver-up h4 { color: #437A22; }
+    .driver-down h4 { color: #A13544; }
+    .driver-box ul {
+      list-style: none;
+      margin: 0;
+    }
+    .driver-box ul li {
+      font-size: 13px;
+      line-height: 1.6;
+      padding: 2px 0 2px 14px;
+      position: relative;
+      color: var(--text);
+    }
+    .driver-up ul li::before { content: '↑'; position: absolute; left: 0; color: #437A22; font-size: 11px; top: 4px; }
+    .driver-down ul li::before { content: '↓'; position: absolute; left: 0; color: #A13544; font-size: 11px; top: 4px; }
+
+    /* Worked example block */
+    .example-block {
+      background: #f5f0ff;
+      border: 1.5px solid #7A39BB;
+      border-radius: 8px;
+      padding: 16px 20px;
+      margin: 16px 0;
+    }
+    .example-block .ex-title {
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 1.2px;
+      text-transform: uppercase;
+      color: #7A39BB;
+      margin-bottom: 10px;
+    }
+    .example-block .ex-content {
+      font-size: 14px;
+      line-height: 1.7;
+      color: var(--text);
+    }
+    .example-block code {
+      background: rgba(122,57,187,0.1);
+      padding: 1px 6px;
+      border-radius: 4px;
+      font-family: 'Courier New', monospace;
+      font-size: 13px;
+      color: #7A39BB;
+    }
+
+    /* Metrics interaction map */
+    .interaction-map {
+      background: var(--bg);
+      border: 1.5px solid var(--border);
+      border-radius: 10px;
+      padding: 24px;
+      margin: 24px 0;
+    }
+    .im-row {
+      display: flex;
+      gap: 0;
+      align-items: center;
+      padding: 10px 0;
+      border-bottom: 1px solid var(--border);
+      font-size: 14px;
+    }
+    .im-row:last-child { border-bottom: none; }
+    .im-metric {
+      font-weight: 700;
+      color: var(--text);
+      min-width: 180px;
+      flex-shrink: 0;
+    }
+    .im-arrow {
+      color: var(--primary);
+      font-size: 18px;
+      padding: 0 12px;
+      flex-shrink: 0;
+    }
+    .im-effect {
+      color: var(--text-muted);
+      line-height: 1.5;
+    }
+
+    /* Dashboard cadence */
+    .cadence-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 12px;
+      margin: 20px 0;
+    }
+    .cadence-card {
+      background: var(--surface);
+      border: 1.5px solid var(--border);
+      border-radius: 8px;
+      padding: 14px;
+    }
+    .cadence-card .cc-period {
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      margin-bottom: 8px;
+    }
+    .cadence-card ul {
+      list-style: none;
+      margin: 0;
+    }
+    .cadence-card ul li {
+      font-size: 12px;
+      line-height: 1.6;
+      padding: 2px 0;
+      color: var(--text);
+      border-bottom: 1px solid var(--border);
+    }
+    .cadence-card ul li:last-child { border-bottom: none; }
+
+    /* Distribution visualization */
+    .dist-visual {
+      display: flex;
+      gap: 0;
+      height: 120px;
+      margin: 16px 0;
+      align-items: flex-end;
+      border-bottom: 2px solid var(--border);
+      position: relative;
+    }
+    .dist-bar {
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+      align-items: center;
+      flex: 1;
+      gap: 4px;
+    }
+    .dist-bar .bar-fill {
+      width: 80%;
+      border-radius: 4px 4px 0 0;
+      transition: height 0.3s;
+    }
+    .dist-bar .bar-label {
+      font-size: 10px;
+      font-weight: 700;
+      color: var(--text-muted);
+      white-space: nowrap;
+    }
+    .bar-unhealthy { background: #fce8e6; }
+    .bar-developing { background: #fff3e0; }
+    .bar-core { background: #e8f8ee; }
+    .bar-high { background: #4F98A3; }
+
+    /* NRR compounding table */
+    .compounding-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 16px 0;
+      font-size: 13px;
+    }
+    .compounding-table th {
+      background: var(--text);
+      color: #fff;
+      padding: 8px 12px;
+      text-align: center;
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.5px;
+      text-transform: uppercase;
+    }
+    .compounding-table td {
+      padding: 8px 12px;
+      border: 1px solid var(--border);
+      text-align: center;
+    }
+    .compounding-table .scenario-header {
+      background: #fafaf8;
+      font-weight: 700;
+      font-size: 12px;
+    }
+    .td-good { color: #437A22; font-weight: 700; }
+    .td-neutral { color: #964219; }
+    .td-bad { color: #A13544; font-weight: 700; }
+
+    @media (max-width: 768px) {
+      .drivers-grid { grid-template-columns: 1fr; }
+      .cadence-grid { grid-template-columns: 1fr 1fr; }
+      .im-metric { min-width: 120px; }
+      .dist-bar .bar-label { font-size: 9px; }
+    }
+  </style>
+</head>
+<body>
+<nav class="nav">
+  <span class="nav-logo">SaaS <span>Revenue System</span></span>
+  <span class="nav-sep">|</span>
+  <a href="../index.html" class="nav-back">← Home</a>
+  <span class="nav-sep">|</span>
+  <span class="nav-current">North Star Metrics</span>
+</nav>
+
+<div class="page-hero">
+  <div class="hero-phase-label">REVENUE SYSTEM</div>
+  <div class="hero-title">North Star Metrics</div>
+  <div class="hero-subtitle">The six metrics that tell a CRO whether the revenue system is healthy, efficient, and scalable.</div>
+  <div class="hero-tags">
+    <a href="../subpages/pipeline-coverage.html" class="hero-tag">Pipeline Coverage</a>
+    <a href="../subpages/win-rate.html" class="hero-tag">Win Rate</a>
+    <a href="../subpages/ramp-time.html" class="hero-tag">Ramp Time</a>
+    <a href="../subpages/cac-payback.html" class="hero-tag">CAC Payback</a>
+    <a href="../subpages/nrr-metric.html" class="hero-tag">Net Revenue Retention</a>
+    <a href="../subpages/quota-attainment.html" class="hero-tag">Quota Attainment</a>
+  </div>
+</div>
+
+<div class="content-wrap">
+
+  <div class="callout callout-definition">
+    <div class="callout-title">Why Six, Not Sixty</div>
+    <p>A CRO can track 200 metrics. They should care deeply about six. These six are "north stars" because they are leading or lagging indicators of the entire revenue system's health — and because they interact with each other in predictable ways. If you move one, another moves. Understanding those interactions is what separates a great CRO from a good analyst. Learn these six metrics cold. Know what drives each one, what benchmark your business should hit, and what you'll do when each falls below par.</p>
+  </div>
+
+  <!-- METRIC 1: PIPELINE COVERAGE -->
+  <div class="metric-section-header">
+    <div class="msn-badge">Metric 01</div>
+    <div class="msh-text">
+      <h2>Pipeline Coverage Ratio</h2>
+      <p>The most fundamental ratio in revenue forecasting — do you have enough pipeline to hit quota?</p>
+    </div>
+  </div>
+  <div class="metric-body">
+
+    <div class="formula-hero">
+      <div class="fh-label">Formula</div>
+      <div class="fh-formula">Pipeline Coverage = Total Qualified Pipeline ÷ Revenue Quota</div>
+      <div class="fh-note">
+        "Qualified" = opportunities that have passed stage 1 (discovery completed, ICP confirmed, next step defined). Raw leads and early-stage noise must be excluded.<br/>
+        <strong>Weighted Pipeline Coverage</strong> = Σ (Deal Value × Stage Win Rate) ÷ Quota — more accurate but requires reliable stage-level win rate data.
+      </div>
+    </div>
+
+    <div class="example-block">
+      <div class="ex-title">Worked Example</div>
+      <div class="ex-content">
+        Quota for Q3: <code>$5,000,000</code><br/>
+        Total qualified pipeline (stages 2–5): <code>$16,500,000</code><br/>
+        Pipeline Coverage = <code>$16,500,000 ÷ $5,000,000 = 3.3x</code><br/><br/>
+        Weighted pipeline (applying 80%/50%/25%/15% win rates by stage): <code>$3,800,000</code><br/>
+        Weighted Coverage = <code>$3,800,000 ÷ $5,000,000 = 0.76x</code><br/><br/>
+        Interpretation: The unweighted 3.3x is at the minimum acceptable level. The weighted 0.76x means the deal mix is skewed toward early-stage pipeline — there's a risk of missing quota unless late-stage pipeline is added in the next 6 weeks.
+      </div>
+    </div>
+
+    <h3 class="subsection-title">Benchmarks by Stage and Segment</h3>
+    <table class="benchmark-table">
+      <thead>
+        <tr>
+          <th>Segment</th>
+          <th>Minimum Acceptable</th>
+          <th>Healthy</th>
+          <th>Strong</th>
+          <th>Why the Difference</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>SMB</strong></td>
+          <td class="bm-ok">2.5x</td>
+          <td class="bm-good">3.0–3.5x</td>
+          <td class="bm-good">4x+</td>
+          <td>Shorter cycles, faster conversions, more predictable stage-to-stage rates</td>
+        </tr>
+        <tr>
+          <td><strong>Mid-Market</strong></td>
+          <td class="bm-ok">3.0x</td>
+          <td class="bm-good">3.5–4.0x</td>
+          <td class="bm-good">4.5x+</td>
+          <td>Multi-stakeholder deals; more can go wrong in late stage</td>
+        </tr>
+        <tr>
+          <td><strong>Enterprise</strong></td>
+          <td class="bm-ok">4.0x</td>
+          <td class="bm-good">4.5–5.0x</td>
+          <td class="bm-good">6x+</td>
+          <td>Long cycles, complex approval chains, high slip rate — need more buffer</td>
+        </tr>
+        <tr>
+          <td><strong>Multi-segment mixed</strong></td>
+          <td class="bm-ok">3.0–3.5x</td>
+          <td class="bm-good">4x weighted average</td>
+          <td class="bm-good">—</td>
+          <td>Weight by quota proportion: if ENT = 60% of quota, skew toward 5x requirement</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <h3 class="subsection-title">What to Do at Different Coverage Levels</h3>
+    <table class="data-table">
+      <thead>
+        <tr>
+          <th>Coverage Level</th>
+          <th>Situation</th>
+          <th>Immediate Action</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>&lt;2x</strong></td>
+          <td>Pipeline emergency. Will almost certainly miss quota unless something unexpected happens.</td>
+          <td>All-hands outbound sprint. Pull marketing demand gen budget forward. CRO personally reviews pipeline with every AE. Set realistic board expectation now — do not wait until end of quarter.</td>
+        </tr>
+        <tr>
+          <td><strong>2x–3x</strong></td>
+          <td>At risk. Will need above-average conversion rates to hit. Tight quarter.</td>
+          <td>Focus on accelerating late-stage deals. Stop creating new stage-1 pipeline for this quarter — push those to next quarter. Identify 2–3 "swing" deals and put maximum support behind them.</td>
+        </tr>
+        <tr>
+          <td><strong>3x–4x</strong></td>
+          <td>Healthy. On track if conversion rates hold at historical averages.</td>
+          <td>Maintain standard pipeline review cadence. Monitor stage conversion weekly. Protect early-stage deals from premature closing pressure that reduces next-quarter coverage.</td>
+        </tr>
+        <tr>
+          <td><strong>4x–6x</strong></td>
+          <td>Strong. You have margin for error. Can invest in quality of deals over quantity.</td>
+          <td>Requalify ruthlessly — cull non-ICP deals that are consuming capacity. Focus AEs on top-quartile deals. Build next quarter's pipeline now from a position of strength.</td>
+        </tr>
+        <tr>
+          <td><strong>&gt;6x</strong></td>
+          <td>Coverage likely inflated by stale deals. "Junk pipeline" problem.</td>
+          <td>Run a pipeline hygiene audit. Require updated close dates and champion confirmations on all stage 3+ deals. The CRM likely contains zombie deals that haven't moved in 90+ days.</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <h3 class="subsection-title">Pipeline Coverage vs. Forecast Coverage</h3>
+    <p style="font-size:15px;line-height:1.75;color:var(--text);">Pipeline coverage measures all qualified opportunities. Forecast coverage measures only the deals in the forecast (commit + best case). Pipeline coverage is used for capacity planning 60–90 days out. Forecast coverage is used for the current quarter. A business can have 4x pipeline coverage but only 1.2x forecast coverage if most of the pipeline is early-stage. This is why stage-weighted analysis matters — the raw number can mislead.</p>
+
+    <div class="drivers-grid">
+      <div class="driver-box driver-up">
+        <h4>What Drives It Up</h4>
+        <ul>
+          <li>Increased SDR outbound activity</li>
+          <li>More demand gen spend and better conversion</li>
+          <li>AE prospecting targets added to comp plan</li>
+          <li>ICP expanded appropriately</li>
+          <li>New channels added (partnerships, PLG, events)</li>
+          <li>Referral programs activated</li>
+        </ul>
+      </div>
+      <div class="driver-box driver-down">
+        <h4>What Drives It Down</h4>
+        <ul>
+          <li>ICP too narrow or demand gen underfunded</li>
+          <li>SDR underperformance or high attrition</li>
+          <li>AEs spending all time on accounts, no prospecting</li>
+          <li>Bad quarter drains late-stage pipeline faster than refilled</li>
+          <li>Market saturation in primary channels</li>
+          <li>Competitive landscape limits addressable market</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="indicator-row">
+      <span class="indicator-tag ind-leading">Leading: Pipeline Created per Week</span>
+      <span class="indicator-tag ind-leading">Leading: SDR Meeting Volume</span>
+      <span class="indicator-tag ind-leading">Leading: Stage 2 Entry Rate</span>
+      <span class="indicator-tag ind-lagging">Lagging: Pipeline Coverage at Quarter Start</span>
+    </div>
+
+    <h3 class="subsection-title">How It Connects to the Other 5 Metrics</h3>
+    <p style="font-size:14px;line-height:1.7;color:var(--text-muted);">If win rate drops, you need more pipeline coverage to compensate — a 20% drop in win rate requires ~25% more pipeline volume to maintain revenue output. If ramp time increases, AEs generate less pipeline per quarter, which means you need earlier hiring to protect future pipeline. If NRR drops, you need higher new logo pipeline to maintain growth rate.</p>
+  </div>
+
+  <!-- METRIC 2: WIN RATE -->
+  <div class="metric-section-header">
+    <div class="msn-badge">Metric 02</div>
+    <div class="msh-text">
+      <h2>Win Rate</h2>
+      <p>The efficiency metric — how much of your pipeline converts to revenue.</p>
+    </div>
+  </div>
+  <div class="metric-body">
+
+    <div class="formula-hero">
+      <div class="fh-label">Formula (Two Methods)</div>
+      <div class="fh-formula">Method A: Win Rate = Closed Won ÷ (Closed Won + Closed Lost) × 100%</div>
+      <div class="fh-formula" style="margin-top:8px;">Method B: Win Rate = Closed Won ÷ Total Opportunities Entered × 100%</div>
+      <div class="fh-note">
+        Method A (competitive win rate): Measures performance only when deals reach a decision point. More accurate for understanding competitive effectiveness. Best for mature, well-qualified pipelines.<br/>
+        Method B (pipeline efficiency): Counts all deals including in-progress and ghosted. Lower number; better for measuring overall pipeline health. Useful when deals frequently go dark without a formal "lost" decision.
+      </div>
+    </div>
+
+    <div class="example-block">
+      <div class="ex-title">Worked Example — Both Methods</div>
+      <div class="ex-content">
+        Quarter data: <code>42 Closed Won</code> | <code>88 Closed Lost</code> | <code>35 still active</code> | <code>165 total entered pipeline</code><br/><br/>
+        Method A: <code>42 ÷ (42 + 88) = 42 ÷ 130 = 32.3%</code> — competitive win rate<br/>
+        Method B: <code>42 ÷ 165 = 25.5%</code> — pipeline efficiency rate<br/><br/>
+        Important: Use the same method consistently. Do not switch between methods when the number looks better with one vs. the other.
+      </div>
+    </div>
+
+    <h3 class="subsection-title">Win Rate Benchmarks</h3>
+    <table class="benchmark-table">
+      <thead>
+        <tr>
+          <th>Segment</th>
+          <th>Below Benchmark</th>
+          <th>Benchmark Range</th>
+          <th>Best-in-Class</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>SMB (&lt;100 employees)</strong></td>
+          <td class="bm-bad">&lt;20%</td>
+          <td class="bm-good">25–35%</td>
+          <td class="bm-good">40%+</td>
+        </tr>
+        <tr>
+          <td><strong>Mid-Market (100–1K employees)</strong></td>
+          <td class="bm-bad">&lt;15%</td>
+          <td class="bm-good">20–30%</td>
+          <td class="bm-good">35%+</td>
+        </tr>
+        <tr>
+          <td><strong>Enterprise (1K+ employees)</strong></td>
+          <td class="bm-bad">&lt;12%</td>
+          <td class="bm-good">15–25%</td>
+          <td class="bm-good">30%+</td>
+        </tr>
+        <tr>
+          <td><strong>PLG-augmented</strong></td>
+          <td class="bm-bad">&lt;30%</td>
+          <td class="bm-good">40–60%</td>
+          <td class="bm-good">70%+</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <h3 class="subsection-title">Win Rate Segmentation: The Four Cuts</h3>
+    <p style="font-size:15px;line-height:1.75;color:var(--text);">Aggregate win rate is almost never the right number to act on. Win rate must be segmented at least four ways before drawing a conclusion or taking action:</p>
+
+    <div class="drivers-grid">
+      <div class="driver-box" style="border-color:#2a7fa8;">
+        <h4 style="color:#2a7fa8;">By Rep</h4>
+        <ul>
+          <li style="padding-left:0;">Rep A: 42% | Rep B: 38% | Rep C: 18% | Rep D: 29%</li>
+          <li style="padding-left:0;padding-top:6px;color:var(--text-muted);font-size:12px;">Wide variance = coaching problem. Narrow variance = systemic issue. If Rep C has 18% and Rep A has 42%, Rep C needs intensive discovery coaching — not a process overhaul.</li>
+        </ul>
+      </div>
+      <div class="driver-box" style="border-color:#7A39BB;">
+        <h4 style="color:#7A39BB;">By Competitor</h4>
+        <ul>
+          <li style="padding-left:0;">vs. Competitor X: 45% | vs. Competitor Y: 18% | no competition: 62%</li>
+          <li style="padding-left:0;padding-top:6px;color:var(--text-muted);font-size:12px;">18% against one specific competitor signals a product gap or positioning failure. Build competitive battlecards. Engage PM on the feature gap.</li>
+        </ul>
+      </div>
+      <div class="driver-box" style="border-color:#437A22;">
+        <h4 style="color:#437A22;">By Source</h4>
+        <ul>
+          <li style="padding-left:0;">Inbound: 38% | Outbound: 21% | Partner: 44% | Events: 16%</li>
+          <li style="padding-left:0;padding-top:6px;color:var(--text-muted);font-size:12px;">Low event win rate may indicate event attendees aren't ICP. Low outbound may mean targeting is too broad. Partner pipeline's high win rate suggests warm intro quality advantage.</li>
+        </ul>
+      </div>
+      <div class="driver-box" style="border-color:#964219;">
+        <h4 style="color:#964219;">By Deal Size</h4>
+        <ul>
+          <li style="padding-left:0;">&lt;$25K: 45% | $25K–$100K: 28% | &gt;$100K: 14%</li>
+          <li style="padding-left:0;padding-top:6px;color:var(--text-muted);font-size:12px;">Low enterprise win rate may mean the enterprise motion (multi-threading, exec sponsorship, evaluation framework) hasn't been built. Don't push enterprise deals before the process is ready.</li>
+        </ul>
+      </div>
+    </div>
+
+    <h3 class="subsection-title">The Win Rate / Sales Cycle Trade-Off</h3>
+    <p style="font-size:15px;line-height:1.75;color:var(--text);">There is a fundamental tension between win rate and sales cycle length. A rep who qualifies very aggressively will have a high win rate but a long cycle (they only pursue near-certain deals). A rep who pursues everything early will have a short average cycle but a lower win rate. Neither extreme is optimal. The right answer: qualify hard at Stage 1, pursue with urgency after Stage 2.</p>
+
+    <div class="callout callout-best-practice">
+      <div class="callout-title">The Win Rate / ACV Interaction</div>
+      <p>A 10% win rate at $150K ACV produces more revenue than a 35% win rate at $25K ACV, assuming equal pipeline volume. Don't optimize win rate in isolation — optimize for Revenue per Deal Entered = Win Rate × Average ACV. This is the true efficiency metric.</p>
+    </div>
+
+    <div class="indicator-row">
+      <span class="indicator-tag ind-leading">Leading: Champion Identified Rate</span>
+      <span class="indicator-tag ind-leading">Leading: Economic Buyer Access Rate</span>
+      <span class="indicator-tag ind-leading">Leading: Stage 2 → 3 Conversion Rate</span>
+      <span class="indicator-tag ind-lagging">Lagging: Win Rate (Method A)</span>
+      <span class="indicator-tag ind-lagging">Lagging: Competitive Win Rate</span>
+    </div>
+  </div>
+
+  <!-- METRIC 3: RAMP TIME -->
+  <div class="metric-section-header">
+    <div class="msn-badge">Metric 03</div>
+    <div class="msh-text">
+      <h2>Ramp Time to Quota</h2>
+      <p>How long it takes a new rep to become fully productive — the hidden cost driver of the entire revenue model.</p>
+    </div>
+  </div>
+  <div class="metric-body">
+
+    <div class="formula-hero">
+      <div class="fh-label">Formula</div>
+      <div class="fh-formula">Ramp Efficiency = % of Quota Attained at Month 3 / Month 6 / Month 9 / Month 12</div>
+      <div class="fh-formula" style="margin-top:8px;">Fully-Loaded Ramp Cost = (OTE × Ramp Months) + Recruiting Cost + Training Cost + Manager Oversight Cost</div>
+      <div class="fh-note">
+        Track the ramp curve by hire cohort (e.g., all Q1 2024 hires) rather than individuals — this smooths noise and shows whether your ramp process is improving over time.<br/>
+        Fully-loaded ramp cost example: $250K OTE rep, 9-month ramp, recruiting at 20% OTE = $50K recruiting + $187K salary/benefits at 50% productivity gap + $15K training = ~$252K total ramp investment.
+      </div>
+    </div>
+
+    <div class="example-block">
+      <div class="ex-title">Healthy Ramp Curve Example — Mid-Market AE</div>
+      <div class="ex-content">
+        Month 3: <code>15–20% of quota</code> — still learning product, process, territory<br/>
+        Month 6: <code>40–60% of quota</code> — first deals closing, pipeline building<br/>
+        Month 9: <code>70–85% of quota</code> — pattern recognition setting in<br/>
+        Month 12: <code>90–100% of quota</code> — fully ramped<br/><br/>
+        Actual observed: Month 3: 8%, Month 6: 28%, Month 9: 55%, Month 12: 72%<br/>
+        Conclusion: This cohort is ramp-delayed. The gap at Month 6 (28% vs. 50% target) suggests a pipeline creation problem in months 2–4. Check if early onboarding included territory assignment, tool access, and active deal coaching — or was classroom-only.
+      </div>
+    </div>
+
+    <h3 class="subsection-title">Ramp Time Benchmarks by Segment</h3>
+    <table class="benchmark-table">
+      <thead>
+        <tr>
+          <th>Segment</th>
+          <th>Time to Full Quota</th>
+          <th>Time to 50% Quota</th>
+          <th>Key Ramp Driver</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>SMB (&lt;$25K ACV)</strong></td>
+          <td class="bm-good">3–4 months</td>
+          <td class="bm-good">6–8 weeks</td>
+          <td>Volume activity, product simplicity, tight ICP</td>
+        </tr>
+        <tr>
+          <td><strong>Mid-Market ($25K–$100K ACV)</strong></td>
+          <td class="bm-good">5–7 months</td>
+          <td class="bm-good">2.5–3 months</td>
+          <td>Discovery skill development, pipeline building, manager coaching cadence</td>
+        </tr>
+        <tr>
+          <td><strong>Enterprise (&gt;$100K ACV)</strong></td>
+          <td class="bm-ok">9–12 months</td>
+          <td class="bm-ok">4–5 months</td>
+          <td>Long cycles mean first closes take longer; ramp appears slow even with good early activity</td>
+        </tr>
+        <tr>
+          <td><strong>Complex/Technical</strong></td>
+          <td class="bm-bad">12–18 months</td>
+          <td class="bm-ok">6–8 months</td>
+          <td>Technical product mastery required; long ramp baked into the cost model</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <h3 class="subsection-title">The Ramp Time / Hiring Timing Relationship</h3>
+    <p style="font-size:15px;line-height:1.75;color:var(--text);">The ramp time metric drives your hiring calendar more than any other number. If you need 10 fully-productive AEs by Q3, and your ramp is 9 months, you need to complete hiring in Q2 of the prior year. Most CROs hire late relative to their targets because they're optimizing for current-quarter headcount cost rather than next-year revenue capacity. The formula:</p>
+
+    <div class="formula-block">
+      <div class="formula-label">Hiring Lead Time</div>
+      <div class="formula-main">Hire By Date = Revenue Target Date − Ramp Duration − Recruiting Duration</div>
+      <div class="formula-note">
+        Example: Need 8 productive Enterprise AEs hitting full quota by Q3 2025<br/>
+        Ramp: 9 months. Recruiting: 3 months.<br/>
+        Hire By Date: Q3 2025 − 9 months − 3 months = Q1 2024<br/>
+        If you wait until Q1 2025 to hire, you miss Q3 2025 by exactly one year.
+      </div>
+    </div>
+
+    <h3 class="subsection-title">How to Reduce Ramp Time Without Compromising Quality</h3>
+
+    <ol class="step-list">
+      <li>
+        <div class="step-content">
+          <span class="step-title">Pre-boarding access</span>
+          Give offer-accepted reps access to product sandbox, sales tools, and the enablement portal 2 weeks before start date. Start the learning curve before day one.
+        </div>
+      </li>
+      <li>
+        <div class="step-content">
+          <span class="step-title">Structured 30/60/90 onboarding with measurable milestones</span>
+          Day 30: First discovery call solo. Day 60: First demo delivered. Day 90: First opportunity in Stage 3. Define exactly what "ramp week 4" looks like, not just month 3 quota attainment.
+        </div>
+      </li>
+      <li>
+        <div class="step-content">
+          <span class="step-title">Deal shadowing + call coaching from week 2</span>
+          New reps shadow top performers on live calls in week 2 (not week 8). Manager reviews every call recording in months 1–3 and provides feedback within 24 hours.
+        </div>
+      </li>
+      <li>
+        <div class="step-content">
+          <span class="step-title">Pipeline inheritance at start</span>
+          Where possible, transfer a starter pipeline of 5–10 qualified opportunities from mature reps or CS-sourced expansion leads to new hires. Eliminates the cold-start problem for the first 60 days.
+        </div>
+      </li>
+      <li>
+        <div class="step-content">
+          <span class="step-title">Deliberate territory design</span>
+          Give ramping reps a territory with inbound and PLG signal to work, not purely cold outbound. The first closed deal dramatically accelerates ramp — any mechanism that produces that first close earlier is worth the territory trade-off.
+        </div>
+      </li>
+    </ol>
+
+    <div class="drivers-grid">
+      <div class="driver-box driver-up">
+        <h4>What Shortens Ramp Time</h4>
+        <ul>
+          <li>Strong structured onboarding program</li>
+          <li>Active call coaching from week 2</li>
+          <li>Clear ICP and simple value proposition</li>
+          <li>Inbound pipeline to work from day 1</li>
+          <li>Strong manager with coaching bandwidth</li>
+          <li>Previous experience in same segment</li>
+        </ul>
+      </div>
+      <div class="driver-box driver-down">
+        <h4>What Extends Ramp Time</h4>
+        <ul>
+          <li>Weak onboarding (classroom only, no live deals)</li>
+          <li>Complex product requiring technical mastery</li>
+          <li>Pure cold outbound territory with no inbound</li>
+          <li>Manager stretched too thin to coach</li>
+          <li>Wrong hire profile (skills mismatch)</li>
+          <li>Long average sales cycle (first close takes longer)</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="indicator-row">
+      <span class="indicator-tag ind-leading">Leading: Activity Volume at Month 1</span>
+      <span class="indicator-tag ind-leading">Leading: Pipeline Created at Month 2</span>
+      <span class="indicator-tag ind-leading">Leading: First Demo Date</span>
+      <span class="indicator-tag ind-lagging">Lagging: % Quota at Month 6</span>
+      <span class="indicator-tag ind-lagging">Lagging: Time to First Close</span>
+    </div>
+  </div>
+
+  <!-- METRIC 4: CAC PAYBACK -->
+  <div class="metric-section-header">
+    <div class="msn-badge">Metric 04</div>
+    <div class="msh-text">
+      <h2>CAC Payback Period</h2>
+      <p>How long it takes to recover the cost of acquiring a customer — the efficiency metric that drives funding requirements.</p>
+    </div>
+  </div>
+  <div class="metric-body">
+
+    <div class="formula-hero">
+      <div class="fh-label">Formulas</div>
+      <div class="fh-formula">CAC = Total Sales & Marketing Spend (Period) ÷ New Customers Acquired (Period)</div>
+      <div class="fh-formula" style="margin-top:8px;">CAC Payback = CAC ÷ (ACV × Gross Margin %)</div>
+      <div class="fh-note">
+        "New Customers" = logos, not ARR. CAC is a per-customer cost.<br/>
+        S&amp;M Spend includes: all S&amp;M salaries + benefits, commissions and bonuses, marketing program spend (ads, events, content), tools and technology, recruiting costs for S&amp;M hires, and a portion of RevOps allocated to demand gen.<br/>
+        Use annualized gross margin, not contribution margin. Use the same time period for spend and customers (typically trailing 12 months or same quarter on a 90-day lag).
+      </div>
+    </div>
+
+    <div class="example-block">
+      <div class="ex-title">Worked Example</div>
+      <div class="ex-content">
+        Q3 S&amp;M Spend: <code>$2,400,000</code><br/>
+        New Customers in Q3: <code>48</code><br/>
+        CAC = <code>$2,400,000 ÷ 48 = $50,000</code><br/><br/>
+        Average ACV of new customers: <code>$60,000</code><br/>
+        Gross Margin: <code>72%</code><br/>
+        CAC Payback = <code>$50,000 ÷ ($60,000 × 72%) = $50,000 ÷ $43,200 = 13.9 months</code><br/><br/>
+        Interpretation: 13.9 months is acceptable but not best-in-class. The company needs approximately 14 months of a customer's revenue (at 72% margin) to cover its cost to acquire them.
+      </div>
+    </div>
+
+    <h3 class="subsection-title">Benchmarks and Interpretation</h3>
+    <table class="benchmark-table">
+      <thead>
+        <tr>
+          <th>CAC Payback Period</th>
+          <th>Assessment</th>
+          <th>Implication</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><span class="bm-good">&lt;12 months</span></td>
+          <td class="bm-good">Best-in-class</td>
+          <td>Extremely efficient GTM. Can grow rapidly with minimal dilution. Investors will love this metric.</td>
+        </tr>
+        <tr>
+          <td><span class="bm-ok">12–18 months</span></td>
+          <td class="bm-ok">Acceptable / Good</td>
+          <td>Healthy business. Standard for most well-run SaaS companies. Growth still requires capital but is fundable.</td>
+        </tr>
+        <tr>
+          <td><span class="bm-bad">18–24 months</span></td>
+          <td class="bm-bad">Concerning</td>
+          <td>GTM efficiency problem. Growth is expensive. Must either raise more capital or improve efficiency before scaling.</td>
+        </tr>
+        <tr>
+          <td><span class="bm-bad">&gt;24 months</span></td>
+          <td class="bm-bad">Problematic</td>
+          <td>Business model risk. Either CAC is too high, ACV is too low, or gross margins are insufficient. Cannot scale without fundamental change.</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <h3 class="subsection-title">CAC Payback and Funding Efficiency</h3>
+    <p style="font-size:15px;line-height:1.75;color:var(--text);">CAC payback is fundamentally a cash flow problem. Every new customer requires upfront S&amp;M investment that isn't recovered for months. The longer your payback period, the more cash you need on hand to fund growth — which means more fundraising, more dilution, and more investor scrutiny. A company with a 12-month payback period needs $12M in S&amp;M spend to add $12M in new ARR. A company with a 24-month payback period needs $24M to add the same $12M in new ARR. The difference is $12M of capital cost.</p>
+
+    <h3 class="subsection-title">The LTV:CAC Ratio</h3>
+    <div class="formula-block">
+      <div class="formula-label">LTV:CAC Formula</div>
+      <div class="formula-main">LTV = ACV × Gross Margin % × (1 ÷ Gross Churn Rate)</div>
+      <div class="formula-main" style="margin-top:8px;">LTV:CAC = LTV ÷ CAC</div>
+      <div class="formula-note">
+        Target: LTV:CAC ≥ 3x for a healthy SaaS business. &lt;3x indicates overspending on acquisition relative to customer value.<br/>
+        Example: ACV $60K, Gross Margin 72%, Gross Churn 12% → LTV = $60K × 72% × (1/0.12) = $360K. CAC $50K. LTV:CAC = $360K ÷ $50K = 7.2x — excellent.
+      </div>
+    </div>
+
+    <h3 class="subsection-title">How to Reduce CAC Payback</h3>
+    <div class="drivers-grid">
+      <div class="driver-box" style="border-color:#437A22;">
+        <h4 style="color:#437A22;">Reduce CAC</h4>
+        <ul>
+          <li style="padding-left:0;">Improve inbound efficiency (organic, PLG, content)</li>
+          <li style="padding-left:0;">Build partner channel (lower CAC than direct)</li>
+          <li style="padding-left:0;">Reduce SDR:AE ratio with better inbound quality</li>
+          <li style="padding-left:0;">Focus on higher-intent buyer segments</li>
+          <li style="padding-left:0;">Reduce S&amp;M headcount via tool automation</li>
+        </ul>
+      </div>
+      <div class="driver-box" style="border-color:#2a7fa8;">
+        <h4 style="color:#2a7fa8;">Increase ACV or Gross Margin</h4>
+        <ul>
+          <li style="padding-left:0;">Move upmarket (higher ACV customers)</li>
+          <li style="padding-left:0;">Add premium tiers with higher gross margin</li>
+          <li style="padding-left:0;">Reduce COGS (infrastructure optimization)</li>
+          <li style="padding-left:0;">Reduce discounting (improve ACV per deal)</li>
+          <li style="padding-left:0;">Add professional services at higher margin</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="indicator-row">
+      <span class="indicator-tag ind-leading">Leading: S&amp;M Efficiency Ratio (New ARR / S&amp;M Spend)</span>
+      <span class="indicator-tag ind-leading">Leading: Inbound % of Pipeline</span>
+      <span class="indicator-tag ind-lagging">Lagging: CAC (trailing 12 months)</span>
+      <span class="indicator-tag ind-lagging">Lagging: CAC Payback Period</span>
+      <span class="indicator-tag ind-lagging">Lagging: LTV:CAC Ratio</span>
+    </div>
+  </div>
+
+  <!-- METRIC 5: NRR -->
+  <div class="metric-section-header">
+    <div class="msn-badge">Metric 05</div>
+    <div class="msh-text">
+      <h2>Net Revenue Retention (NRR)</h2>
+      <p>The single most important metric for SaaS company valuation and the best proxy for product-market fit among existing customers.</p>
+    </div>
+  </div>
+  <div class="metric-body">
+
+    <div class="formula-hero">
+      <div class="fh-label">Formula</div>
+      <div class="fh-formula">NRR = (Starting MRR + Expansion − Contraction − Churn) ÷ Starting MRR × 100%</div>
+      <div class="fh-note">
+        Starting MRR = MRR from existing customers at the start of the period (exclude new logos added this period).<br/>
+        Expansion = MRR added from upsell, cross-sell, or seat additions from those same customers.<br/>
+        Contraction = MRR lost from downgrades or seat reductions (not full churn).<br/>
+        Churn = MRR lost from full customer cancellations.<br/>
+        Gross Revenue Retention (GRR) = same formula without expansion — measures pure retention floor.
+      </div>
+    </div>
+
+    <div class="example-block">
+      <div class="ex-title">Worked Example</div>
+      <div class="ex-content">
+        January 1 cohort MRR: <code>$500,000</code><br/>
+        Expansion (upsell) by December 31: <code>+$90,000</code><br/>
+        Contraction (downgrades): <code>−$18,000</code><br/>
+        Churn (cancellations): <code>−$35,000</code><br/><br/>
+        NRR = <code>($500,000 + $90,000 − $18,000 − $35,000) ÷ $500,000 × 100%</code><br/>
+        NRR = <code>$537,000 ÷ $500,000 × 100% = 107.4%</code><br/><br/>
+        GRR = <code>($500,000 − $18,000 − $35,000) ÷ $500,000 × 100% = 89.4%</code><br/>
+        Interpretation: The company grows existing customer revenue 7.4% annually. But gross retention at 89.4% signals meaningful churn that expansion is offsetting. Need to address the churn to prevent expansion from masking a structural problem.
+      </div>
+    </div>
+
+    <h3 class="subsection-title">NRR Benchmarks</h3>
+    <table class="benchmark-table">
+      <thead>
+        <tr>
+          <th>NRR Level</th>
+          <th>Assessment</th>
+          <th>Narrative</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><span class="bm-good">&gt;130%</span></td>
+          <td class="bm-good">World-Class (Snowflake, Datadog tier)</td>
+          <td>Existing customers grow 30%+ per year. Company can shrink new logo acquisition and still grow. Exceptional product-market fit.</td>
+        </tr>
+        <tr>
+          <td><span class="bm-good">120–130%</span></td>
+          <td class="bm-good">Elite</td>
+          <td>Extremely strong retention + expansion. Top SaaS companies (Veeva, Twilio historically) operate in this range. Investors apply a premium multiple.</td>
+        </tr>
+        <tr>
+          <td><span class="bm-good">110–120%</span></td>
+          <td class="bm-good">Strong / Top Quartile</td>
+          <td>Healthy expansion motion offsetting churn. Most best-in-class PLG/B2B companies. Fundable and scalable.</td>
+        </tr>
+        <tr>
+          <td><span class="bm-ok">100–110%</span></td>
+          <td class="bm-ok">Healthy Baseline</td>
+          <td>Retaining more than losing. Not growing from existing customers meaningfully. Expansion motion needs investment.</td>
+        </tr>
+        <tr>
+          <td><span class="bm-bad">&lt;100%</span></td>
+          <td class="bm-bad">Leaky Bucket</td>
+          <td>Losing more from existing customers than gaining from expansion. New logo acquisition is required just to stay flat. Unsustainable at scale.</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <h3 class="subsection-title">The Compounding Math of NRR</h3>
+    <p style="font-size:15px;line-height:1.75;color:var(--text);">NRR compounds across years, creating a dramatic divergence between companies at different NRR levels. This table shows the fate of a $10M ARR cohort after 5 years at different NRR scenarios — with zero new logo acquisition:</p>
+
+    <table class="compounding-table">
+      <thead>
+        <tr>
+          <th>NRR Scenario</th>
+          <th>Year 1</th>
+          <th>Year 2</th>
+          <th>Year 3</th>
+          <th>Year 5</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr class="scenario-header">
+          <td>Starting ARR: $10M</td>
+          <td colspan="4" style="text-align:center;font-style:italic;font-size:11px;color:var(--text-muted);">Value of original $10M ARR cohort after N years</td>
+        </tr>
+        <tr>
+          <td><strong>NRR = 130%</strong></td>
+          <td class="td-good">$13.0M</td>
+          <td class="td-good">$16.9M</td>
+          <td class="td-good">$21.9M</td>
+          <td class="td-good">$37.1M</td>
+        </tr>
+        <tr>
+          <td><strong>NRR = 120%</strong></td>
+          <td class="td-good">$12.0M</td>
+          <td class="td-good">$14.4M</td>
+          <td class="td-good">$17.3M</td>
+          <td class="td-good">$24.9M</td>
+        </tr>
+        <tr>
+          <td><strong>NRR = 110%</strong></td>
+          <td class="td-neutral">$11.0M</td>
+          <td class="td-neutral">$12.1M</td>
+          <td class="td-neutral">$13.3M</td>
+          <td class="td-neutral">$16.1M</td>
+        </tr>
+        <tr>
+          <td><strong>NRR = 100%</strong></td>
+          <td>$10.0M</td>
+          <td>$10.0M</td>
+          <td>$10.0M</td>
+          <td>$10.0M</td>
+        </tr>
+        <tr>
+          <td><strong>NRR = 90%</strong></td>
+          <td class="td-bad">$9.0M</td>
+          <td class="td-bad">$8.1M</td>
+          <td class="td-bad">$7.3M</td>
+          <td class="td-bad">$5.9M</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <h3 class="subsection-title">NRR and Valuation</h3>
+    <p style="font-size:15px;line-height:1.75;color:var(--text);">Public SaaS market data consistently shows that NRR is the single highest-correlation metric with revenue multiple. Companies with NRR &gt;120% typically command 15–25x ARR multiples in strong markets. Companies with NRR &lt;100% often trade at 3–6x ARR regardless of growth rate. Investors pay for the quality of the revenue base, not just its size. A $100M ARR company at 130% NRR is worth significantly more than a $100M ARR company at 95% NRR — even if both are growing at 30% — because the 130% NRR company's growth requires far less new logo acquisition to sustain.</p>
+
+    <div class="drivers-grid">
+      <div class="driver-box driver-up">
+        <h4>What Drives NRR Up</h4>
+        <ul>
+          <li>Strong product with expanding use cases</li>
+          <li>Proactive CS engagement and QBRs</li>
+          <li>Usage-based pricing with natural expansion ceiling</li>
+          <li>ICP quality at sale (right customers buy)</li>
+          <li>Platform products with cross-sell motion</li>
+          <li>Multi-year contracts reducing churn window</li>
+        </ul>
+      </div>
+      <div class="driver-box driver-down">
+        <h4>What Drives NRR Down</h4>
+        <ul>
+          <li>ICP mismatch — wrong customers churn</li>
+          <li>Product not delivering ROI (adoption failure)</li>
+          <li>Competitive displacement by better alternatives</li>
+          <li>Budget pressure in economic downturns</li>
+          <li>CS team under-resourced or reactive only</li>
+          <li>Point solution with limited expansion surface</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="indicator-row">
+      <span class="indicator-tag ind-leading">Leading: Product Adoption Score</span>
+      <span class="indicator-tag ind-leading">Leading: Health Score Distribution</span>
+      <span class="indicator-tag ind-leading">Leading: Expansion Pipeline Volume</span>
+      <span class="indicator-tag ind-lagging">Lagging: NRR (trailing 12 months)</span>
+      <span class="indicator-tag ind-lagging">Lagging: Gross Revenue Retention</span>
+      <span class="indicator-tag ind-lagging">Lagging: Logo Churn Rate</span>
+    </div>
+  </div>
+
+  <!-- METRIC 6: QUOTA ATTAINMENT DISTRIBUTION -->
+  <div class="metric-section-header">
+    <div class="msn-badge">Metric 06</div>
+    <div class="msh-text">
+      <h2>Quota Attainment Distribution</h2>
+      <p>Not just "what % hit quota" — the full distribution that reveals the health of the entire sales system.</p>
+    </div>
+  </div>
+  <div class="metric-body">
+
+    <div class="formula-hero">
+      <div class="fh-label">The Right Way to Measure Attainment</div>
+      <div class="fh-formula">Attainment % = (Individual Closed Won ACV ÷ Individual Quota) × 100%</div>
+      <div class="fh-note">
+        Track the distribution — not just the mean or the "% above 100%." The shape of the distribution tells you far more than any single number.<br/>
+        Group reps into attainment buckets: 0–25%, 25–50%, 50–75%, 75–100%, 100–125%, 125%+. The relative size of each bucket reveals whether you have a sales problem, a quota problem, or a system problem.
+      </div>
+    </div>
+
+    <h3 class="subsection-title">The Healthy Distribution</h3>
+
+    <div class="dist-visual">
+      <div class="dist-bar">
+        <div class="bar-fill bar-unhealthy" style="height:12px;"></div>
+        <div class="bar-label">0–25%</div>
+      </div>
+      <div class="dist-bar">
+        <div class="bar-fill bar-developing" style="height:32px;"></div>
+        <div class="bar-label">25–50%</div>
+      </div>
+      <div class="dist-bar">
+        <div class="bar-fill bar-developing" style="height:48px;"></div>
+        <div class="bar-label">50–75%</div>
+      </div>
+      <div class="dist-bar">
+        <div class="bar-fill bar-core" style="height:88px;"></div>
+        <div class="bar-label">75–100%</div>
+      </div>
+      <div class="dist-bar">
+        <div class="bar-fill bar-core" style="height:100px;"></div>
+        <div class="bar-label">100–125%</div>
+      </div>
+      <div class="dist-bar">
+        <div class="bar-fill bar-high" style="height:60px;"></div>
+        <div class="bar-label">125%+</div>
+      </div>
+    </div>
+    <p style="font-size:12px;color:var(--text-muted);margin-top:-4px;">Healthy distribution shape: peak at 75–125% attainment with small tails in both directions.</p>
+
+    <table class="benchmark-table">
+      <thead>
+        <tr>
+          <th>Attainment Bucket</th>
+          <th>Healthy Range</th>
+          <th>What It Means</th>
+          <th>Action If Overrepresented</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>0–25% (Failing)</strong></td>
+          <td class="bm-good">&lt;5% of reps</td>
+          <td>These reps are in their first quarter or have a fundamental problem</td>
+          <td>Distinguish ramping reps from tenured reps. Investigate root cause for tenured reps. PIP or exit.</td>
+        </tr>
+        <tr>
+          <td><strong>25–50% (Struggling)</strong></td>
+          <td class="bm-ok">5–10% of reps</td>
+          <td>Underperformance — may be early ramp, skill gap, or territory disadvantage</td>
+          <td>Coaching intervention. Territory audit. If multiple reps in same territory, consider territory problem.</td>
+        </tr>
+        <tr>
+          <td><strong>50–75% (Developing)</strong></td>
+          <td class="bm-ok">15–20% of reps</td>
+          <td>Working but not closing consistently. Usually ramp or skill issue.</td>
+          <td>Active coaching. Pipeline review. Pair with top performer for deal strategies.</td>
+        </tr>
+        <tr>
+          <td><strong>75–125% (Core)</strong></td>
+          <td class="bm-good">50–60% of reps</td>
+          <td>The healthy middle. These reps make or miss the company number.</td>
+          <td>Retain, develop, and protect. These are your culture and performance anchor.</td>
+        </tr>
+        <tr>
+          <td><strong>125%+ (High Performers)</strong></td>
+          <td class="bm-good">20–25% of reps</td>
+          <td>Outperforming. Either exceptional skill, lucky territory, or quota miscalibration.</td>
+          <td>If >25% here consistently, quotas may be too low. Investigate. Develop these reps for senior roles.</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <h3 class="subsection-title">What Different Distribution Shapes Tell You</h3>
+    <div class="callout callout-warning">
+      <div class="callout-title">Distribution Red Flags</div>
+      <p><strong>Bimodal distribution</strong> (peaks at both 0% and 150%, empty middle): Suggests a wild variance in territory quality or a highly inconsistent sales process. Your best territories crush quota; others are structurally underfunded. Fix: territory rebalancing and process standardization.<br/><br/>
+      <strong>Left-heavy distribution</strong> (most reps at 25–75%): Quota is too high, market isn't big enough to support current quota levels, OR onboarding/ramp is broken. Check quota calibration against available TAM per territory.<br/><br/>
+      <strong>Right-heavy distribution</strong> (most reps at 125%+): Quota is too low. You're paying out excessive commissions for performance that should be the baseline. Recalibrate upward — but do it gradually to avoid attrition.
+      </p>
+    </div>
+
+    <h3 class="subsection-title">Attainment Problem vs. Quota Calibration Problem</h3>
+    <p style="font-size:15px;line-height:1.75;color:var(--text);">The most important diagnostic question: is this a sales performance problem or a quota design problem? The test: if your top 20% performers are all at 90–110% attainment, quota is probably right and performance is the issue. If your top 20% performers are all at 50–70% attainment, quota is almost certainly too high regardless of performance. Never PIP a rep for quota miss before ruling out a quota calibration problem.</p>
+
+    <div class="formula-block">
+      <div class="formula-label">Quota Calibration Check</div>
+      <div class="formula-main">Target Attainment Rate: 60–70% of reps at or above 100%</div>
+      <div class="formula-note">
+        If &lt;40% of reps hit quota: quotas are likely too high, or you have a systemic sales problem.<br/>
+        If &gt;80% of reps hit quota: quotas are likely too low. Investigate comp plan profitability.<br/>
+        The 60–70% attainment target creates sufficient stretch while keeping most of the team motivated.
+      </div>
+    </div>
+
+    <div class="drivers-grid">
+      <div class="driver-box driver-up">
+        <h4>What Moves Attainment Higher</h4>
+        <ul>
+          <li>Pipeline coverage ratio improving</li>
+          <li>Win rate improving (process or ICP fix)</li>
+          <li>Shorter ramp time (better onboarding)</li>
+          <li>Better territory design (fair market access)</li>
+          <li>More CS-sourced expansion deals</li>
+          <li>Quota recalibrated to achievable levels</li>
+        </ul>
+      </div>
+      <div class="driver-box driver-down">
+        <h4>What Suppresses Attainment</h4>
+        <ul>
+          <li>Pipeline below 3x coverage at quarter start</li>
+          <li>Quota increased without corresponding market</li>
+          <li>High rep attrition disrupting team pipeline</li>
+          <li>Long ramp — ramping reps drag down distribution</li>
+          <li>Competitive landscape intensifying</li>
+          <li>Product-market fit problems reducing win rate</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="indicator-row">
+      <span class="indicator-tag ind-leading">Leading: Pipeline Coverage per Rep</span>
+      <span class="indicator-tag ind-leading">Leading: Stage 3 Entry Rate per Rep</span>
+      <span class="indicator-tag ind-lagging">Lagging: Attainment Distribution</span>
+      <span class="indicator-tag ind-lagging">Lagging: % Reps at 100%+</span>
+    </div>
+  </div>
+
+  <!-- THE METRICS INTERACTION MAP -->
+  <h2 class="section-title">The Metrics Interaction Map</h2>
+  <p class="section-intro">The six north star metrics are not independent. Moving one changes at least two others. Understanding these interactions allows a CRO to anticipate second-order effects before they appear in the data.</p>
+
+  <div class="interaction-map">
+    <div class="im-row">
+      <div class="im-metric">Win Rate ↓</div>
+      <div class="im-arrow">→</div>
+      <div class="im-effect">Requires higher Pipeline Coverage to maintain revenue output. A 20% drop in win rate demands ~25% more pipeline volume to hit the same quota number. Also signals potential ICP or messaging problem driving Quota Attainment down.</div>
+    </div>
+    <div class="im-row">
+      <div class="im-metric">Ramp Time ↑</div>
+      <div class="im-arrow">→</div>
+      <div class="im-effect">Reduces effective rep capacity per quarter, which reduces Pipeline Coverage and Attainment Distribution. Also increases CAC Payback because S&M spend includes ramping rep costs before they produce revenue.</div>
+    </div>
+    <div class="im-row">
+      <div class="im-metric">NRR ↓</div>
+      <div class="im-arrow">→</div>
+      <div class="im-effect">Requires more New Logo Pipeline Coverage to maintain growth rate. At 90% NRR, a $20M ARR company needs to replace $2M in churned ARR before growing. This increases pressure on Win Rate and Quota Attainment directly.</div>
+    </div>
+    <div class="im-row">
+      <div class="im-metric">CAC Payback ↑</div>
+      <div class="im-arrow">→</div>
+      <div class="im-effect">Usually driven by Win Rate declining (more pipeline spend per dollar closed) or ACV declining (each deal covers less CAC). Forces a choice: reduce S&M spend (which reduces Pipeline Coverage) or raise pricing to increase ACV.</div>
+    </div>
+    <div class="im-row">
+      <div class="im-metric">Quota Attainment ↓</div>
+      <div class="im-arrow">→</div>
+      <div class="im-effect">If systemic, signals either Pipeline Coverage is insufficient, Win Rate is declining, or quotas are miscalibrated. If isolated to specific reps, signals coaching/onboarding problem increasing effective Ramp Time.</div>
+    </div>
+    <div class="im-row">
+      <div class="im-metric">Pipeline Coverage ↑ past 5x</div>
+      <div class="im-arrow">→</div>
+      <div class="im-effect">May actually suppress Win Rate and Quota Attainment if the excess pipeline is low-quality. Reps spread across too many deals make worse discovery decisions on each. Better to have 3x high-quality pipeline than 6x junk pipeline.</div>
+    </div>
+  </div>
+
+  <!-- THE CRO DASHBOARD -->
+  <h2 class="section-title">The CRO Metrics Dashboard</h2>
+  <p class="section-intro">Not everything needs to be reviewed at the same cadence. This framework prevents the trap of either ignoring metrics until they're crises, or drowning in daily noise that isn't actionable.</p>
+
+  <div class="cadence-grid">
+    <div class="cadence-card">
+      <div class="cc-period">Daily Review</div>
+      <ul>
+        <li>Deals closing today</li>
+        <li>Stage 4/5 deal activity</li>
+        <li>Open MQL queue</li>
+        <li>Time-to-first-contact</li>
+        <li>Yesterday's pipeline created</li>
+      </ul>
+    </div>
+    <div class="cadence-card">
+      <div class="cc-period">Weekly Review</div>
+      <ul>
+        <li>Pipeline coverage (vs. quota)</li>
+        <li>Stage conversion week-over-week</li>
+        <li>Forecast update vs. prior week</li>
+        <li>New pipeline created (by source)</li>
+        <li>SDR activity + meeting rate</li>
+        <li>Open CS health score alerts</li>
+      </ul>
+    </div>
+    <div class="cadence-card">
+      <div class="cc-period">Monthly Review</div>
+      <ul>
+        <li>Win rate (rolling 90 days)</li>
+        <li>Average sales cycle (by segment)</li>
+        <li>Ramp curve vs. benchmark</li>
+        <li>NRR (trailing 90 days)</li>
+        <li>CAC (trailing 90 days)</li>
+        <li>Attainment distribution</li>
+        <li>Rep attrition (if applicable)</li>
+      </ul>
+    </div>
+    <div class="cadence-card">
+      <div class="cc-period">Quarterly Review</div>
+      <ul>
+        <li>All 6 North Stars vs. benchmark</li>
+        <li>CAC Payback full calc</li>
+        <li>NRR trailing 12 months</li>
+        <li>Hiring plan vs. capacity model</li>
+        <li>Quota calibration review</li>
+        <li>Win/Loss analysis</li>
+        <li>Handoff metrics audit</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- LEADING VS. LAGGING SUMMARY -->
+  <h2 class="section-title">Leading vs. Lagging: 60–90 Day Forward Visibility</h2>
+  <p class="section-intro">Every lagging indicator has a leading indicator that predicts it 60–90 days in advance. Build a leading indicator dashboard and you'll never be surprised by a bad quarter again.</p>
+
+  <table class="data-table">
+    <thead>
+      <tr>
+        <th>North Star Metric (Lagging)</th>
+        <th>Leading Indicators (60–90 Day Signal)</th>
+        <th>When to Act on Leading Signal</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><strong>Pipeline Coverage</strong></td>
+        <td>SDR meetings booked, pipeline created per week, AE self-sourced activity, MQL volume</td>
+        <td>If pipeline creation rate falls below (quota ÷ average sales cycle weeks), intervene now — not at quarter start</td>
+      </tr>
+      <tr>
+        <td><strong>Win Rate</strong></td>
+        <td>Champion identification rate, economic buyer access rate, Stage 2→3 conversion, discovery call quality score</td>
+        <td>If EB access rate falls below 60% of Stage 3 deals, coach to champion-building and access strategies immediately</td>
+      </tr>
+      <tr>
+        <td><strong>Ramp Time</strong></td>
+        <td>First demo date, first opportunity in Stage 2, activity volume at month 1, coaching call frequency</td>
+        <td>If new hire hasn't booked first demo by week 6, the ramp will be delayed — intervention needed now, not at month 6</td>
+      </tr>
+      <tr>
+        <td><strong>CAC Payback</strong></td>
+        <td>S&M spend per new opportunity created, demo-to-close conversion, ACV per new logo trend</td>
+        <td>If cost-per-opportunity is rising without a corresponding ACV increase, CAC Payback will deteriorate in 90 days</td>
+      </tr>
+      <tr>
+        <td><strong>NRR</strong></td>
+        <td>Health score distribution, product adoption rate, QBR completion rate, expansion pipeline from CS</td>
+        <td>If health score below 70 ("red") accounts exceed 15% of ARR base, next quarter NRR will reflect it</td>
+      </tr>
+      <tr>
+        <td><strong>Quota Attainment</strong></td>
+        <td>Pipeline coverage per rep, Stage 3+ pipeline per rep vs. quota, mid-quarter forecast accuracy</td>
+        <td>At week 6 of the quarter, if a rep's Stage 3+ pipeline is below 1.5x their remaining quota, they'll likely miss — intervene now</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div class="callout callout-best-practice">
+    <div class="callout-title">Build the Leading Indicator Dashboard First</div>
+    <p>Most CROs build lagging indicator dashboards and wonder why they keep getting surprised. The forward-looking dashboard — pipeline creation velocity, champion identification rates, health score distribution, rep ramp curves — gives you 60–90 days to intervene before a bad quarter becomes a fact. Build this dashboard in your BI tool (Tableau, Looker, or even Salesforce reports) and review it weekly alongside your standard forecast review.</p>
+  </div>
+
+  <div class="related-section">
+    <div class="related-title">Related Topics</div>
+    <div class="related-links">
+      <a href="phase6.html" class="related-link">Revenue Problem Diagnostics</a>
+      <a href="handoffs.html" class="related-link">The Three Critical Handoffs</a>
+      <a href="../subpages/forecasting.html" class="related-link">Forecasting</a>
+      <a href="../subpages/meddicc.html" class="related-link">MEDDICC Framework</a>
+      <a href="../subpages/quota-design.html" class="related-link">Quota Design</a>
+      <a href="../subpages/comp-design.html" class="related-link">Compensation Design</a>
+      <a href="revops.html" class="related-link">Revenue Operations</a>
+      <a href="../subpages/icp.html" class="related-link">Ideal Customer Profile</a>
+      <a href="../subpages/pipeline-management.html" class="related-link">Pipeline Management</a>
+      <a href="../subpages/customer-success.html" class="related-link">Customer Success</a>
+    </div>
+  </div>
+
+</div>
+<script data-pplx-inline-edit>
+(function () {
+  if (window === window.top) return;
+
+  const allowedParentOrigins = ["https://www.perplexity.ai","https://perplexity.ai","https://testing.perplexity.ai","https://staging.perplexity.ai","https://*.preview.i.perplexity.ai","http://localhost:3000","http://127.0.0.1:3000","http://localhost:5173","http://127.0.0.1:5173"];
+  const MAX_FONT_BYTES = 500 * 1024;
+  const MAX_TOTAL_FONT_BYTES = 2 * 1024 * 1024;
+  let scrollForwarding = false;
+  let scrollRaf = 0;
+  let trustedTopOrigin = null;
+
+  // Allow entries like "https://*.preview.i.perplexity.ai" — the wildcard
+  // matches a single DNS label (no dots), so "https://*.foo" cannot stretch
+  // across multiple labels.
+  function matchesAllowedOrigin(origin) {
+    if (!origin) return false;
+    for (const entry of allowedParentOrigins) {
+      if (!entry.includes("*")) {
+        if (entry === origin) return true;
+        continue;
+      }
+      const pattern = new RegExp(
+        "^" +
+          entry.replace(/[.+?^${}()|[\]\\]/g, "\\$&").replace(/\*/g, "[^.]+") +
+          "$",
+      );
+      if (pattern.test(origin)) return true;
+    }
+    return false;
+  }
+
+  // Trust decision: when the sender is same-origin-visible (event.origin is a
+  // real origin like https://www.perplexity.ai) we trust event.origin directly.
+  // When event.origin is "null" (opaque broker srcdoc), we fall back to the
+  // broker's stamped `parentOrigin` to identify the top window. The fallback
+  // is claim-only — we rely on the browser's native `targetOrigin` enforcement
+  // on the response path (see postToTrustedTop) to ensure replies can't be
+  // delivered to anyone but the actual top window of that claimed origin.
+  function getTrustedParentOrigin(event) {
+    const forwardedParentOrigin =
+      typeof event.data.parentOrigin === "string" ? event.data.parentOrigin : null;
+    const parentOrigin = event.origin === "null" ? forwardedParentOrigin : event.origin;
+    return matchesAllowedOrigin(parentOrigin) ? parentOrigin : null;
+  }
+
+  // All responses go to window.top with targetOrigin = the allowlisted origin.
+  // An attacker that iframes us inside their own null-origin broker can claim
+  // any parentOrigin they like, but the browser will drop the reply whenever
+  // the real top's origin doesn't match — so the screenshot never leaves.
+  function postToTrustedTop(message) {
+    if (!trustedTopOrigin) return;
+    try {
+      window.top.postMessage(message, trustedTopOrigin);
+    } catch (_error) {}
+  }
+
+  function inlineAll(original, clone) {
+    if (original.nodeType !== 1 || clone.nodeType !== 1) return;
+
+    try {
+      const computedStyle = getComputedStyle(original);
+      // cssText on a computed style is the serialized declaration in modern
+      // Chromium/Safari — a single read beats enumerating ~400 longhand
+      // properties. Firefox returns "" here, so we fall back on empty.
+      const serialized = computedStyle.cssText;
+      if (serialized) {
+        clone.style.cssText = serialized;
+      } else {
+        const parts = new Array(computedStyle.length);
+        for (let index = 0; index < computedStyle.length; index += 1) {
+          const property = computedStyle[index];
+          parts[index] = `${property}:${computedStyle.getPropertyValue(property)};`;
+        }
+        clone.style.cssText = parts.join("");
+      }
+    } catch (_error) {}
+
+    const originalChildren = original.children;
+    const clonedChildren = clone.children;
+    for (
+      let index = 0;
+      index < originalChildren.length && index < clonedChildren.length;
+      index += 1
+    ) {
+      inlineAll(originalChildren[index], clonedChildren[index]);
+    }
+  }
+
+  function extractFontUrl(srcValue) {
+    const matches = [
+      ...srcValue.matchAll(
+        /url\(["']?([^"')]+)["']?\)(?:\s*format\(["']?([^"')]+)["']?\))?/gi,
+      ),
+    ];
+    if (matches.length === 0) return null;
+    const woff2 = matches.find((m) => m[2] && m[2].toLowerCase().includes("woff2"));
+    if (woff2) return woff2[1];
+    const woff = matches.find((m) => m[2] && m[2].toLowerCase().includes("woff"));
+    if (woff) return woff[1];
+    return matches[0][1];
+  }
+
+  // Cache resolved font URL -> data URI across captures. Fonts on a page
+  // essentially never change, and a batch run emits multiple captures back to
+  // back — without this we'd refetch + re-base64 every time.
+  const fontDataUriCache = new Map();
+  const SRC_DECLARATION_RE = /src\s*:\s*[^;}]+/i;
+
+  async function fetchAsDataUri(url) {
+    if (fontDataUriCache.has(url)) return fontDataUriCache.get(url);
+    let dataUri = null;
+    try {
+      const response = await fetch(url, { mode: "cors", credentials: "omit" });
+      if (response.ok) {
+        const blob = await response.blob();
+        if (blob.size <= MAX_FONT_BYTES) {
+          dataUri = await new Promise((resolve) => {
+            const reader = new FileReader();
+            reader.onloadend = () =>
+              resolve(typeof reader.result === "string" ? reader.result : null);
+            reader.onerror = () => resolve(null);
+            reader.readAsDataURL(blob);
+          });
+        }
+      }
+    } catch (_error) {
+      dataUri = null;
+    }
+    fontDataUriCache.set(url, dataUri);
+    return dataUri;
+  }
+
+  function collectFontFaceRuleTexts() {
+    const rules = [];
+    for (const sheet of document.styleSheets) {
+      let cssRules;
+      try {
+        cssRules = sheet.cssRules;
+      } catch (_error) {
+        continue;
+      }
+      if (!cssRules) continue;
+      for (const rule of cssRules) {
+        const cssText = rule.cssText || "";
+        if (cssText.startsWith("@font-face")) rules.push(cssText);
+      }
+    }
+    return rules;
+  }
+
+  async function buildInlinedFontCss() {
+    const ruleTexts = collectFontFaceRuleTexts();
+    if (ruleTexts.length === 0) return null;
+
+    const resolved = ruleTexts.map((cssText) => {
+      if (!SRC_DECLARATION_RE.test(cssText)) return null;
+      const srcMatch = cssText.match(/src\s*:\s*([^;}]+)[;}]/i);
+      if (!srcMatch) return null;
+      const url = extractFontUrl(srcMatch[1]);
+      if (!url) return null;
+      try {
+        return { cssText, url: new URL(url, document.baseURI).href };
+      } catch (_error) {
+        return null;
+      }
+    });
+
+    const dataUris = await Promise.all(
+      resolved.map((entry) => (entry ? fetchAsDataUri(entry.url) : Promise.resolve(null))),
+    );
+
+    const inlined = [];
+    let totalBytes = 0;
+    for (let index = 0; index < resolved.length; index += 1) {
+      const entry = resolved[index];
+      const dataUri = dataUris[index];
+      if (!entry || !dataUri) continue;
+      const approxBytes = dataUri.length * 0.75;
+      if (totalBytes + approxBytes > MAX_TOTAL_FONT_BYTES) break;
+      totalBytes += approxBytes;
+      inlined.push(entry.cssText.replace(SRC_DECLARATION_RE, `src: url("${dataUri}")`));
+    }
+    return inlined.length > 0 ? inlined.join("\n") : null;
+  }
+
+  function stripExternal(clone) {
+    const images = clone.querySelectorAll("img");
+    for (let index = 0; index < images.length; index += 1) {
+      const src = images[index].getAttribute("src");
+      if (src && !src.startsWith("data:")) images[index].removeAttribute("src");
+    }
+
+    const elements = clone.querySelectorAll("*");
+    for (let index = 0; index < elements.length; index += 1) {
+      const style = elements[index].style.cssText;
+      if (style && style.includes("url(")) {
+        elements[index].style.cssText = style.replace(
+          /url\(["']?(?!data:)[^)"']*["']?\)/gi,
+          "none",
+        );
+      }
+    }
+  }
+
+  function emitScroll() {
+    scrollRaf = 0;
+    if (!scrollForwarding) return;
+    postToTrustedTop({
+      type: "INLINE_EDIT_SCROLL",
+      scrollX: window.scrollX,
+      scrollY: window.scrollY,
+    });
+  }
+
+  window.addEventListener(
+    "scroll",
+    function () {
+      if (!scrollForwarding || scrollRaf) return;
+      scrollRaf = requestAnimationFrame(emitScroll);
+    },
+    { passive: true, capture: true },
+  );
+
+  async function handleCaptureRequest(event) {
+    const requestId = event.data.requestId;
+    const scrollX = window.scrollX;
+    const scrollY = window.scrollY;
+    const width = window.innerWidth;
+    const height = window.innerHeight;
+
+    function postResult(dataUrl) {
+      postToTrustedTop({
+        type: "INLINE_EDIT_SCREENSHOT_RESULT",
+        requestId,
+        dataUrl,
+        scrollX,
+        scrollY,
+      });
+    }
+
+    try {
+      // Wait for any pending web fonts to resolve so both inline metrics and
+      // the @font-face inlining below see the same loaded faces.
+      if (document.fonts && document.fonts.ready) {
+        try {
+          await document.fonts.ready;
+        } catch (_error) {}
+      }
+
+      const clone = document.documentElement.cloneNode(true);
+      inlineAll(document.documentElement, clone);
+
+      const removedNodes = clone.querySelectorAll("script,link[rel=\"stylesheet\"],style");
+      for (let index = 0; index < removedNodes.length; index += 1) {
+        removedNodes[index].remove();
+      }
+
+      stripExternal(clone);
+
+      // Re-embed web fonts as data-URI @font-face rules so the SVG rasterizer
+      // can resolve them — external font URLs aren't fetched during
+      // foreignObject rendering, which would otherwise force a fallback face
+      // and change text metrics.
+      const inlinedFontCss = await buildInlinedFontCss();
+      if (inlinedFontCss) {
+        const styleEl = document.createElement("style");
+        styleEl.textContent = inlinedFontCss;
+        const head = clone.querySelector("head");
+        if (head) head.appendChild(styleEl);
+        else clone.insertBefore(styleEl, clone.firstChild);
+      }
+
+      const html = new XMLSerializer().serializeToString(clone);
+      const svg =
+        `<svg xmlns="http://www.w3.org/2000/svg" width="${width}" height="${height}">` +
+        '<foreignObject width="100%" height="100%">' +
+        `<div xmlns="http://www.w3.org/1999/xhtml" style="width:${width}px;height:${height}px;overflow:hidden">` +
+        `<div style="transform:translate(-${scrollX}px,-${scrollY}px);transform-origin:top left">` +
+        html +
+        "</div></div></foreignObject></svg>";
+      const svgUrl = `data:image/svg+xml;charset=utf-8,${encodeURIComponent(svg)}`;
+      const image = new Image();
+      image.onload = function () {
+        const canvas = document.createElement("canvas");
+        canvas.width = width;
+        canvas.height = height;
+        canvas.getContext("2d").drawImage(image, 0, 0);
+        postResult(canvas.toDataURL("image/png"));
+      };
+      image.onerror = function () {
+        postResult(null);
+      };
+      image.src = svgUrl;
+    } catch (_error) {
+      postResult(null);
+    }
+  }
+
+  window.addEventListener("message", function (event) {
+    if (!event.data) return;
+    // Only accept messages from the direct parent frame. Blocks sibling /
+    // unrelated-window postMessage senders that could otherwise reach us.
+    if (event.source !== window.parent) return;
+
+    const trustedParentOrigin = getTrustedParentOrigin(event);
+    if (!trustedParentOrigin) return;
+    trustedTopOrigin = trustedParentOrigin;
+
+    if (event.data.type === "INLINE_EDIT_SCROLL_START") {
+      scrollForwarding = true;
+      emitScroll();
+      return;
+    }
+
+    if (event.data.type === "INLINE_EDIT_SCROLL_STOP") {
+      scrollForwarding = false;
+      if (scrollRaf) cancelAnimationFrame(scrollRaf);
+      scrollRaf = 0;
+      return;
+    }
+
+    if (event.data.type !== "INLINE_EDIT_CAPTURE_REQUEST") return;
+
+    handleCaptureRequest(event);
+  });
+})();
+
+
+</script></body>
+</html>

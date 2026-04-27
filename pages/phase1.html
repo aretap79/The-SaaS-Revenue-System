@@ -1,0 +1,1225 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>ICP, Messaging, Sales Motion & Playbook — SaaS Revenue System</title>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="../assets/shared.css"/>
+  <style>
+    .page-hero { background: #20808D; }
+    .phase1-step-accent { --primary: #20808D; }
+
+    .motion-matrix {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      gap: 12px;
+      margin: 20px 0;
+    }
+    .motion-card {
+      background: var(--surface);
+      border: 1.5px solid var(--border);
+      border-radius: 8px;
+      padding: 16px;
+    }
+    .motion-card .mc-header {
+      font-size: 13px;
+      font-weight: 700;
+      color: #20808D;
+      margin-bottom: 8px;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+    .motion-card .mc-title {
+      font-size: 15px;
+      font-weight: 700;
+      margin-bottom: 8px;
+    }
+    .motion-card ul {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+    }
+    .motion-card ul li {
+      font-size: 13px;
+      line-height: 1.55;
+      padding: 2px 0 2px 14px;
+      position: relative;
+      color: var(--text-muted);
+    }
+    .motion-card ul li::before {
+      content: '·';
+      position: absolute;
+      left: 0;
+      color: #20808D;
+      font-weight: 700;
+      font-size: 18px;
+      line-height: 1.1;
+    }
+    .icp-criteria-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+      margin: 20px 0;
+    }
+    .criteria-box {
+      background: var(--surface);
+      border: 1.5px solid var(--border);
+      border-radius: 8px;
+      padding: 16px 18px;
+    }
+    .criteria-box .cb-header {
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 1.2px;
+      text-transform: uppercase;
+      color: #20808D;
+      margin-bottom: 10px;
+    }
+    .criteria-box ul {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+    }
+    .criteria-box ul li {
+      font-size: 14px;
+      line-height: 1.65;
+      padding: 3px 0;
+      border-bottom: 1px solid var(--border);
+    }
+    .criteria-box ul li:last-child { border-bottom: none; }
+    .playbook-toc {
+      background: #f5feff;
+      border: 1.5px solid #b3dde0;
+      border-radius: 8px;
+      padding: 18px 20px;
+      margin: 20px 0;
+    }
+    .playbook-toc .ptoc-title {
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      color: #20808D;
+      margin-bottom: 12px;
+    }
+    .ptoc-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 6px 24px;
+    }
+    .ptoc-item {
+      font-size: 14px;
+      line-height: 1.55;
+      padding: 4px 0 4px 16px;
+      position: relative;
+      color: var(--text);
+    }
+    .ptoc-item::before {
+      content: '→';
+      position: absolute;
+      left: 0;
+      color: #20808D;
+      font-size: 12px;
+      font-weight: 700;
+      top: 5px;
+    }
+    .acronym-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 8px;
+      margin: 16px 0;
+    }
+    .acronym-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      padding: 10px 12px;
+    }
+    .acronym-card .ac-abbr {
+      font-size: 13px;
+      font-weight: 700;
+      color: #20808D;
+      margin-bottom: 2px;
+    }
+    .acronym-card .ac-full {
+      font-size: 12px;
+      color: var(--text-muted);
+      line-height: 1.4;
+    }
+    .mistake-item {
+      background: #fff8f0;
+      border-left: 4px solid var(--ph4);
+      border-radius: 0 6px 6px 0;
+      padding: 12px 16px;
+      margin-bottom: 10px;
+      font-size: 14px;
+      line-height: 1.6;
+    }
+    .mistake-item strong { color: var(--ph4); display: block; margin-bottom: 3px; }
+    .connect-flow {
+      display: flex;
+      align-items: stretch;
+      gap: 0;
+      margin: 20px 0;
+      overflow-x: auto;
+    }
+    .connect-node {
+      flex: 1;
+      min-width: 120px;
+      background: #20808D;
+      color: #fff;
+      padding: 14px 12px;
+      text-align: center;
+      font-size: 12px;
+      font-weight: 700;
+      line-height: 1.35;
+    }
+    .connect-node:first-child { border-radius: 8px 0 0 8px; }
+    .connect-node:last-child { border-radius: 0 8px 8px 0; }
+    .connect-arrow {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 0 4px;
+      color: #20808D;
+      font-weight: 700;
+      font-size: 18px;
+      background: var(--bg);
+    }
+    @media (max-width: 768px) {
+      .motion-matrix { grid-template-columns: 1fr; }
+      .icp-criteria-grid { grid-template-columns: 1fr; }
+      .acronym-grid { grid-template-columns: 1fr 1fr; }
+      .ptoc-grid { grid-template-columns: 1fr; }
+    }
+
+    /* Science of Scaling context banner */
+    .sos-context-banner {
+      background: linear-gradient(135deg, #0D5C63 0%, #0a4a50 100%);
+      border-radius: 10px;
+      padding: 20px 24px;
+      margin-bottom: 32px;
+      display: grid;
+      grid-template-columns: 200px 1fr auto;
+      gap: 20px;
+      align-items: start;
+    }
+    .sos-cb-stage { border-right: 1px solid rgba(255,255,255,0.2); padding-right: 20px; }
+    .sos-cb-label { font-size: 10px; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase; color: rgba(255,255,255,0.6); margin-bottom: 4px; }
+    .sos-cb-title { font-size: 18px; font-weight: 700; color: #fff; line-height: 1.3; }
+    .sos-cb-content { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+    .sos-cb-item { background: rgba(255,255,255,0.08); border-radius: 6px; padding: 10px 12px; }
+    .sos-cb-item-label { font-size: 10px; font-weight: 700; letter-spacing: 0.8px; text-transform: uppercase; color: rgba(255,255,255,0.55); margin-bottom: 3px; }
+    .sos-cb-item-value { font-size: 12px; color: rgba(255,255,255,0.85); line-height: 1.5; }
+    .sos-cb-link { background: rgba(255,255,255,0.15); color: #fff; font-size: 12px; font-weight: 700; padding: 8px 14px; border-radius: 6px; text-decoration: none; white-space: nowrap; align-self: center; transition: background 0.15s; }
+    .sos-cb-link:hover { background: rgba(255,255,255,0.28); color: #fff; text-decoration: none; }
+
+    /* Tools grid */
+    .tools-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+      gap: 12px;
+      margin: 16px 0 40px;
+    }
+    .tool-card {
+      background: var(--surface);
+      border: 1.5px solid var(--border);
+      border-radius: 8px;
+      padding: 14px 16px;
+      text-decoration: none;
+      display: block;
+      transition: all 0.15s;
+    }
+    .tool-card:hover { text-decoration: none; transform: translateY(-1px); box-shadow: 0 3px 10px rgba(0,0,0,0.08); }
+    .tc-sos { border-left: 3px solid #0D5C63; }
+    .tc-sos:hover { border-color: #0D5C63; }
+    .tc-res { border-left: 3px solid #2C5F8A; }
+    .tc-res:hover { border-color: #2C5F8A; }
+    .tc-phase { font-size: 10px; font-weight: 700; letter-spacing: 0.8px; text-transform: uppercase; color: var(--text-muted); margin-bottom: 4px; }
+    .tc-sos .tc-phase { color: #0D5C63; }
+    .tc-res .tc-phase { color: #2C5F8A; }
+    .tc-title { font-size: 13px; font-weight: 700; color: var(--text); margin-bottom: 4px; line-height: 1.3; }
+    .tc-desc { font-size: 11px; color: var(--text-muted); line-height: 1.5; }
+  </style>
+</head>
+<body>
+<nav class="nav">
+  <span class="nav-logo">SaaS <span>Revenue System</span></span>
+  <span class="nav-sep">|</span>
+  <a href="../index.html" class="nav-back">← Home</a>
+  <span class="nav-sep">|</span>
+  <span class="nav-current">Phase 1 — Foundation</span>
+</nav>
+
+<div class="page-hero">
+  <div class="hero-phase-label">PHASE 1 — FOUNDATION</div>
+  <div class="hero-title">ICP, Messaging, Sales Motion &amp; Playbook</div>
+  <div class="hero-subtitle">Before you can scale, you must define who you serve, what you say, how you sell, and how you document it. Phase 1 is the architectural layer that determines whether your GTM motion generates durable, predictable revenue — or just noise.</div>
+  <div class="hero-tags">
+    <a href="../subpages/icp.html" class="hero-tag">Ideal Customer Profile</a>
+    <a href="../subpages/value-proposition.html" class="hero-tag">Value Proposition</a>
+    <a href="../subpages/sales-motion.html" class="hero-tag">Sales Motion Design</a>
+    <a href="../subpages/playbook.html" class="hero-tag">Sales Playbook</a>
+    <a href="../subpages/competitive-positioning.html" class="hero-tag">Competitive Positioning</a>
+  </div>
+</div>
+
+<div class="content-wrap">
+
+  <!-- Science of Scaling Integration -->
+  <div class="sos-context-banner">
+    <div class="sos-cb-stage">
+      <div class="sos-cb-label">Science of Scaling — Stage 1</div>
+      <div class="sos-cb-title">Product-Market Fit</div>
+    </div>
+    <div class="sos-cb-content">
+      <div class="sos-cb-item">
+        <div class="sos-cb-item-label">Stage Goal</div>
+        <div class="sos-cb-item-value">Customer Retention — prove that customers in your ICP succeed before attempting to scale.</div>
+      </div>
+      <div class="sos-cb-item">
+        <div class="sos-cb-item-label">Governing Metric</div>
+        <div class="sos-cb-item-value"><strong>LIR (Leading Indicator of Retention):</strong> P% of customers achieve E event within T days. Target: 60–80% threshold sustained across 2+ cohorts.</div>
+      </div>
+      <div class="sos-cb-item">
+        <div class="sos-cb-item-label">Stage 1 Playbook Mode</div>
+        <div class="sos-cb-item-value">&ldquo;Win at All Costs&rdquo; — ICP is Early Adopter, sales hire is PM+AE hybrid, pricing solves for customer commitment, comp based on customer retention (50% at close, 50% at LIR).</div>
+      </div>
+      <div class="sos-cb-item">
+        <div class="sos-cb-item-label">Gate to Stage 2</div>
+        <div class="sos-cb-item-value">LIR ≥ 60–80% for 2+ consecutive cohorts AND correlation between LIR and 12-month retention is confirmed (&gt;20pp gap between LIR-hit and LIR-miss).</div>
+      </div>
+    </div>
+    <a href="../subpages/sos-pmf.html" class="sos-cb-link">Stage 1: PMF Deep Dive →</a>
+  </div>
+
+  <!-- TERMINOLOGY -->
+  <h2 class="section-title">Essential Terminology &amp; Acronyms</h2>
+  <p class="section-intro">Phase 1 introduces the foundational vocabulary of B2B SaaS sales strategy. Every member of the revenue team must use these terms with shared meaning — inconsistent definitions are the source of most cross-functional misalignment.</p>
+
+  <div class="acronym-grid">
+    <div class="acronym-card"><div class="ac-abbr">ICP</div><div class="ac-full">Ideal Customer Profile — firmographic + behavioral description of the best-fit customer</div></div>
+    <div class="acronym-card"><div class="ac-abbr">ACV</div><div class="ac-full">Annual Contract Value — total contract value ÷ contract years</div></div>
+    <div class="acronym-card"><div class="ac-abbr">ARR</div><div class="ac-full">Annual Recurring Revenue — normalized annual value of all subscription contracts</div></div>
+    <div class="acronym-card"><div class="ac-abbr">MRR</div><div class="ac-full">Monthly Recurring Revenue — ARR ÷ 12</div></div>
+    <div class="acronym-card"><div class="ac-abbr">TCV</div><div class="ac-full">Total Contract Value — full value of a contract over its entire term</div></div>
+    <div class="acronym-card"><div class="ac-abbr">NRR</div><div class="ac-full">Net Revenue Retention — (ARR from cohort + expansions − contractions − churn) ÷ beginning ARR</div></div>
+    <div class="acronym-card"><div class="ac-abbr">GRR</div><div class="ac-full">Gross Revenue Retention — (ARR from cohort − contractions − churn) ÷ beginning ARR</div></div>
+    <div class="acronym-card"><div class="ac-abbr">PLG</div><div class="ac-full">Product-Led Growth — acquisition model where the product itself is the primary driver</div></div>
+    <div class="acronym-card"><div class="ac-abbr">SLG</div><div class="ac-full">Sales-Led Growth — acquisition model driven by human-directed sales process</div></div>
+    <div class="acronym-card"><div class="ac-abbr">L&amp;E</div><div class="ac-full">Land and Expand — start small, grow the account over time via expansion</div></div>
+    <div class="acronym-card"><div class="ac-abbr">TAM</div><div class="ac-full">Total Addressable Market — total potential revenue if 100% market share achieved</div></div>
+    <div class="acronym-card"><div class="ac-abbr">SAM</div><div class="ac-full">Serviceable Addressable Market — TAM subset your product/go-to-market can realistically serve</div></div>
+    <div class="acronym-card"><div class="ac-abbr">SOM</div><div class="ac-full">Serviceable Obtainable Market — realistic revenue capture given current resources &amp; competition</div></div>
+    <div class="acronym-card"><div class="ac-abbr">MEDDIC</div><div class="ac-full">Metrics, Economic Buyer, Decision Criteria, Decision Process, Identify Pain, Champion</div></div>
+    <div class="acronym-card"><div class="ac-abbr">SPIN</div><div class="ac-full">Situation, Problem, Implication, Need-Payoff — Rackham's discovery methodology</div></div>
+    <div class="acronym-card"><div class="ac-abbr">CAC</div><div class="ac-full">Customer Acquisition Cost — total Sales + Marketing spend ÷ new customers acquired</div></div>
+    <div class="acronym-card"><div class="ac-abbr">LTV</div><div class="ac-full">Lifetime Value — average ACV × average customer lifetime × gross margin</div></div>
+    <div class="acronym-card"><div class="ac-abbr">TTR</div><div class="ac-full">Time-to-Revenue — days from first contact to closed-won</div></div>
+  </div>
+
+  <!-- ICP -->
+  <h2 class="section-title">Ideal Customer Profile (ICP)</h2>
+  <p class="section-intro">The ICP is the single most foundational strategic document in a SaaS revenue organization. It answers: "Who are the customers for whom our product creates the most value, who are most likely to buy, and who will stay and grow?" Everything downstream — demand generation targeting, territory design, AE hiring profiles, CS segmentation, and product roadmap input — should trace back to the ICP.</p>
+
+  <div class="subsection">
+    <div class="subsection-title">ICP vs. Buyer Persona: The Distinction</div>
+    <p>These terms are frequently conflated and the confusion is expensive. An <strong>ICP</strong> describes the type of <em>company</em> that is your best customer — it is an account-level construct. A <strong>Buyer Persona</strong> describes the <em>individual</em> within that company who buys, uses, or influences the purchase of your product.</p>
+    <table class="data-table">
+      <thead>
+        <tr><th>Dimension</th><th>ICP (Account-Level)</th><th>Buyer Persona (Individual-Level)</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>Describes</td><td>The company</td><td>The person</td></tr>
+        <tr><td>Used for</td><td>Targeting, territory, pipeline qualification, CS segmentation</td><td>Messaging, content, discovery, outreach personalization</td></tr>
+        <tr><td>Criteria</td><td>Revenue, employees, industry, geography, tech stack, growth rate</td><td>Title, function, seniority, KPIs, goals, fears, buying influence</td></tr>
+        <tr><td>Owned by</td><td>CRO + Marketing + CS jointly</td><td>Marketing + Sales enablement</td></tr>
+        <tr><td>Update frequency</td><td>Annually + after every significant win/loss pattern</td><td>Every 6–12 months based on field feedback</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="subsection">
+    <div class="subsection-title">How to Build an ICP from Win/Loss Data</div>
+    <ol class="step-list">
+      <li>
+        <div class="step-content">
+          <span class="step-title">Pull your best customers — the "true wins"</span>
+          Define "best" on three dimensions simultaneously: highest NRR (expanded, not churned), fastest time-to-value, and highest product adoption. Do not use "biggest ACV" alone — a high-ACV customer who churned in year 2 is not an ICP match.
+        </div>
+      </li>
+      <li>
+        <div class="step-content">
+          <span class="step-title">Extract the common firmographic attributes</span>
+          Run a statistical analysis (or a manual analysis for smaller datasets) on your best 20–30 customers. What do they have in common? Look for: industry/vertical, company size (employees and revenue), geography, growth stage, tech stack (what do they use that you integrate with?), funding stage, and business model. Patterns will emerge.
+        </div>
+      </li>
+      <li>
+        <div class="step-content">
+          <span class="step-title">Extract common behavioral and situational attributes</span>
+          What was happening in these companies <em>before</em> they bought? This is the "trigger event" analysis. Common triggers: recent funding round, new hire in a key leadership role, specific compliance pressure, competitive threat, rapid growth creating scaling pain. Trigger events are more predictive of buying propensity than firmographics alone.
+        </div>
+      </li>
+      <li>
+        <div class="step-content">
+          <span class="step-title">Analyze your closed-lost deals for the inverse pattern</span>
+          Look at your worst deals — deals that took 2x normal cycle, ended in churn, or required massive discounts. What firmographic and behavioral attributes appear? These are your anti-ICP signals. Build both a positive ICP (go here) and an exclusion filter (don't go here).
+        </div>
+      </li>
+      <li>
+        <div class="step-content">
+          <span class="step-title">Validate with your CS team before publishing</span>
+          CS owns the post-sale customer experience and has the highest-quality signal on which customers succeed vs. fail. Before finalizing the ICP, require CS sign-off. The ICP must be a shared document, not a sales document.
+        </div>
+      </li>
+      <li>
+        <div class="step-content">
+          <span class="step-title">Build a fit scoring model (1–3 or 1–5)</span>
+          Translate your ICP into a tiered scoring model that can be applied to any prospect. Tier 1 = ideal ICP match, Tier 2 = acceptable with specific conditions, Tier 3 = outside ICP (requires VP approval to pursue). Use this scoring in your CRM for pipeline qualification.
+        </div>
+      </li>
+    </ol>
+  </div>
+
+  <div class="subsection">
+    <div class="subsection-title">ICP Criteria Framework</div>
+    <div class="icp-criteria-grid">
+      <div class="criteria-box">
+        <div class="cb-header">Firmographic Criteria</div>
+        <ul>
+          <li>Company size (FTE count, revenue range)</li>
+          <li>Industry / vertical / sub-vertical</li>
+          <li>Geography and regulatory jurisdiction</li>
+          <li>Business model (B2B vs. B2C; subscription vs. transactional)</li>
+          <li>Tech stack compatibility (key integrations)</li>
+          <li>Funding stage and runway</li>
+          <li>Growth rate (headcount, revenue, hiring signals)</li>
+          <li>Organizational complexity (single site vs. multi-entity)</li>
+        </ul>
+      </div>
+      <div class="criteria-box">
+        <div class="cb-header">Behavioral &amp; Situational Criteria</div>
+        <ul>
+          <li>Trigger events: funding, new exec hire, product launch</li>
+          <li>Evidence of the problem you solve (job postings, press)</li>
+          <li>Prior adoption of adjacent solutions</li>
+          <li>Current tool/process maturity (not too early, not too late)</li>
+          <li>Sales process signals: open to evaluation, multi-stakeholder</li>
+          <li>Champion accessibility (do we have a path in?)</li>
+          <li>Strategic alignment to our product roadmap</li>
+          <li>Reference-ability potential post-close</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <div class="subsection">
+    <div class="subsection-title">"Can Buy" vs. "Will Succeed" — The Critical Distinction</div>
+    <p>Many sales organizations build ICP criteria around purchase likelihood alone: "Can this company buy our product?" This is necessary but insufficient. The more important question is: "Will this customer succeed with our product?"</p>
+    <p>A company can buy and subsequently churn, generating negative LTV, damaging your reference base, and creating a misleading win signal. The ICP must incorporate success criteria — the conditions under which a customer will realize value, expand, and become a reference. This requires deep collaboration between Sales and CS, and requires honest feedback on which deals were "can buy but won't succeed" situations.</p>
+    <div class="callout callout-warning">
+      <div class="callout-title">ICP Drift Warning</div>
+      <p>ICP drift occurs when the sales team — under quota pressure — begins closing deals that fall outside the ICP. This is one of the most common and costly errors in SaaS growth. Signs of drift: increasing churn cohorts from recent vintages, CS team struggling to onboard new customers, win rates rising while NRR falls. Prevent drift by requiring ICP tier to be captured in the CRM at opportunity creation, reviewing ICP match rate in pipeline reviews, and giving CS leaders veto power over exception deals above a size threshold.</p>
+    </div>
+  </div>
+
+  <div class="subsection">
+    <div class="subsection-title">ICP Connection to the Rest of the Revenue System</div>
+    <div class="connect-flow">
+      <div class="connect-node">ICP Definition</div>
+      <div class="connect-arrow">→</div>
+      <div class="connect-node">Demand Gen Targeting</div>
+      <div class="connect-arrow">→</div>
+      <div class="connect-node">Territory Design</div>
+      <div class="connect-arrow">→</div>
+      <div class="connect-node">Pipeline Qualification</div>
+      <div class="connect-arrow">→</div>
+      <div class="connect-node">CS Segmentation</div>
+      <div class="connect-arrow">→</div>
+      <div class="connect-node">Product Roadmap</div>
+    </div>
+  </div>
+
+  <!-- VALUE PROPOSITION -->
+  <h2 class="section-title">Value Proposition — From Features to Economic Impact</h2>
+  <p class="section-intro">A value proposition is not a feature list. It is a specific, quantified, relevant answer to the question every economic buyer asks: "What is the measurable business impact if I invest in this?" The failure to build a compelling value proposition is responsible for more lost deals — particularly at the "do nothing" competitive scenario — than any other single factor.</p>
+
+  <div class="subsection">
+    <div class="subsection-title">Economic Value vs. Operational Value</div>
+    <p><strong>Operational value</strong> is what your product does: "Our platform automates lead routing." This is table stakes in a competitive evaluation. Operational value tells a user what they'll experience, but it doesn't tell an economic buyer why they should spend $200K.</p>
+    <p><strong>Economic value</strong> is the financial impact of the operational value: "By automating lead routing, your SDR team will spend 3 fewer hours per day on manual tasks, creating 60 additional selling hours per week across your 4-person team — equivalent to hiring a half-time SDR at zero marginal cost." Economic value connects product capabilities to business outcomes and financial metrics that economic buyers care about.</p>
+    <p>The framework: <em>Our product does [operational capability] which means your business gets [operational outcome] which translates to [financial impact] based on [specific customer data or benchmark].</em></p>
+  </div>
+
+  <div class="subsection">
+    <div class="subsection-title">The "So What?" Test</div>
+    <p>Every value claim must survive the "so what?" challenge. Present your value proposition to someone with no context and have them push back with "so what?" at every step. "We reduce onboarding time" → "So what?" → "Your reps hit quota 30 days faster" → "So what?" → "At a $150K OTE cost, that's $12,500 per rep per faster ramp." When "so what?" leads to a dollar amount or a strategic business outcome, the value proposition is working.</p>
+  </div>
+
+  <div class="subsection">
+    <div class="subsection-title">Before / After / Bridge Framework</div>
+    <p>This three-part structure makes value propositions viscerally compelling because it connects to the human desire to move from a worse state to a better one:</p>
+    <table class="data-table">
+      <thead>
+        <tr><th>Element</th><th>Definition</th><th>Example</th></tr>
+      </thead>
+      <tbody>
+        <tr><td><strong>Before</strong></td><td>The current painful state — specific, acknowledged, emotionally resonant</td><td>"Your revenue team spends 4 hours per week manually reconciling CRM data across 3 systems. Your CRO is making forecasting decisions with 72-hour-old pipeline data."</td></tr>
+        <tr><td><strong>After</strong></td><td>The desired future state — specific, measurable, aspirational</td><td>"With real-time pipeline intelligence, your CRO has a live revenue view. Forecast reviews take 20 minutes instead of 2 hours. Pipeline data is 99% complete."</td></tr>
+        <tr><td><strong>Bridge</strong></td><td>Your specific product as the path from before to after</td><td>"[Product] integrates with your existing CRM and communication tools in 4 hours, automatically enriches every record, and surfaces the deals at risk before they slip — without your team changing any workflows."</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="subsection">
+    <div class="subsection-title">Messaging by Persona</div>
+    <p>The same product creates different value for different buyers. A single value proposition delivered uniformly across all stakeholders is a common, costly mistake. Map your messaging to each buying role:</p>
+    <table class="data-table">
+      <thead>
+        <tr><th>Persona</th><th>What They Care About</th><th>Value Framing</th><th>Proof Assets</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>Economic Buyer (CRO, CFO, CEO)</td><td>ROI, payback period, strategic risk, competitive advantage</td><td>Financial impact, cost of inaction, strategic differentiation</td><td>ROI calculator, executive case study, financial model</td></tr>
+        <tr><td>Champion (VP Sales, Director of Rev Ops)</td><td>Solving their specific operational problem, looking good to their boss</td><td>Operational efficiency, time savings, reporting clarity</td><td>Product demo, pilot results, peer reference call</td></tr>
+        <tr><td>Technical Evaluator (IT, Security, Ops)</td><td>Integration compatibility, security posture, implementation risk</td><td>API documentation, SSO/SAML support, SOC 2 compliance, SLA</td><td>Technical documentation, security whitepaper, sandbox environment</td></tr>
+        <tr><td>End User (AE, SDR, CSM)</td><td>Ease of use, time savings, fewer manual tasks</td><td>Workflow simplification, time recapture, better tools</td><td>Live demo, trial, peer user testimonials</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="subsection">
+    <div class="subsection-title">Proof Assets: The Value Proposition Evidence Layer</div>
+    <p>A value proposition without proof is a claim. The proof assets that move buyers:</p>
+    <ul class="bullet-list">
+      <li><strong>Customer case studies</strong> — Specific customer, specific problem, specific outcome (quantified). "Acme Corp reduced sales cycle by 22% and increased average deal size by 31% in 90 days." Name the customer if they'll let you — anonymized case studies are worth 30% less.</li>
+      <li><strong>ROI calculator</strong> — An interactive tool that allows buyers to input their own data (number of reps, average ACV, current cycle length) and see projected impact. The input act itself increases commitment to the outcome.</li>
+      <li><strong>Third-party validation</strong> — G2, Gartner Peer Insights, Forrester reports, analyst mentions. Buyers trust peers more than vendors. Curate and deploy third-party social proof actively.</li>
+      <li><strong>Benchmark data</strong> — "Across our 200+ customers, average time-to-value is 47 days and average NRR at 12 months is 118%." Aggregate customer data is a powerful proof point when individual references are unavailable.</li>
+    </ul>
+  </div>
+
+  <!-- SALES MOTION -->
+  <h2 class="section-title">Sales Motion Design — Matching Motion to Market</h2>
+  <p class="section-intro">Sales motion is the structural approach to how you acquire customers — the combination of inbound vs. outbound tactics, human vs. product-led acquisition, and the complexity tier (transactional vs. enterprise). Getting the motion wrong is one of the most expensive mistakes in SaaS — the wrong motion for your ACV burns headcount and CAC without generating proportionate revenue.</p>
+
+  <div class="subsection">
+    <div class="subsection-title">The Motion Matrix</div>
+    <div class="motion-matrix">
+      <div class="motion-card">
+        <div class="mc-header">Transactional / SMB</div>
+        <div class="mc-title">Self-Serve + Inside Sales</div>
+        <ul>
+          <li>ACV: $1K–$15K</li>
+          <li>Cycle: 1–30 days</li>
+          <li>Stakeholders: 1–2</li>
+          <li>Motion: PLG + SDR/AE hybrid</li>
+          <li>Rep ratio: 1 AE : 1–2 SDRs</li>
+          <li>Key driver: Volume, velocity</li>
+        </ul>
+      </div>
+      <div class="motion-card">
+        <div class="mc-header">Mid-Market</div>
+        <div class="mc-title">Sales-Led + Inbound Assist</div>
+        <ul>
+          <li>ACV: $15K–$100K</li>
+          <li>Cycle: 30–90 days</li>
+          <li>Stakeholders: 3–8</li>
+          <li>Motion: SDR + AE full cycle or specialist split</li>
+          <li>Rep ratio: 1 AE : 1 SDR</li>
+          <li>Key driver: Qualification, multi-threading</li>
+        </ul>
+      </div>
+      <div class="motion-card">
+        <div class="mc-header">Enterprise</div>
+        <div class="mc-title">Complex / Strategic Sales</div>
+        <ul>
+          <li>ACV: $100K+</li>
+          <li>Cycle: 90–365 days</li>
+          <li>Stakeholders: 8–20+</li>
+          <li>Motion: Named accounts, AE + SE + overlay</li>
+          <li>Rep ratio: 1 AE : 1 SDR + dedicated SE</li>
+          <li>Key driver: Executive access, champion development</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <div class="subsection">
+    <div class="subsection-title">ACV as the Motion Determinant</div>
+    <p>The single most predictive input for sales motion design is Annual Contract Value. ACV determines the economically viable level of human sales investment. The core rule: <em>Sales cost cannot exceed a certain proportion of ACV without destroying unit economics.</em></p>
+    <div class="formula-block">
+      <div class="formula-label">Sales Efficiency Rule of Thumb</div>
+      <div class="formula-main">Max Allowable CAC = ACV × (LTV/CAC Target) × Gross Margin</div>
+      <div class="formula-note">
+        SaaS benchmark: CAC payback period of 12–18 months. For a $20K ACV product with 75% gross margin: Monthly GM = $1,250. Target CAC ≤ $15,000–$22,500.
+        If fully-loaded rep cost for a deal is $5,000 and quota is 4 deals/month, CAC is within range. If rep cost per deal is $15,000 on a $10K ACV product, the motion is broken.
+      </div>
+    </div>
+  </div>
+
+  <div class="subsection">
+    <div class="subsection-title">Product-Led Growth (PLG) vs. Sales-Led Growth (SLG)</div>
+    <p><strong>PLG</strong> is an acquisition model in which the product itself is the primary driver of user adoption, expansion, and retention. Freemium, free trial, and self-serve onboarding are PLG mechanisms. PLG works when: (a) the product delivers standalone value quickly (TTV &lt; 24 hours), (b) the buying decision is individual or small-team, and (c) the adoption experience is intuitive enough to require no human hand-holding.</p>
+    <p><strong>SLG</strong> is a model where human sellers drive the discovery, evaluation, and decision process. SLG is required when: (a) ACV justifies human cost, (b) the deal requires multi-stakeholder alignment, (c) implementation complexity requires scoping, or (d) procurement, legal, and security reviews are part of the process.</p>
+    <p><strong>PLG + Sales hybrid (PLS)</strong> is the dominant model for growth-stage SaaS companies with $10K–$60K ACV. Product drives initial adoption (freemium or free trial), and sales engages when product usage signals indicate upgrade propensity — a model sometimes called "product-qualified lead" or PQL-based selling. The handoff from product usage to sales outreach must be instrumented and precise.</p>
+  </div>
+
+  <div class="subsection">
+    <div class="subsection-title">Land and Expand vs. Single-Event Sale</div>
+    <p>A <strong>land-and-expand</strong> motion starts with a smaller initial commitment — one team, one department, one use case — with a deliberate expansion plan built into the customer journey. This is the right motion when: the full value of the product is difficult to prove without implementation, the buying organization is large and risk-averse, or the product's value increases with adoption breadth.</p>
+    <p>The financial implication: initial ACV may be below CAC payback, with total unit economics justified only by the expansion trajectory. This requires a rigorous expansion motion (CS-driven or sales-overlay-driven) and a clear handoff from Sales to CS that includes the expansion plan as a documented commitment.</p>
+
+    <div class="callout callout-best-practice">
+      <div class="callout-title">Motion Design Principle</div>
+      <p>The biggest motion design mistake is letting the sales team you <em>have</em> define the motion rather than letting the ACV, sales cycle, and customer complexity define the required team. If you have enterprise AEs but a $12K ACV product, you will always overspend on CAC. Right-size the motion to the market segment, then build (or restructure) the team around it.</p>
+    </div>
+  </div>
+
+  <!-- SALES PLAYBOOK -->
+  <h2 class="section-title">The Sales Playbook — The How-to Manual for Your Motion</h2>
+  <p class="section-intro">The sales playbook is the operationalized version of your sales strategy — the collection of frameworks, templates, tools, and standards that allow any qualified rep to execute your selling motion at the level you need. A great playbook doesn't replace judgment — it codifies the collective best judgment of your best performers and makes it accessible to everyone.</p>
+
+  <div class="subsection">
+    <div class="subsection-title">What Belongs in a Playbook</div>
+    <div class="playbook-toc">
+      <div class="ptoc-title">Comprehensive Playbook Table of Contents</div>
+      <div class="ptoc-grid">
+        <div class="ptoc-item">Company Overview &amp; ICP Summary</div>
+        <div class="ptoc-item">Competitive Landscape Overview</div>
+        <div class="ptoc-item">Value Proposition by Persona</div>
+        <div class="ptoc-item">Sales Process Stages &amp; Exit Criteria</div>
+        <div class="ptoc-item">Discovery Framework (SPIN / MEDDIC)</div>
+        <div class="ptoc-item">Demo Framework &amp; Demo Script</div>
+        <div class="ptoc-item">Objection Handling Matrix</div>
+        <div class="ptoc-item">Competitive Battle Cards (by competitor)</div>
+        <div class="ptoc-item">Outreach Templates (email, LinkedIn, phone)</div>
+        <div class="ptoc-item">Call Opening &amp; Agenda Framework</div>
+        <div class="ptoc-item">Proposal / Business Case Structure</div>
+        <div class="ptoc-item">Negotiation &amp; Pricing Guidelines</div>
+        <div class="ptoc-item">Proof Assets by Stage</div>
+        <div class="ptoc-item">ROI Calculator &amp; Usage Guide</div>
+        <div class="ptoc-item">Mutual Action Plan Template</div>
+        <div class="ptoc-item">Close Plan Framework</div>
+        <div class="ptoc-item">Handoff to CS — New Customer Brief Template</div>
+        <div class="ptoc-item">CRM Standards &amp; Stage Definitions</div>
+        <div class="ptoc-item">Common Disqualification Signals</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="subsection">
+    <div class="subsection-title">Discovery Framework: SPIN Selling</div>
+    <p>Neil Rackham's SPIN model, validated in research across 35,000 sales calls, identifies the discovery question types that distinguish high-performing reps from average performers, particularly in complex sales:</p>
+    <table class="data-table">
+      <thead>
+        <tr><th>Letter</th><th>Question Type</th><th>Purpose</th><th>Example</th></tr>
+      </thead>
+      <tbody>
+        <tr><td><strong>S</strong></td><td>Situation Questions</td><td>Gather facts about current state — use sparingly (reps over-use this type)</td><td>"How many AEs are on your team today? What CRM are you running?"</td></tr>
+        <tr><td><strong>P</strong></td><td>Problem Questions</td><td>Uncover explicit pain — the buyer names their dissatisfaction</td><td>"Where do you find the most friction in your current forecasting process?"</td></tr>
+        <tr><td><strong>I</strong></td><td>Implication Questions</td><td>Expand the consequences of the problem — creates urgency and size</td><td>"If forecast accuracy stays at 60%, how does that affect resource planning and investor confidence?"</td></tr>
+        <tr><td><strong>N</strong></td><td>Need-Payoff Questions</td><td>Buyer articulates the value of solving the problem — they sell themselves</td><td>"If you could reduce forecast variance to under 10%, what decisions would that change for you?"</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="subsection">
+    <div class="subsection-title">Discovery Framework: MEDDIC / MEDDPICC</div>
+    <p>MEDDIC (and the extended MEDDPICC) is the qualification and deal navigation framework most commonly used in enterprise and mid-market SaaS. It is both a discovery tool and a deal risk assessment framework. A deal with incomplete MEDDIC data is a deal at high risk of slipping or losing.</p>
+    <table class="data-table">
+      <thead>
+        <tr><th>Letter</th><th>Element</th><th>What to Establish</th></tr>
+      </thead>
+      <tbody>
+        <tr><td><strong>M</strong></td><td>Metrics</td><td>What measurable business outcomes will the buyer achieve? "We need to reduce churn by 15% or our Series C valuation is at risk."</td></tr>
+        <tr><td><strong>E</strong></td><td>Economic Buyer</td><td>Who has final authority and budget? Have you engaged them directly? A deal without EB access is a deal dependent on your champion's success alone.</td></tr>
+        <tr><td><strong>D</strong></td><td>Decision Criteria</td><td>What are the explicit requirements for a yes? Technical requirements, pricing thresholds, reference requirements, implementation timeline?</td></tr>
+        <tr><td><strong>D</strong></td><td>Decision Process</td><td>What are the specific steps between now and a signed contract? Who approves? Who reviews? What is the sequence?</td></tr>
+        <tr><td><strong>P</strong></td><td>Paper Process (MEDDPICC)</td><td>What is the legal/procurement/security review process? How long does it take? What are the known delays?</td></tr>
+        <tr><td><strong>I</strong></td><td>Identify Pain</td><td>What is the explicitly named business problem with known consequences? Without named pain, there is no urgency.</td></tr>
+        <tr><td><strong>C</strong></td><td>Champion</td><td>Who will sell for you internally? Do they have access to the EB, credibility with the technical evaluators, and a personal stake in the outcome?</td></tr>
+        <tr><td><strong>C</strong></td><td>Competition (MEDDPICC)</td><td>Who else is being evaluated? What is your competitive position? What is the "do nothing" risk?</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="subsection">
+    <div class="subsection-title">Objection Handling Matrix</div>
+    <p>Every sales organization encounters the same set of objections repeatedly. The playbook must document each objection with a validated response framework — not scripts to recite, but mental models to apply with authenticity. The core structure for any objection response: <strong>Acknowledge → Explore → Respond → Confirm.</strong></p>
+    <table class="data-table">
+      <thead>
+        <tr><th>Objection</th><th>What It Usually Means</th><th>Response Framework</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>"Too expensive"</td><td>Value has not been established, or budget genuinely isn't there</td><td>Acknowledge the concern. Reframe to cost of inaction. Compare to total cost of problem, not to budget. If genuine budget constraint, explore phased approaches.</td></tr>
+        <tr><td>"We're happy with what we have"</td><td>No urgency, no visible pain, or status quo comfort</td><td>Probe: "What would need to change for you to reconsider?" Use SPIN Implication questions to surface hidden cost. Build a business case for the gap.</td></tr>
+        <tr><td>"Send me a proposal"</td><td>Polite way to end the conversation, or genuine interest without commitment</td><td>Never send before mutual action plan. "I want to make sure the proposal is relevant — can we spend 10 minutes defining what you'd need to see to make a decision?"</td></tr>
+        <tr><td>"We'll do it next quarter"</td><td>Lack of urgency; no clear cost of delay</td><td>Quantify the cost of waiting: "If we start Q3 instead of Q2, that's 90 days at [current cost rate]. What makes Q3 the better time?"</td></tr>
+        <tr><td>"We need to think about it"</td><td>Missing information, stakeholder not aligned, or undisclosed objection</td><td>Surface the real objection: "Of course. What's the one thing you'd need to be more certain about?" Then address it specifically.</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="subsection">
+    <div class="subsection-title">How to Keep the Playbook Alive</div>
+    <p>The most common playbook failure is building it once and letting it decay. The playbook must be a living document with a governance structure:</p>
+    <ul class="bullet-list">
+      <li><strong>Quarterly win/loss review</strong> — What new objections are emerging? What messaging is landing? What templates are getting responses? Update the playbook based on field data.</li>
+      <li><strong>Rep contribution mechanism</strong> — The best playbook content comes from what's working in the field. Create a Slack channel or Notion space where reps submit "plays that worked." Top contributors get recognition.</li>
+      <li><strong>New hire onboarding integration</strong> — The playbook is the curriculum for ramp. If you're teaching something in onboarding that isn't in the playbook, it should be. If it's in the playbook and not in onboarding, it won't be adopted.</li>
+      <li><strong>Version control and change log</strong> — Every update to the playbook should be logged and communicated to the team. Reps need to know when the playbook has changed and what changed.</li>
+    </ul>
+  </div>
+
+  <!-- COMPETITIVE POSITIONING -->
+  <h2 class="section-title">Competitive Positioning — Winning Against the Field</h2>
+  <p class="section-intro">Most competitive positioning frameworks focus on named competitors. The most important competitor in nearly every SaaS deal is not a named vendor — it is "do nothing." The default decision in any B2B evaluation is to maintain the status quo. Your competitive positioning must first win against inertia, and then win against named alternatives.</p>
+
+  <div class="subsection">
+    <div class="subsection-title">Battle Card Framework</div>
+    <p>Every named competitor (and the "do nothing" scenario) needs a documented battle card in the playbook. A battle card is not a feature comparison — it is a strategically positioned response to the competitive threat, designed to be deployed in context by a rep with limited time.</p>
+    <table class="data-table">
+      <thead>
+        <tr><th>Battle Card Section</th><th>Content</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>Competitor Overview</td><td>Their positioning, pricing tier, typical customer profile, known strengths</td></tr>
+        <tr><td>When You See Them</td><td>Deal types, segments, trigger events where they appear most often</td></tr>
+        <tr><td>Our Strengths vs. Them</td><td>3–4 specific, defensible advantages with supporting evidence</td></tr>
+        <tr><td>Their Strengths vs. Us</td><td>Honest assessment — where they win and why. Reps need to know this before the buyer does.</td></tr>
+        <tr><td>Landmines to Drop</td><td>Questions to ask that highlight our advantages without naming them: "How do you handle multi-currency in their platform?" (if we're better there)</td></tr>
+        <tr><td>Traps to Avoid</td><td>Questions or claims that will backfire or credibility-damage our position</td></tr>
+        <tr><td>Win/Loss Data</td><td>Our current win rate vs. this competitor; trend; notable wins to reference</td></tr>
+        <tr><td>Proof Points</td><td>Customer case studies or references that represent competitive displacements</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="subsection">
+    <div class="subsection-title">Competitive Intelligence Sources</div>
+    <ul class="bullet-list">
+      <li><strong>Win/loss interviews</strong> — Structured post-deal interviews (ideally with losses) are the highest-quality competitive intelligence source. 30 minutes with a prospect who chose a competitor is worth more than any analyst report.</li>
+      <li><strong>G2, Gartner Peer Insights, TrustRadius</strong> — Monitor competitor reviews continuously. Themes in 1-star reviews are your best messaging material.</li>
+      <li><strong>Job postings</strong> — Competitor job descriptions reveal strategic priorities, tech stack choices, and talent wars before any press release does.</li>
+      <li><strong>LinkedIn</strong> — Monitor competitor employee growth, leadership changes, and content themes for strategic signals.</li>
+      <li><strong>Klue, Crayon, Kompyte</strong> — Competitive intelligence platforms that automate monitoring of competitor websites, content, pricing pages, and employee profiles.</li>
+      <li><strong>Field intelligence from reps</strong> — Create a systematic mechanism (form, Slack channel, CRM field) for reps to log competitive encounters and what they heard.</li>
+    </ul>
+  </div>
+
+  <!-- FORMULAS AND METRICS -->
+  <h2 class="section-title">Key Formulas and Benchmarks for Phase 1</h2>
+
+  <div class="formula-block">
+    <div class="formula-label">ICP Fit Rate</div>
+    <div class="formula-main">ICP Fit Rate = (Opportunities matching Tier 1 ICP / Total Opportunities Created) × 100</div>
+    <div class="formula-note">Benchmark: &gt;60% of new pipeline should be Tier 1 or Tier 2 ICP fit. Below 40% indicates targeting problem.</div>
+  </div>
+
+  <div class="formula-block">
+    <div class="formula-label">Win Rate by ICP Tier</div>
+    <div class="formula-main">Win Rate = Closed-Won / (Closed-Won + Closed-Lost) × 100</div>
+    <div class="formula-note">Tier 1 ICP win rate should be 2–3× Tier 3 win rate. If the ratio is less than 1.5×, the ICP definition is not predictive enough.</div>
+  </div>
+
+  <div class="formula-block">
+    <div class="formula-label">NRR by ICP Score Cohort</div>
+    <div class="formula-main">NRR = (Beginning ARR + Expansion ARR − Contraction ARR − Churned ARR) / Beginning ARR × 100</div>
+    <div class="formula-note">Benchmark: Tier 1 ICP customers should show NRR &gt;115% at 12 months. Tier 3 customers below 90% NRR confirm ICP drift is costly.</div>
+  </div>
+
+  <div class="formula-block">
+    <div class="formula-label">LTV:CAC Ratio</div>
+    <div class="formula-main">LTV = (ACV × Gross Margin %) / Churn Rate   |   LTV:CAC Target ≥ 3:1</div>
+    <div class="formula-note">SaaS benchmark: LTV:CAC of 3:1 is minimum viable; 5:1 or higher indicates strong unit economics. At 3:1 on a $30K ACV at 75% GM and 15% annual churn: LTV = $150K, target CAC ≤ $50K.</div>
+  </div>
+
+  <div class="formula-block">
+    <div class="formula-label">CAC Payback Period</div>
+    <div class="formula-main">CAC Payback = CAC / (ACV × Gross Margin %)</div>
+    <div class="formula-note">Benchmark: 12–18 months for growth-stage SaaS; &lt;12 months for SMB motion; &lt;24 months for enterprise. Payback &gt;24 months requires significant expansion revenue to justify economics.</div>
+  </div>
+
+  <!-- INDICATORS -->
+  <h2 class="section-title">Phase 1 Leading and Lagging Indicators</h2>
+
+  <div class="subsection">
+    <div class="subsection-title">Leading Indicators</div>
+    <div class="indicator-row">
+      <span class="indicator-tag ind-leading">LEADING</span>
+    </div>
+    <table class="data-table">
+      <thead>
+        <tr><th>Metric</th><th>Definition</th><th>Target</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>ICP Match Rate on New Pipeline</td><td>% of new opportunities created that meet Tier 1/2 ICP criteria</td><td>&gt;60% Tier 1/2 — if below 50%, targeting or qualification is broken</td></tr>
+        <tr><td>Time-to-First-Value (TFV)</td><td>Days from contract signature to first documented customer outcome</td><td>SMB: &lt;30 days; MM: &lt;60 days; Enterprise: &lt;90 days</td></tr>
+        <tr><td>Discovery Completion Rate</td><td>% of opportunities with complete MEDDIC data by Stage 2</td><td>&gt;80% — below this indicates discovery quality problem</td></tr>
+        <tr><td>Competitive Win Rate Trend</td><td>Win rate vs. each named competitor over rolling 90 days</td><td>Trending up or stable; any competitor where win rate is declining &lt;30% triggers battle card review</td></tr>
+        <tr><td>Playbook Adoption Rate</td><td>% of deals using standardized playbook artifacts (templates, mutual action plans)</td><td>&gt;70% for discovery templates, &gt;85% for proposal templates</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="subsection">
+    <div class="subsection-title">Lagging Indicators</div>
+    <div class="indicator-row">
+      <span class="indicator-tag ind-lagging">LAGGING</span>
+    </div>
+    <table class="data-table">
+      <thead>
+        <tr><th>Metric</th><th>Healthy Benchmark</th><th>Warning Signal</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>Win Rate by ICP Tier</td><td>Tier 1: &gt;35–40%; Tier 3: &lt;15%</td><td>Tier 1 win rate below 25% suggests messaging or motion misalignment</td></tr>
+        <tr><td>Churn Rate by ICP Score</td><td>Tier 1: &lt;8% annual churn; Tier 3: can be 25%+</td><td>Any ICP Tier 1 cohort above 12% annual churn is a product-market fit signal</td></tr>
+        <tr><td>NRR by Customer Cohort</td><td>Overall NRR target: &gt;110%; best customers: &gt;120%</td><td>NRR below 100% means you're shrinking your customer base despite new logos</td></tr>
+        <tr><td>Average Sales Cycle Length</td><td>SMB: 14–30 days; MM: 45–90 days; ENT: 90–270 days</td><td>Any motion with sales cycle &gt;2× benchmark needs process audit</td></tr>
+        <tr><td>Average Deal Size vs. Target ACV</td><td>Within 20% of target ACV band</td><td>Persistent below-target ACV indicates discounting culture or ICP drift</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- COMMON MISTAKES -->
+  <h2 class="section-title">Common Phase 1 Mistakes and How to Avoid Them</h2>
+  <div class="mistake-item">
+    <strong>Mistake 1: Building the ICP from opinion, not data</strong>
+    "I think our best customers are mid-market tech companies" is not an ICP — it's a hypothesis. Build the ICP from actual win/loss data, customer health scores, and NRR cohorts. Opinion-based ICPs result in targeting the wrong market and chasing deals that look right but don't close or expand.
+  </div>
+  <div class="mistake-item">
+    <strong>Mistake 2: Using the same pitch for every buyer in a deal</strong>
+    Multi-stakeholder deals fail when the rep treats every contact as the same persona. The economic buyer and the end user have completely different incentives and concerns. A pitch that resonates with the champion will often repel the CFO, and vice versa. Map every deal stakeholder to a persona and tailor messaging accordingly.
+  </div>
+  <div class="mistake-item">
+    <strong>Mistake 3: Choosing sales motion based on what the team wants, not what the market requires</strong>
+    Enterprise reps resist transactional quotas. SDRs resist outbound. These are real human dynamics — but the motion must be dictated by ACV and buyer behavior, not team preference. Hire for the required motion; don't bend the motion to the existing team.
+  </div>
+  <div class="mistake-item">
+    <strong>Mistake 4: Treating the sales playbook as a one-time build</strong>
+    Playbooks that aren't updated quarterly become a museum artifact — reps stop using them because they know the content is stale. Assign a dedicated enablement owner to maintain the playbook and create a mechanism for reps to submit updates.
+  </div>
+  <div class="mistake-item">
+    <strong>Mistake 5: Failing to define "do nothing" as a competitor in battle cards</strong>
+    The status quo is involved in every evaluation. Not having a documented strategy for winning against inertia — which means a clear articulation of the cost of not buying — is the most common reason deals stall in late stages.
+  </div>
+  <div class="mistake-item">
+    <strong>Mistake 6: Skipping the "will they succeed" filter in ICP</strong>
+    Short-term win rate pressure causes teams to close deals that are technically in the ICP but operationally too immature or under-resourced to succeed with the product. Every bad customer creates CS cost, potential negative reviews, and a bad reference — plus the opportunity cost of having pursued a wrong-fit deal.
+  </div>
+
+  <!-- CONNECTIONS -->
+  <h2 class="section-title">How Phase 1 Connects to the Rest of the System</h2>
+  <table class="data-table">
+    <thead>
+      <tr><th>Phase</th><th>How Phase 1 Connects</th></tr>
+    </thead>
+    <tbody>
+      <tr><td><strong>Phase 0 (Leadership &amp; Culture)</strong></td><td>Without Phase 0 foundation, the playbook won't be followed — reps ignore standards they don't trust leadership to enforce. Vision from Phase 0 informs the narrative layer of the value proposition.</td></tr>
+      <tr><td><strong>Phase 2 (Hiring &amp; Onboarding)</strong></td><td>ICP defines the sales motion, and sales motion defines the hiring profile. An enterprise motion requires relationship-builder AEs with patience and executive access. A transactional motion requires high-velocity, resilient hunters. Phase 1 must be complete before sourcing begins.</td></tr>
+      <tr><td><strong>Phase 3 (GTM Execution)</strong></td><td>ICP drives demand generation targeting. Value proposition drives content and campaign strategy. Sales motion determines inbound vs. outbound resource allocation and SDR vs. AE headcount ratios.</td></tr>
+      <tr><td><strong>Phase 4 (Deal Execution)</strong></td><td>Discovery frameworks (SPIN, MEDDIC), objection handling, and the demo structure from the playbook are the direct operational inputs to deal execution. Phase 4 fails when Phase 1 is incomplete.</td></tr>
+      <tr><td><strong>RevOps (Operating Layer)</strong></td><td>ICP tier scores must be fields in the CRM. Stage gate criteria from the playbook define the CRM stage progression model. Value proposition proof assets become the RevOps content library. Pipeline reporting must track ICP match rate as a core metric.</td></tr>
+      <tr><td><strong>Customer Success</strong></td><td>CS segmentation model must align to ICP tiers. The CS playbook for Tier 1 customers should be different from Tier 3. NRR benchmarks by ICP tier are the primary feedback loop for ICP validation and revision.</td></tr>
+    </tbody>
+  </table>
+
+  <!-- Relevant Tools -->
+  <div class="section-title">Science of Scaling Tools for This Phase</div>
+  <p class="section-intro">Phase 1 is the operational home of Stage 1 work. Every tool below maps directly to activities in this phase — from defining your LIR event to building the ICP that governs what customers you pursue.</p>
+  <div class="tools-grid">
+    <a href="../subpages/sos-pmf.html" class="tool-card tc-sos">
+      <div class="tc-phase">Stage 1 · Core Framework</div>
+      <div class="tc-title">Product-Market Fit Deep Dive</div>
+      <div class="tc-desc">Full PMF definition, LIR formula, cohort dashboard, and common mistakes. The scientific foundation for everything in Phase 1.</div>
+    </a>
+    <a href="../subpages/sos-lir.html" class="tool-card tc-sos">
+      <div class="tc-phase">Stage 1 · Core Metric</div>
+      <div class="tc-title">Leading Indicator of Retention (LIR)</div>
+      <div class="tc-desc">How to discover your LIR event, set P and T thresholds, validate correlation, and use LIR operationally in CS and sales comp.</div>
+    </a>
+    <a href="../subpages/template-icp.html" class="tool-card tc-res">
+      <div class="tc-phase">Template · Stage 1</div>
+      <div class="tc-title">ICP Worksheet</div>
+      <div class="tc-desc">Green/Yellow/Red qualification framework — the foundation of Stage 1 targeting. Who achieves LIR? Build your ICP from cohort retention data.</div>
+    </a>
+    <a href="../subpages/template-persona.html" class="tool-card tc-res">
+      <div class="tc-phase">Template · Stage 1</div>
+      <div class="tc-title">Buyer Persona Worksheet</div>
+      <div class="tc-desc">Map Economic Buyer, Champion, and End User personas. In Stage 1, Early Adopter persona drives all messaging and outreach.</div>
+    </a>
+    <a href="../subpages/template-message-house.html" class="tool-card tc-res">
+      <div class="tc-phase">Template · Stage 1</div>
+      <div class="tc-title">Message House Template</div>
+      <div class="tc-desc">Roof, 3 value pillars, positioning statement, pain points, proof points, and competitive differentiators — built around LIR-validated customer outcomes.</div>
+    </a>
+    <a href="../subpages/sos-gtm-playbook.html" class="tool-card tc-sos">
+      <div class="tc-phase">Stage 1→2 Bridge</div>
+      <div class="tc-title">GTM Playbook Framework</div>
+      <div class="tc-desc">In Stage 1, the playbook is exploratory (&ldquo;Win at All Costs&rdquo;). The patterns discovered here become the codified playbook in Stage 2.</div>
+    </a>
+    <a href="../subpages/template-lir.html" class="tool-card tc-res">
+      <div class="tc-phase">Template · Stage 1</div>
+      <div class="tc-title">LIR Journey Template</div>
+      <div class="tc-desc">Pre-PMF: test 3 LIR hypotheses in parallel. Post-PMF: track one LIR monthly by cohort. The operational tracker for Stage 1.</div>
+    </a>
+    <a href="../subpages/template-prospecting.html" class="tool-card tc-res">
+      <div class="tc-phase">GTM Playbook Tool</div>
+      <div class="tc-title">Prospecting Guide</div>
+      <div class="tc-desc">4-step framework for initiating conversations with Early Adopter ICP buyers. In Stage 1, focus on founder network + referrals first.</div>
+    </a>
+    <a href="../subpages/template-discovery.html" class="tool-card tc-res">
+      <div class="tc-phase">GTM Playbook Tool</div>
+      <div class="tc-title">Discovery Guide</div>
+      <div class="tc-desc">MEDDICC-based discovery framework. In Stage 1, discovery is also product research — every discovery call validates LIR hypotheses.</div>
+    </a>
+  </div>
+
+  <div class="related-section">
+    <div class="related-title">Related Sections</div>
+    <div class="related-links">
+      <a href="phase0.html" class="related-link">Phase 0 — Leadership &amp; Culture</a>
+      <a href="phase2.html" class="related-link">Phase 2 — Hiring &amp; Onboarding</a>
+      <a href="phase3.html" class="related-link">Phase 3 — GTM Execution</a>
+      <a href="phase4.html" class="related-link">Phase 4 — Deal Execution</a>
+      <a href="revops.html" class="related-link">RevOps — Operating Layer</a>
+      <a href="phase5.html" class="related-link">Phase 5 — Forecasting</a>
+      <a href="../subpages/sos-pmf.html" class="related-link">Stage 1: Product-Market Fit</a>
+      <a href="../subpages/sos-lir.html" class="related-link">LIR — Leading Indicator of Retention</a>
+      <a href="../subpages/template-icp.html" class="related-link">ICP Worksheet</a>
+      <a href="../subpages/template-lir.html" class="related-link">LIR Journey Template</a>
+    </div>
+  </div>
+
+</div>
+<script data-pplx-inline-edit>
+(function () {
+  if (window === window.top) return;
+
+  const allowedParentOrigins = ["https://www.perplexity.ai","https://perplexity.ai","https://testing.perplexity.ai","https://staging.perplexity.ai","https://*.preview.i.perplexity.ai","http://localhost:3000","http://127.0.0.1:3000","http://localhost:5173","http://127.0.0.1:5173"];
+  const MAX_FONT_BYTES = 500 * 1024;
+  const MAX_TOTAL_FONT_BYTES = 2 * 1024 * 1024;
+  let scrollForwarding = false;
+  let scrollRaf = 0;
+  let trustedTopOrigin = null;
+
+  // Allow entries like "https://*.preview.i.perplexity.ai" — the wildcard
+  // matches a single DNS label (no dots), so "https://*.foo" cannot stretch
+  // across multiple labels.
+  function matchesAllowedOrigin(origin) {
+    if (!origin) return false;
+    for (const entry of allowedParentOrigins) {
+      if (!entry.includes("*")) {
+        if (entry === origin) return true;
+        continue;
+      }
+      const pattern = new RegExp(
+        "^" +
+          entry.replace(/[.+?^${}()|[\]\\]/g, "\\$&").replace(/\*/g, "[^.]+") +
+          "$",
+      );
+      if (pattern.test(origin)) return true;
+    }
+    return false;
+  }
+
+  // Trust decision: when the sender is same-origin-visible (event.origin is a
+  // real origin like https://www.perplexity.ai) we trust event.origin directly.
+  // When event.origin is "null" (opaque broker srcdoc), we fall back to the
+  // broker's stamped `parentOrigin` to identify the top window. The fallback
+  // is claim-only — we rely on the browser's native `targetOrigin` enforcement
+  // on the response path (see postToTrustedTop) to ensure replies can't be
+  // delivered to anyone but the actual top window of that claimed origin.
+  function getTrustedParentOrigin(event) {
+    const forwardedParentOrigin =
+      typeof event.data.parentOrigin === "string" ? event.data.parentOrigin : null;
+    const parentOrigin = event.origin === "null" ? forwardedParentOrigin : event.origin;
+    return matchesAllowedOrigin(parentOrigin) ? parentOrigin : null;
+  }
+
+  // All responses go to window.top with targetOrigin = the allowlisted origin.
+  // An attacker that iframes us inside their own null-origin broker can claim
+  // any parentOrigin they like, but the browser will drop the reply whenever
+  // the real top's origin doesn't match — so the screenshot never leaves.
+  function postToTrustedTop(message) {
+    if (!trustedTopOrigin) return;
+    try {
+      window.top.postMessage(message, trustedTopOrigin);
+    } catch (_error) {}
+  }
+
+  function inlineAll(original, clone) {
+    if (original.nodeType !== 1 || clone.nodeType !== 1) return;
+
+    try {
+      const computedStyle = getComputedStyle(original);
+      // cssText on a computed style is the serialized declaration in modern
+      // Chromium/Safari — a single read beats enumerating ~400 longhand
+      // properties. Firefox returns "" here, so we fall back on empty.
+      const serialized = computedStyle.cssText;
+      if (serialized) {
+        clone.style.cssText = serialized;
+      } else {
+        const parts = new Array(computedStyle.length);
+        for (let index = 0; index < computedStyle.length; index += 1) {
+          const property = computedStyle[index];
+          parts[index] = `${property}:${computedStyle.getPropertyValue(property)};`;
+        }
+        clone.style.cssText = parts.join("");
+      }
+    } catch (_error) {}
+
+    const originalChildren = original.children;
+    const clonedChildren = clone.children;
+    for (
+      let index = 0;
+      index < originalChildren.length && index < clonedChildren.length;
+      index += 1
+    ) {
+      inlineAll(originalChildren[index], clonedChildren[index]);
+    }
+  }
+
+  function extractFontUrl(srcValue) {
+    const matches = [
+      ...srcValue.matchAll(
+        /url\(["']?([^"')]+)["']?\)(?:\s*format\(["']?([^"')]+)["']?\))?/gi,
+      ),
+    ];
+    if (matches.length === 0) return null;
+    const woff2 = matches.find((m) => m[2] && m[2].toLowerCase().includes("woff2"));
+    if (woff2) return woff2[1];
+    const woff = matches.find((m) => m[2] && m[2].toLowerCase().includes("woff"));
+    if (woff) return woff[1];
+    return matches[0][1];
+  }
+
+  // Cache resolved font URL -> data URI across captures. Fonts on a page
+  // essentially never change, and a batch run emits multiple captures back to
+  // back — without this we'd refetch + re-base64 every time.
+  const fontDataUriCache = new Map();
+  const SRC_DECLARATION_RE = /src\s*:\s*[^;}]+/i;
+
+  async function fetchAsDataUri(url) {
+    if (fontDataUriCache.has(url)) return fontDataUriCache.get(url);
+    let dataUri = null;
+    try {
+      const response = await fetch(url, { mode: "cors", credentials: "omit" });
+      if (response.ok) {
+        const blob = await response.blob();
+        if (blob.size <= MAX_FONT_BYTES) {
+          dataUri = await new Promise((resolve) => {
+            const reader = new FileReader();
+            reader.onloadend = () =>
+              resolve(typeof reader.result === "string" ? reader.result : null);
+            reader.onerror = () => resolve(null);
+            reader.readAsDataURL(blob);
+          });
+        }
+      }
+    } catch (_error) {
+      dataUri = null;
+    }
+    fontDataUriCache.set(url, dataUri);
+    return dataUri;
+  }
+
+  function collectFontFaceRuleTexts() {
+    const rules = [];
+    for (const sheet of document.styleSheets) {
+      let cssRules;
+      try {
+        cssRules = sheet.cssRules;
+      } catch (_error) {
+        continue;
+      }
+      if (!cssRules) continue;
+      for (const rule of cssRules) {
+        const cssText = rule.cssText || "";
+        if (cssText.startsWith("@font-face")) rules.push(cssText);
+      }
+    }
+    return rules;
+  }
+
+  async function buildInlinedFontCss() {
+    const ruleTexts = collectFontFaceRuleTexts();
+    if (ruleTexts.length === 0) return null;
+
+    const resolved = ruleTexts.map((cssText) => {
+      if (!SRC_DECLARATION_RE.test(cssText)) return null;
+      const srcMatch = cssText.match(/src\s*:\s*([^;}]+)[;}]/i);
+      if (!srcMatch) return null;
+      const url = extractFontUrl(srcMatch[1]);
+      if (!url) return null;
+      try {
+        return { cssText, url: new URL(url, document.baseURI).href };
+      } catch (_error) {
+        return null;
+      }
+    });
+
+    const dataUris = await Promise.all(
+      resolved.map((entry) => (entry ? fetchAsDataUri(entry.url) : Promise.resolve(null))),
+    );
+
+    const inlined = [];
+    let totalBytes = 0;
+    for (let index = 0; index < resolved.length; index += 1) {
+      const entry = resolved[index];
+      const dataUri = dataUris[index];
+      if (!entry || !dataUri) continue;
+      const approxBytes = dataUri.length * 0.75;
+      if (totalBytes + approxBytes > MAX_TOTAL_FONT_BYTES) break;
+      totalBytes += approxBytes;
+      inlined.push(entry.cssText.replace(SRC_DECLARATION_RE, `src: url("${dataUri}")`));
+    }
+    return inlined.length > 0 ? inlined.join("\n") : null;
+  }
+
+  function stripExternal(clone) {
+    const images = clone.querySelectorAll("img");
+    for (let index = 0; index < images.length; index += 1) {
+      const src = images[index].getAttribute("src");
+      if (src && !src.startsWith("data:")) images[index].removeAttribute("src");
+    }
+
+    const elements = clone.querySelectorAll("*");
+    for (let index = 0; index < elements.length; index += 1) {
+      const style = elements[index].style.cssText;
+      if (style && style.includes("url(")) {
+        elements[index].style.cssText = style.replace(
+          /url\(["']?(?!data:)[^)"']*["']?\)/gi,
+          "none",
+        );
+      }
+    }
+  }
+
+  function emitScroll() {
+    scrollRaf = 0;
+    if (!scrollForwarding) return;
+    postToTrustedTop({
+      type: "INLINE_EDIT_SCROLL",
+      scrollX: window.scrollX,
+      scrollY: window.scrollY,
+    });
+  }
+
+  window.addEventListener(
+    "scroll",
+    function () {
+      if (!scrollForwarding || scrollRaf) return;
+      scrollRaf = requestAnimationFrame(emitScroll);
+    },
+    { passive: true, capture: true },
+  );
+
+  async function handleCaptureRequest(event) {
+    const requestId = event.data.requestId;
+    const scrollX = window.scrollX;
+    const scrollY = window.scrollY;
+    const width = window.innerWidth;
+    const height = window.innerHeight;
+
+    function postResult(dataUrl) {
+      postToTrustedTop({
+        type: "INLINE_EDIT_SCREENSHOT_RESULT",
+        requestId,
+        dataUrl,
+        scrollX,
+        scrollY,
+      });
+    }
+
+    try {
+      // Wait for any pending web fonts to resolve so both inline metrics and
+      // the @font-face inlining below see the same loaded faces.
+      if (document.fonts && document.fonts.ready) {
+        try {
+          await document.fonts.ready;
+        } catch (_error) {}
+      }
+
+      const clone = document.documentElement.cloneNode(true);
+      inlineAll(document.documentElement, clone);
+
+      const removedNodes = clone.querySelectorAll("script,link[rel=\"stylesheet\"],style");
+      for (let index = 0; index < removedNodes.length; index += 1) {
+        removedNodes[index].remove();
+      }
+
+      stripExternal(clone);
+
+      // Re-embed web fonts as data-URI @font-face rules so the SVG rasterizer
+      // can resolve them — external font URLs aren't fetched during
+      // foreignObject rendering, which would otherwise force a fallback face
+      // and change text metrics.
+      const inlinedFontCss = await buildInlinedFontCss();
+      if (inlinedFontCss) {
+        const styleEl = document.createElement("style");
+        styleEl.textContent = inlinedFontCss;
+        const head = clone.querySelector("head");
+        if (head) head.appendChild(styleEl);
+        else clone.insertBefore(styleEl, clone.firstChild);
+      }
+
+      const html = new XMLSerializer().serializeToString(clone);
+      const svg =
+        `<svg xmlns="http://www.w3.org/2000/svg" width="${width}" height="${height}">` +
+        '<foreignObject width="100%" height="100%">' +
+        `<div xmlns="http://www.w3.org/1999/xhtml" style="width:${width}px;height:${height}px;overflow:hidden">` +
+        `<div style="transform:translate(-${scrollX}px,-${scrollY}px);transform-origin:top left">` +
+        html +
+        "</div></div></foreignObject></svg>";
+      const svgUrl = `data:image/svg+xml;charset=utf-8,${encodeURIComponent(svg)}`;
+      const image = new Image();
+      image.onload = function () {
+        const canvas = document.createElement("canvas");
+        canvas.width = width;
+        canvas.height = height;
+        canvas.getContext("2d").drawImage(image, 0, 0);
+        postResult(canvas.toDataURL("image/png"));
+      };
+      image.onerror = function () {
+        postResult(null);
+      };
+      image.src = svgUrl;
+    } catch (_error) {
+      postResult(null);
+    }
+  }
+
+  window.addEventListener("message", function (event) {
+    if (!event.data) return;
+    // Only accept messages from the direct parent frame. Blocks sibling /
+    // unrelated-window postMessage senders that could otherwise reach us.
+    if (event.source !== window.parent) return;
+
+    const trustedParentOrigin = getTrustedParentOrigin(event);
+    if (!trustedParentOrigin) return;
+    trustedTopOrigin = trustedParentOrigin;
+
+    if (event.data.type === "INLINE_EDIT_SCROLL_START") {
+      scrollForwarding = true;
+      emitScroll();
+      return;
+    }
+
+    if (event.data.type === "INLINE_EDIT_SCROLL_STOP") {
+      scrollForwarding = false;
+      if (scrollRaf) cancelAnimationFrame(scrollRaf);
+      scrollRaf = 0;
+      return;
+    }
+
+    if (event.data.type !== "INLINE_EDIT_CAPTURE_REQUEST") return;
+
+    handleCaptureRequest(event);
+  });
+})();
+
+
+</script></body>
+</html>

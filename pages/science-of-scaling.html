@@ -1,0 +1,861 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Science of Scaling — CRO Manual</title>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="../assets/shared.css"/>
+  <style>
+    :root { --sos: #0D5C63; --sos-light: #e6f2f3; --sos-mid: #c2dde0; }
+    .page-hero { background: var(--sos); }
+
+    /* Stage cards */
+    .stage-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 14px;
+      margin: 24px 0;
+    }
+    .stage-card {
+      background: var(--surface);
+      border: 2px solid var(--border);
+      border-radius: 10px;
+      padding: 20px 20px 16px;
+      cursor: pointer;
+      transition: all 0.15s;
+      text-decoration: none;
+      display: block;
+    }
+    .stage-card:hover {
+      border-color: var(--sos);
+      box-shadow: 0 4px 16px rgba(13,92,99,0.14);
+      text-decoration: none;
+      transform: translateY(-2px);
+    }
+    .stage-num {
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      color: var(--sos);
+      margin-bottom: 6px;
+    }
+    .stage-name {
+      font-size: 17px;
+      font-weight: 700;
+      color: var(--text);
+      margin-bottom: 6px;
+    }
+    .stage-goal {
+      font-size: 12px;
+      color: var(--text-muted);
+      margin-bottom: 12px;
+      line-height: 1.4;
+    }
+    .stage-goal strong {
+      color: var(--sos);
+    }
+    .stage-arrow {
+      font-size: 18px;
+      color: var(--sos);
+    }
+
+    /* Failure list */
+    .failure-list {
+      list-style: none;
+      margin: 16px 0;
+      counter-reset: fails;
+    }
+    .failure-list li {
+      counter-increment: fails;
+      display: flex;
+      gap: 14px;
+      align-items: flex-start;
+      padding: 12px 0;
+      border-bottom: 1px solid var(--border);
+    }
+    .failure-list li:last-child { border-bottom: none; }
+    .failure-list li::before {
+      content: counter(fails);
+      min-width: 28px;
+      height: 28px;
+      border-radius: 50%;
+      background: #fce8e6;
+      color: #A13544;
+      font-size: 13px;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      margin-top: 1px;
+    }
+    .failure-text {
+      font-size: 15px;
+      line-height: 1.65;
+      color: var(--text);
+      padding-top: 3px;
+    }
+
+    /* Principle callout */
+    .principle-callout {
+      background: var(--sos);
+      color: #fff;
+      border-radius: 10px;
+      padding: 24px 28px;
+      margin: 24px 0;
+    }
+    .principle-callout .pc-label {
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      opacity: 0.7;
+      margin-bottom: 8px;
+    }
+    .principle-callout p {
+      font-size: 17px;
+      font-weight: 600;
+      line-height: 1.5;
+      margin: 0;
+    }
+
+    /* GTM Matrix table overrides */
+    .matrix-wrap {
+      overflow-x: auto;
+      margin: 20px 0;
+    }
+    .matrix-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 13px;
+      min-width: 600px;
+    }
+    .matrix-table th {
+      padding: 10px 14px;
+      text-align: left;
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.5px;
+      text-transform: uppercase;
+    }
+    .matrix-table th:first-child {
+      background: var(--text);
+      color: #fff;
+      width: 140px;
+    }
+    .matrix-table th.stage-pmf { background: #1B474D; color: #fff; }
+    .matrix-table th.stage-gtm { background: #0D5C63; color: #fff; }
+    .matrix-table th.stage-grow { background: #0a4a50; color: #fff; }
+    .matrix-table td {
+      padding: 10px 14px;
+      border-bottom: 1px solid var(--border);
+      vertical-align: top;
+      line-height: 1.5;
+    }
+    .matrix-table td:first-child {
+      font-weight: 700;
+      font-size: 12px;
+      text-transform: uppercase;
+      letter-spacing: 0.3px;
+      color: var(--text-muted);
+      background: #fafaf8;
+    }
+    .matrix-table tr:last-child td { border-bottom: none; }
+
+    /* Deep-dive nav cards */
+    .deepdive-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+      gap: 12px;
+      margin: 20px 0;
+    }
+    .deepdive-card {
+      background: var(--surface);
+      border: 1.5px solid var(--border);
+      border-radius: 8px;
+      padding: 16px 18px;
+      cursor: pointer;
+      transition: all 0.15s;
+      text-decoration: none;
+      display: block;
+    }
+    .deepdive-card:hover {
+      border-color: var(--sos);
+      box-shadow: 0 2px 8px rgba(13,92,99,0.12);
+      text-decoration: none;
+    }
+    .dd-label {
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      color: var(--sos);
+      margin-bottom: 4px;
+    }
+    .dd-title {
+      font-size: 14px;
+      font-weight: 700;
+      color: var(--text);
+      margin-bottom: 4px;
+    }
+    .dd-desc {
+      font-size: 12px;
+      color: var(--text-muted);
+      line-height: 1.4;
+    }
+    .dd-arrow {
+      font-size: 16px;
+      color: var(--sos);
+      margin-top: 8px;
+      display: block;
+    }
+
+    @media (max-width: 768px) {
+      .stage-grid { grid-template-columns: 1fr; }
+    }
+
+    .phase-map-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+      gap: 12px;
+      margin: 16px 0 32px;
+    }
+    .phase-map-card {
+      background: var(--surface);
+      border: 1.5px solid var(--border);
+      border-radius: 8px;
+      padding: 14px 16px;
+      text-decoration: none;
+      display: block;
+      transition: all 0.15s;
+    }
+    .phase-map-card:hover { text-decoration: none; transform: translateY(-1px); box-shadow: 0 3px 10px rgba(0,0,0,0.08); border-color: var(--sos); }
+    .pm-phase-label { font-size: 10px; font-weight: 700; letter-spacing: 0.8px; text-transform: uppercase; color: var(--sos); margin-bottom: 4px; }
+    .pm-title { font-size: 13px; font-weight: 700; color: var(--text); margin-bottom: 4px; line-height: 1.3; }
+    .pm-desc { font-size: 11px; color: var(--text-muted); line-height: 1.5; }
+
+    .tools-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 12px; margin: 16px 0 32px; }
+    .tool-card { background: var(--surface); border: 1.5px solid var(--border); border-radius: 8px; padding: 14px 16px; text-decoration: none; display: block; transition: all 0.15s; }
+    .tool-card:hover { text-decoration: none; transform: translateY(-1px); box-shadow: 0 3px 10px rgba(0,0,0,0.08); }
+    .tc-sos { border-left: 3px solid #0D5C63; }
+    .tc-res { border-left: 3px solid #2C5F8A; }
+    .tc-phase { font-size: 10px; font-weight: 700; letter-spacing: 0.8px; text-transform: uppercase; color: #0D5C63; margin-bottom: 4px; }
+    .tc-res .tc-phase { color: #2C5F8A; }
+    .tc-title { font-size: 13px; font-weight: 700; color: var(--text); margin-bottom: 4px; line-height: 1.3; }
+    .tc-desc { font-size: 11px; color: var(--text-muted); line-height: 1.5; }
+  </style>
+</head>
+<body>
+
+<!-- Nav -->
+<nav class="nav">
+  <span class="nav-logo">CRO <span>Manual</span></span>
+  <span class="nav-sep">/</span>
+  <a href="../index.html" class="nav-back">← Home</a>
+  <span class="nav-sep">/</span>
+  <span class="nav-current">Science of Scaling</span>
+</nav>
+
+<!-- Hero -->
+<div class="page-hero">
+  <div class="hero-phase-label">Mark Roberge · Stage 2 Capital</div>
+  <div class="hero-title">Science of Scaling</div>
+  <div class="hero-subtitle">A scientific, data-driven framework for scaling SaaS companies — built on customer retention, unit economics, and compounding moats. Most companies fail because they scale too early, too fast, or without the right foundation.</div>
+  <div class="hero-tags">
+    <a href="../subpages/sos-lir.html" class="hero-tag">LIR</a>
+    <a href="../subpages/sos-liue.html" class="hero-tag">LIUE</a>
+    <a href="../subpages/sos-bottoms-up.html" class="hero-tag">GTM Bottoms-Up Model</a>
+    <a href="../subpages/sos-checklist.html" class="hero-tag">Scaling Checklist</a>
+    <a href="../subpages/sos-gtm-playbook.html" class="hero-tag">GTM Playbook</a>
+    <a href="../subpages/sos-hiring-sales-leader.html" class="hero-tag">Hiring Sales Leader</a>
+  </div>
+</div>
+
+<!-- Content -->
+<div class="content-wrap">
+
+  <!-- Breadcrumb -->
+  <div class="breadcrumb">
+    <a href="../index.html">Home</a>
+    <span class="sep">›</span>
+    <span class="current">Science of Scaling</span>
+  </div>
+
+  <!-- Intro -->
+  <div class="section-title">Why Most Startups Fail to Scale</div>
+  <p class="section-intro">Mark Roberge's Science of Scaling framework identifies five root causes of startup failure at the growth stage — all of which stem from misaligned sequencing rather than lack of effort or talent.</p>
+
+  <ol class="failure-list">
+    <li><span class="failure-text"><strong>Premature focus on top-line revenue vs. customer value creation.</strong> Optimizing for closed bookings before customers are reliably successful destroys the foundation of a scalable business.</span></li>
+    <li><span class="failure-text"><strong>Inadequate, non-data-driven definition of product-market fit.</strong> Founders declare PMF based on gut feel or a handful of happy customers — without the cohort data to back it up.</span></li>
+    <li><span class="failure-text"><strong>Misunderstanding the GTM capabilities required before hiring salespeople.</strong> Hiring a sales team before the playbook is codified means hiring people to figure out a motion you haven't solved yet.</span></li>
+    <li><span class="failure-text"><strong>Front-loading sales hires vs. pacing throughout the year.</strong> Hiring a large cohort of reps at once prevents you from learning which profile works and wastes ramp time en masse.</span></li>
+    <li><span class="failure-text"><strong>Confusing temporary competitive advantage with sustainable competitive advantage.</strong> Early wins built on founder hustle or a fleeting product gap don't compound — moats must be deliberately constructed.</span></li>
+  </ol>
+
+  <!-- The 3-Stage Framework -->
+  <div class="section-title">The 3-Stage Framework</div>
+  <p class="section-intro">Every SaaS company must pass through three sequential stages. Attempting to move to the next stage before achieving the current stage's goal is the most common scaling mistake.</p>
+
+  <div class="stage-grid">
+    <div class="stage-card" onclick="location.href='../subpages/sos-pmf.html'">
+      <div class="stage-num">Stage 1</div>
+      <div class="stage-name">Product-Market Fit</div>
+      <div class="stage-goal">Goal: <strong>Customer Retention</strong><br/>Prove that customers succeed consistently before attempting to scale.</div>
+      <span class="stage-arrow">→</span>
+    </div>
+    <div class="stage-card" onclick="location.href='../subpages/sos-gtm-fit.html'">
+      <div class="stage-num">Stage 2</div>
+      <div class="stage-name">Go-to-Market Fit</div>
+      <div class="stage-goal">Goal: <strong>Scalable Unit Economics</strong><br/>Prove that you can acquire customers profitably and repeatably.</div>
+      <span class="stage-arrow">→</span>
+    </div>
+    <div class="stage-card" onclick="location.href='../subpages/sos-growth-moat.html'">
+      <div class="stage-num">Stage 3</div>
+      <div class="stage-name">Growth &amp; Moat</div>
+      <div class="stage-goal">Goal: <strong>Revenue Growth Rate</strong><br/>Maximize revenue growth while building a sustainable competitive moat.</div>
+      <span class="stage-arrow">→</span>
+    </div>
+  </div>
+
+  <!-- GTM Strategy Matrix -->
+  <div class="section-title">GTM Strategy Matrix</div>
+  <p class="section-intro">Every GTM decision — from who you hire to how you compensate — should be calibrated to your current stage. The right action in Stage 3 is often catastrophically wrong in Stage 1.</p>
+
+  <div class="matrix-wrap">
+    <table class="matrix-table">
+      <thead>
+        <tr>
+          <th>Dimension</th>
+          <th class="stage-pmf">Stage 1 — PMF</th>
+          <th class="stage-gtm">Stage 2 — GTM Fit</th>
+          <th class="stage-grow">Stage 3 — Growth &amp; Moat</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Target Market</td>
+          <td>Early Adopter</td>
+          <td>Early Majority</td>
+          <td>Scale vs. Experiment vs. Ignore</td>
+        </tr>
+        <tr>
+          <td>GTM Playbook</td>
+          <td>Win At All Cost</td>
+          <td>Codified, Scalable</td>
+          <td>Reinforced</td>
+        </tr>
+        <tr>
+          <td>Sales Hire</td>
+          <td>PM + AE hybrid</td>
+          <td>Process Builder</td>
+          <td>Process Executor</td>
+        </tr>
+        <tr>
+          <td>Demand Gen</td>
+          <td>Personal Network + Referrals</td>
+          <td>1 Scalable, Measurable Medium</td>
+          <td>Multiple Mediums, Tightly Aligned</td>
+        </tr>
+        <tr>
+          <td>Pricing</td>
+          <td>Solve for Customer Commitment</td>
+          <td>Solve for Unit Economics</td>
+          <td>Assess Disruption Risk</td>
+        </tr>
+        <tr>
+          <td>Compensation</td>
+          <td>Based on Customer Retention</td>
+          <td>Customer Retention + Unit Economics</td>
+          <td>Add Promotion Path</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- Key Principle -->
+  <div class="principle-callout">
+    <div class="pc-label">Key Principle</div>
+    <p>"Scale is a pace, not a single lump sum event. Scale as fast as possible without losing PMF or GTM fit."</p>
+  </div>
+
+  <!-- Phase System Integration -->
+  <div class="section-title">How Stages Map to the 6-Phase Revenue System</div>
+  <p class="section-intro">The Science of Scaling stages are not parallel to the 6-phase SaaS Revenue System — they are the sequencing layer that governs it. Each stage determines which phases you should be executing, which metrics govern readiness, and which gate condition must be met before moving forward.</p>
+
+  <div style="overflow-x:auto; margin: 20px 0;">
+    <table class="matrix-table" style="min-width:700px;">
+      <thead>
+        <tr>
+          <th>SoS Stage</th>
+          <th class="stage-pmf">Stage 1 — PMF</th>
+          <th class="stage-gtm">Stage 2 — GTM Fit</th>
+          <th class="stage-grow">Stage 3 — Growth &amp; Moat</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Primary Phases</td>
+          <td>Phase 1 (ICP, Messaging, Playbook)</td>
+          <td>Phase 3 (GTM, Demand Gen) + Phase 4 (Execution)</td>
+          <td>Phase 5 (Scale, NRR, Moats)</td>
+        </tr>
+        <tr>
+          <td>Supporting Phase</td>
+          <td>Phase 0 (Foundation — all stages) + Phase 2 begins</td>
+          <td>Phase 2 (Hiring at 2/month pace)</td>
+          <td>Phase 2 (Process Executor hiring) + Phase 6</td>
+        </tr>
+        <tr>
+          <td>Governing Metric</td>
+          <td>LIR ≥ 60–80% for 2+ cohorts</td>
+          <td>LIUE &gt; 3 for 2+ consecutive quarters</td>
+          <td>NRR &gt; 110%, Revenue Growth Rate maximized</td>
+        </tr>
+        <tr>
+          <td>GTM Playbook Mode</td>
+          <td>Win at All Costs (exploratory)</td>
+          <td>Codified, Scalable (outside-in)</td>
+          <td>Reinforced (scale + iterate)</td>
+        </tr>
+        <tr>
+          <td>Hiring Profile</td>
+          <td>PM+AE hybrid — discovers playbook</td>
+          <td>Process Builder — codifies playbook</td>
+          <td>Process Executor — scales playbook</td>
+        </tr>
+        <tr>
+          <td>Gate to Next Stage</td>
+          <td>LIR ≥ threshold for 2 cohorts + correlation confirmed</td>
+          <td>LIUE &gt; 3 for 2Q + Playbook codified + Demand gen proven</td>
+          <td>No exit — maintain Speedometer</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="phase-map-grid">
+    <div class="phase-map-card" onclick="location.href='phase0.html'">
+      <div class="pm-phase-label">Phase 0 · All Stages</div>
+      <div class="pm-title">Leadership, Vision &amp; Culture</div>
+      <div class="pm-desc">Prerequisites that must exist at every stage. Culture determines whether LIR programs and playbooks actually get executed.</div>
+    </div>
+    <div class="phase-map-card" onclick="location.href='phase1.html'">
+      <div class="pm-phase-label">Phase 1 · Stage 1</div>
+      <div class="pm-title">ICP, Messaging &amp; Playbook</div>
+      <div class="pm-desc">The operational home of Stage 1. Define LIR event, target Early Adopters, build exploratory playbook. Comp tied to LIR achievement.</div>
+    </div>
+    <div class="phase-map-card" onclick="location.href='phase2.html'">
+      <div class="pm-phase-label">Phase 2 · Stage 1→3</div>
+      <div class="pm-title">Hiring, Ramp &amp; Comp</div>
+      <div class="pm-desc">Hiring profile changes by stage. Comp structure changes by stage. Scale pace (2/month) begins only when LIUE &gt; 3.</div>
+    </div>
+    <div class="phase-map-card" onclick="location.href='phase3.html'">
+      <div class="pm-phase-label">Phase 3 · Stage 2</div>
+      <div class="pm-title">GTM, Demand Gen &amp; Segmentation</div>
+      <div class="pm-desc">The operational home of Stage 2. One scalable demand gen channel, codified playbook, LIUE-positive motion.</div>
+    </div>
+    <div class="phase-map-card" onclick="location.href='phase4.html'">
+      <div class="pm-phase-label">Phase 4 · Stage 2</div>
+      <div class="pm-title">Pipeline, MEDDICC &amp; Forecasting</div>
+      <div class="pm-desc">Execution layer of Stage 2. SQL-to-customer rate and rep productivity are direct LIUE CAC inputs.</div>
+    </div>
+    <div class="phase-map-card" onclick="location.href='phase5.html'">
+      <div class="pm-phase-label">Phase 5 · Stage 3</div>
+      <div class="pm-title">Scale, Repeatability &amp; NRR</div>
+      <div class="pm-desc">The operational home of Stage 3. Roberge's repeatability test is the Stage 2→3 gate. Segment analysis governs scale decisions.</div>
+    </div>
+    <div class="phase-map-card" onclick="location.href='phase6.html'">
+      <div class="pm-phase-label">Phase 6 · All Stages</div>
+      <div class="pm-title">Troubleshooting &amp; Diagnostics</div>
+      <div class="pm-desc">Most revenue problems map to a failed stage gate. LIR problems = Stage 1 failure. LIUE problems = Stage 2 failure. Growth slowdown = Stage 3.</div>
+    </div>
+  </div>
+
+  <!-- Deep-dive navigation -->
+  <div class="section-title">Deep-Dive Resources</div>
+  <p class="section-intro">Each of these pages covers a specific tool, framework, or concept from the Science of Scaling in depth.</p>
+
+  <div class="deepdive-grid">
+    <div class="deepdive-card" onclick="location.href='../subpages/sos-lir.html'">
+      <div class="dd-label">Metric</div>
+      <div class="dd-title">Leading Indicator of Retention (LIR)</div>
+      <div class="dd-desc">The most critical early-warning metric in Stage 1. Predicts long-term customer retention months in advance.</div>
+      <span class="dd-arrow">→</span>
+    </div>
+    <div class="deepdive-card" onclick="location.href='../subpages/sos-liue.html'">
+      <div class="dd-label">Metric</div>
+      <div class="dd-title">Leading Indicator of Unit Economics (LIUE)</div>
+      <div class="dd-desc">The Stage 2 equivalent of LIR — predicts whether your GTM motion will yield scalable unit economics.</div>
+      <span class="dd-arrow">→</span>
+    </div>
+    <div class="deepdive-card" onclick="location.href='../subpages/sos-bottoms-up.html'">
+      <div class="dd-label">Model</div>
+      <div class="dd-title">GTM Bottoms-Up Model</div>
+      <div class="dd-desc">Build a hiring and revenue plan grounded in rep productivity data, not top-down targets.</div>
+      <span class="dd-arrow">→</span>
+    </div>
+    <div class="deepdive-card" onclick="location.href='../subpages/sos-checklist.html'">
+      <div class="dd-label">Framework</div>
+      <div class="dd-title">GTM Scaling Checklist</div>
+      <div class="dd-desc">The full checklist for confirming readiness to move from PMF to GTM Fit — and from GTM Fit to Growth.</div>
+      <span class="dd-arrow">→</span>
+    </div>
+    <div class="deepdive-card" onclick="location.href='../subpages/sos-gtm-playbook.html'">
+      <div class="dd-label">Framework</div>
+      <div class="dd-title">GTM Playbook Framework</div>
+      <div class="dd-desc">How to build, codify, and scale a repeatable go-to-market playbook that doesn't depend on heroics.</div>
+      <span class="dd-arrow">→</span>
+    </div>
+    <div class="deepdive-card" onclick="location.href='../subpages/sos-hiring-sales-leader.html'">
+      <div class="dd-label">Hiring</div>
+      <div class="dd-title">Hiring the First Sales Leader</div>
+      <div class="dd-desc">The most consequential hire in a startup's GTM journey — and the most commonly made too early.</div>
+      <span class="dd-arrow">→</span>
+    </div>
+  </div>
+
+  <!-- Stage links -->
+  <div class="related-section">
+    <div class="related-title">Stages</div>
+    <div class="related-links">
+      <a href="../subpages/sos-pmf.html" class="related-link">Stage 1: Product-Market Fit</a>
+      <a href="../subpages/sos-gtm-fit.html" class="related-link">Stage 2: GTM Fit</a>
+      <a href="../subpages/sos-growth-moat.html" class="related-link">Stage 3: Growth &amp; Moat</a>
+      <a href="../index.html" class="related-link">← Back to Home</a>
+    </div>
+  </div>
+
+</div>
+<script data-pplx-inline-edit>
+(function () {
+  if (window === window.top) return;
+
+  const allowedParentOrigins = ["https://www.perplexity.ai","https://perplexity.ai","https://testing.perplexity.ai","https://staging.perplexity.ai","https://*.preview.i.perplexity.ai","http://localhost:3000","http://127.0.0.1:3000","http://localhost:5173","http://127.0.0.1:5173"];
+  const MAX_FONT_BYTES = 500 * 1024;
+  const MAX_TOTAL_FONT_BYTES = 2 * 1024 * 1024;
+  let scrollForwarding = false;
+  let scrollRaf = 0;
+  let trustedTopOrigin = null;
+
+  // Allow entries like "https://*.preview.i.perplexity.ai" — the wildcard
+  // matches a single DNS label (no dots), so "https://*.foo" cannot stretch
+  // across multiple labels.
+  function matchesAllowedOrigin(origin) {
+    if (!origin) return false;
+    for (const entry of allowedParentOrigins) {
+      if (!entry.includes("*")) {
+        if (entry === origin) return true;
+        continue;
+      }
+      const pattern = new RegExp(
+        "^" +
+          entry.replace(/[.+?^${}()|[\]\\]/g, "\\$&").replace(/\*/g, "[^.]+") +
+          "$",
+      );
+      if (pattern.test(origin)) return true;
+    }
+    return false;
+  }
+
+  // Trust decision: when the sender is same-origin-visible (event.origin is a
+  // real origin like https://www.perplexity.ai) we trust event.origin directly.
+  // When event.origin is "null" (opaque broker srcdoc), we fall back to the
+  // broker's stamped `parentOrigin` to identify the top window. The fallback
+  // is claim-only — we rely on the browser's native `targetOrigin` enforcement
+  // on the response path (see postToTrustedTop) to ensure replies can't be
+  // delivered to anyone but the actual top window of that claimed origin.
+  function getTrustedParentOrigin(event) {
+    const forwardedParentOrigin =
+      typeof event.data.parentOrigin === "string" ? event.data.parentOrigin : null;
+    const parentOrigin = event.origin === "null" ? forwardedParentOrigin : event.origin;
+    return matchesAllowedOrigin(parentOrigin) ? parentOrigin : null;
+  }
+
+  // All responses go to window.top with targetOrigin = the allowlisted origin.
+  // An attacker that iframes us inside their own null-origin broker can claim
+  // any parentOrigin they like, but the browser will drop the reply whenever
+  // the real top's origin doesn't match — so the screenshot never leaves.
+  function postToTrustedTop(message) {
+    if (!trustedTopOrigin) return;
+    try {
+      window.top.postMessage(message, trustedTopOrigin);
+    } catch (_error) {}
+  }
+
+  function inlineAll(original, clone) {
+    if (original.nodeType !== 1 || clone.nodeType !== 1) return;
+
+    try {
+      const computedStyle = getComputedStyle(original);
+      // cssText on a computed style is the serialized declaration in modern
+      // Chromium/Safari — a single read beats enumerating ~400 longhand
+      // properties. Firefox returns "" here, so we fall back on empty.
+      const serialized = computedStyle.cssText;
+      if (serialized) {
+        clone.style.cssText = serialized;
+      } else {
+        const parts = new Array(computedStyle.length);
+        for (let index = 0; index < computedStyle.length; index += 1) {
+          const property = computedStyle[index];
+          parts[index] = `${property}:${computedStyle.getPropertyValue(property)};`;
+        }
+        clone.style.cssText = parts.join("");
+      }
+    } catch (_error) {}
+
+    const originalChildren = original.children;
+    const clonedChildren = clone.children;
+    for (
+      let index = 0;
+      index < originalChildren.length && index < clonedChildren.length;
+      index += 1
+    ) {
+      inlineAll(originalChildren[index], clonedChildren[index]);
+    }
+  }
+
+  function extractFontUrl(srcValue) {
+    const matches = [
+      ...srcValue.matchAll(
+        /url\(["']?([^"')]+)["']?\)(?:\s*format\(["']?([^"')]+)["']?\))?/gi,
+      ),
+    ];
+    if (matches.length === 0) return null;
+    const woff2 = matches.find((m) => m[2] && m[2].toLowerCase().includes("woff2"));
+    if (woff2) return woff2[1];
+    const woff = matches.find((m) => m[2] && m[2].toLowerCase().includes("woff"));
+    if (woff) return woff[1];
+    return matches[0][1];
+  }
+
+  // Cache resolved font URL -> data URI across captures. Fonts on a page
+  // essentially never change, and a batch run emits multiple captures back to
+  // back — without this we'd refetch + re-base64 every time.
+  const fontDataUriCache = new Map();
+  const SRC_DECLARATION_RE = /src\s*:\s*[^;}]+/i;
+
+  async function fetchAsDataUri(url) {
+    if (fontDataUriCache.has(url)) return fontDataUriCache.get(url);
+    let dataUri = null;
+    try {
+      const response = await fetch(url, { mode: "cors", credentials: "omit" });
+      if (response.ok) {
+        const blob = await response.blob();
+        if (blob.size <= MAX_FONT_BYTES) {
+          dataUri = await new Promise((resolve) => {
+            const reader = new FileReader();
+            reader.onloadend = () =>
+              resolve(typeof reader.result === "string" ? reader.result : null);
+            reader.onerror = () => resolve(null);
+            reader.readAsDataURL(blob);
+          });
+        }
+      }
+    } catch (_error) {
+      dataUri = null;
+    }
+    fontDataUriCache.set(url, dataUri);
+    return dataUri;
+  }
+
+  function collectFontFaceRuleTexts() {
+    const rules = [];
+    for (const sheet of document.styleSheets) {
+      let cssRules;
+      try {
+        cssRules = sheet.cssRules;
+      } catch (_error) {
+        continue;
+      }
+      if (!cssRules) continue;
+      for (const rule of cssRules) {
+        const cssText = rule.cssText || "";
+        if (cssText.startsWith("@font-face")) rules.push(cssText);
+      }
+    }
+    return rules;
+  }
+
+  async function buildInlinedFontCss() {
+    const ruleTexts = collectFontFaceRuleTexts();
+    if (ruleTexts.length === 0) return null;
+
+    const resolved = ruleTexts.map((cssText) => {
+      if (!SRC_DECLARATION_RE.test(cssText)) return null;
+      const srcMatch = cssText.match(/src\s*:\s*([^;}]+)[;}]/i);
+      if (!srcMatch) return null;
+      const url = extractFontUrl(srcMatch[1]);
+      if (!url) return null;
+      try {
+        return { cssText, url: new URL(url, document.baseURI).href };
+      } catch (_error) {
+        return null;
+      }
+    });
+
+    const dataUris = await Promise.all(
+      resolved.map((entry) => (entry ? fetchAsDataUri(entry.url) : Promise.resolve(null))),
+    );
+
+    const inlined = [];
+    let totalBytes = 0;
+    for (let index = 0; index < resolved.length; index += 1) {
+      const entry = resolved[index];
+      const dataUri = dataUris[index];
+      if (!entry || !dataUri) continue;
+      const approxBytes = dataUri.length * 0.75;
+      if (totalBytes + approxBytes > MAX_TOTAL_FONT_BYTES) break;
+      totalBytes += approxBytes;
+      inlined.push(entry.cssText.replace(SRC_DECLARATION_RE, `src: url("${dataUri}")`));
+    }
+    return inlined.length > 0 ? inlined.join("\n") : null;
+  }
+
+  function stripExternal(clone) {
+    const images = clone.querySelectorAll("img");
+    for (let index = 0; index < images.length; index += 1) {
+      const src = images[index].getAttribute("src");
+      if (src && !src.startsWith("data:")) images[index].removeAttribute("src");
+    }
+
+    const elements = clone.querySelectorAll("*");
+    for (let index = 0; index < elements.length; index += 1) {
+      const style = elements[index].style.cssText;
+      if (style && style.includes("url(")) {
+        elements[index].style.cssText = style.replace(
+          /url\(["']?(?!data:)[^)"']*["']?\)/gi,
+          "none",
+        );
+      }
+    }
+  }
+
+  function emitScroll() {
+    scrollRaf = 0;
+    if (!scrollForwarding) return;
+    postToTrustedTop({
+      type: "INLINE_EDIT_SCROLL",
+      scrollX: window.scrollX,
+      scrollY: window.scrollY,
+    });
+  }
+
+  window.addEventListener(
+    "scroll",
+    function () {
+      if (!scrollForwarding || scrollRaf) return;
+      scrollRaf = requestAnimationFrame(emitScroll);
+    },
+    { passive: true, capture: true },
+  );
+
+  async function handleCaptureRequest(event) {
+    const requestId = event.data.requestId;
+    const scrollX = window.scrollX;
+    const scrollY = window.scrollY;
+    const width = window.innerWidth;
+    const height = window.innerHeight;
+
+    function postResult(dataUrl) {
+      postToTrustedTop({
+        type: "INLINE_EDIT_SCREENSHOT_RESULT",
+        requestId,
+        dataUrl,
+        scrollX,
+        scrollY,
+      });
+    }
+
+    try {
+      // Wait for any pending web fonts to resolve so both inline metrics and
+      // the @font-face inlining below see the same loaded faces.
+      if (document.fonts && document.fonts.ready) {
+        try {
+          await document.fonts.ready;
+        } catch (_error) {}
+      }
+
+      const clone = document.documentElement.cloneNode(true);
+      inlineAll(document.documentElement, clone);
+
+      const removedNodes = clone.querySelectorAll("script,link[rel=\"stylesheet\"],style");
+      for (let index = 0; index < removedNodes.length; index += 1) {
+        removedNodes[index].remove();
+      }
+
+      stripExternal(clone);
+
+      // Re-embed web fonts as data-URI @font-face rules so the SVG rasterizer
+      // can resolve them — external font URLs aren't fetched during
+      // foreignObject rendering, which would otherwise force a fallback face
+      // and change text metrics.
+      const inlinedFontCss = await buildInlinedFontCss();
+      if (inlinedFontCss) {
+        const styleEl = document.createElement("style");
+        styleEl.textContent = inlinedFontCss;
+        const head = clone.querySelector("head");
+        if (head) head.appendChild(styleEl);
+        else clone.insertBefore(styleEl, clone.firstChild);
+      }
+
+      const html = new XMLSerializer().serializeToString(clone);
+      const svg =
+        `<svg xmlns="http://www.w3.org/2000/svg" width="${width}" height="${height}">` +
+        '<foreignObject width="100%" height="100%">' +
+        `<div xmlns="http://www.w3.org/1999/xhtml" style="width:${width}px;height:${height}px;overflow:hidden">` +
+        `<div style="transform:translate(-${scrollX}px,-${scrollY}px);transform-origin:top left">` +
+        html +
+        "</div></div></foreignObject></svg>";
+      const svgUrl = `data:image/svg+xml;charset=utf-8,${encodeURIComponent(svg)}`;
+      const image = new Image();
+      image.onload = function () {
+        const canvas = document.createElement("canvas");
+        canvas.width = width;
+        canvas.height = height;
+        canvas.getContext("2d").drawImage(image, 0, 0);
+        postResult(canvas.toDataURL("image/png"));
+      };
+      image.onerror = function () {
+        postResult(null);
+      };
+      image.src = svgUrl;
+    } catch (_error) {
+      postResult(null);
+    }
+  }
+
+  window.addEventListener("message", function (event) {
+    if (!event.data) return;
+    // Only accept messages from the direct parent frame. Blocks sibling /
+    // unrelated-window postMessage senders that could otherwise reach us.
+    if (event.source !== window.parent) return;
+
+    const trustedParentOrigin = getTrustedParentOrigin(event);
+    if (!trustedParentOrigin) return;
+    trustedTopOrigin = trustedParentOrigin;
+
+    if (event.data.type === "INLINE_EDIT_SCROLL_START") {
+      scrollForwarding = true;
+      emitScroll();
+      return;
+    }
+
+    if (event.data.type === "INLINE_EDIT_SCROLL_STOP") {
+      scrollForwarding = false;
+      if (scrollRaf) cancelAnimationFrame(scrollRaf);
+      scrollRaf = 0;
+      return;
+    }
+
+    if (event.data.type !== "INLINE_EDIT_CAPTURE_REQUEST") return;
+
+    handleCaptureRequest(event);
+  });
+})();
+
+
+</script></body>
+</html>

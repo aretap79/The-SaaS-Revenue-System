@@ -1,0 +1,1053 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Customer Success — Retention, Expansion & Advocacy — SaaS Revenue System</title>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="../assets/shared.css"/>
+  <style>
+    .page-hero { background: #7A39BB; }
+    .health-score-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+      gap: 12px;
+      margin: 20px 0;
+    }
+    .health-input-card {
+      background: var(--surface);
+      border: 1.5px solid var(--border);
+      border-radius: 8px;
+      padding: 14px 16px;
+    }
+    .health-input-card .hic-label {
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      color: #7A39BB;
+      margin-bottom: 4px;
+    }
+    .health-input-card .hic-weight {
+      font-size: 20px;
+      font-weight: 700;
+      color: var(--text);
+      margin-bottom: 4px;
+    }
+    .health-input-card p { font-size: 13px; line-height: 1.5; color: var(--text-muted); margin: 0; }
+    .rag-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      gap: 12px;
+      margin: 16px 0;
+    }
+    .rag-card {
+      border-radius: 8px;
+      padding: 16px;
+    }
+    .rag-green { background: #f0fff4; border: 1.5px solid #437A22; }
+    .rag-yellow { background: #fff8e1; border: 1.5px solid #9a6c00; }
+    .rag-red { background: #fce8e6; border: 1.5px solid #A13544; }
+    .rag-card .rag-badge {
+      font-size: 12px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      margin-bottom: 8px;
+    }
+    .rag-green .rag-badge { color: #437A22; }
+    .rag-yellow .rag-badge { color: #9a6c00; }
+    .rag-red .rag-badge { color: #A13544; }
+    .rag-card p { font-size: 13px; line-height: 1.5; color: var(--text); margin: 0; }
+    @media(max-width:640px) { .rag-grid { grid-template-columns: 1fr; } .health-score-grid { grid-template-columns: 1fr 1fr; } }
+    .qbr-agenda {
+      background: var(--surface);
+      border: 1.5px solid var(--border);
+      border-radius: 8px;
+      padding: 0;
+      margin: 16px 0;
+      overflow: hidden;
+    }
+    .qbr-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 16px;
+      padding: 14px 20px;
+      border-bottom: 1px solid var(--border);
+    }
+    .qbr-item:last-child { border-bottom: none; }
+    .qbr-time {
+      font-size: 11px;
+      font-weight: 700;
+      color: #7A39BB;
+      text-transform: uppercase;
+      letter-spacing: .5px;
+      min-width: 60px;
+      margin-top: 2px;
+    }
+    .qbr-content .qbr-title { font-size: 14px; font-weight: 700; color: var(--text); margin-bottom: 3px; }
+    .qbr-content p { font-size: 13px; line-height: 1.5; color: var(--text-muted); margin: 0; }
+    .churn-taxonomy {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+      margin: 16px 0;
+    }
+    .churn-card {
+      background: var(--surface);
+      border: 1.5px solid var(--border);
+      border-radius: 8px;
+      padding: 16px;
+    }
+    .churn-card .cc-type {
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      color: #A13544;
+      margin-bottom: 6px;
+    }
+    .churn-card .cc-title { font-size: 14px; font-weight: 700; color: var(--text); margin-bottom: 8px; }
+    .churn-card p { font-size: 13px; line-height: 1.5; color: var(--text); margin: 0; }
+    @media(max-width:640px) { .churn-taxonomy { grid-template-columns: 1fr; } }
+    .nps-zones {
+      display: flex;
+      gap: 0;
+      border-radius: 8px;
+      overflow: hidden;
+      margin: 16px 0;
+      border: 1.5px solid var(--border);
+    }
+    .nps-zone {
+      flex: 1;
+      padding: 14px 12px;
+      text-align: center;
+    }
+    .nps-detractor { background: #fce8e6; }
+    .nps-passive { background: #fff8e1; }
+    .nps-promoter { background: #f0fff4; }
+    .nps-zone .nz-label { font-size: 11px; font-weight: 700; letter-spacing: 1px; text-transform: uppercase; margin-bottom: 4px; }
+    .nps-detractor .nz-label { color: #A13544; }
+    .nps-passive .nz-label { color: #9a6c00; }
+    .nps-promoter .nz-label { color: #437A22; }
+    .nps-zone .nz-range { font-size: 18px; font-weight: 700; color: var(--text); margin-bottom: 6px; }
+    .nps-zone p { font-size: 12px; color: var(--text-muted); line-height: 1.4; margin: 0; }
+    .csm-ratios {
+      background: var(--surface);
+      border: 1.5px solid var(--border);
+      border-radius: 8px;
+      overflow: hidden;
+      margin: 16px 0;
+    }
+    .csm-ratios .cr-header {
+      background: #7A39BB;
+      color: #fff;
+      padding: 10px 16px;
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr 2fr;
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: .5px;
+      text-transform: uppercase;
+    }
+    .csm-ratios .cr-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr 2fr;
+      padding: 12px 16px;
+      border-bottom: 1px solid var(--border);
+      font-size: 13px;
+      align-items: start;
+    }
+    .csm-ratios .cr-row:last-child { border-bottom: none; }
+    .csm-ratios .cr-row:nth-child(even) { background: #fafaf8; }
+    @media(max-width:640px) { .csm-ratios .cr-header, .csm-ratios .cr-row { grid-template-columns: 1fr 1fr; } .csm-ratios .cr-row > *:nth-child(3), .csm-ratios .cr-row > *:nth-child(4), .csm-ratios .cr-header > *:nth-child(3), .csm-ratios .cr-header > *:nth-child(4) { display: none; } }
+    .two-col {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+      margin: 16px 0;
+    }
+    @media(max-width:640px) { .two-col { grid-template-columns: 1fr; } }
+    .icp-loop {
+      background: var(--surface);
+      border: 1.5px solid #7A39BB;
+      border-radius: 10px;
+      padding: 24px;
+      margin: 20px 0;
+    }
+    .icp-loop-steps {
+      display: flex;
+      align-items: center;
+      gap: 0;
+      flex-wrap: wrap;
+      justify-content: center;
+      margin: 16px 0 0;
+    }
+    .icp-step {
+      background: #f5f0ff;
+      border: 1.5px solid #7A39BB;
+      border-radius: 8px;
+      padding: 10px 14px;
+      font-size: 13px;
+      font-weight: 700;
+      color: #7A39BB;
+      text-align: center;
+      min-width: 120px;
+    }
+    .icp-arrow {
+      font-size: 20px;
+      color: #7A39BB;
+      padding: 0 8px;
+      font-weight: 700;
+    }
+    @media(max-width:640px) { .icp-loop-steps { flex-direction: column; } .icp-arrow { transform: rotate(90deg); } }
+  </style>
+</head>
+<body>
+<nav class="nav">
+  <span class="nav-logo">SaaS <span>Revenue System</span></span>
+  <span class="nav-sep">|</span>
+  <a href="../index.html" class="nav-back">← Home</a>
+  <span class="nav-sep">|</span>
+  <span class="nav-current">Customer Success</span>
+</nav>
+
+<div class="page-hero">
+  <div class="hero-phase-label">REVENUE FUNCTION</div>
+  <div class="hero-title">Customer Success — Retention, Expansion &amp; Advocacy</div>
+  <div class="hero-subtitle">The sale doesn't end at close — it begins there. CS is the engine of NRR, the validator of ICP, and the source of expansion revenue.</div>
+  <div class="hero-tags">
+    <a href="../subpages/onboarding-cs.html" class="hero-tag">Onboarding</a>
+    <a href="../subpages/adoption-framework.html" class="hero-tag">Adoption Framework</a>
+    <a href="../subpages/health-scoring.html" class="hero-tag">Health Scoring</a>
+    <a href="../subpages/expansion-selling.html" class="hero-tag">Expansion Selling</a>
+    <a href="../subpages/renewal-management.html" class="hero-tag">Renewal Management</a>
+    <a href="../subpages/icp-validation.html" class="hero-tag">ICP Validation</a>
+  </div>
+</div>
+
+<div class="content-wrap">
+
+  <!-- ── 1. CS ROLE IN THE REVENUE SYSTEM ── -->
+  <h2 class="section-title">CS's Role in the Revenue System</h2>
+  <p class="section-intro">Anthony Iannarino's framing cuts to the core: "The sale begins at close." Everything before signature is value promise. Everything after signature is value delivery. A customer success team that operates as a support function — reactive, ticket-driven, relationship-maintaining but not revenue-driving — has misunderstood its mandate. In a subscription business, the economics do not work unless the customer succeeds, renews, and expands. CS is the operational function that makes the SaaS business model viable.</p>
+
+  <div class="subsection">
+    <div class="subsection-title">The CS-as-Revenue-Driver Model</div>
+    <p>Traditional CS culture frames the function as a cost center: keep customers happy, prevent churn, handle complaints. The revenue-driver model reframes CS as a commercial function with explicit revenue accountability — for retention, expansion, and advocacy. This is not about making CSMs into sales reps; it is about CSMs holding themselves accountable for the customer outcomes that drive financial results.</p>
+    <p>In companies where CS operates as a revenue function, CSMs carry NRR targets and expansion quotas, not just CSAT scores. They conduct QBRs that include expansion agenda items. They proactively identify white space within accounts and route expansion opportunities to either their own pipeline or the AE, depending on the commercial model. They are evaluated on the same business outcomes their company is evaluated on by investors.</p>
+    <div class="two-col">
+      <div class="callout callout-warning" style="margin:0">
+        <div class="callout-title">Passive CS Team (Reactive)</div>
+        <p>Responds to tickets. Answers support questions. Sends NPS surveys. Does an annual business review if the customer asks. Celebrates not losing the account at renewal. Measures success by absence of complaints.</p>
+      </div>
+      <div class="callout callout-best-practice" style="margin:0">
+        <div class="callout-title">Proactive CS Team (Revenue Driver)</div>
+        <p>Monitors health scores and intervenes before risk surfaces. Owns a mutual success plan for every account. Schedules QBRs proactively. Identifies expansion triggers and acts on them. Celebrates NRR growth. Measures success by customer outcomes achieved.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── 2. CUSTOMER ONBOARDING ── -->
+  <h2 class="section-title">Customer Onboarding</h2>
+  <p class="section-intro">Onboarding is the most consequential phase of the customer relationship. Research from Gainsight, ChurnZero, and TSIA consistently shows that customers who achieve their first value milestone within the first 60–90 days are 3–4× more likely to renew and expand than customers who do not. Onboarding failure is the most predictable leading indicator of churn — predictable months before the renewal date, when there is still time to intervene.</p>
+
+  <div class="subsection">
+    <div class="subsection-title">Time-to-Value (TTV)</div>
+    <p>Time-to-Value is the elapsed time from contract signature to the moment the customer experiences their first significant value outcome from the product. TTV is the most important early metric in the CS portfolio because it determines whether the customer's initial experience with the product confirms the value promise made in the sales process or fails to deliver on it.</p>
+    <div class="formula-block">
+      <div class="formula-label">Time-to-Value</div>
+      <div class="formula-main">TTV = Date of First Value Milestone − Contract Signature Date</div>
+      <div class="formula-note">Define the "first value milestone" precisely for each customer segment: it must be a customer-acknowledged outcome, not an internal activity (not "training complete" or "data migrated" — but "first report generated" or "first workflow automated"). Benchmark by segment and track as a portfolio metric.</div>
+    </div>
+    <p>The first value milestone is product-specific but must be defined in the mutual success plan (MSP) before the kickoff call. Examples: "Generate your first dashboard showing pipeline coverage by rep" (sales tool), "Process your first automated payroll run" (payroll software), "Close your first support ticket through the platform" (CS tool). The milestone must be observable, confirmable, and meaningful to the customer — not to the vendor.</p>
+  </div>
+
+  <div class="subsection">
+    <div class="subsection-title">The Onboarding Playbook</div>
+    <ol class="step-list">
+      <li><div class="step-content"><span class="step-title">Pre-Kickoff Preparation (Week -1 to 0)</span>CS receives the sales-to-CS handoff document: ICP match assessment, champion and EB identified, stated business outcomes, competitive context, contractual commitments. Any gap in this document is a signal — a handoff with no stated business outcomes means the sales process didn't do its job and CS will need to rediscover the value case from scratch.</div></li>
+      <li><div class="step-content"><span class="step-title">Kickoff Call (Week 1)</span>The most important meeting in the onboarding sequence. Attendees: CS lead, champion, key users, ideally the executive sponsor. Agenda: restate the business outcomes (not features), agree on the mutual success plan milestones and dates, define the communication cadence, identify potential risks, assign accountabilities on both sides. The kickoff call must end with a signed or verbally committed MSP.</div></li>
+      <li><div class="step-content"><span class="step-title">Data Migration &amp; Technical Setup (Weeks 1–3)</span>The most common onboarding failure point. Define the data migration plan explicitly before kickoff — who provides what data, in what format, by what date. Data migration delays are the #1 cause of delayed TTV. Assign a clear owner on the customer side; this person must be named at kickoff.</div></li>
+      <li><div class="step-content"><span class="step-title">User Training (Weeks 2–4)</span>Segment training by role: admin training (configuration, user management) separate from end-user training (daily workflows). Build training around the specific use cases in the MSP, not a generic product walkthrough. Customers who are trained on irrelevant features disengage; customers trained on their actual workflows become power users.</div></li>
+      <li><div class="step-content"><span class="step-title">First Value Milestone (Weeks 4–8)</span>The most important outcome in the onboarding phase. The CSM's entire energy in weeks 3–6 should be directed at removing every obstacle between the customer and their first value milestone. If the milestone is delayed by internal obstacles on the customer's side, escalate to the champion immediately — do not let it slip silently.</div></li>
+      <li><div class="step-content"><span class="step-title">Stakeholder Expansion (Weeks 6–12)</span>Use the momentum of the first value milestone to expand the relationship: introduce the product to additional users, meet additional stakeholders, identify new use cases and departments that could benefit. This is the opening of the "expand" motion — it begins in onboarding, not at renewal.</div></li>
+    </ol>
+    <div class="callout callout-definition">
+      <div class="callout-title">Mutual Success Plan (MSP)</div>
+      <p>The MSP is a co-authored document that defines: (1) the customer's desired business outcomes (in their language), (2) the product milestones required to achieve those outcomes, (3) the timeline for each milestone, (4) the accountabilities on both the customer and vendor side, and (5) the success metrics that define "done." The MSP is a living document — reviewed at every QBR and updated as circumstances change. It is the operational contract of the CS relationship, distinct from and more valuable than the legal contract.</p>
+    </div>
+  </div>
+
+  <!-- ── 3. PRODUCT ADOPTION FRAMEWORK ── -->
+  <h2 class="section-title">Product Adoption Framework</h2>
+  <p class="section-intro">Adoption is the most predictive leading indicator of renewal. A customer who is deeply embedded in the product — high DAU/MAU ratio, broad feature utilization, multiple power users, integrated into critical workflows — has a high switching cost and a visceral awareness of the product's value. A customer who has completed training but logs in weekly to run one report is a churn risk regardless of how enthusiastic their champion sounds in QBR meetings.</p>
+
+  <div class="subsection">
+    <div class="subsection-title">Adoption Metrics</div>
+    <ul class="bullet-list">
+      <li><strong>DAU/MAU ratio (Stickiness):</strong> Daily Active Users / Monthly Active Users. A ratio above 20% indicates habitual daily use — the product is embedded in the user's daily workflow. Below 10% suggests occasional, non-habitual use — the product is not mission-critical to the individual user.</li>
+      <li><strong>Feature utilization breadth:</strong> The percentage of licensed features (or key value features defined by the product team) that the customer is actively using. Customers using only 30% of the features they paid for are candidates for churn — they don't experience full value and will question ROI at renewal.</li>
+      <li><strong>Login frequency trend:</strong> Not just current frequency but trend. A customer whose login frequency has declined by 40% over the past 3 months is at risk — regardless of their absolute login level. The trend line is the signal.</li>
+      <li><strong>Power user density:</strong> The number of highly active users (in the top quartile of usage) within the account. Accounts with 1–2 power users are dependent on those individuals and are at risk when those individuals leave or change roles. Accounts with 8–10 power users are deeply embedded.</li>
+      <li><strong>Integration usage:</strong> Whether the customer has connected the product to other tools in their stack (CRM, Slack, HRIS, etc.). Integrations dramatically increase switching cost and signal deep adoption.</li>
+    </ul>
+  </div>
+
+  <div class="subsection">
+    <div class="subsection-title">Digital CS vs. High-Touch CS</div>
+    <p>Not all customers warrant the same CSM engagement intensity. The appropriate CS motion is determined primarily by ACV and the strategic importance of the account.</p>
+    <table class="data-table">
+      <thead>
+        <tr><th>Segment</th><th>ACV Range</th><th>CS Motion</th><th>Engagement Model</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>SMB / Digital</td><td>&lt;$10K</td><td>Digital / Automated</td><td>Onboarding via email sequences and in-app guides. Health monitoring via automated scoring. Human touch only at renewal or for severe churn risk. Scalable 1:many.</td></tr>
+        <tr><td>Mid-Market / Tech-Touch</td><td>$10K–$75K</td><td>Tech-Touch</td><td>CSM owns a book of 50–80 accounts. Quarterly check-ins, annual QBR, automated health monitoring with human escalation for yellow/red accounts.</td></tr>
+        <tr><td>Enterprise / High-Touch</td><td>$75K–$300K</td><td>High-Touch</td><td>Dedicated CSM with a book of 15–25 accounts. Monthly check-ins, formal QBRs, executive sponsor engagement, proactive expansion selling.</td></tr>
+        <tr><td>Strategic / Named</td><td>$300K+</td><td>White Glove</td><td>Dedicated CSM + AE + Solutions Architect. Weekly engagement, co-innovation, executive sponsorship program, dedicated CS roadmap sessions.</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- ── 4. HEALTH SCORING ── -->
+  <h2 class="section-title">Health Scoring</h2>
+  <p class="section-intro">A customer health score is a composite, weighted index that provides a single, actionable indicator of a customer's likelihood to renew and expand. Its purpose is not to produce a precise measurement — it is to surface accounts that need intervention early enough for that intervention to change the outcome. A health score that triggers action 6 months before renewal is valuable. One that triggers action at 30 days to renewal is too late to do anything meaningful.</p>
+
+  <div class="subsection">
+    <div class="subsection-title">Health Score Inputs and Weighting</div>
+    <div class="health-score-grid">
+      <div class="health-input-card">
+        <div class="hic-label">Product Usage</div>
+        <div class="hic-weight">30%</div>
+        <p>DAU/MAU ratio, login frequency, feature adoption breadth, integration usage. The highest-signal dimension — behavior over stated satisfaction.</p>
+      </div>
+      <div class="health-input-card">
+        <div class="hic-label">Stakeholder Engagement</div>
+        <div class="hic-weight">20%</div>
+        <p>QBR attendance, executive sponsor responsiveness, champion engagement score, number of active contacts in the platform.</p>
+      </div>
+      <div class="health-input-card">
+        <div class="hic-label">NPS / CSAT</div>
+        <div class="hic-weight">15%</div>
+        <p>Most recent NPS score (promoter/passive/detractor), CSAT trend, survey response rate (non-response is itself a health signal).</p>
+      </div>
+      <div class="health-input-card">
+        <div class="hic-label">Support Ticket Volume &amp; Sentiment</div>
+        <div class="hic-weight">15%</div>
+        <p>Open P1/P2 tickets, escalation history, support ticket trend (increasing tickets signal friction), ticket resolution satisfaction.</p>
+      </div>
+      <div class="health-input-card">
+        <div class="hic-label">Contract &amp; Financial Signals</div>
+        <div class="hic-weight">10%</div>
+        <p>Contract value trend (expansion = positive signal), overdue invoices, budget changes communicated, renewal risk flags raised by champion.</p>
+      </div>
+      <div class="health-input-card">
+        <div class="hic-label">Executive Sponsor Presence</div>
+        <div class="hic-weight">10%</div>
+        <p>Whether a named executive sponsor exists, their engagement level, whether they participated in the last QBR, and whether their interest in the product has been confirmed.</p>
+      </div>
+    </div>
+    <div class="rag-grid">
+      <div class="rag-card rag-green">
+        <div class="rag-badge">🟢 Green (70–100)</div>
+        <p>Product deeply embedded, champion actively engaged, NPS is promoter, no open escalations. Standard cadence. Identify expansion triggers and introduce to additional stakeholders.</p>
+      </div>
+      <div class="rag-card rag-yellow">
+        <div class="rag-badge">🟡 Yellow (40–70)</div>
+        <p>Usage declining, mixed NPS, or reduced engagement. CSM schedules proactive check-in. Identify the root issue (usage gap, stakeholder change, competitive evaluation, budget pressure) before it becomes critical.</p>
+      </div>
+      <div class="rag-card rag-red">
+        <div class="rag-badge">🔴 Red (&lt;40)</div>
+        <p>Active churn risk. Executive sponsor on both sides engaged. CS manager involved. Formal save plan with specific actions and timelines. Risk communicated to CRO. All-hands approach — this is a revenue emergency.</p>
+      </div>
+    </div>
+    <div class="callout callout-warning">
+      <div class="callout-title">The NPS Trap in Health Scoring</div>
+      <p>Over-weighting NPS in health scores creates false confidence. An executive who responds to NPS with a 9 ("promoter") can still churn if the product is not embedded in daily workflows and the budget is cut. Usage data is behavioral and harder to fake — it is always a stronger predictor of renewal than stated satisfaction. Weight product usage highest, always.</p>
+    </div>
+  </div>
+
+  <!-- ── 5. THE QBR ── -->
+  <h2 class="section-title">The Quarterly Business Review (QBR)</h2>
+  <p class="section-intro">The QBR is the highest-leverage recurring touchpoint in the CS relationship. Done well, it demonstrates value delivered, strengthens executive relationships, aligns on future priorities, and creates a natural context for expansion conversations. Done poorly — as a product update meeting that the customer attends out of obligation — it wastes everyone's time and erodes the relationship.</p>
+
+  <div class="subsection">
+    <div class="subsection-title">QBR Attendees</div>
+    <p>The QBR must include the champion, ideally the executive sponsor or economic buyer, and key stakeholders with interest in the outcome. On the vendor side: the CSM, the AE (for relationship continuity and expansion conversation), and a CS or sales leader when the account is strategic. The executive sponsor's attendance signals organizational commitment; their absence is a health signal worth investigating before the meeting.</p>
+  </div>
+
+  <div class="subsection">
+    <div class="subsection-title">QBR Agenda Structure</div>
+    <div class="qbr-agenda">
+      <div class="qbr-item">
+        <div class="qbr-time">5 min</div>
+        <div class="qbr-content">
+          <div class="qbr-title">Restate the Business Outcomes</div>
+          <p>Open with the customer's stated goals from the MSP. "You came to us to achieve [X] and [Y]. Let's start by reviewing your progress." This frames the entire review around their success, not your product.</p>
+        </div>
+      </div>
+      <div class="qbr-item">
+        <div class="qbr-time">15 min</div>
+        <div class="qbr-content">
+          <div class="qbr-title">Value Delivered — Outcomes &amp; Metrics</div>
+          <p>Present the quantified value delivered in the prior quarter against the metrics in the MSP. Use their data and their language. If the metrics aren't tracked, this is the moment to install them. Never present ROI claims that the customer cannot validate — it destroys credibility faster than not presenting them at all.</p>
+        </div>
+      </div>
+      <div class="qbr-item">
+        <div class="qbr-time">10 min</div>
+        <div class="qbr-content">
+          <div class="qbr-title">Adoption &amp; Usage Review</div>
+          <p>Present usage metrics (DAU/MAU, feature adoption, seat utilization). Celebrate wins — teams using the product effectively. Address gaps — departments or features with low adoption — and co-create an action plan to close adoption gaps before the next QBR.</p>
+        </div>
+      </div>
+      <div class="qbr-item">
+        <div class="qbr-time">10 min</div>
+        <div class="qbr-content">
+          <div class="qbr-title">Roadmap Alignment</div>
+          <p>Share upcoming product capabilities relevant to the customer's stated goals. Gather feedback on priorities. This is where Product Marketing and the CS team collaborate — the customer's roadmap input creates ownership and forward-looking investment in the relationship.</p>
+        </div>
+      </div>
+      <div class="qbr-item">
+        <div class="qbr-time">10 min</div>
+        <div class="qbr-content">
+          <div class="qbr-title">Expansion &amp; Next Horizon Discussion</div>
+          <p>Transition to: "Given what you've achieved in Q[X], where is the next opportunity to drive more value?" This is the natural, non-pushy entry point for expansion conversations. You are not selling — you are extending the value delivery conversation. Identify new use cases, departments, or capabilities that align with the customer's stated next-quarter priorities.</p>
+        </div>
+      </div>
+      <div class="qbr-item">
+        <div class="qbr-time">5 min</div>
+        <div class="qbr-content">
+          <div class="qbr-title">MSP Update &amp; Next Steps</div>
+          <p>Update the mutual success plan milestones, agree on action items with owners and due dates, confirm next QBR date. The QBR must end with a documented list of committed actions — not just "great meeting, let's stay in touch."</p>
+        </div>
+      </div>
+    </div>
+    <div class="callout callout-definition">
+      <div class="callout-title">When QBRs Are Not Appropriate</div>
+      <p>For low-ACV accounts (typically &lt;$10K ACV), formal QBRs are economically irrational. The CSM cost per hour exceeds the revenue value of the meeting. For SMB and digital-CS accounts, replace formal QBRs with automated digital business reviews — data-driven summary emails or in-app reports generated on a quarterly cadence, with human touch only for accounts showing red health signals or expansion indicators.</p>
+    </div>
+  </div>
+
+  <!-- ── 6. EXPANSION SELLING ── -->
+  <h2 class="section-title">Expansion Selling</h2>
+  <p class="section-intro">Expansion selling by CSMs is fundamentally different from new logo sales. The CSM's advantage is trust, context, and access — they understand the customer's business deeply, they have a direct relationship with the champion, and they know which problems are unsolved and which teams have unmet needs. The CSM's disadvantage is commercial training and the psychological discomfort many CSMs feel with "selling." The answer is not to make CSMs into salespeople; it is to reframe expansion as an extension of the value delivery obligation — finding more opportunities to create value for the customer.</p>
+
+  <div class="subsection">
+    <div class="subsection-title">Expansion Triggers and CSM Workflow</div>
+    <p>Expansion should be trigger-driven, not calendar-driven. The most effective expansion conversations arise naturally from observable events, not from a CSM thinking "it's Q4, I should push the upsell."</p>
+    <ul class="bullet-list">
+      <li><strong>Usage threshold trigger:</strong> Customer reaches 75–80% of licensed seats or features → CSM schedules a "next steps" conversation to discuss scale.</li>
+      <li><strong>New stakeholder introduction:</strong> A new VP, Director, or C-level contact appears in the account → CS develops them as a champion for the adjacent use case.</li>
+      <li><strong>Expressed pain in QBR or check-in:</strong> Customer mentions a problem that a different product module solves → CSM qualifies the pain and introduces the expansion use case.</li>
+      <li><strong>New product capability release:</strong> Product ships a feature that directly solves a problem the customer expressed in onboarding → CSM demos the new capability proactively.</li>
+      <li><strong>Customer success milestone:</strong> Customer achieves the ROI target in the MSP → CSM opens the "what's next?" conversation while ROI is emotionally top of mind.</li>
+    </ul>
+  </div>
+
+  <div class="subsection">
+    <div class="subsection-title">When to Involve Sales in Expansion</div>
+    <p>The decision between CSM-led and AE-led expansion depends on organizational design, deal size, and the nature of the expansion opportunity. Common models:</p>
+    <table class="data-table">
+      <thead>
+        <tr><th>Expansion Type</th><th>Threshold</th><th>Recommended Owner</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>Seat expansion (same product, same department)</td><td>Any size</td><td>CSM owns. Simple commercial motion, existing relationship, no new evaluation required.</td></tr>
+        <tr><td>Module/upsell (same product, enhanced tier)</td><td>&lt;$25K incremental ACV</td><td>CSM owns with deal desk support on pricing.</td></tr>
+        <tr><td>Module/upsell</td><td>&gt;$25K incremental ACV</td><td>CSM sources, AE owns the commercial negotiation. CSM remains relationship primary.</td></tr>
+        <tr><td>Cross-sell to new department</td><td>Any size</td><td>AE-led with CSM as internal connector. New stakeholders = new qualification required, MEDDICC applies.</td></tr>
+        <tr><td>Enterprise account expansion</td><td>&gt;$100K incremental</td><td>AE + CSM partnership. AE owns the commercial process; CSM owns the relationship and internal access. Joint account plan required.</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- ── 7. RENEWAL MANAGEMENT ── -->
+  <h2 class="section-title">Renewal Management</h2>
+  <p class="section-intro">The renewal is not an event — it is the outcome of 12 months of value delivery. A renewal that requires significant effort at the 30-day mark is a symptom of inadequate CS execution in months 1–11. The renewal playbook begins at the moment of contract signature, not when the renewal date appears on the calendar.</p>
+
+  <div class="subsection">
+    <div class="subsection-title">The Renewal Timeline</div>
+    <ol class="step-list">
+      <li><div class="step-content"><span class="step-title">180 Days Before Renewal</span>Health score audit: assess whether the account is green, yellow, or red. If yellow or red, begin save playbook immediately — 180 days is enough time to turn an account around. If green, identify expansion opportunities to include in the renewal conversation.</div></li>
+      <li><div class="step-content"><span class="step-title">120 Days Before Renewal</span>Renewal risk assessment: is the executive sponsor still in role? Has the champion changed? Are there budget changes or organizational restructuring underway? Surface any risks now — surprises at 30 days are a CS failure, not a customer surprise.</div></li>
+      <li><div class="step-content"><span class="step-title">90 Days Before Renewal</span>Formal renewal kickoff: present the value delivered over the year (the "renewal business case"), restate the ROI in financial terms, and introduce the renewal commercial terms. For expansion, present the expanded package as the renewal option — not as an add-on.</div></li>
+      <li><div class="step-content"><span class="step-title">60 Days Before Renewal</span>Address commercial objections. Begin legal/procurement process if required. Ensure the economic buyer has the renewal paperwork and approvals are initiated. Do not allow the procurement process to become a surprise at 30 days.</div></li>
+      <li><div class="step-content"><span class="step-title">30 Days Before Renewal</span>Executive sponsor confirmation. All commercial terms agreed. Legal signatures initiated. Any remaining blockers escalated with urgency.</div></li>
+    </ol>
+  </div>
+
+  <div class="subsection">
+    <div class="subsection-title">Handling At-Risk Renewals</div>
+    <p>An at-risk renewal is not a failure — it is a solvable problem if identified with enough lead time and addressed with sufficient urgency. The save playbook for a red-status account at 90+ days before renewal:</p>
+    <ul class="bullet-list">
+      <li><strong>Diagnose the root cause:</strong> Is the risk product-driven (adoption gaps, missing features), relationship-driven (champion departed, new decision-maker unfavorable), financial (budget cut, corporate restructuring), or competitive (active competitive evaluation)?</li>
+      <li><strong>Executive involvement:</strong> Escalate to the CS or sales executive on both sides. An executive sponsor-to-executive sponsor conversation often unlocks a relationship dimension that CSM-level conversations cannot.</li>
+      <li><strong>Rebuild the value case:</strong> If the customer has lost sight of the ROI, build a quantified value review specific to their use case. Present this in an emergency QBR with the economic buyer attending.</li>
+      <li><strong>Address the specific blocker:</strong> If there are product gaps, create a commitment with a timeline (if honest and achievable). If the champion left, develop a new champion immediately. If competition is active, apply competitive displacement playbook.</li>
+      <li><strong>Multi-year commercial incentive:</strong> Where appropriate, offer multi-year pricing to create a financial incentive and reset the renewal relationship on a longer time horizon. Multi-year deals are most effective when the customer is satisfied but financially cautious — they should never be used as a band-aid over a fundamentally broken value relationship.</li>
+    </ul>
+  </div>
+
+  <!-- ── 8. CHURN ANALYSIS ── -->
+  <h2 class="section-title">Churn Analysis</h2>
+  <p class="section-intro">Churn analysis is not a post-mortem exercise — it is an intelligence function that feeds directly into ICP refinement, product prioritization, sales qualification standards, and CS playbook improvement. Every churn event contains information. The failure mode is treating churned customers as a sunk cost rather than a data source.</p>
+
+  <div class="subsection">
+    <div class="subsection-title">The Churn Taxonomy</div>
+    <div class="churn-taxonomy">
+      <div class="churn-card">
+        <div class="cc-type">Voluntary Churn</div>
+        <div class="cc-title">Customer Chose to Leave</div>
+        <p>Customer actively decided not to renew. Causes: product doesn't deliver value, competitive displacement, budget elimination, changed business direction, poor CS experience. This churn is actionable — the root cause can be addressed.</p>
+      </div>
+      <div class="churn-card">
+        <div class="cc-type">Involuntary Churn</div>
+        <div class="cc-title">Payment / Business Failure</div>
+        <p>Customer stopped paying due to credit card failure, company shutdown, acquisition, or insolvency. Less common in B2B but still measurable. Dunning process management and account health monitoring reduces this category.</p>
+      </div>
+      <div class="churn-card">
+        <div class="cc-type">Logo Churn</div>
+        <div class="cc-title">Account Departed</div>
+        <p>The customer account no longer exists in your ARR. Measured as a percentage of total accounts. Logo churn rate = churned accounts / total accounts at start of period. Best-in-class enterprise SaaS: &lt;5% annual logo churn.</p>
+      </div>
+      <div class="churn-card">
+        <div class="cc-type">Revenue Churn</div>
+        <div class="cc-title">ARR Lost</div>
+        <p>The dollar value of ARR lost to churn. More meaningful than logo churn — losing 5 small accounts is less impactful than losing 1 large one. Revenue churn rate = churned ARR / starting ARR. Feeds directly into GRR calculation.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="subsection">
+    <div class="subsection-title">Churn Post-Mortem Process</div>
+    <ol class="step-list">
+      <li><div class="step-content"><span class="step-title">Document the stated reason</span>What did the customer say (or what did the CSM understand) was the primary reason for non-renewal? Record in the CRM with a standardized taxonomy, not free text.</div></li>
+      <li><div class="step-content"><span class="step-title">Conduct an exit interview</span>The same principles as win/loss apply: an independent interviewer (not the CSM or AE who managed the account) conducts a structured 20–30 minute exit interview to understand the customer's perspective. The stated reason and the real reason are often different.</div></li>
+      <li><div class="step-content"><span class="step-title">Diagnose the CS failure point</span>At what stage in the lifecycle did the churn risk first become evident in retrospect? Hindsight analysis typically reveals that the health score showed signals 6–9 months before renewal that were either not acted on or not recognized. Use this to calibrate health score triggers.</div></li>
+      <li><div class="step-content"><span class="step-title">Identify the ICP signal</span>Was this customer a good ICP fit? If they were an ICP match and still churned, the onboarding or CS execution failed. If they were an ICP mismatch (wrong size, wrong maturity, wrong use case), the problem started in qualification — and that feedback must go to the sales team.</div></li>
+      <li><div class="step-content"><span class="step-title">Feed back into the system</span>All churn post-mortems should be reviewed in the monthly CS leadership meeting and summarized quarterly for the CRO. The output must include specific, actionable changes to the health score model, the onboarding playbook, the qualification criteria, or the ICP definition.</div></li>
+    </ol>
+  </div>
+
+  <!-- ── 9. NPS AND CSAT ── -->
+  <h2 class="section-title">NPS, CSAT &amp; Customer Advocacy</h2>
+  <p class="section-intro">Customer satisfaction measurement serves three purposes: as an early warning system for churn risk, as an input to the health score, and as an indicator of advocacy potential. No single metric captures the full picture — NPS, CSAT, and behavioral signals must be read together.</p>
+
+  <div class="subsection">
+    <div class="subsection-title">Net Promoter Score (NPS)</div>
+    <div class="formula-block">
+      <div class="formula-label">Net Promoter Score</div>
+      <div class="formula-main">NPS = % Promoters (score 9–10) − % Detractors (score 0–6)</div>
+      <div class="formula-note">Scale: −100 (all detractors) to +100 (all promoters). B2B SaaS benchmarks: Excellent: &gt;50, Good: 30–50, Average: 10–30, Poor: &lt;10. Measure quarterly or semi-annually for enterprise, annually for SMB.</div>
+    </div>
+    <div class="nps-zones">
+      <div class="nps-zone nps-detractor">
+        <div class="nz-label">Detractors</div>
+        <div class="nz-range">0–6</div>
+        <p>Unhappy customers who may actively recommend against you. Immediate CS escalation required. Root cause analysis. Executive involvement for high-ACV accounts.</p>
+      </div>
+      <div class="nps-zone nps-passive">
+        <div class="nz-label">Passives</div>
+        <div class="nz-range">7–8</div>
+        <p>Satisfied but not enthusiastic. Vulnerable to competitive approaches. Investment opportunity — a specific value delivery improvement can convert a passive to a promoter. Never ignore passives.</p>
+      </div>
+      <div class="nps-zone nps-promoter">
+        <div class="nz-label">Promoters</div>
+        <div class="nz-range">9–10</div>
+        <p>Enthusiastic advocates. Source for case studies, reference calls, testimonials, CAB participation, and G2/Gartner reviews. Activate immediately — promoters go passive if not engaged.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="subsection">
+    <div class="subsection-title">Customer Advisory Boards (CABs)</div>
+    <p>A Customer Advisory Board is a structured program that brings 8–15 strategically selected promoter customers together 1–2 times per year to provide strategic input on product direction, provide competitive intelligence, and deepen their organizational commitment to your product. CAB members are typically VP or C-level sponsors who engage directly with product leadership and the executive team.</p>
+    <p>CABs create four types of value: (1) Product intelligence — candid input on roadmap priorities that would never surface in a support ticket. (2) Mutual investment — customers who advise on roadmap feel ownership in the product's direction and are significantly less likely to churn. (3) Reference network — CAB members become the highest-quality reference customers, accessible to the sales team for competitive deals. (4) Executive relationship deepening — sustained executive sponsor engagement at a strategic level, not just a transactional commercial relationship.</p>
+  </div>
+
+  <div class="subsection">
+    <div class="subsection-title">Turning Customers Into Advocates</div>
+    <ul class="bullet-list">
+      <li><strong>Case studies and content:</strong> Work with promoter customers to produce co-authored case studies with real ROI metrics. These are the highest-quality sales enablement assets and significantly outperform vendor-generated content in buyer trust research.</li>
+      <li><strong>Reference program:</strong> Build a structured reference program with tiered commitment levels: Tier 1 (G2/Gartner review only), Tier 2 (discovery call reference), Tier 3 (on-site or competitive deal reference). Compensate references with product credits, early feature access, or event sponsorship — never cash, which creates compliance issues.</li>
+      <li><strong>Speaker and event participation:</strong> Promoter customers who speak at your user conference or industry events become deeply invested advocates. Co-presenting with a customer in front of 500 prospects is the most persuasive marketing motion available to most SaaS companies.</li>
+      <li><strong>Community leadership:</strong> Identify promoters willing to lead user community groups, participate in online forums, or contribute to knowledge base content. Community-led advocates have compounding reach with no incremental cost.</li>
+    </ul>
+  </div>
+
+  <!-- ── 10. ICP VALIDATION LOOP ── -->
+  <h2 class="section-title">The ICP Validation Loop</h2>
+  <p class="section-intro">The ICP is a hypothesis, not a fact. It is an informed prediction about which types of customers will derive the most value from your product, generate the highest NRR, and have the best fit with your go-to-market motion. The only function that can validate or invalidate this hypothesis in real-time is Customer Success — because CS sees what actually happens after the sale. The ICP validation loop is the systematic process by which CS learnings flow back into the ICP, the sales qualification criteria, and the marketing targeting model.</p>
+
+  <div class="icp-loop">
+    <p style="font-size:14px;font-weight:700;color:var(--text);margin-bottom:4px">The ICP Validation Feedback Loop</p>
+    <p style="font-size:13px;color:var(--text-muted);margin-bottom:0">CS insights systematically update every upstream assumption</p>
+    <div class="icp-loop-steps">
+      <div class="icp-step">CS Observes<br/>Outcomes</div>
+      <div class="icp-arrow">→</div>
+      <div class="icp-step">Pattern<br/>Analysis</div>
+      <div class="icp-arrow">→</div>
+      <div class="icp-step">ICP Update<br/>Recommendations</div>
+      <div class="icp-arrow">→</div>
+      <div class="icp-step">Sales &amp; Mktg<br/>Alignment</div>
+      <div class="icp-arrow">→</div>
+      <div class="icp-step">Better Qualified<br/>Pipeline</div>
+    </div>
+  </div>
+
+  <div class="subsection">
+    <div class="subsection-title">What CS Feeds Back and to Whom</div>
+    <ul class="bullet-list">
+      <li><strong>To Sales:</strong> Which customer profiles are consistently achieving strong adoption and expanding (refine positive ICP criteria). Which profiles are struggling in onboarding regardless of qualification quality (refine negative ICP criteria or add disqualification triggers). Qualification signals that predict strong or weak post-sale outcomes — "customers who said X in discovery consistently churn by month 8."</li>
+      <li><strong>To Marketing:</strong> The language customers use to describe their own problems (should inform messaging), the business outcomes they cite as their top priorities (should inform campaign themes), the industries and roles that produce the best customer success stories (should inform targeting and content strategy).</li>
+      <li><strong>To Product:</strong> Feature gaps that are causing adoption failures or churn. Use cases that customers are solving in unexpected ways — signals of product-market fit opportunities. Integration requests that multiple churned customers cited as deal-breakers.</li>
+      <li><strong>To Leadership:</strong> ICP mismatches in the existing customer base — accounts that are high-cost-to-serve, low-NRR, and creating CS team burnout. These accounts should be repriced, segment-reassigned, or candidly disqualified at renewal, freeing capacity for high-fit customers.</li>
+    </ul>
+  </div>
+
+  <!-- ── CS ORG DESIGN ── -->
+  <h2 class="section-title">CS Org Design</h2>
+  <div class="csm-ratios">
+    <div class="cr-header">
+      <div>Segment</div>
+      <div>ACV</div>
+      <div>CSM Ratio</div>
+      <div>Model Notes</div>
+    </div>
+    <div class="cr-row">
+      <div><strong>SMB / Digital</strong></div>
+      <div>&lt;$10K</div>
+      <div>Digital / $5M+ ARR per CSM</div>
+      <div>Automated onboarding, in-app guides, digital business reviews. Human CSM touch only for health escalations. Impossible to deliver positive unit economics with high-touch model at this ACV.</div>
+    </div>
+    <div class="cr-row">
+      <div><strong>Mid-Market (Tech-Touch)</strong></div>
+      <div>$10K–$75K</div>
+      <div>1 CSM : $3–5M ARR</div>
+      <div>CSM manages 50–80 accounts. Quarterly cadence, annual QBR, automated health monitoring. CS platform (Gainsight, ChurnZero) essential for scale at this ratio.</div>
+    </div>
+    <div class="cr-row">
+      <div><strong>Enterprise (High-Touch)</strong></div>
+      <div>$75K–$300K</div>
+      <div>1 CSM : $1–2M ARR</div>
+      <div>CSM manages 15–25 accounts. Monthly check-ins, formal QBRs, executive sponsor engagement, expansion selling. CSM carries NRR target and expansion quota.</div>
+    </div>
+    <div class="cr-row">
+      <div><strong>Strategic / Named</strong></div>
+      <div>$300K+</div>
+      <div>1 CSM : $500K–1M ARR</div>
+      <div>Dedicated CSM + Solutions Architect + AE. White-glove model. Executive briefings, co-innovation sessions, board-level relationship. CSM often aligned with one or two named accounts.</div>
+    </div>
+  </div>
+
+  <div class="subsection">
+    <div class="subsection-title">When to Split CS from Account Management</div>
+    <p>In early-stage SaaS, the CSM often plays both the relationship/adoption role (CS) and the commercial/expansion role (Account Management). As the company scales, this combination becomes problematic: CSMs are often drawn from service backgrounds and are not always comfortable with commercial conversations, and the conflation of roles can undermine customer trust if the CSM appears to be primarily motivated by expansion revenue rather than customer success.</p>
+    <p><strong>Split CS from AM when:</strong> (1) ACV > $75K and expansion conversations are large enough to warrant dedicated commercial attention. (2) CSM performance data shows that customers managed by CSMs who hold expansion quotas have lower NPS and higher churn than those managed by CS-only CSMs — a signal that the commercial pressure is degrading trust. (3) The organization has >$20–30M ARR and the complexity of managing renewals, expansions, and QBRs has grown beyond a single role's capacity. (4) You want to hire specialized CSM talent (service-oriented, technically excellent, high EQ) without requiring them to also be commercial negotiators.</p>
+    <p>The split model: CSM owns adoption, health, onboarding, QBRs, and renewal risk identification. Account Manager or Commercial CSM owns renewal negotiation, upsell/cross-sell, and expansion deal management. The CSM is the customer's advocate; the AM is the commercial relationship owner. They collaborate closely — neither is effective without the other's intelligence.</p>
+  </div>
+
+  <!-- ── INDICATORS ── -->
+  <h2 class="section-title">Key Indicators — Customer Success</h2>
+  <div class="two-col">
+    <div>
+      <p style="font-size:13px;font-weight:700;letter-spacing:.5px;text-transform:uppercase;color:var(--text-muted);margin-bottom:10px">Leading Indicators</p>
+      <div class="indicator-row" style="flex-direction:column;gap:8px;">
+        <div class="indicator-tag ind-leading" style="display:block">Time-to-Value (TTV) — days from contract to first value milestone</div>
+        <div class="indicator-tag ind-leading" style="display:block">DAU/MAU Ratio — product adoption stickiness</div>
+        <div class="indicator-tag ind-leading" style="display:block">Health Score Distribution — % green/yellow/red accounts</div>
+        <div class="indicator-tag ind-leading" style="display:block">QBR Completion Rate — % of accounts with QBR in last 90 days</div>
+        <div class="indicator-tag ind-leading" style="display:block">Feature Adoption Breadth — % of key features utilized per account</div>
+        <div class="indicator-tag ind-leading" style="display:block">Executive Sponsor Engagement Rate</div>
+      </div>
+    </div>
+    <div>
+      <p style="font-size:13px;font-weight:700;letter-spacing:.5px;text-transform:uppercase;color:var(--text-muted);margin-bottom:10px">Lagging Indicators</p>
+      <div class="indicator-row" style="flex-direction:column;gap:8px;">
+        <div class="indicator-tag ind-lagging" style="display:block">NRR (Net Revenue Retention) — target 110%+</div>
+        <div class="indicator-tag ind-lagging" style="display:block">GRR (Gross Revenue Retention) — target 90%+</div>
+        <div class="indicator-tag ind-lagging" style="display:block">Logo Churn Rate — target &lt;5% annually (enterprise)</div>
+        <div class="indicator-tag ind-lagging" style="display:block">Expansion Revenue % of Total ARR Added</div>
+        <div class="indicator-tag ind-lagging" style="display:block">NPS — trailing 12-month average</div>
+        <div class="indicator-tag ind-lagging" style="display:block">CAC Payback Period (influenced by CS quality)</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── FORMULAS ── -->
+  <h2 class="section-title">Formula Reference</h2>
+  <div class="formula-block">
+    <div class="formula-label">NPS</div>
+    <div class="formula-main">NPS = % Promoters (9–10) − % Detractors (0–6)</div>
+    <div class="formula-note">Scale: −100 to +100. B2B SaaS best-in-class: &gt;50. Average: 20–35.</div>
+  </div>
+  <div class="formula-block">
+    <div class="formula-label">NRR (Net Revenue Retention)</div>
+    <div class="formula-main">NRR = (Starting MRR + Expansion − Contraction − Churn) / Starting MRR × 100</div>
+    <div class="formula-note">Best-in-class: 120%+. Strong: 110–120%. Acceptable: 100–110%.</div>
+  </div>
+  <div class="formula-block">
+    <div class="formula-label">GRR (Gross Revenue Retention)</div>
+    <div class="formula-main">GRR = (Starting MRR − Contraction − Churn) / Starting MRR × 100</div>
+    <div class="formula-note">Retention-only. Best-in-class enterprise: 95%+. GRR ≤ NRR always.</div>
+  </div>
+  <div class="formula-block">
+    <div class="formula-label">Time-to-Value (TTV)</div>
+    <div class="formula-main">TTV = Date of First Value Milestone − Contract Signature Date (days)</div>
+    <div class="formula-note">Define "first value milestone" per segment in the playbook. Track as a portfolio average. Reducing TTV by 30% measurably improves 12-month NRR.</div>
+  </div>
+  <div class="formula-block">
+    <div class="formula-label">Health Score (Weighted Composite)</div>
+    <div class="formula-main">Health Score = Σ (Input Score × Weight)
+Example: (Usage × 0.30) + (Engagement × 0.20) + (NPS × 0.15) + (Support × 0.15) + (Contract × 0.10) + (Exec Sponsor × 0.10)</div>
+    <div class="formula-note">Normalize each input to a 0–100 scale before weighting. Green: 70–100. Yellow: 40–70. Red: &lt;40. Calibrate thresholds against historical churn/renewal data annually.</div>
+  </div>
+
+  <!-- ── RELATED SECTION ── -->
+  <div class="related-section">
+    <div class="related-title">Related Topics</div>
+    <div class="related-links">
+      <a href="phase4.html" class="related-link">Phase 4: Execution</a>
+      <a href="phase5.html" class="related-link">Phase 5: Scale &amp; NRR</a>
+      <a href="../subpages/onboarding-cs.html" class="related-link">Onboarding</a>
+      <a href="../subpages/adoption-framework.html" class="related-link">Adoption Framework</a>
+      <a href="../subpages/health-scoring.html" class="related-link">Health Scoring</a>
+      <a href="../subpages/expansion-selling.html" class="related-link">Expansion Selling</a>
+      <a href="../subpages/renewal-management.html" class="related-link">Renewal Management</a>
+      <a href="../subpages/icp-validation.html" class="related-link">ICP Validation</a>
+      <a href="../subpages/nrr.html" class="related-link">NRR Deep-Dive</a>
+    </div>
+  </div>
+
+</div>
+<script data-pplx-inline-edit>
+(function () {
+  if (window === window.top) return;
+
+  const allowedParentOrigins = ["https://www.perplexity.ai","https://perplexity.ai","https://testing.perplexity.ai","https://staging.perplexity.ai","https://*.preview.i.perplexity.ai","http://localhost:3000","http://127.0.0.1:3000","http://localhost:5173","http://127.0.0.1:5173"];
+  const MAX_FONT_BYTES = 500 * 1024;
+  const MAX_TOTAL_FONT_BYTES = 2 * 1024 * 1024;
+  let scrollForwarding = false;
+  let scrollRaf = 0;
+  let trustedTopOrigin = null;
+
+  // Allow entries like "https://*.preview.i.perplexity.ai" — the wildcard
+  // matches a single DNS label (no dots), so "https://*.foo" cannot stretch
+  // across multiple labels.
+  function matchesAllowedOrigin(origin) {
+    if (!origin) return false;
+    for (const entry of allowedParentOrigins) {
+      if (!entry.includes("*")) {
+        if (entry === origin) return true;
+        continue;
+      }
+      const pattern = new RegExp(
+        "^" +
+          entry.replace(/[.+?^${}()|[\]\\]/g, "\\$&").replace(/\*/g, "[^.]+") +
+          "$",
+      );
+      if (pattern.test(origin)) return true;
+    }
+    return false;
+  }
+
+  // Trust decision: when the sender is same-origin-visible (event.origin is a
+  // real origin like https://www.perplexity.ai) we trust event.origin directly.
+  // When event.origin is "null" (opaque broker srcdoc), we fall back to the
+  // broker's stamped `parentOrigin` to identify the top window. The fallback
+  // is claim-only — we rely on the browser's native `targetOrigin` enforcement
+  // on the response path (see postToTrustedTop) to ensure replies can't be
+  // delivered to anyone but the actual top window of that claimed origin.
+  function getTrustedParentOrigin(event) {
+    const forwardedParentOrigin =
+      typeof event.data.parentOrigin === "string" ? event.data.parentOrigin : null;
+    const parentOrigin = event.origin === "null" ? forwardedParentOrigin : event.origin;
+    return matchesAllowedOrigin(parentOrigin) ? parentOrigin : null;
+  }
+
+  // All responses go to window.top with targetOrigin = the allowlisted origin.
+  // An attacker that iframes us inside their own null-origin broker can claim
+  // any parentOrigin they like, but the browser will drop the reply whenever
+  // the real top's origin doesn't match — so the screenshot never leaves.
+  function postToTrustedTop(message) {
+    if (!trustedTopOrigin) return;
+    try {
+      window.top.postMessage(message, trustedTopOrigin);
+    } catch (_error) {}
+  }
+
+  function inlineAll(original, clone) {
+    if (original.nodeType !== 1 || clone.nodeType !== 1) return;
+
+    try {
+      const computedStyle = getComputedStyle(original);
+      // cssText on a computed style is the serialized declaration in modern
+      // Chromium/Safari — a single read beats enumerating ~400 longhand
+      // properties. Firefox returns "" here, so we fall back on empty.
+      const serialized = computedStyle.cssText;
+      if (serialized) {
+        clone.style.cssText = serialized;
+      } else {
+        const parts = new Array(computedStyle.length);
+        for (let index = 0; index < computedStyle.length; index += 1) {
+          const property = computedStyle[index];
+          parts[index] = `${property}:${computedStyle.getPropertyValue(property)};`;
+        }
+        clone.style.cssText = parts.join("");
+      }
+    } catch (_error) {}
+
+    const originalChildren = original.children;
+    const clonedChildren = clone.children;
+    for (
+      let index = 0;
+      index < originalChildren.length && index < clonedChildren.length;
+      index += 1
+    ) {
+      inlineAll(originalChildren[index], clonedChildren[index]);
+    }
+  }
+
+  function extractFontUrl(srcValue) {
+    const matches = [
+      ...srcValue.matchAll(
+        /url\(["']?([^"')]+)["']?\)(?:\s*format\(["']?([^"')]+)["']?\))?/gi,
+      ),
+    ];
+    if (matches.length === 0) return null;
+    const woff2 = matches.find((m) => m[2] && m[2].toLowerCase().includes("woff2"));
+    if (woff2) return woff2[1];
+    const woff = matches.find((m) => m[2] && m[2].toLowerCase().includes("woff"));
+    if (woff) return woff[1];
+    return matches[0][1];
+  }
+
+  // Cache resolved font URL -> data URI across captures. Fonts on a page
+  // essentially never change, and a batch run emits multiple captures back to
+  // back — without this we'd refetch + re-base64 every time.
+  const fontDataUriCache = new Map();
+  const SRC_DECLARATION_RE = /src\s*:\s*[^;}]+/i;
+
+  async function fetchAsDataUri(url) {
+    if (fontDataUriCache.has(url)) return fontDataUriCache.get(url);
+    let dataUri = null;
+    try {
+      const response = await fetch(url, { mode: "cors", credentials: "omit" });
+      if (response.ok) {
+        const blob = await response.blob();
+        if (blob.size <= MAX_FONT_BYTES) {
+          dataUri = await new Promise((resolve) => {
+            const reader = new FileReader();
+            reader.onloadend = () =>
+              resolve(typeof reader.result === "string" ? reader.result : null);
+            reader.onerror = () => resolve(null);
+            reader.readAsDataURL(blob);
+          });
+        }
+      }
+    } catch (_error) {
+      dataUri = null;
+    }
+    fontDataUriCache.set(url, dataUri);
+    return dataUri;
+  }
+
+  function collectFontFaceRuleTexts() {
+    const rules = [];
+    for (const sheet of document.styleSheets) {
+      let cssRules;
+      try {
+        cssRules = sheet.cssRules;
+      } catch (_error) {
+        continue;
+      }
+      if (!cssRules) continue;
+      for (const rule of cssRules) {
+        const cssText = rule.cssText || "";
+        if (cssText.startsWith("@font-face")) rules.push(cssText);
+      }
+    }
+    return rules;
+  }
+
+  async function buildInlinedFontCss() {
+    const ruleTexts = collectFontFaceRuleTexts();
+    if (ruleTexts.length === 0) return null;
+
+    const resolved = ruleTexts.map((cssText) => {
+      if (!SRC_DECLARATION_RE.test(cssText)) return null;
+      const srcMatch = cssText.match(/src\s*:\s*([^;}]+)[;}]/i);
+      if (!srcMatch) return null;
+      const url = extractFontUrl(srcMatch[1]);
+      if (!url) return null;
+      try {
+        return { cssText, url: new URL(url, document.baseURI).href };
+      } catch (_error) {
+        return null;
+      }
+    });
+
+    const dataUris = await Promise.all(
+      resolved.map((entry) => (entry ? fetchAsDataUri(entry.url) : Promise.resolve(null))),
+    );
+
+    const inlined = [];
+    let totalBytes = 0;
+    for (let index = 0; index < resolved.length; index += 1) {
+      const entry = resolved[index];
+      const dataUri = dataUris[index];
+      if (!entry || !dataUri) continue;
+      const approxBytes = dataUri.length * 0.75;
+      if (totalBytes + approxBytes > MAX_TOTAL_FONT_BYTES) break;
+      totalBytes += approxBytes;
+      inlined.push(entry.cssText.replace(SRC_DECLARATION_RE, `src: url("${dataUri}")`));
+    }
+    return inlined.length > 0 ? inlined.join("\n") : null;
+  }
+
+  function stripExternal(clone) {
+    const images = clone.querySelectorAll("img");
+    for (let index = 0; index < images.length; index += 1) {
+      const src = images[index].getAttribute("src");
+      if (src && !src.startsWith("data:")) images[index].removeAttribute("src");
+    }
+
+    const elements = clone.querySelectorAll("*");
+    for (let index = 0; index < elements.length; index += 1) {
+      const style = elements[index].style.cssText;
+      if (style && style.includes("url(")) {
+        elements[index].style.cssText = style.replace(
+          /url\(["']?(?!data:)[^)"']*["']?\)/gi,
+          "none",
+        );
+      }
+    }
+  }
+
+  function emitScroll() {
+    scrollRaf = 0;
+    if (!scrollForwarding) return;
+    postToTrustedTop({
+      type: "INLINE_EDIT_SCROLL",
+      scrollX: window.scrollX,
+      scrollY: window.scrollY,
+    });
+  }
+
+  window.addEventListener(
+    "scroll",
+    function () {
+      if (!scrollForwarding || scrollRaf) return;
+      scrollRaf = requestAnimationFrame(emitScroll);
+    },
+    { passive: true, capture: true },
+  );
+
+  async function handleCaptureRequest(event) {
+    const requestId = event.data.requestId;
+    const scrollX = window.scrollX;
+    const scrollY = window.scrollY;
+    const width = window.innerWidth;
+    const height = window.innerHeight;
+
+    function postResult(dataUrl) {
+      postToTrustedTop({
+        type: "INLINE_EDIT_SCREENSHOT_RESULT",
+        requestId,
+        dataUrl,
+        scrollX,
+        scrollY,
+      });
+    }
+
+    try {
+      // Wait for any pending web fonts to resolve so both inline metrics and
+      // the @font-face inlining below see the same loaded faces.
+      if (document.fonts && document.fonts.ready) {
+        try {
+          await document.fonts.ready;
+        } catch (_error) {}
+      }
+
+      const clone = document.documentElement.cloneNode(true);
+      inlineAll(document.documentElement, clone);
+
+      const removedNodes = clone.querySelectorAll("script,link[rel=\"stylesheet\"],style");
+      for (let index = 0; index < removedNodes.length; index += 1) {
+        removedNodes[index].remove();
+      }
+
+      stripExternal(clone);
+
+      // Re-embed web fonts as data-URI @font-face rules so the SVG rasterizer
+      // can resolve them — external font URLs aren't fetched during
+      // foreignObject rendering, which would otherwise force a fallback face
+      // and change text metrics.
+      const inlinedFontCss = await buildInlinedFontCss();
+      if (inlinedFontCss) {
+        const styleEl = document.createElement("style");
+        styleEl.textContent = inlinedFontCss;
+        const head = clone.querySelector("head");
+        if (head) head.appendChild(styleEl);
+        else clone.insertBefore(styleEl, clone.firstChild);
+      }
+
+      const html = new XMLSerializer().serializeToString(clone);
+      const svg =
+        `<svg xmlns="http://www.w3.org/2000/svg" width="${width}" height="${height}">` +
+        '<foreignObject width="100%" height="100%">' +
+        `<div xmlns="http://www.w3.org/1999/xhtml" style="width:${width}px;height:${height}px;overflow:hidden">` +
+        `<div style="transform:translate(-${scrollX}px,-${scrollY}px);transform-origin:top left">` +
+        html +
+        "</div></div></foreignObject></svg>";
+      const svgUrl = `data:image/svg+xml;charset=utf-8,${encodeURIComponent(svg)}`;
+      const image = new Image();
+      image.onload = function () {
+        const canvas = document.createElement("canvas");
+        canvas.width = width;
+        canvas.height = height;
+        canvas.getContext("2d").drawImage(image, 0, 0);
+        postResult(canvas.toDataURL("image/png"));
+      };
+      image.onerror = function () {
+        postResult(null);
+      };
+      image.src = svgUrl;
+    } catch (_error) {
+      postResult(null);
+    }
+  }
+
+  window.addEventListener("message", function (event) {
+    if (!event.data) return;
+    // Only accept messages from the direct parent frame. Blocks sibling /
+    // unrelated-window postMessage senders that could otherwise reach us.
+    if (event.source !== window.parent) return;
+
+    const trustedParentOrigin = getTrustedParentOrigin(event);
+    if (!trustedParentOrigin) return;
+    trustedTopOrigin = trustedParentOrigin;
+
+    if (event.data.type === "INLINE_EDIT_SCROLL_START") {
+      scrollForwarding = true;
+      emitScroll();
+      return;
+    }
+
+    if (event.data.type === "INLINE_EDIT_SCROLL_STOP") {
+      scrollForwarding = false;
+      if (scrollRaf) cancelAnimationFrame(scrollRaf);
+      scrollRaf = 0;
+      return;
+    }
+
+    if (event.data.type !== "INLINE_EDIT_CAPTURE_REQUEST") return;
+
+    handleCaptureRequest(event);
+  });
+})();
+
+
+</script></body>
+</html>

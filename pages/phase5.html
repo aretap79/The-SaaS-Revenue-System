@@ -1,0 +1,1073 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Repeatability, Headcount Planning, RevOps Infrastructure & Expansion — SaaS Revenue System</title>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="../assets/shared.css"/>
+  <style>
+    .page-hero { background: #6E522B; }
+    .repeatability-test {
+      background: var(--surface);
+      border: 1.5px solid var(--border);
+      border-radius: 10px;
+      padding: 20px 24px;
+      margin: 16px 0;
+    }
+    .repeatability-test .rt-number {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      background: #6E522B;
+      color: #fff;
+      font-weight: 700;
+      font-size: 15px;
+      margin-right: 12px;
+      flex-shrink: 0;
+    }
+    .repeatability-test .rt-header {
+      display: flex;
+      align-items: center;
+      margin-bottom: 10px;
+    }
+    .repeatability-test .rt-title {
+      font-size: 15px;
+      font-weight: 700;
+      color: var(--text);
+    }
+    .repeatability-test p {
+      font-size: 14px;
+      line-height: 1.65;
+      color: var(--text);
+      margin-bottom: 0;
+    }
+    .capacity-model {
+      background: #f9f6f0;
+      border: 1.5px solid #D4CAB8;
+      border-radius: 10px;
+      padding: 24px;
+      margin: 16px 0;
+    }
+    .capacity-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 10px 0;
+      border-bottom: 1px solid #E8E1D5;
+      font-size: 14px;
+    }
+    .capacity-row:last-child { border-bottom: none; }
+    .capacity-row .cap-label { font-weight: 600; color: var(--text); }
+    .capacity-row .cap-value { color: #6E522B; font-weight: 700; font-size: 15px; }
+    .capacity-row .cap-note { font-size: 12px; color: var(--text-muted); text-align: right; max-width: 200px; }
+    .partner-types-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+      gap: 12px;
+      margin: 20px 0;
+    }
+    .partner-card {
+      background: var(--surface);
+      border: 1.5px solid var(--border);
+      border-radius: 8px;
+      padding: 16px;
+    }
+    .partner-card .pc-type {
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      color: #6E522B;
+      margin-bottom: 6px;
+    }
+    .partner-card .pc-title { font-size: 14px; font-weight: 700; color: var(--text); margin-bottom: 8px; }
+    .partner-card p { font-size: 13px; line-height: 1.5; color: var(--text); margin: 0; }
+    .nrr-compound {
+      background: var(--surface);
+      border: 1.5px solid var(--border);
+      border-radius: 8px;
+      padding: 20px;
+      margin: 16px 0;
+    }
+    .nrr-compound table { width: 100%; border-collapse: collapse; }
+    .nrr-compound td, .nrr-compound th { padding: 8px 12px; text-align: center; font-size: 13px; }
+    .nrr-compound th { background: #6E522B; color: #fff; font-size: 11px; font-weight: 700; letter-spacing: .5px; text-transform: uppercase; }
+    .nrr-compound td:first-child { text-align: left; font-weight: 600; }
+    .nrr-compound tr:nth-child(even) td { background: #fafaf8; }
+    .revops-org {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 12px;
+      margin: 20px 0;
+    }
+    .revops-stage {
+      background: var(--surface);
+      border: 1.5px solid var(--border);
+      border-radius: 8px;
+      padding: 14px;
+    }
+    .revops-stage .rs-size {
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      color: #6E522B;
+      margin-bottom: 6px;
+    }
+    .revops-stage .rs-title { font-size: 13px; font-weight: 700; margin-bottom: 8px; color: var(--text); }
+    .revops-stage ul { list-style: none; margin: 0; padding: 0; }
+    .revops-stage ul li { font-size: 12px; line-height: 1.5; color: var(--text); padding: 3px 0; border-bottom: 1px solid var(--border); }
+    .revops-stage ul li:last-child { border-bottom: none; }
+    @media(max-width:768px) { .revops-org { grid-template-columns: 1fr 1fr; } .partner-types-grid { grid-template-columns: 1fr; } }
+    @media(max-width:480px) { .revops-org { grid-template-columns: 1fr; } }
+    .two-col {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+      margin: 16px 0;
+    }
+    @media(max-width:640px) { .two-col { grid-template-columns: 1fr; } }
+    .ramp-table td { vertical-align: top; }
+    .hockey-stick-note {
+      background: #fef9f0;
+      border: 1.5px solid #D4A84B;
+      border-radius: 8px;
+      padding: 16px 20px;
+      margin: 16px 0;
+      font-size: 14px;
+      line-height: 1.65;
+    }
+    .sos-context-banner {
+  background: linear-gradient(135deg, #0D5C63 0%, #0a4a50 100%);
+  border-radius: 10px;
+  padding: 20px 24px;
+  margin-bottom: 32px;
+  display: grid;
+  grid-template-columns: 200px 1fr auto;
+  gap: 20px;
+  align-items: start;
+}
+.sos-cb-stage { border-right: 1px solid rgba(255,255,255,0.2); padding-right: 20px; }
+.sos-cb-label { font-size: 10px; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase; color: rgba(255,255,255,0.6); margin-bottom: 4px; }
+.sos-cb-title { font-size: 18px; font-weight: 700; color: #fff; line-height: 1.3; }
+.sos-cb-content { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+.sos-cb-item { background: rgba(255,255,255,0.08); border-radius: 6px; padding: 10px 12px; }
+.sos-cb-item-label { font-size: 10px; font-weight: 700; letter-spacing: 0.8px; text-transform: uppercase; color: rgba(255,255,255,0.55); margin-bottom: 3px; }
+.sos-cb-item-value { font-size: 12px; color: rgba(255,255,255,0.85); line-height: 1.5; }
+.sos-cb-link { background: rgba(255,255,255,0.15); color: #fff; font-size: 12px; font-weight: 700; padding: 8px 14px; border-radius: 6px; text-decoration: none; white-space: nowrap; align-self: center; transition: background 0.15s; }
+.sos-cb-link:hover { background: rgba(255,255,255,0.28); color: #fff; text-decoration: none; }
+.tools-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 12px; margin: 16px 0 40px; }
+.tool-card { background: var(--surface); border: 1.5px solid var(--border); border-radius: 8px; padding: 14px 16px; text-decoration: none; display: block; transition: all 0.15s; }
+.tool-card:hover { text-decoration: none; transform: translateY(-1px); box-shadow: 0 3px 10px rgba(0,0,0,0.08); }
+.tc-sos { border-left: 3px solid #0D5C63; }
+.tc-sos:hover { border-color: #0D5C63; }
+.tc-res { border-left: 3px solid #2C5F8A; }
+.tc-res:hover { border-color: #2C5F8A; }
+.tc-phase { font-size: 10px; font-weight: 700; letter-spacing: 0.8px; text-transform: uppercase; color: var(--text-muted); margin-bottom: 4px; }
+.tc-sos .tc-phase { color: #0D5C63; }
+.tc-res .tc-phase { color: #2C5F8A; }
+.tc-title { font-size: 13px; font-weight: 700; color: var(--text); margin-bottom: 4px; line-height: 1.3; }
+.tc-desc { font-size: 11px; color: var(--text-muted); line-height: 1.5; }
+  </style>
+</head>
+<body>
+<nav class="nav">
+  <span class="nav-logo">SaaS <span>Revenue System</span></span>
+  <span class="nav-sep">|</span>
+  <a href="../index.html" class="nav-back">← Home</a>
+  <span class="nav-sep">|</span>
+  <span class="nav-current">Phase 5 — Scale</span>
+</nav>
+
+<div class="page-hero">
+  <div class="hero-phase-label">PHASE 5 — SCALE</div>
+  <div class="hero-title">Repeatability, Headcount Planning, RevOps Infrastructure &amp; Expansion</div>
+  <div class="hero-subtitle">You are not ready to scale until you have repeatable, predictable revenue. Scaling a broken model just accelerates failure.</div>
+  <div class="hero-tags">
+    <a href="../subpages/repeatability-test.html" class="hero-tag">Repeatability Test</a>
+    <a href="../subpages/headcount-planning.html" class="hero-tag">Headcount Planning</a>
+    <a href="../subpages/expansion-playbook.html" class="hero-tag">Expansion Playbook</a>
+    <a href="../subpages/nrr.html" class="hero-tag">NRR &amp; GRR</a>
+    <a href="../subpages/revenue-capacity-model.html" class="hero-tag">Revenue Capacity Model</a>
+    <a href="../subpages/partnership-scale.html" class="hero-tag">Partnership &amp; Channel</a>
+  </div>
+</div>
+
+<div class="content-wrap">
+
+<div class="sos-context-banner">
+  <div class="sos-cb-stage">
+    <div class="sos-cb-label">Science of Scaling — Stage 3</div>
+    <div class="sos-cb-title">Growth &amp; Moat</div>
+  </div>
+  <div class="sos-cb-content">
+    <div class="sos-cb-item">
+      <div class="sos-cb-item-label">Stage Goal</div>
+      <div class="sos-cb-item-value">Maximize Revenue Growth Rate while building sustainable competitive moats. The Speedometer: both LIR ≥ threshold AND LIUE &gt; 3 must stay green to keep scaling.</div>
+    </div>
+    <div class="sos-cb-item">
+      <div class="sos-cb-item-label">Roberge's Repeatability Test = Stage Gate</div>
+      <div class="sos-cb-item-value">The 3-question repeatability test in this phase IS the Stage 2→3 gate: (1) Can a new rep follow the playbook and produce results? (2) Is win rate consistent across reps? (3) Is ICP producing LIR-achieving customers?</div>
+    </div>
+    <div class="sos-cb-item">
+      <div class="sos-cb-item-label">The 2/Month Scaling Rule</div>
+      <div class="sos-cb-item-value">Add 2 salespeople per month. Not a batch hire. Monthly staggering allows LIUE and LIR monitoring by cohort — if either drops, you catch it before committing to 12 more reps.</div>
+    </div>
+    <div class="sos-cb-item">
+      <div class="sos-cb-item-label">Segment Analysis</div>
+      <div class="sos-cb-item-value">SCALE (LIUE &gt; 3, LIR ≥ threshold, sufficient TAM) vs. EXPERIMENT (LIUE 1–3 or uncertain LIR) vs. IGNORE (LIUE &lt; 1 or LIR persistently below threshold). Run this analysis for every segment × channel combination.</div>
+    </div>
+  </div>
+  <a href="../subpages/sos-growth-moat.html" class="sos-cb-link">Stage 3: Growth &amp; Moat →</a>
+</div>
+
+  <!-- ── 1. THE SCALING MILESTONE ── -->
+  <h2 class="section-title">The Scaling Milestone — Roberge's Repeatability Test</h2>
+  <p class="section-intro">Mark Roberge, former CRO of HubSpot and author of <em>The Sales Acceleration Formula</em>, articulated the most important insight in SaaS growth: repeatability must precede scale. Hiring ahead of a repeatable sales motion is not aggressive growth — it is the deliberate destruction of unit economics. Every dollar spent scaling a model that has not yet proven it can be replicated by multiple reps is a dollar that generates diluted or negative returns.</p>
+
+  <p>Repeatability means your revenue model is independent of specific individuals. It means your playbook — the ICP definition, messaging, qualification methodology, discovery process, and closing approach — is codified, teachable, and produces consistent results in the hands of a new hire who follows it correctly. The moment your revenue depends on 2–3 "rainmaker" reps who operate on relationship instinct and institutional knowledge, you have a talent dependency, not a revenue system.</p>
+
+  <div class="repeatability-test">
+    <div class="rt-header"><span class="rt-number">1</span><span class="rt-title">Can a new rep follow the playbook and produce results?</span></div>
+    <p>The first test of repeatability is whether a new hire — onboarded through your standard training program, executing the defined ICP, sequences, and methodology — can reach quota attainment within the expected ramp period. If new reps consistently fail or take 2× longer to ramp, the playbook is either wrong, incomplete, or not being taught correctly. You do not have a hiring problem; you have a playbook or enablement problem. Scaling headcount will compound the failure, not resolve it.</p>
+  </div>
+  <div class="repeatability-test" style="margin-top:12px">
+    <div class="rt-header"><span class="rt-number">2</span><span class="rt-title">Is win rate consistent across reps?</span></div>
+    <p>The second test is win rate variance. If your top rep has a 45% win rate and your median rep has a 15% win rate, you do not have a repeatable process — you have a talent distribution. Best-in-class SaaS organizations show win rate variance of less than 15 percentage points between the top and median rep after a full year of tenure. If the variance is higher, the process is either not being enforced or the playbook is incomplete. Diagnose through ride-alongs and call review before hiring more people to execute an undefined process.</p>
+  </div>
+  <div class="repeatability-test" style="margin-top:12px">
+    <div class="rt-header"><span class="rt-number">3</span><span class="rt-title">Is the ICP consistently producing the right customers?</span></div>
+    <p>The third test — often overlooked — is whether the customers your sales motion is winning are actually good customers downstream. If win rate looks strong but NRR is below 90% and churn is concentrated in a specific segment, the ICP is wrong. You are winning the wrong deals. Scaling that sales motion will accelerate logo acquisition and accelerate churn simultaneously. The CS and sales teams must validate ICP assumptions against actual customer outcome data before headcount scale is authorized.</p>
+  </div>
+
+  <div class="callout callout-warning">
+    <div class="callout-title">The Scale-Before-Repeatability Death Spiral</div>
+    <p>The most common growth-stage failure pattern in SaaS: Series A or B funding arrives, leadership hires 10–20 new AEs, new reps fail to ramp because the playbook is either person-dependent or incomplete, quota attainment drops to 40–50% across the team, burn increases dramatically, board pressure mounts, leadership makes reactive changes to comp plans and territory, and the strongest reps leave for more stable environments. The root cause is almost always the same: scaling before the repeatability test was passed.</p>
+  </div>
+
+  <!-- ── 2. REVENUE CAPACITY MODEL ── -->
+  <h2 class="section-title">The Revenue Capacity Model</h2>
+  <p class="section-intro">The revenue capacity model is a bottoms-up projection of how much revenue the sales team is structurally capable of generating in a given period, given current and planned headcount, ramp schedules, quota levels, attrition rates, and productivity assumptions. It is the financial instrument that connects headcount decisions to revenue outcomes — and it must be built before hiring decisions are made, not after.</p>
+
+  <div class="subsection">
+    <div class="subsection-title">Model Inputs</div>
+    <div class="capacity-model">
+      <div class="capacity-row">
+        <span class="cap-label">Current Quota-Carrying Headcount</span>
+        <span class="cap-value">e.g. 12 AEs</span>
+        <span class="cap-note">Only reps past ramp date. Ramping reps are modeled separately.</span>
+      </div>
+      <div class="capacity-row">
+        <span class="cap-label">Average Annual Quota per Rep</span>
+        <span class="cap-value">e.g. $800K</span>
+        <span class="cap-note">Should be set at ~5× OTE. Varies by segment (SMB/Mid-Market/Enterprise).</span>
+      </div>
+      <div class="capacity-row">
+        <span class="cap-label">Ramp Duration</span>
+        <span class="cap-value">e.g. 4 months</span>
+        <span class="cap-note">Time from hire date to full quota productivity. Typically 3–6 months for SMB, 6–9 months for Enterprise.</span>
+      </div>
+      <div class="capacity-row">
+        <span class="cap-label">Ramp Productivity Schedule</span>
+        <span class="cap-value">25/50/75/100%</span>
+        <span class="cap-note">Month-by-month productivity ramp. Month 1 = 25%, Month 2 = 50%, Month 3 = 75%, Month 4+ = 100% of quota.</span>
+      </div>
+      <div class="capacity-row">
+        <span class="cap-label">Annual Voluntary Attrition Rate</span>
+        <span class="cap-value">20–25%</span>
+        <span class="cap-note">Industry average for SaaS AEs. Must be baked into the model — attrition is not an exception, it is a structural constant.</span>
+      </div>
+      <div class="capacity-row">
+        <span class="cap-label">Average Quota Attainment</span>
+        <span class="cap-value">e.g. 72%</span>
+        <span class="cap-note">Not all ramped reps hit full quota. Use trailing 4-quarter average attainment, not 100%. This is the productivity rate adjustment.</span>
+      </div>
+      <div class="capacity-row">
+        <span class="cap-label">Planned New Hires</span>
+        <span class="cap-value">e.g. 4 AEs in Q2</span>
+        <span class="cap-note">Modeled with hire date + time-to-offer + ramp schedule. Revenue contribution doesn't start until month 4+.</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="subsection">
+    <div class="subsection-title">Building the Model: A Worked Example</div>
+    <p>Assume 12 ramped AEs, $800K quota, 72% average attainment, 22% annual attrition. The model calculates:</p>
+    <div class="formula-block">
+      <div class="formula-label">Current Capacity</div>
+      <div class="formula-main">Effective Revenue Capacity = # Ramped Reps × Quota × Avg Attainment Rate</div>
+      <div class="formula-note">12 reps × $800K × 72% = $6.91M expected revenue from current ramped team (annualized)</div>
+    </div>
+    <div class="formula-block">
+      <div class="formula-label">Attrition Impact</div>
+      <div class="formula-main">Expected Attrition Loss = Headcount × Attrition Rate × Quota × Attainment</div>
+      <div class="formula-note">12 × 22% = 2.64 reps lost annually → $800K × 72% × 2.64 = ~$1.52M revenue at risk from attrition per year</div>
+    </div>
+    <p>The revenue gap — the difference between the capacity model output and the annual revenue target — determines the minimum hiring requirement. If the revenue target is $9M and current capacity (net of attrition) is $6.91M, the organization needs to either increase quota, improve attainment, or hire and ramp additional reps in time to contribute within the fiscal year.</p>
+    <p><strong>The critical insight:</strong> Because of ramp time, a rep hired today does not contribute meaningfully to this year's number. A rep hired in Q1 contributes ~60–70% of their annual quota to the year. A rep hired in Q3 contributes ~20–30%. The revenue capacity model makes this timing math explicit and non-negotiable.</p>
+  </div>
+
+  <div class="subsection">
+    <div class="subsection-title">Hiring Lead Time: The Hidden Revenue Planning Variable</div>
+    <p>The hiring lag — the total time from approved headcount to a fully productive rep — is the single most misunderstood variable in SaaS revenue planning. Leaders who decide to "hire 5 more AEs" in Q3 are making a decision that won't affect revenue until Q4 at the earliest, and realistically until the following fiscal year for meaningful contribution.</p>
+    <div class="formula-block">
+      <div class="formula-label">Total Hiring Lag</div>
+      <div class="formula-main">Total Lag = Time to Approve HC + Time to Fill + Ramp Duration</div>
+      <div class="formula-note">Typical: 2–3 weeks to approve → 6–10 weeks to fill (interview, offer, notice period) → 4–6 months ramp. Total: 5–9 months from decision to revenue contribution.</div>
+    </div>
+    <p>The implication: headcount decisions that affect next year's revenue must be made in Q3 or Q4 of the prior year. CROs who wait until January to start hiring for a February revenue plan are already 4–6 months behind. Revenue capacity modeling forces this timeline conversation in advance.</p>
+  </div>
+
+  <!-- ── 3. HEADCOUNT PLANNING ── -->
+  <h2 class="section-title">Headcount Planning</h2>
+  <p class="section-intro">Headcount planning is a financial exercise disguised as an HR exercise. Every hire is a multi-year investment: base salary + variable + benefits + equity + enablement + management overhead + opportunity cost of a manager's coaching time. The question is not "can we afford to hire?" — in most high-growth SaaS companies, there is always budget pressure pushing toward more headcount. The question is "will this hire produce positive unit economics within 12–18 months?"</p>
+
+  <div class="subsection">
+    <div class="subsection-title">SDR:AE Ratios by Segment</div>
+    <table class="data-table">
+      <thead>
+        <tr><th>Segment</th><th>Deal Size</th><th>SDR:AE Ratio</th><th>Rationale</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>SMB</td><td>&lt;$15K ACV</td><td>1:1 to 1:2</td><td>High volume, short cycle. SDR workload per AE is manageable. AEs often self-source significantly.</td></tr>
+        <tr><td>Mid-Market</td><td>$15K–$75K ACV</td><td>1:2 to 1:3</td><td>Standard ratio. SDR handles volume outbound; AE handles AE-sourced and SDR-generated pipeline.</td></tr>
+        <tr><td>Enterprise</td><td>$75K+ ACV</td><td>1:3 to 1:4</td><td>Lower volume, longer cycle. SDR focuses on deep account research and multi-touch cadences for fewer, higher-value targets.</td></tr>
+        <tr><td>Named/Strategic</td><td>$250K+ ACV</td><td>1:4 to 1:6 or dedicated SDR</td><td>Enterprise SDRs may be account-aligned with specific AEs. High-touch, long-horizon relationship building.</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="subsection">
+    <div class="subsection-title">The Productivity Ramp Model</div>
+    <p>Plan headcount based on ramped capacity, not nominal headcount. A team of 15 AEs where 4 are in month 1–3 of ramp is effectively a 12-rep team for quota purposes. The productivity ramp model converts headcount into effective quota-carrying capacity by applying time-weighted productivity multipliers.</p>
+    <table class="data-table ramp-table">
+      <thead>
+        <tr><th>Month Post-Hire</th><th>SMB Productivity</th><th>Mid-Market Productivity</th><th>Enterprise Productivity</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>Month 1</td><td>20%</td><td>0–10%</td><td>0%</td></tr>
+        <tr><td>Month 2</td><td>40%</td><td>20%</td><td>0–10%</td></tr>
+        <tr><td>Month 3</td><td>70%</td><td>40%</td><td>20%</td></tr>
+        <tr><td>Month 4</td><td>90%</td><td>60%</td><td>40%</td></tr>
+        <tr><td>Month 5</td><td>100%</td><td>80%</td><td>60%</td></tr>
+        <tr><td>Month 6</td><td>100%</td><td>100%</td><td>80%</td></tr>
+        <tr><td>Month 7+</td><td>100%</td><td>100%</td><td>100%</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="subsection">
+    <div class="subsection-title">Attrition Planning</div>
+    <p>Attrition in SaaS sales organizations is structural, not exceptional. Industry benchmarks consistently show 20–25% voluntary and involuntary attrition annually for quota-carrying AEs. This means that a 20-rep sales team will lose 4–5 reps per year through voluntary resignation (higher comp elsewhere, career change, relocation) and involuntary termination (performance management, role elimination). Plans that assume 0% attrition are fantasy plans.</p>
+    <div class="hockey-stick-note">
+      <strong>The Hockey Stick Problem:</strong> SaaS revenue plans typically show a "hockey stick" — flat performance through most of the year followed by a large Q4 spike driven by end-of-year urgency and budget flush. The headcount plan must account for this by ensuring reps hired in Q1 and Q2 are fully ramped in time to carry the Q3–Q4 load. A rep hired in Q3 will not contribute to a Q4 hockey stick — they are still in ramp. The hockey stick problem is, at its core, a hiring lag and ramp timing problem.
+    </div>
+  </div>
+
+  <!-- ── 4. REVOPS AT SCALE ── -->
+  <h2 class="section-title">Revenue Operations at Scale</h2>
+  <p class="section-intro">RevOps is the connective tissue of the revenue organization. It owns the systems, data, processes, and analytical infrastructure that enables the sales, marketing, and CS teams to execute efficiently and make evidence-based decisions. As the organization scales, RevOps complexity grows non-linearly — the systems and processes that work for a 10-rep team are inadequate at 50, and inadequate at 50 are broken at 200.</p>
+
+  <div class="revops-org">
+    <div class="revops-stage">
+      <div class="rs-size">0–10 Reps</div>
+      <div class="rs-title">Founder-Led RevOps</div>
+      <ul>
+        <li>CRM administration (Salesforce/HubSpot)</li>
+        <li>Basic pipeline reporting</li>
+        <li>Deal desk for pricing exceptions</li>
+        <li>Comp plan administration</li>
+        <li>1 RevOps generalist or fractional</li>
+      </ul>
+    </div>
+    <div class="revops-stage">
+      <div class="rs-size">10–50 Reps</div>
+      <div class="rs-title">Function Established</div>
+      <ul>
+        <li>Territory design &amp; assignment</li>
+        <li>Quota-setting methodology</li>
+        <li>Forecast infrastructure</li>
+        <li>Marketing attribution</li>
+        <li>CRM data governance</li>
+        <li>3–5 person RevOps team</li>
+      </ul>
+    </div>
+    <div class="revops-stage">
+      <div class="rs-size">50–100 Reps</div>
+      <div class="rs-title">Specialization Begins</div>
+      <ul>
+        <li>Sales Ops + Marketing Ops split</li>
+        <li>BI/analytics function</li>
+        <li>Systems integration (CPQ, CLM)</li>
+        <li>Comp modeling &amp; SPIFs</li>
+        <li>Rep productivity analytics</li>
+        <li>6–10 person RevOps team</li>
+      </ul>
+    </div>
+    <div class="revops-stage">
+      <div class="rs-size">100–200+ Reps</div>
+      <div class="rs-title">Enterprise RevOps</div>
+      <ul>
+        <li>Dedicated Sales/Mktg/CS Ops</li>
+        <li>Full BI + data engineering</li>
+        <li>Deal desk as standalone function</li>
+        <li>Global territory governance</li>
+        <li>RevOps VP or SVP</li>
+        <li>12–20+ RevOps professionals</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="subsection">
+    <div class="subsection-title">Core RevOps Infrastructure Requirements at Scale</div>
+    <ul class="bullet-list">
+      <li><strong>Territory governance:</strong> Formal territory assignment rules, named account lists, geographic boundaries, and rules of engagement (ROE) for partner and SDR overlap. Without written ROE, account ownership disputes consume management time and erode sales culture.</li>
+      <li><strong>Quota administration:</strong> A documented quota-setting methodology (bottoms-up modeling from segment capacity, not top-down from board targets alone), a formal quota assignment timeline, an exception/appeal process, and a mid-year adjustment policy. Quota surprise destroys trust.</li>
+      <li><strong>Comp plan management:</strong> Quarterly and annual comp plan documentation, SPIFs policy, accelerator structures, clawback provisions, and a calculation/audit process that ensures reps trust their commission statements.</li>
+      <li><strong>System integrations:</strong> CRM ↔ marketing automation (bi-directional sync), CRM ↔ billing system (revenue recognition and expansion data), CRM ↔ CS platform (health scores, usage data, renewal dates surfaced to AEs). Data silos at scale destroy forecast accuracy and CS effectiveness.</li>
+      <li><strong>Data governance:</strong> Defined data standards for CRM fields (required fields, picklist values, naming conventions), a data stewardship policy, and a regular data quality audit. Garbage-in-garbage-out is not a metaphor in SaaS forecasting — it is the literal mechanism of forecast failure.</li>
+      <li><strong>BI and reporting infrastructure:</strong> A reporting layer (Tableau, Looker, Mode, or equivalent) that surfaces pipeline coverage, forecast accuracy, rep productivity, win rate trends, and NRR waterfall to leadership without requiring manual spreadsheet work. Real-time data access is a competitive advantage in fast-moving sales environments.</li>
+    </ul>
+  </div>
+
+  <!-- ── 5. EXPANSION REVENUE & LAND-AND-EXPAND ── -->
+  <h2 class="section-title">Expansion Revenue &amp; Land-and-Expand</h2>
+  <p class="section-intro">Expansion revenue — the incremental ARR generated from existing customers through upsell, cross-sell, and seat expansion — is the most efficient revenue a SaaS company can generate. The CAC is dramatically lower (existing relationship, no initial prospecting), the ramp time is zero (the customer already understands the product), and the win probability is significantly higher (customer loyalty and switching cost inertia). Companies that treat CS purely as a retention function are leaving substantial expansion revenue on the table.</p>
+
+  <div class="subsection">
+    <div class="subsection-title">The Land-and-Expand Motion in Detail</div>
+    <p>The land-and-expand (L&amp;E) strategy involves intentionally entering an account with a smaller initial deal — "the land" — at lower ACV than the total account potential, prioritizing speed of initial close and time-to-value over upfront deal size. The "expand" phase captures additional ARR once the initial use case has proven value, new stakeholders have been engaged, and additional pain points have surfaced.</p>
+    <p>The L&amp;E motion requires explicit coordination between sales and CS from the moment the deal closes. The initial deal's success plan must define the specific value milestones that will trigger the expansion conversation. CS must be handed the expansion roadmap at kickoff, not 12 months into the relationship when the renewal is coming. Without this coordination, the "expand" phase is accidental rather than engineered.</p>
+    <p><strong>Expansion types:</strong></p>
+    <ul class="bullet-list">
+      <li><strong>Seat expansion:</strong> Adding users within the same use case. Often the simplest expansion — triggered by usage thresholds, new hires, team additions.</li>
+      <li><strong>Module/product expansion:</strong> Selling additional product lines or modules to the same account. Requires identifying new pain areas and aligning with new stakeholders.</li>
+      <li><strong>Upsell to higher tier:</strong> Moving the customer from a lower SKU to a higher-value tier with additional capabilities. Triggered by feature limitation events.</li>
+      <li><strong>Cross-sell to new departments:</strong> Taking the product to a new business unit, geography, or function within the same organization. Requires new champion development — the existing champion rarely has authority across organizational boundaries.</li>
+    </ul>
+  </div>
+
+  <div class="subsection">
+    <div class="subsection-title">Expansion Triggers</div>
+    <p>Expansion conversations should be initiated by specific, observable triggers, not by arbitrary renewal calendar events. The most effective expansion programs build trigger-based workflows into the CS platform and CRM:</p>
+    <ul class="bullet-list">
+      <li><strong>Usage threshold trigger:</strong> Customer reaches 80% of licensed seats or feature usage quota → automatic CSM alert to initiate expansion conversation.</li>
+      <li><strong>Time-based milestones:</strong> 90, 180, 270 days post-go-live — structured check-ins that assess value delivered and surface new pain areas.</li>
+      <li><strong>New stakeholder entry:</strong> A new executive or department head joins the account who was not part of the original purchase — a fresh champion development opportunity.</li>
+      <li><strong>Product release events:</strong> A new module or capability launches that directly addresses a known pain area the customer expressed during discovery.</li>
+      <li><strong>Organizational events:</strong> Customer acquires another company, launches a new product line, enters a new market — all of which expand the use case.</li>
+    </ul>
+  </div>
+
+  <!-- ── 6. NRR IN DEPTH ── -->
+  <h2 class="section-title">NRR &amp; GRR — The Defining SaaS Metrics</h2>
+  <p class="section-intro">Net Revenue Retention (NRR) — also called Net Dollar Retention (NDR) — is the single most important metric in a post-initial-scale SaaS business. It measures whether existing customers are growing or shrinking as a revenue base, and it directly determines whether the business requires constant new logo acquisition just to maintain current ARR or whether it can compound from its existing customer base.</p>
+
+  <div class="subsection">
+    <div class="subsection-title">NRR Formula and Benchmarks</div>
+    <div class="formula-block">
+      <div class="formula-label">Net Revenue Retention (NRR)</div>
+      <div class="formula-main">NRR = (Starting MRR + Expansion MRR − Contraction MRR − Churn MRR) / Starting MRR × 100</div>
+      <div class="formula-note">Measure monthly (starting cohort MRR) and report trailing 12-month average. Example: Start $1.0M MRR + $200K expansion − $50K contraction − $80K churn = $1.07M / $1.0M × 100 = 107% NRR</div>
+    </div>
+    <table class="data-table">
+      <thead>
+        <tr><th>NRR Level</th><th>Interpretation</th><th>Implication</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>&lt;90%</td><td>Revenue is shrinking from existing customers</td><td>Serious churn crisis. New logo acquisition just replaces lost ARR. Business is a "leaky bucket."</td></tr>
+        <tr><td>90–100%</td><td>Roughly flat from existing base</td><td>Retention is acceptable but expansion is not working. Growth requires constant new logo acquisition.</td></tr>
+        <tr><td>100–110%</td><td>Healthy net expansion</td><td>Good foundation. Existing customer base is a modest growth engine. Acceptable for most growth stages.</td></tr>
+        <tr><td>110–120%</td><td>Strong net expansion</td><td>Existing customers are a meaningful growth engine. New logo acquisition builds on a growing base.</td></tr>
+        <tr><td>120%+</td><td>Best-in-class</td><td>The base compounds. Best-in-class SaaS benchmarks (Snowflake, Twilio at peak, Veeva). Existing customers generate enough expansion to sustain growth without new logos.</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="subsection">
+    <div class="subsection-title">The Compounding Math of NRR</div>
+    <p>The power of high NRR is the compounding effect on ARR from existing customers alone. At 120% NRR, the existing customer base doubles approximately every 4 years without a single new logo. This is the mathematical foundation of the "expansion-led growth" strategy pursued by the most efficient SaaS businesses.</p>
+    <div class="nrr-compound">
+      <table>
+        <thead>
+          <tr>
+            <th>Year</th>
+            <th>80% NRR (Shrinking)</th>
+            <th>100% NRR (Flat)</th>
+            <th>110% NRR (Good)</th>
+            <th>120% NRR (Best-in-Class)</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td>Year 0 (Base)</td><td>$10M</td><td>$10M</td><td>$10M</td><td>$10M</td></tr>
+          <tr><td>Year 1</td><td>$8.0M</td><td>$10.0M</td><td>$11.0M</td><td>$12.0M</td></tr>
+          <tr><td>Year 2</td><td>$6.4M</td><td>$10.0M</td><td>$12.1M</td><td>$14.4M</td></tr>
+          <tr><td>Year 3</td><td>$5.1M</td><td>$10.0M</td><td>$13.3M</td><td>$17.3M</td></tr>
+          <tr><td>Year 4</td><td>$4.1M</td><td>$10.0M</td><td>$14.6M</td><td>$20.7M</td></tr>
+          <tr><td>Year 5</td><td>$3.3M</td><td>$10.0M</td><td>$16.1M</td><td>$24.9M</td></tr>
+        </tbody>
+      </table>
+      <p style="font-size:12px;color:var(--text-muted);margin-top:10px">Table assumes no new logo acquisition — illustrates NRR compounding effect from existing customers only. A business with 120% NRR and strong new logo acquisition has a dramatically more favorable growth trajectory than a business with 85% NRR and the same new logo engine.</p>
+    </div>
+  </div>
+
+  <div class="subsection">
+    <div class="subsection-title">GRR (Gross Revenue Retention)</div>
+    <div class="formula-block">
+      <div class="formula-label">Gross Revenue Retention (GRR)</div>
+      <div class="formula-main">GRR = (Starting MRR − Contraction MRR − Churn MRR) / Starting MRR × 100</div>
+      <div class="formula-note">GRR excludes expansion entirely. It measures retention-only. GRR &lt; NRR always (unless no expansion exists). Best-in-class GRR: 90%+ for SMB, 95%+ for enterprise.</div>
+    </div>
+    <p><strong>Why GRR matters separately from NRR:</strong> NRR can be artificially elevated by aggressive expansion motions that mask underlying churn. A company with 50% logo churn but aggressive upsell of surviving customers can show 100% NRR while its core product quality or customer fit is severely broken. GRR reveals the retention-only health of the customer base, independent of expansion success. It directly reflects product quality, CS effectiveness, and ICP fit.</p>
+    <div class="two-col">
+      <div class="callout callout-definition" style="margin:0">
+        <div class="callout-title">GRR Interpretation</div>
+        <p>GRR reflects product stickiness and customer success quality. A high GRR with low NRR suggests strong retention but weak expansion motion — the expansion playbook or CSM commercial skills need investment. A low GRR with high NRR is a warning sign — masking churn with upsell is not sustainable.</p>
+      </div>
+      <div class="callout callout-definition" style="margin:0">
+        <div class="callout-title">NRR vs. GRR in Investment Analysis</div>
+        <p>Sophisticated SaaS investors examine both metrics. NRR &gt; 120% demonstrates a powerful expansion engine. GRR &gt; 95% in enterprise demonstrates best-in-class retention. The ideal combination — high GRR + high NRR — signals product-market fit AND commercial CS execution. Either metric in isolation is incomplete.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── 7. LTV:CAC ── -->
+  <h2 class="section-title">LTV:CAC Ratio &amp; Payback Period</h2>
+  <p class="section-intro">LTV:CAC is the foundational unit economics metric in SaaS. It measures whether the business is generating durable value from each customer relationship relative to what it costs to acquire them. A business with poor LTV:CAC is one where growth itself is value-destructive — each new customer acquired makes the business less valuable, not more.</p>
+
+  <div class="formula-block">
+    <div class="formula-label">Customer Lifetime Value (LTV)</div>
+    <div class="formula-main">LTV = (ACV × Gross Margin %) / Churn Rate</div>
+    <div class="formula-note">Example: $50K ACV × 75% gross margin / 12% annual churn = $312,500 LTV. Note: Use annual churn as a decimal (12% = 0.12). LTV is highly sensitive to churn rate — halving churn doubles LTV.</div>
+  </div>
+  <div class="formula-block">
+    <div class="formula-label">Customer Acquisition Cost (CAC)</div>
+    <div class="formula-main">CAC = Total Sales &amp; Marketing Spend (period) / New Customers Acquired (period)</div>
+    <div class="formula-note">Include all S&amp;M fully-loaded costs: rep salaries, variable comp, SDR costs, marketing programs, tools, management overhead. Segment by channel (inbound vs. outbound, partner vs. direct) for meaningful analysis.</div>
+  </div>
+  <div class="formula-block">
+    <div class="formula-label">LTV:CAC Ratio</div>
+    <div class="formula-main">LTV:CAC = LTV / CAC</div>
+    <div class="formula-note">Benchmark: LTV:CAC &gt; 3:1 is the SaaS standard. &gt; 5:1 is exceptional. &lt; 2:1 signals unit economics are broken and scaling will destroy capital.</div>
+  </div>
+  <div class="formula-block">
+    <div class="formula-label">CAC Payback Period</div>
+    <div class="formula-main">Payback Period = CAC / (ACV × Gross Margin %)</div>
+    <div class="formula-note">Best-in-class: &lt;12 months. Good: 12–18 months. Concerning: 18–24 months. Dangerous: &gt;24 months (especially at high growth rates). Example: $45K CAC / ($50K ACV × 75% GM) = $45K / $37.5K = 14.4 months.</div>
+  </div>
+
+  <div class="callout callout-best-practice">
+    <div class="callout-title">The LTV:CAC Investment Principle</div>
+    <p>An LTV:CAC ratio above 3:1 means you should invest more in sales and marketing — each dollar spent generates at least three dollars of value. A ratio below 2:1 means additional investment in customer acquisition destroys capital. Most growth-stage SaaS companies optimize for growth rate without monitoring this ratio — and discover, often too late, that they have been growing by destroying value.</p>
+  </div>
+
+  <!-- ── 8. PARTNERSHIP & CHANNEL ── -->
+  <h2 class="section-title">Partnership &amp; Channel at Scale</h2>
+  <p class="section-intro">Channel and partnership programs are the highest-leverage, highest-risk scaling motion available to a SaaS business. Done right, they multiply revenue capacity without proportionally increasing headcount. Done prematurely — before direct sales is proven and repeatable — they create dependency on partners who have less conviction in your product than your own team, who cannot troubleshoot the sales process because they don't understand it, and whose economics often misalign with your target market.</p>
+
+  <div class="subsection">
+    <div class="subsection-title">When to Build a Channel Program</div>
+    <p>The prerequisite for a channel program is a proven direct sales motion. Specifically: you have passed all three of Roberge's repeatability tests, you have a complete sales playbook that can be trained externally, you have customer references across multiple segments, and you have the internal resources to train, enable, and support partner sellers without cannibalizing the core sales team's attention.</p>
+    <p>Most SaaS companies should not build a channel program before $5–10M ARR, and many do not need one until $25–50M ARR. The exceptions are businesses that are inherently distribution-heavy (geographic markets that require local resellers, government/public sector with mandatory local partner requirements, or technology integrations that create natural referral structures).</p>
+  </div>
+
+  <div class="subsection">
+    <div class="subsection-title">Partner Types &amp; Economics</div>
+    <div class="partner-types-grid">
+      <div class="partner-card">
+        <div class="pc-type">Referral Partner</div>
+        <div class="pc-title">Lead Generation</div>
+        <p>Partner refers qualified leads in exchange for a finder's fee or referral commission (typically 5–15% of first-year ACV). Partner does not manage the sales cycle. Lowest friction, lowest investment, lowest revenue contribution per partner.</p>
+      </div>
+      <div class="partner-card">
+        <div class="pc-type">Reseller Partner</div>
+        <div class="pc-title">Full Sales Ownership</div>
+        <p>Partner owns the customer relationship and sales cycle end-to-end. Receives a margin (typically 15–30% of list price). Requires full enablement investment. Revenue is partner-sourced and partner-managed. High scale potential, high management overhead.</p>
+      </div>
+      <div class="partner-card">
+        <div class="pc-type">OEM / White Label</div>
+        <div class="pc-title">Embedded Distribution</div>
+        <p>Partner embeds your technology in their product or bundle. Revenue shares vs. per-unit pricing. Very high scale potential, low individual deal visibility. Loss of brand presence in end customer relationship.</p>
+      </div>
+      <div class="partner-card">
+        <div class="pc-type">Technology Alliance</div>
+        <div class="pc-title">Integration Partnership</div>
+        <p>Complementary technology integration that creates mutual pipeline referrals, co-marketing, and co-selling motions. Typically margin-free or low-margin. Primary value is pipeline influence and market positioning rather than direct revenue.</p>
+      </div>
+    </div>
+    <p><strong>Deal registration:</strong> All partnership programs require a formal deal registration process — partners register their opportunities in your CRM before beginning the sales motion. This prevents channel conflict (two partners competing on the same deal), provides visibility into partner-influenced pipeline, and ensures partner compensation is defensible. Without deal registration, channel conflict rapidly erodes partner trust and program participation.</p>
+  </div>
+
+  <div class="subsection">
+    <div class="subsection-title">Measuring Partner Revenue</div>
+    <p>Distinguish clearly between partner-sourced revenue (the partner originated the opportunity) and partner-influenced revenue (the partner was involved but the opportunity was sourced by direct sales or marketing). Both have value, but they reflect different partner program investments and should be tracked separately in the CRM.</p>
+    <div class="formula-block">
+      <div class="formula-label">Partner Revenue Metrics</div>
+      <div class="formula-main">Partner-Sourced ARR % = Partner-Sourced New ARR / Total New ARR × 100
+Partner-Influenced ARR % = Deals with Partner Involvement / Total Deals Closed × 100</div>
+      <div class="formula-note">Best-in-class channel programs target 20–40% partner-sourced at maturity (3–5 years). Early programs typically achieve 5–15% in year 1–2.</div>
+    </div>
+  </div>
+
+  <!-- ── INDICATORS ── -->
+  <h2 class="section-title">Key Indicators — Phase 5</h2>
+  <div class="two-col">
+    <div>
+      <p style="font-size:13px;font-weight:700;letter-spacing:.5px;text-transform:uppercase;color:var(--text-muted);margin-bottom:10px">Leading Indicators</p>
+      <div class="indicator-row" style="flex-direction:column;gap:8px;">
+        <div class="indicator-tag ind-leading" style="display:block">Pipeline Coverage Trend (quarter over quarter)</div>
+        <div class="indicator-tag ind-leading" style="display:block">Rep Ramp Completion Rate (% hitting ramp milestones)</div>
+        <div class="indicator-tag ind-leading" style="display:block">Expansion Pipeline (CSM-identified expansion opps)</div>
+        <div class="indicator-tag ind-leading" style="display:block">Account Health Score Distribution (% green/yellow/red)</div>
+        <div class="indicator-tag ind-leading" style="display:block">Win Rate Consistency Across Reps</div>
+      </div>
+    </div>
+    <div>
+      <p style="font-size:13px;font-weight:700;letter-spacing:.5px;text-transform:uppercase;color:var(--text-muted);margin-bottom:10px">Lagging Indicators</p>
+      <div class="indicator-row" style="flex-direction:column;gap:8px;">
+        <div class="indicator-tag ind-lagging" style="display:block">NRR (Net Revenue Retention) — target 110%+</div>
+        <div class="indicator-tag ind-lagging" style="display:block">GRR (Gross Revenue Retention) — target 90%+</div>
+        <div class="indicator-tag ind-lagging" style="display:block">LTV:CAC Ratio — target &gt;3:1</div>
+        <div class="indicator-tag ind-lagging" style="display:block">CAC Payback Period — target &lt;18 months</div>
+        <div class="indicator-tag ind-lagging" style="display:block">Quota Attainment Distribution Trend</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── FORMULAS SUMMARY ── -->
+  <h2 class="section-title">Formula Reference</h2>
+  <div class="formula-block">
+    <div class="formula-label">NRR</div>
+    <div class="formula-main">NRR = (Starting MRR + Expansion − Contraction − Churn) / Starting MRR × 100</div>
+    <div class="formula-note">Best-in-class: 120%+. Benchmark: 100–110% is solid for most growth-stage companies.</div>
+  </div>
+  <div class="formula-block">
+    <div class="formula-label">GRR</div>
+    <div class="formula-main">GRR = (Starting MRR − Contraction − Churn) / Starting MRR × 100</div>
+    <div class="formula-note">GRR ≤ NRR always. Best-in-class enterprise: 95%+. Reflects retention without expansion credit.</div>
+  </div>
+  <div class="formula-block">
+    <div class="formula-label">LTV</div>
+    <div class="formula-main">LTV = (ACV × Gross Margin %) / Churn Rate</div>
+    <div class="formula-note">Highly sensitive to churn rate. Reducing churn from 15% to 10% increases LTV by 50%.</div>
+  </div>
+  <div class="formula-block">
+    <div class="formula-label">CAC &amp; Payback Period</div>
+    <div class="formula-main">CAC = Total S&amp;M Spend / New Customers Acquired
+Payback = CAC / (ACV × Gross Margin %)</div>
+    <div class="formula-note">Target: LTV:CAC &gt; 3:1, Payback &lt; 18 months. Best-in-class: LTV:CAC &gt; 5:1, Payback &lt; 12 months.</div>
+  </div>
+
+  <!-- ── COMMON MISTAKES ── -->
+  <h2 class="section-title">Common Scaling Mistakes</h2>
+  <div class="callout callout-warning">
+    <div class="callout-title">Hiring Ahead of Repeatability</div>
+    <p>Scaling headcount before passing the three repeatability tests is the fastest way to destroy unit economics and culture simultaneously. New reps fail, attrition rises, the playbook is revised under fire, and headcount costs grow while revenue lags. <strong>Fix:</strong> Run all three repeatability tests before the first headcount scale. If tests 1 or 2 fail, invest in playbook and enablement. If test 3 fails, the ICP is wrong — fix the ICP before scaling the funnel.</p>
+  </div>
+  <div class="callout callout-warning">
+    <div class="callout-title">Ignoring NRR Until It's Too Late</div>
+    <p>Companies that optimize exclusively for new logo ARR without monitoring NRR often discover at $20–30M ARR that their existing customer base is declining fast enough to require new logo growth just to maintain flat ARR. This is the "running on a treadmill" growth trap. <strong>Fix:</strong> Make NRR a board-level metric from $1M ARR. Track the NRR waterfall (expansion, contraction, churn) monthly, not quarterly.</p>
+  </div>
+  <div class="callout callout-warning">
+    <div class="callout-title">Under-Investing in Customer Success</div>
+    <p>The most common rationalization for under-investing in CS is "we need to prioritize sales first." This inverts the economics. A $1 invested in CS that improves NRR by 5 points generates more long-term enterprise value than $1 invested in additional sales capacity — because NRR improvement compounds while incremental sales capacity is linear. <strong>Fix:</strong> Fund CS at the level required to maintain target NRR. Model the compounding revenue impact of NRR improvement; it will always justify the investment.</p>
+  </div>
+  <div class="callout callout-warning">
+    <div class="callout-title">Building Channel Before Direct Is Proven</div>
+    <p>Partners cannot sell a product that your own team cannot sell consistently. A channel program launched before direct sales repeatability is established produces confused partners, inconsistent messaging, channel conflict with your direct team, and revenue attribution disputes that poison the partnership. <strong>Fix:</strong> Direct sales repeatability is the prerequisite for any channel investment. Build channel after you have the playbook, the reference customers, and the enablement infrastructure to train and support external sellers.</p>
+  </div>
+
+<div class="section-title">Science of Scaling Tools for This Phase</div>
+<p class="section-intro">Phase 5 scale decisions must be governed by the two-speedometer framework: LIR cohort chart + LIUE dashboard. Both must stay green. Use these tools to scale confidently and build moats that compound.</p>
+<div class="tools-grid">
+  <a href="../subpages/sos-growth-moat.html" class="tool-card tc-sos">
+    <div class="tc-phase">Stage 3 · Core Framework</div>
+    <div class="tc-title">Growth &amp; Moat Deep Dive</div>
+    <div class="tc-desc">Speedometer framework, Scale/Experiment/Ignore matrix, 2-per-month rule, 5 sustainable moats, multi-channel demand gen, promotion path design.</div>
+  </a>
+  <a href="../subpages/sos-checklist.html" class="tool-card tc-sos">
+    <div class="tc-phase">Stage Gate</div>
+    <div class="tc-title">GTM Scaling Readiness Checklist</div>
+    <div class="tc-desc">Gate 2 (GTM Fit → Growth &amp; Moat): 19 items across unit economics, playbook validation, demand gen, and team readiness. Use before authorizing Phase 5 scale.</div>
+  </a>
+  <a href="../subpages/sos-bottoms-up.html" class="tool-card tc-sos">
+    <div class="tc-phase">Stage 3 · Model</div>
+    <div class="tc-title">GTM Bottoms-Up Revenue Model</div>
+    <div class="tc-desc">The headcount planning model rooted in rep productivity data. 9 sheets: GTM model, plan vs. actual, LIR tracking, rep quotas, cohort analysis.</div>
+  </a>
+  <a href="../subpages/sos-liue.html" class="tool-card tc-sos">
+    <div class="tc-phase">Stage 3 · Speedometer</div>
+    <div class="tc-title">LIUE Dashboard</div>
+    <div class="tc-desc">Track LIUE by segment and cohort weekly. If LIUE drops below 3 in any segment, pause hiring in that segment. The "green light" for Phase 5 headcount additions.</div>
+  </a>
+  <a href="../subpages/template-ccac.html" class="tool-card tc-res">
+    <div class="tc-phase">Template · Stage 3</div>
+    <div class="tc-title">CCAC Model</div>
+    <div class="tc-desc">Cohort-based CAC calculation — tracks true acquisition cost by cohort rather than blended average. Essential for Stage 3 segment analysis accuracy.</div>
+  </a>
+  <a href="../subpages/template-cs-playbook.html" class="tool-card tc-res">
+    <div class="tc-phase">CS · NRR Engine</div>
+    <div class="tc-title">Customer Success Playbook</div>
+    <div class="tc-desc">LIR-focused onboarding, QBR framework, health score model, expansion motion. NRR &gt; 120% (Stage 3 target) requires a systematized CS motion running in parallel with sales scale.</div>
+  </a>
+  <a href="../subpages/template-scorecard-sales.html" class="tool-card tc-res">
+    <div class="tc-phase">Template · Stage 3</div>
+    <div class="tc-title">Sales Rep Scorecard (Iteration)</div>
+    <div class="tc-desc">Iterate at month 6 of each cohort: which attributes predicted success? Update before the next cohort. Process Executor profile replaces Process Builder in Stage 3.</div>
+  </a>
+</div>
+
+  <!-- ── RELATED SECTION ── -->
+  <div class="related-section">
+    <div class="related-title">Related Topics</div>
+    <div class="related-links">
+      <a href="phase4.html" class="related-link">← Phase 4: Execution</a>
+      <a href="../subpages/customer-success.html" class="related-link">Customer Success</a>
+      <a href="../subpages/nrr.html" class="related-link">NRR Deep-Dive</a>
+      <a href="../subpages/headcount-planning.html" class="related-link">Headcount Planning</a>
+      <a href="../subpages/revenue-capacity-model.html" class="related-link">Revenue Capacity Model</a>
+      <a href="../subpages/expansion-playbook.html" class="related-link">Expansion Playbook</a>
+      <a href="../subpages/repeatability-test.html" class="related-link">Repeatability Test</a>
+      <a href="../subpages/partnership-scale.html" class="related-link">Partnership &amp; Channel</a>
+      <a href="../subpages/sos-growth-moat.html" class="related-link">Stage 3: Growth &amp; Moat</a>
+      <a href="../subpages/sos-checklist.html" class="related-link">GTM Scaling Checklist</a>
+      <a href="../subpages/sos-bottoms-up.html" class="related-link">GTM Bottoms-Up Model</a>
+      <a href="../subpages/template-ccac.html" class="related-link">CCAC Model</a>
+    </div>
+  </div>
+
+</div>
+<script data-pplx-inline-edit>
+(function () {
+  if (window === window.top) return;
+
+  const allowedParentOrigins = ["https://www.perplexity.ai","https://perplexity.ai","https://testing.perplexity.ai","https://staging.perplexity.ai","https://*.preview.i.perplexity.ai","http://localhost:3000","http://127.0.0.1:3000","http://localhost:5173","http://127.0.0.1:5173"];
+  const MAX_FONT_BYTES = 500 * 1024;
+  const MAX_TOTAL_FONT_BYTES = 2 * 1024 * 1024;
+  let scrollForwarding = false;
+  let scrollRaf = 0;
+  let trustedTopOrigin = null;
+
+  // Allow entries like "https://*.preview.i.perplexity.ai" — the wildcard
+  // matches a single DNS label (no dots), so "https://*.foo" cannot stretch
+  // across multiple labels.
+  function matchesAllowedOrigin(origin) {
+    if (!origin) return false;
+    for (const entry of allowedParentOrigins) {
+      if (!entry.includes("*")) {
+        if (entry === origin) return true;
+        continue;
+      }
+      const pattern = new RegExp(
+        "^" +
+          entry.replace(/[.+?^${}()|[\]\\]/g, "\\$&").replace(/\*/g, "[^.]+") +
+          "$",
+      );
+      if (pattern.test(origin)) return true;
+    }
+    return false;
+  }
+
+  // Trust decision: when the sender is same-origin-visible (event.origin is a
+  // real origin like https://www.perplexity.ai) we trust event.origin directly.
+  // When event.origin is "null" (opaque broker srcdoc), we fall back to the
+  // broker's stamped `parentOrigin` to identify the top window. The fallback
+  // is claim-only — we rely on the browser's native `targetOrigin` enforcement
+  // on the response path (see postToTrustedTop) to ensure replies can't be
+  // delivered to anyone but the actual top window of that claimed origin.
+  function getTrustedParentOrigin(event) {
+    const forwardedParentOrigin =
+      typeof event.data.parentOrigin === "string" ? event.data.parentOrigin : null;
+    const parentOrigin = event.origin === "null" ? forwardedParentOrigin : event.origin;
+    return matchesAllowedOrigin(parentOrigin) ? parentOrigin : null;
+  }
+
+  // All responses go to window.top with targetOrigin = the allowlisted origin.
+  // An attacker that iframes us inside their own null-origin broker can claim
+  // any parentOrigin they like, but the browser will drop the reply whenever
+  // the real top's origin doesn't match — so the screenshot never leaves.
+  function postToTrustedTop(message) {
+    if (!trustedTopOrigin) return;
+    try {
+      window.top.postMessage(message, trustedTopOrigin);
+    } catch (_error) {}
+  }
+
+  function inlineAll(original, clone) {
+    if (original.nodeType !== 1 || clone.nodeType !== 1) return;
+
+    try {
+      const computedStyle = getComputedStyle(original);
+      // cssText on a computed style is the serialized declaration in modern
+      // Chromium/Safari — a single read beats enumerating ~400 longhand
+      // properties. Firefox returns "" here, so we fall back on empty.
+      const serialized = computedStyle.cssText;
+      if (serialized) {
+        clone.style.cssText = serialized;
+      } else {
+        const parts = new Array(computedStyle.length);
+        for (let index = 0; index < computedStyle.length; index += 1) {
+          const property = computedStyle[index];
+          parts[index] = `${property}:${computedStyle.getPropertyValue(property)};`;
+        }
+        clone.style.cssText = parts.join("");
+      }
+    } catch (_error) {}
+
+    const originalChildren = original.children;
+    const clonedChildren = clone.children;
+    for (
+      let index = 0;
+      index < originalChildren.length && index < clonedChildren.length;
+      index += 1
+    ) {
+      inlineAll(originalChildren[index], clonedChildren[index]);
+    }
+  }
+
+  function extractFontUrl(srcValue) {
+    const matches = [
+      ...srcValue.matchAll(
+        /url\(["']?([^"')]+)["']?\)(?:\s*format\(["']?([^"')]+)["']?\))?/gi,
+      ),
+    ];
+    if (matches.length === 0) return null;
+    const woff2 = matches.find((m) => m[2] && m[2].toLowerCase().includes("woff2"));
+    if (woff2) return woff2[1];
+    const woff = matches.find((m) => m[2] && m[2].toLowerCase().includes("woff"));
+    if (woff) return woff[1];
+    return matches[0][1];
+  }
+
+  // Cache resolved font URL -> data URI across captures. Fonts on a page
+  // essentially never change, and a batch run emits multiple captures back to
+  // back — without this we'd refetch + re-base64 every time.
+  const fontDataUriCache = new Map();
+  const SRC_DECLARATION_RE = /src\s*:\s*[^;}]+/i;
+
+  async function fetchAsDataUri(url) {
+    if (fontDataUriCache.has(url)) return fontDataUriCache.get(url);
+    let dataUri = null;
+    try {
+      const response = await fetch(url, { mode: "cors", credentials: "omit" });
+      if (response.ok) {
+        const blob = await response.blob();
+        if (blob.size <= MAX_FONT_BYTES) {
+          dataUri = await new Promise((resolve) => {
+            const reader = new FileReader();
+            reader.onloadend = () =>
+              resolve(typeof reader.result === "string" ? reader.result : null);
+            reader.onerror = () => resolve(null);
+            reader.readAsDataURL(blob);
+          });
+        }
+      }
+    } catch (_error) {
+      dataUri = null;
+    }
+    fontDataUriCache.set(url, dataUri);
+    return dataUri;
+  }
+
+  function collectFontFaceRuleTexts() {
+    const rules = [];
+    for (const sheet of document.styleSheets) {
+      let cssRules;
+      try {
+        cssRules = sheet.cssRules;
+      } catch (_error) {
+        continue;
+      }
+      if (!cssRules) continue;
+      for (const rule of cssRules) {
+        const cssText = rule.cssText || "";
+        if (cssText.startsWith("@font-face")) rules.push(cssText);
+      }
+    }
+    return rules;
+  }
+
+  async function buildInlinedFontCss() {
+    const ruleTexts = collectFontFaceRuleTexts();
+    if (ruleTexts.length === 0) return null;
+
+    const resolved = ruleTexts.map((cssText) => {
+      if (!SRC_DECLARATION_RE.test(cssText)) return null;
+      const srcMatch = cssText.match(/src\s*:\s*([^;}]+)[;}]/i);
+      if (!srcMatch) return null;
+      const url = extractFontUrl(srcMatch[1]);
+      if (!url) return null;
+      try {
+        return { cssText, url: new URL(url, document.baseURI).href };
+      } catch (_error) {
+        return null;
+      }
+    });
+
+    const dataUris = await Promise.all(
+      resolved.map((entry) => (entry ? fetchAsDataUri(entry.url) : Promise.resolve(null))),
+    );
+
+    const inlined = [];
+    let totalBytes = 0;
+    for (let index = 0; index < resolved.length; index += 1) {
+      const entry = resolved[index];
+      const dataUri = dataUris[index];
+      if (!entry || !dataUri) continue;
+      const approxBytes = dataUri.length * 0.75;
+      if (totalBytes + approxBytes > MAX_TOTAL_FONT_BYTES) break;
+      totalBytes += approxBytes;
+      inlined.push(entry.cssText.replace(SRC_DECLARATION_RE, `src: url("${dataUri}")`));
+    }
+    return inlined.length > 0 ? inlined.join("\n") : null;
+  }
+
+  function stripExternal(clone) {
+    const images = clone.querySelectorAll("img");
+    for (let index = 0; index < images.length; index += 1) {
+      const src = images[index].getAttribute("src");
+      if (src && !src.startsWith("data:")) images[index].removeAttribute("src");
+    }
+
+    const elements = clone.querySelectorAll("*");
+    for (let index = 0; index < elements.length; index += 1) {
+      const style = elements[index].style.cssText;
+      if (style && style.includes("url(")) {
+        elements[index].style.cssText = style.replace(
+          /url\(["']?(?!data:)[^)"']*["']?\)/gi,
+          "none",
+        );
+      }
+    }
+  }
+
+  function emitScroll() {
+    scrollRaf = 0;
+    if (!scrollForwarding) return;
+    postToTrustedTop({
+      type: "INLINE_EDIT_SCROLL",
+      scrollX: window.scrollX,
+      scrollY: window.scrollY,
+    });
+  }
+
+  window.addEventListener(
+    "scroll",
+    function () {
+      if (!scrollForwarding || scrollRaf) return;
+      scrollRaf = requestAnimationFrame(emitScroll);
+    },
+    { passive: true, capture: true },
+  );
+
+  async function handleCaptureRequest(event) {
+    const requestId = event.data.requestId;
+    const scrollX = window.scrollX;
+    const scrollY = window.scrollY;
+    const width = window.innerWidth;
+    const height = window.innerHeight;
+
+    function postResult(dataUrl) {
+      postToTrustedTop({
+        type: "INLINE_EDIT_SCREENSHOT_RESULT",
+        requestId,
+        dataUrl,
+        scrollX,
+        scrollY,
+      });
+    }
+
+    try {
+      // Wait for any pending web fonts to resolve so both inline metrics and
+      // the @font-face inlining below see the same loaded faces.
+      if (document.fonts && document.fonts.ready) {
+        try {
+          await document.fonts.ready;
+        } catch (_error) {}
+      }
+
+      const clone = document.documentElement.cloneNode(true);
+      inlineAll(document.documentElement, clone);
+
+      const removedNodes = clone.querySelectorAll("script,link[rel=\"stylesheet\"],style");
+      for (let index = 0; index < removedNodes.length; index += 1) {
+        removedNodes[index].remove();
+      }
+
+      stripExternal(clone);
+
+      // Re-embed web fonts as data-URI @font-face rules so the SVG rasterizer
+      // can resolve them — external font URLs aren't fetched during
+      // foreignObject rendering, which would otherwise force a fallback face
+      // and change text metrics.
+      const inlinedFontCss = await buildInlinedFontCss();
+      if (inlinedFontCss) {
+        const styleEl = document.createElement("style");
+        styleEl.textContent = inlinedFontCss;
+        const head = clone.querySelector("head");
+        if (head) head.appendChild(styleEl);
+        else clone.insertBefore(styleEl, clone.firstChild);
+      }
+
+      const html = new XMLSerializer().serializeToString(clone);
+      const svg =
+        `<svg xmlns="http://www.w3.org/2000/svg" width="${width}" height="${height}">` +
+        '<foreignObject width="100%" height="100%">' +
+        `<div xmlns="http://www.w3.org/1999/xhtml" style="width:${width}px;height:${height}px;overflow:hidden">` +
+        `<div style="transform:translate(-${scrollX}px,-${scrollY}px);transform-origin:top left">` +
+        html +
+        "</div></div></foreignObject></svg>";
+      const svgUrl = `data:image/svg+xml;charset=utf-8,${encodeURIComponent(svg)}`;
+      const image = new Image();
+      image.onload = function () {
+        const canvas = document.createElement("canvas");
+        canvas.width = width;
+        canvas.height = height;
+        canvas.getContext("2d").drawImage(image, 0, 0);
+        postResult(canvas.toDataURL("image/png"));
+      };
+      image.onerror = function () {
+        postResult(null);
+      };
+      image.src = svgUrl;
+    } catch (_error) {
+      postResult(null);
+    }
+  }
+
+  window.addEventListener("message", function (event) {
+    if (!event.data) return;
+    // Only accept messages from the direct parent frame. Blocks sibling /
+    // unrelated-window postMessage senders that could otherwise reach us.
+    if (event.source !== window.parent) return;
+
+    const trustedParentOrigin = getTrustedParentOrigin(event);
+    if (!trustedParentOrigin) return;
+    trustedTopOrigin = trustedParentOrigin;
+
+    if (event.data.type === "INLINE_EDIT_SCROLL_START") {
+      scrollForwarding = true;
+      emitScroll();
+      return;
+    }
+
+    if (event.data.type === "INLINE_EDIT_SCROLL_STOP") {
+      scrollForwarding = false;
+      if (scrollRaf) cancelAnimationFrame(scrollRaf);
+      scrollRaf = 0;
+      return;
+    }
+
+    if (event.data.type !== "INLINE_EDIT_CAPTURE_REQUEST") return;
+
+    handleCaptureRequest(event);
+  });
+})();
+
+
+</script></body>
+</html>

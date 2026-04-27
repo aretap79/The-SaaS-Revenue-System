@@ -1,0 +1,1211 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>The SaaS Revenue System — CRO Reference Manual</title>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="assets/shared.css"/>
+  <style>
+    body { background: #F7F6F2; }
+
+    /* ── Home Nav ── */
+    .home-nav {
+      background: #28251D;
+      padding: 0 40px;
+      height: 56px;
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+    .home-nav-logo {
+      font-size: 15px;
+      font-weight: 700;
+      color: #fff;
+      letter-spacing: -0.2px;
+    }
+    .home-nav-logo span { color: #4F98A3; }
+    .home-nav-sub {
+      font-size: 13px;
+      color: rgba(255,255,255,0.4);
+    }
+
+    /* ── Hero ── */
+    .hero {
+      background: #28251D;
+      padding: 56px 40px 48px;
+      text-align: center;
+    }
+    .hero h1 {
+      font-size: 44px;
+      font-weight: 700;
+      color: #fff;
+      letter-spacing: -1px;
+      margin-bottom: 12px;
+      line-height: 1.1;
+    }
+    .hero h1 span { color: #4F98A3; }
+    .hero p {
+      font-size: 17px;
+      color: rgba(255,255,255,0.6);
+      max-width: 600px;
+      margin: 0 auto 20px;
+      line-height: 1.6;
+    }
+    .hero-sources {
+      font-size: 12px;
+      color: rgba(255,255,255,0.3);
+      font-style: italic;
+    }
+
+    /* ── Main layout ── */
+    .main {
+      max-width: 1140px;
+      margin: 0 auto;
+      padding: 40px 32px 80px;
+    }
+
+    /* ── RevOps Banner ── */
+    .revops-banner {
+      background: #01696F;
+      color: #fff;
+      border-radius: 10px;
+      padding: 16px 28px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 6px;
+      cursor: pointer;
+      transition: background 0.15s;
+      text-decoration: none;
+    }
+    .revops-banner:hover { background: #0C4E54; text-decoration: none; }
+    .revops-banner .r-left .r-label {
+      font-size: 11px; font-weight: 700; letter-spacing: 1.5px;
+      text-transform: uppercase; opacity: 0.7; margin-bottom: 3px;
+    }
+    .revops-banner .r-left .r-title { font-size: 18px; font-weight: 700; color: #fff; }
+    .revops-pillars { display: flex; gap: 10px; }
+    .revops-pillars .rp {
+      font-size: 12px; font-weight: 600;
+      background: rgba(255,255,255,0.18);
+      border-radius: 20px; padding: 4px 14px; color: #fff;
+    }
+    .revops-arrow { font-size: 20px; color: rgba(255,255,255,0.5); margin-left: 16px; }
+
+    /* ── Three column ── */
+    .three-col {
+      display: grid;
+      grid-template-columns: 200px 1fr 200px;
+      gap: 6px;
+      margin-bottom: 6px;
+    }
+
+    /* ── Side columns ── */
+    .side-col { display: flex; flex-direction: column; gap: 6px; }
+    .side-header {
+      border-radius: 8px;
+      padding: 14px 16px;
+      font-size: 14px;
+      font-weight: 700;
+      text-align: center;
+      color: #fff;
+      letter-spacing: 0.3px;
+      cursor: pointer;
+      transition: opacity 0.15s;
+      text-decoration: none;
+      display: block;
+    }
+    .side-header:hover { opacity: 0.88; text-decoration: none; color: #fff; }
+    .mktg-bg { background: #006494; }
+    .cs-bg { background: #7A39BB; }
+
+    .side-item {
+      border-radius: 6px;
+      padding: 11px 14px;
+      font-size: 13px;
+      font-weight: 500;
+      color: #fff;
+      cursor: pointer;
+      transition: opacity 0.15s;
+      text-decoration: none;
+      display: block;
+      flex: 1;
+      display: flex;
+      align-items: center;
+    }
+    .side-item:hover { opacity: 0.85; color: #fff; text-decoration: none; }
+    .mktg-item { background: #1a5f7a; }
+    .cs-item { background: #5a2a99; }
+
+    .side-metric {
+      border-radius: 6px;
+      padding: 11px 14px;
+      font-size: 12px;
+      font-weight: 600;
+      text-align: center;
+      border: 1.5px dashed;
+      cursor: default;
+    }
+    .mktg-metric { border-color: #006494; color: #006494; background: #f0f8ff; }
+    .cs-metric { border-color: #7A39BB; color: #7A39BB; background: #f8f4ff; }
+
+    /* ── Phase cards ── */
+    .center-col { display: flex; flex-direction: column; gap: 6px; }
+    .phase-card {
+      border-radius: 8px;
+      padding: 16px 20px;
+      cursor: pointer;
+      transition: opacity 0.15s, transform 0.15s;
+      text-decoration: none;
+      display: block;
+    }
+    .phase-card:hover { opacity: 0.92; transform: translateY(-1px); text-decoration: none; }
+    .phase-label { font-size: 10px; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase; opacity: 0.7; margin-bottom: 4px; color: #fff; }
+    .phase-title { font-size: 15px; font-weight: 700; color: #fff; margin-bottom: 8px; }
+    .phase-tags { display: flex; flex-wrap: wrap; gap: 5px; }
+    .phase-tag {
+      font-size: 12px; font-weight: 500;
+      padding: 3px 10px; border-radius: 20px;
+      background: rgba(255,255,255,0.22);
+      color: #fff !important; cursor: pointer;
+      transition: background 0.12s;
+      text-decoration: none !important;
+      display: inline-block;
+      line-height: 1.6;
+    }
+    .phase-tag:hover { background: rgba(255,255,255,0.38); color: #fff !important; text-decoration: none !important; }
+
+    .ph0 { background: #1B474D; }
+    .ph1 { background: #20808D; }
+    .ph2 { background: #2a7fa8; }
+    .ph3 { background: #437A22; }
+    .ph4 { background: #964219; }
+    .ph5 { background: #6E522B; }
+    .ph6 { background: #A13544; }
+
+    /* ── Handoffs ── */
+    .handoffs-row {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 6px;
+      margin-bottom: 6px;
+    }
+    .handoff-card {
+      background: #fff;
+      border: 1.5px solid #D4D1CA;
+      border-radius: 8px;
+      padding: 14px 16px;
+      text-align: center;
+      cursor: pointer;
+      transition: all 0.15s;
+      text-decoration: none;
+      display: block;
+    }
+    .handoff-card:hover { border-color: #01696F; box-shadow: 0 2px 8px rgba(1,105,111,0.1); text-decoration: none; }
+    .handoff-arrow { font-size: 13px; font-weight: 700; color: #01696F; margin-bottom: 4px; }
+    .handoff-title { font-size: 11px; font-weight: 700; letter-spacing: 0.8px; text-transform: uppercase; color: #7A7974; margin-bottom: 8px; }
+    .handoff-items { display: flex; flex-direction: column; gap: 4px; }
+    .handoff-item { font-size: 12px; color: #28251D; padding: 3px 10px; background: #F7F6F2; border-radius: 4px; }
+
+    /* ── Trouble section ── */
+    .trouble-wrap { margin-bottom: 6px; }
+    .trouble-header {
+      background: #A13544;
+      color: #fff;
+      border-radius: 8px 8px 0 0;
+      padding: 13px 24px;
+      font-size: 13px;
+      font-weight: 700;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      cursor: pointer;
+      text-decoration: none;
+    }
+    .trouble-header:hover { background: #8e2c3a; text-decoration: none; color: #fff; }
+    .trouble-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      border: 1.5px solid #D4D1CA;
+      border-top: none;
+      border-radius: 0 0 8px 8px;
+      overflow: hidden;
+    }
+    .trouble-card {
+      padding: 13px 16px;
+      border-right: 1px solid #D4D1CA;
+      background: #fff;
+      cursor: pointer;
+      transition: background 0.12s;
+      text-decoration: none;
+      display: block;
+    }
+    .trouble-card:hover { background: #fdf5f6; text-decoration: none; }
+    .trouble-card:nth-child(3n) { border-right: none; }
+    .trouble-card:nth-child(n+4) { border-top: 1px solid #D4D1CA; }
+    .trouble-symptom { font-size: 12px; font-weight: 700; color: #A13544; margin-bottom: 3px; }
+    .trouble-cause { font-size: 12px; color: #28251D; line-height: 1.4; }
+
+    /* ── Metrics section ── */
+    .metrics-wrap { margin-bottom: 6px; }
+    .metrics-header {
+      background: #28251D;
+      color: #fff;
+      border-radius: 8px 8px 0 0;
+      padding: 13px 24px;
+      font-size: 13px;
+      font-weight: 700;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      cursor: pointer;
+      text-decoration: none;
+    }
+    .metrics-header:hover { background: #3a3830; text-decoration: none; color: #fff; }
+    .metrics-grid {
+      display: grid;
+      grid-template-columns: repeat(6, 1fr);
+      border: 1.5px solid #D4D1CA;
+      border-top: none;
+      border-radius: 0 0 8px 8px;
+      overflow: hidden;
+    }
+    .metric-item {
+      padding: 14px 14px;
+      border-right: 1px solid #D4D1CA;
+      background: #fff;
+      cursor: pointer;
+      transition: background 0.12s;
+      text-decoration: none;
+      display: block;
+    }
+    .metric-item:hover { background: #f5fffe; text-decoration: none; }
+    .metric-item:last-child { border-right: none; }
+    .metric-item .mi-value { font-size: 11px; font-weight: 700; color: #01696F; margin-bottom: 4px; line-height: 1.3; }
+    .metric-item .mi-desc { font-size: 11px; color: #7A7974; line-height: 1.4; }
+
+    /* ── Science of Scaling section ── */
+    .sos-wrap { margin-bottom: 6px; }
+    .sos-header {
+      background: #0D5C63;
+      color: #fff;
+      border-radius: 8px 8px 0 0;
+      padding: 13px 24px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      cursor: pointer;
+      text-decoration: none;
+    }
+    .sos-header:hover { background: #0a4a50; text-decoration: none; color: #fff; }
+    .sos-header-left .sos-label {
+      font-size: 11px; font-weight: 700; letter-spacing: 1.5px;
+      text-transform: uppercase; opacity: 0.7; margin-bottom: 2px;
+    }
+    .sos-header-left .sos-title { font-size: 17px; font-weight: 700; }
+    .sos-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      border: 1.5px solid #c2dde0;
+      border-top: none;
+      border-radius: 0 0 8px 8px;
+      overflow: hidden;
+      background: #fff;
+    }
+    .sos-item {
+      padding: 16px 18px;
+      border-right: 1px solid #c2dde0;
+      cursor: pointer;
+      transition: background 0.12s;
+      text-decoration: none;
+      display: block;
+    }
+    .sos-item:hover { background: #e6f2f3; text-decoration: none; }
+    .sos-item:last-child { border-right: none; }
+    .sos-item .si-stage { font-size: 10px; font-weight: 700; color: #0D5C63; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 3px; }
+    .sos-item .si-title { font-size: 13px; font-weight: 700; color: #28251D; margin-bottom: 3px; line-height: 1.3; }
+    .sos-item .si-desc { font-size: 11px; color: #7A7974; line-height: 1.4; }
+    .sos-tools-row {
+      display: grid;
+      grid-template-columns: repeat(6, 1fr);
+      border: 1.5px solid #c2dde0;
+      border-top: 1px solid #c2dde0;
+      background: #f5fffe;
+    }
+    .sos-tool {
+      padding: 11px 14px;
+      border-right: 1px solid #c2dde0;
+      font-size: 11px;
+      font-weight: 600;
+      color: #0D5C63;
+      cursor: pointer;
+      transition: background 0.12s;
+      text-decoration: none;
+      display: block;
+      line-height: 1.4;
+    }
+    .sos-tool:hover { background: #c2dde0; text-decoration: none; color: #0D5C63; }
+    .sos-tool:last-child { border-right: none; }
+
+    /* ── Resources & Templates section ── */
+    .res-wrap { margin-bottom: 6px; }
+    .res-header {
+      background: #2C5F8A;
+      color: #fff;
+      border-radius: 8px 8px 0 0;
+      padding: 13px 24px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      cursor: pointer;
+      text-decoration: none;
+    }
+    .res-header:hover { background: #234d72; text-decoration: none; color: #fff; }
+    .res-header-left .res-label {
+      font-size: 11px; font-weight: 700; letter-spacing: 1.5px;
+      text-transform: uppercase; opacity: 0.7; margin-bottom: 2px;
+    }
+    .res-header-left .res-title { font-size: 17px; font-weight: 700; }
+    .res-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      border: 1.5px solid #c5d8ea;
+      border-top: none;
+      border-radius: 0 0 8px 8px;
+      overflow: hidden;
+      background: #fff;
+    }
+    .res-item {
+      padding: 14px 16px;
+      border-right: 1px solid #c5d8ea;
+      cursor: pointer;
+      transition: background 0.12s;
+      text-decoration: none;
+      display: block;
+    }
+    .res-item:hover { background: #e8f1f8; text-decoration: none; }
+    .res-item:last-child { border-right: none; }
+    .res-item.row2 { border-top: 1px solid #c5d8ea; }
+    .res-item .ri-cat { font-size: 10px; font-weight: 700; color: #2C5F8A; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 3px; }
+    .res-item .ri-title { font-size: 12px; font-weight: 700; color: #28251D; margin-bottom: 2px; line-height: 1.3; }
+    .res-item .ri-desc { font-size: 11px; color: #7A7974; line-height: 1.35; }
+
+    /* ── Stage Key strip ── */
+    .stage-key {
+      background: #0D5C63;
+      border-radius: 8px;
+      padding: 12px 20px;
+      margin-bottom: 6px;
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+    .sk-label {
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.55);
+      white-space: nowrap;
+      min-width: 100px;
+      writing-mode: initial;
+    }
+    .sk-stages {
+      display: flex;
+      flex: 1;
+      align-items: center;
+      gap: 6px;
+    }
+    .sk-stage {
+      flex: 1;
+      background: rgba(255,255,255,0.1);
+      border-radius: 6px;
+      padding: 10px 14px;
+      text-decoration: none;
+      transition: background 0.15s;
+      cursor: pointer;
+    }
+    .sk-stage:hover { background: rgba(255,255,255,0.2); text-decoration: none; }
+    .sk-stage-num { font-size: 10px; font-weight: 700; letter-spacing: 1px; text-transform: uppercase; color: rgba(255,255,255,0.6); margin-bottom: 2px; }
+    .sk-stage-name { font-size: 14px; font-weight: 700; color: #fff; margin-bottom: 2px; }
+    .sk-stage-goal { font-size: 11px; color: rgba(255,255,255,0.7); line-height: 1.4; margin-bottom: 4px; }
+    .sk-stage-phases { font-size: 10px; font-weight: 700; background: rgba(255,255,255,0.15); display: inline-block; padding: 2px 8px; border-radius: 10px; color: #fff; }
+    .sk-arrow { font-size: 18px; color: rgba(255,255,255,0.4); }
+
+    /* ── Phase stage badge ── */
+    .phase-stage-badge {
+      display: inline-block;
+      font-size: 9px;
+      font-weight: 700;
+      letter-spacing: 0.8px;
+      text-transform: uppercase;
+      padding: 2px 8px;
+      border-radius: 10px;
+      background: rgba(255,255,255,0.18);
+      color: rgba(255,255,255,0.9);
+      margin-bottom: 6px;
+    }
+
+    /* ── Footer ── */
+    .footer {
+      margin-top: 32px;
+      text-align: center;
+      font-size: 11px;
+      color: #BAB9B4;
+      line-height: 1.8;
+    }
+
+    /* ── Responsive ── */
+    @media (max-width: 900px) {
+      .three-col { grid-template-columns: 1fr; }
+      .side-col { flex-direction: row; flex-wrap: wrap; }
+      .side-header { width: 100%; }
+      .metrics-grid { grid-template-columns: repeat(3, 1fr); }
+      .hero h1 { font-size: 30px; }
+    }
+  </style>
+</head>
+<body>
+
+<nav class="home-nav">
+  <span class="home-nav-logo">SaaS <span>Revenue System</span></span>
+  <span class="home-nav-sub">The Complete CRO Reference Manual</span>
+</nav>
+
+<div class="hero">
+  <h1>The <span>SaaS Revenue System</span></h1>
+  <p>An integrated operating model for leading, building, scaling, and troubleshooting a SaaS sales organization. Click any element to explore in depth.</p>
+  <div class="hero-sources">Based on: Roberge · Iannarino · Lane & Adint · Whyte (MEDDICC)</div>
+</div>
+
+<div class="main">
+
+  <!-- RevOps Banner -->
+  <a href="pages/revops.html" class="revops-banner" style="margin-bottom:6px;">
+    <div class="r-left">
+      <div class="r-label">Horizontal Operating Layer</div>
+      <div class="r-title">Revenue Operations (RevOps)</div>
+    </div>
+    <div class="revops-pillars">
+      <span class="rp">Process</span>
+      <span class="rp">Technology</span>
+      <span class="rp">Data &amp; Insights</span>
+    </div>
+    <span class="revops-arrow">→</span>
+  </a>
+
+  <!-- Stage Key -->
+  <div class="stage-key">
+    <div class="sk-label">Science of Scaling — Stage Sequence</div>
+    <div class="sk-stages">
+      <a href="pages/science-of-scaling.html" class="sk-stage sk-s1">
+        <div class="sk-stage-num">Stage 1</div>
+        <div class="sk-stage-name">Product-Market Fit</div>
+        <div class="sk-stage-goal">Goal: Customer Retention · Metric: LIR</div>
+        <div class="sk-stage-phases">Phases 1–2</div>
+      </a>
+      <div class="sk-arrow">→</div>
+      <a href="pages/science-of-scaling.html" class="sk-stage sk-s2">
+        <div class="sk-stage-num">Stage 2</div>
+        <div class="sk-stage-name">GTM Fit</div>
+        <div class="sk-stage-goal">Goal: Scalable Unit Economics · Metric: LIUE &gt; 3</div>
+        <div class="sk-stage-phases">Phases 2–4</div>
+      </a>
+      <div class="sk-arrow">→</div>
+      <a href="pages/science-of-scaling.html" class="sk-stage sk-s3">
+        <div class="sk-stage-num">Stage 3</div>
+        <div class="sk-stage-name">Growth &amp; Moat</div>
+        <div class="sk-stage-goal">Goal: Revenue Growth Rate · Maximize NRR</div>
+        <div class="sk-stage-phases">Phase 5</div>
+      </a>
+    </div>
+  </div>
+
+  <!-- Three Column -->
+  <div class="three-col">
+
+    <!-- Marketing -->
+    <div class="side-col">
+      <a href="pages/marketing.html" class="side-header mktg-bg">MARKETING</a>
+      <a href="subpages/demand-generation.html" class="side-item mktg-item">Demand Generation</a>
+      <a href="subpages/icp.html" class="side-item mktg-item">ICP &amp; Messaging</a>
+      <a href="subpages/abm.html" class="side-item mktg-item">ABM &amp; Campaigns</a>
+      <a href="subpages/sales-enablement-mktg.html" class="side-item mktg-item">Sales Enablement</a>
+      <a href="subpages/pipeline-attribution.html" class="side-item mktg-item">Pipeline Attribution</a>
+      <a href="subpages/win-loss-analysis.html" class="side-item mktg-item">Win/Loss Insights</a>
+      <div class="side-metric mktg-metric">North Star:<br/>Pipeline Contribution</div>
+    </div>
+
+    <!-- Center Phases -->
+    <div class="center-col">
+
+      <div class="phase-card ph0" onclick="location.href='pages/phase0.html'">
+        <div class="phase-stage-badge">Foundation · All Stages</div>
+        <div class="phase-label">Phase 0 — The Foundation</div>
+        <div class="phase-title">Leadership, Vision, Culture &amp; Communication</div>
+        <div class="phase-tags">
+          <a href="subpages/compelling-vision.html" class="phase-tag">Compelling Vision</a>
+          <a href="subpages/performance-standards.html" class="phase-tag">Performance Standards</a>
+          <a href="subpages/trust-accountability.html" class="phase-tag">Trust &amp; Accountability</a>
+          <a href="subpages/coaching.html" class="phase-tag">Coaching Over Inspection</a>
+          <a href="subpages/communication-cadence.html" class="phase-tag">Consistent Communication</a>
+        </div>
+      </div>
+
+      <div class="phase-card ph1" onclick="location.href='pages/phase1.html'">
+        <div class="phase-stage-badge">Stage 1 · PMF</div>
+        <div class="phase-label">Phase 1 — Foundation</div>
+        <div class="phase-title">ICP, Messaging, Sales Motion &amp; Playbook</div>
+        <div class="phase-tags">
+          <a href="subpages/icp.html" class="phase-tag">Ideal Customer Profile</a>
+          <a href="subpages/value-proposition.html" class="phase-tag">Value Proposition</a>
+          <a href="subpages/sales-motion.html" class="phase-tag">Sales Motion Design</a>
+          <a href="subpages/playbook.html" class="phase-tag">Sales Playbook</a>
+          <a href="subpages/competitive-positioning.html" class="phase-tag">Competitive Positioning</a>
+        </div>
+      </div>
+
+      <div class="phase-card ph2" onclick="location.href='pages/phase2.html'">
+        <div class="phase-stage-badge">Stage 1→2</div>
+        <div class="phase-label">Phase 2 — Team</div>
+        <div class="phase-title">Hiring, Ramp, Management Cadence &amp; Compensation</div>
+        <div class="phase-tags">
+          <a href="subpages/hiring-formula.html" class="phase-tag">Hiring Formula</a>
+          <a href="subpages/ramp-design.html" class="phase-tag">30/60/90 Ramp</a>
+          <a href="subpages/management-cadence.html" class="phase-tag">Weekly 1:1 Cadence</a>
+          <a href="subpages/quota-design.html" class="phase-tag">Quota Design</a>
+          <a href="subpages/compensation-design.html" class="phase-tag">OTE &amp; Comp Plan</a>
+        </div>
+      </div>
+
+      <div class="phase-card ph3" onclick="location.href='pages/phase3.html'">
+        <div class="phase-stage-badge">Stage 2 · GTM Fit</div>
+        <div class="phase-label">Phase 3 — Go-To-Market</div>
+        <div class="phase-title">Segmentation, Demand Gen, Funnel &amp; Channels</div>
+        <div class="phase-tags">
+          <a href="subpages/segmentation.html" class="phase-tag">Segmentation</a>
+          <a href="subpages/territory-design.html" class="phase-tag">Territory Design</a>
+          <a href="subpages/funnel-architecture.html" class="phase-tag">Funnel Stage Definitions</a>
+          <a href="subpages/channel-strategy.html" class="phase-tag">Channel Strategy</a>
+          <a href="subpages/cac-payback.html" class="phase-tag">CAC Payback</a>
+        </div>
+      </div>
+
+      <div class="phase-card ph4" onclick="location.href='pages/phase4.html'">
+        <div class="phase-stage-badge">Stage 2 · GTM Fit</div>
+        <div class="phase-label">Phase 4 — Execution</div>
+        <div class="phase-title">Pipeline Discipline, MEDDICC, Forecasting &amp; Win/Loss</div>
+        <div class="phase-tags">
+          <a href="subpages/pipeline-generation.html" class="phase-tag">Pipeline Generation</a>
+          <a href="subpages/meddicc.html" class="phase-tag">MEDDICC Qualification</a>
+          <a href="subpages/champion-building.html" class="phase-tag">Champion Building</a>
+          <a href="subpages/forecast-integrity.html" class="phase-tag">Forecast Integrity</a>
+          <a href="subpages/win-loss-analysis.html" class="phase-tag">Win/Loss Analysis</a>
+        </div>
+      </div>
+
+      <div class="phase-card ph5" onclick="location.href='pages/phase5.html'">
+        <div class="phase-stage-badge">Stage 3 · Growth &amp; Moat</div>
+        <div class="phase-label">Phase 5 — Scale</div>
+        <div class="phase-title">Repeatability, Headcount Planning &amp; Expansion</div>
+        <div class="phase-tags">
+          <a href="subpages/repeatability-test.html" class="phase-tag">Repeatable Motion</a>
+          <a href="subpages/headcount-planning.html" class="phase-tag">Headcount Modeling</a>
+          <a href="pages/revops.html" class="phase-tag">RevOps Infrastructure</a>
+          <a href="subpages/nrr.html" class="phase-tag">NRR &gt; 100%</a>
+          <a href="subpages/expansion-selling.html" class="phase-tag">Expansion Playbook</a>
+        </div>
+      </div>
+
+    </div>
+
+        <!-- Customer Success -->
+    <div class="side-col">
+      <a href="pages/customer-success.html" class="side-header cs-bg">CUSTOMER SUCCESS</a>
+      <a href="subpages/onboarding-cs.html" class="side-item cs-item">Onboarding</a>
+      <a href="subpages/adoption-framework.html" class="side-item cs-item">Product Adoption</a>
+      <a href="subpages/health-scoring.html" class="side-item cs-item">Health Scoring</a>
+      <a href="subpages/expansion-selling.html" class="side-item cs-item">Expansion Selling</a>
+      <a href="subpages/renewal-management.html" class="side-item cs-item">Renewal Management</a>
+      <a href="subpages/icp-validation.html" class="side-item cs-item">ICP Validation</a>
+      <div class="side-metric cs-metric">North Star:<br/>Net Revenue Retention</div>
+    </div>
+
+  </div>
+
+  <!-- Handoffs -->
+  <div class="handoffs-row">
+    <a href="pages/handoffs.html#mql" class="handoff-card">
+      <div class="handoff-arrow">Marketing → Sales</div>
+      <div class="handoff-title">MQL Handoff</div>
+      <div class="handoff-items">
+        <div class="handoff-item">Shared MQL definition</div>
+        <div class="handoff-item">24hr follow-up SLA</div>
+        <div class="handoff-item">Closed-loop lead feedback</div>
+      </div>
+    </a>
+    <a href="pages/handoffs.html#close" class="handoff-card">
+      <div class="handoff-arrow">Sales → Customer Success</div>
+      <div class="handoff-title">Close Handoff</div>
+      <div class="handoff-items">
+        <div class="handoff-item">Structured handoff document</div>
+        <div class="handoff-item">CS on late-stage calls</div>
+        <div class="handoff-item">Mutual success plan at close</div>
+      </div>
+    </a>
+    <a href="pages/handoffs.html#expansion" class="handoff-card">
+      <div class="handoff-arrow">CS → Sales</div>
+      <div class="handoff-title">Expansion Handoff</div>
+      <div class="handoff-items">
+        <div class="handoff-item">Defined expansion triggers</div>
+        <div class="handoff-item">Shared expansion playbook</div>
+        <div class="handoff-item">Co-owned expansion quota</div>
+      </div>
+    </a>
+  </div>
+
+  <!-- Troubleshooting -->
+  <div class="trouble-wrap">
+    <a href="pages/phase6.html" class="trouble-header">
+      <span>Phase 6 — Troubleshooting: Revenue Problem Diagnostics &nbsp;<span style="font-size:9px;font-weight:700;letter-spacing:0.8px;text-transform:uppercase;padding:2px 8px;border-radius:10px;background:rgba(255,255,255,0.18);color:rgba(255,255,255,0.9);vertical-align:middle;">All Stages · Diagnostics</span></span>
+      <span style="font-size:18px; opacity:0.6;">→</span>
+    </a>
+    <div class="trouble-grid">
+      <a href="subpages/low-pipeline.html" class="trouble-card">
+        <div class="trouble-symptom">Low Pipeline Volume</div>
+        <div class="trouble-cause">Demand gen, ICP clarity, prospecting discipline</div>
+      </a>
+      <a href="subpages/low-win-rate.html" class="trouble-card">
+        <div class="trouble-symptom">Low Win Rates</div>
+        <div class="trouble-cause">Messaging, qualification, competitive positioning</div>
+      </a>
+      <a href="subpages/long-sales-cycles.html" class="trouble-card">
+        <div class="trouble-symptom">Long Sales Cycles</div>
+        <div class="trouble-cause">Champion weakness, economic buyer access, undefined decision process</div>
+      </a>
+      <a href="subpages/missed-forecasts.html" class="trouble-card">
+        <div class="trouble-symptom">Missed Forecasts</div>
+        <div class="trouble-cause">Stage definitions, MEDDICC gaps, rep sandbagging</div>
+      </a>
+      <a href="subpages/high-churn.html" class="trouble-card">
+        <div class="trouble-symptom">High Churn / Low NRR</div>
+        <div class="trouble-cause">ICP mismatch, broken sales-to-CS handoff, onboarding failure</div>
+      </a>
+      <a href="subpages/rep-attrition.html" class="trouble-card">
+        <div class="trouble-symptom">Rep Attrition</div>
+        <div class="trouble-cause">Compensation, management quality, culture, quota fairness</div>
+      </a>
+    </div>
+  </div>
+
+  <!-- Resources & Templates -->
+  <div class="res-wrap">
+    <a href="pages/resources.html" class="res-header">
+      <div class="res-header-left">
+        <div class="res-label">Stage 2 Capital · Worksheets, Scorecards &amp; Models</div>
+        <div class="res-title">Resources &amp; Templates — GTM Tools Library</div>
+        <div style="font-size:11px;color:rgba(255,255,255,0.65);margin-top:3px;">Integrated tools for each phase and stage — click any tool to see which phases and stages it applies to.</div>
+      </div>
+      <span style="font-size:20px;opacity:0.5;">→</span>
+    </a>
+    <div class="res-grid">
+      <a href="subpages/template-icp.html" class="res-item">
+        <div class="ri-cat">Strategy</div>
+        <div class="ri-title">ICP Worksheet</div>
+        <div class="ri-desc">Green/Yellow/Red qualification framework</div>
+      </a>
+      <a href="subpages/template-persona.html" class="res-item">
+        <div class="ri-cat">Strategy</div>
+        <div class="ri-title">Buyer Persona Worksheet</div>
+        <div class="ri-desc">Economic Buyer, Champion &amp; End User mapping</div>
+      </a>
+      <a href="subpages/template-message-house.html" class="res-item">
+        <div class="ri-cat">Messaging</div>
+        <div class="ri-title">Message House</div>
+        <div class="ri-desc">Roof, pillars, positioning &amp; proof points</div>
+      </a>
+      <a href="subpages/template-gtm-plan.html" class="res-item">
+        <div class="ri-cat">Planning</div>
+        <div class="ri-title">Annual GTM Plan</div>
+        <div class="ri-desc">4 drivers, headcount model, OKRs</div>
+      </a>
+      <a href="subpages/template-lir.html" class="res-item row2">
+        <div class="ri-cat">Science of Scaling</div>
+        <div class="ri-title">LIR Journey Template</div>
+        <div class="ri-desc">Pre/post-PMF cohort tracking</div>
+      </a>
+      <a href="subpages/template-liue-worksheet.html" class="res-item row2">
+        <div class="ri-cat">Science of Scaling</div>
+        <div class="ri-title">LIUE Worksheet</div>
+        <div class="ri-desc">LIR &amp; LIUE component tracker</div>
+      </a>
+      <a href="subpages/template-ccac.html" class="res-item row2">
+        <div class="ri-cat">Finance</div>
+        <div class="ri-title">CCAC Model</div>
+        <div class="ri-desc">Cohort-based CAC calculation</div>
+      </a>
+      <a href="subpages/template-forecasting.html" class="res-item row2">
+        <div class="ri-cat">Finance</div>
+        <div class="ri-title">Demand-Driven Forecast</div>
+        <div class="ri-desc">Bottom-up revenue model by segment &amp; source</div>
+      </a>
+      <a href="subpages/template-scorecard-sales-leader.html" class="res-item row2">
+        <div class="ri-cat">Hiring</div>
+        <div class="ri-title">Sales Leader Scorecard</div>
+        <div class="ri-desc">7-skill weighted rubric</div>
+      </a>
+      <a href="subpages/template-scorecard-sales.html" class="res-item row2">
+        <div class="ri-cat">Hiring</div>
+        <div class="ri-title">Sales Rep Scorecard</div>
+        <div class="ri-desc">10-attribute Roberge formula (580 pts)</div>
+      </a>
+      <a href="subpages/template-scorecard-cs.html" class="res-item row2">
+        <div class="ri-cat">Hiring</div>
+        <div class="ri-title">CS Hire Scorecard</div>
+        <div class="ri-desc">4-criteria CSM evaluation rubric</div>
+      </a>
+      <a href="subpages/template-scorecard-gtm.html" class="res-item row2">
+        <div class="ri-cat">Hiring</div>
+        <div class="ri-title">First GTM Hire Scorecard</div>
+        <div class="ri-desc">5-criteria founding AE evaluation</div>
+      </a>
+      <a href="subpages/template-prospecting.html" class="res-item row2">
+        <div class="ri-cat">GTM Playbook</div>
+        <div class="ri-title">Prospecting Guide</div>
+        <div class="ri-desc">4-step framework + multi-touch sequences</div>
+      </a>
+      <a href="subpages/template-discovery.html" class="res-item row2">
+        <div class="ri-cat">GTM Playbook</div>
+        <div class="ri-title">Discovery Guide</div>
+        <div class="ri-desc">MEDDICC framework + call structure</div>
+      </a>
+      <a href="subpages/template-presentation.html" class="res-item row2">
+        <div class="ri-cat">GTM Playbook</div>
+        <div class="ri-title">Presentation Guide</div>
+        <div class="ri-desc">6-step demo framework + swim lanes</div>
+      </a>
+      <a href="subpages/template-cs-playbook.html" class="res-item row2">
+        <div class="ri-cat">GTM Playbook</div>
+        <div class="ri-title">CS Playbook</div>
+        <div class="ri-desc">Onboarding → LIR → Expansion motions</div>
+      </a>
+      <a href="subpages/template-demand-gen-channels.html" class="res-item row2">
+        <div class="ri-cat">Marketing</div>
+        <div class="ri-title">Demand Gen Channel Guide</div>
+        <div class="ri-desc">4-criteria selection + channel deep-dives</div>
+      </a>
+      <a href="subpages/template-content-marketing.html" class="res-item row2">
+        <div class="ri-cat">Marketing</div>
+        <div class="ri-title">Content Marketing Worksheet</div>
+        <div class="ri-desc">Topic planning + distribution framework</div>
+      </a>
+      <a href="subpages/template-editorial-calendar.html" class="res-item row2">
+        <div class="ri-cat">Marketing</div>
+        <div class="ri-title">Editorial Calendar</div>
+        <div class="ri-desc">Monthly content planning + SEO alignment</div>
+      </a>
+      <a href="subpages/template-paid-marketing.html" class="res-item row2">
+        <div class="ri-cat">Marketing</div>
+        <div class="ri-title">Paid Marketing Worksheet</div>
+        <div class="ri-desc">Campaign planning + budget allocation</div>
+      </a>
+      <a href="subpages/template-plg.html" class="res-item row2">
+        <div class="ri-cat">Marketing</div>
+        <div class="ri-title">PLG Funnel Worksheet</div>
+        <div class="ri-desc">AARRR framework + North Star Metrics</div>
+      </a>
+      <a href="subpages/template-marketing-budget.html" class="res-item row2">
+        <div class="ri-cat">Marketing</div>
+        <div class="ri-title">Marketing Budget Template</div>
+        <div class="ri-desc">Bottom-up budget tied to pipeline targets</div>
+      </a>
+      <a href="subpages/template-gtm-playbook.html" class="res-item row2">
+        <div class="ri-cat">GTM Playbook</div>
+        <div class="ri-title">GTM Playbook Template</div>
+        <div class="ri-desc">Master template with all 5 components</div>
+      </a>
+      <a href="subpages/template-retention-narrative.html" class="res-item row2">
+        <div class="ri-cat">Investor Materials</div>
+        <div class="ri-title">Retention Strategy Narrative</div>
+        <div class="ri-desc">6-slide investor deck framework</div>
+      </a>
+    </div>
+  </div>
+
+  <!-- North Star Metrics -->
+  <div class="metrics-wrap">
+    <a href="pages/north-star-metrics.html" class="metrics-header">
+      <span>North Star Metrics — The 6 Indicators of Revenue System Health</span>
+      <span style="font-size:18px; opacity:0.6;">→</span>
+    </a>
+    <div class="metrics-grid">
+      <a href="subpages/pipeline-coverage.html" class="metric-item">
+        <div class="mi-value">Pipeline Coverage Ratio</div>
+        <div class="mi-desc">Enough to make the number</div>
+      </a>
+      <a href="subpages/win-rate.html" class="metric-item">
+        <div class="mi-value">Win Rate</div>
+        <div class="mi-desc">Message &amp; motion effectiveness</div>
+      </a>
+      <a href="subpages/ramp-time.html" class="metric-item">
+        <div class="mi-value">Ramp Time to Quota</div>
+        <div class="mi-desc">Hiring &amp; training quality</div>
+      </a>
+      <a href="subpages/cac-payback.html" class="metric-item">
+        <div class="mi-value">CAC Payback Period</div>
+        <div class="mi-desc">GTM efficiency by channel</div>
+      </a>
+      <a href="subpages/nrr.html" class="metric-item">
+        <div class="mi-value">Net Revenue Retention</div>
+        <div class="mi-desc">Product, CS &amp; expansion health</div>
+      </a>
+      <a href="subpages/quota-attainment.html" class="metric-item">
+        <div class="mi-value">Quota Attainment Distribution</div>
+        <div class="mi-desc">Sales system health</div>
+      </a>
+    </div>
+  </div>
+
+
+
+  <div class="footer">
+    The SaaS Revenue System — Complete CRO Reference Manual<br/>
+    Based on: Roberge (Science of Scaling, Sales Acceleration Formula) · Iannarino (Leading Growth) · Lane &amp; Adint (Revenue Operations Manual) · Whyte (MEDDICC)
+  </div>
+
+</div>
+<script data-pplx-inline-edit>
+(function () {
+  if (window === window.top) return;
+
+  const allowedParentOrigins = ["https://www.perplexity.ai","https://perplexity.ai","https://testing.perplexity.ai","https://staging.perplexity.ai","https://*.preview.i.perplexity.ai","http://localhost:3000","http://127.0.0.1:3000","http://localhost:5173","http://127.0.0.1:5173"];
+  const MAX_FONT_BYTES = 500 * 1024;
+  const MAX_TOTAL_FONT_BYTES = 2 * 1024 * 1024;
+  let scrollForwarding = false;
+  let scrollRaf = 0;
+  let trustedTopOrigin = null;
+
+  // Allow entries like "https://*.preview.i.perplexity.ai" — the wildcard
+  // matches a single DNS label (no dots), so "https://*.foo" cannot stretch
+  // across multiple labels.
+  function matchesAllowedOrigin(origin) {
+    if (!origin) return false;
+    for (const entry of allowedParentOrigins) {
+      if (!entry.includes("*")) {
+        if (entry === origin) return true;
+        continue;
+      }
+      const pattern = new RegExp(
+        "^" +
+          entry.replace(/[.+?^${}()|[\]\\]/g, "\\$&").replace(/\*/g, "[^.]+") +
+          "$",
+      );
+      if (pattern.test(origin)) return true;
+    }
+    return false;
+  }
+
+  // Trust decision: when the sender is same-origin-visible (event.origin is a
+  // real origin like https://www.perplexity.ai) we trust event.origin directly.
+  // When event.origin is "null" (opaque broker srcdoc), we fall back to the
+  // broker's stamped `parentOrigin` to identify the top window. The fallback
+  // is claim-only — we rely on the browser's native `targetOrigin` enforcement
+  // on the response path (see postToTrustedTop) to ensure replies can't be
+  // delivered to anyone but the actual top window of that claimed origin.
+  function getTrustedParentOrigin(event) {
+    const forwardedParentOrigin =
+      typeof event.data.parentOrigin === "string" ? event.data.parentOrigin : null;
+    const parentOrigin = event.origin === "null" ? forwardedParentOrigin : event.origin;
+    return matchesAllowedOrigin(parentOrigin) ? parentOrigin : null;
+  }
+
+  // All responses go to window.top with targetOrigin = the allowlisted origin.
+  // An attacker that iframes us inside their own null-origin broker can claim
+  // any parentOrigin they like, but the browser will drop the reply whenever
+  // the real top's origin doesn't match — so the screenshot never leaves.
+  function postToTrustedTop(message) {
+    if (!trustedTopOrigin) return;
+    try {
+      window.top.postMessage(message, trustedTopOrigin);
+    } catch (_error) {}
+  }
+
+  function inlineAll(original, clone) {
+    if (original.nodeType !== 1 || clone.nodeType !== 1) return;
+
+    try {
+      const computedStyle = getComputedStyle(original);
+      // cssText on a computed style is the serialized declaration in modern
+      // Chromium/Safari — a single read beats enumerating ~400 longhand
+      // properties. Firefox returns "" here, so we fall back on empty.
+      const serialized = computedStyle.cssText;
+      if (serialized) {
+        clone.style.cssText = serialized;
+      } else {
+        const parts = new Array(computedStyle.length);
+        for (let index = 0; index < computedStyle.length; index += 1) {
+          const property = computedStyle[index];
+          parts[index] = `${property}:${computedStyle.getPropertyValue(property)};`;
+        }
+        clone.style.cssText = parts.join("");
+      }
+    } catch (_error) {}
+
+    const originalChildren = original.children;
+    const clonedChildren = clone.children;
+    for (
+      let index = 0;
+      index < originalChildren.length && index < clonedChildren.length;
+      index += 1
+    ) {
+      inlineAll(originalChildren[index], clonedChildren[index]);
+    }
+  }
+
+  function extractFontUrl(srcValue) {
+    const matches = [
+      ...srcValue.matchAll(
+        /url\(["']?([^"')]+)["']?\)(?:\s*format\(["']?([^"')]+)["']?\))?/gi,
+      ),
+    ];
+    if (matches.length === 0) return null;
+    const woff2 = matches.find((m) => m[2] && m[2].toLowerCase().includes("woff2"));
+    if (woff2) return woff2[1];
+    const woff = matches.find((m) => m[2] && m[2].toLowerCase().includes("woff"));
+    if (woff) return woff[1];
+    return matches[0][1];
+  }
+
+  // Cache resolved font URL -> data URI across captures. Fonts on a page
+  // essentially never change, and a batch run emits multiple captures back to
+  // back — without this we'd refetch + re-base64 every time.
+  const fontDataUriCache = new Map();
+  const SRC_DECLARATION_RE = /src\s*:\s*[^;}]+/i;
+
+  async function fetchAsDataUri(url) {
+    if (fontDataUriCache.has(url)) return fontDataUriCache.get(url);
+    let dataUri = null;
+    try {
+      const response = await fetch(url, { mode: "cors", credentials: "omit" });
+      if (response.ok) {
+        const blob = await response.blob();
+        if (blob.size <= MAX_FONT_BYTES) {
+          dataUri = await new Promise((resolve) => {
+            const reader = new FileReader();
+            reader.onloadend = () =>
+              resolve(typeof reader.result === "string" ? reader.result : null);
+            reader.onerror = () => resolve(null);
+            reader.readAsDataURL(blob);
+          });
+        }
+      }
+    } catch (_error) {
+      dataUri = null;
+    }
+    fontDataUriCache.set(url, dataUri);
+    return dataUri;
+  }
+
+  function collectFontFaceRuleTexts() {
+    const rules = [];
+    for (const sheet of document.styleSheets) {
+      let cssRules;
+      try {
+        cssRules = sheet.cssRules;
+      } catch (_error) {
+        continue;
+      }
+      if (!cssRules) continue;
+      for (const rule of cssRules) {
+        const cssText = rule.cssText || "";
+        if (cssText.startsWith("@font-face")) rules.push(cssText);
+      }
+    }
+    return rules;
+  }
+
+  async function buildInlinedFontCss() {
+    const ruleTexts = collectFontFaceRuleTexts();
+    if (ruleTexts.length === 0) return null;
+
+    const resolved = ruleTexts.map((cssText) => {
+      if (!SRC_DECLARATION_RE.test(cssText)) return null;
+      const srcMatch = cssText.match(/src\s*:\s*([^;}]+)[;}]/i);
+      if (!srcMatch) return null;
+      const url = extractFontUrl(srcMatch[1]);
+      if (!url) return null;
+      try {
+        return { cssText, url: new URL(url, document.baseURI).href };
+      } catch (_error) {
+        return null;
+      }
+    });
+
+    const dataUris = await Promise.all(
+      resolved.map((entry) => (entry ? fetchAsDataUri(entry.url) : Promise.resolve(null))),
+    );
+
+    const inlined = [];
+    let totalBytes = 0;
+    for (let index = 0; index < resolved.length; index += 1) {
+      const entry = resolved[index];
+      const dataUri = dataUris[index];
+      if (!entry || !dataUri) continue;
+      const approxBytes = dataUri.length * 0.75;
+      if (totalBytes + approxBytes > MAX_TOTAL_FONT_BYTES) break;
+      totalBytes += approxBytes;
+      inlined.push(entry.cssText.replace(SRC_DECLARATION_RE, `src: url("${dataUri}")`));
+    }
+    return inlined.length > 0 ? inlined.join("\n") : null;
+  }
+
+  function stripExternal(clone) {
+    const images = clone.querySelectorAll("img");
+    for (let index = 0; index < images.length; index += 1) {
+      const src = images[index].getAttribute("src");
+      if (src && !src.startsWith("data:")) images[index].removeAttribute("src");
+    }
+
+    const elements = clone.querySelectorAll("*");
+    for (let index = 0; index < elements.length; index += 1) {
+      const style = elements[index].style.cssText;
+      if (style && style.includes("url(")) {
+        elements[index].style.cssText = style.replace(
+          /url\(["']?(?!data:)[^)"']*["']?\)/gi,
+          "none",
+        );
+      }
+    }
+  }
+
+  function emitScroll() {
+    scrollRaf = 0;
+    if (!scrollForwarding) return;
+    postToTrustedTop({
+      type: "INLINE_EDIT_SCROLL",
+      scrollX: window.scrollX,
+      scrollY: window.scrollY,
+    });
+  }
+
+  window.addEventListener(
+    "scroll",
+    function () {
+      if (!scrollForwarding || scrollRaf) return;
+      scrollRaf = requestAnimationFrame(emitScroll);
+    },
+    { passive: true, capture: true },
+  );
+
+  async function handleCaptureRequest(event) {
+    const requestId = event.data.requestId;
+    const scrollX = window.scrollX;
+    const scrollY = window.scrollY;
+    const width = window.innerWidth;
+    const height = window.innerHeight;
+
+    function postResult(dataUrl) {
+      postToTrustedTop({
+        type: "INLINE_EDIT_SCREENSHOT_RESULT",
+        requestId,
+        dataUrl,
+        scrollX,
+        scrollY,
+      });
+    }
+
+    try {
+      // Wait for any pending web fonts to resolve so both inline metrics and
+      // the @font-face inlining below see the same loaded faces.
+      if (document.fonts && document.fonts.ready) {
+        try {
+          await document.fonts.ready;
+        } catch (_error) {}
+      }
+
+      const clone = document.documentElement.cloneNode(true);
+      inlineAll(document.documentElement, clone);
+
+      const removedNodes = clone.querySelectorAll("script,link[rel=\"stylesheet\"],style");
+      for (let index = 0; index < removedNodes.length; index += 1) {
+        removedNodes[index].remove();
+      }
+
+      stripExternal(clone);
+
+      // Re-embed web fonts as data-URI @font-face rules so the SVG rasterizer
+      // can resolve them — external font URLs aren't fetched during
+      // foreignObject rendering, which would otherwise force a fallback face
+      // and change text metrics.
+      const inlinedFontCss = await buildInlinedFontCss();
+      if (inlinedFontCss) {
+        const styleEl = document.createElement("style");
+        styleEl.textContent = inlinedFontCss;
+        const head = clone.querySelector("head");
+        if (head) head.appendChild(styleEl);
+        else clone.insertBefore(styleEl, clone.firstChild);
+      }
+
+      const html = new XMLSerializer().serializeToString(clone);
+      const svg =
+        `<svg xmlns="http://www.w3.org/2000/svg" width="${width}" height="${height}">` +
+        '<foreignObject width="100%" height="100%">' +
+        `<div xmlns="http://www.w3.org/1999/xhtml" style="width:${width}px;height:${height}px;overflow:hidden">` +
+        `<div style="transform:translate(-${scrollX}px,-${scrollY}px);transform-origin:top left">` +
+        html +
+        "</div></div></foreignObject></svg>";
+      const svgUrl = `data:image/svg+xml;charset=utf-8,${encodeURIComponent(svg)}`;
+      const image = new Image();
+      image.onload = function () {
+        const canvas = document.createElement("canvas");
+        canvas.width = width;
+        canvas.height = height;
+        canvas.getContext("2d").drawImage(image, 0, 0);
+        postResult(canvas.toDataURL("image/png"));
+      };
+      image.onerror = function () {
+        postResult(null);
+      };
+      image.src = svgUrl;
+    } catch (_error) {
+      postResult(null);
+    }
+  }
+
+  window.addEventListener("message", function (event) {
+    if (!event.data) return;
+    // Only accept messages from the direct parent frame. Blocks sibling /
+    // unrelated-window postMessage senders that could otherwise reach us.
+    if (event.source !== window.parent) return;
+
+    const trustedParentOrigin = getTrustedParentOrigin(event);
+    if (!trustedParentOrigin) return;
+    trustedTopOrigin = trustedParentOrigin;
+
+    if (event.data.type === "INLINE_EDIT_SCROLL_START") {
+      scrollForwarding = true;
+      emitScroll();
+      return;
+    }
+
+    if (event.data.type === "INLINE_EDIT_SCROLL_STOP") {
+      scrollForwarding = false;
+      if (scrollRaf) cancelAnimationFrame(scrollRaf);
+      scrollRaf = 0;
+      return;
+    }
+
+    if (event.data.type !== "INLINE_EDIT_CAPTURE_REQUEST") return;
+
+    handleCaptureRequest(event);
+  });
+})();
+
+
+</script></body>
+</html>

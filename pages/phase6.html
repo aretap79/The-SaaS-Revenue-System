@@ -1,0 +1,1628 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Revenue Problem Diagnostics — SaaS Revenue System</title>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="../assets/shared.css"/>
+  <style>
+    .page-hero { background: #A13544; }
+
+    /* Failure mode cards */
+    .failure-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      gap: 12px;
+      margin: 24px 0;
+    }
+    .failure-card {
+      background: var(--surface);
+      border: 1.5px solid var(--border);
+      border-radius: 8px;
+      padding: 18px;
+      border-left: 4px solid #A13544;
+    }
+    .failure-card .fc-number {
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      color: #A13544;
+      margin-bottom: 4px;
+    }
+    .failure-card .fc-title {
+      font-size: 15px;
+      font-weight: 700;
+      color: var(--text);
+      margin-bottom: 6px;
+    }
+    .failure-card .fc-desc {
+      font-size: 13px;
+      color: var(--text-muted);
+      line-height: 1.5;
+    }
+
+    /* Diagnosis block */
+    .diagnosis-block {
+      background: var(--surface);
+      border: 1.5px solid var(--border);
+      border-radius: 10px;
+      padding: 24px;
+      margin: 20px 0;
+    }
+    .diagnosis-block h3 {
+      font-size: 18px;
+      font-weight: 700;
+      color: var(--text);
+      margin-bottom: 6px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .diagnosis-block h3 .db-number {
+      background: #A13544;
+      color: #fff;
+      width: 28px;
+      height: 28px;
+      border-radius: 50%;
+      font-size: 13px;
+      font-weight: 700;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+    .diagnosis-block .db-intro {
+      font-size: 14px;
+      color: var(--text-muted);
+      margin-bottom: 16px;
+      line-height: 1.6;
+    }
+    .two-col {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 20px;
+      margin: 16px 0;
+    }
+    .col-box {
+      background: #fafaf8;
+      border-radius: 8px;
+      padding: 14px 16px;
+    }
+    .col-box h4 {
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      margin-bottom: 10px;
+    }
+    .col-box ul {
+      list-style: none;
+      margin: 0;
+    }
+    .col-box ul li {
+      font-size: 13px;
+      line-height: 1.6;
+      padding: 3px 0 3px 16px;
+      position: relative;
+      color: var(--text);
+    }
+    .col-box ul li::before {
+      content: '·';
+      position: absolute;
+      left: 0;
+      color: #A13544;
+      font-size: 16px;
+      line-height: 1.4;
+    }
+
+    /* 3-question framework */
+    .question-trio {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 12px;
+      margin: 20px 0;
+    }
+    .q-card {
+      background: var(--surface);
+      border: 1.5px solid var(--border);
+      border-radius: 8px;
+      padding: 16px;
+      text-align: center;
+    }
+    .q-card .q-num {
+      font-size: 28px;
+      font-weight: 700;
+      color: #A13544;
+      line-height: 1;
+      margin-bottom: 8px;
+    }
+    .q-card .q-text {
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--text);
+      margin-bottom: 6px;
+      line-height: 1.4;
+    }
+    .q-card .q-sub {
+      font-size: 12px;
+      color: var(--text-muted);
+      line-height: 1.4;
+    }
+
+    /* Turnaround timeline */
+    .timeline {
+      margin: 20px 0;
+      position: relative;
+    }
+    .timeline-item {
+      display: flex;
+      gap: 16px;
+      margin-bottom: 16px;
+      align-items: flex-start;
+    }
+    .timeline-marker {
+      background: #A13544;
+      color: #fff;
+      border-radius: 6px;
+      padding: 6px 12px;
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.5px;
+      white-space: nowrap;
+      flex-shrink: 0;
+      margin-top: 2px;
+    }
+    .timeline-content h4 {
+      font-size: 14px;
+      font-weight: 700;
+      color: var(--text);
+      margin-bottom: 4px;
+    }
+    .timeline-content p {
+      font-size: 14px;
+      color: var(--text-muted);
+      line-height: 1.6;
+      margin: 0;
+    }
+
+    /* Root cause tree */
+    .rct-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 20px 0;
+      font-size: 13px;
+    }
+    .rct-table th {
+      background: #A13544;
+      color: #fff;
+      padding: 10px 14px;
+      text-align: left;
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.5px;
+      text-transform: uppercase;
+    }
+    .rct-table td {
+      padding: 10px 14px;
+      border-bottom: 1px solid var(--border);
+      vertical-align: top;
+      line-height: 1.5;
+    }
+    .rct-table tr:nth-child(even) td { background: #fafaf8; }
+    .rct-table tr:last-child td { border-bottom: none; }
+    .symptom-tag {
+      display: inline-block;
+      background: #fce8e6;
+      color: #A13544;
+      font-size: 11px;
+      font-weight: 600;
+      padding: 2px 8px;
+      border-radius: 10px;
+    }
+
+    /* Intervention matrix */
+    .intervention-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(210px, 1fr));
+      gap: 12px;
+      margin: 20px 0;
+    }
+    .int-card {
+      background: var(--surface);
+      border: 1.5px solid var(--border);
+      border-radius: 8px;
+      padding: 16px;
+    }
+    .int-card .int-level {
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      margin-bottom: 6px;
+    }
+    .int-card .int-title {
+      font-size: 14px;
+      font-weight: 700;
+      color: var(--text);
+      margin-bottom: 6px;
+    }
+    .int-card .int-when {
+      font-size: 12px;
+      color: var(--text-muted);
+      line-height: 1.5;
+    }
+    .level-coach { color: #437A22; }
+    .level-process { color: #2a7fa8; }
+    .level-strategy { color: #964219; }
+    .level-personnel { color: #A13544; }
+
+    @media (max-width: 768px) {
+      .two-col { grid-template-columns: 1fr; }
+      .question-trio { grid-template-columns: 1fr; }
+      .intervention-grid { grid-template-columns: 1fr 1fr; }
+    }
+    .sos-context-banner {
+  background: linear-gradient(135deg, #0D5C63 0%, #0a4a50 100%);
+  border-radius: 10px;
+  padding: 20px 24px;
+  margin-bottom: 32px;
+  display: grid;
+  grid-template-columns: 200px 1fr auto;
+  gap: 20px;
+  align-items: start;
+}
+.sos-cb-stage { border-right: 1px solid rgba(255,255,255,0.2); padding-right: 20px; }
+.sos-cb-label { font-size: 10px; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase; color: rgba(255,255,255,0.6); margin-bottom: 4px; }
+.sos-cb-title { font-size: 18px; font-weight: 700; color: #fff; line-height: 1.3; }
+.sos-cb-content { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+.sos-cb-item { background: rgba(255,255,255,0.08); border-radius: 6px; padding: 10px 12px; }
+.sos-cb-item-label { font-size: 10px; font-weight: 700; letter-spacing: 0.8px; text-transform: uppercase; color: rgba(255,255,255,0.55); margin-bottom: 3px; }
+.sos-cb-item-value { font-size: 12px; color: rgba(255,255,255,0.85); line-height: 1.5; }
+.sos-cb-link { background: rgba(255,255,255,0.15); color: #fff; font-size: 12px; font-weight: 700; padding: 8px 14px; border-radius: 6px; text-decoration: none; white-space: nowrap; align-self: center; transition: background 0.15s; }
+.sos-cb-link:hover { background: rgba(255,255,255,0.28); color: #fff; text-decoration: none; }
+.tools-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 12px; margin: 16px 0 40px; }
+.tool-card { background: var(--surface); border: 1.5px solid var(--border); border-radius: 8px; padding: 14px 16px; text-decoration: none; display: block; transition: all 0.15s; }
+.tool-card:hover { text-decoration: none; transform: translateY(-1px); box-shadow: 0 3px 10px rgba(0,0,0,0.08); }
+.tc-sos { border-left: 3px solid #0D5C63; }
+.tc-sos:hover { border-color: #0D5C63; }
+.tc-res { border-left: 3px solid #2C5F8A; }
+.tc-res:hover { border-color: #2C5F8A; }
+.tc-phase { font-size: 10px; font-weight: 700; letter-spacing: 0.8px; text-transform: uppercase; color: var(--text-muted); margin-bottom: 4px; }
+.tc-sos .tc-phase { color: #0D5C63; }
+.tc-res .tc-phase { color: #2C5F8A; }
+.tc-title { font-size: 13px; font-weight: 700; color: var(--text); margin-bottom: 4px; line-height: 1.3; }
+.tc-desc { font-size: 11px; color: var(--text-muted); line-height: 1.5; }
+
+    /* ── SoS Integration ── */
+    .sos-context-banner {
+      background: linear-gradient(135deg, #0D5C63 0%, #0a4a50 100%);
+      border-radius: 10px;
+      padding: 20px 24px;
+      margin-bottom: 32px;
+      display: grid;
+      grid-template-columns: 220px 1fr auto;
+      gap: 20px;
+      align-items: start;
+    }
+    .sos-cb-stage { border-right: 1px solid rgba(255,255,255,0.2); padding-right: 20px; }
+    .sos-cb-label { font-size: 10px; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase; color: rgba(255,255,255,0.6); margin-bottom: 4px; }
+    .sos-cb-title { font-size: 18px; font-weight: 700; color: #fff; line-height: 1.3; }
+    .sos-cb-content { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+    .sos-cb-item { background: rgba(255,255,255,0.08); border-radius: 6px; padding: 10px 12px; }
+    .sos-cb-item-label { font-size: 10px; font-weight: 700; letter-spacing: 0.8px; text-transform: uppercase; color: rgba(255,255,255,0.55); margin-bottom: 3px; }
+    .sos-cb-item-value { font-size: 12px; color: rgba(255,255,255,0.85); line-height: 1.5; }
+    .sos-cb-link { background: rgba(255,255,255,0.15); color: #fff; font-size: 12px; font-weight: 700; padding: 8px 14px; border-radius: 6px; text-decoration: none; white-space: nowrap; align-self: center; transition: background 0.15s; }
+    .sos-cb-link:hover { background: rgba(255,255,255,0.28); color: #fff; text-decoration: none; }
+    .tools-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 12px; margin: 16px 0 40px; }
+    .tool-card { background: var(--surface); border: 1.5px solid var(--border); border-radius: 8px; padding: 14px 16px; text-decoration: none; display: block; transition: all 0.15s; }
+    .tool-card:hover { text-decoration: none; transform: translateY(-1px); box-shadow: 0 3px 10px rgba(0,0,0,0.08); }
+    .tc-sos { border-left: 3px solid #0D5C63; }
+    .tc-sos:hover { border-color: #0D5C63; }
+    .tc-res { border-left: 3px solid #2C5F8A; }
+    .tc-res:hover { border-color: #2C5F8A; }
+    .tc-title { font-size: 13px; font-weight: 700; color: var(--text); margin-bottom: 4px; }
+    .tc-desc { font-size: 11px; color: var(--text-muted); line-height: 1.45; }
+    .tc-phase { font-size: 10px; font-weight: 700; letter-spacing: 0.8px; text-transform: uppercase; margin-bottom: 6px; }
+    .tc-sos .tc-phase { color: #0D5C63; }
+    .tc-res .tc-phase { color: #2C5F8A; }
+    .tools-section-label { font-size: 11px; font-weight: 700; letter-spacing: 1.2px; text-transform: uppercase; color: var(--text-muted); margin: 32px 0 12px; }
+  </style>
+</head>
+<body>
+<nav class="nav">
+  <span class="nav-logo">SaaS <span>Revenue System</span></span>
+  <span class="nav-sep">|</span>
+  <a href="../index.html" class="nav-back">← Home</a>
+  <span class="nav-sep">|</span>
+  <span class="nav-current">Revenue Problem Diagnostics</span>
+</nav>
+
+<div class="page-hero">
+  <div class="hero-phase-label">PHASE 6 — TROUBLESHOOTING</div>
+  <div class="hero-title">Revenue Problem Diagnostics</div>
+  <div class="hero-subtitle">Every revenue problem maps to a root cause. The skill of a great CRO is diagnosing accurately and intervening at the right level.</div>
+  <div class="hero-tags">
+    <a href="../subpages/low-pipeline.html" class="hero-tag">Low Pipeline Volume</a>
+    <a href="../subpages/low-win-rate.html" class="hero-tag">Low Win Rate</a>
+    <a href="../subpages/long-sales-cycles.html" class="hero-tag">Long Sales Cycles</a>
+    <a href="../subpages/missed-forecasts.html" class="hero-tag">Missed Forecasts</a>
+    <a href="../subpages/high-churn.html" class="hero-tag">High Churn</a>
+    <a href="../subpages/rep-attrition.html" class="hero-tag">Rep Attrition</a>
+  </div>
+</div>
+
+<div class="content-wrap">
+
+<div class="sos-context-banner">
+  <div class="sos-cb-stage">
+    <div class="sos-cb-label">Science of Scaling</div>
+    <div class="sos-cb-title">All Stages — Diagnostic Layer</div>
+  </div>
+  <div class="sos-cb-content">
+    <div class="sos-cb-item">
+      <div class="sos-cb-item-label">Stage 1 Diagnostic (PMF)</div>
+      <div class="sos-cb-item-value">LIR achievement rate below 60%? → Wrong ICP, wrong LIR event (E), or broken CS onboarding. Check: Are you selling to Early Adopters? Is E objective and instrumentable?</div>
+    </div>
+    <div class="sos-cb-item">
+      <div class="sos-cb-item-label">Stage 2 Diagnostic (GTM Fit)</div>
+      <div class="sos-cb-item-value">LIUE below 3? → Diagnose: LTV side (low ACV, high churn, low GM%) vs. CAC side (high cost/SQL, low SQL-to-customer%, low rep productivity). Fix the broken lever before scaling.</div>
+    </div>
+    <div class="sos-cb-item">
+      <div class="sos-cb-item-label">Stage 3 Diagnostic (Growth)</div>
+      <div class="sos-cb-item-value">Revenue growth slowing with LIUE &gt; 3? → Segment analysis: are you SCALING the right segments and IGNORING the wrong ones? Check: moat erosion, NRR &lt; 110%, or segment LIUE drift.</div>
+    </div>
+    <div class="sos-cb-item">
+      <div class="sos-cb-item-label">The Premature Scale Diagnosis</div>
+      <div class="sos-cb-item-value">Many "revenue problems" are actually premature scaling. Symptoms: high churn, low NRR, high rep attrition, declining LIUE. Root cause: moved to Stage 2 or Stage 3 before the gate conditions were met.</div>
+    </div>
+  </div>
+  <a href="../pages/science-of-scaling.html" class="sos-cb-link">SoS Framework →</a>
+</div>
+
+  <!-- SECTION 1: THE DIAGNOSTIC FRAMEWORK -->
+  <h2 class="section-title">The Diagnostic Framework</h2>
+  <p class="section-intro">Most CROs react to symptoms. Great CROs diagnose systems. The difference between a good turnaround and a failed one is whether the leader correctly identified the root cause before intervening. Cutting reps when the problem is messaging, or rebuilding process when the problem is ICP, destroys credibility and capital. Diagnosis comes first.</p>
+
+  <div class="callout callout-definition">
+    <div class="callout-title">The CRO as Diagnostician</div>
+    <p>Think of revenue leadership like medicine. A doctor who prescribes without diagnosing is dangerous. A CRO who fires reps, hires reps, changes comp plans, or rebuilds process without first establishing root cause is equally dangerous — and usually more expensive. The diagnostic framework below forces rigor before action.</p>
+  </div>
+
+  <h3 class="subsection-title">The Three Questions to Ask First</h3>
+
+  <div class="question-trio">
+    <div class="q-card">
+      <div class="q-num">01</div>
+      <div class="q-text">People, Process, or Market?</div>
+      <div class="q-sub">Is the root cause human performance, broken workflow, or external conditions beyond your control?</div>
+    </div>
+    <div class="q-card">
+      <div class="q-num">02</div>
+      <div class="q-text">Isolated or Systemic?</div>
+      <div class="q-sub">Is this problem limited to one rep or one team — or does the pattern repeat across the organization?</div>
+    </div>
+    <div class="q-card">
+      <div class="q-num">03</div>
+      <div class="q-text">Leading or Lagging?</div>
+      <div class="q-sub">Is this a fixable input problem (leading) or an outcome of past decisions already baked into your results (lagging)?</div>
+    </div>
+  </div>
+
+  <div class="subsection">
+    <div class="subsection-title">Question 1: People, Process, or Market?</div>
+    <p>These are mutually exclusive categories with very different interventions. A people problem means the right process exists but the humans executing it lack skill, motivation, or fit. A process problem means even a great rep, following the current process, would produce poor results. A market problem means the external environment has shifted in a way that renders current strategy ineffective regardless of execution.</p>
+    <p>The diagnostic test: take your top 20% performing rep and put them on the territory/segment/channel where you see the problem. If they also struggle, it's process or market — not people. If they thrive, it's a people problem. This thought experiment prevents the most common CRO mistake: blaming the person when the system is broken.</p>
+  </div>
+
+  <div class="subsection">
+    <div class="subsection-title">Question 2: Isolated or Systemic?</div>
+    <p>Segment every metric by individual, team, segment, geography, source, and product line before drawing any conclusion. If one rep has a 12% win rate and the team average is 28%, you have a coaching problem, not a process problem. If every rep on the enterprise team has a win rate below 15%, you have a process, ICP, or competitive problem. The segmentation step is non-negotiable — aggregate metrics are almost always misleading.</p>
+  </div>
+
+  <div class="subsection">
+    <div class="subsection-title">Question 3: Leading or Lagging?</div>
+    <p>This question determines urgency and intervention horizon. Lagging indicators — closed revenue, churn, win rate over last two quarters — reflect decisions already made. You cannot fix Q3 revenue with a Q3 intervention; you fix it with Q1 pipeline decisions. Leading indicators — pipeline volume, activity, stage conversion rates, champion identification — are where you have actionable leverage right now. Always identify which type of problem you're facing before setting expectations about when interventions will show results.</p>
+
+    <div class="callout callout-warning">
+      <div class="callout-title">The Expectation Trap</div>
+      <p>A new CRO who walks in, diagnoses the problem correctly, and implements the right fixes still won't see lagging indicators improve for 60–180 days. Board and CEO expectations must be set accordingly. The leading indicators — pipeline volume, discovery quality, champion depth — will move first. Use those to demonstrate progress while lagging indicators catch up.</p>
+    </div>
+  </div>
+
+  <!-- The 6 Failure Modes Overview -->
+  <h2 class="section-title">The Six Revenue Failure Modes</h2>
+  <p class="section-intro">Every revenue problem in a SaaS business falls into one of six failure modes. These are not mutually exclusive — a broken organization often has multiple active at once — but each has distinct root causes, diagnostic questions, and intervention paths.</p>
+
+  <div class="failure-grid">
+    <div class="failure-card">
+      <div class="fc-number">Failure Mode 01</div>
+      <div class="fc-title">Low Pipeline Volume</div>
+      <div class="fc-desc">Not enough qualified opportunities to hit quota — the earliest and most reversible revenue failure.</div>
+    </div>
+    <div class="failure-card">
+      <div class="fc-number">Failure Mode 02</div>
+      <div class="fc-title">Low Win Rates</div>
+      <div class="fc-desc">Enough pipeline, but deals aren't closing — usually a qualification, messaging, or competitive failure.</div>
+    </div>
+    <div class="failure-card">
+      <div class="fc-number">Failure Mode 03</div>
+      <div class="fc-title">Long Sales Cycles</div>
+      <div class="fc-desc">Deals in the pipeline but moving too slowly, killing forecast accuracy and rep capacity.</div>
+    </div>
+    <div class="failure-card">
+      <div class="fc-number">Failure Mode 04</div>
+      <div class="fc-title">Missed Forecasts</div>
+      <div class="fc-desc">The number you commit to the board doesn't match what closes — a CRM, discipline, or culture problem.</div>
+    </div>
+    <div class="failure-card">
+      <div class="fc-number">Failure Mode 05</div>
+      <div class="fc-title">High Churn / Low NRR</div>
+      <div class="fc-desc">Customers leave faster than you acquire them — often a sales quality problem before it's a CS problem.</div>
+    </div>
+    <div class="failure-card">
+      <div class="fc-number">Failure Mode 06</div>
+      <div class="fc-title">Rep Attrition</div>
+      <div class="fc-desc">Your best salespeople are leaving — destroying pipeline, institutional knowledge, and team morale.</div>
+    </div>
+  </div>
+
+  <!-- FAILURE MODE 1: LOW PIPELINE VOLUME -->
+  <div class="diagnosis-block">
+    <h3><span class="db-number">1</span> Low Pipeline Volume</h3>
+    <p class="db-intro">The earliest and most correctable failure mode. Low pipeline is almost always a leading indicator problem, which means interventions will show results within 60–90 days if correctly targeted. The challenge is that pipeline volume is a multi-variable output — it depends on ICP definition, demand gen investment, SDR performance, AE prospecting, messaging resonance, and channel mix. Diagnosing which variable is broken requires segmented analysis, not gut instinct.</p>
+
+    <div class="two-col">
+      <div class="col-box">
+        <h4>Root Causes</h4>
+        <ul>
+          <li>ICP definition too narrow or too broad</li>
+          <li>Demand gen budget underfunded relative to TAM</li>
+          <li>AEs not prospecting — relying on inbound only</li>
+          <li>SDR team underperforming (activity or quality)</li>
+          <li>Messaging not resonating with target persona</li>
+          <li>Wrong channels for the target buyer</li>
+          <li>Poor lead routing — good leads dying in queue</li>
+          <li>No outbound motion in a segment that needs one</li>
+          <li>Territory design concentrates pipeline too narrowly</li>
+        </ul>
+      </div>
+      <div class="col-box">
+        <h4>Diagnostic Questions</h4>
+        <ul>
+          <li>What is pipeline coverage ratio right now? (Target: 3–4x)</li>
+          <li>What % of pipeline is sourced by marketing vs. outbound?</li>
+          <li>What is the MQL-to-SQL conversion rate? (Benchmark: 13–15%)</li>
+          <li>What is each AE's average self-sourced pipeline per month?</li>
+          <li>What is SDR connect rate, demo rate, and pipeline per SDR?</li>
+          <li>Which channels have the highest-converting pipeline?</li>
+          <li>What does the ICP look like for the last 20 closed-won deals?</li>
+          <li>Is there a whitespace in the TAM the team isn't working?</li>
+        </ul>
+      </div>
+    </div>
+
+    <h4 style="font-size:13px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--text-muted);margin:16px 0 10px;">Fixes by Layer</h4>
+    <table class="data-table">
+      <thead>
+        <tr>
+          <th>Layer</th>
+          <th>Fix</th>
+          <th>Time to Impact</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>ICP</strong></td>
+          <td>Analyze 20–30 best customers by NRR, LTV, and sales cycle. Rebuild ICP firmographics and technographics from the data.</td>
+          <td>30–60 days</td>
+        </tr>
+        <tr>
+          <td><strong>Marketing</strong></td>
+          <td>Reallocate budget to highest-converting channels. Launch content that addresses specific buyer pain at top of funnel. Build intent data programs (G2, Bombora).</td>
+          <td>60–90 days</td>
+        </tr>
+        <tr>
+          <td><strong>SDR</strong></td>
+          <td>Audit activity metrics (calls, emails, LinkedIn touches). Implement cadence sequences. Add personalization requirements at step 1.</td>
+          <td>30–60 days</td>
+        </tr>
+        <tr>
+          <td><strong>AE Prospecting</strong></td>
+          <td>Set self-sourced pipeline targets per AE. Block prospecting time in calendar. Inspect in 1:1s. Create comp upside for self-sourced deals.</td>
+          <td>45–60 days</td>
+        </tr>
+        <tr>
+          <td><strong>Messaging</strong></td>
+          <td>A/B test subject lines and opening value props. Pull win-loss data on which messaging angles resonate with buying personas.</td>
+          <td>45–75 days</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <div class="indicator-row">
+      <span class="indicator-tag ind-leading">Leading: SDR Activity Volume</span>
+      <span class="indicator-tag ind-leading">Leading: MQL Volume</span>
+      <span class="indicator-tag ind-leading">Leading: Pipeline Created per Week</span>
+      <span class="indicator-tag ind-lagging">Lagging: Pipeline Coverage Ratio</span>
+      <span class="indicator-tag ind-lagging">Lagging: New Logos per Quarter</span>
+    </div>
+  </div>
+
+  <!-- FAILURE MODE 2: LOW WIN RATES -->
+  <div class="diagnosis-block">
+    <h3><span class="db-number">2</span> Low Win Rates</h3>
+    <p class="db-intro">Win rate problems are the most complex to diagnose because they have the most potential root causes — and because the symptom (deals lost) is usually blamed on the wrong variable (price). In practice, price is rarely the real reason deals are lost. It's almost always a pre-demo qualification failure, a champion failure, a competitive positioning gap, or a value prop weakness. The segmentation analysis is critical here.</p>
+
+    <div class="two-col">
+      <div class="col-box">
+        <h4>Root Causes</h4>
+        <ul>
+          <li>Wrong ICP — pursuing prospects who shouldn't buy</li>
+          <li>Weak discovery — not identifying real pain</li>
+          <li>No champion — selling to users, not buyers</li>
+          <li>Poor competitive positioning — losing to specific vendors</li>
+          <li>Price/value gap — product not worth perceived cost</li>
+          <li>Weak value proposition relative to alternatives</li>
+          <li>Product gaps the competition covers</li>
+          <li>Demo quality — showing features, not solving pain</li>
+          <li>Sales skills variance across the team</li>
+          <li>No defined close process or economic buyer access</li>
+        </ul>
+      </div>
+      <div class="col-box">
+        <h4>Diagnostic Questions</h4>
+        <ul>
+          <li>What is win rate segmented by rep, segment, source, and competitor?</li>
+          <li>What are the top 3 stated reasons for loss in CRM?</li>
+          <li>Are losses concentrated with specific competitors?</li>
+          <li>What % of lost deals had an identified champion?</li>
+          <li>What % of lost deals had economic buyer access?</li>
+          <li>Are reps running MEDDICC in late-stage opportunities?</li>
+          <li>What does call recording analysis show in lost deal demos?</li>
+          <li>Are we losing at specific funnel stages disproportionately?</li>
+        </ul>
+      </div>
+    </div>
+
+    <h4 style="font-size:13px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--text-muted);margin:16px 0 10px;">Win Rate Segmentation Analysis</h4>
+    <table class="data-table">
+      <thead>
+        <tr>
+          <th>Segment</th>
+          <th>What it Reveals</th>
+          <th>Action if Low</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>By Rep</strong></td>
+          <td>Skill distribution across the team; isolates coaching targets vs. systemic issues</td>
+          <td>Call coaching, discovery framework retraining, 1:1 pipeline reviews</td>
+        </tr>
+        <tr>
+          <td><strong>By Segment (SMB/MM/ENT)</strong></td>
+          <td>Whether your product/process fits the market segment you're targeting</td>
+          <td>Reallocate resources to the segment where you win; rebuild motion for others</td>
+        </tr>
+        <tr>
+          <td><strong>By Competitor</strong></td>
+          <td>Specific competitive gaps — product, pricing, perception</td>
+          <td>Build competitive battlecards, address product gaps with PM, adjust pricing</td>
+        </tr>
+        <tr>
+          <td><strong>By Source (inbound/outbound)</strong></td>
+          <td>Whether qualification quality differs by channel</td>
+          <td>Tighten qualification criteria at the source with the lower win rate</td>
+        </tr>
+        <tr>
+          <td><strong>By Deal Size</strong></td>
+          <td>Whether your process scales to enterprise deals or only works SMB</td>
+          <td>Add enterprise-specific motion: multi-threading, exec sponsors, evaluation frameworks</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <div class="callout callout-best-practice">
+      <div class="callout-title">Win/Loss Interview Program</div>
+      <p>Build a formal win/loss interview process: call every lost deal decision-maker 2 weeks after loss. Ask what the final decision came down to, who was involved, what alternatives were considered, and what would have changed the outcome. Do the same for wins. 20 interviews reveals patterns that 1,000 CRM "loss reason" checkboxes never will.</p>
+    </div>
+
+    <div class="indicator-row">
+      <span class="indicator-tag ind-leading">Leading: Champion Identified %</span>
+      <span class="indicator-tag ind-leading">Leading: Economic Buyer Access %</span>
+      <span class="indicator-tag ind-leading">Leading: Discovery Call Quality Score</span>
+      <span class="indicator-tag ind-lagging">Lagging: Win Rate by Quarter</span>
+      <span class="indicator-tag ind-lagging">Lagging: Competitive Loss Rate</span>
+    </div>
+  </div>
+
+  <!-- FAILURE MODE 3: LONG SALES CYCLES -->
+  <div class="diagnosis-block">
+    <h3><span class="db-number">3</span> Long Sales Cycles</h3>
+    <p class="db-intro">Long sales cycles are a hidden killer because they don't appear as a problem until the forecast model breaks. Deals in stage 4 for 90 days feel like pipeline — until they ghost. The root causes of long cycles are almost always traceable to early-stage qualification failures: no urgency established, no economic buyer accessed, no champion willing to pull the deal through, no defined process. The fix is almost always at Stage 1, not Stage 4.</p>
+
+    <div class="two-col">
+      <div class="col-box">
+        <h4>Root Causes</h4>
+        <ul>
+          <li>No access to the economic buyer — stuck with champions only</li>
+          <li>No defined decision process established early</li>
+          <li>Pain not quantified — no urgency to act now</li>
+          <li>Internal procurement delays (legal, IT, finance)</li>
+          <li>Multi-stakeholder complexity with no nav strategy</li>
+          <li>No champion willing and able to drive internally</li>
+          <li>POC scope creep — technical evaluation never ends</li>
+          <li>Budget not confirmed — "we'll find it" purchases</li>
+          <li>Deal stalls because next step is not defined at each stage</li>
+          <li>Competitor-induced delays — buying committee wants "comparison"</li>
+        </ul>
+      </div>
+      <div class="col-box">
+        <h4>Diagnostic Questions</h4>
+        <ul>
+          <li>What is average days in each pipeline stage?</li>
+          <li>What % of opportunities have a confirmed decision date?</li>
+          <li>What % of opportunities have an identified economic buyer who attended a call?</li>
+          <li>What is the average POC length? Is it defined at kickoff?</li>
+          <li>At what stage do deals begin to stall?</li>
+          <li>What % of late-stage deals have a mutual action plan (MAP)?</li>
+          <li>How many stakeholders are mapped per deal at Stage 3?</li>
+          <li>What is the "slip rate" — deals that push quarter-over-quarter?</li>
+        </ul>
+      </div>
+    </div>
+
+    <h4 style="font-size:13px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--text-muted);margin:16px 0 10px;">How to Compress Sales Cycles Without Discounting</h4>
+
+    <ol class="step-list">
+      <li>
+        <div class="step-content">
+          <span class="step-title">Quantify the cost of inaction at discovery</span>
+          Convert pain into a number: "What does this problem cost you per month?" If the prospect can't quantify, help them. A $50K/month problem creates natural urgency. "Nice to have" pain never does.
+        </div>
+      </li>
+      <li>
+        <div class="step-content">
+          <span class="step-title">Access the economic buyer before Stage 3</span>
+          Set an explicit gate: no opportunity advances to Stage 3 without the rep having at least one call with the budget holder. Use the champion to facilitate. Without this gate, deals stall in procurement.
+        </div>
+      </li>
+      <li>
+        <div class="step-content">
+          <span class="step-title">Build a Mutual Action Plan at Stage 2</span>
+          A MAP is a shared document between seller and buyer with every step to close, owner, and date. If a champion won't sign off on a MAP, they aren't a real champion. The MAP creates accountability on the buyer's side.
+        </div>
+      </li>
+      <li>
+        <div class="step-content">
+          <span class="step-title">Define POC exit criteria before POC begins</span>
+          Never start a POC without written success criteria. "We'll know it's working when X" — set that before day one. Prevents endless evaluation and gives you a close trigger.
+        </div>
+      </li>
+      <li>
+        <div class="step-content">
+          <span class="step-title">Time-box every stage</span>
+          Set explicit "expires on" dates for proposals, POCs, and pricing. Urgency is engineered, not discovered. Use a quarter-end, fiscal close, executive sponsor's availability, or a product launch as a legitimate reason to close now.
+        </div>
+      </li>
+    </ol>
+
+    <div class="callout callout-warning">
+      <div class="callout-title">The Discount Trap</div>
+      <p>When deals stall, the instinct is to offer a discount to re-create urgency. This works once and teaches the buyer to stall every renewal. A 15% discount to compress a sales cycle by 30 days costs you 15% of deal value permanently, not just this quarter. Engineer urgency through business value and timelines instead.</p>
+    </div>
+
+    <div class="indicator-row">
+      <span class="indicator-tag ind-leading">Leading: MAP Completion Rate</span>
+      <span class="indicator-tag ind-leading">Leading: Economic Buyer on Calls %</span>
+      <span class="indicator-tag ind-leading">Leading: Pain Quantified %</span>
+      <span class="indicator-tag ind-lagging">Lagging: Average Sales Cycle Days</span>
+      <span class="indicator-tag ind-lagging">Lagging: Quarter-Push Rate</span>
+    </div>
+  </div>
+
+  <!-- FAILURE MODE 4: MISSED FORECASTS -->
+  <div class="diagnosis-block">
+    <h3><span class="db-number">4</span> Missed Forecasts</h3>
+    <p class="db-intro">Forecast accuracy is the most important trust currency a CRO has with the CEO and board. A CRO who misses forecast twice is on a performance plan. Missed forecasts almost never happen because the deals weren't there — they happen because the inspection process was broken, the stage definitions were vague, reps were sandbagging or over-forecasting, and managers weren't challenging with rigor. The fix is systemic, not situational.</p>
+
+    <div class="two-col">
+      <div class="col-box">
+        <h4>Root Causes</h4>
+        <ul>
+          <li>CRM hygiene failures — stale data, no close dates</li>
+          <li>Rep sandbagging — holding deals to hit next quarter</li>
+          <li>Rep optimism bias — gut feel overrides data</li>
+          <li>Managers not challenging rep commits</li>
+          <li>Stage definitions vague — same stage means different things to different reps</li>
+          <li>No MEDDICC discipline in late stage</li>
+          <li>Over-reliance on "commit" category without verification</li>
+          <li>No rollup inspection process above the manager</li>
+          <li>Late-quarter deal slippage not caught early enough</li>
+        </ul>
+      </div>
+      <div class="col-box">
+        <h4>Audit a Missed Forecast</h4>
+        <ul>
+          <li>Pull all deals that were in "commit" on day 1 of the quarter — what % closed?</li>
+          <li>For deals that didn't close: at what stage did they enter the quarter? What signals were present that should have flagged risk?</li>
+          <li>What did reps say in week 8 forecast calls vs. what closed in week 13?</li>
+          <li>Was CRM data accurate on close dates at week 6?</li>
+          <li>Were "upside" deals included in the final number?</li>
+          <li>Which managers over-forecasted most consistently? Is this skill or incentive?</li>
+        </ul>
+      </div>
+    </div>
+
+    <h4 style="font-size:13px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--text-muted);margin:16px 0 10px;">Building Forecast Confidence Over Time</h4>
+
+    <div class="formula-block">
+      <div class="formula-label">Forecast Accuracy Rate</div>
+      <div class="formula-main">Accuracy = Actual Closed / Called Forecast × 100%</div>
+      <div class="formula-note">Target: ±5% accuracy. Track this by rep, by manager, and in aggregate each quarter. Managers with >15% variance consistently need coaching or replacement.</div>
+    </div>
+
+    <p class="subsection" style="font-size:15px;line-height:1.75;color:var(--text);">The path to forecast accuracy runs through MEDDICC rigor. Before any deal enters the "commit" category, a manager must be able to answer YES to all of: (1) Is the economic buyer personally engaged? (2) Is there a confirmed decision date? (3) Is there a compelling event or consequence of inaction? (4) Has legal/procurement review begun? (5) Has the rep spoken to at least two stakeholders above the champion? If any answer is NO, the deal goes in "best case" — not commit.</p>
+
+    <table class="data-table">
+      <thead>
+        <tr>
+          <th>Forecast Category</th>
+          <th>Definition</th>
+          <th>Required Evidence</th>
+          <th>Typical Close %</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>Closed Won</strong></td>
+          <td>Signed and booked</td>
+          <td>Executed contract + PO</td>
+          <td>100%</td>
+        </tr>
+        <tr>
+          <td><strong>Commit</strong></td>
+          <td>Rep betting their job on this</td>
+          <td>Verbal commit from economic buyer, decision date within 30 days, legal in progress</td>
+          <td>80–90%</td>
+        </tr>
+        <tr>
+          <td><strong>Best Case</strong></td>
+          <td>Strong deals with one remaining risk</td>
+          <td>Champion confirmed intent, at least one other stakeholder mapped</td>
+          <td>40–60%</td>
+        </tr>
+        <tr>
+          <td><strong>Pipeline</strong></td>
+          <td>Working opportunities, no close certainty</td>
+          <td>Discovery completed, next step defined</td>
+          <td>10–25%</td>
+        </tr>
+        <tr>
+          <td><strong>Omitted</strong></td>
+          <td>Won't close this quarter</td>
+          <td>—</td>
+          <td>0%</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <div class="indicator-row">
+      <span class="indicator-tag ind-leading">Leading: MEDDICC Score per Deal</span>
+      <span class="indicator-tag ind-leading">Leading: Stage-to-Close Age</span>
+      <span class="indicator-tag ind-leading">Leading: CRM Completeness Score</span>
+      <span class="indicator-tag ind-lagging">Lagging: Forecast vs. Actual Variance</span>
+      <span class="indicator-tag ind-lagging">Lagging: Commit Close Rate</span>
+    </div>
+  </div>
+
+  <!-- FAILURE MODE 5: HIGH CHURN / LOW NRR -->
+  <div class="diagnosis-block">
+    <h3><span class="db-number">5</span> High Churn / Low NRR</h3>
+    <p class="db-intro">Churn is the most dangerous failure mode because it compounds: low NRR means new ARR is filling a leaky bucket, and every new logo at risk creates a permanent drag on growth efficiency. The single most important insight for a CRO is that churn is usually caused by the sales process, not the CS process — the seeds of churn are planted at signature, not at renewal.</p>
+
+    <div class="two-col">
+      <div class="col-box">
+        <h4>Root Causes</h4>
+        <ul>
+          <li>ICP mismatch — sold to prospects who aren't a great fit</li>
+          <li>Sales promises product can't keep (over-scoped, over-promised)</li>
+          <li>Onboarding failure — customer never gets to first value</li>
+          <li>Low product adoption — champion leaves, no second user base</li>
+          <li>Weak CS team — no proactive engagement model</li>
+          <li>Competitive displacement — better alternative emerges</li>
+          <li>Economic pressure — budget cuts, company downturn</li>
+          <li>No executive sponsor — single-threaded account relationship</li>
+          <li>Success criteria never defined — hard to claim ROI at renewal</li>
+        </ul>
+      </div>
+      <div class="col-box">
+        <h4>The Churn Investigation Framework</h4>
+        <ul>
+          <li>When did churn risk first appear in health scores?</li>
+          <li>Was this account in ICP? (Run ICP match score on churned accounts)</li>
+          <li>What promises were made in the sales process? (Pull call recordings)</li>
+          <li>Did the customer reach first value milestone? By when?</li>
+          <li>Was there a QBR in the last 6 months? What did the customer say?</li>
+          <li>Who was the champion at sale? Are they still at the company?</li>
+          <li>Was there a red flag in the sales-to-CS handoff document?</li>
+          <li>What was the customer's NPS score at month 3?</li>
+        </ul>
+      </div>
+    </div>
+
+    <h4 style="font-size:13px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--text-muted);margin:16px 0 10px;">How to Prevent Churn at the Sales Stage</h4>
+
+    <ol class="step-list">
+      <li>
+        <div class="step-content">
+          <span class="step-title">Enforce ICP discipline at the pipeline entry gate</span>
+          Every opportunity must pass an ICP score before Stage 2. Reps who sell to non-ICP accounts get lower commissions. Make selling to the wrong customer economically painful for the rep.
+        </div>
+      </li>
+      <li>
+        <div class="step-content">
+          <span class="step-title">Define success criteria jointly before close</span>
+          The mutual success plan (MSP) includes measurable success criteria agreed upon by both parties. CS inherits this document at handoff. No MSP = no Closed Won.
+        </div>
+      </li>
+      <li>
+        <div class="step-content">
+          <span class="step-title">Shadow CS model</span>
+          Bring a CS leader onto the final demo and implementation scoping call. CS commits to what's deliverable, not what sales promises. Prevents scope creep that creates churn.
+        </div>
+      </li>
+      <li>
+        <div class="step-content">
+          <span class="step-title">Chargeback mechanism</span>
+          If an account churns within 12 months, the AE refunds a portion of their commission. This is the most powerful alignment mechanism between sales quality and customer success. Painful, but effective.
+        </div>
+      </li>
+    </ol>
+
+    <div class="formula-block">
+      <div class="formula-label">The Leaky Bucket Math</div>
+      <div class="formula-main">Net New ARR Required = Growth Target − (Starting ARR × (NRR − 100%))</div>
+      <div class="formula-note">Example: $20M ARR company targeting $28M (+40% growth). At 90% NRR, you lose $2M/year to churn, so you need $10M in new ARR. At 110% NRR, existing customers grow $2M, so you only need $6M in new ARR. The NRR difference is massive on new logo requirements.</div>
+    </div>
+
+    <div class="indicator-row">
+      <span class="indicator-tag ind-leading">Leading: Health Score at Month 3</span>
+      <span class="indicator-tag ind-leading">Leading: Product Adoption Rate</span>
+      <span class="indicator-tag ind-leading">Leading: Time-to-First-Value</span>
+      <span class="indicator-tag ind-lagging">Lagging: Gross Revenue Retention</span>
+      <span class="indicator-tag ind-lagging">Lagging: Net Revenue Retention</span>
+      <span class="indicator-tag ind-lagging">Lagging: Logo Churn Rate</span>
+    </div>
+  </div>
+
+  <!-- FAILURE MODE 6: REP ATTRITION -->
+  <div class="diagnosis-block">
+    <h3><span class="db-number">6</span> Rep Attrition</h3>
+    <p class="db-intro">Rep attrition is the most expensive and under-measured failure mode. When a rep leaves, the company loses their pipeline (typically 50–60% of in-flight deals die within 30 days), their institutional knowledge, their customer relationships, and months of invested ramp. The loaded cost of one experienced rep departure is 1.5–3x their annual OTE — but most CROs don't calculate it and therefore don't defend against it with appropriate investment.</p>
+
+    <div class="two-col">
+      <div class="col-box">
+        <h4>Root Causes</h4>
+        <ul>
+          <li>Compensation not competitive vs. market</li>
+          <li>Quota miscalibrated — set to fail, not to motivate</li>
+          <li>Poor management — toxic, micromanaging, or absent</li>
+          <li>No career path — nowhere to grow</li>
+          <li>Toxic culture or unfair treatment</li>
+          <li>Wrong hire — skill mismatch, cultural fit failure</li>
+          <li>Lack of tools, support, or resources to succeed</li>
+          <li>Better territory/segment given to favorites</li>
+          <li>Poached by a better-paying competitor</li>
+        </ul>
+      </div>
+      <div class="col-box">
+        <h4>Exit Interview Framework</h4>
+        <ul>
+          <li>Why are you leaving? (Probe for real answer, not polished one)</li>
+          <li>What made you look? (There's usually a triggering event)</li>
+          <li>What would have changed your decision?</li>
+          <li>How did you feel about your quota fairness?</li>
+          <li>How would you describe your manager's effectiveness?</li>
+          <li>What tools/support were missing?</li>
+          <li>Would you refer a friend to work here? Why/why not?</li>
+          <li>What does your new role offer that this one didn't?</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="formula-block">
+      <div class="formula-label">True Cost of Rep Attrition</div>
+      <div class="formula-main">Attrition Cost = (Recruiting Cost) + (Lost Pipeline × Pipeline-to-Close Rate) + (Ramp Cost × Ramp Months) + (Lost Productivity Gap)</div>
+      <div class="formula-note">
+        Typical breakdown for a $200K OTE Enterprise AE:<br/>
+        Recruiting (15–25% OTE): $30–50K<br/>
+        Lost pipeline (6 months of $500K pipeline × 25% win rate): $125K revenue<br/>
+        Ramp cost (6 months × 50% productivity): $100K OTE equivalent<br/>
+        Total loaded cost: $250K–$350K per departure
+      </div>
+    </div>
+
+    <h4 style="font-size:13px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--text-muted);margin:16px 0 10px;">Retention Strategies by Root Cause</h4>
+
+    <table class="data-table">
+      <thead>
+        <tr>
+          <th>Root Cause</th>
+          <th>Retention Fix</th>
+          <th>Cost</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>Below-market comp</strong></td>
+          <td>Annual benchmarking (Radford, OTE surveys). Equity top-ups for top performers.</td>
+          <td>Medium</td>
+        </tr>
+        <tr>
+          <td><strong>Quota miscalibration</strong></td>
+          <td>Target 60–70% attainment rate. Rebuild quotas with a bottoms-up capacity model. Never top-down allocate from board targets.</td>
+          <td>Low</td>
+        </tr>
+        <tr>
+          <td><strong>Poor management</strong></td>
+          <td>360° manager feedback. Remove or retrain managers with >30% team attrition. Promote great reps into management roles slowly.</td>
+          <td>Low-Medium</td>
+        </tr>
+        <tr>
+          <td><strong>No career path</strong></td>
+          <td>Build explicit career ladder: AE I → AE II → Sr. AE → Enterprise AE → Strategic. Each level has comp, quota, and scope changes.</td>
+          <td>Low</td>
+        </tr>
+        <tr>
+          <td><strong>Poaching</strong></td>
+          <td>Stay bonuses for top performers at 1- and 2-year marks. Accelerated vesting cliffs. Role enrichment (special accounts, mentorship programs).</td>
+          <td>Medium</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <div class="indicator-row">
+      <span class="indicator-tag ind-leading">Leading: Attainment Distribution</span>
+      <span class="indicator-tag ind-leading">Leading: Manager NPS Score</span>
+      <span class="indicator-tag ind-leading">Leading: Voluntary Turnover Intent (Survey)</span>
+      <span class="indicator-tag ind-lagging">Lagging: Annual Voluntary Attrition Rate</span>
+      <span class="indicator-tag ind-lagging">Lagging: Regrettable Attrition Rate</span>
+    </div>
+  </div>
+
+  <!-- THE ROOT CAUSE TREE -->
+  <h2 class="section-title">The Root Cause Tree</h2>
+  <p class="section-intro">Revenue symptoms almost never have a single root cause. This table maps the most common presenting symptoms to their most likely root causes across the system — and the first diagnostic action to take.</p>
+
+  <table class="rct-table">
+    <thead>
+      <tr>
+        <th>Presenting Symptom</th>
+        <th>Most Likely Root Causes</th>
+        <th>First Diagnostic Action</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="symptom-tag">Pipeline below 3x coverage</span></td>
+        <td>ICP too narrow, SDR underperforming, AEs not prospecting, demand gen underfunded</td>
+        <td>Segment pipeline creation by source and by rep; compare to SDR activity metrics</td>
+      </tr>
+      <tr>
+        <td><span class="symptom-tag">Win rate below 20%</span></td>
+        <td>ICP mismatch, discovery failure, no champion, competitive loss, messaging gap</td>
+        <td>Pull win/loss data segmented by rep, source, and competitor</td>
+      </tr>
+      <tr>
+        <td><span class="symptom-tag">Sales cycle >120 days (Mid-Market)</span></td>
+        <td>No economic buyer access, no MAP, no urgency, procurement delay</td>
+        <td>Audit top-10 longest-open deals for EB contact and MAP completion</td>
+      </tr>
+      <tr>
+        <td><span class="symptom-tag">Forecast miss >10%</span></td>
+        <td>CRM hygiene, manager not challenging, stage definition vague, sandbagging</td>
+        <td>Audit deals committed at quarter start vs. close rate; run MEDDICC audit on current commit</td>
+      </tr>
+      <tr>
+        <td><span class="symptom-tag">Churn >10% gross annually</span></td>
+        <td>ICP mismatch at sale, over-promises, onboarding failure, adoption failure</td>
+        <td>Run ICP match score on 100% of churned accounts; pull sales-to-CS handoff completeness rate</td>
+      </tr>
+      <tr>
+        <td><span class="symptom-tag">NRR below 100%</span></td>
+        <td>Expansion motion weak, pricing not value-indexed, CS underfunded, product stagnant</td>
+        <td>Segment NRR by segment, cohort vintage, and CSM to isolate if systemic or isolated</td>
+      </tr>
+      <tr>
+        <td><span class="symptom-tag">Rep attrition >20% annually</span></td>
+        <td>Comp below market, quota too high, bad manager, no career path</td>
+        <td>Conduct exit interviews; benchmark OTE against Radford/LinkedIn Salary data; run attainment distribution analysis</td>
+      </tr>
+      <tr>
+        <td><span class="symptom-tag">Ramp time >9 months</span></td>
+        <td>Weak onboarding, poor coaching infrastructure, ICP too complex, wrong hire profile</td>
+        <td>Analyze ramp curves by hire cohort; identify where ramp stalls (activity, pipeline, or conversion)</td>
+      </tr>
+      <tr>
+        <td><span class="symptom-tag">ACV declining over time</span></td>
+        <td>Downmarket drift, discounting pressure, wrong buyer persona, packaging weakness</td>
+        <td>Track new logo ACV by quarter; segment by rep and source; audit recent discount rates</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <!-- INTERVENTION LEVELS -->
+  <h2 class="section-title">Intervention Levels</h2>
+  <p class="section-intro">Not every problem requires the same intervention. Using a strategy-level fix on a coaching problem destroys momentum. Using a coaching fix on a strategy problem wastes time. Matching intervention level to root cause is a core CRO competency.</p>
+
+  <div class="intervention-grid">
+    <div class="int-card">
+      <div class="int-level level-coach">LEVEL 1</div>
+      <div class="int-title">Coaching</div>
+      <div class="int-when">Use when: The problem is isolated to specific reps, the process is proven, and the gap is skill or behavior. Cost: low. Time to impact: 30–60 days.</div>
+    </div>
+    <div class="int-card">
+      <div class="int-level level-process">LEVEL 2</div>
+      <div class="int-title">Process Change</div>
+      <div class="int-when">Use when: The problem is systemic across multiple reps following the same process. A good rep would still fail. Cost: medium. Time to impact: 60–90 days.</div>
+    </div>
+    <div class="int-card">
+      <div class="int-level level-strategy">LEVEL 3</div>
+      <div class="int-title">Strategy Change</div>
+      <div class="int-when">Use when: The market, competitive landscape, or ICP has fundamentally shifted. Process improvements won't help. Cost: high. Time to impact: 90–180 days.</div>
+    </div>
+    <div class="int-card">
+      <div class="int-level level-personnel">LEVEL 4</div>
+      <div class="int-title">Personnel Change</div>
+      <div class="int-when">Use when: Level 1–3 interventions have failed or the individual is a cultural threat to the organization. Last resort. Immediate in some cases.</div>
+    </div>
+  </div>
+
+  <div class="callout callout-warning">
+    <div class="callout-title">The Intervention Sequencing Rule</div>
+    <p>Always start at Level 1. Escalate only when you can prove the lower level won't work. Moving to Level 4 (personnel) before trying Level 1–3 destroys team trust and culture. The exception: when the problem is clearly a role mismatch from the outset, a wrong hire from day one, or illegal conduct. In those cases, speed is appropriate.</p>
+  </div>
+
+  <h3 class="subsection-title">When to Move to Personnel Action</h3>
+  <p style="font-size:15px;line-height:1.75;color:var(--text);">Three conditions must all be true: (1) You have given the individual clear, documented, and unambiguous expectations. (2) You have provided adequate support — coaching, resources, process clarity — to give them a fair chance to meet those expectations. (3) A defined timeframe has passed with no improvement. Without all three, a personnel change is premature and will be perceived as arbitrary. With all three, it is both necessary and defensible.</p>
+
+  <!-- THE 90-DAY TURNAROUND PLAN -->
+  <h2 class="section-title">The 90-Day Turnaround Plan</h2>
+  <p class="section-intro">A CRO inheriting a broken sales org faces a sequencing challenge: act too fast and you destroy confidence; act too slow and you miss the window to demonstrate leadership. This framework provides the right cadence.</p>
+
+  <div class="timeline">
+    <div class="timeline-item">
+      <div class="timeline-marker">Weeks 1–2</div>
+      <div class="timeline-content">
+        <h4>Diagnose — Listen Before You Build</h4>
+        <p>Do not make any changes in the first two weeks. Hold 1:1s with every rep, every manager, every functional leader (marketing, CS, RevOps, product). Listen for what's working, what's not, and what the org believes the real problems are. Pull the last 6 quarters of data: pipeline coverage, win rates, forecast accuracy, ramp time, churn, NRR, attrition. Map the symptoms to possible root causes. Document all findings without judgment.</p>
+      </div>
+    </div>
+    <div class="timeline-item">
+      <div class="timeline-marker">Weeks 3–4</div>
+      <div class="timeline-content">
+        <h4>Stabilize — Stop the Bleeding</h4>
+        <p>Identify the top three most urgent issues and address them with targeted, fast-win interventions. This might be fixing the forecast process, rescuing a top-3 deal that's at risk, making one critical hire, or stopping a destructive behavior in the field. Build credibility with one visible win. Share your preliminary diagnosis with the CEO and board — both to align expectations and to demonstrate you understand the problem.</p>
+      </div>
+    </div>
+    <div class="timeline-item">
+      <div class="timeline-marker">Months 2–3</div>
+      <div class="timeline-content">
+        <h4>Fix Foundations — Structural Changes</h4>
+        <p>Execute the process, ICP, and structural changes that your diagnostic identified. This typically includes: rebuilding the ICP and qualification criteria, implementing or retraining MEDDICC, fixing the MQL definition and marketing-sales SLA, implementing structured onboarding for new hires, building the first version of a metrics dashboard, and making any talent decisions that can no longer be deferred. These are Level 2–3 interventions with a 60–90 day impact horizon.</p>
+      </div>
+    </div>
+    <div class="timeline-item">
+      <div class="timeline-marker">Months 4–6</div>
+      <div class="timeline-content">
+        <h4>Rebuild Momentum — System-Level Improvements</h4>
+        <p>By now, leading indicators should be improving. Use this window to build the long-term system: structured enablement program, career paths and comp redesign, territory optimization, demand gen investment, CS-sales alignment on handoffs, and a quarterly business review cadence that makes performance visible across the org. Begin presenting to the board with a narrative that shows leading indicators improving even if lagging indicators are still recovering.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="callout callout-best-practice">
+    <div class="callout-title">The 30-60-90 Board Narrative</div>
+    <p>At 30 days: "Here is my diagnosis. Here are the root causes I believe are real. Here are the 3 things I'm fixing first." At 60 days: "Here is what we've changed. Here are the leading indicators already moving. Here is what I expect by end of Q." At 90 days: "Here is the evidence that the fixes are working. Here is the plan for the next two quarters." This cadence builds enormous credibility even when lagging indicators haven't caught up yet.</p>
+  </div>
+
+  <!-- DIAGNOSTIC METRICS -->
+  <h2 class="section-title">Complete Diagnostic Metrics Reference</h2>
+
+  <table class="data-table">
+    <thead>
+      <tr>
+        <th>Failure Mode</th>
+        <th>Key Diagnostic Metrics</th>
+        <th>Benchmark</th>
+        <th>Type</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><strong>Low Pipeline</strong></td>
+        <td>Pipeline coverage ratio, pipeline created per rep per month, SDR meetings booked per month</td>
+        <td>3–4x coverage; 2–4 meetings/SDR/day</td>
+        <td>Leading</td>
+      </tr>
+      <tr>
+        <td><strong>Low Win Rate</strong></td>
+        <td>Win rate by rep/segment/source/competitor, SAL→SQL conversion, stage conversion rates</td>
+        <td>SMB: 25–35%; MM: 20–30%; ENT: 15–25%</td>
+        <td>Lagging</td>
+      </tr>
+      <tr>
+        <td><strong>Long Cycles</strong></td>
+        <td>Average days per stage, MAP completion %, economic buyer access %, quarter-push rate</td>
+        <td>SMB: 30–60 days; MM: 60–90 days; ENT: 90–180 days</td>
+        <td>Leading/Lagging</td>
+      </tr>
+      <tr>
+        <td><strong>Forecast Miss</strong></td>
+        <td>Forecast accuracy %, commit close rate, CRM completeness score, stage-to-close age</td>
+        <td>±5% forecast accuracy; >80% commit close rate</td>
+        <td>Both</td>
+      </tr>
+      <tr>
+        <td><strong>High Churn</strong></td>
+        <td>Gross retention %, NRR, time-to-first-value, health score at month 3, ICP match score on churned accounts</td>
+        <td>GRR >90%; NRR >100%; TTFV &lt;30 days</td>
+        <td>Lagging</td>
+      </tr>
+      <tr>
+        <td><strong>Rep Attrition</strong></td>
+        <td>Annual voluntary attrition %, regrettable attrition %, attainment distribution, manager NPS</td>
+        <td>Voluntary attrition &lt;15%; regrettable &lt;8%</td>
+        <td>Lagging</td>
+      </tr>
+    </tbody>
+  </table>
+
+<div class="section-title">Science of Scaling Diagnostic Tools</div>
+<p class="section-intro">Most revenue problems map to a Science of Scaling stage failure. Use the tools below to identify which stage gate was skipped or is now breaking down — then apply the correct intervention.</p>
+<div class="tools-grid">
+  <a href="../subpages/sos-checklist.html" class="tool-card tc-sos">
+    <div class="tc-phase">All Stages · First Stop</div>
+    <div class="tc-title">GTM Scaling Readiness Checklist</div>
+    <div class="tc-desc">Run both Gate 1 and Gate 2 checklists against your current state. Failed items pinpoint exactly where the system broke down and what to fix first.</div>
+  </a>
+  <a href="../subpages/sos-lir.html" class="tool-card tc-sos">
+    <div class="tc-phase">Stage 1 Diagnostic</div>
+    <div class="tc-title">LIR — Is PMF Real?</div>
+    <div class="tc-desc">High churn, low NRR, customer frustration? Calculate your LIR achievement rate. If below 60%, you don't have PMF — you have a customer success or ICP problem.</div>
+  </a>
+  <a href="../subpages/sos-liue.html" class="tool-card tc-sos">
+    <div class="tc-phase">Stage 2 Diagnostic</div>
+    <div class="tc-title">LIUE — Is GTM Fit Real?</div>
+    <div class="tc-desc">High CAC, low win rates, poor rep productivity? Calculate LIUE by segment. If below 3, identify whether it's the LTV side or CAC side that's broken, then apply the right lever.</div>
+  </a>
+  <a href="../subpages/sos-growth-moat.html" class="tool-card tc-sos">
+    <div class="tc-phase">Stage 3 Diagnostic</div>
+    <div class="tc-title">Growth Slowdown — Segment Analysis</div>
+    <div class="tc-desc">If growth is slowing with healthy unit economics, run the Scale/Experiment/Ignore analysis. Are you wasting budget on IGNORE segments while SCALE segments are under-resourced?</div>
+  </a>
+  <a href="../subpages/template-liue-worksheet.html" class="tool-card tc-res">
+    <div class="tc-phase">Template · Diagnostic</div>
+    <div class="tc-title">LIUE Worksheet</div>
+    <div class="tc-desc">Track LIR and LIUE quarterly by cohort. The decision tree at the bottom maps every combination of LIR/LIUE signals to a specific root cause and intervention.</div>
+  </a>
+  <a href="../subpages/template-ccac.html" class="tool-card tc-res">
+    <div class="tc-phase">Template · CAC Diagnostic</div>
+    <div class="tc-title">CCAC Model</div>
+    <div class="tc-desc">Cohort-based CAC reveals whether your acquisition cost is rising over time — a leading indicator of LIUE deterioration before it shows up in the blended number.</div>
+  </a>
+  <a href="../subpages/template-retention-narrative.html" class="tool-card tc-res">
+    <div class="tc-phase">Template · LIR Failure</div>
+    <div class="tc-title">Retention Strategy Narrative</div>
+    <div class="tc-desc">6-slide framework for diagnosing poor retention: ICP analysis (firmographic + qualification + post-sale adoption) → ICP-only acquisition → cohort improvement trajectory.</div>
+  </a>
+</div>
+
+  <div class="tools-section-label">Diagnostic Tools &amp; Stage References</div>
+  <div class="tools-grid">
+    <a href="../subpages/sos-checklist.html" class="tool-card tc-sos">
+      <div class="tc-phase">Science of Scaling</div>
+      <div class="tc-title">SoS Stage-Gate Checklist</div>
+      <div class="tc-desc">Complete readiness checklist for PMF → GTM Fit → Growth &amp; Moat stage transitions</div>
+    </a>
+    <a href="pages/science-of-scaling.html" class="tool-card tc-sos">
+      <div class="tc-phase">Science of Scaling</div>
+      <div class="tc-title">3-Stage Framework Overview</div>
+      <div class="tc-desc">Full SoS framework: LIR, LIUE, Speedometer, and the stage-gate logic governing all phases</div>
+    </a>
+    <a href="../subpages/sos-pmf.html" class="tool-card tc-sos">
+      <div class="tc-phase">Stage 1 · PMF</div>
+      <div class="tc-title">Stage 1: PMF Diagnostic</div>
+      <div class="tc-desc">LIR root-cause analysis: wrong ICP, LIR definition errors, product gaps, CS failures</div>
+    </a>
+    <a href="../subpages/sos-gtm-fit.html" class="tool-card tc-sos">
+      <div class="tc-phase">Stage 2 · GTM Fit</div>
+      <div class="tc-title">Stage 2: LIUE Diagnostic</div>
+      <div class="tc-desc">Decompose LIUE &lt; 3: LTV decay vs. CAC inflation, channel efficiency, sales productivity</div>
+    </a>
+    <a href="../subpages/sos-growth-moat.html" class="tool-card tc-sos">
+      <div class="tc-phase">Stage 3 · Growth &amp; Moat</div>
+      <div class="tc-title">Stage 3: Speedometer Diagnostic</div>
+      <div class="tc-desc">When LIR or LIUE drops in scale mode: stop-scale triggers, root cause tree, recovery plan</div>
+    </a>
+    <a href="../subpages/sos-lir.html" class="tool-card tc-sos">
+      <div class="tc-phase">Metric · Stage 1</div>
+      <div class="tc-title">LIR — Leading Indicator of Retention</div>
+      <div class="tc-desc">How to define, measure, and diagnose LIR. Cohort analysis and threshold validation methods</div>
+    </a>
+    <a href="../subpages/sos-liue.html" class="tool-card tc-sos">
+      <div class="tc-phase">Metric · Stage 2</div>
+      <div class="tc-title">LIUE — LTV/CAC Worksheet</div>
+      <div class="tc-desc">Full LIUE decomposition: LTV formula, CAC formula, segment-level breakout</div>
+    </a>
+    <a href="../subpages/template-scorecard-sales.html" class="tool-card tc-res">
+      <div class="tc-phase">Template · Phase 2</div>
+      <div class="tc-title">Sales Rep Scorecard</div>
+      <div class="tc-desc">Activity, pipeline, and outcome metrics to identify rep-level performance problems vs. systemic issues</div>
+    </a>
+    <a href="../subpages/template-scorecard-sales-leader.html" class="tool-card tc-res">
+      <div class="tc-phase">Template · Phase 2</div>
+      <div class="tc-title">Sales Leader Scorecard</div>
+      <div class="tc-desc">Leading indicators for manager effectiveness: coaching cadence, forecast accuracy, ramp speed</div>
+    </a>
+    <a href="../subpages/template-forecasting.html" class="tool-card tc-res">
+      <div class="tc-phase">Template · Phase 4</div>
+      <div class="tc-title">Forecasting Template</div>
+      <div class="tc-desc">Bottom-up + top-down forecast model with variance analysis and stage-conversion diagnostics</div>
+    </a>
+  </div>
+
+  <div class="related-section">
+    <div class="related-title">Related Topics</div>
+    <div class="related-links">
+      <a href="handoffs.html" class="related-link">The Three Critical Handoffs</a>
+      <a href="north-star-metrics.html" class="related-link">North Star Metrics</a>
+      <a href="../subpages/meddicc.html" class="related-link">MEDDICC Framework</a>
+      <a href="../subpages/forecasting.html" class="related-link">Forecasting</a>
+      <a href="../subpages/rep-onboarding.html" class="related-link">Rep Onboarding</a>
+      <a href="../subpages/quota-design.html" class="related-link">Quota Design</a>
+      <a href="../subpages/icp.html" class="related-link">Ideal Customer Profile</a>
+      <a href="../subpages/win-loss.html" class="related-link">Win/Loss Analysis</a>
+      <a href="../subpages/pipeline-management.html" class="related-link">Pipeline Management</a>
+      <a href="../pages/science-of-scaling.html" class="related-link">Science of Scaling Framework</a>
+      <a href="../subpages/sos-checklist.html" class="related-link">GTM Scaling Checklist</a>
+      <a href="../subpages/sos-liue.html" class="related-link">LIUE Diagnostic</a>
+      <a href="../subpages/sos-lir.html" class="related-link">LIR Diagnostic</a>
+    </div>
+  </div>
+
+</div>
+<script data-pplx-inline-edit>
+(function () {
+  if (window === window.top) return;
+
+  const allowedParentOrigins = ["https://www.perplexity.ai","https://perplexity.ai","https://testing.perplexity.ai","https://staging.perplexity.ai","https://*.preview.i.perplexity.ai","http://localhost:3000","http://127.0.0.1:3000","http://localhost:5173","http://127.0.0.1:5173"];
+  const MAX_FONT_BYTES = 500 * 1024;
+  const MAX_TOTAL_FONT_BYTES = 2 * 1024 * 1024;
+  let scrollForwarding = false;
+  let scrollRaf = 0;
+  let trustedTopOrigin = null;
+
+  // Allow entries like "https://*.preview.i.perplexity.ai" — the wildcard
+  // matches a single DNS label (no dots), so "https://*.foo" cannot stretch
+  // across multiple labels.
+  function matchesAllowedOrigin(origin) {
+    if (!origin) return false;
+    for (const entry of allowedParentOrigins) {
+      if (!entry.includes("*")) {
+        if (entry === origin) return true;
+        continue;
+      }
+      const pattern = new RegExp(
+        "^" +
+          entry.replace(/[.+?^${}()|[\]\\]/g, "\\$&").replace(/\*/g, "[^.]+") +
+          "$",
+      );
+      if (pattern.test(origin)) return true;
+    }
+    return false;
+  }
+
+  // Trust decision: when the sender is same-origin-visible (event.origin is a
+  // real origin like https://www.perplexity.ai) we trust event.origin directly.
+  // When event.origin is "null" (opaque broker srcdoc), we fall back to the
+  // broker's stamped `parentOrigin` to identify the top window. The fallback
+  // is claim-only — we rely on the browser's native `targetOrigin` enforcement
+  // on the response path (see postToTrustedTop) to ensure replies can't be
+  // delivered to anyone but the actual top window of that claimed origin.
+  function getTrustedParentOrigin(event) {
+    const forwardedParentOrigin =
+      typeof event.data.parentOrigin === "string" ? event.data.parentOrigin : null;
+    const parentOrigin = event.origin === "null" ? forwardedParentOrigin : event.origin;
+    return matchesAllowedOrigin(parentOrigin) ? parentOrigin : null;
+  }
+
+  // All responses go to window.top with targetOrigin = the allowlisted origin.
+  // An attacker that iframes us inside their own null-origin broker can claim
+  // any parentOrigin they like, but the browser will drop the reply whenever
+  // the real top's origin doesn't match — so the screenshot never leaves.
+  function postToTrustedTop(message) {
+    if (!trustedTopOrigin) return;
+    try {
+      window.top.postMessage(message, trustedTopOrigin);
+    } catch (_error) {}
+  }
+
+  function inlineAll(original, clone) {
+    if (original.nodeType !== 1 || clone.nodeType !== 1) return;
+
+    try {
+      const computedStyle = getComputedStyle(original);
+      // cssText on a computed style is the serialized declaration in modern
+      // Chromium/Safari — a single read beats enumerating ~400 longhand
+      // properties. Firefox returns "" here, so we fall back on empty.
+      const serialized = computedStyle.cssText;
+      if (serialized) {
+        clone.style.cssText = serialized;
+      } else {
+        const parts = new Array(computedStyle.length);
+        for (let index = 0; index < computedStyle.length; index += 1) {
+          const property = computedStyle[index];
+          parts[index] = `${property}:${computedStyle.getPropertyValue(property)};`;
+        }
+        clone.style.cssText = parts.join("");
+      }
+    } catch (_error) {}
+
+    const originalChildren = original.children;
+    const clonedChildren = clone.children;
+    for (
+      let index = 0;
+      index < originalChildren.length && index < clonedChildren.length;
+      index += 1
+    ) {
+      inlineAll(originalChildren[index], clonedChildren[index]);
+    }
+  }
+
+  function extractFontUrl(srcValue) {
+    const matches = [
+      ...srcValue.matchAll(
+        /url\(["']?([^"')]+)["']?\)(?:\s*format\(["']?([^"')]+)["']?\))?/gi,
+      ),
+    ];
+    if (matches.length === 0) return null;
+    const woff2 = matches.find((m) => m[2] && m[2].toLowerCase().includes("woff2"));
+    if (woff2) return woff2[1];
+    const woff = matches.find((m) => m[2] && m[2].toLowerCase().includes("woff"));
+    if (woff) return woff[1];
+    return matches[0][1];
+  }
+
+  // Cache resolved font URL -> data URI across captures. Fonts on a page
+  // essentially never change, and a batch run emits multiple captures back to
+  // back — without this we'd refetch + re-base64 every time.
+  const fontDataUriCache = new Map();
+  const SRC_DECLARATION_RE = /src\s*:\s*[^;}]+/i;
+
+  async function fetchAsDataUri(url) {
+    if (fontDataUriCache.has(url)) return fontDataUriCache.get(url);
+    let dataUri = null;
+    try {
+      const response = await fetch(url, { mode: "cors", credentials: "omit" });
+      if (response.ok) {
+        const blob = await response.blob();
+        if (blob.size <= MAX_FONT_BYTES) {
+          dataUri = await new Promise((resolve) => {
+            const reader = new FileReader();
+            reader.onloadend = () =>
+              resolve(typeof reader.result === "string" ? reader.result : null);
+            reader.onerror = () => resolve(null);
+            reader.readAsDataURL(blob);
+          });
+        }
+      }
+    } catch (_error) {
+      dataUri = null;
+    }
+    fontDataUriCache.set(url, dataUri);
+    return dataUri;
+  }
+
+  function collectFontFaceRuleTexts() {
+    const rules = [];
+    for (const sheet of document.styleSheets) {
+      let cssRules;
+      try {
+        cssRules = sheet.cssRules;
+      } catch (_error) {
+        continue;
+      }
+      if (!cssRules) continue;
+      for (const rule of cssRules) {
+        const cssText = rule.cssText || "";
+        if (cssText.startsWith("@font-face")) rules.push(cssText);
+      }
+    }
+    return rules;
+  }
+
+  async function buildInlinedFontCss() {
+    const ruleTexts = collectFontFaceRuleTexts();
+    if (ruleTexts.length === 0) return null;
+
+    const resolved = ruleTexts.map((cssText) => {
+      if (!SRC_DECLARATION_RE.test(cssText)) return null;
+      const srcMatch = cssText.match(/src\s*:\s*([^;}]+)[;}]/i);
+      if (!srcMatch) return null;
+      const url = extractFontUrl(srcMatch[1]);
+      if (!url) return null;
+      try {
+        return { cssText, url: new URL(url, document.baseURI).href };
+      } catch (_error) {
+        return null;
+      }
+    });
+
+    const dataUris = await Promise.all(
+      resolved.map((entry) => (entry ? fetchAsDataUri(entry.url) : Promise.resolve(null))),
+    );
+
+    const inlined = [];
+    let totalBytes = 0;
+    for (let index = 0; index < resolved.length; index += 1) {
+      const entry = resolved[index];
+      const dataUri = dataUris[index];
+      if (!entry || !dataUri) continue;
+      const approxBytes = dataUri.length * 0.75;
+      if (totalBytes + approxBytes > MAX_TOTAL_FONT_BYTES) break;
+      totalBytes += approxBytes;
+      inlined.push(entry.cssText.replace(SRC_DECLARATION_RE, `src: url("${dataUri}")`));
+    }
+    return inlined.length > 0 ? inlined.join("\n") : null;
+  }
+
+  function stripExternal(clone) {
+    const images = clone.querySelectorAll("img");
+    for (let index = 0; index < images.length; index += 1) {
+      const src = images[index].getAttribute("src");
+      if (src && !src.startsWith("data:")) images[index].removeAttribute("src");
+    }
+
+    const elements = clone.querySelectorAll("*");
+    for (let index = 0; index < elements.length; index += 1) {
+      const style = elements[index].style.cssText;
+      if (style && style.includes("url(")) {
+        elements[index].style.cssText = style.replace(
+          /url\(["']?(?!data:)[^)"']*["']?\)/gi,
+          "none",
+        );
+      }
+    }
+  }
+
+  function emitScroll() {
+    scrollRaf = 0;
+    if (!scrollForwarding) return;
+    postToTrustedTop({
+      type: "INLINE_EDIT_SCROLL",
+      scrollX: window.scrollX,
+      scrollY: window.scrollY,
+    });
+  }
+
+  window.addEventListener(
+    "scroll",
+    function () {
+      if (!scrollForwarding || scrollRaf) return;
+      scrollRaf = requestAnimationFrame(emitScroll);
+    },
+    { passive: true, capture: true },
+  );
+
+  async function handleCaptureRequest(event) {
+    const requestId = event.data.requestId;
+    const scrollX = window.scrollX;
+    const scrollY = window.scrollY;
+    const width = window.innerWidth;
+    const height = window.innerHeight;
+
+    function postResult(dataUrl) {
+      postToTrustedTop({
+        type: "INLINE_EDIT_SCREENSHOT_RESULT",
+        requestId,
+        dataUrl,
+        scrollX,
+        scrollY,
+      });
+    }
+
+    try {
+      // Wait for any pending web fonts to resolve so both inline metrics and
+      // the @font-face inlining below see the same loaded faces.
+      if (document.fonts && document.fonts.ready) {
+        try {
+          await document.fonts.ready;
+        } catch (_error) {}
+      }
+
+      const clone = document.documentElement.cloneNode(true);
+      inlineAll(document.documentElement, clone);
+
+      const removedNodes = clone.querySelectorAll("script,link[rel=\"stylesheet\"],style");
+      for (let index = 0; index < removedNodes.length; index += 1) {
+        removedNodes[index].remove();
+      }
+
+      stripExternal(clone);
+
+      // Re-embed web fonts as data-URI @font-face rules so the SVG rasterizer
+      // can resolve them — external font URLs aren't fetched during
+      // foreignObject rendering, which would otherwise force a fallback face
+      // and change text metrics.
+      const inlinedFontCss = await buildInlinedFontCss();
+      if (inlinedFontCss) {
+        const styleEl = document.createElement("style");
+        styleEl.textContent = inlinedFontCss;
+        const head = clone.querySelector("head");
+        if (head) head.appendChild(styleEl);
+        else clone.insertBefore(styleEl, clone.firstChild);
+      }
+
+      const html = new XMLSerializer().serializeToString(clone);
+      const svg =
+        `<svg xmlns="http://www.w3.org/2000/svg" width="${width}" height="${height}">` +
+        '<foreignObject width="100%" height="100%">' +
+        `<div xmlns="http://www.w3.org/1999/xhtml" style="width:${width}px;height:${height}px;overflow:hidden">` +
+        `<div style="transform:translate(-${scrollX}px,-${scrollY}px);transform-origin:top left">` +
+        html +
+        "</div></div></foreignObject></svg>";
+      const svgUrl = `data:image/svg+xml;charset=utf-8,${encodeURIComponent(svg)}`;
+      const image = new Image();
+      image.onload = function () {
+        const canvas = document.createElement("canvas");
+        canvas.width = width;
+        canvas.height = height;
+        canvas.getContext("2d").drawImage(image, 0, 0);
+        postResult(canvas.toDataURL("image/png"));
+      };
+      image.onerror = function () {
+        postResult(null);
+      };
+      image.src = svgUrl;
+    } catch (_error) {
+      postResult(null);
+    }
+  }
+
+  window.addEventListener("message", function (event) {
+    if (!event.data) return;
+    // Only accept messages from the direct parent frame. Blocks sibling /
+    // unrelated-window postMessage senders that could otherwise reach us.
+    if (event.source !== window.parent) return;
+
+    const trustedParentOrigin = getTrustedParentOrigin(event);
+    if (!trustedParentOrigin) return;
+    trustedTopOrigin = trustedParentOrigin;
+
+    if (event.data.type === "INLINE_EDIT_SCROLL_START") {
+      scrollForwarding = true;
+      emitScroll();
+      return;
+    }
+
+    if (event.data.type === "INLINE_EDIT_SCROLL_STOP") {
+      scrollForwarding = false;
+      if (scrollRaf) cancelAnimationFrame(scrollRaf);
+      scrollRaf = 0;
+      return;
+    }
+
+    if (event.data.type !== "INLINE_EDIT_CAPTURE_REQUEST") return;
+
+    handleCaptureRequest(event);
+  });
+})();
+
+
+</script></body>
+</html>
