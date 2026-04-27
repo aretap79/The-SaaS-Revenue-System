@@ -2,11 +2,441 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8"/>
-  <meta http-equiv="refresh" content="0; url=value-proposition.html"/>
-  <title>Pricing Strategy — SaaS Revenue System</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>SaaS Pricing Strategy — SaaS Revenue System</title>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="../assets/shared.css"/>
+  <style>
+    .page-hero { background: #437A22; }
+    .formula-block { background: #1C1B19; color: #CDCCCA; border-radius: 8px; padding: 20px 24px; margin: 16px 0; font-family: 'DM Mono', 'Courier New', monospace; font-size: 14px; line-height: 1.8; }
+    .formula-block .formula-label { font-size: 11px; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase; color: #8bba6f; margin-bottom: 10px; }
+    .formula-block strong { color: #E8C96A; }
+    .formula-block em { color: #7EC8A4; font-style: normal; }
+    .subsection { margin: 32px 0; }
+    .subsection-title { font-size: 20px; font-weight: 700; color: var(--text); margin-bottom: 12px; padding-bottom: 6px; border-bottom: 2px solid var(--border); }
+    .callout { background: var(--surface); border: 1.5px solid var(--border); border-left: 4px solid var(--primary); border-radius: 8px; padding: 18px 20px; margin: 20px 0; }
+    .callout-title { font-size: 12px; font-weight: 700; letter-spacing: 1px; text-transform: uppercase; color: var(--primary); margin-bottom: 8px; }
+    .callout p { font-size: 15px; line-height: 1.65; }
+    .callout-warning { border-left-color: #964219; }
+    .callout-warning .callout-title { color: #964219; }
+    .callout-insight { border-left-color: #437A22; }
+    .callout-insight .callout-title { color: #437A22; }
+    .hero-tags { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 20px; }
+    .hero-tag { font-size: 12px; font-weight: 600; padding: 5px 14px; border-radius: 20px; background: rgba(255,255,255,0.15); color: rgba(255,255,255,0.92); border: 1px solid rgba(255,255,255,0.25); text-decoration: none; transition: background 0.15s; }
+    .hero-tag:hover { background: rgba(255,255,255,0.28); color: #fff; text-decoration: none; }
+    .model-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 16px; margin: 20px 0; }
+    .model-card { background: var(--surface); border: 1.5px solid var(--border); border-radius: 10px; padding: 20px; }
+    .model-card h4 { font-size: 15px; font-weight: 700; color: var(--text); margin-bottom: 8px; }
+    .model-card .model-tag { display: inline-block; font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.8px; padding: 2px 8px; border-radius: 10px; margin-bottom: 8px; }
+    .tag-high { background: #e6f4ea; color: #437A22; }
+    .tag-med { background: #e3f4fb; color: #2a7fa8; }
+    .tag-low { background: #fce8e6; color: #A13544; }
+    .model-card p { font-size: 13px; color: var(--text-muted); line-height: 1.6; margin-bottom: 10px; }
+    .model-card .model-example { font-size: 12px; font-weight: 600; color: var(--primary); }
+    .tier-row { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 14px; margin: 20px 0; }
+    .tier-card { border-radius: 10px; padding: 22px; background: var(--surface); border: 2px solid var(--border); text-align: center; }
+    .tier-card.tier-best { border-color: #437A22; }
+    .tier-card h4 { font-size: 16px; font-weight: 700; margin-bottom: 4px; }
+    .tier-card .tier-price { font-size: 28px; font-weight: 700; color: var(--primary); margin: 8px 0; }
+    .tier-card ul { list-style: none; text-align: left; margin-top: 12px; }
+    .tier-card ul li { font-size: 13px; padding: 4px 0 4px 18px; position: relative; color: var(--text-muted); }
+    .tier-card ul li::before { content: '✓'; position: absolute; left: 0; color: #437A22; font-weight: 700; }
+    .tier-card .tier-badge { font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; color: #437A22; margin-bottom: 4px; }
+    @media (max-width: 768px) { .tier-row { grid-template-columns: 1fr; } .model-grid { grid-template-columns: 1fr; } }
+  </style>
 </head>
 <body>
-  <p>Redirecting... <a href="value-proposition.html">Click here if not redirected</a></p>
+
+<nav class="nav">
+  <span class="nav-logo">SaaS <span>Revenue System</span></span>
+  <span class="nav-sep">|</span>
+  <a href="../index.html" class="nav-back">← Home</a>
+  <span class="nav-sep">|</span>
+  <a href="../pages/phase3.html" class="nav-back">Phase 3: GTM Architecture</a>
+  <span class="nav-sep">|</span>
+  <span class="nav-current">Pricing Strategy</span>
+</nav>
+
+<div class="page-hero">
+  <div class="hero-phase-label">Phase 3 — GTM Architecture</div>
+  <div class="hero-title">SaaS Pricing Strategy</div>
+  <div class="hero-subtitle">Pricing is not a finance decision. It is the most consequential GTM decision a SaaS company makes — it determines who you can sell to, what your unit economics look like, whether your PLG motion works, and how much leverage your sales team has in every deal. Get this wrong and no amount of sales execution fixes it.</div>
+  <div class="hero-tags">
+    <a href="value-proposition.html" class="hero-tag">Value Proposition</a>
+    <a href="sos-liue.html" class="hero-tag">LIUE</a>
+    <a href="segmentation.html" class="hero-tag">Segmentation</a>
+    <a href="template-ccac.html" class="hero-tag">Unit Economics</a>
+    <a href="icp.html" class="hero-tag">ICP Alignment</a>
+  </div>
+</div>
+
+<div class="content-wrap">
+  <div class="breadcrumb">
+    <a href="../index.html">Home</a><span class="sep">›</span>
+    <a href="../pages/phase3.html">Phase 3</a><span class="sep">›</span>
+    <span class="current">Pricing Strategy</span>
+  </div>
+
+  <!-- SECTION 1 -->
+  <h2 class="section-title">Pricing Is a Strategic GTM Decision</h2>
+  <p class="section-intro">The majority of SaaS founders and even experienced revenue leaders treat pricing as a finance exercise — a number derived from cost structure, competitive benchmarking, and gut instinct. This framing produces pricing that is defensible in a spreadsheet and lethal in the market. Pricing is a GTM decision because it encodes your assumptions about your buyer, your value delivery mechanism, your growth model, and your competitive positioning into a single number or structure that every prospect will scrutinize.</p>
+
+  <div class="callout callout-insight">
+    <div class="callout-title">The <a href="https://www.mckinsey.com" target="_blank" rel="noopener noreferrer">McKinsey</a> Principle on Pricing</div>
+    <p>McKinsey's pricing research consistently demonstrates that a 1% improvement in price realization produces 8–11% improvement in operating profit — more than equivalent improvements in volume (+3.7%), variable cost (−5.9%), or fixed cost (−2.5%). Pricing is the highest-leverage financial lever available to a SaaS business. Yet most SaaS companies spend 6 hours on pricing decisions and thousands of hours on sales process. This asymmetry is a structural mistake.</p>
+  </div>
+
+  <div class="subsection">
+    <div class="subsection-title">What Pricing Actually Determines</div>
+    <ul class="bullet-list">
+      <li><strong>Who you can sell to:</strong> A $500/month minimum effectively excludes solo practitioners and very small teams. A $50,000 ACV minimum excludes every company below 200 employees. Price is a segmentation tool.</li>
+      <li><strong>Your CAC ceiling:</strong> The LTV:CAC ratio puts a hard cap on what you can spend to acquire a customer. Pricing determines LTV. LTV determines CAC ceiling. CAC ceiling determines which acquisition channels are viable.</li>
+      <li><strong>Your sales motion:</strong> Sub-$5K ACV products cannot support a field sales motion. $100K+ ACV products cannot be sold purely PLG. Price determines which sales muscles you can afford to build.</li>
+      <li><strong>Your competitive positioning:</strong> Price communicates value. Premium pricing signals superior outcomes. Discount pricing signals commodity positioning. Your price tells the market where you stand.</li>
+      <li><strong>Your expansion potential:</strong> Usage-based pricing creates natural expansion with customer growth. Flat-rate pricing caps expansion revenue. The pricing model you choose determines whether your best customers automatically become your biggest revenue generators.</li>
+    </ul>
+  </div>
+
+  <!-- SECTION 2 -->
+  <h2 class="section-title">The Major SaaS Pricing Models</h2>
+  <p class="section-intro">There are five foundational SaaS pricing architectures, each with distinct economics, motion requirements, and expansion characteristics. Most mature SaaS companies use hybrid models that combine elements of two or more. The critical error is adopting a model that was successful for a company with a fundamentally different motion, customer profile, or value delivery pattern than yours.</p>
+
+  <div class="model-grid">
+    <div class="model-card">
+      <h4>Per-Seat (User-Based)</h4>
+      <span class="model-tag tag-high">Most Common</span>
+      <p>Charge per user account. Revenue scales with team adoption. Expansion is tied to headcount growth and organizational roll-out. Natural for collaboration tools.</p>
+      <div class="model-example">Examples: <a href="https://www.salesforce.com" target="_blank" rel="noopener noreferrer">Salesforce</a>, <a href="https://www.hubspot.com" target="_blank" rel="noopener noreferrer">HubSpot</a>, Notion, Slack (legacy)</div>
+    </div>
+    <div class="model-card">
+      <h4>Usage-Based (Consumption)</h4>
+      <span class="model-tag tag-high">Fastest Growing</span>
+      <p>Charge for units consumed — API calls, messages sent, data processed, tasks run. Revenue correlates with customer value realization. Higher ceiling but harder to forecast.</p>
+      <div class="model-example">Examples: Twilio, AWS, Snowflake, OpenAI, Stripe</div>
+    </div>
+    <div class="model-card">
+      <h4>Flat-Rate (Fixed)</h4>
+      <span class="model-tag tag-med">Declining</span>
+      <p>Single price for all features, unlimited users, unlimited usage. Maximally simple. Maximally leaves money on the table. Works only for narrow, single-use-case tools.</p>
+      <div class="model-example">Examples: Basecamp, early Mailchimp tiers</div>
+    </div>
+    <div class="model-card">
+      <h4>Freemium</h4>
+      <span class="model-tag tag-med">PLG Enabler</span>
+      <p>Free tier with meaningful (but limited) functionality. Conversion to paid via usage limits, team features, or workflow unlocks. Requires high volume of top-of-funnel users to generate economic conversion rates.</p>
+      <div class="model-example">Examples: Dropbox, Zoom, Calendly, Loom</div>
+    </div>
+    <div class="model-card">
+      <h4>Hybrid (Seat + Usage)</h4>
+      <span class="model-tag tag-high">Enterprise Standard</span>
+      <p>Combine a platform fee or seat fee with consumption-based overages. Provides revenue predictability (seat component) with upside capture (usage component). Increasingly the enterprise standard.</p>
+      <div class="model-example">Examples: Twilio Flex, <a href="https://www.intercom.com" target="_blank" rel="noopener noreferrer">Intercom</a>, Zendesk Suite</div>
+    </div>
+    <div class="model-card">
+      <h4>Outcome-Based</h4>
+      <span class="model-tag tag-low">Emerging / Advanced</span>
+      <p>Charge based on measurable business outcomes delivered — revenue generated, money saved, deals closed. Maximal value alignment. Requires deep integration and outcome measurement infrastructure.</p>
+      <div class="model-example">Examples: Some revenue intelligence tools, legal tech platforms</div>
+    </div>
+  </div>
+
+  <!-- SECTION 3 -->
+  <h2 class="section-title">Value Metric Selection: What the Customer Pays For</h2>
+  <p class="section-intro">The value metric is the unit of measurement that determines what your customer pays for. It is the single most important element of your pricing model. Get the value metric right and your pricing scales naturally with customer value. Get it wrong and you create friction, churn, and a permanent misalignment between what you charge and what customers believe they receive.</p>
+
+  <div class="subsection">
+    <div class="subsection-title">The Three Laws of Value Metric Selection</div>
+    <ol class="step-list">
+      <li><div class="step-content"><span class="step-title">The metric must scale with value delivered.</span>If a customer gets 10× more value from your product as they grow, they should pay roughly 10× more. A value metric that doesn't scale with value creates a ceiling on revenue and invites downgrade as the most rational customer behavior. The metric must track the customer's growth in value, not just usage.</div></li>
+      <li><div class="step-content"><span class="step-title">The metric must be easy for the customer to understand and predict.</span>A value metric that produces billing surprises will destroy NPS and trigger churn. Customers need to be able to estimate their bill at the start of the month and verify it at the end. Complexity in consumption-based billing is the single biggest adoption inhibitor in usage-based pricing models.</div></li>
+      <li><div class="step-content"><span class="step-title">The metric must be measurable by both parties.</span>If your customer cannot independently verify the consumption you are billing them for, you will face disputes, distrust, and churn. The metric must be auditable from the customer's side — preferably visible in a dashboard they control.</div></li>
+    </ol>
+  </div>
+
+  <div class="subsection">
+    <div class="subsection-title">Value Metric Selection Matrix</div>
+    <table class="data-table">
+      <thead>
+        <tr><th>Value Metric</th><th>Best Product Category</th><th>Scales with Value?</th><th>Customer Predictability</th><th>Risk</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>Per user/seat</td><td>Collaboration, CRM, project management</td><td>Partially (team size ≠ value)</td><td>High</td><td>Usage per seat varies wildly</td></tr>
+        <tr><td>API calls / events</td><td>Developer tools, communications, data</td><td>Yes — usage = value</td><td>Low (volatile)</td><td>Bill shock, throttling behavior</td></tr>
+        <tr><td>Records / contacts</td><td>Marketing automation, CRM</td><td>Partially</td><td>Medium</td><td>Data hygiene drives churn</td></tr>
+        <tr><td>Revenue processed / GMV</td><td>Payments, commerce platforms</td><td>Yes — aligned perfectly</td><td>Medium</td><td>High-volume customers demand discounts</td></tr>
+        <tr><td>Monthly active users</td><td>Consumer, marketplaces, analytics</td><td>Partially</td><td>Medium</td><td>Seasonal variation</td></tr>
+        <tr><td>Data volume (GB/TB)</td><td>Analytics, storage, data infra</td><td>Partially</td><td>Low</td><td>Optimization behavior, data reduction</td></tr>
+        <tr><td>Outcomes (revenue saved/generated)</td><td>Revenue intelligence, procurement</td><td>Yes — perfectly aligned</td><td>Low (measurement complexity)</td><td>Attribution disputes, contract complexity</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- SECTION 4 -->
+  <h2 class="section-title">Pricing Psychology: Anchoring, Tiers, and Packaging</h2>
+  <p class="section-intro">Pricing is not a rational exercise for your buyer any more than it is for you. Behavioral economics has established that buyers don't evaluate prices in absolute terms — they evaluate prices relative to anchors, alternatives, and perceived bundles. Understanding the psychology of pricing is not manipulation. It is meeting buyers where their cognitive processes actually operate.</p>
+
+  <div class="subsection">
+    <div class="subsection-title">The Good / Better / Best Architecture</div>
+    <p>The three-tier model is the dominant SaaS packaging architecture for a reason: it exploits anchoring, social proof, and decoy effects simultaneously. The architecture must be designed with an outcome target, not a feature list. Most SaaS companies make the mistake of defining tiers by feature access rather than by outcome delivered.</p>
+
+    <div class="tier-row">
+      <div class="tier-card">
+        <h4>Starter</h4>
+        <div class="tier-price">$X/mo</div>
+        <p style="font-size:13px; color:var(--text-muted); margin-bottom:8px;">For small teams establishing a baseline process. Serves as the anchor — makes "Better" look like an obvious upgrade.</p>
+        <ul>
+          <li>Core use case only</li>
+          <li>Limited seats / usage</li>
+          <li>Self-serve setup</li>
+          <li>Community support</li>
+          <li>Basic reporting</li>
+        </ul>
+      </div>
+      <div class="tier-card tier-best">
+        <div class="tier-badge">Most Popular</div>
+        <h4>Professional</h4>
+        <div class="tier-price" style="color:#437A22;">$2.5X/mo</div>
+        <p style="font-size:13px; color:var(--text-muted); margin-bottom:8px;">The target. Most revenue concentration should be here. Design this tier to be the obvious rational choice for the median ICP buyer.</p>
+        <ul>
+          <li>Full feature access</li>
+          <li>Higher seat / usage limits</li>
+          <li>Automation and integrations</li>
+          <li>Email + chat support</li>
+          <li>Advanced analytics</li>
+          <li>Team collaboration tools</li>
+        </ul>
+      </div>
+      <div class="tier-card">
+        <h4>Enterprise</h4>
+        <div class="tier-price">Custom</div>
+        <p style="font-size:13px; color:var(--text-muted); margin-bottom:8px;">For organizations with complex requirements. Serves as the aspirational anchor — makes Professional feel affordable and reasonable.</p>
+        <ul>
+          <li>Unlimited seats / usage</li>
+          <li>Custom integrations</li>
+          <li>SSO / SAML / SCIM</li>
+          <li>Dedicated CSM</li>
+          <li>SLA guarantees</li>
+          <li>Custom contracts</li>
+          <li>Audit logs, compliance</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="callout">
+      <div class="callout-title">The Decoy Effect in Tier Design</div>
+      <p>The "Starter" tier in a Good/Better/Best architecture functions as a decoy — its primary purpose is not to maximize revenue at that tier, but to make the Professional tier appear dramatically more valuable for a modest price increment. If 70% of your new customers are choosing Starter, your tier pricing is miscalibrated: either Starter is too feature-rich or the gap between Starter and Professional is too small to justify the upgrade.</p>
+    </div>
+  </div>
+
+  <div class="subsection">
+    <div class="subsection-title">Anchoring Strategy</div>
+    <ul class="bullet-list">
+      <li><strong>Show the enterprise price first:</strong> When a buyer sees $100K/year (enterprise) before they see $10K/year (professional), the professional tier feels cheap. Sequence matters.</li>
+      <li><strong>Annual pricing displayed as monthly:</strong> "$199/month, billed annually" anchors on the low monthly number. The annual commitment is buried — but legally binding. This increases conversion while reducing churn.</li>
+      <li><strong>The value anchor (not just price anchor):</strong> Always frame pricing relative to the value delivered. "At $1,500/month, if you close even one additional deal per month because of [product], you've paid for the entire year." The comparison should be against the cost of the problem, not the cost of competitors.</li>
+      <li><strong>Per-user vs. team pricing psychology:</strong> "5 users included, $25/additional user" anchors the team size conversation. Buyers calculate usage rather than debating the base price.</li>
+    </ul>
+  </div>
+
+  <!-- SECTION 5 -->
+  <h2 class="section-title">Pricing and LIUE: Impact on Unit Economics</h2>
+  <p class="section-intro">Every pricing decision is simultaneously a unit economics decision. The LIUE framework — LTV / (Investment + Unit Economics) — quantifies the relationship between price, expansion, churn, and CAC in a single accountability model. Before committing to any pricing model, the revenue leader must model its impact on each component of the LIUE equation.</p>
+
+  <div class="formula-block">
+    <div class="formula-label">LIUE: Price's Impact on Each Component</div>
+    <strong>LTV</strong> = (ACV / Gross Margin %) / Gross Churn Rate<br/><br/>
+    <em>Pricing lever 1 — raise price:</em> ACV ↑ → LTV ↑ (assuming churn stable or improving)<br/>
+    <em>Pricing lever 2 — expand value metric:</em> Net Revenue Retention ↑ → LTV ↑ dramatically<br/>
+    <em>Pricing lever 3 — reduce friction (freemium):</em> CAC ↓ → LIUE ratio ↑<br/><br/>
+    <strong>Target LTV:CAC Ratio:</strong> ≥ 3:1 (minimum viable)<br/>
+    <strong>Elite SaaS (category leaders):</strong> 5:1 to 8:1<br/>
+    <strong>CAC Payback Period:</strong> &lt; 12 months (SMB), &lt; 18 months (mid-market), &lt; 24 months (enterprise)<br/><br/>
+    <strong>Pricing Impact Model:</strong><br/>
+    10% price increase × stable churn → 14–18% LTV improvement (leverage effect via margin)<br/>
+    5% NRR improvement → 25–35% LTV improvement (compounding effect)
+  </div>
+
+  <div class="subsection">
+    <div class="subsection-title">The NRR Equation: Why Expansion Pricing Matters More Than New Logo Pricing</div>
+    <p>Net Revenue Retention (NRR) is the single most important unit economics metric in SaaS. An NRR above 120% means your existing customer base is growing revenue faster than new logo acquisition adds it. The pricing model is the primary lever that determines NRR ceiling:</p>
+    <table class="data-table">
+      <thead>
+        <tr><th>Pricing Model</th><th>NRR Ceiling</th><th>Expansion Mechanism</th><th>Churn Risk</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>Flat-rate unlimited</td><td>100% (expansion capped)</td><td>None — must cross-sell or add modules</td><td>Low (no bill surprises)</td></tr>
+        <tr><td>Per-seat</td><td>110–130% (headcount growth)</td><td>Team expansion, new departments</td><td>Medium (seat optimization)</td></tr>
+        <tr><td>Usage-based</td><td>120–160% (compounding with growth)</td><td>Natural product usage growth</td><td>Low to Medium (volatile in downturns)</td></tr>
+        <tr><td>Hybrid seat + usage</td><td>115–140%</td><td>Seat growth + usage overages + upsells</td><td>Low (predictable base)</td></tr>
+        <tr><td>Outcome-based</td><td>130–200% (scales with customer success)</td><td>Contractually tied to customer value growth</td><td>Very Low (aligned incentives)</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- SECTION 6 -->
+  <h2 class="section-title">Competitive Pricing Analysis</h2>
+  <p class="section-intro">Competitive pricing analysis is not about matching competitors. It is about understanding the price perceptions and value expectations your ICP already holds when they arrive at your product. Buyers don't evaluate your price in isolation — they evaluate it relative to alternatives they know about. Your pricing must be intelligible and defensible in the context of that competitive frame.</p>
+
+  <div class="subsection">
+    <div class="subsection-title">The Competitive Pricing Intelligence Stack</div>
+    <ol class="step-list">
+      <li><div class="step-content"><span class="step-title">Map the Category Pricing Landscape</span>Collect publicly available pricing for every direct and indirect competitor. Create a pricing matrix by tier, value metric, and target segment. Identify the price floor (cheapest credible option) and price ceiling (most expensive option buyers consider) in your category.</div></li>
+      <li><div class="step-content"><span class="step-title">Conduct Win/Loss Analysis on Price</span>In every lost deal where price was cited, probe: was price the true objection or a proxy objection for poor value communication? True price objections (where the budget literally doesn't exist) are rare. Value objections disguised as price objections are common. The fix is different for each.</div></li>
+      <li><div class="step-content"><span class="step-title">Define Your Price Positioning Thesis</span>Decide deliberately whether you are: (a) Price leader (lower cost, volume play), (b) Value parity (competitive pricing, differentiated product), or (c) Premium (higher price, superior outcomes/service). Each positioning requires a different sales narrative and different proof mechanisms.</div></li>
+      <li><div class="step-content"><span class="step-title">Build the Value Gap Analysis</span>For every dollar of price premium you charge above the category floor, document the specific, quantifiable value differential that justifies it. "We're better" is not a value gap — "We reduce sales cycle length by 22 days, and the average rep at your company size closes $180K/year, so 22 days = $10,800 in additional rep capacity per year" is.</div></li>
+    </ol>
+
+    <div class="formula-block">
+      <div class="formula-label">Economic Value Estimation (EVE) — Justifying Premium Pricing</div>
+      <strong>EVE</strong> = Reference Price (best alternative) + Positive Differentiation Value − Negative Differentiation Value<br/><br/>
+      <em>Reference Price:</em> What the buyer would pay for their next best alternative<br/>
+      <em>Positive Diff Value:</em> Quantified additional value your product delivers (time saved, revenue increased, cost reduced)<br/>
+      <em>Negative Diff Value:</em> Switching cost, learning curve, integration complexity<br/><br/>
+      <strong>Example:</strong> Reference price $800/mo, you save 15 hours/month × $75/hr blended cost = $1,125/month value<br/>
+      Switching cost amortized = -$150/month<br/>
+      <strong>EVE = $800 + $1,125 − $150 = $1,775/month maximum justifiable price</strong>
+    </div>
+  </div>
+
+  <!-- SECTION 7 -->
+  <h2 class="section-title">The Packaging Decision: Bundling, Add-Ons, and Enterprise Tiers</h2>
+  <p class="section-intro">Packaging is the art of grouping features into tiers and bundles that maximize revenue across buyer segments without leaving money on the table at any segment. The packaging decision requires simultaneous optimization across three dimensions: revenue maximization, buyer simplicity, and competitive differentiation.</p>
+
+  <div class="subsection">
+    <div class="subsection-title">Bundling Principles</div>
+    <ul class="bullet-list">
+      <li><strong>Bundle for the outcome, not the feature:</strong> Customers don't want 15 features — they want the outcome those features deliver. Bundle by use case: "Sales Acceleration Pack" resonates better than "includes pipeline reporting, call recording, and sequence builder."</li>
+      <li><strong>Price bundles to create perceived value surplus:</strong> The bundle price should feel like a significant discount from purchasing each component individually. Even if customers would only use 60% of the bundle, the perceived value of "getting everything" reduces churn and increases NPS.</li>
+      <li><strong>Reserve strategic features for enterprise:</strong> Every tier should include at least one feature that the ICP genuinely values but that requires organizational maturity to fully utilize — SSO, audit logs, advanced permissions, SLA guarantees. This feature should not be available at lower tiers at any price.</li>
+      <li><strong>Add-ons serve two purposes:</strong> (1) Capturing revenue from buyers who need one specific capability without a full tier upgrade, and (2) Creating upsell triggers within the current tier. Add-ons should be priced at 20–40% of the tier they're attached to, never higher.</li>
+    </ul>
+  </div>
+
+  <!-- SECTION 8 -->
+  <h2 class="section-title">Pricing for PLG: Freemium, Viral Loops, and Expansion Triggers</h2>
+  <p class="section-intro">Product-Led Growth pricing is a distinct discipline. In a PLG model, pricing is not just the conversion mechanism — it is the growth engine. The free tier drives distribution. The conversion trigger drives monetization. The expansion pricing drives net revenue retention. All three must be designed in concert; failure in any one destroys the PLG flywheel.</p>
+
+  <div class="subsection">
+    <div class="subsection-title">Freemium Design Principles</div>
+    <ol class="step-list">
+      <li><div class="step-content"><span class="step-title">Make the free tier genuinely valuable.</span>A free tier with insufficient functionality produces trial abandonment, not product adoption. The free tier must solve a real problem for the user — just not the complete problem your paid tiers address. Aim for "wow" on Day 1, natural friction on Day 30.</div></li>
+      <li><div class="step-content"><span class="step-title">Place conversion triggers at moments of peak value realization.</span>The optimal conversion trigger is the moment when the user has experienced enough value to feel loss if their access is revoked. Conversion prompts that appear before value realization (Day 1–7 for complex products) produce resentment. Prompts after peak value (Day 90+) produce "I've been using this for free for months — why would I pay now?"</div></li>
+      <li><div class="step-content"><span class="step-title">Design viral loops into the pricing model.</span>Collaboration features that require inviting other users — shared workspaces, team features, client portals — create organic distribution. Every invited user is a potential free user who is a potential paid user. Price the collaboration tier to make inviting users frictionless at the free level and valuable at the paid level.</div></li>
+      <li><div class="step-content"><span class="step-title">Track freemium conversion rate as a leading indicator.</span>Free-to-paid conversion of 2–5% is typical for horizontal PLG tools. 5–10% is excellent. Below 2% signals either (a) the free tier is too generous, (b) the upgrade value is insufficiently communicated, or (c) the ICP on the free tier doesn't have budget authority to purchase.</div></li>
+    </ol>
+
+    <div class="formula-block">
+      <div class="formula-label">PLG Expansion Revenue Model</div>
+      <strong>PLG ARR Growth</strong> = (Free Users × Conversion Rate × ACV) + (Paid Users × NRR − 100%)<br/><br/>
+      <em>Example month:</em> 10,000 free users × 4% conversion × $1,200 ACV = $480K new ARR<br/>
+      Existing $3M ARR × 115% NRR = $450K expansion ARR<br/>
+      <strong>Total new ARR this month: $480K + $450K = $930K (annualized: $11.2M)</strong><br/><br/>
+      <em>Sensitivity analysis:</em> 1% improvement in conversion rate = +$120K ARR/month<br/>
+      5% improvement in NRR = +$150K ARR/month → NRR improvement often has higher leverage than conversion rate improvement
+    </div>
+  </div>
+
+  <!-- SECTION 9 -->
+  <h2 class="section-title">Price Increase Strategy</h2>
+  <p class="section-intro">Every SaaS company that survives beyond five years will face the need to raise prices. Product value has increased, costs have increased, market positioning has clarified, and the original pricing was almost certainly too low. How you execute a price increase determines whether it strengthens the customer relationship or damages it. There is a right way to raise prices in SaaS — and most companies don't do it.</p>
+
+  <div class="subsection">
+    <div class="subsection-title">When to Raise Prices</div>
+    <ul class="bullet-list">
+      <li><strong>Win rate is too high:</strong> A win rate consistently above 60–70% in competitive deals is a signal that you are underpriced. Buyers experience minimal price objection at your current level — leave-money-on-the-table territory.</li>
+      <li><strong>NPS is high but pricing page conversion is also high:</strong> Happy customers paying low prices is a double signal to raise. The product delivers sufficient value to support a higher price point.</li>
+      <li><strong>Your CAC payback period is extending:</strong> If acquisition costs are rising but price isn't, the unit economics deteriorate. A price increase that restores LTV:CAC ratio may be the fastest fix available.</li>
+      <li><strong>Significant product investment since last pricing review:</strong> If you've shipped capabilities that materially expand value delivered, the price should reflect it. Customers who are getting 3× more value than they did two years ago and paying the same price are candidates for both price increases and expansion plays.</li>
+    </ul>
+  </div>
+
+  <div class="subsection">
+    <div class="subsection-title">Price Increase Execution Playbook</div>
+    <ol class="step-list">
+      <li><div class="step-content"><span class="step-title">Grandfather existing customers (short-term, with sunset).</span>Give existing customers 90–180 days at current pricing. This is not permanent — it is a goodwill window. Communicate the sunset date clearly. Customers who feel surprised by immediate price hikes churn. Customers who feel respected during a transition period do not.</div></li>
+      <li><div class="step-content"><span class="step-title">Lead with value delivered, not business justification.</span>The communication should document what has been built, delivered, and improved since the customer joined — not explain that costs have increased. "Here's everything we've shipped in the last 18 months" is a value narrative. "Our costs have gone up" is an excuse narrative. One builds goodwill; one generates resentment.</div></li>
+      <li><div class="step-content"><span class="step-title">Offer an annual prepay option at current pricing.</span>Many customers will lock in at current pricing by prepaying annually. This converts monthly revenue to annual ARR, improves cash flow, and lets the customer feel they "won" the price increase negotiation. You win too — you've secured 12 months of retention.</div></li>
+      <li><div class="step-content"><span class="step-title">Segment the increase by tenure and health score.</span>Long-tenure, high-health-score customers should receive the most generous grandfather terms and the most personal communication from their CSM. New customers on month 3 of a monthly subscription with a declining health score should receive a standard notice — the relationship and retention risk are different.</div></li>
+    </ol>
+  </div>
+
+  <!-- SECTION 10 -->
+  <h2 class="section-title">Key Metrics: Pricing Performance Dashboard</h2>
+
+  <div class="metric-grid">
+    <div class="metric-card">
+      <div class="m-label">Average Contract Value (ACV)</div>
+      <div class="m-value">Primary</div>
+      <div class="m-desc">Average annual revenue per customer. Target benchmarks vary by segment: SMB $5–15K, Mid-market $25–80K, Enterprise $100K+</div>
+    </div>
+    <div class="metric-card">
+      <div class="m-label">Average Selling Price (ASP)</div>
+      <div class="m-value">Primary</div>
+      <div class="m-desc">Average price at point of sale (including discounts). Tracks discount discipline. ASP declining without volume growth signals pricing integrity issues.</div>
+    </div>
+    <div class="metric-card">
+      <div class="m-label">Net Revenue Retention (NRR)</div>
+      <div class="m-value">Critical</div>
+      <div class="m-desc">Revenue from existing cohort including expansion and contraction. Best-in-class: 120%+. Directly reflects expansion pricing design.</div>
+    </div>
+    <div class="metric-card">
+      <div class="m-label">Expansion Revenue %</div>
+      <div class="m-value">Growth</div>
+      <div class="m-desc">% of total new MRR from existing customers (upsells, seat adds, usage overages). Target: 30–50% of new MRR in mature SaaS.</div>
+    </div>
+    <div class="metric-card">
+      <div class="m-label">Discount Rate</div>
+      <div class="m-value">Discipline</div>
+      <div class="m-desc">Average discount given vs. list price. Target: &lt;15% average. Above 25% signals list price is not credible or reps lack pricing confidence.</div>
+    </div>
+    <div class="metric-card">
+      <div class="m-label">Price Sensitivity Index</div>
+      <div class="m-value">Intelligence</div>
+      <div class="m-desc">% of lost deals citing price as primary reason. Below 15%: you're likely underpriced. Above 30%: potential overpricing or value communication gap.</div>
+    </div>
+    <div class="metric-card">
+      <div class="m-label">Freemium Conversion Rate</div>
+      <div class="m-value">PLG</div>
+      <div class="m-desc">% of free users converting to paid within 90 days. Target: 3–7% (horizontal), 10–20% (vertical/specialized tools).</div>
+    </div>
+    <div class="metric-card">
+      <div class="m-label">Pricing Page Conversion Rate</div>
+      <div class="m-value">Signal</div>
+      <div class="m-desc">% of pricing page visitors who initiate trial or demo request. Benchmark: 5–15%. Below 3% signals pricing or packaging clarity issue.</div>
+    </div>
+  </div>
+
+  <!-- SECTION 11 -->
+  <h2 class="section-title">Common Pricing Mistakes and Fixes</h2>
+
+  <table class="data-table">
+    <thead>
+      <tr><th>Mistake</th><th>Symptom</th><th>Root Cause</th><th>Fix</th></tr>
+    </thead>
+    <tbody>
+      <tr><td><strong>Feature-based packaging</strong></td><td>Customers constantly ask "which plan includes X?" Tier selection confusion.</td><td>Packages defined by feature lists rather than buyer outcomes or segments</td><td>Redesign tiers around buyer segments and use cases. Lead with outcomes, follow with features.</td></tr>
+      <tr><td><strong>Pricing too low from launch</strong></td><td>Win rate very high, rapid growth, but unit economics deteriorating</td><td>Founder anchored to "affordable" during pre-PMF phase, failed to reprice post-PMF</td><td>Conduct pricing sensitivity survey (Van Westendorp or Gabor-Granger). Raise 20–30% with strong value narrative. Test win rate impact.</td></tr>
+      <tr><td><strong>Unlimited everything</strong></td><td>Best customers paying same as smallest customers. NRR capped at 100%.</td><td>Simplicity prioritized over expansion economics. Flat pricing.</td><td>Introduce a usage-based or seat-based growth component. Start with an "Overage" model for existing customers, build into new packaging.</td></tr>
+      <tr><td><strong>Excessive discount culture</strong></td><td>Reps routinely offer 25–40% discounts without approval. ASP trending down.</td><td>No discount governance, reps don't believe in list price, no consequence for discounting</td><td>Implement approval matrix (any discount &gt;15% requires VP approval). Score reps on ASP, not just revenue. Train reps on value-based pricing narrative.</td></tr>
+      <tr><td><strong>Freemium too generous</strong></td><td>Free tier has 50,000 users; paid tier has 500. 1% conversion rate.</td><td>Free tier was designed to attract users, not to create natural paid upgrade moments</td><td>Identify the 2–3 features that drive the most value for converting users. Move them behind the paywall. Gate collaboration features.</td></tr>
+      <tr><td><strong>No expansion pricing model</strong></td><td>NRR consistently at 95–105%. Growth requires only new logos.</td><td>Flat-rate pricing with no usage-based components or expansion vectors</td><td>Design expansion motion: seat-based growth trigger, usage overage, add-on modules, or annual uplift clause (3–5% annual CPI adjustment).</td></tr>
+      <tr><td><strong>Price-feature disconnect</strong></td><td>Customers feel price increase is unjustified. Churn spikes post-increase.</td><td>Price raised without corresponding value communication or product investment narrative</td><td>Every price increase must be accompanied by a documented value delivery report. Communicate feature roadmap and delivered features simultaneously.</td></tr>
+    </tbody>
+  </table>
+
+  <div class="related-section">
+    <div class="related-title">Related Resources</div>
+    <div class="related-links">
+      <a href="value-proposition.html" class="related-link">Value Proposition Design</a>
+      <a href="sos-liue.html" class="related-link">LIUE &amp; Unit Economics</a>
+      <a href="segmentation.html" class="related-link">Market Segmentation</a>
+      <a href="template-ccac.html" class="related-link">CAC &amp; Unit Economics Template</a>
+      <a href="expansion-selling.html" class="related-link">Expansion Selling</a>
+      <a href="template-plg.html" class="related-link">PLG Motion Template</a>
+    </div>
+  </div>
+
+</div>
 <script data-pplx-inline-edit>
 (function () {
   if (window === window.top) return;

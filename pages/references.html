@@ -1,0 +1,797 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>References & Sources — CRO Manual</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="../assets/shared.css" />
+  <style>
+    .refs-hero {
+      background: linear-gradient(135deg, #0D5C63 0%, #1B474D 100%);
+      color: #fff;
+      padding: 64px 40px 48px;
+      text-align: center;
+    }
+    .refs-hero h1 { font-size: 2.4rem; font-weight: 700; margin: 0 0 12px; }
+    .refs-hero p { font-size: 1.1rem; opacity: .85; max-width: 640px; margin: 0 auto; }
+
+    .refs-body { max-width: 960px; margin: 0 auto; padding: 56px 40px 80px; }
+
+    .refs-section { margin-bottom: 56px; }
+    .refs-section h2 {
+      font-size: 1.25rem;
+      font-weight: 700;
+      color: #0D5C63;
+      text-transform: uppercase;
+      letter-spacing: .08em;
+      border-bottom: 2px solid #0D5C63;
+      padding-bottom: 10px;
+      margin-bottom: 24px;
+    }
+
+    .ref-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      gap: 18px;
+    }
+
+    .ref-card {
+      border: 1px solid #E2E8F0;
+      border-radius: 10px;
+      padding: 20px 22px;
+      background: #fff;
+      transition: box-shadow .2s, border-color .2s;
+      text-decoration: none;
+      display: block;
+      color: inherit;
+    }
+    .ref-card:hover {
+      box-shadow: 0 6px 24px rgba(13,92,99,.12);
+      border-color: #0D5C63;
+    }
+    .ref-card .ref-label {
+      font-size: .7rem;
+      font-weight: 700;
+      letter-spacing: .1em;
+      text-transform: uppercase;
+      color: #0D5C63;
+      margin-bottom: 6px;
+    }
+    .ref-card .ref-title {
+      font-size: 1rem;
+      font-weight: 600;
+      color: #1A1A2E;
+      margin-bottom: 4px;
+      line-height: 1.35;
+    }
+    .ref-card .ref-sub {
+      font-size: .85rem;
+      color: #64748B;
+    }
+    .ref-card .ref-link-hint {
+      font-size: .78rem;
+      color: #0D5C63;
+      margin-top: 10px;
+      font-weight: 500;
+    }
+
+    /* Tool cards row */
+    .tool-list {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+      gap: 14px;
+    }
+    .tool-card {
+      border: 1px solid #E2E8F0;
+      border-radius: 8px;
+      padding: 16px 18px;
+      background: #F8FAFC;
+      transition: box-shadow .2s, border-color .2s;
+      text-decoration: none;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      color: inherit;
+    }
+    .tool-card:hover {
+      box-shadow: 0 4px 16px rgba(13,92,99,.1);
+      border-color: #0D5C63;
+      background: #fff;
+    }
+    .tool-icon {
+      width: 36px;
+      height: 36px;
+      border-radius: 8px;
+      background: #0D5C63;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      font-size: .8rem;
+      font-weight: 700;
+      color: #fff;
+    }
+    .tool-name { font-size: .9rem; font-weight: 600; color: #1A1A2E; }
+    .tool-cat { font-size: .75rem; color: #64748B; }
+
+    .back-nav {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      color: #0D5C63;
+      font-weight: 600;
+      font-size: .9rem;
+      text-decoration: none;
+      padding: 12px 40px 0;
+      display: block;
+    }
+    .back-nav:hover { text-decoration: underline; }
+  </style>
+</head>
+<body>
+
+  <a href="../index.html" class="back-nav">← Back to CRO Manual</a>
+
+  <div class="refs-hero">
+    <h1>References &amp; Sources</h1>
+    <p>Every book, author, and tool referenced throughout this manual — all in one place. Click any card to visit the original source.</p>
+  </div>
+
+  <div class="refs-body">
+
+    <!-- FOUNDATIONAL BOOKS -->
+    <div class="refs-section">
+      <h2>Foundational Books</h2>
+      <div class="ref-grid">
+
+        <a class="ref-card" href="https://www.stage2.capital/science-of-scaling-book" target="_blank" rel="noopener noreferrer">
+          <div class="ref-label">Book</div>
+          <div class="ref-title">The Science of Scaling</div>
+          <div class="ref-sub">Mark Roberge · Stage 2 Capital (2026)</div>
+          <div class="ref-link-hint">stage2.capital →</div>
+        </a>
+
+        <a class="ref-card" href="https://www.amazon.com/Sales-Acceleration-Formula-Technology-Inbound/dp/1119047072" target="_blank" rel="noopener noreferrer">
+          <div class="ref-label">Book</div>
+          <div class="ref-title">The Sales Acceleration Formula</div>
+          <div class="ref-sub">Mark Roberge · Wiley (2015)</div>
+          <div class="ref-link-hint">amazon.com →</div>
+        </a>
+
+        <a class="ref-card" href="https://meddicc.com/meddicc-the-book" target="_blank" rel="noopener noreferrer">
+          <div class="ref-label">Book</div>
+          <div class="ref-title">MEDDICC: The Ultimate Guide to Staying One Step Ahead in the Complex Sale</div>
+          <div class="ref-sub">Andy Whyte · MEDDICC Ltd (2021)</div>
+          <div class="ref-link-hint">meddicc.com →</div>
+        </a>
+
+        <a class="ref-card" href="https://www.amazon.com/Leading-Growth-Proven-Formula-Consistently/dp/1119890330" target="_blank" rel="noopener noreferrer">
+          <div class="ref-label">Book</div>
+          <div class="ref-title">Leading Growth: The Proven Formula for Consistently Increasing Revenue</div>
+          <div class="ref-sub">Anthony Iannarino · Wiley (2022)</div>
+          <div class="ref-link-hint">amazon.com →</div>
+        </a>
+
+        <a class="ref-card" href="https://www.amazon.com/Revenue-Operations-Manual-High-Growth-Predictable/dp/1398616761" target="_blank" rel="noopener noreferrer">
+          <div class="ref-label">Book</div>
+          <div class="ref-title">The Revenue Operations Manual</div>
+          <div class="ref-sub">Sean Lane &amp; Laura Adint · Kogan Page (2024)</div>
+          <div class="ref-link-hint">amazon.com →</div>
+        </a>
+
+        <a class="ref-card" href="https://www.amazon.com/Predictable-Revenue-Business-Practices-Salesforce-com/dp/0984380213" target="_blank" rel="noopener noreferrer">
+          <div class="ref-label">Book</div>
+          <div class="ref-title">Predictable Revenue</div>
+          <div class="ref-sub">Aaron Ross &amp; Marylou Tyler · PebbleStorm (2011)</div>
+          <div class="ref-link-hint">amazon.com →</div>
+        </a>
+
+        <a class="ref-card" href="https://www.amazon.com/Lost-Art-Closing-Winning-Commitments/dp/0735211698" target="_blank" rel="noopener noreferrer">
+          <div class="ref-label">Book</div>
+          <div class="ref-title">The Lost Art of Closing</div>
+          <div class="ref-sub">Anthony Iannarino · Portfolio (2017)</div>
+          <div class="ref-link-hint">amazon.com →</div>
+        </a>
+
+        <a class="ref-card" href="https://www.amazon.com/Only-Sales-Guide-Youll-Ever/dp/0735211671" target="_blank" rel="noopener noreferrer">
+          <div class="ref-label">Book</div>
+          <div class="ref-title">The Only Sales Guide You'll Ever Need</div>
+          <div class="ref-sub">Anthony Iannarino · Portfolio (2016)</div>
+          <div class="ref-link-hint">amazon.com →</div>
+        </a>
+
+        <a class="ref-card" href="https://www.amazon.com/SPIN-Selling-Neil-Rackham/dp/0070511136" target="_blank" rel="noopener noreferrer">
+          <div class="ref-label">Book</div>
+          <div class="ref-title">SPIN Selling</div>
+          <div class="ref-sub">Neil Rackham · McGraw-Hill (1988)</div>
+          <div class="ref-link-hint">amazon.com →</div>
+        </a>
+
+      </div>
+    </div>
+
+    <!-- AUTHORS & THOUGHT LEADERS -->
+    <div class="refs-section">
+      <h2>Authors &amp; Thought Leaders</h2>
+      <div class="ref-grid">
+
+        <a class="ref-card" href="https://www.stage2.capital" target="_blank" rel="noopener noreferrer">
+          <div class="ref-label">Author</div>
+          <div class="ref-title">Mark Roberge</div>
+          <div class="ref-sub">Co-founder, Stage 2 Capital · Former CRO, HubSpot · Senior Lecturer, Harvard Business School</div>
+          <div class="ref-link-hint">stage2.capital →</div>
+        </a>
+
+        <a class="ref-card" href="https://www.thesalesblog.com" target="_blank" rel="noopener noreferrer">
+          <div class="ref-label">Author</div>
+          <div class="ref-title">Anthony Iannarino</div>
+          <div class="ref-sub">International Speaker, Author &amp; Sales Coach — Leading Growth, The Only Sales Guide, The Lost Art of Closing</div>
+          <div class="ref-link-hint">thesalesblog.com →</div>
+        </a>
+
+        <a class="ref-card" href="https://meddicc.com" target="_blank" rel="noopener noreferrer">
+          <div class="ref-label">Author</div>
+          <div class="ref-title">Andy Whyte</div>
+          <div class="ref-sub">CEO &amp; Founder, MEDDICC Ltd · Enterprise Sales Leader · Author of MEDDICC</div>
+          <div class="ref-link-hint">meddicc.com →</div>
+        </a>
+
+        <a class="ref-card" href="https://www.operationspodcast.com" target="_blank" rel="noopener noreferrer">
+          <div class="ref-label">Author</div>
+          <div class="ref-title">Sean Lane</div>
+          <div class="ref-sub">RevOps Leader · Co-author, The Revenue Operations Manual · Host, Operations Podcast</div>
+          <div class="ref-link-hint">operationspodcast.com →</div>
+        </a>
+
+        <a class="ref-card" href="https://www.linkedin.com/in/lauraadint" target="_blank" rel="noopener noreferrer">
+          <div class="ref-label">Author</div>
+          <div class="ref-title">Laura Adint</div>
+          <div class="ref-sub">RevOps Executive · Co-author, The Revenue Operations Manual</div>
+          <div class="ref-link-hint">linkedin.com →</div>
+        </a>
+
+        <a class="ref-card" href="https://predictablerevenue.com" target="_blank" rel="noopener noreferrer">
+          <div class="ref-label">Author</div>
+          <div class="ref-title">Aaron Ross</div>
+          <div class="ref-sub">Author, Predictable Revenue · Founder, Predictable Revenue Inc · Former Salesforce SDR architect</div>
+          <div class="ref-link-hint">predictablerevenue.com →</div>
+        </a>
+
+        <a class="ref-card" href="https://www.saastr.com" target="_blank" rel="noopener noreferrer">
+          <div class="ref-label">Thought Leader</div>
+          <div class="ref-title">Jason Lemkin</div>
+          <div class="ref-sub">Founder, SaaStr · Prolific SaaS investor &amp; educator</div>
+          <div class="ref-link-hint">saastr.com →</div>
+        </a>
+
+        <a class="ref-card" href="https://www.linkedin.com/in/neilrackham" target="_blank" rel="noopener noreferrer">
+          <div class="ref-label">Author</div>
+          <div class="ref-title">Neil Rackham</div>
+          <div class="ref-sub">Researcher &amp; Author, SPIN Selling · Founder of Huthwaite International</div>
+          <div class="ref-link-hint">linkedin.com →</div>
+        </a>
+
+        <a class="ref-card" href="https://www.linkedin.com/in/johnmcmahonsales" target="_blank" rel="noopener noreferrer">
+          <div class="ref-label">Thought Leader</div>
+          <div class="ref-title">John McMahon</div>
+          <div class="ref-sub">Enterprise Sales Executive · Board Member · MEDDIC pioneer &amp; author of The Qualified Sales Leader</div>
+          <div class="ref-link-hint">linkedin.com →</div>
+        </a>
+
+        <a class="ref-card" href="https://mikeweinberg.com" target="_blank" rel="noopener noreferrer">
+          <div class="ref-label">Author</div>
+          <div class="ref-title">Mike Weinberg</div>
+          <div class="ref-sub">Sales Coach &amp; Author · New Sales. Simplified. · Sales Management. Simplified.</div>
+          <div class="ref-link-hint">mikeweinberg.com →</div>
+        </a>
+
+      </div>
+    </div>
+
+    <!-- CRM & SALES PLATFORMS -->
+    <div class="refs-section">
+      <h2>CRM &amp; Sales Platforms</h2>
+      <div class="tool-list">
+
+        <a class="tool-card" href="https://www.salesforce.com" target="_blank" rel="noopener noreferrer">
+          <div class="tool-icon">SF</div>
+          <div><div class="tool-name">Salesforce</div><div class="tool-cat">CRM</div></div>
+        </a>
+
+        <a class="tool-card" href="https://www.hubspot.com" target="_blank" rel="noopener noreferrer">
+          <div class="tool-icon">HS</div>
+          <div><div class="tool-name">HubSpot</div><div class="tool-cat">CRM / Marketing</div></div>
+        </a>
+
+        <a class="tool-card" href="https://www.outreach.io" target="_blank" rel="noopener noreferrer">
+          <div class="tool-icon">OR</div>
+          <div><div class="tool-name">Outreach</div><div class="tool-cat">Sales Engagement</div></div>
+        </a>
+
+        <a class="tool-card" href="https://www.salesloft.com" target="_blank" rel="noopener noreferrer">
+          <div class="tool-icon">SL</div>
+          <div><div class="tool-name">Salesloft</div><div class="tool-cat">Revenue Orchestration</div></div>
+        </a>
+
+        <a class="tool-card" href="https://www.apollo.io" target="_blank" rel="noopener noreferrer">
+          <div class="tool-icon">AP</div>
+          <div><div class="tool-name">Apollo.io</div><div class="tool-cat">Sales Intelligence</div></div>
+        </a>
+
+        <a class="tool-card" href="https://www.zoominfo.com" target="_blank" rel="noopener noreferrer">
+          <div class="tool-icon">ZI</div>
+          <div><div class="tool-name">ZoomInfo</div><div class="tool-cat">Data &amp; Intelligence</div></div>
+        </a>
+
+      </div>
+    </div>
+
+    <!-- CONVERSATION INTELLIGENCE & FORECASTING -->
+    <div class="refs-section">
+      <h2>Conversation Intelligence &amp; Forecasting</h2>
+      <div class="tool-list">
+
+        <a class="tool-card" href="https://www.gong.io" target="_blank" rel="noopener noreferrer">
+          <div class="tool-icon">GO</div>
+          <div><div class="tool-name">Gong</div><div class="tool-cat">Revenue AI &amp; Call Intel</div></div>
+        </a>
+
+        <a class="tool-card" href="https://www.zoominfo.com/products/chorus" target="_blank" rel="noopener noreferrer">
+          <div class="tool-icon">CH</div>
+          <div><div class="tool-name">Chorus (ZoomInfo)</div><div class="tool-cat">Conversation Intelligence</div></div>
+        </a>
+
+        <a class="tool-card" href="https://www.clari.com" target="_blank" rel="noopener noreferrer">
+          <div class="tool-icon">CL</div>
+          <div><div class="tool-name">Clari</div><div class="tool-cat">Revenue Forecasting</div></div>
+        </a>
+
+      </div>
+    </div>
+
+    <!-- MARKETING & ABM PLATFORMS -->
+    <div class="refs-section">
+      <h2>Marketing &amp; ABM Platforms</h2>
+      <div class="tool-list">
+
+        <a class="tool-card" href="https://www.marketo.com" target="_blank" rel="noopener noreferrer">
+          <div class="tool-icon">MK</div>
+          <div><div class="tool-name">Marketo</div><div class="tool-cat">Marketing Automation</div></div>
+        </a>
+
+        <a class="tool-card" href="https://www.pardot.com" target="_blank" rel="noopener noreferrer">
+          <div class="tool-icon">PD</div>
+          <div><div class="tool-name">Pardot</div><div class="tool-cat">B2B Marketing Auto</div></div>
+        </a>
+
+        <a class="tool-card" href="https://6sense.com" target="_blank" rel="noopener noreferrer">
+          <div class="tool-icon">6S</div>
+          <div><div class="tool-name">6sense</div><div class="tool-cat">Revenue AI / ABM</div></div>
+        </a>
+
+        <a class="tool-card" href="https://www.demandbase.com" target="_blank" rel="noopener noreferrer">
+          <div class="tool-icon">DB</div>
+          <div><div class="tool-name">Demandbase</div><div class="tool-cat">ABM Platform</div></div>
+        </a>
+
+        <a class="tool-card" href="https://www.drift.com" target="_blank" rel="noopener noreferrer">
+          <div class="tool-icon">DR</div>
+          <div><div class="tool-name">Drift</div><div class="tool-cat">Conversational Marketing</div></div>
+        </a>
+
+        <a class="tool-card" href="https://www.intercom.com" target="_blank" rel="noopener noreferrer">
+          <div class="tool-icon">IC</div>
+          <div><div class="tool-name">Intercom</div><div class="tool-cat">Customer Messaging</div></div>
+        </a>
+
+        <a class="tool-card" href="https://business.linkedin.com/sell/sales-navigator" target="_blank" rel="noopener noreferrer">
+          <div class="tool-icon">LI</div>
+          <div><div class="tool-name">LinkedIn Sales Nav</div><div class="tool-cat">B2B Prospecting</div></div>
+        </a>
+
+      </div>
+    </div>
+
+    <!-- CUSTOMER SUCCESS PLATFORMS -->
+    <div class="refs-section">
+      <h2>Customer Success Platforms</h2>
+      <div class="tool-list">
+
+        <a class="tool-card" href="https://www.gainsight.com" target="_blank" rel="noopener noreferrer">
+          <div class="tool-icon">GS</div>
+          <div><div class="tool-name">Gainsight</div><div class="tool-cat">Customer Success</div></div>
+        </a>
+
+        <a class="tool-card" href="https://churnzero.com" target="_blank" rel="noopener noreferrer">
+          <div class="tool-icon">CZ</div>
+          <div><div class="tool-name">ChurnZero</div><div class="tool-cat">Customer Success</div></div>
+        </a>
+
+        <a class="tool-card" href="https://www.totango.com" target="_blank" rel="noopener noreferrer">
+          <div class="tool-icon">TT</div>
+          <div><div class="tool-name">Totango</div><div class="tool-cat">Customer Success</div></div>
+        </a>
+
+      </div>
+    </div>
+
+    <!-- RESEARCH & ADVISORY -->
+    <div class="refs-section">
+      <h2>Research &amp; Advisory</h2>
+      <div class="tool-list">
+
+        <a class="tool-card" href="https://www.stage2.capital" target="_blank" rel="noopener noreferrer">
+          <div class="tool-icon">S2</div>
+          <div><div class="tool-name">Stage 2 Capital</div><div class="tool-cat">GTM-focused VC</div></div>
+        </a>
+
+        <a class="tool-card" href="https://hbr.org" target="_blank" rel="noopener noreferrer">
+          <div class="tool-icon">HB</div>
+          <div><div class="tool-name">Harvard Business Review</div><div class="tool-cat">Research &amp; Publishing</div></div>
+        </a>
+
+        <a class="tool-card" href="https://www.mckinsey.com" target="_blank" rel="noopener noreferrer">
+          <div class="tool-icon">MK</div>
+          <div><div class="tool-name">McKinsey &amp; Company</div><div class="tool-cat">Management Consulting</div></div>
+        </a>
+
+        <a class="tool-card" href="https://www.forrester.com" target="_blank" rel="noopener noreferrer">
+          <div class="tool-icon">FR</div>
+          <div><div class="tool-name">Forrester</div><div class="tool-cat">Market Research</div></div>
+        </a>
+
+        <a class="tool-card" href="https://www.gartner.com" target="_blank" rel="noopener noreferrer">
+          <div class="tool-icon">GT</div>
+          <div><div class="tool-name">Gartner</div><div class="tool-cat">Market Research</div></div>
+        </a>
+
+        <a class="tool-card" href="https://www.saastr.com" target="_blank" rel="noopener noreferrer">
+          <div class="tool-icon">ST</div>
+          <div><div class="tool-name">SaaStr</div><div class="tool-cat">SaaS Community &amp; Events</div></div>
+        </a>
+
+      </div>
+    </div>
+
+  </div>
+
+  <footer class="footer">
+    <div class="footer-content">
+      <p>SaaS Revenue System — CRO Manual</p>
+      <p>A complete operational guide for Chief Revenue Officers</p>
+    </div>
+  </footer>
+
+<script data-pplx-inline-edit>
+(function () {
+  if (window === window.top) return;
+
+  const allowedParentOrigins = ["https://www.perplexity.ai","https://perplexity.ai","https://testing.perplexity.ai","https://staging.perplexity.ai","https://*.preview.i.perplexity.ai","http://localhost:3000","http://127.0.0.1:3000","http://localhost:5173","http://127.0.0.1:5173"];
+  const MAX_FONT_BYTES = 500 * 1024;
+  const MAX_TOTAL_FONT_BYTES = 2 * 1024 * 1024;
+  let scrollForwarding = false;
+  let scrollRaf = 0;
+  let trustedTopOrigin = null;
+
+  // Allow entries like "https://*.preview.i.perplexity.ai" — the wildcard
+  // matches a single DNS label (no dots), so "https://*.foo" cannot stretch
+  // across multiple labels.
+  function matchesAllowedOrigin(origin) {
+    if (!origin) return false;
+    for (const entry of allowedParentOrigins) {
+      if (!entry.includes("*")) {
+        if (entry === origin) return true;
+        continue;
+      }
+      const pattern = new RegExp(
+        "^" +
+          entry.replace(/[.+?^${}()|[\]\\]/g, "\\$&").replace(/\*/g, "[^.]+") +
+          "$",
+      );
+      if (pattern.test(origin)) return true;
+    }
+    return false;
+  }
+
+  // Trust decision: when the sender is same-origin-visible (event.origin is a
+  // real origin like https://www.perplexity.ai) we trust event.origin directly.
+  // When event.origin is "null" (opaque broker srcdoc), we fall back to the
+  // broker's stamped `parentOrigin` to identify the top window. The fallback
+  // is claim-only — we rely on the browser's native `targetOrigin` enforcement
+  // on the response path (see postToTrustedTop) to ensure replies can't be
+  // delivered to anyone but the actual top window of that claimed origin.
+  function getTrustedParentOrigin(event) {
+    const forwardedParentOrigin =
+      typeof event.data.parentOrigin === "string" ? event.data.parentOrigin : null;
+    const parentOrigin = event.origin === "null" ? forwardedParentOrigin : event.origin;
+    return matchesAllowedOrigin(parentOrigin) ? parentOrigin : null;
+  }
+
+  // All responses go to window.top with targetOrigin = the allowlisted origin.
+  // An attacker that iframes us inside their own null-origin broker can claim
+  // any parentOrigin they like, but the browser will drop the reply whenever
+  // the real top's origin doesn't match — so the screenshot never leaves.
+  function postToTrustedTop(message) {
+    if (!trustedTopOrigin) return;
+    try {
+      window.top.postMessage(message, trustedTopOrigin);
+    } catch (_error) {}
+  }
+
+  function inlineAll(original, clone) {
+    if (original.nodeType !== 1 || clone.nodeType !== 1) return;
+
+    try {
+      const computedStyle = getComputedStyle(original);
+      // cssText on a computed style is the serialized declaration in modern
+      // Chromium/Safari — a single read beats enumerating ~400 longhand
+      // properties. Firefox returns "" here, so we fall back on empty.
+      const serialized = computedStyle.cssText;
+      if (serialized) {
+        clone.style.cssText = serialized;
+      } else {
+        const parts = new Array(computedStyle.length);
+        for (let index = 0; index < computedStyle.length; index += 1) {
+          const property = computedStyle[index];
+          parts[index] = `${property}:${computedStyle.getPropertyValue(property)};`;
+        }
+        clone.style.cssText = parts.join("");
+      }
+    } catch (_error) {}
+
+    const originalChildren = original.children;
+    const clonedChildren = clone.children;
+    for (
+      let index = 0;
+      index < originalChildren.length && index < clonedChildren.length;
+      index += 1
+    ) {
+      inlineAll(originalChildren[index], clonedChildren[index]);
+    }
+  }
+
+  function extractFontUrl(srcValue) {
+    const matches = [
+      ...srcValue.matchAll(
+        /url\(["']?([^"')]+)["']?\)(?:\s*format\(["']?([^"')]+)["']?\))?/gi,
+      ),
+    ];
+    if (matches.length === 0) return null;
+    const woff2 = matches.find((m) => m[2] && m[2].toLowerCase().includes("woff2"));
+    if (woff2) return woff2[1];
+    const woff = matches.find((m) => m[2] && m[2].toLowerCase().includes("woff"));
+    if (woff) return woff[1];
+    return matches[0][1];
+  }
+
+  // Cache resolved font URL -> data URI across captures. Fonts on a page
+  // essentially never change, and a batch run emits multiple captures back to
+  // back — without this we'd refetch + re-base64 every time.
+  const fontDataUriCache = new Map();
+  const SRC_DECLARATION_RE = /src\s*:\s*[^;}]+/i;
+
+  async function fetchAsDataUri(url) {
+    if (fontDataUriCache.has(url)) return fontDataUriCache.get(url);
+    let dataUri = null;
+    try {
+      const response = await fetch(url, { mode: "cors", credentials: "omit" });
+      if (response.ok) {
+        const blob = await response.blob();
+        if (blob.size <= MAX_FONT_BYTES) {
+          dataUri = await new Promise((resolve) => {
+            const reader = new FileReader();
+            reader.onloadend = () =>
+              resolve(typeof reader.result === "string" ? reader.result : null);
+            reader.onerror = () => resolve(null);
+            reader.readAsDataURL(blob);
+          });
+        }
+      }
+    } catch (_error) {
+      dataUri = null;
+    }
+    fontDataUriCache.set(url, dataUri);
+    return dataUri;
+  }
+
+  function collectFontFaceRuleTexts() {
+    const rules = [];
+    for (const sheet of document.styleSheets) {
+      let cssRules;
+      try {
+        cssRules = sheet.cssRules;
+      } catch (_error) {
+        continue;
+      }
+      if (!cssRules) continue;
+      for (const rule of cssRules) {
+        const cssText = rule.cssText || "";
+        if (cssText.startsWith("@font-face")) rules.push(cssText);
+      }
+    }
+    return rules;
+  }
+
+  async function buildInlinedFontCss() {
+    const ruleTexts = collectFontFaceRuleTexts();
+    if (ruleTexts.length === 0) return null;
+
+    const resolved = ruleTexts.map((cssText) => {
+      if (!SRC_DECLARATION_RE.test(cssText)) return null;
+      const srcMatch = cssText.match(/src\s*:\s*([^;}]+)[;}]/i);
+      if (!srcMatch) return null;
+      const url = extractFontUrl(srcMatch[1]);
+      if (!url) return null;
+      try {
+        return { cssText, url: new URL(url, document.baseURI).href };
+      } catch (_error) {
+        return null;
+      }
+    });
+
+    const dataUris = await Promise.all(
+      resolved.map((entry) => (entry ? fetchAsDataUri(entry.url) : Promise.resolve(null))),
+    );
+
+    const inlined = [];
+    let totalBytes = 0;
+    for (let index = 0; index < resolved.length; index += 1) {
+      const entry = resolved[index];
+      const dataUri = dataUris[index];
+      if (!entry || !dataUri) continue;
+      const approxBytes = dataUri.length * 0.75;
+      if (totalBytes + approxBytes > MAX_TOTAL_FONT_BYTES) break;
+      totalBytes += approxBytes;
+      inlined.push(entry.cssText.replace(SRC_DECLARATION_RE, `src: url("${dataUri}")`));
+    }
+    return inlined.length > 0 ? inlined.join("\n") : null;
+  }
+
+  function stripExternal(clone) {
+    const images = clone.querySelectorAll("img");
+    for (let index = 0; index < images.length; index += 1) {
+      const src = images[index].getAttribute("src");
+      if (src && !src.startsWith("data:")) images[index].removeAttribute("src");
+    }
+
+    const elements = clone.querySelectorAll("*");
+    for (let index = 0; index < elements.length; index += 1) {
+      const style = elements[index].style.cssText;
+      if (style && style.includes("url(")) {
+        elements[index].style.cssText = style.replace(
+          /url\(["']?(?!data:)[^)"']*["']?\)/gi,
+          "none",
+        );
+      }
+    }
+  }
+
+  function emitScroll() {
+    scrollRaf = 0;
+    if (!scrollForwarding) return;
+    postToTrustedTop({
+      type: "INLINE_EDIT_SCROLL",
+      scrollX: window.scrollX,
+      scrollY: window.scrollY,
+    });
+  }
+
+  window.addEventListener(
+    "scroll",
+    function () {
+      if (!scrollForwarding || scrollRaf) return;
+      scrollRaf = requestAnimationFrame(emitScroll);
+    },
+    { passive: true, capture: true },
+  );
+
+  async function handleCaptureRequest(event) {
+    const requestId = event.data.requestId;
+    const scrollX = window.scrollX;
+    const scrollY = window.scrollY;
+    const width = window.innerWidth;
+    const height = window.innerHeight;
+
+    function postResult(dataUrl) {
+      postToTrustedTop({
+        type: "INLINE_EDIT_SCREENSHOT_RESULT",
+        requestId,
+        dataUrl,
+        scrollX,
+        scrollY,
+      });
+    }
+
+    try {
+      // Wait for any pending web fonts to resolve so both inline metrics and
+      // the @font-face inlining below see the same loaded faces.
+      if (document.fonts && document.fonts.ready) {
+        try {
+          await document.fonts.ready;
+        } catch (_error) {}
+      }
+
+      const clone = document.documentElement.cloneNode(true);
+      inlineAll(document.documentElement, clone);
+
+      const removedNodes = clone.querySelectorAll("script,link[rel=\"stylesheet\"],style");
+      for (let index = 0; index < removedNodes.length; index += 1) {
+        removedNodes[index].remove();
+      }
+
+      stripExternal(clone);
+
+      // Re-embed web fonts as data-URI @font-face rules so the SVG rasterizer
+      // can resolve them — external font URLs aren't fetched during
+      // foreignObject rendering, which would otherwise force a fallback face
+      // and change text metrics.
+      const inlinedFontCss = await buildInlinedFontCss();
+      if (inlinedFontCss) {
+        const styleEl = document.createElement("style");
+        styleEl.textContent = inlinedFontCss;
+        const head = clone.querySelector("head");
+        if (head) head.appendChild(styleEl);
+        else clone.insertBefore(styleEl, clone.firstChild);
+      }
+
+      const html = new XMLSerializer().serializeToString(clone);
+      const svg =
+        `<svg xmlns="http://www.w3.org/2000/svg" width="${width}" height="${height}">` +
+        '<foreignObject width="100%" height="100%">' +
+        `<div xmlns="http://www.w3.org/1999/xhtml" style="width:${width}px;height:${height}px;overflow:hidden">` +
+        `<div style="transform:translate(-${scrollX}px,-${scrollY}px);transform-origin:top left">` +
+        html +
+        "</div></div></foreignObject></svg>";
+      const svgUrl = `data:image/svg+xml;charset=utf-8,${encodeURIComponent(svg)}`;
+      const image = new Image();
+      image.onload = function () {
+        const canvas = document.createElement("canvas");
+        canvas.width = width;
+        canvas.height = height;
+        canvas.getContext("2d").drawImage(image, 0, 0);
+        postResult(canvas.toDataURL("image/png"));
+      };
+      image.onerror = function () {
+        postResult(null);
+      };
+      image.src = svgUrl;
+    } catch (_error) {
+      postResult(null);
+    }
+  }
+
+  window.addEventListener("message", function (event) {
+    if (!event.data) return;
+    // Only accept messages from the direct parent frame. Blocks sibling /
+    // unrelated-window postMessage senders that could otherwise reach us.
+    if (event.source !== window.parent) return;
+
+    const trustedParentOrigin = getTrustedParentOrigin(event);
+    if (!trustedParentOrigin) return;
+    trustedTopOrigin = trustedParentOrigin;
+
+    if (event.data.type === "INLINE_EDIT_SCROLL_START") {
+      scrollForwarding = true;
+      emitScroll();
+      return;
+    }
+
+    if (event.data.type === "INLINE_EDIT_SCROLL_STOP") {
+      scrollForwarding = false;
+      if (scrollRaf) cancelAnimationFrame(scrollRaf);
+      scrollRaf = 0;
+      return;
+    }
+
+    if (event.data.type !== "INLINE_EDIT_CAPTURE_REQUEST") return;
+
+    handleCaptureRequest(event);
+  });
+})();
+
+
+</script></body>
+</html>

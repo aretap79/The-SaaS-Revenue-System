@@ -168,7 +168,7 @@
 
   <!-- WHAT IT MEANS -->
   <h2 class="section-title">What CRM Architecture Actually Means</h2>
-  <div class="section-intro">CRM architecture is not "how you've set up Salesforce." It is a deliberate system of objects, fields, workflows, integrations, and human behavior patterns that makes revenue data trustworthy enough to run the business on.</div>
+  <div class="section-intro">CRM architecture is not "how you've set up <a href="https://www.salesforce.com" target="_blank" rel="noopener noreferrer">Salesforce</a>." It is a deliberate system of objects, fields, workflows, integrations, and human behavior patterns that makes revenue data trustworthy enough to run the business on.</div>
 
   <div class="subsection">
     <p>Most SaaS companies have a CRM. Very few have CRM <em>architecture</em>. The difference is the difference between a spreadsheet that someone has been editing for three years and a properly designed database. Both contain data. Only one can be trusted for decisions that cost millions of dollars.</p>
@@ -214,7 +214,7 @@
       </div>
     </div>
     <div class="object-body">
-      <p style="font-size:14px; line-height:1.7; margin-bottom:16px;">Leads exist before conversion. A Lead in Salesforce or HubSpot represents a person whose Account relationship has not been confirmed or created. Upon qualification (SAL → SQL), the Lead converts to a Contact + Account + Opportunity. Never use Lead as a permanent record type — all qualified records should be Contact/Account/Opportunity.</p>
+      <p style="font-size:14px; line-height:1.7; margin-bottom:16px;">Leads exist before conversion. A Lead in Salesforce or <a href="https://www.hubspot.com" target="_blank" rel="noopener noreferrer">HubSpot</a> represents a person whose Account relationship has not been confirmed or created. Upon qualification (SAL → SQL), the Lead converts to a Contact + Account + Opportunity. Never use Lead as a permanent record type — all qualified records should be Contact/Account/Opportunity.</p>
       <table class="field-table">
         <thead><tr><th>Field</th><th>Type</th><th>Required</th><th>Notes</th></tr></thead>
         <tbody>
@@ -224,7 +224,7 @@
           <tr><td>MQL Date</td><td>Date/Time</td><td><span class="req-badge req-critical">Critical</span></td><td>Auto-stamped when status changes to MQL. Required for MQL-to-SQL conversion rate calculation.</td></tr>
           <tr><td>Assigned SDR</td><td>Lookup: User</td><td><span class="req-badge req-critical">Critical</span></td><td>Auto-populated via routing rules. Timestamp of assignment required for SLA tracking.</td></tr>
           <tr><td>ICP Segment</td><td>Picklist</td><td><span class="req-badge req-standard">Standard</span></td><td>SMB / Mid-Market / Enterprise / Partner. Auto-populated from firmographic data enrichment.</td></tr>
-          <tr><td>Industry</td><td>Picklist</td><td><span class="req-badge req-standard">Standard</span></td><td>Standardized taxonomy (max 15 values). Enriched from ZoomInfo/Clearbit. Do not allow free text.</td></tr>
+          <tr><td>Industry</td><td>Picklist</td><td><span class="req-badge req-standard">Standard</span></td><td>Standardized taxonomy (max 15 values). Enriched from <a href="https://www.zoominfo.com" target="_blank" rel="noopener noreferrer">ZoomInfo</a>/Clearbit. Do not allow free text.</td></tr>
           <tr><td>Employee Count</td><td>Number</td><td><span class="req-badge req-standard">Standard</span></td><td>Enriched, used in ICP scoring. Ranges: &lt;50, 50–200, 201–1000, 1001–5000, 5000+.</td></tr>
           <tr><td>Rejection Reason</td><td>Picklist</td><td><span class="req-badge req-optional">Conditional</span></td><td>Required only if status = Disqualified. Not ICP / Wrong Persona / Duplicate / Competitor / Student. Feeds MQL quality analysis.</td></tr>
         </tbody>
@@ -253,7 +253,7 @@
           <tr><td>ARR (Current)</td><td>Currency</td><td><span class="req-badge req-critical">Critical</span></td><td>Current contracted ARR. Auto-updated from Contract/Subscription object on renewal/expansion/churn. Never manually edited.</td></tr>
           <tr><td>NRR (TTM)</td><td>Percent</td><td><span class="req-badge req-critical">Critical</span></td><td>Net Revenue Retention trailing 12 months. Calculated field from ARR history. Formula: (Beginning ARR + Expansion − Contraction − Churn) / Beginning ARR.</td></tr>
           <tr><td>Renewal Date</td><td>Date</td><td><span class="req-badge req-critical">Critical</span></td><td>Next contract renewal date. Auto-populated from Contract object. Feeds renewal pipeline creation automation (120 days out).</td></tr>
-          <tr><td>Health Score</td><td>Number (1–100)</td><td><span class="req-badge req-standard">Standard</span></td><td>Auto-synced from CS platform (Gainsight/ChurnZero/Totango). Not manually editable.</td></tr>
+          <tr><td>Health Score</td><td>Number (1–100)</td><td><span class="req-badge req-standard">Standard</span></td><td>Auto-synced from CS platform (<a href="https://www.gainsight.com" target="_blank" rel="noopener noreferrer">Gainsight</a>/<a href="https://churnzero.com" target="_blank" rel="noopener noreferrer">ChurnZero</a>/<a href="https://www.totango.com" target="_blank" rel="noopener noreferrer">Totango</a>). Not manually editable.</td></tr>
           <tr><td>CSM Owner</td><td>Lookup: User</td><td><span class="req-badge req-standard">Standard</span></td><td>Assigned CS Manager. Required for all Type = Customer accounts.</td></tr>
           <tr><td>Contract Start Date</td><td>Date</td><td><span class="req-badge req-standard">Standard</span></td><td>First contract date (customer since). Important for cohort analysis and tenure-based health benchmarks.</td></tr>
         </tbody>
@@ -282,7 +282,7 @@
           <tr><td>Next Step</td><td>Text</td><td><span class="req-badge req-critical">Critical</span></td><td>Specific next action with date, person responsible. "Call next week" is not a Next Step. "Demo with CTO on 3/14 — confirm technical requirements" is. Blank Next Step = red flag in pipeline review.</td></tr>
           <tr><td>Lead Source</td><td>Picklist</td><td><span class="req-badge req-critical">Critical</span></td><td>Inherited from Lead/Contact source. Required for channel attribution and CAC analysis. Do not allow retroactive changes.</td></tr>
           <tr><td>Opportunity Type</td><td>Picklist</td><td><span class="req-badge req-critical">Critical</span></td><td>New Business / Expansion / Renewal / Reactivation. Drives separate pipeline and forecast tracks for each motion.</td></tr>
-          <tr><td>M — Metrics</td><td>Text (long)</td><td><span class="req-badge req-standard">Standard</span></td><td>MEDDICC: Quantified business impact the customer expects. What does success look like in numbers?</td></tr>
+          <tr><td>M — Metrics</td><td>Text (long)</td><td><span class="req-badge req-standard">Standard</span></td><td><a href="https://meddicc.com/meddicc-the-book" target="_blank" rel="noopener noreferrer">MEDDICC</a>: Quantified business impact the customer expects. What does success look like in numbers?</td></tr>
           <tr><td>E — Economic Buyer</td><td>Lookup: Contact</td><td><span class="req-badge req-standard">Standard</span></td><td>MEDDICC: The person with budget authority. Required for Stage 3+.</td></tr>
           <tr><td>D — Decision Criteria</td><td>Text (long)</td><td><span class="req-badge req-standard">Standard</span></td><td>MEDDICC: What criteria will they use to evaluate vendors?</td></tr>
           <tr><td>D — Decision Process</td><td>Text (long)</td><td><span class="req-badge req-standard">Standard</span></td><td>MEDDICC: Who is involved, what steps, what is the timeline?</td></tr>
@@ -343,7 +343,7 @@
     <table class="data-table">
       <thead><tr><th>Failure Mode</th><th>Root Cause</th><th>Fix</th></tr></thead>
       <tbody>
-        <tr><td>Reps don't log activities</td><td>Activity logging takes 3+ minutes per call; seen as admin overhead with no personal benefit</td><td>Auto-log from sales engagement tool (Outreach/Salesloft) and conversation intelligence (Gong/Chorus). Reps should never manually log calls.</td></tr>
+        <tr><td>Reps don't log activities</td><td>Activity logging takes 3+ minutes per call; seen as admin overhead with no personal benefit</td><td>Auto-log from sales engagement tool (<a href="https://www.outreach.io" target="_blank" rel="noopener noreferrer">Outreach</a>/<a href="https://www.salesloft.com" target="_blank" rel="noopener noreferrer">Salesloft</a>) and conversation intelligence (<a href="https://www.gong.io" target="_blank" rel="noopener noreferrer">Gong</a>/Chorus). Reps should never manually log calls.</td></tr>
         <tr><td>Reps don't update Next Step</td><td>No accountability mechanism; they don't see what they put there after they type it</td><td>Make Next Step visible on the pipeline dashboard the rep uses daily. Pipeline reviews that start with "what's your next step?" create habit fast.</td></tr>
         <tr><td>Reps use personal spreadsheets</td><td>CRM is too slow, too complex, or doesn't give them the view they need</td><td>Build rep-centric CRM views that give them their pipeline by stage, their activities for the week, and their quota attainment in one screen. If the CRM gives reps useful information, they'll use it.</td></tr>
         <tr><td>Data is inaccurate so nobody trusts it</td><td>Bad data creates a vicious cycle: low trust → low usage → worse data</td><td>Start with a data quality sprint: fix the 20% of records that cause 80% of the problems. Publish a weekly data quality score by rep. Make it a manager metric, not a rep punishment.</td></tr>
@@ -366,9 +366,9 @@
       <tr><th>Tool Category</th><th>Example Tools</th><th>Data Flow to CRM</th><th>Integration Method</th></tr>
     </thead>
     <tbody>
-      <tr><td>Marketing Automation (MAP)</td><td>Marketo, HubSpot, Pardot</td><td>Lead records, lead scores, campaign memberships, form fills, email engagement, MQL dates</td><td>Native bidirectional sync. MAP is the master for lead data; CRM is the master for opportunity data.</td></tr>
+      <tr><td>Marketing Automation (MAP)</td><td><a href="https://www.marketo.com" target="_blank" rel="noopener noreferrer">Marketo</a>, HubSpot, <a href="https://www.pardot.com" target="_blank" rel="noopener noreferrer">Pardot</a></td><td>Lead records, lead scores, campaign memberships, form fills, email engagement, MQL dates</td><td>Native bidirectional sync. MAP is the master for lead data; CRM is the master for opportunity data.</td></tr>
       <tr><td>Sales Engagement Platform</td><td>Outreach, Salesloft, Apollo</td><td>Email sends, call logs, sequence enrollment, reply rates, task completion</td><td>Native integration. All activities auto-logged to CRM Lead/Contact/Opportunity. Do not duplicate in CRM manually.</td></tr>
-      <tr><td>Conversation Intelligence</td><td>Gong, Chorus, Clari Copilot</td><td>Call recordings linked to Opportunity, talk ratio, next steps extracted, MEDDICC field updates from AI</td><td>Native integration. Gong writes back to CRM opportunity fields via AI-extracted insights.</td></tr>
+      <tr><td>Conversation Intelligence</td><td>Gong, Chorus, <a href="https://www.clari.com" target="_blank" rel="noopener noreferrer">Clari</a> Copilot</td><td>Call recordings linked to Opportunity, talk ratio, next steps extracted, MEDDICC field updates from AI</td><td>Native integration. Gong writes back to CRM opportunity fields via AI-extracted insights.</td></tr>
       <tr><td>CS Platform</td><td>Gainsight, ChurnZero, Totango</td><td>Health scores, QBR dates, renewal pipeline, NPS scores, expansion signals</td><td>Bidirectional. CS platform reads ARR/renewal data from CRM; writes health score and risk flags back.</td></tr>
       <tr><td>BI / Analytics</td><td>Tableau, Looker, Metabase</td><td>Read-only. BI connects to CRM data warehouse replica, never to live CRM API.</td><td>CRM data warehouse sync (Snowflake/BigQuery). Avoid direct BI-to-CRM API connections — they degrade CRM performance and create governance issues.</td></tr>
       <tr><td>CPQ / Billing</td><td>Salesforce CPQ, Chargebee, Stripe</td><td>Quote objects, contract terms, ARR recognition, invoice status</td><td>Bidirectional. Closed Won opportunity triggers CPQ quote generation. Billing system writes ARR recognized back to Account.</td></tr>

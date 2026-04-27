@@ -2,11 +2,489 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8"/>
-  <meta http-equiv="refresh" content="0; url=demand-generation.html"/>
-  <title>Content Marketing — SaaS Revenue System</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Content Marketing Strategy — SaaS Revenue System</title>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="../assets/shared.css"/>
+  <style>
+    .page-hero { background: #006494; }
+    .formula-block { background: #1C1B19; color: #CDCCCA; border-radius: 8px; padding: 20px 24px; margin: 16px 0; font-family: 'DM Mono', 'Courier New', monospace; font-size: 14px; line-height: 1.8; }
+    .formula-block .formula-label { font-size: 11px; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase; color: #6b9fb8; margin-bottom: 10px; }
+    .formula-block strong { color: #E8C96A; }
+    .formula-block em { color: #7EC8A4; font-style: normal; }
+    .subsection { margin: 32px 0; }
+    .subsection-title { font-size: 20px; font-weight: 700; color: var(--text); margin-bottom: 12px; padding-bottom: 6px; border-bottom: 2px solid var(--border); }
+    .callout { background: var(--surface); border: 1.5px solid var(--border); border-left: 4px solid var(--primary); border-radius: 8px; padding: 18px 20px; margin: 20px 0; }
+    .callout-title { font-size: 12px; font-weight: 700; letter-spacing: 1px; text-transform: uppercase; color: var(--primary); margin-bottom: 8px; }
+    .callout p { font-size: 15px; line-height: 1.65; }
+    .callout-warning { border-left-color: #964219; }
+    .callout-warning .callout-title { color: #964219; }
+    .callout-insight { border-left-color: #437A22; }
+    .callout-insight .callout-title { color: #437A22; }
+    .hero-tags { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 20px; }
+    .hero-tag { font-size: 12px; font-weight: 600; padding: 5px 14px; border-radius: 20px; background: rgba(255,255,255,0.15); color: rgba(255,255,255,0.92); border: 1px solid rgba(255,255,255,0.25); text-decoration: none; transition: background 0.15s; }
+    .hero-tag:hover { background: rgba(255,255,255,0.28); color: #fff; text-decoration: none; }
+    .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin: 20px 0; }
+    .box-card { background: var(--surface); border: 1.5px solid var(--border); border-radius: 8px; padding: 18px 20px; }
+    .box-card h4 { font-size: 14px; font-weight: 700; margin-bottom: 8px; color: var(--text); }
+    .box-card p, .box-card li { font-size: 14px; color: var(--text-muted); line-height: 1.6; }
+    .funnel-row { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 14px; margin: 20px 0; }
+    .funnel-card { border-radius: 8px; padding: 18px; color: #fff; }
+    .funnel-card h4 { font-size: 13px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.8px; margin-bottom: 8px; opacity: 0.85; }
+    .funnel-card ul { list-style: none; }
+    .funnel-card ul li { font-size: 13px; padding: 3px 0; opacity: 0.9; padding-left: 14px; position: relative; }
+    .funnel-card ul li::before { content: '·'; position: absolute; left: 0; font-size: 18px; line-height: 1; }
+    .funnel-tofu { background: #1a6b9a; }
+    .funnel-mofu { background: #1a7a6e; }
+    .funnel-bofu { background: #7a5c1a; }
+    @media (max-width: 768px) { .two-col, .funnel-row { grid-template-columns: 1fr; } }
+  </style>
 </head>
 <body>
-  <p>Redirecting... <a href="demand-generation.html">Click here if not redirected</a></p>
+
+<nav class="nav">
+  <span class="nav-logo">SaaS <span>Revenue System</span></span>
+  <span class="nav-sep">|</span>
+  <a href="../index.html" class="nav-back">← Home</a>
+  <span class="nav-sep">|</span>
+  <a href="../pages/marketing.html" class="nav-back">Marketing</a>
+  <span class="nav-sep">|</span>
+  <span class="nav-current">Content Marketing Strategy</span>
+</nav>
+
+<div class="page-hero">
+  <div class="hero-phase-label">Marketing Function</div>
+  <div class="hero-title">Content Marketing Strategy for SaaS</div>
+  <div class="hero-subtitle">Content is not a brand exercise. In a properly architected SaaS GTM, content marketing is a pipeline engine — generating qualified demand, educating buyers, and accelerating deal velocity at every stage of the funnel.</div>
+  <div class="hero-tags">
+    <a href="demand-generation.html" class="hero-tag">SEO Strategy</a>
+    <a href="template-editorial-calendar.html" class="hero-tag">Editorial Calendar</a>
+    <a href="compelling-vision.html" class="hero-tag">Thought Leadership</a>
+    <a href="pipeline-attribution.html" class="hero-tag">Pipeline Influence</a>
+    <a href="channel-strategy.html" class="hero-tag">Content Distribution</a>
+    <a href="icp.html" class="hero-tag">Persona Mapping</a>
+  </div>
+</div>
+
+<div class="content-wrap">
+  <div class="breadcrumb">
+    <a href="../index.html">Home</a><span class="sep">›</span>
+    <a href="../pages/marketing.html">Marketing</a><span class="sep">›</span>
+    <span class="current">Content Marketing Strategy</span>
+  </div>
+
+  <!-- SECTION 1 -->
+  <h2 class="section-title">Content Marketing Is a Revenue Function</h2>
+  <p class="section-intro">The most expensive mistake SaaS companies make with content is treating it as a brand exercise — something the marketing team does to stay visible. This framing produces content that gets impressions, wins awards, and generates zero pipeline. The CMOs who build category-defining businesses understand something different: content marketing, when architected correctly, is the highest ROI pipeline channel available to a SaaS company. It compounds. It scales without proportional headcount. It works at 3am on a Sunday when your SDRs are asleep.</p>
+
+  <div class="callout callout-insight">
+    <div class="callout-title">The Roberge Principle</div>
+    <p><a href="https://www.stage2.capital" target="_blank" rel="noopener noreferrer">Mark Roberge</a>'s data at <a href="https://www.hubspot.com" target="_blank" rel="noopener noreferrer">HubSpot</a> demonstrated that inbound-led growth — powered by content — produces customers with 30–40% lower CAC than outbound-led acquisition and 2× higher NPS scores. The causal mechanism: buyers who find you through content have already self-qualified, self-educated, and formed a positive association with your brand before the first sales conversation.</p>
+  </div>
+
+  <div class="subsection">
+    <div class="subsection-title">Why Content Generates Pipeline (Not Just Awareness)</div>
+    <p>Content generates pipeline through three distinct mechanisms, each with measurable attribution:</p>
+    <ol class="step-list">
+      <li><div class="step-content"><span class="step-title">Organic Search Demand Capture</span>When a VP of Sales types "sales velocity formula" into Google and lands on your article, they have expressed an intent signal. You have captured a buyer who was already in the market. Every organic visit is a buyer who raised their hand — you just have to convert them.</div></li>
+      <li><div class="step-content"><span class="step-title">Thought Leadership Authority</span>Buyers research vendors before agreeing to a demo. If your company has published authoritative content on the problem your buyer is trying to solve, you arrive at the first meeting with credibility pre-established. The sales cycle shortens because discovery is partially complete before the rep opens their mouth.</div></li>
+      <li><div class="step-content"><span class="step-title">Deal Acceleration Content</span>Mid-funnel and bottom-funnel content — case studies, ROI calculators, competitive battlecards, implementation guides — directly accelerates in-flight deals. The champion shares this content internally to build the business case. This is where content becomes measurably tied to win rate improvement.</div></li>
+    </ol>
+  </div>
+
+  <div class="subsection">
+    <div class="subsection-title">The Business Case: Content vs. Paid Demand Generation</div>
+    <table class="data-table">
+      <thead>
+        <tr><th>Dimension</th><th>Paid (PPC/Display)</th><th>Content Marketing</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>Cost per MQL (Year 1)</td><td>$200–$800</td><td>$400–$1,200 (investment heavy)</td></tr>
+        <tr><td>Cost per MQL (Year 3)</td><td>$200–$800 (static)</td><td>$40–$120 (compounding)</td></tr>
+        <tr><td>Payoff timeline</td><td>Immediate</td><td>6–18 months to peak performance</td></tr>
+        <tr><td>Durability</td><td>Stops the day budget stops</td><td>Compounds indefinitely</td></tr>
+        <tr><td>Buyer trust signal</td><td>Low (paid = interruption)</td><td>High (found = authority)</td></tr>
+        <tr><td>Sales cycle impact</td><td>Neutral</td><td>Shortens by 15–30% (educated buyer)</td></tr>
+        <tr><td>Win rate impact</td><td>Neutral</td><td>+10–20% (pre-built credibility)</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- SECTION 2 -->
+  <h2 class="section-title">The Content Strategy Framework: Pillars, Clusters, Distribution</h2>
+  <p class="section-intro">Effective SaaS content strategy is not a collection of articles. It is an interconnected architecture of topic authority designed to (a) capture every intent signal in your ICP's problem space and (b) funnel captured traffic toward conversion. The three-layer framework — Pillars, Clusters, Distribution — is the operating model.</p>
+
+  <div class="subsection">
+    <div class="subsection-title">Layer 1: Content Pillars (The Big Bets)</div>
+    <p>A content pillar is a broad, strategic topic area that sits at the intersection of your ICP's most pressing problems and your product's core value. Pillars are not blog categories. They are the 3–5 topic domains where you intend to build category authority. Each pillar maps to a primary buyer persona and a core product use case.</p>
+
+    <div class="callout">
+      <div class="callout-title">Pillar Selection Criteria</div>
+      <p>A valid content pillar must satisfy four conditions: (1) the ICP actively researches this topic, (2) the topic has sustainable search volume (500+ monthly searches), (3) your product directly addresses the underlying problem, and (4) you can plausibly build more comprehensive coverage than any competitor. Pillars that fail condition (4) are traffic plays, not authority plays — and traffic without authority doesn't convert.</p>
+    </div>
+
+    <div class="formula-block">
+      <div class="formula-label">Pillar Validation Formula</div>
+      <strong>Pillar Score</strong> = (Monthly Search Volume × ICP Relevance Score) / (Competitor Domain Authority × Content Saturation Index)<br/><br/>
+      <em>Target:</em> Pillar Score &gt; 0.4 = viable authority opportunity<br/>
+      <em>Target:</em> Pillar Score &lt; 0.2 = blue ocean (low search, low competition) — often worth owning early<br/>
+      <em>Red flag:</em> Pillar Score &gt; 1.0 = oversaturated (DA 80+ competitors own every SERP position)
+    </div>
+  </div>
+
+  <div class="subsection">
+    <div class="subsection-title">Layer 2: Content Clusters (The Architecture)</div>
+    <p>Each pillar spawns a cluster of 15–30 related articles, each targeting a specific longtail keyword within the pillar's topic space. The cluster structure serves dual purposes: it builds topical authority with Google's algorithms (signaling you are the definitive resource on this topic) and it captures buyers at every specificity level of their research journey.</p>
+    <ul class="bullet-list">
+      <li><strong>Pillar Page:</strong> 3,000–6,000 word comprehensive guide on the broad topic — this is the hub that receives internal links from all cluster content</li>
+      <li><strong>Cluster Articles:</strong> 1,000–2,500 word focused pieces on specific subtopics — each one links back to the pillar page</li>
+      <li><strong>Supporting Assets:</strong> Calculators, templates, comparison tools that serve specific queries and collect emails in exchange for value</li>
+      <li><strong>Internal Link Strategy:</strong> Every cluster article links to the pillar and to 2–3 related cluster articles, building PageRank consolidation</li>
+    </ul>
+  </div>
+
+  <div class="subsection">
+    <div class="subsection-title">Layer 3: Distribution (The Amplification System)</div>
+    <p>The best-written article in your pillar that nobody reads generates zero pipeline. Distribution is not optional — it is the mechanism that transforms a piece of content from an asset into a pipeline driver. The distribution stack must be designed before the editorial calendar is written.</p>
+
+    <table class="data-table">
+      <thead>
+        <tr><th>Channel</th><th>Mechanism</th><th>Best For</th><th>Effort:Return</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>Organic Search (SEO)</td><td>Google ranking, Featured Snippets, AI Overviews</td><td>Top-of-funnel awareness, sustained pipeline</td><td>High (long-term compounding)</td></tr>
+        <tr><td>LinkedIn Organic</td><td>Founder/executive posts, document posts, carousels</td><td>Thought leadership, warm ICP audiences</td><td>Medium-High</td></tr>
+        <tr><td>Email Newsletter</td><td>Weekly/biweekly ICP-targeted digest</td><td>Nurturing existing list, re-engagement</td><td>High (owned channel)</td></tr>
+        <tr><td>Content Syndication</td><td>G2 Learning Hub, industry publications, partner blogs</td><td>Net-new audience reach, backlink acquisition</td><td>Medium</td></tr>
+        <tr><td>SDR/Sales Enablement</td><td>Reps share relevant content in prospecting sequences</td><td>Deal acceleration, champion arming</td><td>Very High (direct pipeline impact)</td></tr>
+        <tr><td>Paid Amplification</td><td>LinkedIn document ads, content retargeting</td><td>Boosting proven high-converting content</td><td>Medium (requires proven organic performance first)</td></tr>
+        <tr><td>Community Seeding</td><td>Slack communities, Reddit, industry forums</td><td>Niche ICP reach, authentic engagement</td><td>Low-Medium (brand risk if inauthentic)</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- SECTION 3 -->
+  <h2 class="section-title">The Three Content Types: ToFu, MoFu, BoFu</h2>
+  <p class="section-intro">Every piece of content your company produces should be deliberately assigned to a funnel stage. Content that tries to serve all three stages serves none of them. The funnel stage determines the intent, the CTA, the format, the length, and the distribution channel. Mixing these produces content that is pleasant to read and impossible to attribute.</p>
+
+  <div class="funnel-row">
+    <div class="funnel-card funnel-tofu">
+      <h4>Top of Funnel (Awareness)</h4>
+      <ul>
+        <li>Educational how-to guides</li>
+        <li>Industry trend reports</li>
+        <li>Problem definition content</li>
+        <li>Thought leadership essays</li>
+        <li>Benchmark/research reports</li>
+        <li>Glossary terms (SEO plays)</li>
+        <li>Podcast content</li>
+        <li>CTA: Newsletter subscribe, free tool</li>
+      </ul>
+    </div>
+    <div class="funnel-card funnel-mofu">
+      <h4>Mid Funnel (Evaluation)</h4>
+      <ul>
+        <li>Solution comparison guides</li>
+        <li>Use case deep-dives</li>
+        <li>ROI calculators</li>
+        <li>Webinars and workshops</li>
+        <li>Customer success stories</li>
+        <li>Category vs. category content</li>
+        <li>Feature explanation series</li>
+        <li>CTA: Demo request, free trial</li>
+      </ul>
+    </div>
+    <div class="funnel-card funnel-bofu">
+      <h4>Bottom of Funnel (Decision)</h4>
+      <ul>
+        <li>Vendor comparison pages</li>
+        <li>Case studies with ROI data</li>
+        <li>Implementation guides</li>
+        <li>Security/compliance docs</li>
+        <li>Pricing page content</li>
+        <li>Customer testimonial videos</li>
+        <li>Business case templates</li>
+        <li>CTA: Talk to sales, free pilot</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="callout callout-warning">
+    <div class="callout-title">Critical Failure Mode: The Middle Funnel Desert</div>
+    <p>Most SaaS content teams are excellent at ToFu (educational content) and adequate at BoFu (case studies). The mid-funnel is systematically under-resourced. This is precisely where most B2B buyers are spending the majority of their research time — comparing solutions, building business cases, and evaluating implementation risk. A barren MoFu means your content drives awareness, then loses the buyer to a competitor with better evaluation-stage resources. Audit your content inventory: if less than 30% of your pieces are MoFu, you have a pipeline leakage problem.</p>
+  </div>
+
+  <!-- SECTION 4 -->
+  <h2 class="section-title">SEO as a Pipeline Engine</h2>
+  <p class="section-intro">Search engine optimization, done properly, is not a technical exercise. It is a buyer research intelligence program that reverse-engineers the exact questions your ICP is typing into Google and publishes the most authoritative answers available. The technical SEO layer (site speed, indexing, structured data) is table stakes. The strategic SEO layer — keyword strategy, domain authority, content clusters, interlinking — is where pipeline is built or lost.</p>
+
+  <div class="subsection">
+    <div class="subsection-title">Keyword Strategy: Intent Segmentation</div>
+    <p>Every keyword your ICP searches has an intent signal. Keyword strategy means classifying every target keyword by intent and ensuring your content matches that intent precisely. Mismatched intent — publishing a product pitch for an informational query — is the single most common reason SaaS content ranks without converting.</p>
+
+    <table class="data-table">
+      <thead>
+        <tr><th>Intent Type</th><th>Query Pattern</th><th>Example</th><th>Content Response</th><th>Pipeline Value</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>Informational</td><td>"What is X", "How to X", "X explained"</td><td>"What is sales velocity"</td><td>Educational guide, no product pitch</td><td>Low (ToFu — capture email)</td></tr>
+        <tr><td>Comparative</td><td>"X vs Y", "Best X tools", "X alternatives"</td><td>"<a href="https://www.salesforce.com" target="_blank" rel="noopener noreferrer">Salesforce</a> vs HubSpot"</td><td>Honest comparison, differentiation-first</td><td>High (MoFu — capture demo)</td></tr>
+        <tr><td>Transactional</td><td>"X software pricing", "X demo", "Buy X"</td><td>"CRM software pricing"</td><td>Pricing page, demo CTA, social proof</td><td>Very High (BoFu)</td></tr>
+        <tr><td>Navigational</td><td>Brand name + feature</td><td>"Salesforce reports tutorial"</td><td>Product documentation, help content</td><td>Retention/expansion value</td></tr>
+        <tr><td>Problem-aware</td><td>"How to fix X", "X best practices"</td><td>"How to reduce churn rate"</td><td>Problem-solution content, subtle product fit</td><td>Medium (ICP qualification)</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="subsection">
+    <div class="subsection-title">Domain Authority: The Long Game</div>
+    <p>Domain Authority (DA) is a proxy for Google's trust in your domain. DA is built through backlinks from authoritative external sites, consistent publishing cadence, and technical health signals. New SaaS companies (DA &lt; 30) should prioritize two DA-building strategies: (1) original research reports that journalists and bloggers cite, and (2) guest contributions to high-DA industry publications that link back to your domain.</p>
+
+    <div class="formula-block">
+      <div class="formula-label">Domain Authority Growth Model</div>
+      <strong>Target DA to Rank for Competitive Terms</strong> = (Average DA of top 3 SERP results) × 0.80<br/><br/>
+      <em>Rule of thumb:</em> DA 20–40 → can rank for longtail (&lt;500 searches/mo, low competition)<br/>
+      <em>Rule of thumb:</em> DA 40–60 → can rank for mid-competition terms (500–5k searches/mo)<br/>
+      <em>Rule of thumb:</em> DA 60+ → can compete for high-volume commercial terms (5k+ searches/mo)<br/><br/>
+      <strong>Backlink acquisition target:</strong> 10–20 high-quality (DA 40+) referring domains per month
+    </div>
+  </div>
+
+  <div class="subsection">
+    <div class="subsection-title">Content Interlinking: Building PageRank Architecture</div>
+    <p>Internal linking is the most under-utilized SEO lever in SaaS content programs. Every page on your site passes authority to the pages it links to. A deliberate interlinking strategy ensures that your highest-value commercial pages (pricing, demo, comparison pages) receive maximum internal PageRank from your high-traffic ToFu content. The model: ToFu articles link to MoFu resources; MoFu resources link to BoFu pages; BoFu pages link to demo/trial CTAs.</p>
+  </div>
+
+  <!-- SECTION 5 -->
+  <h2 class="section-title">Thought Leadership: Establishing Category Authority</h2>
+  <p class="section-intro">Thought leadership is not publishing company news, product updates, or generic industry advice. Thought leadership is the systematic publication of original perspectives, counter-intuitive insights, and data-backed frameworks that make your ICP think differently about their problem. When done correctly, thought leadership makes your company the intellectual reference point for the category — which means when buyers are ready to purchase, you are the brand they already trust.</p>
+
+  <div class="subsection">
+    <div class="subsection-title">The Three Levels of Thought Leadership</div>
+    <ul class="bullet-list">
+      <li><strong>Level 1 — Aggregation:</strong> Curating and synthesizing existing industry knowledge. Valuable but produces no differentiation. This is the minimum viable thought leadership that any content team can produce.</li>
+      <li><strong>Level 2 — Framework Creation:</strong> Publishing original frameworks, models, or methodologies for solving problems in your space. Examples: <a href="https://www.gartner.com" target="_blank" rel="noopener noreferrer">Gartner</a>'s Magic Quadrant, <a href="https://www.mckinsey.com" target="_blank" rel="noopener noreferrer">McKinsey</a>'s 7-S Model. Frameworks generate backlinks, citations, and direct brand association with the problem domain.</li>
+      <li><strong>Level 3 — Category Creation:</strong> Naming a new problem and claiming ownership of the solution. Examples: <a href="https://www.drift.com" target="_blank" rel="noopener noreferrer">Drift</a> naming "Conversational Marketing," <a href="https://www.gainsight.com" target="_blank" rel="noopener noreferrer">Gainsight</a> naming "Customer Success." Category creation is a 3–5 year play, but the companies that win it own their markets for a decade.</li>
+    </ul>
+
+    <div class="callout callout-insight">
+      <div class="callout-title">The Iannarino Standard</div>
+      <p><a href="https://www.thesalesblog.com" target="_blank" rel="noopener noreferrer">Anthony Iannarino</a>'s "Level 4 Value Creation" framework argues that the highest-value salespeople don't sell products — they teach clients to think. The same principle applies to content. The highest-performing SaaS content doesn't explain your product's features. It teaches your ICP to think about their problem differently. This distinction separates content that builds pipeline from content that wins awards.</p>
+    </div>
+  </div>
+
+  <div class="subsection">
+    <div class="subsection-title">Thought Leadership Vehicles</div>
+    <table class="data-table">
+      <thead>
+        <tr><th>Vehicle</th><th>Format</th><th>Cadence</th><th>Primary Benefit</th><th>Distribution</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>Founder/CEO POV</td><td>LinkedIn essays, podcast appearances</td><td>Weekly</td><td>Brand personalization, category authority</td><td>LinkedIn, newsletter, PR</td></tr>
+        <tr><td>Original Research</td><td>Annual benchmark report, survey data</td><td>Annually (+ quarterly updates)</td><td>Backlinks, press coverage, citation authority</td><td>PR, LinkedIn, email, SEO</td></tr>
+        <tr><td>Frameworks and Models</td><td>Long-form guide with original framework</td><td>Quarterly</td><td>Framework ownership, sales enablement</td><td>SEO, email, sales content</td></tr>
+        <tr><td>Point of View Series</td><td>Opinion articles on industry trends</td><td>Monthly</td><td>Editorial voice, community building</td><td>LinkedIn, newsletter, guest posts</td></tr>
+        <tr><td>Podcast/Video Series</td><td>Interview show with ICP practitioners</td><td>Weekly/biweekly</td><td>Network building, distribution of thought leadership</td><td>YouTube, Spotify, LinkedIn</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- SECTION 6 -->
+  <h2 class="section-title">The Editorial Calendar: Publishing Architecture</h2>
+  <p class="section-intro">An editorial calendar is not a content schedule. It is a strategic publishing architecture that maps every piece of content to a buyer persona, a funnel stage, a keyword target, a distribution channel, and a business goal. Without this mapping, content marketing is creative output. With it, content marketing is demand generation.</p>
+
+  <div class="subsection">
+    <div class="subsection-title">Persona Mapping in the Editorial Calendar</div>
+    <p>Every content pillar should map to one primary ICP persona. The persona determines the vocabulary, the sophistication level, the examples, the distribution channel, and the CTA. Publishing VP of Sales content with an SDR-level CTA is a common mismatch that destroys conversion rates.</p>
+
+    <table class="data-table">
+      <thead>
+        <tr><th>ICP Persona</th><th>Job-to-be-Done</th><th>Preferred Content Format</th><th>Distribution Channel</th><th>CTA</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>VP of Sales</td><td>Improve team performance, reduce attrition, hit quota</td><td>Benchmarks, frameworks, executive summaries</td><td>LinkedIn, email, podcasts</td><td>Executive briefing, demo</td></tr>
+        <tr><td>RevOps Leader</td><td>Clean data, process efficiency, CRM optimization</td><td>Deep-dive guides, how-tos, integration tutorials</td><td>SEO, Slack communities, email</td><td>Free assessment, product trial</td></tr>
+        <tr><td>Sales Enablement</td><td>Rep ramp time, training content, playbooks</td><td>Templates, playbooks, training frameworks</td><td>Email, LinkedIn, community</td><td>Template downloads, webinar</td></tr>
+        <tr><td>CEO/Founder (SMB)</td><td>Revenue growth, GTM strategy, fundraising</td><td>Case studies, frameworks, contrarian takes</td><td>LinkedIn, newsletter, podcast</td><td>Strategy call, demo</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="subsection">
+    <div class="subsection-title">Publishing Cadence by Stage and Resource</div>
+
+    <div class="formula-block">
+      <div class="formula-label">Content Volume Model (by team size)</div>
+      <strong>Solo Content Marketer:</strong> 2 ToFu posts/week + 1 MoFu asset/month + 1 BoFu asset/quarter<br/>
+      <strong>Team of 3:</strong> 4–5 posts/week + 2 MoFu assets/month + 1 BoFu asset/month<br/>
+      <strong>Team of 5+:</strong> 8–10 posts/week + 4 MoFu assets/month + 2–3 BoFu assets/month<br/><br/>
+      <em>Quality rule:</em> One comprehensive pillar page outperforms 10 thin articles every time.<br/>
+      <em>Cadence rule:</em> Publishing at 50% of target cadence but 100% of quality beats the reverse.
+    </div>
+  </div>
+
+  <!-- SECTION 7 -->
+  <h2 class="section-title">Content Attribution: Tying Content to Pipeline</h2>
+  <p class="section-intro">Content attribution is the mechanism by which marketing earns its seat at the revenue table. Without attribution, content is a cost center. With it, content is a pipeline investment. The attribution model you choose will determine which content gets prioritized, which metrics are reported to leadership, and how content team ROI is measured. Each model tells a different story — and none of them tells the complete story.</p>
+
+  <div class="subsection">
+    <div class="subsection-title">Attribution Models Compared</div>
+    <table class="data-table">
+      <thead>
+        <tr><th>Model</th><th>How It Works</th><th>Best For</th><th>Limitation</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>First Touch</td><td>100% credit to the first content touchpoint that introduced the buyer</td><td>Measuring ToFu pipeline generation</td><td>Ignores all content influence after initial awareness</td></tr>
+        <tr><td>Last Touch</td><td>100% credit to the final touchpoint before conversion</td><td>Measuring BoFu conversion content</td><td>Ignores all awareness and evaluation content</td></tr>
+        <tr><td>Linear</td><td>Equal credit split across all touchpoints in the buyer journey</td><td>Balanced view of the full journey</td><td>Undervalues high-impact touchpoints</td></tr>
+        <tr><td>Time Decay</td><td>More credit to touchpoints closer to conversion</td><td>Longer sales cycles where recency matters</td><td>Undervalues awareness-stage content</td></tr>
+        <tr><td>U-Shaped (Position Based)</td><td>40% first touch, 40% last touch, 20% split across middle</td><td>Standard B2B SaaS (recommended baseline)</td><td>Arbitrary weight distribution</td></tr>
+        <tr><td>Data-Driven (ML)</td><td>Machine learning assigns credit based on historical conversion patterns</td><td>Companies with 10k+ conversion events</td><td>Requires large data volume; black box</td></tr>
+        <tr><td>Content-Influenced Pipeline</td><td>All pipeline where a prospect touched content at any point</td><td>Demonstrating content's total pipeline footprint</td><td>Overcounts (everyone touched something)</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="callout callout-insight">
+    <div class="callout-title">The Attribution Stack Recommendation</div>
+    <p>Run U-shaped attribution as your primary model for executive reporting. Layer in content-influenced pipeline as a secondary metric to show the full footprint. Use first-touch attribution to justify investment in ToFu/SEO programs. The goal is not to pick one model — it is to understand that each model answers a different question, and use the right model for the right question.</p>
+  </div>
+
+  <!-- SECTION 8 -->
+  <h2 class="section-title">Key Metrics: Content Marketing Dashboard</h2>
+  <p class="section-intro">The metrics you track determine the behaviors you incentivize. Content teams that track only traffic will optimize for traffic. Content teams that track pipeline influence will optimize for pipeline. Define your measurement stack before publishing the first piece of content.</p>
+
+  <div class="metric-grid">
+    <div class="metric-card">
+      <div class="m-label">MQLs from Content</div>
+      <div class="m-value">Primary</div>
+      <div class="m-desc">Total marketing qualified leads where content was a first or influencing touchpoint. Target: 40%+ of total MQL volume.</div>
+    </div>
+    <div class="metric-card">
+      <div class="m-label">Content-Influenced Pipeline</div>
+      <div class="m-value">Primary</div>
+      <div class="m-desc">Total pipeline value in deals where content was touched at any point. Target: 60%+ of total pipeline.</div>
+    </div>
+    <div class="metric-card">
+      <div class="m-label">Organic Traffic Growth</div>
+      <div class="m-value">Leading</div>
+      <div class="m-desc">Month-over-month organic sessions growth. Healthy SaaS content programs: 15–25% MoM in growth phase.</div>
+    </div>
+    <div class="metric-card">
+      <div class="m-label">Time on Page</div>
+      <div class="m-value">Quality</div>
+      <div class="m-desc">Average time spent on content pages. Target: 3+ minutes for long-form. Below 90 seconds = intent mismatch.</div>
+    </div>
+    <div class="metric-card">
+      <div class="m-label">Backlinks Acquired</div>
+      <div class="m-value">Authority</div>
+      <div class="m-desc">New referring domains (DA 30+) per month. Drives domain authority growth and compound ranking improvement.</div>
+    </div>
+    <div class="metric-card">
+      <div class="m-label">Share of Voice</div>
+      <div class="m-value">Competitive</div>
+      <div class="m-desc">Your brand's visibility vs. competitors across target keywords. Measured by Share of SERP impressions.</div>
+    </div>
+    <div class="metric-card">
+      <div class="m-label">Content → SQL Rate</div>
+      <div class="m-value">Pipeline</div>
+      <div class="m-desc">% of content-sourced MQLs that become Sales Qualified Leads. Benchmark: 15–25% for well-targeted content.</div>
+    </div>
+    <div class="metric-card">
+      <div class="m-label">Content-Influenced Win Rate</div>
+      <div class="m-value">Revenue</div>
+      <div class="m-desc">Win rate on deals where content was consumed vs. those where it wasn't. Expect 15–25% lift for content-touched deals.</div>
+    </div>
+  </div>
+
+  <div class="subsection">
+    <div class="subsection-title">The Content Marketing ROI Formula</div>
+    <div class="formula-block">
+      <div class="formula-label">Content ROI Calculation</div>
+      <strong>Content ROI</strong> = ((Content-Influenced Revenue × Gross Margin) − Content Program Cost) / Content Program Cost × 100<br/><br/>
+      <em>Example:</em> $2M content-influenced revenue × 75% GM = $1.5M margin<br/>
+      $1.5M − $400K program cost = $1.1M net return<br/>
+      $1.1M / $400K = <strong>275% ROI</strong><br/><br/>
+      <em>Note:</em> Use a conservative influence coefficient (e.g., 30% attribution weight on influenced pipeline) to avoid inflating the ROI number in board presentations.
+    </div>
+  </div>
+
+  <!-- SECTION 9 -->
+  <h2 class="section-title">The Content Marketing → MQL → Sales Handoff</h2>
+  <p class="section-intro">The highest-friction point in a content-led GTM motion is the handoff from marketing to sales. Content marketing generates warm inbound leads — buyers who have self-educated, expressed intent, and signaled readiness. These leads should be treated differently from cold outbound targets. A sales team that applies cold-calling approaches to inbound MQLs will destroy conversion rates and generate negative buyer experiences.</p>
+
+  <div class="subsection">
+    <div class="subsection-title">MQL Definition and Scoring</div>
+    <p>An MQL from content is not a traffic session. It is a named individual who has taken a conversion action (form fill, demo request, content download, pricing page visit + return) that indicates buying intent or problem awareness. MQL definition must be agreed between marketing and sales — an MQL that sales doesn't accept is not an MQL, it is a waste of marketing budget.</p>
+
+    <div class="formula-block">
+      <div class="formula-label">Content MQL Scoring Model</div>
+      <strong>Firmographic Fit:</strong> Company size match (5 pts), Industry match (5 pts), Role match (10 pts), Geography (3 pts) = max 23 pts<br/>
+      <strong>Behavioral Signals:</strong> Pricing page visit (15 pts), Demo request (25 pts), Content download (8 pts), Webinar attend (10 pts), 3+ page visits in session (5 pts) = max 63 pts<br/>
+      <strong>Engagement Depth:</strong> Email open (1 pt), Click (3 pts), 2+ visit sessions (5 pts), Social follow (2 pts) = max 14 pts<br/><br/>
+      <em>MQL threshold:</em> ≥ 45 points total<br/>
+      <em>Hot MQL (immediate follow-up):</em> ≥ 70 points OR demo request OR pricing page + role match
+    </div>
+  </div>
+
+  <div class="subsection">
+    <div class="subsection-title">The Handoff Protocol</div>
+    <ol class="step-list">
+      <li><div class="step-content"><span class="step-title">Marketing Arms the Rep</span>Before the first call, the rep should know: which content the prospect consumed, how many sessions they've had, which pages they visited, and any firmographic data. This context transforms the opening of the call.</div></li>
+      <li><div class="step-content"><span class="step-title">Speed Matters More Than Anything</span>The <a href="https://hbr.org" target="_blank" rel="noopener noreferrer">Harvard Business Review</a> study by MIT and Kellogg found that leads contacted within 5 minutes of form submission are 21× more likely to convert than those contacted after 30 minutes. Build a routing and notification system that creates zero lag from form fill to rep outreach.</div></li>
+      <li><div class="step-content"><span class="step-title">Context-Aware Opening</span>The rep's opening message should reference the content the prospect engaged with. "I saw you downloaded our SaaS sales velocity guide" is dramatically more effective than a cold opener — it confirms the rep did their homework and opens with relevance.</div></li>
+      <li><div class="step-content"><span class="step-title">Closed-Loop Reporting</span>Every inbound MQL that fails to convert to an SQL should generate a feedback signal back to marketing. Was the content attracting the wrong persona? Was the lead score threshold too low? This loop is what makes content + sales progressively more efficient over time.</div></li>
+    </ol>
+  </div>
+
+  <!-- SECTION 10 -->
+  <h2 class="section-title">Common Failure Modes and Fixes</h2>
+  <p class="section-intro">The majority of SaaS content programs fail not because of poor writing — but because of structural and strategic errors that no amount of editorial quality can fix. These are the ten most common failure modes, diagnosed with precision and paired with remedies.</p>
+
+  <table class="data-table">
+    <thead>
+      <tr><th>Failure Mode</th><th>Symptom</th><th>Root Cause</th><th>Fix</th></tr>
+    </thead>
+    <tbody>
+      <tr><td><strong>Content that doesn't convert</strong></td><td>High traffic, low MQLs</td><td>CTAs are weak or misaligned to content intent; content attracts non-ICP audience</td><td>Audit every high-traffic page: does the CTA match the intent of the reader? Add intent-matched conversion paths.</td></tr>
+      <tr><td><strong>SEO without ICP alignment</strong></td><td>Traffic growing, pipeline flat</td><td>Targeting keywords that attract general audience, not buyer personas</td><td>Rebuild keyword strategy starting from ICP job titles and problems, not search volume alone.</td></tr>
+      <tr><td><strong>No mid-funnel content</strong></td><td>MQLs don't progress to SQL</td><td>No evaluation-stage content to help buyers build internal cases</td><td>Map 3–5 pieces of MoFu content per ICP persona: ROI calculator, comparison guide, implementation guide.</td></tr>
+      <tr><td><strong>Publishing without distribution</strong></td><td>Articles get &lt;100 views</td><td>Treating content as complete when published, not when distributed</td><td>70% of content effort should be distribution. Build a channel-by-channel distribution checklist for every publish.</td></tr>
+      <tr><td><strong>No thought leadership differentiation</strong></td><td>Content is identical to 10 competitors</td><td>Producing "me too" content from generic briefs without POV</td><td>Define 3–5 original frameworks or counter-intuitive positions. Every piece must have a distinctly ownable perspective.</td></tr>
+      <tr><td><strong>Attribution theater</strong></td><td>Marketing claims 150% of pipeline</td><td>Using "content influenced" as a catch-all with no rigor</td><td>Define attribution model in writing with sales leadership. Apply conservative weighting. Measure content → close, not content → impression.</td></tr>
+      <tr><td><strong>Slow speed-to-lead</strong></td><td>Inbound MQLs converting at &lt;5%</td><td>Manual routing, delayed follow-up, rep unaware of lead context</td><td>Implement automated routing, rep notification, and content context delivery in CRM within 90 seconds of form fill.</td></tr>
+      <tr><td><strong>Persona confusion</strong></td><td>Content doesn't resonate with ICP</td><td>Writing for "everyone" or for an outdated persona definition</td><td>Run ICP interviews quarterly. Every article should cite which persona it serves and why that persona would find it valuable.</td></tr>
+    </tbody>
+  </table>
+
+  
+  <div class="download-section">
+    <div class="download-section-title">Downloadable Tools</div>
+    <div class="download-grid">
+      <a href="../assets/downloads/Content-Marketing-Worksheet-MAKE-A-COPY-FOR-PERSONAL-USE.xlsx" class="download-card" download>
+        <div class="download-icon dl-xlsx">XLS</div>
+        <div class="download-card-body">
+          <div class="download-card-name">Content Marketing Worksheet</div>
+          <div class="download-card-type">Excel Spreadsheet</div>
+        </div>
+        <div class="download-arrow">↓</div>
+      </a>
+    </div>
+  </div>
+
+  <div class="related-section">
+    <div class="related-title">Related Resources</div>
+    <div class="related-links">
+      <a href="template-editorial-calendar.html" class="related-link">Editorial Calendar Template</a>
+      <a href="template-content-marketing.html" class="related-link">Content Marketing Template</a>
+      <a href="demand-generation.html" class="related-link">Demand Generation</a>
+      <a href="icp.html" class="related-link">ICP &amp; Persona Mapping</a>
+      <a href="mql-handoff.html" class="related-link">MQL → Sales Handoff</a>
+      <a href="pipeline-attribution.html" class="related-link">Pipeline Attribution</a>
+    </div>
+  </div>
+
+</div>
 <script data-pplx-inline-edit>
 (function () {
   if (window === window.top) return;

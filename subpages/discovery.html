@@ -2,11 +2,531 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8"/>
-  <meta http-equiv="refresh" content="0; url=playbook.html"/>
-  <title>Discovery Framework — SaaS Revenue System</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Discovery — SaaS Revenue System</title>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="../assets/shared.css"/>
+  <style>
+    .page-hero { background: #964219; }
+    .formula-block { background: #1C1B19; color: #CDCCCA; border-radius: 8px; padding: 20px 24px; margin: 16px 0; font-family: 'DM Mono', 'Courier New', monospace; font-size: 14px; line-height: 1.8; }
+    .formula-block .formula-label { font-size: 11px; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase; color: #d4843f; margin-bottom: 10px; }
+    .formula-block strong { color: #E8C96A; }
+    .formula-block em { color: #7EC8A4; font-style: normal; }
+    .subsection { margin: 32px 0; }
+    .subsection-title { font-size: 20px; font-weight: 700; color: var(--text); margin-bottom: 12px; padding-bottom: 6px; border-bottom: 2px solid var(--border); }
+    .callout { background: var(--surface); border: 1.5px solid var(--border); border-left: 4px solid var(--primary); border-radius: 8px; padding: 18px 20px; margin: 20px 0; }
+    .callout-title { font-size: 12px; font-weight: 700; letter-spacing: 1px; text-transform: uppercase; color: var(--primary); margin-bottom: 8px; }
+    .callout p { font-size: 15px; line-height: 1.65; }
+    .callout-warning { border-left-color: #964219; }
+    .callout-warning .callout-title { color: #964219; }
+    .callout-insight { border-left-color: #437A22; }
+    .callout-insight .callout-title { color: #437A22; }
+    .callout-orange { border-left-color: #964219; }
+    .callout-orange .callout-title { color: #964219; }
+    .hero-tags { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 20px; }
+    .hero-tag { font-size: 12px; font-weight: 600; padding: 5px 14px; border-radius: 20px; background: rgba(255,255,255,0.15); color: rgba(255,255,255,0.92); border: 1px solid rgba(255,255,255,0.25); text-decoration: none; transition: background 0.15s; }
+    .hero-tag:hover { background: rgba(255,255,255,0.28); color: #fff; text-decoration: none; }
+    .meddicc-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 14px; margin: 20px 0; }
+    .meddicc-card { background: var(--surface); border: 1.5px solid var(--border); border-radius: 10px; padding: 18px 20px; }
+    .meddicc-card .m-letter { font-size: 28px; font-weight: 700; color: #964219; line-height: 1; margin-bottom: 4px; }
+    .meddicc-card h4 { font-size: 15px; font-weight: 700; color: var(--text); margin-bottom: 6px; }
+    .meddicc-card p { font-size: 13px; color: var(--text-muted); line-height: 1.6; margin-bottom: 8px; }
+    .meddicc-card .m-questions { font-size: 12px; color: var(--primary); font-weight: 500; }
+    .scorecard { background: var(--surface); border: 1.5px solid var(--border); border-radius: 10px; overflow: hidden; margin: 20px 0; }
+    .scorecard-header { background: #964219; color: #fff; padding: 12px 20px; font-size: 14px; font-weight: 700; display: flex; justify-content: space-between; }
+    .scorecard-row { display: flex; padding: 10px 20px; border-bottom: 1px solid var(--border); align-items: center; gap: 16px; }
+    .scorecard-row:last-child { border-bottom: none; }
+    .scorecard-criterion { flex: 1; font-size: 14px; font-weight: 600; color: var(--text); }
+    .scorecard-qualified { flex: 1; font-size: 13px; color: #437A22; }
+    .scorecard-weak { flex: 1; font-size: 13px; color: #964219; }
+    .scorecard-col-header { flex: 1; font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.8px; color: var(--text-muted); }
+    .question-block { background: #f9f8f5; border: 1px solid var(--border); border-radius: 8px; padding: 16px 20px; margin: 12px 0; }
+    .question-block .q-type { font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; color: #964219; margin-bottom: 8px; }
+    .question-block ul { list-style: none; }
+    .question-block ul li { font-size: 14px; color: var(--text); padding: 4px 0 4px 16px; position: relative; font-style: italic; }
+    .question-block ul li::before { content: '"'; position: absolute; left: 0; color: #964219; font-weight: 700; font-style: normal; }
+    .redflag-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin: 20px 0; }
+    .redflag-card { background: #fdf3ef; border: 1.5px solid #e8c4b0; border-radius: 8px; padding: 16px; }
+    .redflag-card h4 { font-size: 13px; font-weight: 700; color: #964219; margin-bottom: 6px; }
+    .redflag-card p { font-size: 13px; color: var(--text-muted); line-height: 1.5; }
+    .thread-row { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 14px; margin: 20px 0; }
+    .thread-card { background: var(--surface); border: 1.5px solid var(--border); border-radius: 8px; padding: 18px; }
+    .thread-card h4 { font-size: 13px; font-weight: 700; color: var(--text); margin-bottom: 8px; }
+    .thread-card .thread-role { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.8px; color: #964219; margin-bottom: 6px; }
+    .thread-card ul { list-style: none; }
+    .thread-card ul li { font-size: 12px; color: var(--text-muted); padding: 3px 0 3px 14px; position: relative; line-height: 1.5; }
+    .thread-card ul li::before { content: '→'; position: absolute; left: 0; color: var(--primary); font-size: 10px; font-weight: 700; }
+    @media (max-width: 768px) { .redflag-grid, .thread-row { grid-template-columns: 1fr; } .meddicc-grid { grid-template-columns: 1fr; } }
+  </style>
 </head>
 <body>
-  <p>Redirecting... <a href="playbook.html">Click here if not redirected</a></p>
+
+<nav class="nav">
+  <span class="nav-logo">SaaS <span>Revenue System</span></span>
+  <span class="nav-sep">|</span>
+  <a href="../index.html" class="nav-back">← Home</a>
+  <span class="nav-sep">|</span>
+  <a href="../pages/phase4.html" class="nav-back">Phase 4: Execution</a>
+  <span class="nav-sep">|</span>
+  <span class="nav-current">Discovery</span>
+</nav>
+
+<div class="page-hero">
+  <div class="hero-phase-label">Phase 4 — Execution &amp; Performance Management</div>
+  <div class="hero-title">Discovery — The Art and Science of Qualifying and Understanding Your Buyer</div>
+  <div class="hero-subtitle">Discovery is the highest-leverage sales skill. It is not a question-and-answer session. It is a structured diagnostic that surfaces the economic reality of your buyer's situation, identifies the person who will win or lose the deal internally, and creates the foundation for every value conversation that follows.</div>
+  <div class="hero-tags">
+    <a href="meddicc.html" class="hero-tag">MEDDICC</a>
+    <a href="champion-building.html" class="hero-tag">Champion Building</a>
+    <a href="template-discovery.html" class="hero-tag">Discovery Template</a>
+    <a href="value-proposition.html" class="hero-tag">Value Alignment</a>
+    <a href="playbook.html" class="hero-tag">Sales Playbook</a>
+  </div>
+</div>
+
+<div class="content-wrap">
+  <div class="breadcrumb">
+    <a href="../index.html">Home</a><span class="sep">›</span>
+    <a href="../pages/phase4.html">Phase 4</a><span class="sep">›</span>
+    <span class="current">Discovery</span>
+  </div>
+
+  <!-- SECTION 1 -->
+  <h2 class="section-title">Why Discovery Is the Most Important Sales Skill</h2>
+  <p class="section-intro">In <a href="https://www.thesalesblog.com" target="_blank" rel="noopener noreferrer">Anthony Iannarino</a>'s framework, the ability to create value in a sales conversation starts with the ability to diagnose needs with clinical precision. Not assumed needs. Not features you want to pitch. Actual, articulated, stakeholder-validated needs — with quantified consequences if unaddressed. Discovery is the mechanism by which a salesperson earns the right to propose a solution. Without it, every proposal is a guess.</p>
+
+  <div class="callout callout-insight">
+    <div class="callout-title">Iannarino: The Level 4 Seller</div>
+    <p>Iannarino's hierarchy of sales value creation identifies four levels: Level 1 sellers pitch products. Level 2 sellers present solutions. Level 3 sellers solve problems. Level 4 sellers identify problems the buyer didn't know they had and quantify the cost of those problems with greater precision than the buyer can themselves. Discovery is the mechanism that separates Level 4 sellers from everyone else. A Level 4 discovery conversation leaves the buyer feeling they just had a productive session with a strategic advisor — not a salesperson.</p>
+  </div>
+
+  <div class="subsection">
+    <div class="subsection-title">The Economic Case for Discovery Investment</div>
+    <p><a href="https://www.gong.io" target="_blank" rel="noopener noreferrer">Gong</a>'s research across 500,000+ recorded sales calls establishes the empirical case. Deals where discovery conversations included questions about business impact (not just product fit) had win rates 43% higher than deals where discovery focused on technical requirements. Deals where the rep listened more than 65% of the time in discovery had close rates 2.1× higher than deals where the rep spoke more than 50% of the time. Discovery is not a step in the sales process. It is the sales process.</p>
+
+    <table class="data-table">
+      <thead>
+        <tr><th>Discovery Quality Level</th><th>Characteristics</th><th>Win Rate Impact</th><th>Sales Cycle Impact</th></tr>
+      </thead>
+      <tbody>
+        <tr><td><strong>Level 1 (Surface)</strong></td><td>Role, headcount, current tools, basic pain statement</td><td>Baseline (no lift)</td><td>No change</td></tr>
+        <tr><td><strong>Level 2 (Situational)</strong></td><td>+ Timeline, budget range, decision process, competitors considered</td><td>+10–15% win rate</td><td>−10% cycle length</td></tr>
+        <tr><td><strong>Level 3 (Impact)</strong></td><td>+ Quantified business pain, cost of inaction, revenue/cost impact</td><td>+25–35% win rate</td><td>−20% cycle length</td></tr>
+        <tr><td><strong>Level 4 (<a href="https://meddicc.com/meddicc-the-book" target="_blank" rel="noopener noreferrer">MEDDICC</a> Complete)</strong></td><td>+ Champion identified, EB accessed, metrics agreed, competition mapped</td><td>+40–55% win rate</td><td>−30% cycle length</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- SECTION 2 -->
+  <h2 class="section-title">The Discovery Framework: Pain → Impact → Cause → Solution</h2>
+  <p class="section-intro">The Pain-Impact-Cause-Solution (PICS) framework structures discovery into a logical diagnostic sequence that mirrors how a physician approaches a patient consultation. Each layer builds on the previous. Skipping layers produces shallow discovery — you know what hurts but not why, or you know why but not how much it costs. Every layer is necessary.</p>
+
+  <div class="subsection">
+    <div class="subsection-title">The Four Layers of Deep Discovery</div>
+    <ol class="step-list">
+      <li><div class="step-content"><span class="step-title">Pain — What's the problem?</span>The opening layer establishes the surface-level problem the buyer is experiencing. These are the symptoms. "Our sales cycle is too long." "Our reps are missing quota." "We're losing deals to competitors we shouldn't lose to." Pain statements are the starting point — they are not the discovery destination. A rep who stops at pain is a commodity. The value comes from what happens next.<br/><br/><em>Key questions:</em> "What's the biggest challenge your sales team is facing right now?" / "If you could solve one problem in the next 90 days, what would it be?" / "Walk me through what a typical deal looks like from first meeting to close."</div></li>
+      <li><div class="step-content"><span class="step-title">Impact — What does this cost?</span>The impact layer converts a pain statement into an economic reality. "Our sales cycle is too long" becomes "Each additional week in our sales cycle costs us approximately $28,000 in rep time, and we're running 47 active deals — that's $1.3 million in inefficiency this quarter." Impact quantification is the most important discovery skill because it transforms your product from a nice-to-have into a financial imperative.<br/><br/><em>Key questions:</em> "What does that cost you in terms of revenue?" / "If I told you we could cut your sales cycle by 3 weeks, what does that mean for this quarter's number?" / "How many deals have you lost in the last 12 months because this problem wasn't solved?"</div></li>
+      <li><div class="step-content"><span class="step-title">Cause — Why does the problem exist?</span>The cause layer investigates root causation. Most buyers haven't done root cause analysis on their own pain — they experience symptoms and react to them. The discovery rep who surfaces the actual cause earns extraordinary credibility. The buyer thinks: "I've been dealing with this for two years and this person figured out why in 20 minutes."<br/><br/><em>Key questions:</em> "When did this problem first appear? What changed?" / "Have you tried to solve this before? What happened?" / "Is this a people problem, a process problem, or a technology problem — or some combination?"</div></li>
+      <li><div class="step-content"><span class="step-title">Solution — What would perfect look like?</span>The solution layer invites the buyer to describe their ideal state in their own words. This is the most powerful question in discovery: it gets the buyer to paint the picture you'll use to build the proposal. "Perfect" for them becomes the value destination. Your job is to show them the path from where they are to where they want to be.<br/><br/><em>Key questions:</em> "If everything went exactly right with a new solution, what would your world look like in 12 months?" / "What would have to be true about a vendor for you to consider them a true partner rather than just a tool?" / "How would you know if this investment was successful?"</div></li>
+    </ol>
+  </div>
+
+  <!-- SECTION 3 -->
+  <h2 class="section-title">MEDDICC in Discovery: The Complete Qualification Framework</h2>
+  <p class="section-intro">MEDDICC (Metrics, Economic Buyer, Decision Criteria, Decision Process, Identify Pain, Champion, Competition) is not a checklist to complete at the end of a discovery call. It is the architecture of the discovery call itself. Every discovery conversation should be designed to gather MEDDICC data across multiple interactions. A deal where you cannot populate every MEDDICC field is not a qualified opportunity — it is a hope.</p>
+
+  <div class="meddicc-grid">
+    <div class="meddicc-card">
+      <div class="m-letter">M</div>
+      <h4>Metrics</h4>
+      <p>Quantified measures of success. The specific numbers the buyer will use to determine if the investment worked. Without metrics, deals die in procurement because nobody can articulate ROI.</p>
+      <div class="m-questions">Key questions: "How will you measure success?" / "What are the business outcomes you're solving for, and what's the dollar value of each?"</div>
+    </div>
+    <div class="meddicc-card">
+      <div class="m-letter">E</div>
+      <h4>Economic Buyer</h4>
+      <p>The individual with budget authority and final approval. In complex deals, the economic buyer is often not in early discovery conversations. Your champion must get you access. Without EB access, your deal is at risk of veto.</p>
+      <div class="m-questions">Key questions: "Who has final approval on a decision of this size?" / "Has your CRO/CFO/CEO been briefed on this initiative?"</div>
+    </div>
+    <div class="meddicc-card">
+      <div class="m-letter">D</div>
+      <h4>Decision Criteria</h4>
+      <p>The specific criteria the buying committee will use to evaluate vendors. Technical, commercial, strategic. Who owns each criterion. Knowing this lets you influence the criteria before RFP, turning evaluation into confirmation.</p>
+      <div class="m-questions">Key questions: "What are the must-haves vs. nice-to-haves?" / "Who owns the technical evaluation vs. the business case?"</div>
+    </div>
+    <div class="meddicc-card">
+      <div class="m-letter">D</div>
+      <h4>Decision Process</h4>
+      <p>The sequence of events from evaluation to signed contract. Who must approve. What internal stages must be completed (security review, legal review, procurement, board approval). Timeline to implementation start.</p>
+      <div class="m-questions">Key questions: "Walk me through what happens after you choose a vendor." / "What are the internal approval steps? Who can slow this down?"</div>
+    </div>
+    <div class="meddicc-card">
+      <div class="m-letter">I</div>
+      <h4>Identify Pain</h4>
+      <p>The specific, quantified business pain that creates urgency. Must be confirmed by both the champion and, ideally, the economic buyer. Pain that is felt at the EB level creates budget; pain felt only at the practitioner level creates interest.</p>
+      <div class="m-questions">Key questions: "Does your CFO/VP understand the cost of this problem today?" / "What happens to the business if this isn't solved in the next 6 months?"</div>
+    </div>
+    <div class="meddicc-card">
+      <div class="m-letter">C</div>
+      <h4>Champion</h4>
+      <p>The person inside the buying organization who has power and actively wants you to win. Not a fan — a fighter. They share confidential information, provide access, and will spend political capital on your behalf. See Champion Building for full treatment.</p>
+      <div class="m-questions">Champion test: "Will they coach you on the political landscape?" / "Have they introduced you to the EB without being asked?"</div>
+    </div>
+    <div class="meddicc-card">
+      <div class="m-letter">C</div>
+      <h4>Competition</h4>
+      <p>Every vendor being evaluated, including the status quo (do nothing). Understanding competitive alternatives lets you shape decision criteria in your favor before they're formalized. Deals lost to "no decision" are often wins for the status quo competitor.</p>
+      <div class="m-questions">Key questions: "What other solutions are you evaluating?" / "What would have to be true about our solution to make this decision easy?" / "What happens if you do nothing?"</div>
+    </div>
+  </div>
+
+  <div class="formula-block">
+    <div class="formula-label">MEDDICC Opportunity Score</div>
+    <strong>Each MEDDICC element scored 0–2:</strong><br/>
+    0 = Unknown / not captured<br/>
+    1 = Partially known / unconfirmed<br/>
+    2 = Fully known / confirmed by multiple stakeholders<br/><br/>
+    <strong>Total possible: 14 points</strong><br/>
+    <em>Score 0–5:</em>  Unqualified — do not commit resources. Qualify or disqualify immediately.<br/>
+    <em>Score 6–9:</em>  Developing — qualified with gaps. Active discovery required on missing elements.<br/>
+    <em>Score 10–12:</em> Well-qualified — progress deal to next stage with specific gap-close plan.<br/>
+    <em>Score 13–14:</em> Fully qualified — commit resources, escalate champion engagement, forecast with confidence.<br/><br/>
+    <strong>Forecast Policy:</strong> Deals scoring &lt;8 should not be in Commit forecast category.<br/>
+    <strong>Coaching Focus:</strong> Deals in 6–9 range — manager and rep review missing elements weekly.
+  </div>
+
+  <!-- SECTION 4 -->
+  <h2 class="section-title">The Discovery Call Structure</h2>
+  <p class="section-intro">A discovery call has a deliberate structure. Improvisation in discovery produces random outputs — sometimes good, usually incomplete. The structured discovery call is reproducible, trainable, and auditable. Every rep on your team should be able to run the same quality discovery call with the same architecture, producing comparable qualification data that managers can coach and forecast from.</p>
+
+  <div class="subsection">
+    <div class="subsection-title">The Five-Part Discovery Call Architecture</div>
+    <ol class="step-list">
+      <li><div class="step-content"><span class="step-title">Opening and Agenda Setting (5 minutes)</span>Establish credibility, set the agenda explicitly, and confirm the time allocation. Ask permission to take notes. Confirm who is in the room and their roles. Establish a mutual objective for the call: "By the end of our time today, I want to understand your situation well enough to tell you honestly whether we can help you — and if we can, what that would look like." This framing establishes the rep as a diagnostic expert, not a pitching vendor.</div></li>
+      <li><div class="step-content"><span class="step-title">Situational Questions (10–15 minutes)</span>Current state: team size, current tools, organizational structure, key metrics, recent history. These are the context questions that make all subsequent questions meaningful. Do not skip this layer, even if you researched the company extensively. The buyer's self-description is different from your research — and often more accurate.</div></li>
+      <li><div class="step-content"><span class="step-title">Problem Questions — <a href="https://www.amazon.com/SPIN-Selling-Neil-Rackham/dp/0070511136" target="_blank" rel="noopener noreferrer">SPIN Selling</a> Layer (15–20 minutes)</span>Derived from <a href="https://www.amazon.com/SPIN-Selling-Neil-Rackham/dp/0070511136" target="_blank" rel="noopener noreferrer">Neil Rackham</a>'s SPIN methodology: Situation established, now Probe for Problems. These questions surface the specific pain points, failures, and frustrations the buyer experiences. Open-ended, exploratory. Let the buyer elaborate. The rep should speak no more than 30% of the time in this phase.</div></li>
+      <li><div class="step-content"><span class="step-title">Implication Questions — Deepening Pain (10–15 minutes)</span>The most powerful questions in SPIN: "What happens if this problem isn't solved?" / "How does this affect the rest of the organization?" / "What's the downstream consequence?" Implication questions amplify the felt impact of the problem — they move it from "important" to "urgent." This is the phase where budget authority gets justified and urgency gets created.</div></li>
+      <li><div class="step-content"><span class="step-title">Need-Payoff Questions — Closing the Discovery (5–10 minutes)</span>Rackham's final SPIN layer: invite the buyer to articulate the value of solving the problem. "If you could eliminate that problem, what would that mean for your team?" / "What's it worth to you to get that 30 days back every quarter?" Need-payoff questions transfer ownership of the solution idea from the rep to the buyer — the buyer is now telling you why they need your product.</div></li>
+    </ol>
+  </div>
+
+  <div class="subsection">
+    <div class="subsection-title">Question Architecture: The SPIN Discovery Bank</div>
+
+    <div class="question-block">
+      <div class="q-type">Situational Questions</div>
+      <ul>
+        <li>Walk me through how your sales team is currently structured.</li>
+        <li>What does your current tech stack look like for [relevant function]?</li>
+        <li>How are you currently measuring [relevant metric]?</li>
+        <li>What does a typical [process] look like for your team today?</li>
+      </ul>
+    </div>
+
+    <div class="question-block">
+      <div class="q-type">Problem Questions</div>
+      <ul>
+        <li>What are the biggest challenges your team faces with [process]?</li>
+        <li>Where do deals most commonly stall or fall apart in your pipeline?</li>
+        <li>What's not working about the way you [current approach] today?</li>
+        <li>If you could change one thing about how your team operates, what would it be?</li>
+      </ul>
+    </div>
+
+    <div class="question-block">
+      <div class="q-type">Implication Questions</div>
+      <ul>
+        <li>What does that problem cost you — in time, revenue, or rep capacity?</li>
+        <li>How does that affect your ability to hit your number this quarter?</li>
+        <li>If this isn't solved in the next 6 months, what happens to the business?</li>
+        <li>How many deals have you lost because of this problem in the last 12 months?</li>
+      </ul>
+    </div>
+
+    <div class="question-block">
+      <div class="q-type">Need-Payoff Questions</div>
+      <ul>
+        <li>If you could solve that completely, what would that mean for you personally?</li>
+        <li>What's the value to the business of getting those [hours/deals/dollars] back?</li>
+        <li>If this was working perfectly in 90 days, what would your world look like?</li>
+        <li>How important is it for you to solve this before your next board meeting?</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- SECTION 5 -->
+  <h2 class="section-title">Multi-Threading Discovery: Multiple Stakeholder Conversations</h2>
+  <p class="section-intro">Single-threaded deals — where all discovery is conducted with a single contact — are the most fragile deals in any pipeline. That single contact can leave the company, lose internal support, be overruled, or simply fail to carry your message to the decision-makers who matter. Multi-threaded discovery is the practice of conducting parallel discovery conversations across multiple stakeholders, each revealing a different dimension of the organization's reality.</p>
+
+  <div class="thread-row">
+    <div class="thread-card">
+      <div class="thread-role">Economic Buyer (EB)</div>
+      <h4>What to Discover</h4>
+      <ul>
+        <li>Strategic priorities for this fiscal year</li>
+        <li>Budget cycle and approval process</li>
+        <li>How they measure ROI on technology investments</li>
+        <li>Previous failures in this category</li>
+        <li>Personal success metrics for this initiative</li>
+      </ul>
+    </div>
+    <div class="thread-card">
+      <div class="thread-role">Champion / Project Owner</div>
+      <h4>What to Discover</h4>
+      <ul>
+        <li>Day-to-day pain points (granular)</li>
+        <li>Internal stakeholder map</li>
+        <li>Decision process and politics</li>
+        <li>Competitive landscape awareness</li>
+        <li>Personal motivation for this initiative</li>
+        <li>What winning looks like for their career</li>
+      </ul>
+    </div>
+    <div class="thread-card">
+      <div class="thread-role">Technical Evaluator</div>
+      <h4>What to Discover</h4>
+      <ul>
+        <li>Integration requirements</li>
+        <li>Security and compliance needs</li>
+        <li>Implementation complexity concerns</li>
+        <li>Current tech stack constraints</li>
+        <li>Past technical failures with similar tools</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="callout callout-orange">
+    <div class="callout-title">The Multi-Threading Rule</div>
+    <p>Lane &amp; Adint's framework for enterprise deals requires a minimum of three stakeholders across two organizational levels to be validated as a multi-threaded opportunity. A deal with only one contact at any stage of the pipeline is classified as "at risk" regardless of the stated interest level of that contact. The practical implication: every discovery call should end with a request for introductions to other relevant stakeholders. "Based on what you've shared, it would be valuable to also understand how [VP of Finance / Head of IT / CEO] thinks about this — can you set up a brief conversation?"</p>
+  </div>
+
+  <!-- SECTION 6 -->
+  <h2 class="section-title">Documenting Discovery: CRM Capture and Proposal Preparation</h2>
+  <p class="section-intro">Discovery is only as valuable as its documentation. A rep who has a perfect discovery conversation and fails to capture the insights in CRM has wasted the effort — for themselves (the next conversation starts from zero), for their manager (no coaching material), and for the company (no pattern recognition across deals). Discovery documentation is a sales discipline, not an administrative burden.</p>
+
+  <div class="subsection">
+    <div class="subsection-title">The Discovery CRM Capture Standard</div>
+    <p>Every opportunity in CRM should be able to answer the following questions from the data captured in discovery fields, not from notes buried in call recordings:</p>
+
+    <table class="data-table">
+      <thead>
+        <tr><th>CRM Field</th><th>What to Capture</th><th>Why It Matters</th></tr>
+      </thead>
+      <tbody>
+        <tr><td><strong>Identified Pain (text)</strong></td><td>Verbatim statement of the primary business pain, in the buyer's words</td><td>Used in proposal to mirror buyer's language; validation signal in forecasting</td></tr>
+        <tr><td><strong>Quantified Impact ($)</strong></td><td>Dollar value of the pain — revenue lost, cost incurred, or efficiency foregone</td><td>Business case foundation; required for EB conversation; forecast confidence signal</td></tr>
+        <tr><td><strong>Champion Name + Title</strong></td><td>Named individual who meets champion criteria (power + will + action)</td><td>Deal risk assessment; coaching trigger if blank at Stage 3+</td></tr>
+        <tr><td><strong>Economic Buyer Name + Title</strong></td><td>Named individual with final approval authority and confirmed budget</td><td>Forecast confidence; escalation planning</td></tr>
+        <tr><td><strong>Decision Criteria (ranked)</strong></td><td>Top 3–5 evaluation criteria in order of weight</td><td>Proposal structure; competitive positioning; win/loss analysis</td></tr>
+        <tr><td><strong>Decision Process (steps)</strong></td><td>Sequential steps from evaluation to signed contract with owner and timeline</td><td>Forecast date accuracy; next step clarity; legal/procurement planning</td></tr>
+        <tr><td><strong>Competitor(s)</strong></td><td>Named alternatives being evaluated, including status quo</td><td>Battlecard activation; competitive positioning; win/loss tracking</td></tr>
+        <tr><td><strong>MEDDICC Score</strong></td><td>Numerical score 0–14 per opportunity scoring model</td><td>Forecast category assignment; manager review trigger</td></tr>
+        <tr><td><strong>Next Stakeholder Action</strong></td><td>Specific commitment the buyer made at end of last conversation</td><td>Deal momentum signal; ghosting detection; coaching trigger</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="subsection">
+    <div class="subsection-title">From Discovery Notes to Proposal: The Bridge</div>
+    <div class="formula-block">
+      <div class="formula-label">Discovery → Proposal Translation Framework</div>
+      <strong>Section 1: Your Situation</strong> (use buyer's exact words from discovery)<br/>
+      "Based on our conversations, [Company] is experiencing [Identified Pain] — specifically [quantified impact detail]. This is costing you [dollar amount] and [strategic consequence]."<br/><br/>
+      <strong>Section 2: What You Told Us Success Looks Like</strong><br/>
+      "You defined success as: [need-payoff statement from discovery]. You need this solved by [timeline] because [urgency driver]."<br/><br/>
+      <strong>Section 3: Our Recommended Solution</strong><br/>
+      "Given those specific needs, here is what we recommend and why each element maps to the outcomes you described."<br/><br/>
+      <em>Rule:</em> Every element of the proposal must be anchored to a specific discovery finding.<br/>
+      <em>Failure mode:</em> A proposal that introduces features not mentioned in discovery is a product pitch, not a solution proposal.
+    </div>
+  </div>
+
+  <!-- SECTION 7 -->
+  <h2 class="section-title">Discovery Red Flags: Signs the Deal Is Not Real</h2>
+  <p class="section-intro">The most expensive thing a salesperson can do is spend time on a deal that was never going to close. Discovery is not just about uncovering opportunity — it is equally about identifying deals that should be disqualified before they consume quota-carrying resources. The red flags below are not reasons to immediately walk away. They are reasons to immediately investigate and resolve before committing resources.</p>
+
+  <div class="redflag-grid">
+    <div class="redflag-card">
+      <h4>No Articulated Urgency</h4>
+      <p>The buyer cannot articulate why this needs to be solved in the next 90 days. "Someday" projects compete against budget priorities that have a timeline. Without urgency, deals slip quarters indefinitely.</p>
+    </div>
+    <div class="redflag-card">
+      <h4>No Budget Confirmed</h4>
+      <p>Three meetings in and you still don't know if budget exists, is approved, or requires a new request cycle. Unconfirmed budget at Stage 3 is a forecast integrity issue.</p>
+    </div>
+    <div class="redflag-card">
+      <h4>No Champion, Only a Coach</h4>
+      <p>Your primary contact is friendly, helpful, and completely powerless. They won't introduce you to the EB. They won't share competitive information. They're a coach. Coaches don't close deals — champions do.</p>
+    </div>
+    <div class="redflag-card">
+      <h4>Competitor in Late-Stage Evaluation</h4>
+      <p>You discover the prospect has been running an evaluation with a competitor for 3 months and you just entered. You are being used as a pricing check. Unless you can disrupt the evaluation, walk away.</p>
+    </div>
+    <div class="redflag-card">
+      <h4>No Access to Economic Buyer</h4>
+      <p>Your champion refuses to introduce you to the EB, claiming "we don't need to involve them yet." In a deal above $25K ACV, this almost always means your champion doesn't have the influence they've implied — or they're protecting their position as your only information source.</p>
+    </div>
+    <div class="redflag-card">
+      <h4>Pain Not Felt at Executive Level</h4>
+      <p>The practitioner feels the pain acutely, but the VP/C-suite views it as a minor efficiency issue rather than a strategic imperative. Budget for non-executive-priority problems is the first to be cut.</p>
+    </div>
+    <div class="redflag-card">
+      <h4>RFP Without Prior Relationship</h4>
+      <p>You receive an RFP with specific requirements that perfectly match a competitor's capabilities. You are being used to satisfy a procurement process. Win rate on RFPs where you weren't involved in writing the requirements: 3–7%.</p>
+    </div>
+    <div class="redflag-card">
+      <h4>Consistent Decision Timeline Slippage</h4>
+      <p>The decision date has moved by more than one quarter. Every check-in produces a new "we just need a little more time." This is a deal that is alive but not moving — the buyer equivalent of "ghosting."</p>
+    </div>
+  </div>
+
+  <!-- SECTION 8 -->
+  <h2 class="section-title">The Discovery-to-Presentation Bridge</h2>
+  <p class="section-intro">The transition from discovery to demo/presentation is the most commonly mishandled moment in the sales process. Most reps end discovery and immediately begin pitching product features — as if the discovery conversation never happened. The Discovery-to-Presentation Bridge is a structured protocol that explicitly connects every element of the upcoming presentation to specific insights from discovery, while also serving as a real-time qualification check.</p>
+
+  <div class="subsection">
+    <div class="subsection-title">The Bridge Conversation</div>
+    <p>At the end of the final discovery conversation and before the presentation, conduct a brief bridge confirmation with the champion. This conversation serves four purposes: (1) confirms that your understanding of their needs is accurate, (2) provides an opportunity to add or adjust before the proposal, (3) begins building the champion's emotional investment in the upcoming presentation, and (4) surfaces any last-minute competitive or political developments.</p>
+
+    <ol class="step-list">
+      <li><div class="step-content"><span class="step-title">Summarize Pain and Impact</span>"Based on our conversations, here's what I heard as the core challenges and the cost of those challenges. [Summary]. Is that accurate? Is there anything I've missed or should re-weight?"</div></li>
+      <li><div class="step-content"><span class="step-title">Confirm Decision Criteria</span>"You mentioned the three most important things for you were [1, 2, 3]. Are those still the right priorities, or has anything shifted since we last spoke?"</div></li>
+      <li><div class="step-content"><span class="step-title">Confirm Who Will Be in the Room</span>"For the presentation on [date], who are you expecting to be present? Is there anyone I should prepare specifically for — a CFO who needs numbers, a CTO who needs technical depth?"</div></li>
+      <li><div class="step-content"><span class="step-title">Coach Your Champion</span>"What should I know about the room before I walk in? Is there anyone who has reservations about this initiative that I should be aware of and address proactively?"</div></li>
+    </ol>
+  </div>
+
+  <!-- SECTION 9 -->
+  <h2 class="section-title">Discovery Scorecards: Qualified vs. Poorly Qualified</h2>
+  <p class="section-intro">A discovery scorecard operationalizes the distinction between a real opportunity and a pipeline hallucination. It converts subjective rep judgment ("this deal feels good") into objective qualification data that managers can review, coach from, and use in forecast integrity conversations. The scorecard below should be completed by the rep and reviewed by the manager at each stage gate.</p>
+
+  <div class="scorecard">
+    <div class="scorecard-header">
+      <span>Discovery Scorecard</span>
+      <span>Qualified vs. Weak Opportunity</span>
+    </div>
+    <div class="scorecard-row">
+      <div class="scorecard-col-header">Criterion</div>
+      <div class="scorecard-col-header">Fully Qualified Signal</div>
+      <div class="scorecard-col-header">Weak / Disqualify Signal</div>
+    </div>
+    <div class="scorecard-row">
+      <div class="scorecard-criterion">Pain Identified</div>
+      <div class="scorecard-qualified">Specific, named pain; buyer stated it unprompted</div>
+      <div class="scorecard-weak">Generic "we want to improve"; rep-suggested pain</div>
+    </div>
+    <div class="scorecard-row">
+      <div class="scorecard-criterion">Impact Quantified</div>
+      <div class="scorecard-qualified">Dollar value confirmed by buyer; $X/year or $X/deal</div>
+      <div class="scorecard-weak">Vague ("it's costly"); buyer couldn't quantify</div>
+    </div>
+    <div class="scorecard-row">
+      <div class="scorecard-criterion">Champion Identified</div>
+      <div class="scorecard-qualified">Named individual; has met all 4 champion criteria</div>
+      <div class="scorecard-weak">Friendly contact; has not introduced EB; won't share intel</div>
+    </div>
+    <div class="scorecard-row">
+      <div class="scorecard-criterion">Economic Buyer Accessed</div>
+      <div class="scorecard-qualified">EB met; confirmed budget authority; understands pain</div>
+      <div class="scorecard-weak">EB not met; "we'll get there"; champion protecting access</div>
+    </div>
+    <div class="scorecard-row">
+      <div class="scorecard-criterion">Decision Criteria Confirmed</div>
+      <div class="scorecard-qualified">Top 3–5 criteria named and ranked; we can win on all</div>
+      <div class="scorecard-weak">Criteria vague; "we're evaluating lots of things"</div>
+    </div>
+    <div class="scorecard-row">
+      <div class="scorecard-criterion">Decision Process Mapped</div>
+      <div class="scorecard-qualified">Sequential steps known; legal/procurement timeline clear</div>
+      <div class="scorecard-weak">Process unknown; "it depends on a lot of things"</div>
+    </div>
+    <div class="scorecard-row">
+      <div class="scorecard-criterion">Timeline / Urgency</div>
+      <div class="scorecard-qualified">Specific date; business consequence tied to missing it</div>
+      <div class="scorecard-weak">No date; "when we're ready"; no urgency driver</div>
+    </div>
+    <div class="scorecard-row">
+      <div class="scorecard-criterion">Competition Mapped</div>
+      <div class="scorecard-qualified">Named competitors; evaluation stage; our differentiation clear</div>
+      <div class="scorecard-weak">"We might look at a couple of options" — unnamed</div>
+    </div>
+    <div class="scorecard-row">
+      <div class="scorecard-criterion">Budget Confirmed</div>
+      <div class="scorecard-qualified">Budget exists; approved; in current fiscal allocation</div>
+      <div class="scorecard-weak">Budget "TBD"; requires new approval cycle; no CFO sign-off</div>
+    </div>
+  </div>
+
+  <!-- SECTION 10 -->
+  <h2 class="section-title">Common Discovery Mistakes and Fixes</h2>
+
+  <table class="data-table">
+    <thead>
+      <tr><th>Mistake</th><th>Symptom</th><th>Root Cause</th><th>Fix</th></tr>
+    </thead>
+    <tbody>
+      <tr><td><strong>Pitching in discovery</strong></td><td>Rep talks 60%+ of the time; buyer passive</td><td>Rep anxiety; product-first training; fear of silence</td><td>Record all discovery calls; review talk-to-listen ratio. Target: rep speaks &lt;35% of the time. Coach on open-ended questions.</td></tr>
+      <tr><td><strong>Surface-level pain only</strong></td><td>Proposals miss the real problem; demo doesn't resonate</td><td>Rep stops at symptom; doesn't probe for root cause or impact</td><td>Train PICS framework. Require quantified impact in CRM before opportunity advances to Stage 3.</td></tr>
+      <tr><td><strong>No urgency creation</strong></td><td>Deals stall after demo; "we'll circle back in Q3"</td><td>Rep never asks implication questions; no urgency driver surfaced</td><td>Build implication questions into discovery script. "What happens if this isn't solved before your fiscal year end?" is mandatory.</td></tr>
+      <tr><td><strong>Single-threaded discovery</strong></td><td>Primary contact goes quiet; deal dies with no explanation</td><td>Rep didn't ask for introductions to other stakeholders</td><td>Mandate multi-threading: any Stage 3+ deal with fewer than 2 named stakeholders is flagged in CRM for manager review.</td></tr>
+      <tr><td><strong>No MEDDICC documentation</strong></td><td>Forecast inaccurate; manager can't coach on deal specifics</td><td>Reps treat CRM as administrative burden, not sales tool</td><td>Make MEDDICC fields required for stage advancement. Manager reviews MEDDICC score in 1:1, not anecdotes.</td></tr>
+      <tr><td><strong>Accepting weak budget signals</strong></td><td>Deal loses to "no budget" in final stage; revenue pulled from forecast</td><td>Rep didn't confirm budget authority and allocation during discovery</td><td>Add explicit budget qualification question to discovery framework: "Has the budget for this initiative been approved and allocated, or does it require a new approval request?"</td></tr>
+      <tr><td><strong>Failure to disqualify</strong></td><td>Pipeline bloated with stale opportunities; forecast noise</td><td>Reps reluctant to disqualify (removes from pipeline, looks bad); no disqualification standard</td><td>Reward disqualification: reps who disqualify fast spend time on winnable deals. Set a 45-day no-movement rule: any deal with no next step agreed after 45 days moves to Nurture automatically.</td></tr>
+    </tbody>
+  </table>
+
+  <!-- SECTION 11 -->
+  <h2 class="section-title">Key Discovery Formulas and Scoring</h2>
+
+  <div class="formula-block">
+    <div class="formula-label">Cost of Inaction (COI) — The Most Powerful Discovery Metric</div>
+    <strong>COI</strong> = (Current Cost of Problem per Period) × (Periods Until Solution Implemented)<br/><br/>
+    <em>Example:</em> 3 reps missing quota by $150K/year each = $450K/year pain<br/>
+    Implementation takes 60 days from contract = 2 months of continued pain<br/>
+    <strong>COI = $450K / 12 × 2 = $75,000 cost of delay per month</strong><br/><br/>
+    <em>Application:</em> "Every month you don't move forward costs you $75,000. Our implementation takes 60 days. If you sign today, you're generating ROI by [date]."<br/><br/>
+    This converts urgency from abstract to arithmetic.
+  </div>
+
+  <div class="formula-block">
+    <div class="formula-label">Opportunity Quality Score (OQS) — Forecast Integrity</div>
+    <strong>OQS</strong> = (MEDDICC Score / 14) × (Buyer Engagement Score / 10) × (Competitive Position Score / 5)<br/><br/>
+    <em>MEDDICC Score:</em> 0–14 per element scoring above<br/>
+    <em>Buyer Engagement:</em> Response speed (2), Stakeholder count (2), Meetings attended (2), Champion actions taken (2), EB engagement (2) = max 10<br/>
+    <em>Competitive Position:</em> Sole vendor (5), Preferred vendor (4), Competitive evaluation (3), Late entry (1), Responding to RFP (1) = max 5<br/><br/>
+    <strong>OQS &gt; 0.70:</strong> Commit forecast eligible<br/>
+    <strong>OQS 0.50–0.69:</strong> Best Case forecast eligible<br/>
+    <strong>OQS &lt; 0.50:</strong> Pipeline only — do not commit; active coaching required
+  </div>
+
+  
+  <div class="download-section">
+    <div class="download-section-title">Downloadable Tools</div>
+    <div class="download-grid">
+      <a href="../assets/downloads/Discovery-Guide-MAKE-A-COPY-FOR-PERSONAL-USE.pptx" class="download-card" download>
+        <div class="download-icon dl-pptx">PPT</div>
+        <div class="download-card-body">
+          <div class="download-card-name">Discovery Guide</div>
+          <div class="download-card-type">PowerPoint</div>
+        </div>
+        <div class="download-arrow">↓</div>
+      </a>
+    </div>
+  </div>
+
+  <div class="related-section">
+    <div class="related-title">Related Resources</div>
+    <div class="related-links">
+      <a href="meddicc.html" class="related-link">MEDDICC Framework</a>
+      <a href="champion-building.html" class="related-link">Champion Building</a>
+      <a href="template-discovery.html" class="related-link">Discovery Call Template</a>
+      <a href="playbook.html" class="related-link">Sales Playbook</a>
+      <a href="sos-gtm-playbook.html" class="related-link">GTM Playbook</a>
+      <a href="win-loss-analysis.html" class="related-link">Win / Loss Analysis</a>
+    </div>
+  </div>
+
+</div>
 <script data-pplx-inline-edit>
 (function () {
   if (window === window.top) return;
