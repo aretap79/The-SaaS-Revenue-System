@@ -1,0 +1,947 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Marketing Budget Template — CRO Manual</title>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="../assets/shared.css"/>
+  <style>
+    .page-hero { background: #006494; }
+
+    .bottom-up-steps {
+      background: var(--surface);
+      border: 1.5px solid var(--border);
+      border-radius: 10px;
+      overflow: hidden;
+      margin: 20px 0;
+    }
+    .bus-header {
+      background: #1C1B19;
+      color: #fff;
+      padding: 14px 20px;
+      font-size: 13px;
+      font-weight: 700;
+      letter-spacing: 0.5px;
+      text-transform: uppercase;
+    }
+    .bus-body { padding: 20px; }
+
+    .budget-calc {
+      background: #1C1B19;
+      border-radius: 8px;
+      padding: 20px 24px;
+      margin: 20px 0;
+      font-family: 'DM Sans', sans-serif;
+    }
+    .budget-calc-title {
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 1.2px;
+      text-transform: uppercase;
+      color: #4F98A3;
+      margin-bottom: 16px;
+    }
+    .calc-row {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      margin-bottom: 10px;
+      padding-bottom: 10px;
+      border-bottom: 1px solid rgba(255,255,255,0.08);
+    }
+    .calc-row:last-child { border-bottom: none; margin-bottom: 0; padding-bottom: 0; }
+    .calc-step-num {
+      width: 24px;
+      height: 24px;
+      background: rgba(79,152,163,0.25);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 12px;
+      font-weight: 700;
+      color: #4F98A3;
+      flex-shrink: 0;
+    }
+    .calc-desc { flex: 1; font-size: 13px; color: #CDCCCA; }
+    .calc-operator { font-size: 16px; color: #4F98A3; font-weight: 700; }
+    .calc-value { font-size: 15px; font-weight: 700; color: #fff; min-width: 120px; text-align: right; }
+    .calc-final .calc-desc { color: #fff; font-weight: 700; }
+    .calc-final .calc-value { color: #4F98A3; font-size: 18px; }
+
+    .channel-budget-table-wrap { overflow-x: auto; margin: 20px 0; }
+    .channel-budget-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 13px;
+    }
+    .channel-budget-table th {
+      background: #006494;
+      color: #fff;
+      padding: 10px 14px;
+      text-align: left;
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.5px;
+      text-transform: uppercase;
+    }
+    .channel-budget-table th:last-child, .channel-budget-table td:last-child { text-align: right; }
+    .channel-budget-table td {
+      padding: 10px 14px;
+      border-bottom: 1px solid var(--border);
+      vertical-align: middle;
+    }
+    .channel-budget-table tr:nth-child(even) td { background: #fafaf8; }
+    .channel-budget-table tr:last-child td { border-bottom: none; }
+    .total-row td { background: #006494 !important; color: #fff; font-weight: 700; }
+
+    .bar-mini {
+      height: 6px;
+      background: #e8f4f8;
+      border-radius: 3px;
+      overflow: hidden;
+      width: 80px;
+      display: inline-block;
+      vertical-align: middle;
+      margin-right: 8px;
+    }
+    .bar-mini-fill { height: 100%; border-radius: 3px; background: #006494; }
+
+    .category-table-wrap { overflow-x: auto; margin: 20px 0; }
+    .category-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 13px;
+    }
+    .category-table th {
+      background: #28251D;
+      color: #fff;
+      padding: 10px 14px;
+      text-align: left;
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.5px;
+      text-transform: uppercase;
+    }
+    .category-table td {
+      padding: 10px 14px;
+      border-bottom: 1px solid var(--border);
+      vertical-align: top;
+      line-height: 1.5;
+    }
+    .category-table tr:nth-child(even) td { background: #fafaf8; }
+    .category-table tr:last-child td { border-bottom: none; }
+
+    .plan-actual-wrap { overflow-x: auto; margin: 20px 0; }
+    .plan-actual-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 13px;
+      min-width: 700px;
+    }
+    .plan-actual-table th {
+      background: #006494;
+      color: #fff;
+      padding: 10px 12px;
+      text-align: left;
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.5px;
+      text-transform: uppercase;
+      white-space: nowrap;
+    }
+    .plan-actual-table th:not(:first-child) { text-align: right; }
+    .plan-actual-table td {
+      padding: 10px 12px;
+      border-bottom: 1px solid var(--border);
+      vertical-align: middle;
+    }
+    .plan-actual-table td:not(:first-child) { text-align: right; font-variant-numeric: tabular-nums; }
+    .plan-actual-table tr:nth-child(even) td { background: #fafaf8; }
+    .plan-actual-table tr:last-child td { border-bottom: none; }
+    .variance-green { color: #437A22; font-weight: 700; }
+    .variance-yellow { color: #8B6914; font-weight: 700; }
+    .variance-red { color: #A13544; font-weight: 700; }
+    .total-plan-row td { background: #006494 !important; color: #fff !important; font-weight: 700; }
+
+    .realloc-card {
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      gap: 0;
+      margin: 20px 0;
+      border: 1.5px solid var(--border);
+      border-radius: 10px;
+      overflow: hidden;
+    }
+    .rc-band {
+      padding: 16px;
+      text-align: center;
+      border-right: 1px solid var(--border);
+    }
+    .rc-band:last-child { border-right: none; }
+    .rc-range { font-size: 13px; font-weight: 700; margin-bottom: 4px; }
+    .rc-label { font-size: 11px; text-transform: uppercase; letter-spacing: 0.8px; font-weight: 700; margin-bottom: 8px; }
+    .rc-action { font-size: 12px; line-height: 1.4; }
+
+    .rc-best { background: #d4edda; }
+    .rc-best .rc-range, .rc-best .rc-label { color: #1a5c2a; }
+    .rc-good { background: #e8f4f8; }
+    .rc-good .rc-range, .rc-good .rc-label { color: #006494; }
+    .rc-watch { background: #fff3cd; }
+    .rc-watch .rc-range, .rc-watch .rc-label { color: #7a5a00; }
+    .rc-reduce { background: #fff0f0; }
+    .rc-reduce .rc-range, .rc-reduce .rc-label { color: #A13544; }
+    .rc-kill { background: #f8d7da; }
+    .rc-kill .rc-range, .rc-kill .rc-label { color: #7a1a1a; }
+
+    @media (max-width: 640px) {
+      .realloc-card { grid-template-columns: 1fr; }
+      .rc-band { border-right: none; border-bottom: 1px solid var(--border); }
+      .rc-band:last-child { border-bottom: none; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav class="nav">
+  <span class="nav-logo">CRO <span>Manual</span></span>
+  <span class="nav-sep">/</span>
+  <a href="../pages/resources.html" class="nav-back">Resources &amp; Templates</a>
+  <span class="nav-sep">/</span>
+  <span class="nav-current">Marketing Budget Template</span>
+  <span class="nav-spacer"></span>
+  <a href="../index.html" class="nav-home">Home</a>
+</nav>
+
+<!-- HERO -->
+<div class="page-hero">
+  <div class="hero-phase-label">Marketing · Resources &amp; Templates</div>
+  <h1 class="hero-title">Marketing Budget Template</h1>
+  <p class="hero-subtitle">A marketing budget that is tied to pipeline targets — not just spend categories. Every line item maps to a channel with known cost per SQL and LIUE, enabling quarterly reallocation based on ROI.</p>
+  <div class="hero-tags">
+    <span class="hero-tag">Budget Planning</span>
+    <span class="hero-tag">Demand Gen</span>
+    <span class="hero-tag">Events</span>
+    <span class="hero-tag">Content</span>
+    <span class="hero-tag">Tools</span>
+    <span class="hero-tag">Plan vs. Actual</span>
+  </div>
+</div>
+
+<!-- CONTENT -->
+<div class="content-wrap">
+
+  <!-- Breadcrumb -->
+  <nav class="breadcrumb">
+    <a href="../index.html">Home</a>
+    <span class="sep">›</span>
+    <a href="../pages/resources.html">Resources &amp; Templates</a>
+    <span class="sep">›</span>
+    <span class="current">Marketing Budget Template</span>
+  </nav>
+
+  <!-- Section 1 -->
+  <h2 class="section-title">Budget Planning Philosophy</h2>
+  <p class="section-intro">Most marketing budgets are built top-down — "allocate X% of revenue to marketing." This approach is backward. A budget built from pipeline targets tells you exactly how much you need to spend, and which channels to spend it on, to hit the revenue number.</p>
+
+  <div class="callout callout-definition">
+    <div class="callout-title">The Right Framing</div>
+    <p>"Marketing budget exists to generate SQLs at a LIUE-positive cost." Everything else — brand awareness, events for the sake of events, content with no distribution plan — is waste until the core demand gen engine is proven. Build the bottom-up model first. Add brand and awareness spend only after the SQL-generation engine is healthy.</p>
+  </div>
+
+  <h3 class="subsection-title">The Bottom-Up Process</h3>
+  <ol class="step-list">
+    <li><div class="step-content"><span class="step-title">Set the revenue target</span>This comes from the board/CEO annual plan. Break it into new ARR (from new logos) and expansion ARR (from existing customers). The marketing budget covers new ARR — expansion is driven by CS.</div></li>
+    <li><div class="step-content"><span class="step-title">Calculate customers needed</span>New ARR ÷ Average ACV = new customers needed. Use your actual ACV from the last 12 months, not an aspirational number. If ACV is shifting, model both scenarios.</div></li>
+    <li><div class="step-content"><span class="step-title">Calculate SQLs needed</span>New customers needed ÷ SQL-to-customer rate = total SQLs needed. SQL-to-customer rate is your historical close rate — do not assume it will improve unless you have a specific plan to improve it.</div></li>
+    <li><div class="step-content"><span class="step-title">Allocate SQLs to marketing vs. sales</span>Determine what % of SQLs marketing will source vs. sales (outbound, partnership). A typical Stage 2 split is 50-60% marketing, 40-50% sales. Stage 3: marketing sources more as channels scale.</div></li>
+    <li><div class="step-content"><span class="step-title">Calculate budget by channel</span>For each channel, multiply marketing-sourced SQLs by the cost per SQL for that channel. Sum to get total budget required. This is your budget request — not a % of revenue, a specific amount tied to a specific pipeline target.</div></li>
+  </ol>
+
+  <!-- Section 2 -->
+  <h2 class="section-title">The Bottom-Up Budget Model</h2>
+  <p class="section-intro">Walk through this model with your actual numbers before the budgeting cycle. The output is a specific budget request with a clear pipeline commitment — not a spend allocation without accountability.</p>
+
+  <div class="budget-calc">
+    <div class="budget-calc-title">Example: $2M New ARR Target</div>
+    <div class="calc-row">
+      <div class="calc-step-num">1</div>
+      <div class="calc-desc">Revenue Target (New ARR)</div>
+      <div class="calc-operator">=</div>
+      <div class="calc-value">$2,000,000</div>
+    </div>
+    <div class="calc-row">
+      <div class="calc-step-num">÷</div>
+      <div class="calc-desc">Average Contract Value (ACV) — actual, not aspirational</div>
+      <div class="calc-operator">=</div>
+      <div class="calc-value">$36,000</div>
+    </div>
+    <div class="calc-row">
+      <div class="calc-step-num">2</div>
+      <div class="calc-desc">New Customers Needed</div>
+      <div class="calc-operator">=</div>
+      <div class="calc-value">56 customers</div>
+    </div>
+    <div class="calc-row">
+      <div class="calc-step-num">÷</div>
+      <div class="calc-desc">SQL-to-Customer Rate (historical close rate)</div>
+      <div class="calc-operator">=</div>
+      <div class="calc-value">30%</div>
+    </div>
+    <div class="calc-row">
+      <div class="calc-step-num">3</div>
+      <div class="calc-desc">Total SQLs Needed (all sources)</div>
+      <div class="calc-operator">=</div>
+      <div class="calc-value">186 SQLs</div>
+    </div>
+    <div class="calc-row">
+      <div class="calc-step-num">×</div>
+      <div class="calc-desc">Marketing's SQL contribution (% of total)</div>
+      <div class="calc-operator">=</div>
+      <div class="calc-value">60%</div>
+    </div>
+    <div class="calc-row calc-final">
+      <div class="calc-step-num">4</div>
+      <div class="calc-desc">Marketing-Sourced SQLs Needed</div>
+      <div class="calc-operator">=</div>
+      <div class="calc-value">112 SQLs</div>
+    </div>
+  </div>
+
+  <h3 class="subsection-title">Channel Budget Breakdown</h3>
+  <p>Allocate those 112 marketing-sourced SQLs across channels based on each channel's validated cost per SQL and capacity to deliver the target volume:</p>
+
+  <div class="channel-budget-table-wrap">
+    <table class="channel-budget-table">
+      <thead>
+        <tr>
+          <th>Channel</th>
+          <th>SQLs Needed</th>
+          <th>Cost / SQL</th>
+          <th>Total Budget</th>
+          <th>% of Total</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>Content / SEO</strong></td>
+          <td>40</td>
+          <td>$800</td>
+          <td>$32,000</td>
+          <td>
+            <div class="bar-mini"><div class="bar-mini-fill" style="width:25%;"></div></div>
+            25%
+          </td>
+        </tr>
+        <tr>
+          <td><strong>Paid Search (SEM)</strong></td>
+          <td>25</td>
+          <td>$1,200</td>
+          <td>$30,000</td>
+          <td>
+            <div class="bar-mini"><div class="bar-mini-fill" style="width:23%;"></div></div>
+            23%
+          </td>
+        </tr>
+        <tr>
+          <td><strong>LinkedIn Ads</strong></td>
+          <td>20</td>
+          <td>$1,500</td>
+          <td>$30,000</td>
+          <td>
+            <div class="bar-mini"><div class="bar-mini-fill" style="width:23%;"></div></div>
+            23%
+          </td>
+        </tr>
+        <tr>
+          <td><strong>Outbound (tools + lists)</strong></td>
+          <td>15</td>
+          <td>$400</td>
+          <td>$6,000</td>
+          <td>
+            <div class="bar-mini"><div class="bar-mini-fill" style="width:5%;"></div></div>
+            5%
+          </td>
+        </tr>
+        <tr>
+          <td><strong>Events &amp; Conferences</strong></td>
+          <td>12</td>
+          <td>$2,500</td>
+          <td>$30,000</td>
+          <td>
+            <div class="bar-mini"><div class="bar-mini-fill" style="width:23%;"></div></div>
+            23%
+          </td>
+        </tr>
+        <tr class="total-row">
+          <td><strong>Total</strong></td>
+          <td><strong>112</strong></td>
+          <td><strong>$1,143 avg</strong></td>
+          <td><strong>$128,000</strong></td>
+          <td><strong>100%</strong></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="callout callout-best-practice">
+    <div class="callout-title">Budget Request Framing</div>
+    <p>Present this model to your board as: "We need $128,000 to generate 112 marketing-sourced SQLs. At our current SQL-to-customer rate of 30%, that produces 34 new customers, generating $1.2M of the $2M ARR target. Sales outbound covers the remaining 74 SQLs."<br/><br/>This framing is accountable and fundable. The alternative ("we need $128K for marketing initiatives") is not.</p>
+  </div>
+
+  <!-- Section 3 -->
+  <h2 class="section-title">Budget Categories</h2>
+  <p class="section-intro">Every marketing dollar falls into one of these six categories. The allocation percentages are directional benchmarks for Stage 2–3 B2B SaaS companies — adjust based on your channel strategy and stage.</p>
+
+  <div class="category-table-wrap">
+    <table class="category-table">
+      <thead>
+        <tr>
+          <th>Category</th>
+          <th>Examples</th>
+          <th>Typical % of Total</th>
+          <th>Notes</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>Paid Advertising</strong></td>
+          <td>Google SEM, LinkedIn Ads, paid social, retargeting, display</td>
+          <td>30–40%</td>
+          <td>Highest ROI when validated. Largest single category for most Stage 2–3 companies. Scale up when LIUE &gt;3, cut when LIUE &lt;2.</td>
+        </tr>
+        <tr>
+          <td><strong>Events &amp; Conferences</strong></td>
+          <td>Event sponsorships, booth fees, field events, hosted webinars, executive dinners</td>
+          <td>15–25%</td>
+          <td>High cost per SQL but very high LIR quality. Best for companies with a defined 2–3 "must-attend" events for their ICP. Track meeting-booked rate, not badge scans.</td>
+        </tr>
+        <tr>
+          <td><strong>Consulting &amp; Agency</strong></td>
+          <td>SEO agency, content writing, PR agency, design, video production</td>
+          <td>20–30%</td>
+          <td>Helps scale output without growing headcount. Best for content velocity (SEO writers) and specialized expertise (PR, paid media management).</td>
+        </tr>
+        <tr>
+          <td><strong>Software &amp; Tools</strong></td>
+          <td>Marketing automation (HubSpot), SEO tools (Semrush/Ahrefs), analytics (Amplitude), ad management</td>
+          <td>10–15%</td>
+          <td>Tools should enable measurement first — attribution, cohort tracking, and cost per SQL calculation. Avoid tool proliferation before proving the need.</td>
+        </tr>
+        <tr>
+          <td><strong>Content Production</strong></td>
+          <td>Video production, photography, graphic design, infographics, interactive content</td>
+          <td>5–10%</td>
+          <td>Invest in high-quality production for cornerstone content (case studies, State-of-Industry reports). Lower production standards are acceptable for evergreen blog content.</td>
+        </tr>
+        <tr>
+          <td><strong>PR &amp; Earned Media</strong></td>
+          <td>PR agency retainer, press release distribution, analyst relations, awards submissions</td>
+          <td>5–10%</td>
+          <td>Stage 3 investment. Builds long-term brand authority. Difficult to attribute directly to pipeline — measure through aided brand awareness and backlink acquisition instead.</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- Section 4 -->
+  <h2 class="section-title">Plan vs. Actual Tracking</h2>
+  <p class="section-intro">Track budget actuals monthly against the quarterly plan. Variance management is critical — underspending in Q1 means missing pipeline targets in Q2 (due to lag). Overspending early means you'll need to cut in Q3–Q4.</p>
+
+  <div class="plan-actual-wrap">
+    <table class="plan-actual-table">
+      <thead>
+        <tr>
+          <th>Category</th>
+          <th>Q1 Plan</th>
+          <th>Jan Actual</th>
+          <th>Feb Actual</th>
+          <th>Mar Actual</th>
+          <th>Q1 Total</th>
+          <th>Variance</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>Paid Advertising</strong></td>
+          <td>$15,000</td>
+          <td>$4,800</td>
+          <td>$5,200</td>
+          <td>$5,100</td>
+          <td>$15,100</td>
+          <td><span class="variance-green">+$100 (1%)</span></td>
+        </tr>
+        <tr>
+          <td><strong>Events &amp; Conferences</strong></td>
+          <td>$8,000</td>
+          <td>$0</td>
+          <td>$7,500</td>
+          <td>$600</td>
+          <td>$8,100</td>
+          <td><span class="variance-green">+$100 (1%)</span></td>
+        </tr>
+        <tr>
+          <td><strong>Consulting &amp; Agency</strong></td>
+          <td>$9,000</td>
+          <td>$3,000</td>
+          <td>$3,000</td>
+          <td>$4,500</td>
+          <td>$10,500</td>
+          <td><span class="variance-yellow">+$1,500 (17%)</span></td>
+        </tr>
+        <tr>
+          <td><strong>Software &amp; Tools</strong></td>
+          <td>$4,500</td>
+          <td>$1,500</td>
+          <td>$1,500</td>
+          <td>$1,500</td>
+          <td>$4,500</td>
+          <td><span class="variance-green">$0 (0%)</span></td>
+        </tr>
+        <tr>
+          <td><strong>Content Production</strong></td>
+          <td>$3,000</td>
+          <td>$800</td>
+          <td>$600</td>
+          <td>$2,100</td>
+          <td>$3,500</td>
+          <td><span class="variance-yellow">+$500 (17%)</span></td>
+        </tr>
+        <tr>
+          <td><strong>PR &amp; Earned Media</strong></td>
+          <td>$2,500</td>
+          <td>$833</td>
+          <td>$833</td>
+          <td>$833</td>
+          <td>$2,499</td>
+          <td><span class="variance-green">-$1 (0%)</span></td>
+        </tr>
+        <tr class="total-plan-row">
+          <td><strong>Total</strong></td>
+          <td><strong>$42,000</strong></td>
+          <td><strong>$10,933</strong></td>
+          <td><strong>$18,633</strong></td>
+          <td><strong>$14,633</strong></td>
+          <td><strong>$44,199</strong></td>
+          <td><strong>+$2,199 (5%)</strong></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div style="display:flex;gap:16px;flex-wrap:wrap;margin:12px 0 24px;">
+    <div style="display:flex;align-items:center;gap:8px;font-size:13px;"><div style="width:12px;height:12px;border-radius:2px;background:#d4edda;border:1px solid #437A22;"></div> <strong style="color:#437A22;">Green:</strong> Within 10% of plan — acceptable</div>
+    <div style="display:flex;align-items:center;gap:8px;font-size:13px;"><div style="width:12px;height:12px;border-radius:2px;background:#fff3cd;border:1px solid #8B6914;"></div> <strong style="color:#8B6914;">Yellow:</strong> 10–20% over plan — needs explanation</div>
+    <div style="display:flex;align-items:center;gap:8px;font-size:13px;"><div style="width:12px;height:12px;border-radius:2px;background:#f8d7da;border:1px solid #A13544;"></div> <strong style="color:#A13544;">Red:</strong> 20%+ over plan — requires reforecast</div>
+  </div>
+
+  <!-- Section 5 -->
+  <h2 class="section-title">ROI-Based Reallocation</h2>
+  <p class="section-intro">Every quarter, review LIUE by channel and reallocate budget accordingly. Channels that are not generating LIUE-positive returns do not get more budget — regardless of how many impressions or brand metrics they produce.</p>
+
+  <div class="realloc-card">
+    <div class="rc-band rc-best">
+      <div class="rc-range">LIUE &gt; 5</div>
+      <div class="rc-label">Excellent</div>
+      <div class="rc-action">Increase budget 25–50%. These channels are generating outsized returns — scale now while efficiency holds.</div>
+    </div>
+    <div class="rc-band rc-good">
+      <div class="rc-range">LIUE 3–5</div>
+      <div class="rc-label">Healthy</div>
+      <div class="rc-action">Maintain budget. Optimize creatives and landing pages. Look for marginal efficiency improvements.</div>
+    </div>
+    <div class="rc-band rc-watch">
+      <div class="rc-range">LIUE 1–3</div>
+      <div class="rc-label">Concerning</div>
+      <div class="rc-action">Reduce budget and investigate. Either cost per SQL has risen or LIR rate has dropped. Fix before next cycle.</div>
+    </div>
+    <div class="rc-band rc-reduce">
+      <div class="rc-range">LIUE &lt; 1</div>
+      <div class="rc-label">Destroying Value</div>
+      <div class="rc-action">Pause immediately. Do not reallocate — kill the budget. Redesign the channel strategy before resuming.</div>
+    </div>
+  </div>
+
+  <h3 class="subsection-title">Quarterly Budget Review Process</h3>
+  <ol class="step-list">
+    <li>
+      <div class="step-content">
+        <span class="step-title">Pull LIUE by channel for the quarter</span>
+        Calculate LTV/CAC using cohort-level data. Use actual LIR achievement rates from the quarter — not lifetime averages which may mask recent deterioration. Segment by channel source (paid search, LinkedIn, events, content, outbound).
+      </div>
+    </li>
+    <li>
+      <div class="step-content">
+        <span class="step-title">Identify channels with LIUE &gt; 5</span>
+        These channels are delivering returns far above the minimum viable threshold. Increase their budget allocation by 25–50% in the next quarter. Monitor closely for efficiency degradation as volume increases — every channel has a scale ceiling.
+      </div>
+    </li>
+    <li>
+      <div class="step-content">
+        <span class="step-title">Investigate LIUE 1–3 channels</span>
+        Diagnose whether the problem is in the numerator (LTV — poor LIR achievement, low ACV from this channel) or denominator (CAC — rising cost per SQL). Each requires a different remediation: LIR problems are ICP or CS problems; CAC problems are channel efficiency problems.
+      </div>
+    </li>
+    <li>
+      <div class="step-content">
+        <span class="step-title">Reallocate from low-LIUE to high-LIUE</span>
+        The total budget envelope may stay the same, but the mix shifts toward what's working. Document the reallocation decision and the LIUE data that drove it — this creates institutional memory and improves future budgeting cycles.
+      </div>
+    </li>
+    <li>
+      <div class="step-content">
+        <span class="step-title">Update the annual plan</span>
+        If LIUE shifts significantly, update the bottom-up budget model for the remaining quarters. A channel that dropped from LIUE 4 to LIUE 1.5 may require its SQL contribution to be replaced by another channel — update the plan before the quarter begins, not after it ends.
+      </div>
+    </li>
+  </ol>
+
+  <div class="callout callout-formula">
+    <div class="callout-title">LIUE Formula Reminder</div>
+    <p><strong>LIUE = LTV ÷ CAC</strong><br/>LTV = ACV × (1 ÷ Churn Rate) × Gross Margin %<br/>CAC = Total demand gen spend on channel ÷ New customers from that channel<br/><br/>A LIUE of 3 means: for every $1 of CAC invested through this channel, the company recovers $3 of lifetime gross profit. The minimum viable threshold is 3. Below 3, the channel is not sustainable at scale.</p>
+  </div>
+
+  <!-- Related -->
+  <div class="related-section">
+    <div class="related-title">Related Pages</div>
+    <div class="related-links">
+      <a href="../pages/resources.html" class="related-link">← Resources &amp; Templates</a>
+      <a href="template-demand-gen-channels.html" class="related-link">Demand Gen Channel Guide</a>
+      <a href="template-paid-marketing.html" class="related-link">Paid Marketing Worksheet</a>
+      <a href="sos-liue.html" class="related-link">LIUE SOS</a>
+    </div>
+  </div>
+
+</div>
+<script data-pplx-inline-edit>
+(function () {
+  if (window === window.top) return;
+
+  const allowedParentOrigins = ["https://www.perplexity.ai","https://perplexity.ai","https://testing.perplexity.ai","https://staging.perplexity.ai","https://*.preview.i.perplexity.ai","http://localhost:3000","http://127.0.0.1:3000","http://localhost:5173","http://127.0.0.1:5173"];
+  const MAX_FONT_BYTES = 500 * 1024;
+  const MAX_TOTAL_FONT_BYTES = 2 * 1024 * 1024;
+  let scrollForwarding = false;
+  let scrollRaf = 0;
+  let trustedTopOrigin = null;
+
+  // Allow entries like "https://*.preview.i.perplexity.ai" — the wildcard
+  // matches a single DNS label (no dots), so "https://*.foo" cannot stretch
+  // across multiple labels.
+  function matchesAllowedOrigin(origin) {
+    if (!origin) return false;
+    for (const entry of allowedParentOrigins) {
+      if (!entry.includes("*")) {
+        if (entry === origin) return true;
+        continue;
+      }
+      const pattern = new RegExp(
+        "^" +
+          entry.replace(/[.+?^${}()|[\]\\]/g, "\\$&").replace(/\*/g, "[^.]+") +
+          "$",
+      );
+      if (pattern.test(origin)) return true;
+    }
+    return false;
+  }
+
+  // Trust decision: when the sender is same-origin-visible (event.origin is a
+  // real origin like https://www.perplexity.ai) we trust event.origin directly.
+  // When event.origin is "null" (opaque broker srcdoc), we fall back to the
+  // broker's stamped `parentOrigin` to identify the top window. The fallback
+  // is claim-only — we rely on the browser's native `targetOrigin` enforcement
+  // on the response path (see postToTrustedTop) to ensure replies can't be
+  // delivered to anyone but the actual top window of that claimed origin.
+  function getTrustedParentOrigin(event) {
+    const forwardedParentOrigin =
+      typeof event.data.parentOrigin === "string" ? event.data.parentOrigin : null;
+    const parentOrigin = event.origin === "null" ? forwardedParentOrigin : event.origin;
+    return matchesAllowedOrigin(parentOrigin) ? parentOrigin : null;
+  }
+
+  // All responses go to window.top with targetOrigin = the allowlisted origin.
+  // An attacker that iframes us inside their own null-origin broker can claim
+  // any parentOrigin they like, but the browser will drop the reply whenever
+  // the real top's origin doesn't match — so the screenshot never leaves.
+  function postToTrustedTop(message) {
+    if (!trustedTopOrigin) return;
+    try {
+      window.top.postMessage(message, trustedTopOrigin);
+    } catch (_error) {}
+  }
+
+  function inlineAll(original, clone) {
+    if (original.nodeType !== 1 || clone.nodeType !== 1) return;
+
+    try {
+      const computedStyle = getComputedStyle(original);
+      // cssText on a computed style is the serialized declaration in modern
+      // Chromium/Safari — a single read beats enumerating ~400 longhand
+      // properties. Firefox returns "" here, so we fall back on empty.
+      const serialized = computedStyle.cssText;
+      if (serialized) {
+        clone.style.cssText = serialized;
+      } else {
+        const parts = new Array(computedStyle.length);
+        for (let index = 0; index < computedStyle.length; index += 1) {
+          const property = computedStyle[index];
+          parts[index] = `${property}:${computedStyle.getPropertyValue(property)};`;
+        }
+        clone.style.cssText = parts.join("");
+      }
+    } catch (_error) {}
+
+    const originalChildren = original.children;
+    const clonedChildren = clone.children;
+    for (
+      let index = 0;
+      index < originalChildren.length && index < clonedChildren.length;
+      index += 1
+    ) {
+      inlineAll(originalChildren[index], clonedChildren[index]);
+    }
+  }
+
+  function extractFontUrl(srcValue) {
+    const matches = [
+      ...srcValue.matchAll(
+        /url\(["']?([^"')]+)["']?\)(?:\s*format\(["']?([^"')]+)["']?\))?/gi,
+      ),
+    ];
+    if (matches.length === 0) return null;
+    const woff2 = matches.find((m) => m[2] && m[2].toLowerCase().includes("woff2"));
+    if (woff2) return woff2[1];
+    const woff = matches.find((m) => m[2] && m[2].toLowerCase().includes("woff"));
+    if (woff) return woff[1];
+    return matches[0][1];
+  }
+
+  // Cache resolved font URL -> data URI across captures. Fonts on a page
+  // essentially never change, and a batch run emits multiple captures back to
+  // back — without this we'd refetch + re-base64 every time.
+  const fontDataUriCache = new Map();
+  const SRC_DECLARATION_RE = /src\s*:\s*[^;}]+/i;
+
+  async function fetchAsDataUri(url) {
+    if (fontDataUriCache.has(url)) return fontDataUriCache.get(url);
+    let dataUri = null;
+    try {
+      const response = await fetch(url, { mode: "cors", credentials: "omit" });
+      if (response.ok) {
+        const blob = await response.blob();
+        if (blob.size <= MAX_FONT_BYTES) {
+          dataUri = await new Promise((resolve) => {
+            const reader = new FileReader();
+            reader.onloadend = () =>
+              resolve(typeof reader.result === "string" ? reader.result : null);
+            reader.onerror = () => resolve(null);
+            reader.readAsDataURL(blob);
+          });
+        }
+      }
+    } catch (_error) {
+      dataUri = null;
+    }
+    fontDataUriCache.set(url, dataUri);
+    return dataUri;
+  }
+
+  function collectFontFaceRuleTexts() {
+    const rules = [];
+    for (const sheet of document.styleSheets) {
+      let cssRules;
+      try {
+        cssRules = sheet.cssRules;
+      } catch (_error) {
+        continue;
+      }
+      if (!cssRules) continue;
+      for (const rule of cssRules) {
+        const cssText = rule.cssText || "";
+        if (cssText.startsWith("@font-face")) rules.push(cssText);
+      }
+    }
+    return rules;
+  }
+
+  async function buildInlinedFontCss() {
+    const ruleTexts = collectFontFaceRuleTexts();
+    if (ruleTexts.length === 0) return null;
+
+    const resolved = ruleTexts.map((cssText) => {
+      if (!SRC_DECLARATION_RE.test(cssText)) return null;
+      const srcMatch = cssText.match(/src\s*:\s*([^;}]+)[;}]/i);
+      if (!srcMatch) return null;
+      const url = extractFontUrl(srcMatch[1]);
+      if (!url) return null;
+      try {
+        return { cssText, url: new URL(url, document.baseURI).href };
+      } catch (_error) {
+        return null;
+      }
+    });
+
+    const dataUris = await Promise.all(
+      resolved.map((entry) => (entry ? fetchAsDataUri(entry.url) : Promise.resolve(null))),
+    );
+
+    const inlined = [];
+    let totalBytes = 0;
+    for (let index = 0; index < resolved.length; index += 1) {
+      const entry = resolved[index];
+      const dataUri = dataUris[index];
+      if (!entry || !dataUri) continue;
+      const approxBytes = dataUri.length * 0.75;
+      if (totalBytes + approxBytes > MAX_TOTAL_FONT_BYTES) break;
+      totalBytes += approxBytes;
+      inlined.push(entry.cssText.replace(SRC_DECLARATION_RE, `src: url("${dataUri}")`));
+    }
+    return inlined.length > 0 ? inlined.join("\n") : null;
+  }
+
+  function stripExternal(clone) {
+    const images = clone.querySelectorAll("img");
+    for (let index = 0; index < images.length; index += 1) {
+      const src = images[index].getAttribute("src");
+      if (src && !src.startsWith("data:")) images[index].removeAttribute("src");
+    }
+
+    const elements = clone.querySelectorAll("*");
+    for (let index = 0; index < elements.length; index += 1) {
+      const style = elements[index].style.cssText;
+      if (style && style.includes("url(")) {
+        elements[index].style.cssText = style.replace(
+          /url\(["']?(?!data:)[^)"']*["']?\)/gi,
+          "none",
+        );
+      }
+    }
+  }
+
+  function emitScroll() {
+    scrollRaf = 0;
+    if (!scrollForwarding) return;
+    postToTrustedTop({
+      type: "INLINE_EDIT_SCROLL",
+      scrollX: window.scrollX,
+      scrollY: window.scrollY,
+    });
+  }
+
+  window.addEventListener(
+    "scroll",
+    function () {
+      if (!scrollForwarding || scrollRaf) return;
+      scrollRaf = requestAnimationFrame(emitScroll);
+    },
+    { passive: true, capture: true },
+  );
+
+  async function handleCaptureRequest(event) {
+    const requestId = event.data.requestId;
+    const scrollX = window.scrollX;
+    const scrollY = window.scrollY;
+    const width = window.innerWidth;
+    const height = window.innerHeight;
+
+    function postResult(dataUrl) {
+      postToTrustedTop({
+        type: "INLINE_EDIT_SCREENSHOT_RESULT",
+        requestId,
+        dataUrl,
+        scrollX,
+        scrollY,
+      });
+    }
+
+    try {
+      // Wait for any pending web fonts to resolve so both inline metrics and
+      // the @font-face inlining below see the same loaded faces.
+      if (document.fonts && document.fonts.ready) {
+        try {
+          await document.fonts.ready;
+        } catch (_error) {}
+      }
+
+      const clone = document.documentElement.cloneNode(true);
+      inlineAll(document.documentElement, clone);
+
+      const removedNodes = clone.querySelectorAll("script,link[rel=\"stylesheet\"],style");
+      for (let index = 0; index < removedNodes.length; index += 1) {
+        removedNodes[index].remove();
+      }
+
+      stripExternal(clone);
+
+      // Re-embed web fonts as data-URI @font-face rules so the SVG rasterizer
+      // can resolve them — external font URLs aren't fetched during
+      // foreignObject rendering, which would otherwise force a fallback face
+      // and change text metrics.
+      const inlinedFontCss = await buildInlinedFontCss();
+      if (inlinedFontCss) {
+        const styleEl = document.createElement("style");
+        styleEl.textContent = inlinedFontCss;
+        const head = clone.querySelector("head");
+        if (head) head.appendChild(styleEl);
+        else clone.insertBefore(styleEl, clone.firstChild);
+      }
+
+      const html = new XMLSerializer().serializeToString(clone);
+      const svg =
+        `<svg xmlns="http://www.w3.org/2000/svg" width="${width}" height="${height}">` +
+        '<foreignObject width="100%" height="100%">' +
+        `<div xmlns="http://www.w3.org/1999/xhtml" style="width:${width}px;height:${height}px;overflow:hidden">` +
+        `<div style="transform:translate(-${scrollX}px,-${scrollY}px);transform-origin:top left">` +
+        html +
+        "</div></div></foreignObject></svg>";
+      const svgUrl = `data:image/svg+xml;charset=utf-8,${encodeURIComponent(svg)}`;
+      const image = new Image();
+      image.onload = function () {
+        const canvas = document.createElement("canvas");
+        canvas.width = width;
+        canvas.height = height;
+        canvas.getContext("2d").drawImage(image, 0, 0);
+        postResult(canvas.toDataURL("image/png"));
+      };
+      image.onerror = function () {
+        postResult(null);
+      };
+      image.src = svgUrl;
+    } catch (_error) {
+      postResult(null);
+    }
+  }
+
+  window.addEventListener("message", function (event) {
+    if (!event.data) return;
+    // Only accept messages from the direct parent frame. Blocks sibling /
+    // unrelated-window postMessage senders that could otherwise reach us.
+    if (event.source !== window.parent) return;
+
+    const trustedParentOrigin = getTrustedParentOrigin(event);
+    if (!trustedParentOrigin) return;
+    trustedTopOrigin = trustedParentOrigin;
+
+    if (event.data.type === "INLINE_EDIT_SCROLL_START") {
+      scrollForwarding = true;
+      emitScroll();
+      return;
+    }
+
+    if (event.data.type === "INLINE_EDIT_SCROLL_STOP") {
+      scrollForwarding = false;
+      if (scrollRaf) cancelAnimationFrame(scrollRaf);
+      scrollRaf = 0;
+      return;
+    }
+
+    if (event.data.type !== "INLINE_EDIT_CAPTURE_REQUEST") return;
+
+    handleCaptureRequest(event);
+  });
+})();
+
+
+</script></body>
+</html>

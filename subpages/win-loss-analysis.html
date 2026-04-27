@@ -1,0 +1,785 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Win/Loss Analysis — SaaS Revenue System</title>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="../assets/shared.css"/>
+  <style>
+    .page-hero { background: #964219; }
+    .interview-block { background: var(--surface); border: 1.5px solid var(--border); border-radius: 8px; padding: 24px; margin: 20px 0; }
+    .ib-header { font-size: 13px; font-weight: 700; letter-spacing: 1px; text-transform: uppercase; color: var(--text-muted); margin-bottom: 16px; }
+    .q-item { display: flex; gap: 14px; margin-bottom: 14px; align-items: flex-start; }
+    .q-num { min-width: 28px; height: 28px; border-radius: 4px; background: #964219; color: #fff; font-size: 11px; font-weight: 700; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+    .q-text { font-size: 14px; line-height: 1.6; }
+    .q-text em { color: var(--text-muted); font-style: italic; font-size: 13px; display: block; margin-top: 4px; }
+    .taxonomy-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; margin: 20px 0; }
+    .taxon-card { border-radius: 8px; padding: 16px; text-align: center; border: 1.5px solid var(--border); background: var(--surface); }
+    .taxon-card .tx-icon { font-size: 24px; margin-bottom: 8px; }
+    .taxon-card .tx-name { font-size: 14px; font-weight: 700; margin-bottom: 4px; }
+    .taxon-card .tx-note { font-size: 12px; color: var(--text-muted); line-height: 1.4; }
+    .feedback-flow { display: grid; grid-template-columns: repeat(5, 1fr); gap: 8px; margin: 20px 0; align-items: stretch; }
+    .ff-step { background: var(--surface); border: 1.5px solid var(--border); border-radius: 8px; padding: 14px 12px; text-align: center; }
+    .ff-step .ffs-title { font-size: 13px; font-weight: 700; margin-bottom: 4px; color: #964219; }
+    .ff-step .ffs-desc { font-size: 11px; color: var(--text-muted); line-height: 1.4; }
+    .arrow-col { display: flex; align-items: center; justify-content: center; font-size: 18px; color: #964219; }
+    .comp-intel-box { background: #1C1B19; border-radius: 8px; padding: 20px; margin: 16px 0; }
+    .comp-intel-box .ci-title { font-size: 11px; color: #4F98A3; font-weight: 700; letter-spacing: 1px; text-transform: uppercase; margin-bottom: 12px; }
+    .comp-intel-box .ci-row { display: flex; gap: 16px; align-items: flex-start; margin-bottom: 10px; }
+    .comp-intel-box .ci-label { min-width: 140px; font-size: 13px; font-weight: 600; color: #CDCCCA; flex-shrink: 0; }
+    .comp-intel-box .ci-val { font-size: 13px; color: #797876; line-height: 1.5; }
+    .attribution-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin: 20px 0; }
+    .attribution-side { border-radius: 8px; padding: 18px; }
+    .attribution-side .as-title { font-size: 14px; font-weight: 700; margin-bottom: 10px; }
+    .attribution-side .as-example { font-size: 13px; line-height: 1.6; }
+    .no-decision-stats { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin: 20px 0; }
+    .nd-stat { background: var(--surface); border: 1.5px solid var(--border); border-radius: 8px; padding: 18px; text-align: center; }
+    .nd-stat .nds-val { font-size: 28px; font-weight: 700; color: #964219; margin-bottom: 4px; }
+    .nd-stat .nds-label { font-size: 12px; color: var(--text-muted); line-height: 1.4; }
+    .interview-structure { margin: 16px 0; }
+    .is-phase { display: flex; gap: 14px; margin-bottom: 14px; }
+    .is-phase-num { min-width: 28px; height: 28px; border-radius: 50%; background: #964219; color: #fff; font-size: 12px; font-weight: 700; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+    .is-phase-content .ispc-title { font-size: 14px; font-weight: 700; margin-bottom: 4px; }
+    .is-phase-content .ispc-desc { font-size: 13px; color: var(--text-muted); line-height: 1.5; }
+    @media (max-width: 768px) {
+      .taxonomy-grid { grid-template-columns: repeat(2, 1fr); }
+      .feedback-flow { grid-template-columns: 1fr; }
+      .attribution-grid { grid-template-columns: 1fr; }
+      .no-decision-stats { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+<nav class="nav">
+  <span class="nav-logo">SaaS <span>Revenue System</span></span>
+  <span class="nav-sep">|</span>
+  <a href="../index.html" class="nav-back">← Home</a>
+  <span class="nav-sep">|</span>
+  <a href="../pages/phase4.html" class="nav-back">Phase 4: Execution</a>
+  <span class="nav-sep">|</span>
+  <span class="nav-current">Win/Loss Analysis</span>
+</nav>
+
+<div class="page-hero" style="background:#964219">
+  <div class="hero-phase-label">Phase 4 — Execution &amp; Performance Management</div>
+  <div class="hero-title">Win/Loss Analysis — The Intelligence Engine of Your GTM</div>
+  <div class="hero-subtitle">Win/loss is not a post-mortem. It is a continuous intelligence system that tells you why your GTM is working or failing.</div>
+</div>
+
+<div class="content-wrap">
+  <div class="breadcrumb">
+    <a href="../index.html">Home</a>
+    <span class="sep">›</span>
+    <a href="../pages/phase4.html">Phase 4: Execution</a>
+    <span class="sep">›</span>
+    <span class="current">Win/Loss Analysis</span>
+  </div>
+
+  <!-- WHY W/L IS UNDERINVESTED -->
+  <h2 class="section-title">Why Win/Loss Is Underinvested</h2>
+  <p class="section-intro">The average B2B SaaS company does almost no systematic win/loss analysis. What passes for win/loss is usually: a rep's anecdotal "they went with the cheaper option," a Salesforce loss reason field that says "price" 70% of the time, and a quarterly review where someone presents a bar chart and says "we need to be more competitive."</p>
+
+  <div class="subsection">
+    <div class="subsection-title">The Anecdotal Problem</div>
+    <p>Reps are structurally incapable of providing accurate win/loss intelligence. This is not a criticism of reps — it is a recognition of human psychology. Reps have three natural biases:</p>
+    <ul class="bullet-list">
+      <li><strong>Attribution bias:</strong> Losses are blamed on price, product, or bad timing (external factors). Wins are attributed to the rep's skill and relationships (internal factors).</li>
+      <li><strong>Emotional proximity:</strong> After losing a deal they spent 6 months on, a rep is processing a significant professional disappointment. Objective analysis is the last thing on their mind.</li>
+      <li><strong>Information asymmetry:</strong> Reps only know what the buyer told them — and buyers routinely give polite, diplomatic reasons for their decisions, not honest ones. "We went in a different direction" tells you nothing.</li>
+    </ul>
+  </div>
+
+  <div class="callout callout-warning">
+    <div class="callout-title">The Cost of Getting This Wrong</div>
+    <p>Companies that rely solely on rep-reported win/loss data end up systematically investing in the wrong things. If every rep says you lost because of price, leadership cuts price. If the real reason was a weak implementation story and no references in the buyer's industry, the price cut does nothing — and may even signal lower quality. Bad win/loss intelligence drives bad GTM investments worth hundreds of thousands to millions of dollars annually.</p>
+  </div>
+
+  <div class="subsection">
+    <div class="subsection-title">The Systematic Approach: What It Unlocks</div>
+    <ul class="bullet-list">
+      <li>Real understanding of why buyers chose you or didn't — from the buyer's perspective</li>
+      <li>Competitive positioning intelligence that actually matches how buyers perceive competitors</li>
+      <li>ICP clarity: which customer profiles close at high rates vs. low rates, and why</li>
+      <li>Product roadmap input grounded in deal-level evidence, not sales anecdotes</li>
+      <li>Messaging refinement: what resonated, what didn't, where the pitch lost them</li>
+      <li>Sales process insight: where deals stall, where trust is built or lost</li>
+    </ul>
+  </div>
+
+  <!-- PROGRAM DESIGN -->
+  <h2 class="section-title">The Win/Loss Program Design</h2>
+
+  <div class="subsection">
+    <div class="subsection-title">Who Should Own It</div>
+    <p>Win/loss analysis should <strong>not be owned by sales</strong>. Sales has the most to gain and lose from the findings, and this conflict of interest — even unconsciously — will bias the analysis. The best owners, in order of preference:</p>
+
+    <table class="data-table">
+      <thead>
+        <tr><th>Owner</th><th>Pros</th><th>Cons</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>Third-party win/loss firm<br/><em>(e.g., Clozd, Primary Intelligence)</em></td><td>Maximum buyer candor; no internal bias; professional methodology</td><td>Cost ($30K–$150K/yr); less flexibility; slower turnaround</td></tr>
+        <tr><td>Product Marketing</td><td>Uses findings directly; strong analytical skills; neutral from sales</td><td>May have product bias; bandwidth constrained</td></tr>
+        <tr><td>Revenue Operations / Strategy</td><td>Quantitative; CRM access; process-oriented</td><td>May lack buyer empathy; sales relationships needed for interview access</td></tr>
+        <tr><td>Customer Success</td><td>Strong buyer relationships; good interviewers</td><td>Primarily post-sale perspective; limited competitive context</td></tr>
+        <tr><td>Sales (rep or manager)</td><td>Fastest access; existing relationships</td><td>Highest bias risk; least candid responses from buyers</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="subsection">
+    <div class="subsection-title">Sampling Strategy</div>
+    <p>You cannot interview every deal. You need a sampling approach that produces actionable, statistically meaningful insights within your budget and bandwidth. Best practice:</p>
+
+    <table class="data-table">
+      <thead>
+        <tr><th>Deal Type</th><th>Priority</th><th>Target Sample Rate</th><th>Why</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>Competitive losses (ACV &gt; $20K)</td><td>Highest</td><td>30–50% of deals</td><td>Competitive intelligence, positioning, battle cards</td></tr>
+        <tr><td>No-decision / stalled deals</td><td>High</td><td>20–30%</td><td>Urgency and business case weaknesses</td></tr>
+        <tr><td>Unexpected wins</td><td>High</td><td>20–30%</td><td>Understand what actually drove the win — not what you assumed</td></tr>
+        <tr><td>Churned customers</td><td>High</td><td>50–75% of churned</td><td>Retention intelligence; churn prevention</td></tr>
+        <tr><td>Expected wins</td><td>Medium</td><td>10–20%</td><td>Validate and document your winning formula</td></tr>
+        <tr><td>Small deal losses (&lt;$5K ACV)</td><td>Low</td><td>5%</td><td>Low signal-to-effort ratio unless you're SMB-focused</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- THE WIN/LOSS INTERVIEW -->
+  <h2 class="section-title">The Win/Loss Interview</h2>
+
+  <div class="subsection">
+    <div class="subsection-title">Who to Interview</div>
+    <p>The economic buyer or final decision-maker is the gold standard interview subject. They own the budget decision and have the clearest view of what ultimately drove the choice. Champions and evaluators are valuable secondary interviews — they explain the evaluation process. Avoid interviewing only the contact who was "nice" to your team; interview the person who made the call.</p>
+
+    <div class="callout callout-best-practice">
+      <div class="callout-title">Getting the Interview</div>
+      <p>Buyers are surprisingly willing to give win/loss feedback — especially if you frame it correctly: "We're not trying to re-sell you. We're running a research program to improve our product and sales process, and your perspective would be genuinely valuable. It will take 20 minutes and is completely off the record from the sales team." Win rates on interview requests typically run 40–60% when framed this way. Approach within 2–3 weeks of the decision while memory is fresh.</p>
+    </div>
+  </div>
+
+  <div class="subsection">
+    <div class="subsection-title">Interview Structure</div>
+    <div class="interview-structure">
+      <div class="is-phase">
+        <div class="is-phase-num">1</div>
+        <div class="is-phase-content">
+          <div class="ispc-title">Context (5 min)</div>
+          <div class="ispc-desc">Establish the business situation. "Can you describe the problem you were trying to solve and what triggered this evaluation?" Understand the before-state. Build rapport before asking for judgment.</div>
+        </div>
+      </div>
+      <div class="is-phase">
+        <div class="is-phase-num">2</div>
+        <div class="is-phase-content">
+          <div class="ispc-title">Evaluation Process (10 min)</div>
+          <div class="ispc-desc">Map the evaluation: who was involved, what criteria they used, how they weighted factors, how many vendors they considered, what the timeline looked like. This reveals decision process intelligence even before you ask about your performance.</div>
+        </div>
+      </div>
+      <div class="is-phase">
+        <div class="is-phase-num">3</div>
+        <div class="is-phase-content">
+          <div class="ispc-title">Vendor Comparison (10 min)</div>
+          <div class="ispc-desc">How did we compare to alternatives? What were our strengths? What were our weaknesses relative to the winner or alternatives? This is where competitive intelligence lives.</div>
+        </div>
+      </div>
+      <div class="is-phase">
+        <div class="is-phase-num">4</div>
+        <div class="is-phase-content">
+          <div class="ispc-title">Decision Factors (5 min)</div>
+          <div class="ispc-desc">What were the 2–3 factors that ultimately drove the decision? Rank them. This distinguishes stated rationale from actual rationale.</div>
+        </div>
+      </div>
+      <div class="is-phase">
+        <div class="is-phase-num">5</div>
+        <div class="is-phase-content">
+          <div class="ispc-title">What Could Have Changed the Outcome (5 min)</div>
+          <div class="ispc-desc">"If we had done X differently, would it have changed your decision?" This is the highest-leverage question. The answer tells you exactly what to fix. For wins: "What almost made you choose someone else?"</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="subsection">
+    <div class="subsection-title">The 10 Core Win/Loss Interview Questions</div>
+    <div class="interview-block">
+      <div class="ib-header">10 Questions Every Win/Loss Interview Should Include</div>
+      <div class="q-item"><div class="q-num">1</div><div class="q-text">"What business problem were you trying to solve, and what triggered this evaluation now?"<em>Reveals urgency driver and ICP fit signals</em></div></div>
+      <div class="q-item"><div class="q-num">2</div><div class="q-text">"Who was involved in the decision, and what role did each person play?"<em>Maps the buying committee; validates multi-threading effectiveness</em></div></div>
+      <div class="q-item"><div class="q-num">3</div><div class="q-text">"How did you evaluate vendors? What criteria did you use, and how did you weight them?"<em>Reveals true decision criteria — often different from what reps heard during the deal</em></div></div>
+      <div class="q-item"><div class="q-num">4</div><div class="q-text">"How did we compare to the other vendors you evaluated?"<em>The core competitive intelligence question. Ask for specific comparisons, not just "you were good."</em></div></div>
+      <div class="q-item"><div class="q-num">5</div><div class="q-text">"What did we do well throughout the process?"<em>Validates your winning behaviors and helps identify what to preserve</em></div></div>
+      <div class="q-item"><div class="q-num">6</div><div class="q-text">"Where did we fall short or disappoint you?"<em>The hardest question to ask and the most valuable. Probe gently: "If you had to name one thing…"</em></div></div>
+      <div class="q-item"><div class="q-num">7</div><div class="q-text">"What was the primary reason for your final decision?"<em>Get them to rank, not just list. The #1 reason is the decision driver.</em></div></div>
+      <div class="q-item"><div class="q-num">8</div><div class="q-text">"Was price a factor? If so, was it the primary factor or a contributing factor?"<em>Separates "price was a reason" from "price was the reason." Critical for competitive positioning.</em></div></div>
+      <div class="q-item"><div class="q-num">9</div><div class="q-text">"Is there anything we could have done differently that would have changed the outcome?"<em>The highest-leverage question. Answers are often specific and immediately actionable.</em></div></div>
+      <div class="q-item"><div class="q-num">10</div><div class="q-text">"Would you consider us in a future evaluation or for a different use case?"<em>Measures relationship preservation and opens the door to future opportunities</em></div></div>
+    </div>
+  </div>
+
+  <!-- WIN/LOSS DATA CATEGORIZATION -->
+  <h2 class="section-title">Win/Loss Data Categorization</h2>
+  <p class="section-intro">Raw interview data is not actionable until it's categorized and trended. The taxonomy you use determines the quality of insight you extract. The most durable taxonomy covers 8 primary reason categories.</p>
+
+  <div class="taxonomy-grid">
+    <div class="taxon-card">
+      <div class="tx-icon">💰</div>
+      <div class="tx-name">Price</div>
+      <div class="tx-note">Too expensive, poor ROI case, unfavorable TCO vs. competitor</div>
+    </div>
+    <div class="taxon-card">
+      <div class="tx-icon">🔧</div>
+      <div class="tx-name">Product / Features</div>
+      <div class="tx-note">Missing capability, integration gap, UX issues, performance limitations</div>
+    </div>
+    <div class="taxon-card">
+      <div class="tx-icon">🤝</div>
+      <div class="tx-name">Relationships</div>
+      <div class="tx-note">Incumbent advantage, rep relationship, executive sponsor mismatch</div>
+    </div>
+    <div class="taxon-card">
+      <div class="tx-icon">⚙️</div>
+      <div class="tx-name">Process / Experience</div>
+      <div class="tx-note">Sales process friction, poor demo, slow response, implementation concerns</div>
+    </div>
+    <div class="taxon-card">
+      <div class="tx-icon">⭐</div>
+      <div class="tx-name">Reputation</div>
+      <div class="tx-note">Brand, reference customers, analyst positioning, online reviews</div>
+    </div>
+    <div class="taxon-card">
+      <div class="tx-icon">⚔️</div>
+      <div class="tx-name">Competition</div>
+      <div class="tx-note">Specific competitor won; competitor had better fit, pricing, or relationships</div>
+    </div>
+    <div class="taxon-card">
+      <div class="tx-icon">📅</div>
+      <div class="tx-name">Timing</div>
+      <div class="tx-note">Budget cycle, organizational change, strategic pivot, freeze</div>
+    </div>
+    <div class="taxon-card">
+      <div class="tx-icon">🚫</div>
+      <div class="tx-name">No Decision</div>
+      <div class="tx-note">Evaluation stalled; status quo won; no compelling event; internal politics</div>
+    </div>
+  </div>
+
+  <div class="subsection">
+    <div class="subsection-title">The Attribution Gap: Stated vs. Actual Reason</div>
+    <div class="attribution-grid">
+      <div class="attribution-side" style="background:#fff8f0; border: 1.5px solid #964219;">
+        <div class="as-title" style="color:#964219;">Stated Reason (What Buyers Say)</div>
+        <div class="as-example">"You were too expensive."<br/><br/>"Your feature set wasn't quite there."<br/><br/>"We went with a company that was a better fit."</div>
+      </div>
+      <div class="attribution-side" style="background:#f0fff4; border: 1.5px solid #437A22;">
+        <div class="as-title" style="color:#437A22;">Actual Reason (What Interviews Reveal)</div>
+        <div class="as-example">"Our champion couldn't build an internal ROI case — we never quantified business value."<br/><br/>"The competitor's CS team gave 3 references in our industry. We had none."<br/><br/>"The rep was strong but the exec sponsor never engaged — procurement killed it."</div>
+      </div>
+    </div>
+    <p style="font-size:14px; color:var(--text-muted); margin-top:12px;">The stated reason points to price. The actual reason points to sales methodology, reference program, and executive engagement. The investment required to fix each is completely different. This is why buyer interviews are non-negotiable — CRM loss reasons alone will always lead you toward the wrong fix.</p>
+  </div>
+
+  <!-- ANALYSIS AND TRENDING -->
+  <h2 class="section-title">Analysis and Trending</h2>
+
+  <div class="subsection">
+    <div class="subsection-title">Win/Loss Dashboard: Key Views</div>
+    <table class="data-table">
+      <thead>
+        <tr><th>Dashboard View</th><th>What It Shows</th><th>Business Decision It Informs</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>Win rate by competitor</td><td>Head-to-head win rate for each named competitor</td><td>Competitive prioritization, battle card investment</td></tr>
+        <tr><td>Win rate by deal size</td><td>Win rate in each ACV band ($0–$25K, $25K–$100K, $100K+)</td><td>ICP sharpening, segment focus decisions</td></tr>
+        <tr><td>Win rate by source</td><td>Win rate by pipeline source (inbound, outbound, partner, referral)</td><td>Pipeline generation investment allocation</td></tr>
+        <tr><td>Win rate by rep</td><td>Individual rep win rate with confidence intervals</td><td>Coaching prioritization, performance management</td></tr>
+        <tr><td>Win rate by industry / vertical</td><td>Win rate across key verticals</td><td>Vertical GTM investment, ICP validation</td></tr>
+        <tr><td>Win rate over time</td><td>Quarterly trend in overall win rate</td><td>Market position health; GTM program effectiveness</td></tr>
+        <tr><td>Loss reason distribution</td><td>Primary loss reason % breakdown</td><td>Investment prioritization: product, price, process, or competitive</td></tr>
+        <tr><td>No-decision rate</td><td>% of opportunities ending without a decision</td><td>Qualification rigor, urgency creation, ICP fit</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="subsection">
+    <div class="subsection-title">Statistical Significance Considerations</div>
+    <p>Win/loss analysis suffers from small-n problems at most growth-stage SaaS companies. A 15% win rate improvement over 3 months with 40 deals is not statistically significant. Key principles for validity:</p>
+    <ul class="bullet-list">
+      <li><strong>Minimum sample for trendable insight:</strong> 20+ deals per segment per analysis period</li>
+      <li><strong>Confidence intervals:</strong> Always report win rate ranges, not point estimates. Win rate of "32%" with 20 deals has a wide confidence interval — acknowledge it.</li>
+      <li><strong>Stratified sampling:</strong> Ensure your interview sample is representative of deal distribution. Don't over-sample the easiest interviews.</li>
+      <li><strong>Longitudinal view:</strong> Single-quarter win/loss is anecdote. 4+ quarter trends are intelligence. Build the program with the long view in mind.</li>
+    </ul>
+  </div>
+
+  <!-- FEEDING BACK INTO THE SYSTEM -->
+  <h2 class="section-title">Feeding Win/Loss Back Into the GTM System</h2>
+  <p class="section-intro">Win/loss intelligence is worthless if it doesn't change behavior. The governance process for acting on findings is as important as the analysis itself.</p>
+
+  <div class="feedback-flow">
+    <div class="ff-step">
+      <div class="ffs-title">ICP Refinement</div>
+      <div class="ffs-desc">Tighten ICP based on which profiles win at high rates vs. low rates</div>
+    </div>
+    <div class="ff-step">
+      <div class="ffs-title">Playbook Update</div>
+      <div class="ffs-desc">Update discovery questions, demo flows, and objection handling based on common decision patterns</div>
+    </div>
+    <div class="ff-step">
+      <div class="ffs-title">Battle Cards</div>
+      <div class="ffs-desc">Refresh competitive battle cards with buyer-voiced comparisons, not vendor-voiced assumptions</div>
+    </div>
+    <div class="ff-step">
+      <div class="ffs-title">Product Roadmap</div>
+      <div class="ffs-desc">Escalate feature gaps with deal evidence: "$X ARR lost in Q3 due to missing capability Y"</div>
+    </div>
+    <div class="ff-step">
+      <div class="ffs-title">Marketing Messaging</div>
+      <div class="ffs-desc">Update positioning, website copy, and demand gen content based on what resonated in winning deals</div>
+    </div>
+  </div>
+
+  <div class="subsection">
+    <div class="subsection-title">Governance Process for Acting on Findings</div>
+    <ol class="step-list">
+      <li><div class="step-content"><span class="step-title">Quarterly Win/Loss Review (cross-functional)</span>Product, Sales, Marketing, and CS attend. Present trended findings with business impact quantification. Not a data presentation — a decision meeting.</div></li>
+      <li><div class="step-content"><span class="step-title">Action item ownership</span>Every key finding gets an owner, a specific action, and a deadline. "Product to evaluate feature X for Q3 roadmap" — not "we should think about feature X."</div></li>
+      <li><div class="step-content"><span class="step-title">Feedback loop back to sales</span>Specific deal-level insights distributed to the rep and manager within 1 week of interview completion. Don't wait for the quarterly review to share deal-specific learnings.</div></li>
+      <li><div class="step-content"><span class="step-title">Effectiveness tracking</span>Track win rate in the segments where you made investments. If you updated your competitive battle cards based on win/loss, track win rate vs. that competitor for the next two quarters.</div></li>
+    </ol>
+  </div>
+
+  <!-- THE DO-NOTHING COMPETITOR -->
+  <h2 class="section-title">The Do-Nothing Competitor</h2>
+  <p class="section-intro">The most dangerous competitor in any sales process is not Competitor A or Competitor B. It is the status quo — the decision to do nothing, maintain the current approach, or defer the evaluation indefinitely.</p>
+
+  <div class="no-decision-stats">
+    <div class="nd-stat">
+      <div class="nds-val">40–60%</div>
+      <div class="nds-label">Proportion of B2B evaluations that end in no decision (industry benchmark)</div>
+    </div>
+    <div class="nd-stat">
+      <div class="nds-val">3×</div>
+      <div class="nds-label">More common than any single named competitor in most pipelines</div>
+    </div>
+    <div class="nd-stat">
+      <div class="nds-val">70%+</div>
+      <div class="nds-label">Of no-decision deals have no compelling event identified in CRM</div>
+    </div>
+  </div>
+
+  <div class="subsection">
+    <div class="subsection-title">Analyzing No-Decision Deals Separately</div>
+    <p>No-decision deals should be analyzed as a distinct category from competitive losses. The intelligence is different:</p>
+    <ul class="bullet-list">
+      <li><strong>Qualification failure:</strong> Was this deal ever real? Did we create pipeline from a prospect that had no genuine intent to buy this year?</li>
+      <li><strong>Business case failure:</strong> Was there a problem but no compelling ROI to justify the investment?</li>
+      <li><strong>Organizational failure:</strong> Did internal politics, budget cuts, or leadership change stall the initiative?</li>
+      <li><strong>Urgency failure:</strong> Was the problem real and the ROI valid, but no trigger event created pressure to act?</li>
+    </ul>
+
+    <div class="callout callout-best-practice">
+      <div class="callout-title">Urgency Framework from No-Decision Analysis</div>
+      <p>The most valuable output of no-decision win/loss analysis is an urgency framework: a catalog of the compelling events, cost-of-inaction arguments, and risk scenarios that reliably convert "not now" into "now." This framework feeds directly into your discovery process, your business case template, and your objection handling for late-stage stalls.</p>
+    </div>
+  </div>
+
+  <!-- COMPETITIVE WIN/LOSS -->
+  <h2 class="section-title">Competitive Win/Loss Intelligence</h2>
+
+  <div class="comp-intel-box">
+    <div class="ci-title">Competitive Intelligence Output Template (Per Named Competitor)</div>
+    <div class="ci-row"><div class="ci-label">Head-to-head win rate</div><div class="ci-val">Our win rate when this competitor is in the deal — trending over 4 quarters</div></div>
+    <div class="ci-row"><div class="ci-label">Where they beat us</div><div class="ci-val">Specific product, price, or process areas where buyers consistently favor them (from interview data)</div></div>
+    <div class="ci-row"><div class="ci-label">Where we beat them</div><div class="ci-val">Specific areas where our wins are driven by differentiation vs. this competitor</div></div>
+    <div class="ci-row"><div class="ci-label">Buyer language</div><div class="ci-val">Exact words buyers use when comparing us to this competitor — verbatim quotes from interviews</div></div>
+    <div class="ci-row"><div class="ci-label">Where they appear</div><div class="ci-val">Which segment, deal size, and industry we encounter them most</div></div>
+    <div class="ci-row"><div class="ci-label">Battle card status</div><div class="ci-val">Last updated date; confidence level in current positioning</div></div>
+    <div class="ci-row"><div class="ci-label">Win rate trend</div><div class="ci-val">Is our win rate vs. this competitor improving, stable, or declining?</div></div>
+  </div>
+
+  <div class="callout callout-definition">
+    <div class="callout-title">The Competitive Intelligence Program</div>
+    <p>A mature competitive intelligence program combines win/loss interview data with public intelligence: competitor product updates, G2/Gartner reviews, job postings (signal new investment areas), pricing page changes, and customer community discussions. Win/loss provides the buyer-voice signal; public intelligence provides the market context. Together, they make battle cards that actually help reps win deals.</p>
+  </div>
+
+  <!-- INDICATORS -->
+  <h2 class="section-title">Leading &amp; Lagging Indicators</h2>
+
+  <div class="subsection">
+    <div class="subsection-title">Leading Indicators (Predict Win/Loss Program Quality)</div>
+    <div class="indicator-row">
+      <span class="indicator-tag ind-leading">Win/loss interviews completed (% of target)</span>
+      <span class="indicator-tag ind-leading">CRM loss reason completion rate</span>
+      <span class="indicator-tag ind-leading">Interview recency (days since last batch)</span>
+      <span class="indicator-tag ind-leading">Action items from last quarterly review completed</span>
+    </div>
+  </div>
+
+  <div class="subsection">
+    <div class="subsection-title">Lagging Indicators (Measure GTM System Effectiveness)</div>
+    <div class="indicator-row">
+      <span class="indicator-tag ind-lagging">Win rate trend by competitor</span>
+      <span class="indicator-tag ind-lagging">Win rate trend by segment</span>
+      <span class="indicator-tag ind-lagging">No-decision rate trend</span>
+      <span class="indicator-tag ind-lagging">Overall win rate trend (quarterly)</span>
+      <span class="indicator-tag ind-lagging">Win rate vs. specific competitors (quarterly)</span>
+    </div>
+
+    <table class="data-table">
+      <thead>
+        <tr><th>Metric</th><th>Measurement Frequency</th><th>Best-in-Class Benchmark</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>Overall win rate (from qualified pipeline)</td><td>Quarterly</td><td>25–35% (varies by segment)</td></tr>
+        <tr><td>No-decision rate</td><td>Quarterly</td><td>&lt;30% of qualified pipeline</td></tr>
+        <tr><td>Win/loss interviews completed</td><td>Monthly</td><td>&gt;30% of deals $25K+ ACV sampled</td></tr>
+        <tr><td>Loss reason completion in CRM</td><td>Weekly</td><td>&gt;90% of closed-lost deals have reasons logged</td></tr>
+        <tr><td>Competitive win rate trend</td><td>Quarterly</td><td>Positive or stable vs. each primary competitor</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="related-section">
+    <div class="related-title">Related Sections</div>
+    <div class="related-links">
+      <a href="pipeline-generation.html" class="related-link">Pipeline Generation</a>
+      <a href="forecast-integrity.html" class="related-link">Forecast Integrity</a>
+      <a href="competitive-playbooks.html" class="related-link">Competitive Playbooks</a>
+      <a href="icp-definition.html" class="related-link">ICP Definition</a>
+      <a href="meddicc.html" class="related-link">MEDDICC Qualification</a>
+      <a href="../pages/phase4.html" class="related-link">← Phase 4 Overview</a>
+    </div>
+  </div>
+</div>
+<script data-pplx-inline-edit>
+(function () {
+  if (window === window.top) return;
+
+  const allowedParentOrigins = ["https://www.perplexity.ai","https://perplexity.ai","https://testing.perplexity.ai","https://staging.perplexity.ai","https://*.preview.i.perplexity.ai","http://localhost:3000","http://127.0.0.1:3000","http://localhost:5173","http://127.0.0.1:5173"];
+  const MAX_FONT_BYTES = 500 * 1024;
+  const MAX_TOTAL_FONT_BYTES = 2 * 1024 * 1024;
+  let scrollForwarding = false;
+  let scrollRaf = 0;
+  let trustedTopOrigin = null;
+
+  // Allow entries like "https://*.preview.i.perplexity.ai" — the wildcard
+  // matches a single DNS label (no dots), so "https://*.foo" cannot stretch
+  // across multiple labels.
+  function matchesAllowedOrigin(origin) {
+    if (!origin) return false;
+    for (const entry of allowedParentOrigins) {
+      if (!entry.includes("*")) {
+        if (entry === origin) return true;
+        continue;
+      }
+      const pattern = new RegExp(
+        "^" +
+          entry.replace(/[.+?^${}()|[\]\\]/g, "\\$&").replace(/\*/g, "[^.]+") +
+          "$",
+      );
+      if (pattern.test(origin)) return true;
+    }
+    return false;
+  }
+
+  // Trust decision: when the sender is same-origin-visible (event.origin is a
+  // real origin like https://www.perplexity.ai) we trust event.origin directly.
+  // When event.origin is "null" (opaque broker srcdoc), we fall back to the
+  // broker's stamped `parentOrigin` to identify the top window. The fallback
+  // is claim-only — we rely on the browser's native `targetOrigin` enforcement
+  // on the response path (see postToTrustedTop) to ensure replies can't be
+  // delivered to anyone but the actual top window of that claimed origin.
+  function getTrustedParentOrigin(event) {
+    const forwardedParentOrigin =
+      typeof event.data.parentOrigin === "string" ? event.data.parentOrigin : null;
+    const parentOrigin = event.origin === "null" ? forwardedParentOrigin : event.origin;
+    return matchesAllowedOrigin(parentOrigin) ? parentOrigin : null;
+  }
+
+  // All responses go to window.top with targetOrigin = the allowlisted origin.
+  // An attacker that iframes us inside their own null-origin broker can claim
+  // any parentOrigin they like, but the browser will drop the reply whenever
+  // the real top's origin doesn't match — so the screenshot never leaves.
+  function postToTrustedTop(message) {
+    if (!trustedTopOrigin) return;
+    try {
+      window.top.postMessage(message, trustedTopOrigin);
+    } catch (_error) {}
+  }
+
+  function inlineAll(original, clone) {
+    if (original.nodeType !== 1 || clone.nodeType !== 1) return;
+
+    try {
+      const computedStyle = getComputedStyle(original);
+      // cssText on a computed style is the serialized declaration in modern
+      // Chromium/Safari — a single read beats enumerating ~400 longhand
+      // properties. Firefox returns "" here, so we fall back on empty.
+      const serialized = computedStyle.cssText;
+      if (serialized) {
+        clone.style.cssText = serialized;
+      } else {
+        const parts = new Array(computedStyle.length);
+        for (let index = 0; index < computedStyle.length; index += 1) {
+          const property = computedStyle[index];
+          parts[index] = `${property}:${computedStyle.getPropertyValue(property)};`;
+        }
+        clone.style.cssText = parts.join("");
+      }
+    } catch (_error) {}
+
+    const originalChildren = original.children;
+    const clonedChildren = clone.children;
+    for (
+      let index = 0;
+      index < originalChildren.length && index < clonedChildren.length;
+      index += 1
+    ) {
+      inlineAll(originalChildren[index], clonedChildren[index]);
+    }
+  }
+
+  function extractFontUrl(srcValue) {
+    const matches = [
+      ...srcValue.matchAll(
+        /url\(["']?([^"')]+)["']?\)(?:\s*format\(["']?([^"')]+)["']?\))?/gi,
+      ),
+    ];
+    if (matches.length === 0) return null;
+    const woff2 = matches.find((m) => m[2] && m[2].toLowerCase().includes("woff2"));
+    if (woff2) return woff2[1];
+    const woff = matches.find((m) => m[2] && m[2].toLowerCase().includes("woff"));
+    if (woff) return woff[1];
+    return matches[0][1];
+  }
+
+  // Cache resolved font URL -> data URI across captures. Fonts on a page
+  // essentially never change, and a batch run emits multiple captures back to
+  // back — without this we'd refetch + re-base64 every time.
+  const fontDataUriCache = new Map();
+  const SRC_DECLARATION_RE = /src\s*:\s*[^;}]+/i;
+
+  async function fetchAsDataUri(url) {
+    if (fontDataUriCache.has(url)) return fontDataUriCache.get(url);
+    let dataUri = null;
+    try {
+      const response = await fetch(url, { mode: "cors", credentials: "omit" });
+      if (response.ok) {
+        const blob = await response.blob();
+        if (blob.size <= MAX_FONT_BYTES) {
+          dataUri = await new Promise((resolve) => {
+            const reader = new FileReader();
+            reader.onloadend = () =>
+              resolve(typeof reader.result === "string" ? reader.result : null);
+            reader.onerror = () => resolve(null);
+            reader.readAsDataURL(blob);
+          });
+        }
+      }
+    } catch (_error) {
+      dataUri = null;
+    }
+    fontDataUriCache.set(url, dataUri);
+    return dataUri;
+  }
+
+  function collectFontFaceRuleTexts() {
+    const rules = [];
+    for (const sheet of document.styleSheets) {
+      let cssRules;
+      try {
+        cssRules = sheet.cssRules;
+      } catch (_error) {
+        continue;
+      }
+      if (!cssRules) continue;
+      for (const rule of cssRules) {
+        const cssText = rule.cssText || "";
+        if (cssText.startsWith("@font-face")) rules.push(cssText);
+      }
+    }
+    return rules;
+  }
+
+  async function buildInlinedFontCss() {
+    const ruleTexts = collectFontFaceRuleTexts();
+    if (ruleTexts.length === 0) return null;
+
+    const resolved = ruleTexts.map((cssText) => {
+      if (!SRC_DECLARATION_RE.test(cssText)) return null;
+      const srcMatch = cssText.match(/src\s*:\s*([^;}]+)[;}]/i);
+      if (!srcMatch) return null;
+      const url = extractFontUrl(srcMatch[1]);
+      if (!url) return null;
+      try {
+        return { cssText, url: new URL(url, document.baseURI).href };
+      } catch (_error) {
+        return null;
+      }
+    });
+
+    const dataUris = await Promise.all(
+      resolved.map((entry) => (entry ? fetchAsDataUri(entry.url) : Promise.resolve(null))),
+    );
+
+    const inlined = [];
+    let totalBytes = 0;
+    for (let index = 0; index < resolved.length; index += 1) {
+      const entry = resolved[index];
+      const dataUri = dataUris[index];
+      if (!entry || !dataUri) continue;
+      const approxBytes = dataUri.length * 0.75;
+      if (totalBytes + approxBytes > MAX_TOTAL_FONT_BYTES) break;
+      totalBytes += approxBytes;
+      inlined.push(entry.cssText.replace(SRC_DECLARATION_RE, `src: url("${dataUri}")`));
+    }
+    return inlined.length > 0 ? inlined.join("\n") : null;
+  }
+
+  function stripExternal(clone) {
+    const images = clone.querySelectorAll("img");
+    for (let index = 0; index < images.length; index += 1) {
+      const src = images[index].getAttribute("src");
+      if (src && !src.startsWith("data:")) images[index].removeAttribute("src");
+    }
+
+    const elements = clone.querySelectorAll("*");
+    for (let index = 0; index < elements.length; index += 1) {
+      const style = elements[index].style.cssText;
+      if (style && style.includes("url(")) {
+        elements[index].style.cssText = style.replace(
+          /url\(["']?(?!data:)[^)"']*["']?\)/gi,
+          "none",
+        );
+      }
+    }
+  }
+
+  function emitScroll() {
+    scrollRaf = 0;
+    if (!scrollForwarding) return;
+    postToTrustedTop({
+      type: "INLINE_EDIT_SCROLL",
+      scrollX: window.scrollX,
+      scrollY: window.scrollY,
+    });
+  }
+
+  window.addEventListener(
+    "scroll",
+    function () {
+      if (!scrollForwarding || scrollRaf) return;
+      scrollRaf = requestAnimationFrame(emitScroll);
+    },
+    { passive: true, capture: true },
+  );
+
+  async function handleCaptureRequest(event) {
+    const requestId = event.data.requestId;
+    const scrollX = window.scrollX;
+    const scrollY = window.scrollY;
+    const width = window.innerWidth;
+    const height = window.innerHeight;
+
+    function postResult(dataUrl) {
+      postToTrustedTop({
+        type: "INLINE_EDIT_SCREENSHOT_RESULT",
+        requestId,
+        dataUrl,
+        scrollX,
+        scrollY,
+      });
+    }
+
+    try {
+      // Wait for any pending web fonts to resolve so both inline metrics and
+      // the @font-face inlining below see the same loaded faces.
+      if (document.fonts && document.fonts.ready) {
+        try {
+          await document.fonts.ready;
+        } catch (_error) {}
+      }
+
+      const clone = document.documentElement.cloneNode(true);
+      inlineAll(document.documentElement, clone);
+
+      const removedNodes = clone.querySelectorAll("script,link[rel=\"stylesheet\"],style");
+      for (let index = 0; index < removedNodes.length; index += 1) {
+        removedNodes[index].remove();
+      }
+
+      stripExternal(clone);
+
+      // Re-embed web fonts as data-URI @font-face rules so the SVG rasterizer
+      // can resolve them — external font URLs aren't fetched during
+      // foreignObject rendering, which would otherwise force a fallback face
+      // and change text metrics.
+      const inlinedFontCss = await buildInlinedFontCss();
+      if (inlinedFontCss) {
+        const styleEl = document.createElement("style");
+        styleEl.textContent = inlinedFontCss;
+        const head = clone.querySelector("head");
+        if (head) head.appendChild(styleEl);
+        else clone.insertBefore(styleEl, clone.firstChild);
+      }
+
+      const html = new XMLSerializer().serializeToString(clone);
+      const svg =
+        `<svg xmlns="http://www.w3.org/2000/svg" width="${width}" height="${height}">` +
+        '<foreignObject width="100%" height="100%">' +
+        `<div xmlns="http://www.w3.org/1999/xhtml" style="width:${width}px;height:${height}px;overflow:hidden">` +
+        `<div style="transform:translate(-${scrollX}px,-${scrollY}px);transform-origin:top left">` +
+        html +
+        "</div></div></foreignObject></svg>";
+      const svgUrl = `data:image/svg+xml;charset=utf-8,${encodeURIComponent(svg)}`;
+      const image = new Image();
+      image.onload = function () {
+        const canvas = document.createElement("canvas");
+        canvas.width = width;
+        canvas.height = height;
+        canvas.getContext("2d").drawImage(image, 0, 0);
+        postResult(canvas.toDataURL("image/png"));
+      };
+      image.onerror = function () {
+        postResult(null);
+      };
+      image.src = svgUrl;
+    } catch (_error) {
+      postResult(null);
+    }
+  }
+
+  window.addEventListener("message", function (event) {
+    if (!event.data) return;
+    // Only accept messages from the direct parent frame. Blocks sibling /
+    // unrelated-window postMessage senders that could otherwise reach us.
+    if (event.source !== window.parent) return;
+
+    const trustedParentOrigin = getTrustedParentOrigin(event);
+    if (!trustedParentOrigin) return;
+    trustedTopOrigin = trustedParentOrigin;
+
+    if (event.data.type === "INLINE_EDIT_SCROLL_START") {
+      scrollForwarding = true;
+      emitScroll();
+      return;
+    }
+
+    if (event.data.type === "INLINE_EDIT_SCROLL_STOP") {
+      scrollForwarding = false;
+      if (scrollRaf) cancelAnimationFrame(scrollRaf);
+      scrollRaf = 0;
+      return;
+    }
+
+    if (event.data.type !== "INLINE_EDIT_CAPTURE_REQUEST") return;
+
+    handleCaptureRequest(event);
+  });
+})();
+
+
+</script></body>
+</html>

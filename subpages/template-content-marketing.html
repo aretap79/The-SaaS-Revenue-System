@@ -1,0 +1,932 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Content Marketing Worksheet — CRO Manual</title>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="../assets/shared.css"/>
+  <style>
+    .page-hero { background: #006494; }
+
+    .funnel-flow {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 0;
+      margin: 20px 0;
+      position: relative;
+    }
+    .funnel-stage {
+      background: var(--surface);
+      border: 1.5px solid var(--border);
+      padding: 18px 16px;
+      position: relative;
+    }
+    .funnel-stage:first-child { border-radius: 10px 0 0 10px; }
+    .funnel-stage:last-child { border-radius: 0 10px 10px 0; }
+    .funnel-stage + .funnel-stage { border-left: none; }
+    .fs-label {
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      color: #006494;
+      margin-bottom: 6px;
+    }
+    .fs-title { font-size: 15px; font-weight: 700; color: var(--text); margin-bottom: 6px; }
+    .fs-desc { font-size: 12px; color: var(--text-muted); line-height: 1.5; }
+    .fs-arrow {
+      position: absolute;
+      right: -14px;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 28px;
+      height: 28px;
+      background: #006494;
+      border-radius: 50%;
+      color: #fff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 12px;
+      z-index: 1;
+    }
+
+    .content-type-table-wrap { overflow-x: auto; margin: 20px 0; }
+    .content-type-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 13px;
+      min-width: 680px;
+    }
+    .content-type-table th {
+      background: #006494;
+      color: #fff;
+      padding: 10px 14px;
+      text-align: left;
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.5px;
+      text-transform: uppercase;
+    }
+    .content-type-table td {
+      padding: 10px 14px;
+      border-bottom: 1px solid var(--border);
+      vertical-align: top;
+      line-height: 1.5;
+    }
+    .content-type-table tr:nth-child(even) td { background: #fafaf8; }
+    .content-type-table tr:last-child td { border-bottom: none; }
+
+    .worksheet-table-wrap { overflow-x: auto; margin: 20px 0; }
+    .worksheet-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 13px;
+      min-width: 800px;
+    }
+    .worksheet-table th {
+      background: #28251D;
+      color: #fff;
+      padding: 10px 14px;
+      text-align: left;
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.5px;
+      text-transform: uppercase;
+      white-space: nowrap;
+    }
+    .worksheet-table td {
+      padding: 10px 14px;
+      border-bottom: 1px solid var(--border);
+      vertical-align: top;
+      line-height: 1.5;
+    }
+    .worksheet-table tr:nth-child(even) td { background: #fafaf8; }
+    .worksheet-table tr:last-child td { border-bottom: none; }
+
+    .status-badge {
+      display: inline-block;
+      font-size: 11px;
+      font-weight: 700;
+      padding: 3px 10px;
+      border-radius: 20px;
+      white-space: nowrap;
+    }
+    .status-draft { background: #fff3cd; color: #7a5a00; }
+    .status-review { background: #cfe2ff; color: #0a3d91; }
+    .status-scheduled { background: #d1ecf1; color: #0c5460; }
+    .status-published { background: #d4edda; color: #1a5c2a; }
+
+    .distribution-grid {
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      gap: 10px;
+      margin: 20px 0;
+    }
+    .dist-card {
+      background: var(--surface);
+      border: 1.5px solid var(--border);
+      border-radius: 8px;
+      padding: 14px;
+      text-align: center;
+    }
+    .dist-icon { font-size: 24px; margin-bottom: 8px; display: block; }
+    .dist-title { font-size: 12px; font-weight: 700; color: var(--text); margin-bottom: 4px; }
+    .dist-desc { font-size: 11px; color: var(--text-muted); line-height: 1.4; }
+
+    .seo-pillars {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 14px;
+      margin: 20px 0;
+    }
+    .seo-pillar {
+      background: var(--surface);
+      border: 1.5px solid var(--border);
+      border-radius: 8px;
+      padding: 16px;
+    }
+    .seo-pillar-title {
+      font-size: 14px;
+      font-weight: 700;
+      color: var(--text);
+      margin-bottom: 8px;
+    }
+    .seo-pillar p { font-size: 13px; color: var(--text-muted); line-height: 1.6; margin: 0; }
+
+    .metrics-table-wrap { overflow-x: auto; margin: 20px 0; }
+    .metrics-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 13px;
+    }
+    .metrics-table th {
+      background: #28251D;
+      color: #fff;
+      padding: 10px 14px;
+      text-align: left;
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.5px;
+      text-transform: uppercase;
+    }
+    .metrics-table td {
+      padding: 10px 14px;
+      border-bottom: 1px solid var(--border);
+      vertical-align: top;
+      line-height: 1.5;
+    }
+    .metrics-table tr:nth-child(even) td { background: #fafaf8; }
+    .metrics-table tr:last-child td { border-bottom: none; }
+
+    @media (max-width: 768px) {
+      .funnel-flow { grid-template-columns: 1fr 1fr; }
+      .distribution-grid { grid-template-columns: 1fr 1fr; }
+      .seo-pillars { grid-template-columns: 1fr; }
+      .fs-arrow { display: none; }
+      .funnel-stage + .funnel-stage { border-left: 1.5px solid var(--border); border-top: none; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav class="nav">
+  <span class="nav-logo">CRO <span>Manual</span></span>
+  <span class="nav-sep">/</span>
+  <a href="../pages/resources.html" class="nav-back">Resources &amp; Templates</a>
+  <span class="nav-sep">/</span>
+  <span class="nav-current">Content Marketing Worksheet</span>
+  <span class="nav-spacer"></span>
+  <a href="../index.html" class="nav-home">Home</a>
+</nav>
+
+<!-- HERO -->
+<div class="page-hero">
+  <div class="hero-phase-label">Marketing · Resources &amp; Templates</div>
+  <h1 class="hero-title">Content Marketing Worksheet</h1>
+  <p class="hero-subtitle">Content marketing builds compounding pipeline over time. A disciplined content operation produces ICP-relevant content consistently, distributes it across channels, and tracks which content influences pipeline and LIR achievement.</p>
+  <div class="hero-tags">
+    <span class="hero-tag">Content Strategy</span>
+    <span class="hero-tag">SEO</span>
+    <span class="hero-tag">Thought Leadership</span>
+    <span class="hero-tag">Content Calendar</span>
+    <span class="hero-tag">Distribution</span>
+    <span class="hero-tag">Pipeline Influence</span>
+  </div>
+</div>
+
+<!-- CONTENT -->
+<div class="content-wrap">
+
+  <!-- Breadcrumb -->
+  <nav class="breadcrumb">
+    <a href="../index.html">Home</a>
+    <span class="sep">›</span>
+    <a href="../pages/resources.html">Resources &amp; Templates</a>
+    <span class="sep">›</span>
+    <span class="current">Content Marketing Worksheet</span>
+  </nav>
+
+  <!-- Section 1 -->
+  <h2 class="section-title">The Content-to-Pipeline Framework</h2>
+  <p class="section-intro">Content drives revenue across the entire customer lifecycle — from first search to renewal. Map every content investment to one of these four stages to ensure your content budget is allocated proportionally to pipeline impact.</p>
+
+  <div class="funnel-flow">
+    <div class="funnel-stage">
+      <div class="fs-label">Stage 1</div>
+      <div class="fs-title">Awareness</div>
+      <div class="fs-desc">SEO articles drive organic traffic from ICP buyers searching for solutions to their specific pain. Intent-matched content captures buyers at the problem recognition stage.</div>
+      <div class="fs-arrow">→</div>
+    </div>
+    <div class="funnel-stage">
+      <div class="fs-label">Stage 2</div>
+      <div class="fs-title">Engagement</div>
+      <div class="fs-desc">Gated content (ebooks, reports) captures leads. Nurture sequences move MQLs toward SQL qualification with progressive education about your solution.</div>
+      <div class="fs-arrow">→</div>
+    </div>
+    <div class="funnel-stage">
+      <div class="fs-label">Stage 3</div>
+      <div class="fs-title">Trust</div>
+      <div class="fs-desc">Case studies and customer stories accelerate the evaluation stage by validating ROI for buyers comparing your solution to alternatives.</div>
+      <div class="fs-arrow">→</div>
+    </div>
+    <div class="funnel-stage">
+      <div class="fs-label">Stage 4</div>
+      <div class="fs-title">Retention</div>
+      <div class="fs-desc">Onboarding content and help documentation reduces support burden, improves LIR achievement, and supports CS-led expansion conversations.</div>
+    </div>
+  </div>
+
+  <div class="callout callout-best-practice">
+    <div class="callout-title">Allocation Guidance</div>
+    <p>Stage 2 allocation: 60% Awareness content (SEO), 25% Trust content (case studies), 15% Engagement content (gated assets). Retention content is owned by the CS team but supported by marketing. Stage 3: add Engagement and Thought Leadership content as brand authority grows.</p>
+  </div>
+
+  <!-- Section 2 -->
+  <h2 class="section-title">Content Types by Buyer Journey Stage</h2>
+  <p class="section-intro">Each content format serves a specific function in the buyer journey. Misaligning format to journey stage is a common waste of content budget — a case study is useless for Awareness, a product page is useless for Consideration.</p>
+
+  <div class="content-type-table-wrap">
+    <table class="content-type-table">
+      <thead>
+        <tr>
+          <th>Content Type</th>
+          <th>Journey Stage</th>
+          <th>Format</th>
+          <th>Distribution Channel</th>
+          <th>Primary Goal</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>SEO Blog Posts</strong></td>
+          <td>Awareness</td>
+          <td>1,500–3,000 words, ungated</td>
+          <td>Organic search, LinkedIn</td>
+          <td>Drive ICP traffic from problem-aware searches</td>
+        </tr>
+        <tr>
+          <td><strong>Ebooks / Guides</strong></td>
+          <td>Consideration</td>
+          <td>PDF, 10–30 pages, gated</td>
+          <td>Paid ads, email nurture, organic CTAs</td>
+          <td>Lead capture and MQL generation</td>
+        </tr>
+        <tr>
+          <td><strong>Case Studies</strong></td>
+          <td>Evaluation</td>
+          <td>500–1,500 words, ungated</td>
+          <td>Sales enablement, website, email sequences</td>
+          <td>Build credibility and validate ROI claims</td>
+        </tr>
+        <tr>
+          <td><strong>Webinars</strong></td>
+          <td>Evaluation</td>
+          <td>45–60 minutes, live + recording</td>
+          <td>Email, LinkedIn, partner channels</td>
+          <td>Qualified engagement and demo pipeline</td>
+        </tr>
+        <tr>
+          <td><strong>Demo Videos</strong></td>
+          <td>Decision</td>
+          <td>2–5 minutes, self-hosted</td>
+          <td>Website, sales sequences, paid retargeting</td>
+          <td>Remove friction from evaluation process</td>
+        </tr>
+        <tr>
+          <td><strong>Reports / Data</strong></td>
+          <td>Awareness + Evaluation</td>
+          <td>PDF, ungated, PR-distributed</td>
+          <td>PR, social media, email, partner syndication</td>
+          <td>Brand authority and category positioning</td>
+        </tr>
+        <tr>
+          <td><strong>Product Updates</strong></td>
+          <td>Retention</td>
+          <td>Email + in-app notification</td>
+          <td>Product email, in-product messages</td>
+          <td>Drive feature adoption and improve LIR</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- Section 3 -->
+  <h2 class="section-title">The Content Worksheet Template</h2>
+  <p class="section-intro">This worksheet tracks every piece of content from ideation through publication and performance measurement. Fill in all columns before a piece enters production — an incomplete brief is the most common cause of content that never gets published.</p>
+
+  <div class="worksheet-table-wrap">
+    <table class="worksheet-table">
+      <thead>
+        <tr>
+          <th>Topic</th>
+          <th>Owner</th>
+          <th>Thought Leader</th>
+          <th>Draft Due</th>
+          <th>Publish Date</th>
+          <th>Status</th>
+          <th>Channel</th>
+          <th>Persona</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>How [ICP type] achieves [LIR event] in 60 days</strong><br/><span style="font-size:11px;color:var(--text-muted);">Case study — customer success story with metrics</span></td>
+          <td>CSM / Marketing</td>
+          <td>Customer Success Manager</td>
+          <td>Week 2</td>
+          <td>Week 4</td>
+          <td><span class="status-badge status-published">Published</span></td>
+          <td>Blog, Sales Sequences</td>
+          <td>Economic Buyer (VP)</td>
+        </tr>
+        <tr>
+          <td><strong>The [ICP pain] playbook: a step-by-step guide</strong><br/><span style="font-size:11px;color:var(--text-muted);">Long-form guide — 2,500 words, gated as PDF lead magnet</span></td>
+          <td>Marketing</td>
+          <td>VP Sales</td>
+          <td>Week 1</td>
+          <td>Week 3</td>
+          <td><span class="status-badge status-scheduled">Scheduled</span></td>
+          <td>Paid ads, Email, Blog</td>
+          <td>Champion (Director)</td>
+        </tr>
+        <tr>
+          <td><strong>[Competitor] vs [Your Product]: an honest comparison</strong><br/><span style="font-size:11px;color:var(--text-muted);">Comparison blog — targets active evaluators searching competitor alternatives</span></td>
+          <td>Marketing</td>
+          <td>Marketing / PMM</td>
+          <td>Week 3</td>
+          <td>Week 5</td>
+          <td><span class="status-badge status-review">In Review</span></td>
+          <td>Blog, SEM, LinkedIn</td>
+          <td>Active Evaluator</td>
+        </tr>
+        <tr>
+          <td><strong>State of [Industry] Report — 2025 Edition</strong><br/><span style="font-size:11px;color:var(--text-muted);">Original research — survey of 200 ICP professionals, ungated, PR-distributed</span></td>
+          <td>Marketing</td>
+          <td>CEO / Marketing</td>
+          <td>Week 4</td>
+          <td>Week 8</td>
+          <td><span class="status-badge status-draft">Draft</span></td>
+          <td>PR, LinkedIn, Email, Blog</td>
+          <td>All Personas</td>
+        </tr>
+        <tr>
+          <td><strong>[Customer name] cut [specific pain] by 40% with [product]</strong><br/><span style="font-size:11px;color:var(--text-muted);">Case study — specific, quantified result with customer quote and process detail</span></td>
+          <td>CS / Marketing</td>
+          <td>Customer Success</td>
+          <td>Week 2</td>
+          <td>Week 4</td>
+          <td><span class="status-badge status-review">In Review</span></td>
+          <td>Blog, Sales, Website</td>
+          <td>Economic Buyer</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="callout callout-definition">
+    <div class="callout-title">Worksheet Column Definitions</div>
+    <p><strong>Owner:</strong> the person accountable for publication — never "marketing" generically, always a named individual. <strong>Thought Leader:</strong> the SME whose expertise or voice appears in the content. <strong>Status:</strong> Draft → In Review → Scheduled → Published. Nothing should sit in "Draft" for more than 2 weeks without escalation.</p>
+  </div>
+
+  <!-- Section 4 -->
+  <h2 class="section-title">Content Distribution Framework</h2>
+  <p class="section-intro">Creating content without a distribution plan is the most common content marketing mistake. Every piece of content must have a multi-channel distribution plan defined before production begins — not after publication.</p>
+
+  <div class="distribution-grid">
+    <div class="dist-card">
+      <span class="dist-icon">🌐</span>
+      <div class="dist-title">Publish</div>
+      <div class="dist-desc">Website / blog with full SEO structure. This is the permanent home — all other channels link back here.</div>
+    </div>
+    <div class="dist-card">
+      <span class="dist-icon">💼</span>
+      <div class="dist-title">Share</div>
+      <div class="dist-desc">LinkedIn company page + employee advocacy. Top content gets a CEO personal post for 5–10× reach amplification.</div>
+    </div>
+    <div class="dist-card">
+      <span class="dist-icon">📧</span>
+      <div class="dist-title">Email</div>
+      <div class="dist-desc">Newsletter segment or nurture sequence. High-value content becomes a gated asset for lead capture.</div>
+    </div>
+    <div class="dist-card">
+      <span class="dist-icon">♻️</span>
+      <div class="dist-title">Repurpose</div>
+      <div class="dist-desc">3–5 LinkedIn posts, 1–2 short videos, 1 infographic. One long-form piece = 10+ derivative assets.</div>
+    </div>
+    <div class="dist-card">
+      <span class="dist-icon">📡</span>
+      <div class="dist-title">Syndicate</div>
+      <div class="dist-desc">Guest posts on industry publications, relevant Reddit communities, and Slack communities your ICP uses.</div>
+    </div>
+  </div>
+
+  <h3 class="subsection-title">Distribution Cadence by Content Type</h3>
+  <div class="data-table" style="font-size:13px;">
+    <table class="data-table">
+      <thead>
+        <tr>
+          <th>Day</th>
+          <th>Action</th>
+          <th>Channel</th>
+          <th>Notes</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>Day 0 (Publish)</strong></td>
+          <td>Post goes live on blog</td>
+          <td>Website</td>
+          <td>Internal link from 2 related posts immediately</td>
+        </tr>
+        <tr>
+          <td><strong>Day 1</strong></td>
+          <td>Company LinkedIn post + email newsletter</td>
+          <td>LinkedIn, Email</td>
+          <td>LinkedIn post is a hook/insight, not a link dump</td>
+        </tr>
+        <tr>
+          <td><strong>Day 3</strong></td>
+          <td>Employee advocacy — share to personal LinkedIn</td>
+          <td>LinkedIn</td>
+          <td>3–5 employees share with personal commentary</td>
+        </tr>
+        <tr>
+          <td><strong>Day 7</strong></td>
+          <td>Short video / infographic derivative</td>
+          <td>LinkedIn, Twitter/X</td>
+          <td>Repurposed visual pulls the key stat or insight</td>
+        </tr>
+        <tr>
+          <td><strong>Day 14</strong></td>
+          <td>Submit to 1–2 relevant community channels</td>
+          <td>Reddit, Slack</td>
+          <td>Add original commentary — do not just post the link</td>
+        </tr>
+        <tr>
+          <td><strong>Day 30+</strong></td>
+          <td>Review performance, add to sales sequences</td>
+          <td>CRM Sequences</td>
+          <td>High-performing pieces (5%+ CTR) enter rep sequences</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- Section 5 -->
+  <h2 class="section-title">SEO Fundamentals for SaaS</h2>
+  <p class="section-intro">SEO is a compounding channel — the results build over 6–18 months but then deliver traffic with near-zero marginal cost. Every piece of content should be built with SEO fundamentals in place from the first draft.</p>
+
+  <div class="seo-pillars">
+    <div class="seo-pillar">
+      <div class="seo-pillar-title">Keyword Research</div>
+      <p>Focus on "problem-aware" keywords: "how to manage [problem]," "[problem] best practices," "[industry] challenges." Avoid over-indexing on branded or product keywords — those buyers already know you. Target keywords with search volume AND buying intent.</p>
+    </div>
+    <div class="seo-pillar">
+      <div class="seo-pillar-title">On-Page Optimization</div>
+      <p>Primary keyword in H1, URL slug, meta description, and within the first 100 words. Include 3–5 internal links to related content. Add schema markup (Article, FAQ). Meta descriptions should be benefit-focused, not keyword-stuffed.</p>
+    </div>
+    <div class="seo-pillar">
+      <div class="seo-pillar-title">Content Cluster Model</div>
+      <p>Build 1 pillar page (3,000+ words) covering a broad topic comprehensively, then 5–10 supporting cluster pages on specific subtopics — all linking to the pillar. This signals topical authority to search engines and earns significantly higher rankings than isolated articles.</p>
+    </div>
+    <div class="seo-pillar">
+      <div class="seo-pillar-title">Link Building</div>
+      <p>Guest posts on authoritative industry publications, digital PR around original research, and product integration content (e.g., "[Your Product] + [Partner Product]" pages) drive the highest-quality backlinks for SaaS companies.</p>
+    </div>
+  </div>
+
+  <h3 class="subsection-title">Recommended SEO Tools</h3>
+  <div style="display:flex;flex-wrap:wrap;gap:8px;margin:12px 0;">
+    <span style="font-size:12px;font-weight:600;padding:4px 12px;border-radius:20px;background:#e8f4f8;color:#006494;border:1px solid #b8d8e8;">Semrush</span>
+    <span style="font-size:12px;font-weight:600;padding:4px 12px;border-radius:20px;background:#e8f4f8;color:#006494;border:1px solid #b8d8e8;">Ahrefs</span>
+    <span style="font-size:12px;font-weight:600;padding:4px 12px;border-radius:20px;background:#e8f4f8;color:#006494;border:1px solid #b8d8e8;">Google Search Console</span>
+    <span style="font-size:12px;font-weight:600;padding:4px 12px;border-radius:20px;background:#e8f4f8;color:#006494;border:1px solid #b8d8e8;">Clearscope</span>
+    <span style="font-size:12px;font-weight:600;padding:4px 12px;border-radius:20px;background:#e8f4f8;color:#006494;border:1px solid #b8d8e8;">Surfer SEO</span>
+    <span style="font-size:12px;font-weight:600;padding:4px 12px;border-radius:20px;background:#e8f4f8;color:#006494;border:1px solid #b8d8e8;">Google Analytics 4</span>
+  </div>
+
+  <!-- Section 6 -->
+  <h2 class="section-title">Content Metrics</h2>
+  <p class="section-intro">Measure content effectiveness at the pipeline layer, not the traffic layer. High traffic from non-ICP visitors is vanity. The metrics that matter are those that connect content consumption to pipeline generation and LIR achievement.</p>
+
+  <div class="metrics-table-wrap">
+    <table class="metrics-table">
+      <thead>
+        <tr>
+          <th>Metric</th>
+          <th>Definition</th>
+          <th>Target</th>
+          <th>How to Track</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>Organic Sessions</strong></td>
+          <td>Monthly visitors from organic search</td>
+          <td>10% MoM growth</td>
+          <td>Google Analytics / Search Console</td>
+        </tr>
+        <tr>
+          <td><strong>MQL from Content</strong></td>
+          <td>Leads generated from content downloads or gated assets</td>
+          <td>&gt;25% of total MQL volume</td>
+          <td>CRM UTM tracking on content CTAs</td>
+        </tr>
+        <tr>
+          <td><strong>Content Pipeline Influence</strong></td>
+          <td>% of closed-won deals where content was consumed pre-close</td>
+          <td>&gt;40% of closed-won pipeline</td>
+          <td>Multi-touch attribution in CRM</td>
+        </tr>
+        <tr>
+          <td><strong>Case Study Coverage</strong></td>
+          <td>% of ICP segments with at least one published case study</td>
+          <td>&gt;80% of defined ICP segments</td>
+          <td>Manual audit of case study library quarterly</td>
+        </tr>
+        <tr>
+          <td><strong>Content Velocity</strong></td>
+          <td>Number of SEO-optimized articles published per week</td>
+          <td>≥2 per week (minimum for authority building)</td>
+          <td>Editorial calendar tracking</td>
+        </tr>
+        <tr>
+          <td><strong>Avg. Time on Page</strong></td>
+          <td>Engagement depth signal for SEO and quality calibration</td>
+          <td>&gt;3 minutes for long-form content</td>
+          <td>Google Analytics 4 engagement metrics</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="callout callout-formula">
+    <div class="callout-title">Content Attribution Formula</div>
+    <p><strong>Content-Influenced Pipeline Rate = (Pipeline from deals where content was consumed ÷ Total pipeline) × 100</strong><br/>Track this quarterly. A rate above 40% indicates content is a genuine pipeline contributor. Below 20% means content is not being distributed into the sales process or is not ICP-aligned.</p>
+  </div>
+
+  <!-- Related -->
+  <div class="related-section">
+    <div class="related-title">Related Pages</div>
+    <div class="related-links">
+      <a href="../pages/resources.html" class="related-link">← Resources &amp; Templates</a>
+      <a href="template-editorial-calendar.html" class="related-link">Editorial Calendar Template</a>
+      <a href="template-demand-gen-channels.html" class="related-link">Demand Gen Channel Guide</a>
+      <a href="template-paid-marketing.html" class="related-link">Paid Marketing Worksheet</a>
+    </div>
+  </div>
+
+</div>
+<script data-pplx-inline-edit>
+(function () {
+  if (window === window.top) return;
+
+  const allowedParentOrigins = ["https://www.perplexity.ai","https://perplexity.ai","https://testing.perplexity.ai","https://staging.perplexity.ai","https://*.preview.i.perplexity.ai","http://localhost:3000","http://127.0.0.1:3000","http://localhost:5173","http://127.0.0.1:5173"];
+  const MAX_FONT_BYTES = 500 * 1024;
+  const MAX_TOTAL_FONT_BYTES = 2 * 1024 * 1024;
+  let scrollForwarding = false;
+  let scrollRaf = 0;
+  let trustedTopOrigin = null;
+
+  // Allow entries like "https://*.preview.i.perplexity.ai" — the wildcard
+  // matches a single DNS label (no dots), so "https://*.foo" cannot stretch
+  // across multiple labels.
+  function matchesAllowedOrigin(origin) {
+    if (!origin) return false;
+    for (const entry of allowedParentOrigins) {
+      if (!entry.includes("*")) {
+        if (entry === origin) return true;
+        continue;
+      }
+      const pattern = new RegExp(
+        "^" +
+          entry.replace(/[.+?^${}()|[\]\\]/g, "\\$&").replace(/\*/g, "[^.]+") +
+          "$",
+      );
+      if (pattern.test(origin)) return true;
+    }
+    return false;
+  }
+
+  // Trust decision: when the sender is same-origin-visible (event.origin is a
+  // real origin like https://www.perplexity.ai) we trust event.origin directly.
+  // When event.origin is "null" (opaque broker srcdoc), we fall back to the
+  // broker's stamped `parentOrigin` to identify the top window. The fallback
+  // is claim-only — we rely on the browser's native `targetOrigin` enforcement
+  // on the response path (see postToTrustedTop) to ensure replies can't be
+  // delivered to anyone but the actual top window of that claimed origin.
+  function getTrustedParentOrigin(event) {
+    const forwardedParentOrigin =
+      typeof event.data.parentOrigin === "string" ? event.data.parentOrigin : null;
+    const parentOrigin = event.origin === "null" ? forwardedParentOrigin : event.origin;
+    return matchesAllowedOrigin(parentOrigin) ? parentOrigin : null;
+  }
+
+  // All responses go to window.top with targetOrigin = the allowlisted origin.
+  // An attacker that iframes us inside their own null-origin broker can claim
+  // any parentOrigin they like, but the browser will drop the reply whenever
+  // the real top's origin doesn't match — so the screenshot never leaves.
+  function postToTrustedTop(message) {
+    if (!trustedTopOrigin) return;
+    try {
+      window.top.postMessage(message, trustedTopOrigin);
+    } catch (_error) {}
+  }
+
+  function inlineAll(original, clone) {
+    if (original.nodeType !== 1 || clone.nodeType !== 1) return;
+
+    try {
+      const computedStyle = getComputedStyle(original);
+      // cssText on a computed style is the serialized declaration in modern
+      // Chromium/Safari — a single read beats enumerating ~400 longhand
+      // properties. Firefox returns "" here, so we fall back on empty.
+      const serialized = computedStyle.cssText;
+      if (serialized) {
+        clone.style.cssText = serialized;
+      } else {
+        const parts = new Array(computedStyle.length);
+        for (let index = 0; index < computedStyle.length; index += 1) {
+          const property = computedStyle[index];
+          parts[index] = `${property}:${computedStyle.getPropertyValue(property)};`;
+        }
+        clone.style.cssText = parts.join("");
+      }
+    } catch (_error) {}
+
+    const originalChildren = original.children;
+    const clonedChildren = clone.children;
+    for (
+      let index = 0;
+      index < originalChildren.length && index < clonedChildren.length;
+      index += 1
+    ) {
+      inlineAll(originalChildren[index], clonedChildren[index]);
+    }
+  }
+
+  function extractFontUrl(srcValue) {
+    const matches = [
+      ...srcValue.matchAll(
+        /url\(["']?([^"')]+)["']?\)(?:\s*format\(["']?([^"')]+)["']?\))?/gi,
+      ),
+    ];
+    if (matches.length === 0) return null;
+    const woff2 = matches.find((m) => m[2] && m[2].toLowerCase().includes("woff2"));
+    if (woff2) return woff2[1];
+    const woff = matches.find((m) => m[2] && m[2].toLowerCase().includes("woff"));
+    if (woff) return woff[1];
+    return matches[0][1];
+  }
+
+  // Cache resolved font URL -> data URI across captures. Fonts on a page
+  // essentially never change, and a batch run emits multiple captures back to
+  // back — without this we'd refetch + re-base64 every time.
+  const fontDataUriCache = new Map();
+  const SRC_DECLARATION_RE = /src\s*:\s*[^;}]+/i;
+
+  async function fetchAsDataUri(url) {
+    if (fontDataUriCache.has(url)) return fontDataUriCache.get(url);
+    let dataUri = null;
+    try {
+      const response = await fetch(url, { mode: "cors", credentials: "omit" });
+      if (response.ok) {
+        const blob = await response.blob();
+        if (blob.size <= MAX_FONT_BYTES) {
+          dataUri = await new Promise((resolve) => {
+            const reader = new FileReader();
+            reader.onloadend = () =>
+              resolve(typeof reader.result === "string" ? reader.result : null);
+            reader.onerror = () => resolve(null);
+            reader.readAsDataURL(blob);
+          });
+        }
+      }
+    } catch (_error) {
+      dataUri = null;
+    }
+    fontDataUriCache.set(url, dataUri);
+    return dataUri;
+  }
+
+  function collectFontFaceRuleTexts() {
+    const rules = [];
+    for (const sheet of document.styleSheets) {
+      let cssRules;
+      try {
+        cssRules = sheet.cssRules;
+      } catch (_error) {
+        continue;
+      }
+      if (!cssRules) continue;
+      for (const rule of cssRules) {
+        const cssText = rule.cssText || "";
+        if (cssText.startsWith("@font-face")) rules.push(cssText);
+      }
+    }
+    return rules;
+  }
+
+  async function buildInlinedFontCss() {
+    const ruleTexts = collectFontFaceRuleTexts();
+    if (ruleTexts.length === 0) return null;
+
+    const resolved = ruleTexts.map((cssText) => {
+      if (!SRC_DECLARATION_RE.test(cssText)) return null;
+      const srcMatch = cssText.match(/src\s*:\s*([^;}]+)[;}]/i);
+      if (!srcMatch) return null;
+      const url = extractFontUrl(srcMatch[1]);
+      if (!url) return null;
+      try {
+        return { cssText, url: new URL(url, document.baseURI).href };
+      } catch (_error) {
+        return null;
+      }
+    });
+
+    const dataUris = await Promise.all(
+      resolved.map((entry) => (entry ? fetchAsDataUri(entry.url) : Promise.resolve(null))),
+    );
+
+    const inlined = [];
+    let totalBytes = 0;
+    for (let index = 0; index < resolved.length; index += 1) {
+      const entry = resolved[index];
+      const dataUri = dataUris[index];
+      if (!entry || !dataUri) continue;
+      const approxBytes = dataUri.length * 0.75;
+      if (totalBytes + approxBytes > MAX_TOTAL_FONT_BYTES) break;
+      totalBytes += approxBytes;
+      inlined.push(entry.cssText.replace(SRC_DECLARATION_RE, `src: url("${dataUri}")`));
+    }
+    return inlined.length > 0 ? inlined.join("\n") : null;
+  }
+
+  function stripExternal(clone) {
+    const images = clone.querySelectorAll("img");
+    for (let index = 0; index < images.length; index += 1) {
+      const src = images[index].getAttribute("src");
+      if (src && !src.startsWith("data:")) images[index].removeAttribute("src");
+    }
+
+    const elements = clone.querySelectorAll("*");
+    for (let index = 0; index < elements.length; index += 1) {
+      const style = elements[index].style.cssText;
+      if (style && style.includes("url(")) {
+        elements[index].style.cssText = style.replace(
+          /url\(["']?(?!data:)[^)"']*["']?\)/gi,
+          "none",
+        );
+      }
+    }
+  }
+
+  function emitScroll() {
+    scrollRaf = 0;
+    if (!scrollForwarding) return;
+    postToTrustedTop({
+      type: "INLINE_EDIT_SCROLL",
+      scrollX: window.scrollX,
+      scrollY: window.scrollY,
+    });
+  }
+
+  window.addEventListener(
+    "scroll",
+    function () {
+      if (!scrollForwarding || scrollRaf) return;
+      scrollRaf = requestAnimationFrame(emitScroll);
+    },
+    { passive: true, capture: true },
+  );
+
+  async function handleCaptureRequest(event) {
+    const requestId = event.data.requestId;
+    const scrollX = window.scrollX;
+    const scrollY = window.scrollY;
+    const width = window.innerWidth;
+    const height = window.innerHeight;
+
+    function postResult(dataUrl) {
+      postToTrustedTop({
+        type: "INLINE_EDIT_SCREENSHOT_RESULT",
+        requestId,
+        dataUrl,
+        scrollX,
+        scrollY,
+      });
+    }
+
+    try {
+      // Wait for any pending web fonts to resolve so both inline metrics and
+      // the @font-face inlining below see the same loaded faces.
+      if (document.fonts && document.fonts.ready) {
+        try {
+          await document.fonts.ready;
+        } catch (_error) {}
+      }
+
+      const clone = document.documentElement.cloneNode(true);
+      inlineAll(document.documentElement, clone);
+
+      const removedNodes = clone.querySelectorAll("script,link[rel=\"stylesheet\"],style");
+      for (let index = 0; index < removedNodes.length; index += 1) {
+        removedNodes[index].remove();
+      }
+
+      stripExternal(clone);
+
+      // Re-embed web fonts as data-URI @font-face rules so the SVG rasterizer
+      // can resolve them — external font URLs aren't fetched during
+      // foreignObject rendering, which would otherwise force a fallback face
+      // and change text metrics.
+      const inlinedFontCss = await buildInlinedFontCss();
+      if (inlinedFontCss) {
+        const styleEl = document.createElement("style");
+        styleEl.textContent = inlinedFontCss;
+        const head = clone.querySelector("head");
+        if (head) head.appendChild(styleEl);
+        else clone.insertBefore(styleEl, clone.firstChild);
+      }
+
+      const html = new XMLSerializer().serializeToString(clone);
+      const svg =
+        `<svg xmlns="http://www.w3.org/2000/svg" width="${width}" height="${height}">` +
+        '<foreignObject width="100%" height="100%">' +
+        `<div xmlns="http://www.w3.org/1999/xhtml" style="width:${width}px;height:${height}px;overflow:hidden">` +
+        `<div style="transform:translate(-${scrollX}px,-${scrollY}px);transform-origin:top left">` +
+        html +
+        "</div></div></foreignObject></svg>";
+      const svgUrl = `data:image/svg+xml;charset=utf-8,${encodeURIComponent(svg)}`;
+      const image = new Image();
+      image.onload = function () {
+        const canvas = document.createElement("canvas");
+        canvas.width = width;
+        canvas.height = height;
+        canvas.getContext("2d").drawImage(image, 0, 0);
+        postResult(canvas.toDataURL("image/png"));
+      };
+      image.onerror = function () {
+        postResult(null);
+      };
+      image.src = svgUrl;
+    } catch (_error) {
+      postResult(null);
+    }
+  }
+
+  window.addEventListener("message", function (event) {
+    if (!event.data) return;
+    // Only accept messages from the direct parent frame. Blocks sibling /
+    // unrelated-window postMessage senders that could otherwise reach us.
+    if (event.source !== window.parent) return;
+
+    const trustedParentOrigin = getTrustedParentOrigin(event);
+    if (!trustedParentOrigin) return;
+    trustedTopOrigin = trustedParentOrigin;
+
+    if (event.data.type === "INLINE_EDIT_SCROLL_START") {
+      scrollForwarding = true;
+      emitScroll();
+      return;
+    }
+
+    if (event.data.type === "INLINE_EDIT_SCROLL_STOP") {
+      scrollForwarding = false;
+      if (scrollRaf) cancelAnimationFrame(scrollRaf);
+      scrollRaf = 0;
+      return;
+    }
+
+    if (event.data.type !== "INLINE_EDIT_CAPTURE_REQUEST") return;
+
+    handleCaptureRequest(event);
+  });
+})();
+
+
+</script></body>
+</html>

@@ -1,0 +1,1292 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Discovery Guide — GTM Playbook</title>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="../assets/shared.css"/>
+  <style>
+    .page-hero { background: #2C5F8A; }
+
+    /* ── IS / IS NOT split ── */
+    .is-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+      margin: 20px 0;
+    }
+    .is-card {
+      background: var(--surface);
+      border: 1.5px solid var(--border);
+      border-radius: 10px;
+      padding: 20px 22px;
+    }
+    .is-label {
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      margin-bottom: 12px;
+    }
+    .is-card.is-yes .is-label { color: #437A22; }
+    .is-card.is-no .is-label { color: #A13544; }
+    .is-card ul {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+    }
+    .is-card ul li {
+      font-size: 14px;
+      color: var(--text);
+      padding: 5px 0 5px 20px;
+      position: relative;
+      line-height: 1.55;
+    }
+    .is-card.is-yes ul li::before {
+      content: '✓';
+      position: absolute;
+      left: 0;
+      color: #437A22;
+      font-weight: 700;
+    }
+    .is-card.is-no ul li::before {
+      content: '✗';
+      position: absolute;
+      left: 0;
+      color: #A13544;
+      font-weight: 700;
+    }
+
+    /* ── Gong stat callout ── */
+    .stat-banner {
+      background: #1a3d5c;
+      color: #fff;
+      border-radius: 10px;
+      padding: 20px 24px;
+      margin: 20px 0;
+      display: flex;
+      align-items: center;
+      gap: 24px;
+    }
+    .stat-banner-icon {
+      font-size: 32px;
+      flex-shrink: 0;
+    }
+    .stat-banner-text {
+      font-size: 14px;
+      line-height: 1.65;
+      color: rgba(255,255,255,0.85);
+    }
+    .stat-banner-text strong {
+      color: #fff;
+    }
+
+    /* ── MEDDICC cards ── */
+    .meddicc-list {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+      margin: 20px 0;
+    }
+    .meddicc-card {
+      background: var(--surface);
+      border: 1.5px solid var(--border);
+      border-radius: 10px;
+      padding: 22px 26px;
+      display: grid;
+      grid-template-columns: 60px 1fr;
+      gap: 20px;
+    }
+    .meddicc-letter-block {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding-top: 2px;
+    }
+    .meddicc-letter {
+      font-size: 30px;
+      font-weight: 700;
+      color: #2C5F8A;
+      line-height: 1;
+    }
+    .meddicc-abbr {
+      font-size: 9px;
+      font-weight: 700;
+      letter-spacing: 0.5px;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      margin-top: 3px;
+      text-align: center;
+    }
+    .meddicc-content {}
+    .meddicc-name {
+      font-size: 16px;
+      font-weight: 700;
+      color: var(--text);
+      margin-bottom: 4px;
+    }
+    .meddicc-def {
+      font-size: 13px;
+      color: var(--text-muted);
+      margin-bottom: 12px;
+      line-height: 1.55;
+    }
+    .meddicc-why {
+      font-size: 13px;
+      color: #1a3d5c;
+      background: #eef4fa;
+      border-radius: 6px;
+      padding: 8px 12px;
+      margin-bottom: 12px;
+      line-height: 1.5;
+    }
+    .meddicc-why strong { color: #1a3d5c; }
+    .q-label {
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 1.2px;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      margin-bottom: 6px;
+    }
+    .q-list {
+      list-style: none;
+      padding: 0;
+      margin: 0 0 12px 0;
+    }
+    .q-list li {
+      font-size: 13px;
+      color: var(--text);
+      padding: 4px 0 4px 16px;
+      position: relative;
+      line-height: 1.55;
+      font-style: italic;
+    }
+    .q-list li::before {
+      content: '"';
+      position: absolute;
+      left: 0;
+      color: #2C5F8A;
+      font-weight: 700;
+      font-style: normal;
+    }
+    .gyr-mini-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 8px;
+      margin-top: 10px;
+    }
+    .gyr-mini {
+      border-radius: 6px;
+      padding: 8px 12px;
+      font-size: 12px;
+      line-height: 1.5;
+      border: 1px solid;
+    }
+    .gyr-mini-good {
+      background: #f0fff4;
+      border-color: #437A22;
+      color: #2a5515;
+    }
+    .gyr-mini-bad {
+      background: #fff5f5;
+      border-color: #A13544;
+      color: #7a2232;
+    }
+    .gyr-mini-label {
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      margin-bottom: 3px;
+    }
+    .gyr-mini-good .gyr-mini-label { color: #437A22; }
+    .gyr-mini-bad .gyr-mini-label { color: #A13544; }
+
+    /* ── Call structure timeline ── */
+    .call-timeline {
+      list-style: none;
+      padding: 0;
+      margin: 20px 0;
+      position: relative;
+    }
+    .call-timeline::before {
+      content: '';
+      position: absolute;
+      left: 18px;
+      top: 8px;
+      bottom: 8px;
+      width: 2px;
+      background: var(--border);
+    }
+    .call-step {
+      display: flex;
+      gap: 16px;
+      margin-bottom: 20px;
+      position: relative;
+    }
+    .call-step-dot {
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      background: #2C5F8A;
+      color: #fff;
+      font-size: 13px;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      z-index: 1;
+      position: relative;
+    }
+    .call-step-body {
+      flex: 1;
+      padding-top: 6px;
+    }
+    .call-step-title {
+      font-size: 15px;
+      font-weight: 700;
+      color: var(--text);
+      margin-bottom: 4px;
+    }
+    .call-step-time {
+      font-size: 12px;
+      font-weight: 600;
+      color: #2C5F8A;
+      margin-bottom: 6px;
+    }
+    .call-step-desc {
+      font-size: 14px;
+      color: var(--text-muted);
+      line-height: 1.6;
+    }
+
+    /* ── SPIN framework ── */
+    .spin-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 12px;
+      margin: 20px 0;
+    }
+    .spin-card {
+      background: var(--surface);
+      border: 1.5px solid var(--border);
+      border-radius: 8px;
+      padding: 16px 18px;
+    }
+    .spin-letter {
+      font-size: 24px;
+      font-weight: 700;
+      color: #2C5F8A;
+      line-height: 1;
+      margin-bottom: 2px;
+    }
+    .spin-name {
+      font-size: 13px;
+      font-weight: 700;
+      color: var(--text);
+      margin-bottom: 8px;
+    }
+    .spin-example {
+      font-size: 13px;
+      color: var(--text-muted);
+      font-style: italic;
+      line-height: 1.55;
+    }
+
+    /* ── Failure list ── */
+    .failure-list {
+      list-style: none;
+      counter-reset: failures;
+      margin: 16px 0;
+    }
+    .failure-list li {
+      counter-increment: failures;
+      display: flex;
+      gap: 14px;
+      margin-bottom: 14px;
+      align-items: flex-start;
+    }
+    .failure-list li::before {
+      content: counter(failures);
+      min-width: 28px;
+      height: 28px;
+      border-radius: 50%;
+      background: #fff5f5;
+      border: 1.5px solid #A13544;
+      color: #A13544;
+      font-size: 12px;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      margin-top: 1px;
+    }
+    .failure-body {
+      font-size: 14px;
+      line-height: 1.65;
+      color: var(--text);
+    }
+    .failure-body strong { display: block; margin-bottom: 2px; }
+    .failure-body span { color: var(--text-muted); font-size: 13px; }
+
+    /* ── Scoring rubric table ── */
+    .rubric-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 20px 0;
+      background: var(--surface);
+      border-radius: 10px;
+      overflow: hidden;
+      border: 1.5px solid var(--border);
+    }
+    .rubric-table thead {
+      background: #2C5F8A;
+      color: #fff;
+    }
+    .rubric-table thead th {
+      padding: 12px 16px;
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: 0.8px;
+      text-transform: uppercase;
+      text-align: left;
+    }
+    .rubric-table td {
+      padding: 13px 16px;
+      font-size: 14px;
+      vertical-align: top;
+      border-bottom: 1px solid var(--border);
+      line-height: 1.5;
+    }
+    .rubric-table tr:last-child td { border-bottom: none; }
+    .rubric-table tr:nth-child(even) td { background: #fafaf8; }
+    .score-dim { font-weight: 700; color: var(--text); }
+    .score-low { color: #A13544; font-size: 13px; }
+    .score-mid { color: #a07800; font-size: 13px; }
+    .score-high { color: #437A22; font-size: 13px; }
+
+    /* ── Callout ── */
+    .callout {
+      background: #eef4fa;
+      border: 1.5px solid #2C5F8A;
+      border-radius: 8px;
+      padding: 16px 20px;
+      margin: 18px 0;
+      font-size: 14px;
+      color: #1a3d5c;
+      line-height: 1.65;
+    }
+    .callout strong { color: #1a3d5c; }
+
+    /* ── Hero tags ── */
+    .hero-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-top: 16px;
+    }
+    .hero-tag {
+      font-size: 11px;
+      font-weight: 600;
+      padding: 4px 12px;
+      border-radius: 20px;
+      background: rgba(255,255,255,0.18);
+      color: rgba(255,255,255,0.92);
+      letter-spacing: 0.3px;
+    }
+
+    .phase-context-bar {
+      background: #f0f8f9;
+      border-bottom: 2px solid #c2dde0;
+      padding: 0;
+    }
+    .pcb-inner {
+      max-width: 960px;
+      margin: 0 auto;
+      padding: 10px 32px;
+      display: flex;
+      align-items: center;
+      gap: 20px;
+      flex-wrap: wrap;
+    }
+    .pcb-item { display: flex; flex-direction: column; gap: 1px; }
+    .pcb-label { font-size: 9px; font-weight: 700; letter-spacing: 1px; text-transform: uppercase; color: #7A7974; }
+    .pcb-value { font-size: 12px; font-weight: 700; color: #0D5C63; }
+    .pcb-divider { width: 1px; height: 28px; background: #c2dde0; }
+    .pcb-link { font-size: 11px; font-weight: 700; color: #0D5C63; background: rgba(13,92,99,0.08); padding: 4px 10px; border-radius: 4px; text-decoration: none; transition: background 0.15s; }
+    .pcb-link:hover { background: rgba(13,92,99,0.16); color: #0D5C63; text-decoration: none; }
+
+    @media (max-width: 768px) {
+      .is-grid { grid-template-columns: 1fr; }
+      .meddicc-card { grid-template-columns: 1fr; }
+      .meddicc-letter-block { flex-direction: row; gap: 8px; align-items: baseline; }
+      .gyr-mini-row { grid-template-columns: 1fr; }
+      .spin-grid { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+<nav class="nav">
+  <span class="nav-logo">CRO <span>Manual</span></span>
+  <span class="nav-sep">/</span>
+  <a href="../index.html" class="nav-back">← Home</a>
+  <span class="nav-sep">/</span>
+  <a href="../pages/resources.html" class="nav-back">Resources &amp; Templates</a>
+  <span class="nav-sep">/</span>
+  <span class="nav-current">Discovery Guide</span>
+</nav>
+
+<div class="page-hero">
+  <div class="hero-phase-label">GTM PLAYBOOK TOOL · STAGE 2</div>
+  <div class="hero-title">Discovery Guide</div>
+  <div class="hero-subtitle">Discovery is the most important call in the sales process. Done right, it uncovers the buyer's real pain, decision process, and urgency — and positions you as an expert, not a vendor. Done wrong, you pitch to the wrong person about the wrong problem.</div>
+  <div class="hero-tags">
+    <span class="hero-tag">MEDDICC</span>
+    <span class="hero-tag">Pain Discovery</span>
+    <span class="hero-tag">Economic Buyer</span>
+    <span class="hero-tag">Decision Process</span>
+    <span class="hero-tag">Champion</span>
+    <span class="hero-tag">Qualification</span>
+  </div>
+</div>
+
+<div class="phase-context-bar">
+  <div class="pcb-inner">
+    <div class="pcb-item">
+      <span class="pcb-label">Primary Phase</span>
+      <span class="pcb-value">Phase 4 — Pipeline, MEDDICC &amp; Forecasting</span>
+    </div>
+    <div class="pcb-divider"></div>
+    <div class="pcb-item">
+      <span class="pcb-label">Science of Scaling Stage</span>
+      <span class="pcb-value">Stage 2: GTM Fit</span>
+    </div>
+    <div class="pcb-divider"></div>
+    <div class="pcb-item">
+      <span class="pcb-label">Governing Metric</span>
+      <span class="pcb-value">SQL-to-Customer% · Sales Cycle Length</span>
+    </div>
+    <a href="../pages/phase4.html" class="pcb-link">View Phase →</a>
+    <a href="../subpages/sos-gtm-fit.html" class="pcb-link">View Stage →</a>
+  </div>
+</div>
+
+<div class="content-wrap">
+
+  <div class="breadcrumb">
+    <a href="../index.html">Home</a>
+    <span class="sep">›</span>
+    <a href="../pages/resources.html">Resources &amp; Templates</a>
+    <span class="sep">›</span>
+    <span class="current">Discovery Guide</span>
+  </div>
+
+  <!-- SECTION 1: WHAT DISCOVERY IS -->
+  <div class="section-title">1. What Discovery Is (and Isn't)</div>
+  <div class="section-intro">Discovery is not a formality before the pitch — it is the pitch. The entire rest of the sales process depends on the quality of information and trust built in this call. Get it wrong, and everything downstream is built on a false foundation.</div>
+
+  <div class="subsection">
+    <div class="is-grid">
+      <div class="is-card is-yes">
+        <div class="is-label">Discovery IS</div>
+        <ul>
+          <li>A structured conversation to understand the buyer's situation, pain, goals, and decision process</li>
+          <li>An opportunity to establish credibility through smart, specific questions</li>
+          <li>The foundation for a highly relevant, personalized presentation</li>
+          <li>A qualification checkpoint: you are deciding as much as they are</li>
+          <li>The single most important determinant of demo conversion rate</li>
+        </ul>
+      </div>
+      <div class="is-card is-no">
+        <div class="is-label">Discovery IS NOT</div>
+        <ul>
+          <li>A product pitch in disguise — the moment you start selling, the buyer stops sharing</li>
+          <li>"Let me tell you what we do and see if you're interested"</li>
+          <li>A checklist to complete before the real conversation starts</li>
+          <li>A monologue — if you're talking more than 50% of the time, you're doing it wrong</li>
+          <li>A formality that happens before the "real" part of the sales process</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="stat-banner">
+      <div class="stat-banner-icon">📊</div>
+      <div class="stat-banner-text">
+        <strong>The Gong.io Finding:</strong> Top-performing reps talk <strong>46% / listen 54%</strong> in discovery calls. Bottom-performing reps talk <strong>72% / listen 28%</strong>. The number one differentiator between good and great discovery is not the questions you ask — it's the ratio of listening to talking.
+      </div>
+    </div>
+  </div>
+
+  <!-- SECTION 2: MEDDICC FRAMEWORK -->
+  <div class="section-title">2. The MEDDICC Discovery Framework</div>
+  <div class="section-intro">MEDDICC is the most comprehensive qualification and discovery framework used by high-performing B2B sales teams. It ensures you never leave a discovery call without knowing the metrics, economic buyer, decision criteria, decision process, identified pain, champion, and competitive landscape.</div>
+
+  <div class="subsection">
+    <div class="meddicc-list">
+
+      <!-- M -->
+      <div class="meddicc-card">
+        <div class="meddicc-letter-block">
+          <div class="meddicc-letter">M</div>
+          <div class="meddicc-abbr">Metrics</div>
+        </div>
+        <div class="meddicc-content">
+          <div class="meddicc-name">Metrics</div>
+          <div class="meddicc-def">The quantifiable business impact of solving the problem. Metrics transform vague pain into a financial case that economic buyers can evaluate and approve.</div>
+          <div class="meddicc-why"><strong>Why it matters:</strong> Buyers with a clear financial case approve faster and retain longer. A deal without a quantified metric is a deal built on opinion, not data — and opinion loses to competing priorities at budget time.</div>
+          <div class="q-label">Discovery Questions</div>
+          <ul class="q-list">
+            <li>What is the current cost of this problem to your team?"</li>
+            <li>If we could eliminate [pain], what would that mean for your business?"</li>
+            <li>How are you currently measuring success in this area?"</li>
+            <li>What does a 10% improvement in [metric] mean for revenue or headcount?"</li>
+          </ul>
+          <div class="gyr-mini-row">
+            <div class="gyr-mini gyr-mini-good">
+              <div class="gyr-mini-label">Green Signal</div>
+              Specific numbers, ROI thinking, finance already engaged in the conversation
+            </div>
+            <div class="gyr-mini gyr-mini-bad">
+              <div class="gyr-mini-label">Red Flag</div>
+              "I'm not sure, it's just frustrating" — no business case = high churn risk and deal stall
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- E -->
+      <div class="meddicc-card">
+        <div class="meddicc-letter-block">
+          <div class="meddicc-letter">E</div>
+          <div class="meddicc-abbr">Economic Buyer</div>
+        </div>
+        <div class="meddicc-content">
+          <div class="meddicc-name">Economic Buyer</div>
+          <div class="meddicc-def">The person with budget authority and the power to approve the contract. Not the champion, not the user — the person who signs or who can unilaterally say yes.</div>
+          <div class="meddicc-why"><strong>Why it matters:</strong> 60% of deals that stall do so because the champion doesn't have budget authority. You can do perfect discovery with the wrong person. Always identify and create a path to the Economic Buyer.</div>
+          <div class="q-label">Discovery Questions</div>
+          <ul class="q-list">
+            <li>Who ultimately approves investments of this size at your company?"</li>
+            <li>What does the approval process look like for a decision at this price point?"</li>
+            <li>Have you made similar investments in the past — who was involved in that process?"</li>
+            <li>Is there a finance or procurement step I should know about?"</li>
+          </ul>
+          <div class="gyr-mini-row">
+            <div class="gyr-mini gyr-mini-good">
+              <div class="gyr-mini-label">Green Signal</div>
+              Economic buyer is engaged or accessible; champion has a clear path and relationship to them
+            </div>
+            <div class="gyr-mini gyr-mini-bad">
+              <div class="gyr-mini-label">Red Flag</div>
+              "I handle it" (from a mid-level person with no budget authority); or "I'm not sure who decides"
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- D1 -->
+      <div class="meddicc-card">
+        <div class="meddicc-letter-block">
+          <div class="meddicc-letter">D</div>
+          <div class="meddicc-abbr">Decision Criteria</div>
+        </div>
+        <div class="meddicc-content">
+          <div class="meddicc-name">Decision Criteria</div>
+          <div class="meddicc-def">The specific things the buyer will use to evaluate and compare solutions. If you don't know the criteria, you can't win against them — and you can't align your presentation to what actually matters.</div>
+          <div class="meddicc-why"><strong>Why it matters:</strong> Reps who understand decision criteria win deals by aligning every subsequent interaction to the buyer's specific evaluation framework — not the rep's product preferences.</div>
+          <div class="q-label">Discovery Questions</div>
+          <ul class="q-list">
+            <li>What would the ideal solution look like for your team?"</li>
+            <li>When you evaluate options like this, what's most important to you?"</li>
+            <li>Is there anything that would be a dealbreaker for moving forward?"</li>
+            <li>How will you know you've made the right decision?"</li>
+          </ul>
+          <div class="gyr-mini-row">
+            <div class="gyr-mini gyr-mini-good">
+              <div class="gyr-mini-label">Green Signal</div>
+              Specific, articulable criteria that are clearly aligned to your product's core strengths
+            </div>
+            <div class="gyr-mini gyr-mini-bad">
+              <div class="gyr-mini-label">Red Flag</div>
+              "We're just exploring" — no decision criteria means no real process and no real urgency
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- D2 -->
+      <div class="meddicc-card">
+        <div class="meddicc-letter-block">
+          <div class="meddicc-letter">D</div>
+          <div class="meddicc-abbr">Decision Process</div>
+        </div>
+        <div class="meddicc-content">
+          <div class="meddicc-name">Decision Process</div>
+          <div class="meddicc-def">The sequence of steps, stakeholders, and timeline from "yes we want this" to "contract signed." The full map, not just the next step.</div>
+          <div class="meddicc-why"><strong>Why it matters:</strong> You cannot forecast accurately without the full decision process mapped. Deals stall and die when they hit procurement, legal, or security review steps that were never discovered and planned for.</div>
+          <div class="q-label">Discovery Questions</div>
+          <ul class="q-list">
+            <li>What does your internal approval process look like from here?"</li>
+            <li>Who else needs to be involved or informed before a decision is made?"</li>
+            <li>If everything looks good, how long does it typically take to complete legal and procurement?"</li>
+            <li>Is there a board approval or budget cycle I should be aware of?"</li>
+          </ul>
+          <div class="gyr-mini-row">
+            <div class="gyr-mini gyr-mini-good">
+              <div class="gyr-mini-label">Green Signal</div>
+              Clear map: who approves, what steps, what timeline — including legal, procurement, and security
+            </div>
+            <div class="gyr-mini gyr-mini-bad">
+              <div class="gyr-mini-label">Red Flag</div>
+              "It should be simple" without specifics; or legal described as "usually fast" (a reliable stall signal)
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- I -->
+      <div class="meddicc-card">
+        <div class="meddicc-letter-block">
+          <div class="meddicc-letter">I</div>
+          <div class="meddicc-abbr">Identify Pain</div>
+        </div>
+        <div class="meddicc-content">
+          <div class="meddicc-name">Identify Pain</div>
+          <div class="meddicc-def">The specific, acute problem the buyer is experiencing — and its business impact. Pain is the fuel of urgency. Without real, felt pain, there is no compelling reason to act.</div>
+          <div class="meddicc-why"><strong>Why it matters:</strong> Buyers act on pain, not curiosity. A "nice to have" solution gets deprioritized. A solution to a critical, quantified, felt pain gets fast-tracked. The job of discovery is to find and surface that pain — not to create it.</div>
+          <div class="q-label">Discovery Questions</div>
+          <ul class="q-list">
+            <li>Walk me through how you handle [process] today — from start to finish."</li>
+            <li>What's the biggest headache in [area] right now?"</li>
+            <li>How long has this been a problem? What have you tried to solve it?"</li>
+            <li>What happens to the business when [problem] occurs?"</li>
+            <li>What gets in the way of fixing this today?"</li>
+          </ul>
+          <div class="gyr-mini-row">
+            <div class="gyr-mini gyr-mini-good">
+              <div class="gyr-mini-label">Green Signal</div>
+              Vivid, specific pain with emotional resonance: "this is killing our team" + clear business impact
+            </div>
+            <div class="gyr-mini gyr-mini-bad">
+              <div class="gyr-mini-label">Red Flag</div>
+              "It's mostly fine, we're just looking to improve" — pain is too low for any real urgency to form
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- C Champion -->
+      <div class="meddicc-card">
+        <div class="meddicc-letter-block">
+          <div class="meddicc-letter">C</div>
+          <div class="meddicc-abbr">Champion</div>
+        </div>
+        <div class="meddicc-content">
+          <div class="meddicc-name">Champion</div>
+          <div class="meddicc-def">An internal advocate who believes in your solution and will fight for it when you're not in the room. Without a champion, you are dependent on the buyer being self-motivated — a dangerous bet.</div>
+          <div class="meddicc-why"><strong>Why it matters:</strong> Most complex B2B sales are won by the champion, not the AE. A great champion has organizational credibility, cares personally about the outcome, and will take internal risk to advocate for you.</div>
+          <div class="q-label">Discovery Questions</div>
+          <ul class="q-list">
+            <li>Who internally is feeling this pain most acutely right now?"</li>
+            <li>Who would be the primary user and benefit most directly from a solution?"</li>
+            <li>Is there someone who would be your internal sponsor for this project?"</li>
+          </ul>
+          <div class="q-label" style="margin-top:10px;">How to Develop a Champion</div>
+          <ul class="bullet-list" style="margin-top:4px;">
+            <li>Give them tools: ROI calculator, case studies, internal presentation template they can use in their own meetings</li>
+            <li>Arm them with objection responses for every likely internal pushback</li>
+            <li>Make them look good — their career is on the line when they advocate for you</li>
+          </ul>
+          <div class="gyr-mini-row">
+            <div class="gyr-mini gyr-mini-good">
+              <div class="gyr-mini-label">Green Signal</div>
+              Contact has organizational credibility, clear personal stake in the outcome, and will take meetings without you present
+            </div>
+            <div class="gyr-mini gyr-mini-bad">
+              <div class="gyr-mini-label">Red Flag</div>
+              No internal advocate identified; or the "champion" is junior and has no relationships with decision-makers
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- C Competition -->
+      <div class="meddicc-card">
+        <div class="meddicc-letter-block">
+          <div class="meddicc-letter">C</div>
+          <div class="meddicc-abbr">Competition</div>
+        </div>
+        <div class="meddicc-content">
+          <div class="meddicc-name">Competition</div>
+          <div class="meddicc-def">What alternatives the buyer is considering — including direct competitors, "do nothing," and "build internally." You cannot differentiate without knowing what you're differentiating against.</div>
+          <div class="meddicc-why"><strong>Why it matters:</strong> Knowing the competition tells you what the buyer has already been exposed to, where their anchors are set, and what specific strengths you need to emphasize — or neutralize.</div>
+          <div class="q-label">Discovery Questions</div>
+          <ul class="q-list">
+            <li>Are you evaluating any other solutions alongside this conversation?"</li>
+            <li>What are you currently using to handle this today — even if it's a spreadsheet?"</li>
+            <li>Have you looked at [competitor]? What drew you to them?"</li>
+            <li>What do you like most about what you're doing today?"</li>
+          </ul>
+          <div class="callout" style="margin-top:10px;">
+            <strong>Handling Competition:</strong> Never badmouth a competitor by name. Position based on your specific strengths vs. the buyer's specific needs. "What I can tell you is that for customers who care most about [their criterion], we consistently outperform because [specific proof point]."
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- SECTION 3: CALL STRUCTURE -->
+  <div class="section-title">3. The Discovery Call Structure</div>
+  <div class="section-intro">A strong discovery call has a clear arc — from agenda setting to pain discovery to decision mapping to a definitive next step. This structure works for 45–90 minute calls in all segments. Do not skip the agenda-setting or next-steps steps.</div>
+
+  <div class="subsection">
+    <ul class="call-timeline">
+      <li class="call-step">
+        <div class="call-step-dot">1</div>
+        <div class="call-step-body">
+          <div class="call-step-title">Set the Agenda</div>
+          <div class="call-step-time">2 minutes</div>
+          <div class="call-step-desc">"Here's what I'd like to cover today — I want to make sure I fully understand your situation, then share a few relevant things we've done for similar teams. Does that work for you?" Getting agreement to the agenda creates a micro-commitment and signals organization.</div>
+        </div>
+      </li>
+      <li class="call-step">
+        <div class="call-step-dot">2</div>
+        <div class="call-step-body">
+          <div class="call-step-title">Rapport &amp; Context Setting</div>
+          <div class="call-step-time">3 minutes</div>
+          <div class="call-step-desc">"Tell me a bit about your current situation in [area] — how does your team handle this today?" Open-ended, present-tense, low-threat. Gets the buyer talking before you ask about problems.</div>
+        </div>
+      </li>
+      <li class="call-step">
+        <div class="call-step-dot">3</div>
+        <div class="call-step-body">
+          <div class="call-step-title">Pain Discovery</div>
+          <div class="call-step-time">15–20 minutes</div>
+          <div class="call-step-desc">The core of the call. Use MEDDICC components I and M primarily. Go deep on the highest-signal pain — use the 5 Whys to reach root cause. Do not accept surface-level answers. "That's really helpful — can you tell me more about what the impact of that looks like day-to-day?"</div>
+        </div>
+      </li>
+      <li class="call-step">
+        <div class="call-step-dot">4</div>
+        <div class="call-step-body">
+          <div class="call-step-title">Decision Discovery</div>
+          <div class="call-step-time">5–10 minutes</div>
+          <div class="call-step-desc">Cover MEDDICC components D (criteria), D (process), C (champion), and C (competition). Frame as "just want to understand how decisions like this work" — not an interrogation. Map the process, identify the economic buyer, and assess champion quality.</div>
+        </div>
+      </li>
+      <li class="call-step">
+        <div class="call-step-dot">5</div>
+        <div class="call-step-body">
+          <div class="call-step-title">Summary &amp; Reflection</div>
+          <div class="call-step-time">5 minutes</div>
+          <div class="call-step-desc">"Based on what you've shared, I'm hearing [pain summary] — and that the biggest impact is [quantified impact]. Is that an accurate picture of where things stand?" This step builds trust, allows correction before you pitch, and demonstrates active listening.</div>
+        </div>
+      </li>
+      <li class="call-step">
+        <div class="call-step-dot">6</div>
+        <div class="call-step-body">
+          <div class="call-step-title">Next Steps</div>
+          <div class="call-step-time">3 minutes</div>
+          <div class="call-step-desc">"I think we could show you something very relevant. I'd like to put together a focused 45-minute session where I show you specifically [what you'd show, tied to their pain]. Would [specific date/time] work?" Never leave a discovery call without a specific next step — date, time, and attendees confirmed.</div>
+        </div>
+      </li>
+    </ul>
+
+    <div class="callout">
+      <strong>Call Length:</strong> 45–60 minutes for mid-market. 90 minutes for enterprise (more stakeholders, more complex decision process to map). Never go over time without explicitly asking: "I have a few more questions — do you have another 10 minutes, or should we schedule a follow-up?"
+    </div>
+  </div>
+
+  <!-- SECTION 4: QUESTION FRAMEWORKS -->
+  <div class="section-title">4. Question Frameworks</div>
+  <div class="section-intro">Two proven frameworks for structuring your discovery questions. SPIN Selling and the 5 Whys are complementary — use SPIN for the overall call arc and the 5 Whys when you've found a signal worth digging into.</div>
+
+  <div class="subsection">
+    <p style="font-size:14px; font-weight:600; color:var(--text); margin-bottom:12px;">SPIN Selling Alignment</p>
+    <div class="spin-grid">
+      <div class="spin-card">
+        <div class="spin-letter">S</div>
+        <div class="spin-name">Situation</div>
+        <div class="spin-example">"Tell me about how you currently manage [process] — from start to finish, what does that look like?"</div>
+      </div>
+      <div class="spin-card">
+        <div class="spin-letter">P</div>
+        <div class="spin-name">Problem</div>
+        <div class="spin-example">"What are the biggest challenges or frustrations with the way you're doing it today?"</div>
+      </div>
+      <div class="spin-card">
+        <div class="spin-letter">I</div>
+        <div class="spin-name">Implication</div>
+        <div class="spin-example">"What happens to [metric: team velocity / revenue / customer satisfaction] when [problem] occurs?"</div>
+      </div>
+      <div class="spin-card">
+        <div class="spin-letter">N</div>
+        <div class="spin-name">Need-Payoff</div>
+        <div class="spin-example">"If you could eliminate [problem] completely, what would that make possible for your team?"</div>
+      </div>
+    </div>
+
+    <div style="margin-top:24px;">
+      <p style="font-size:14px; font-weight:600; color:var(--text); margin-bottom:12px;">The 5 Whys for Pain Depth</p>
+      <p style="font-size:14px; color:var(--text-muted); margin-bottom:12px;">When a prospect surfaces a pain, probe with layered "why" questions until you reach root cause and business impact. Most reps stop at Why 1 or 2. Top reps reach Why 4 or 5.</p>
+      <ul class="bullet-list">
+        <li><strong>Why 1:</strong> "Why is [problem] happening — do you know the root cause?"</li>
+        <li><strong>Why 2:</strong> "Why is that the underlying reason — has it always been this way?"</li>
+        <li><strong>Why 3:</strong> "Why hasn't this been solved before — what got in the way?"</li>
+        <li><strong>Why 4:</strong> "Why is now the time to address it — what's changed?"</li>
+        <li><strong>Why 5:</strong> "Why is your team specifically the right one to own solving this?"</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- SECTION 5: COMMON DISCOVERY MISTAKES -->
+  <div class="section-title">5. Common Discovery Mistakes</div>
+  <div class="section-intro">These are the seven highest-frequency discovery failures, ranked by their downstream impact on deal conversion. Each failure has a specific, identifiable fix.</div>
+
+  <div class="subsection">
+    <ul class="failure-list">
+      <li>
+        <div class="failure-body">
+          <strong>Pitching During Discovery</strong>
+          <span>The moment you start selling, the buyer stops sharing. Discovery is a listening exercise. Any time you find yourself saying "and what our product does is..." you have broken the discovery frame.</span>
+        </div>
+      </li>
+      <li>
+        <div class="failure-body">
+          <strong>Asking Yes/No Questions</strong>
+          <span>Closed questions close down conversation. "Do you have a problem with X?" gets a yes/no. "Walk me through how you handle X today" gets a story with pain, context, and emotion embedded in it.</span>
+        </div>
+      </li>
+      <li>
+        <div class="failure-body">
+          <strong>Surface-Level Pain Acceptance</strong>
+          <span>Accepting "it's frustrating" as a complete pain answer and moving on. That's Level 1 pain. You need Level 4 or 5 pain — specific, quantified, with emotional resonance and business impact attached.</span>
+        </div>
+      </li>
+      <li>
+        <div class="failure-body">
+          <strong>Skipping Economic Buyer Discovery</strong>
+          <span>The most common cause of late-stage deal stalls. You've done perfect discovery with a champion who cannot actually approve the budget. Always map the approval chain — even if you think you know who decides.</span>
+        </div>
+      </li>
+      <li>
+        <div class="failure-body">
+          <strong>Not Confirming Next Steps</strong>
+          <span>Discovery calls with no clear, confirmed next step — specific date, time, and attendees — convert to demos at less than 20%. "I'll follow up" is not a next step. "I'll send you a calendar invite for Tuesday at 2pm" is a next step.</span>
+        </div>
+      </li>
+      <li>
+        <div class="failure-body">
+          <strong>Not Taking Notes Visibly</strong>
+          <span>Buyers notice when you're not writing. Not taking notes signals: "I don't plan to use what you're telling me." Take notes and reference them back: "Let me make sure I captured that correctly — you said..."</span>
+        </div>
+      </li>
+      <li>
+        <div class="failure-body">
+          <strong>Going Over Time Without Asking</strong>
+          <span>Running over the scheduled call time without permission is disrespectful and signals poor planning. If you need more time: "I want to be respectful of your time — I have two more important questions. Do you have another 5 minutes, or should we schedule a follow-up?"</span>
+        </div>
+      </li>
+    </ul>
+  </div>
+
+  <!-- SECTION 6: DISCOVERY SCORING RUBRIC -->
+  <div class="section-title">6. Discovery Scoring Rubric (Post-Call)</div>
+  <div class="section-intro">Score every discovery call immediately after it ends on these five dimensions. If total score is below 15/25, the opportunity should not advance to SQL. This rubric exists to protect pipeline quality — not to penalize reps.</div>
+
+  <div class="subsection">
+    <table class="rubric-table">
+      <thead>
+        <tr>
+          <th>Dimension</th>
+          <th>1–2 (Weak)</th>
+          <th>3 (Developing)</th>
+          <th>4–5 (Strong)</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><span class="score-dim">Pain Depth</span></td>
+          <td><span class="score-low">Surface-level, unspecific. "They have some pain but I'm not sure what."</span></td>
+          <td><span class="score-mid">Specific but unquantified. Pain is identified but not measured.</span></td>
+          <td><span class="score-high">Specific, quantified, with emotional resonance and business impact.</span></td>
+        </tr>
+        <tr>
+          <td><span class="score-dim">Economic Buyer</span></td>
+          <td><span class="score-low">Unknown. "I'm not sure who approves."</span></td>
+          <td><span class="score-mid">Identified but not engaged. Champion has mentioned their name.</span></td>
+          <td><span class="score-high">Engaged or clear path to engagement. Champion has confirmed access.</span></td>
+        </tr>
+        <tr>
+          <td><span class="score-dim">Decision Process</span></td>
+          <td><span class="score-low">Unknown. "It depends on how things go."</span></td>
+          <td><span class="score-mid">Partially known. Some steps identified, no timeline or full stakeholder map.</span></td>
+          <td><span class="score-high">Fully mapped: who, what steps, what timeline — including legal and procurement.</span></td>
+        </tr>
+        <tr>
+          <td><span class="score-dim">Champion Quality</span></td>
+          <td><span class="score-low">No champion identified. Contact is passive or low-influence.</span></td>
+          <td><span class="score-mid">Interested contact. Engaged but unclear organizational credibility.</span></td>
+          <td><span class="score-high">Credible internal advocate. Has stated they will advocate for this internally.</span></td>
+        </tr>
+        <tr>
+          <td><span class="score-dim">Urgency</span></td>
+          <td><span class="score-low">None. "Sometime this year, maybe."</span></td>
+          <td><span class="score-mid">Soft urgency. "We'd like to get started soon."</span></td>
+          <td><span class="score-high">Hard deadline or event-driven: contract expiring, initiative launching, board mandate.</span></td>
+        </tr>
+      </tbody>
+    </table>
+
+    <div class="callout">
+      <strong>Below 15/25:</strong> Do not advance to SQL. Go back to the prospect with a targeted follow-up designed to fill the specific gap (e.g., if pain depth is weak, schedule a second discovery call focused on ROI and metrics). Better to delay advancement by one week than to carry a 0% deal in your pipeline for 90 days.
+    </div>
+  </div>
+
+  <!-- RELATED LINKS -->
+  <div class="related-section">
+    <div class="related-title">Related Tools &amp; Templates</div>
+    <div class="related-links">
+      <a href="template-prospecting.html" class="related-link">Prospecting Guide</a>
+      <a href="template-presentation.html" class="related-link">Presentation &amp; Demo Guide</a>
+      <a href="template-icp.html" class="related-link">ICP Worksheet</a>
+      <a href="sos-gtm-playbook.html" class="related-link">GTM Playbook SOS</a>
+    </div>
+  </div>
+
+</div><!-- /content-wrap -->
+<script data-pplx-inline-edit>
+(function () {
+  if (window === window.top) return;
+
+  const allowedParentOrigins = ["https://www.perplexity.ai","https://perplexity.ai","https://testing.perplexity.ai","https://staging.perplexity.ai","https://*.preview.i.perplexity.ai","http://localhost:3000","http://127.0.0.1:3000","http://localhost:5173","http://127.0.0.1:5173"];
+  const MAX_FONT_BYTES = 500 * 1024;
+  const MAX_TOTAL_FONT_BYTES = 2 * 1024 * 1024;
+  let scrollForwarding = false;
+  let scrollRaf = 0;
+  let trustedTopOrigin = null;
+
+  // Allow entries like "https://*.preview.i.perplexity.ai" — the wildcard
+  // matches a single DNS label (no dots), so "https://*.foo" cannot stretch
+  // across multiple labels.
+  function matchesAllowedOrigin(origin) {
+    if (!origin) return false;
+    for (const entry of allowedParentOrigins) {
+      if (!entry.includes("*")) {
+        if (entry === origin) return true;
+        continue;
+      }
+      const pattern = new RegExp(
+        "^" +
+          entry.replace(/[.+?^${}()|[\]\\]/g, "\\$&").replace(/\*/g, "[^.]+") +
+          "$",
+      );
+      if (pattern.test(origin)) return true;
+    }
+    return false;
+  }
+
+  // Trust decision: when the sender is same-origin-visible (event.origin is a
+  // real origin like https://www.perplexity.ai) we trust event.origin directly.
+  // When event.origin is "null" (opaque broker srcdoc), we fall back to the
+  // broker's stamped `parentOrigin` to identify the top window. The fallback
+  // is claim-only — we rely on the browser's native `targetOrigin` enforcement
+  // on the response path (see postToTrustedTop) to ensure replies can't be
+  // delivered to anyone but the actual top window of that claimed origin.
+  function getTrustedParentOrigin(event) {
+    const forwardedParentOrigin =
+      typeof event.data.parentOrigin === "string" ? event.data.parentOrigin : null;
+    const parentOrigin = event.origin === "null" ? forwardedParentOrigin : event.origin;
+    return matchesAllowedOrigin(parentOrigin) ? parentOrigin : null;
+  }
+
+  // All responses go to window.top with targetOrigin = the allowlisted origin.
+  // An attacker that iframes us inside their own null-origin broker can claim
+  // any parentOrigin they like, but the browser will drop the reply whenever
+  // the real top's origin doesn't match — so the screenshot never leaves.
+  function postToTrustedTop(message) {
+    if (!trustedTopOrigin) return;
+    try {
+      window.top.postMessage(message, trustedTopOrigin);
+    } catch (_error) {}
+  }
+
+  function inlineAll(original, clone) {
+    if (original.nodeType !== 1 || clone.nodeType !== 1) return;
+
+    try {
+      const computedStyle = getComputedStyle(original);
+      // cssText on a computed style is the serialized declaration in modern
+      // Chromium/Safari — a single read beats enumerating ~400 longhand
+      // properties. Firefox returns "" here, so we fall back on empty.
+      const serialized = computedStyle.cssText;
+      if (serialized) {
+        clone.style.cssText = serialized;
+      } else {
+        const parts = new Array(computedStyle.length);
+        for (let index = 0; index < computedStyle.length; index += 1) {
+          const property = computedStyle[index];
+          parts[index] = `${property}:${computedStyle.getPropertyValue(property)};`;
+        }
+        clone.style.cssText = parts.join("");
+      }
+    } catch (_error) {}
+
+    const originalChildren = original.children;
+    const clonedChildren = clone.children;
+    for (
+      let index = 0;
+      index < originalChildren.length && index < clonedChildren.length;
+      index += 1
+    ) {
+      inlineAll(originalChildren[index], clonedChildren[index]);
+    }
+  }
+
+  function extractFontUrl(srcValue) {
+    const matches = [
+      ...srcValue.matchAll(
+        /url\(["']?([^"')]+)["']?\)(?:\s*format\(["']?([^"')]+)["']?\))?/gi,
+      ),
+    ];
+    if (matches.length === 0) return null;
+    const woff2 = matches.find((m) => m[2] && m[2].toLowerCase().includes("woff2"));
+    if (woff2) return woff2[1];
+    const woff = matches.find((m) => m[2] && m[2].toLowerCase().includes("woff"));
+    if (woff) return woff[1];
+    return matches[0][1];
+  }
+
+  // Cache resolved font URL -> data URI across captures. Fonts on a page
+  // essentially never change, and a batch run emits multiple captures back to
+  // back — without this we'd refetch + re-base64 every time.
+  const fontDataUriCache = new Map();
+  const SRC_DECLARATION_RE = /src\s*:\s*[^;}]+/i;
+
+  async function fetchAsDataUri(url) {
+    if (fontDataUriCache.has(url)) return fontDataUriCache.get(url);
+    let dataUri = null;
+    try {
+      const response = await fetch(url, { mode: "cors", credentials: "omit" });
+      if (response.ok) {
+        const blob = await response.blob();
+        if (blob.size <= MAX_FONT_BYTES) {
+          dataUri = await new Promise((resolve) => {
+            const reader = new FileReader();
+            reader.onloadend = () =>
+              resolve(typeof reader.result === "string" ? reader.result : null);
+            reader.onerror = () => resolve(null);
+            reader.readAsDataURL(blob);
+          });
+        }
+      }
+    } catch (_error) {
+      dataUri = null;
+    }
+    fontDataUriCache.set(url, dataUri);
+    return dataUri;
+  }
+
+  function collectFontFaceRuleTexts() {
+    const rules = [];
+    for (const sheet of document.styleSheets) {
+      let cssRules;
+      try {
+        cssRules = sheet.cssRules;
+      } catch (_error) {
+        continue;
+      }
+      if (!cssRules) continue;
+      for (const rule of cssRules) {
+        const cssText = rule.cssText || "";
+        if (cssText.startsWith("@font-face")) rules.push(cssText);
+      }
+    }
+    return rules;
+  }
+
+  async function buildInlinedFontCss() {
+    const ruleTexts = collectFontFaceRuleTexts();
+    if (ruleTexts.length === 0) return null;
+
+    const resolved = ruleTexts.map((cssText) => {
+      if (!SRC_DECLARATION_RE.test(cssText)) return null;
+      const srcMatch = cssText.match(/src\s*:\s*([^;}]+)[;}]/i);
+      if (!srcMatch) return null;
+      const url = extractFontUrl(srcMatch[1]);
+      if (!url) return null;
+      try {
+        return { cssText, url: new URL(url, document.baseURI).href };
+      } catch (_error) {
+        return null;
+      }
+    });
+
+    const dataUris = await Promise.all(
+      resolved.map((entry) => (entry ? fetchAsDataUri(entry.url) : Promise.resolve(null))),
+    );
+
+    const inlined = [];
+    let totalBytes = 0;
+    for (let index = 0; index < resolved.length; index += 1) {
+      const entry = resolved[index];
+      const dataUri = dataUris[index];
+      if (!entry || !dataUri) continue;
+      const approxBytes = dataUri.length * 0.75;
+      if (totalBytes + approxBytes > MAX_TOTAL_FONT_BYTES) break;
+      totalBytes += approxBytes;
+      inlined.push(entry.cssText.replace(SRC_DECLARATION_RE, `src: url("${dataUri}")`));
+    }
+    return inlined.length > 0 ? inlined.join("\n") : null;
+  }
+
+  function stripExternal(clone) {
+    const images = clone.querySelectorAll("img");
+    for (let index = 0; index < images.length; index += 1) {
+      const src = images[index].getAttribute("src");
+      if (src && !src.startsWith("data:")) images[index].removeAttribute("src");
+    }
+
+    const elements = clone.querySelectorAll("*");
+    for (let index = 0; index < elements.length; index += 1) {
+      const style = elements[index].style.cssText;
+      if (style && style.includes("url(")) {
+        elements[index].style.cssText = style.replace(
+          /url\(["']?(?!data:)[^)"']*["']?\)/gi,
+          "none",
+        );
+      }
+    }
+  }
+
+  function emitScroll() {
+    scrollRaf = 0;
+    if (!scrollForwarding) return;
+    postToTrustedTop({
+      type: "INLINE_EDIT_SCROLL",
+      scrollX: window.scrollX,
+      scrollY: window.scrollY,
+    });
+  }
+
+  window.addEventListener(
+    "scroll",
+    function () {
+      if (!scrollForwarding || scrollRaf) return;
+      scrollRaf = requestAnimationFrame(emitScroll);
+    },
+    { passive: true, capture: true },
+  );
+
+  async function handleCaptureRequest(event) {
+    const requestId = event.data.requestId;
+    const scrollX = window.scrollX;
+    const scrollY = window.scrollY;
+    const width = window.innerWidth;
+    const height = window.innerHeight;
+
+    function postResult(dataUrl) {
+      postToTrustedTop({
+        type: "INLINE_EDIT_SCREENSHOT_RESULT",
+        requestId,
+        dataUrl,
+        scrollX,
+        scrollY,
+      });
+    }
+
+    try {
+      // Wait for any pending web fonts to resolve so both inline metrics and
+      // the @font-face inlining below see the same loaded faces.
+      if (document.fonts && document.fonts.ready) {
+        try {
+          await document.fonts.ready;
+        } catch (_error) {}
+      }
+
+      const clone = document.documentElement.cloneNode(true);
+      inlineAll(document.documentElement, clone);
+
+      const removedNodes = clone.querySelectorAll("script,link[rel=\"stylesheet\"],style");
+      for (let index = 0; index < removedNodes.length; index += 1) {
+        removedNodes[index].remove();
+      }
+
+      stripExternal(clone);
+
+      // Re-embed web fonts as data-URI @font-face rules so the SVG rasterizer
+      // can resolve them — external font URLs aren't fetched during
+      // foreignObject rendering, which would otherwise force a fallback face
+      // and change text metrics.
+      const inlinedFontCss = await buildInlinedFontCss();
+      if (inlinedFontCss) {
+        const styleEl = document.createElement("style");
+        styleEl.textContent = inlinedFontCss;
+        const head = clone.querySelector("head");
+        if (head) head.appendChild(styleEl);
+        else clone.insertBefore(styleEl, clone.firstChild);
+      }
+
+      const html = new XMLSerializer().serializeToString(clone);
+      const svg =
+        `<svg xmlns="http://www.w3.org/2000/svg" width="${width}" height="${height}">` +
+        '<foreignObject width="100%" height="100%">' +
+        `<div xmlns="http://www.w3.org/1999/xhtml" style="width:${width}px;height:${height}px;overflow:hidden">` +
+        `<div style="transform:translate(-${scrollX}px,-${scrollY}px);transform-origin:top left">` +
+        html +
+        "</div></div></foreignObject></svg>";
+      const svgUrl = `data:image/svg+xml;charset=utf-8,${encodeURIComponent(svg)}`;
+      const image = new Image();
+      image.onload = function () {
+        const canvas = document.createElement("canvas");
+        canvas.width = width;
+        canvas.height = height;
+        canvas.getContext("2d").drawImage(image, 0, 0);
+        postResult(canvas.toDataURL("image/png"));
+      };
+      image.onerror = function () {
+        postResult(null);
+      };
+      image.src = svgUrl;
+    } catch (_error) {
+      postResult(null);
+    }
+  }
+
+  window.addEventListener("message", function (event) {
+    if (!event.data) return;
+    // Only accept messages from the direct parent frame. Blocks sibling /
+    // unrelated-window postMessage senders that could otherwise reach us.
+    if (event.source !== window.parent) return;
+
+    const trustedParentOrigin = getTrustedParentOrigin(event);
+    if (!trustedParentOrigin) return;
+    trustedTopOrigin = trustedParentOrigin;
+
+    if (event.data.type === "INLINE_EDIT_SCROLL_START") {
+      scrollForwarding = true;
+      emitScroll();
+      return;
+    }
+
+    if (event.data.type === "INLINE_EDIT_SCROLL_STOP") {
+      scrollForwarding = false;
+      if (scrollRaf) cancelAnimationFrame(scrollRaf);
+      scrollRaf = 0;
+      return;
+    }
+
+    if (event.data.type !== "INLINE_EDIT_CAPTURE_REQUEST") return;
+
+    handleCaptureRequest(event);
+  });
+})();
+
+
+</script></body>
+</html>

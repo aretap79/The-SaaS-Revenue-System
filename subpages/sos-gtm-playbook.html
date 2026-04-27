@@ -1,0 +1,1276 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>GTM Playbook Framework — Science of Scaling</title>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="../assets/shared.css"/>
+  <style>
+    :root { --sos: #0D5C63; --sos-hover: #094a50; --sos-light: #e6f4f5; }
+    .page-hero { background: var(--sos); }
+    .step-list li::before { background: var(--sos); }
+    .bullet-list li::before { color: var(--sos); }
+
+    /* Quote block */
+    .quote-block {
+      border-left: 4px solid var(--sos);
+      padding: 14px 20px;
+      background: var(--sos-light);
+      border-radius: 0 8px 8px 0;
+      margin: 20px 0;
+    }
+    .quote-text { font-size: 18px; font-weight: 600; color: var(--sos); line-height: 1.5; margin-bottom: 6px; }
+    .quote-source { font-size: 13px; color: var(--text-muted); }
+
+    /* Insight tag */
+    .insight-tag {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: #FFF8E6;
+      border: 1px solid #F0C060;
+      border-radius: 6px;
+      padding: 7px 14px;
+      font-size: 13px;
+      font-weight: 600;
+      color: #7A5A00;
+      margin: 10px 0;
+    }
+
+    /* Compare grid */
+    .compare-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+      margin: 16px 0;
+    }
+    .compare-box { border-radius: 8px; padding: 16px 18px; }
+    .compare-wrong { background: #FFF5F5; border: 1.5px solid #F5C0C0; }
+    .compare-right { background: #F0FFF4; border: 1.5px solid #A8DCA8; }
+    .compare-label {
+      font-size: 11px; font-weight: 700; letter-spacing: 1px; text-transform: uppercase; margin-bottom: 8px;
+    }
+    .compare-wrong .compare-label { color: #A13544; }
+    .compare-right .compare-label { color: #437A22; }
+    .compare-box p { font-size: 13px; line-height: 1.6; margin: 0; }
+
+    /* Component overview */
+    .component-overview {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 10px;
+      margin: 20px 0;
+    }
+    .comp-overview-card {
+      background: var(--surface);
+      border: 1.5px solid var(--border);
+      border-radius: 8px;
+      padding: 14px 16px;
+      cursor: pointer;
+      transition: all 0.15s;
+      text-decoration: none;
+    }
+    .comp-overview-card:hover {
+      border-color: var(--sos);
+      box-shadow: 0 2px 8px rgba(13,92,99,0.12);
+      text-decoration: none;
+    }
+    .comp-overview-num {
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      color: var(--sos);
+      margin-bottom: 4px;
+    }
+    .comp-overview-title { font-size: 14px; font-weight: 700; color: var(--text); margin-bottom: 3px; }
+    .comp-overview-desc { font-size: 12px; color: var(--text-muted); line-height: 1.4; }
+
+    /* Component sections */
+    .component-card {
+      background: var(--surface);
+      border: 1.5px solid var(--border);
+      border-radius: 10px;
+      margin-bottom: 28px;
+      overflow: hidden;
+    }
+    .component-header {
+      background: var(--sos);
+      color: #fff;
+      padding: 16px 22px;
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
+    .comp-num {
+      width: 36px; height: 36px; border-radius: 50%;
+      background: rgba(255,255,255,0.2);
+      font-size: 14px; font-weight: 700;
+      display: flex; align-items: center; justify-content: center;
+      flex-shrink: 0;
+    }
+    .comp-title { font-size: 17px; font-weight: 700; }
+    .comp-subtitle { font-size: 13px; opacity: 0.8; margin-top: 2px; }
+    .comp-link {
+      margin-left: auto;
+      background: rgba(255,255,255,0.18);
+      color: #fff;
+      font-size: 12px;
+      font-weight: 600;
+      padding: 5px 14px;
+      border-radius: 20px;
+      text-decoration: none;
+      white-space: nowrap;
+      transition: background 0.15s;
+    }
+    .comp-link:hover { background: rgba(255,255,255,0.3); color: #fff; text-decoration: none; }
+    .component-body { padding: 20px 22px; }
+    .component-body p { font-size: 14px; line-height: 1.75; margin-bottom: 12px; color: var(--text); }
+    .component-body p:last-child { margin-bottom: 0; }
+
+    /* Buyer journey grid */
+    .journey-grid {
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      gap: 0;
+      margin: 16px 0;
+      border-radius: 8px;
+      overflow: hidden;
+      border: 1.5px solid var(--border);
+    }
+    .journey-stage {
+      padding: 14px 12px;
+      border-right: 1px solid var(--border);
+    }
+    .journey-stage:last-child { border-right: none; }
+    .journey-stage-num {
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      color: var(--sos);
+      margin-bottom: 4px;
+    }
+    .journey-stage-name {
+      font-size: 13px;
+      font-weight: 700;
+      color: var(--text);
+      margin-bottom: 6px;
+    }
+    .journey-question { font-size: 12px; line-height: 1.5; color: var(--text-muted); }
+
+    /* GYR framework */
+    .gyr-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 10px;
+      margin: 16px 0;
+    }
+    .gyr-card {
+      border-radius: 8px;
+      padding: 14px 16px;
+      text-align: center;
+    }
+    .gyr-green { background: #f0fff4; border: 1.5px solid #a8dca8; }
+    .gyr-yellow { background: #fffde7; border: 1.5px solid #ffe082; }
+    .gyr-red { background: #fff5f5; border: 1.5px solid #f5c0c0; }
+    .gyr-dot {
+      width: 16px; height: 16px; border-radius: 50%;
+      display: inline-block; margin-bottom: 8px;
+    }
+    .gyr-green .gyr-dot { background: #437A22; }
+    .gyr-yellow .gyr-dot { background: #e6a800; }
+    .gyr-red .gyr-dot { background: #A13544; }
+    .gyr-label {
+      font-size: 13px; font-weight: 700; margin-bottom: 5px;
+    }
+    .gyr-green .gyr-label { color: #437A22; }
+    .gyr-yellow .gyr-label { color: #a07800; }
+    .gyr-red .gyr-label { color: #A13544; }
+    .gyr-desc { font-size: 12px; color: var(--text-muted); line-height: 1.5; }
+
+    /* Swim lanes */
+    .swim-lanes {
+      display: flex;
+      gap: 8px;
+      margin: 16px 0;
+    }
+    .swim-lane {
+      flex: 1;
+      border: 1.5px solid var(--sos);
+      border-radius: 8px;
+      padding: 12px 8px;
+      text-align: center;
+      font-size: 12px;
+      font-weight: 700;
+      color: var(--sos);
+      background: var(--sos-light);
+    }
+    .swim-lane-num { font-size: 20px; font-weight: 700; margin-bottom: 4px; }
+    .swim-lane-label { font-size: 11px; line-height: 1.4; }
+
+    /* MEDDICC */
+    .meddicc-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+      margin: 16px 0;
+    }
+    .meddicc-card {
+      background: var(--surface);
+      border: 1.5px solid var(--border);
+      border-radius: 8px;
+      padding: 14px 16px;
+      display: flex;
+      gap: 12px;
+      align-items: flex-start;
+    }
+    .meddicc-letter {
+      min-width: 34px; height: 34px;
+      border-radius: 8px;
+      background: var(--sos);
+      color: #fff;
+      font-size: 14px; font-weight: 700;
+      display: flex; align-items: center; justify-content: center;
+      flex-shrink: 0;
+    }
+    .meddicc-title { font-size: 14px; font-weight: 700; color: var(--text); margin-bottom: 3px; }
+    .meddicc-desc { font-size: 12px; color: var(--text-muted); line-height: 1.5; }
+
+    /* Film review steps */
+    .film-protocol { margin: 16px 0; }
+    .film-step {
+      display: flex; gap: 14px; margin-bottom: 10px; align-items: flex-start;
+    }
+    .film-num {
+      min-width: 26px; height: 26px; border-radius: 50%;
+      background: var(--sos); color: #fff;
+      font-size: 12px; font-weight: 700;
+      display: flex; align-items: center; justify-content: center;
+      flex-shrink: 0; margin-top: 1px;
+    }
+    .film-text { font-size: 14px; line-height: 1.6; padding-top: 2px; }
+
+    /* Prospecting step table */
+    .step-table-wrap { overflow-x: auto; margin: 16px 0; }
+
+    /* Governance steps */
+    .governance-step {
+      display: flex;
+      align-items: flex-start;
+      gap: 16px;
+      padding: 14px 0;
+      border-bottom: 1px solid var(--border);
+    }
+    .governance-step:last-child { border-bottom: none; }
+    .gov-icon {
+      min-width: 36px; height: 36px;
+      border-radius: 8px;
+      background: var(--sos-light);
+      color: var(--sos);
+      font-size: 14px; font-weight: 700;
+      display: flex; align-items: center; justify-content: center;
+      flex-shrink: 0;
+    }
+    .gov-title { font-size: 14px; font-weight: 700; color: var(--text); margin-bottom: 3px; }
+    .gov-desc { font-size: 13px; color: var(--text-muted); line-height: 1.55; }
+
+    /* Cadence chips */
+    .cadence-row {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      margin: 14px 0;
+      align-items: center;
+    }
+    .cadence-chip {
+      background: var(--sos);
+      color: #fff;
+      padding: 6px 16px;
+      border-radius: 20px;
+      font-size: 13px;
+      font-weight: 600;
+    }
+    .cadence-chip.soft {
+      background: #4a8c92;
+    }
+    .cadence-sep { color: var(--text-muted); font-size: 14px; }
+
+    @media (max-width: 768px) {
+      .component-overview { grid-template-columns: 1fr 1fr; }
+      .compare-grid { grid-template-columns: 1fr; }
+      .journey-grid { grid-template-columns: 1fr 1fr; overflow: visible; }
+      .journey-stage:nth-child(2) { border-right: none; }
+      .journey-stage { border-bottom: 1px solid var(--border); }
+      .gyr-grid { grid-template-columns: 1fr; }
+      .swim-lanes { flex-direction: column; }
+      .meddicc-grid { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+<nav class="nav">
+  <span class="nav-logo">CRO <span>Manual</span></span>
+  <span class="nav-sep">|</span>
+  <a href="../index.html" class="nav-back">← Home</a>
+  <span class="nav-sep">|</span>
+  <a href="../pages/science-of-scaling.html" class="nav-back">Science of Scaling</a>
+  <span class="nav-sep">|</span>
+  <span class="nav-current">GTM Playbook Framework</span>
+</nav>
+
+<div class="page-hero">
+  <div class="hero-phase-label">Framework · Science of Scaling</div>
+  <div class="hero-title">GTM Playbook Framework</div>
+  <div class="hero-subtitle">The GTM Playbook is the codified, repeatable set of plays that allows any rep — not just your best rep — to consistently close ICP customers who succeed. It is built outside-in, from buyer behavior, not inside-out from rep behavior.</div>
+  <div class="hero-tags">
+    <span class="hero-tag">ICP</span>
+    <span class="hero-tag">Buyer Journey</span>
+    <span class="hero-tag">Prospecting</span>
+    <span class="hero-tag">Discovery</span>
+    <span class="hero-tag">Presentation</span>
+    <span class="hero-tag">CS Onboarding</span>
+    <span class="hero-tag">Film Reviews</span>
+  </div>
+</div>
+
+<div class="content-wrap">
+  <div class="breadcrumb">
+    <a href="../index.html">Home</a><span class="sep">›</span>
+    <a href="../pages/science-of-scaling.html">Science of Scaling</a><span class="sep">›</span>
+    <span class="current">GTM Playbook Framework</span>
+  </div>
+
+  <!-- SECTION 1: What is a GTM Playbook? -->
+  <div class="section-title">What is a GTM Playbook?</div>
+  <div class="section-intro">A documented, repeatable system that any trained rep can execute to generate qualified pipeline and close customers in your ICP. It is not a collection of decks, scripts, and email templates — it is an integrated system built on a single foundation: how your buyers actually make decisions.</div>
+
+  <div class="compare-grid">
+    <div class="compare-box compare-wrong">
+      <div class="compare-label">Inside-Out (The Failure Mode)</div>
+      <p>Built around the founder's or top rep's personal style. "Here's how Sarah closes deals — everyone do what Sarah does." The playbook is a transcript of one person's instincts, not a system. It fails when Sarah isn't on the call — which is every call at scale.</p>
+    </div>
+    <div class="compare-box compare-right">
+      <div class="compare-label">Outside-In (The World-Class Approach)</div>
+      <p>Built from buyer behavior. Start with "What does a buyer who succeeds actually experience?" and work backwards to design every touchpoint. The product is the answer to a question the buyer is already asking. The playbook teaches reps to find that question first.</p>
+    </div>
+  </div>
+
+  <div class="quote-block">
+    <div class="quote-text">"World class selling is about buying first."</div>
+    <div class="quote-source">Stage 2 Capital — Science of Scaling</div>
+  </div>
+
+  <div class="insight-tag">
+    <span>📊</span>
+    Gong.io research: Top-performing reps (&gt;120% quota) talk 46% / listen 54% in discovery. Bottom performers talk 72% / listen 28%. Outside-in playbook design is what trains the discipline to listen.
+  </div>
+
+  <!-- SECTION 2: The 5 Components -->
+  <div class="section-title">The 5 Components of a GTM Playbook</div>
+  <div class="section-intro">Every component connects to the one before it. The entire system is built on a single foundation: the buyer journey. Remove any component and the system underperforms.</div>
+
+  <div class="component-overview">
+    <div class="comp-overview-card" onclick="location.href='template-icp.html'">
+      <div class="comp-overview-num">Component 1</div>
+      <div class="comp-overview-title">ICP &amp; Buyer Persona</div>
+      <div class="comp-overview-desc">Who you sell to and why they succeed</div>
+    </div>
+    <div class="comp-overview-card">
+      <div class="comp-overview-num">Component 2</div>
+      <div class="comp-overview-title">Buyer Journey Map</div>
+      <div class="comp-overview-desc">The stages buyers move through — from their perspective</div>
+    </div>
+    <div class="comp-overview-card" onclick="location.href='template-prospecting.html'">
+      <div class="comp-overview-num">Component 3</div>
+      <div class="comp-overview-title">Prospecting Guide</div>
+      <div class="comp-overview-desc">How to initiate contact with awareness-stage buyers</div>
+    </div>
+    <div class="comp-overview-card" onclick="location.href='template-discovery.html'">
+      <div class="comp-overview-num">Component 4</div>
+      <div class="comp-overview-title">Discovery Guide</div>
+      <div class="comp-overview-desc">Questions that locate buyers on their journey</div>
+    </div>
+    <div class="comp-overview-card" onclick="location.href='template-presentation.html'">
+      <div class="comp-overview-num">Component 5</div>
+      <div class="comp-overview-title">Presentation Guide</div>
+      <div class="comp-overview-desc">3–5 swim lanes that convert discovery into tailored demos</div>
+    </div>
+    <div class="comp-overview-card" onclick="location.href='template-cs-playbook.html'">
+      <div class="comp-overview-num">Component 6</div>
+      <div class="comp-overview-title">CS Onboarding Guide</div>
+      <div class="comp-overview-desc">LIR-focused onboarding that mirrors the sales swim lanes</div>
+    </div>
+  </div>
+
+  <!-- COMPONENT 1: ICP & Buyer Persona -->
+  <div class="component-card" id="comp-icp">
+    <div class="component-header">
+      <div class="comp-num">1</div>
+      <div>
+        <div class="comp-title">ICP &amp; Buyer Persona Definition</div>
+        <div class="comp-subtitle">The firmographic and behavioral profile that predicts customer success</div>
+      </div>
+      <a href="template-icp.html" class="comp-link">ICP Template →</a>
+    </div>
+    <div class="component-body">
+      <p><strong>ICP</strong> (Ideal Customer Profile) is the firmographic profile of the company that succeeds: industry, company size, tech stack, business model, growth stage. It answers "which companies are the right fit at the company level?"</p>
+      <p><strong>Buyer Persona</strong> is the individual buyer within that company: their role, title, pain points, goals, and the metrics they personally own. One ICP company typically has 2–4 buyer personas involved in the purchase process.</p>
+
+      <div class="subsection-title">Green/Yellow/Red Qualification Framework</div>
+      <div class="gyr-grid">
+        <div class="gyr-card gyr-green">
+          <div class="gyr-dot"></div>
+          <div class="gyr-label">Green — Pursue Aggressively</div>
+          <div class="gyr-desc">Meets all ICP criteria. Invest full sales resources. Move through all playbook stages without hesitation.</div>
+        </div>
+        <div class="gyr-card gyr-yellow">
+          <div class="gyr-dot"></div>
+          <div class="gyr-label">Yellow — Qualify Through Discovery</div>
+          <div class="gyr-desc">Meets most criteria, 1–2 gaps. Run discovery to confirm the gaps don't disqualify. Invest cautiously until confirmed.</div>
+        </div>
+        <div class="gyr-card gyr-red">
+          <div class="gyr-dot"></div>
+          <div class="gyr-label">Red — Politely Disqualify</div>
+          <div class="gyr-desc">Missing core criteria. These customers won't achieve LIR. Closing them hurts LIUE and demoralizes CS. Walk away gracefully.</div>
+        </div>
+      </div>
+
+      <div class="callout callout-definition" style="margin-top: 16px;">
+        <div class="callout-title">Time to Qualify</div>
+        <p>A trained rep should assign Green/Yellow/Red within the first 15–20 minutes of a discovery call. If qualification requires more time than this, the ICP framework is too complex or the rep hasn't been sufficiently trained on it. Simplify or re-train.</p>
+      </div>
+
+      <p style="margin-top: 14px;">The ICP and persona definitions are validated by LIR data, not by hypothesis. After 6 months of GTM Fit phase execution, run the analysis: do Green-qualified customers achieve LIR at higher rates than Yellow? Do Yellow customers achieve LIR at higher rates than Red? If the differentiation doesn't appear in the LIR data, revise the framework.</p>
+    </div>
+  </div>
+
+  <!-- COMPONENT 2: Buyer Journey -->
+  <div class="component-card" id="comp-journey">
+    <div class="component-header">
+      <div class="comp-num">2</div>
+      <div>
+        <div class="comp-title">Buyer Journey Map</div>
+        <div class="comp-subtitle">The foundation everything else is built on — mapped from the buyer's perspective, not the seller's</div>
+      </div>
+    </div>
+    <div class="component-body">
+      <p>The buyer journey is the sequence of experiences, questions, and decisions a buyer moves through — from first recognizing they have a problem to signing a contract and achieving success with the solution. The critical principle: map it from the buyer's perspective, not the seller's process.</p>
+
+      <div class="journey-grid">
+        <div class="journey-stage">
+          <div class="journey-stage-num">Stage 1</div>
+          <div class="journey-stage-name">Problem Awareness</div>
+          <div class="journey-question">Buyer recognizes they have a problem. Still unclear whether it's solvable. May not be actively researching solutions yet.</div>
+        </div>
+        <div class="journey-stage">
+          <div class="journey-stage-num">Stage 2</div>
+          <div class="journey-stage-name">Solution Exploration</div>
+          <div class="journey-question">Buyer explores categories of solutions. Not yet comparing specific vendors. Asks peers, reads content, attends events.</div>
+        </div>
+        <div class="journey-stage">
+          <div class="journey-stage-num">Stage 3</div>
+          <div class="journey-stage-name">Vendor Evaluation</div>
+          <div class="journey-question">Buyer narrows to 2–4 vendors. Requests demos, references, and pricing. Decision criteria are forming.</div>
+        </div>
+        <div class="journey-stage">
+          <div class="journey-stage-num">Stage 4</div>
+          <div class="journey-stage-name">Decision &amp; Negotiation</div>
+          <div class="journey-question">Buyer selects preferred vendor and negotiates terms. Internal approval processes engaged. Timeline urgency increases.</div>
+        </div>
+        <div class="journey-stage">
+          <div class="journey-stage-num">Stage 5</div>
+          <div class="journey-stage-name">Implementation Planning</div>
+          <div class="journey-question">Buyer plans rollout. Success metrics defined. Stakeholders aligned. Timeline for LIR achievement established.</div>
+        </div>
+      </div>
+
+      <div class="subsection-title">Swim Lanes: Why One Map Is Never Enough</div>
+      <p>The buyer journey for a 50-person company is completely different from a 500-person company. Their timelines differ, their approval processes differ, their success criteria differ, and their onboarding capacity differs. One playbook for both will underperform on both.</p>
+
+      <div class="swim-lanes">
+        <div class="swim-lane">
+          <div class="swim-lane-num">1</div>
+          <div class="swim-lane-label">SMB<br/>10–100 employees</div>
+        </div>
+        <div class="swim-lane">
+          <div class="swim-lane-num">2</div>
+          <div class="swim-lane-label">Mid-Market<br/>100–500 employees</div>
+        </div>
+        <div class="swim-lane">
+          <div class="swim-lane-num">3</div>
+          <div class="swim-lane-label">Enterprise<br/>500+ employees</div>
+        </div>
+        <div class="swim-lane">
+          <div class="swim-lane-num">4</div>
+          <div class="swim-lane-label">Use Case A<br/>Primary pain focus</div>
+        </div>
+        <div class="swim-lane">
+          <div class="swim-lane-num">5</div>
+          <div class="swim-lane-label">Competitive<br/>Displace incumbent</div>
+        </div>
+      </div>
+      <p style="font-size:13px; color:var(--text-muted); margin-top: 0;">Define 3–5 swim lanes based on your most common buyer scenarios. Each swim lane has its own journey map, discovery question set, presentation path, and CS onboarding guide.</p>
+    </div>
+  </div>
+
+  <!-- COMPONENT 3: Prospecting Guide -->
+  <div class="component-card" id="comp-prospecting">
+    <div class="component-header">
+      <div class="comp-num">3</div>
+      <div>
+        <div class="comp-title">Prospecting Guide</div>
+        <div class="comp-subtitle">A 4-step permission and qualification sequence for awareness-stage buyers</div>
+      </div>
+      <a href="template-prospecting.html" class="comp-link">Template →</a>
+    </div>
+    <div class="component-body">
+      <p>The prospecting guide defines how reps initiate contact with buyers who may not know your product exists. It is not a pitch sequence — it is designed to gain permission, deliver a relevant value statement, and determine if there's a genuine fit before investing further sales resources.</p>
+
+      <div class="step-table-wrap">
+        <table class="data-table">
+          <thead>
+            <tr><th>Step</th><th>Objective</th><th>What to Define</th></tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>1. Ask Permission</strong></td>
+              <td>Establish rapport and respect the prospect's time before making any value claim</td>
+              <td>"Is it okay if I take 30 seconds to tell you why I'm reaching out?" — a simple permission request that immediately differentiates you from a cold pitch</td>
+            </tr>
+            <tr>
+              <td><strong>2. Value Statement</strong></td>
+              <td>Describe the problem you solve using the buyer's language — not product features</td>
+              <td>Specific, persona-tailored value proposition. Reference a specific company context (funding event, recent hiring, tech stack trigger) to demonstrate relevance</td>
+            </tr>
+            <tr>
+              <td><strong>3. Engage</strong></td>
+              <td>Create a two-way conversation by asking one targeted, open-ended question</td>
+              <td>A single question that surfaces whether this prospect has the problem you solve. Not a qualification interrogation — one question that invites a real response</td>
+            </tr>
+            <tr>
+              <td><strong>4. Qualify</strong></td>
+              <td>Determine if they meet Green/Yellow/Red ICP criteria before proposing next steps</td>
+              <td>Apply the ICP framework quickly. If Green or Yellow, propose a specific next step with a clear date. If Red, disqualify gracefully and move on</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="subsection-title">Multi-Channel Sequence Design</div>
+      <ul class="bullet-list">
+        <li><strong>Personalization</strong>: Reference specific company context — funding event, recent job posting, tech stack, recent news. Generic outreach is the fastest path to the delete folder</li>
+        <li><strong>Multi-channel</strong>: LinkedIn connection request + email sequence + phone. A minimum of 3 distinct channels before drawing a conclusion</li>
+        <li><strong>Sequence length</strong>: 6–8 touch sequence over 14 days before marking a prospect as unresponsive. 1 attempt yields ~40% contact rate; 6+ attempts yields ~90%</li>
+        <li><strong>Timing</strong>: Tuesdays and Thursdays, 8–10am and 3–5pm local time to prospect, consistently outperform other windows in response rate data</li>
+        <li><strong>Story progression</strong>: Each touch adds a new angle — insight, case study, trigger event, different medium. Sending the same email six times is not persistence, it is spam</li>
+      </ul>
+
+      <div class="callout callout-warning">
+        <div class="callout-title">Mistake: CTA Misaligned with Buyer Stage</div>
+        <p>Awareness-stage buyers have not yet decided they want to see a demo. Asking for a "30-minute product demo" as the CTA for a first outreach asks them to skip two journey stages. Awareness buyers respond to insight, peer stories, and education — not demo requests. Design your CTA to match where the buyer is, not where you want them to be.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- COMPONENT 4: Discovery Guide -->
+  <div class="component-card" id="comp-discovery">
+    <div class="component-header">
+      <div class="comp-num">4</div>
+      <div>
+        <div class="comp-title">Discovery Guide</div>
+        <div class="comp-subtitle">Outside-in questions organized by buyer journey stage — not by product feature</div>
+      </div>
+      <a href="template-discovery.html" class="comp-link">Template →</a>
+    </div>
+    <div class="component-body">
+      <p>Discovery is the most important component of the playbook. Its purpose is to locate the buyer on their journey and identify their specific pain before presenting anything. Reps who skip discovery and jump to demo are the ones with below-quota attainment and frustrated buyers.</p>
+
+      <div class="insight-tag" style="margin: 0 0 16px 0;">
+        <span>📊</span>
+        Gong.io: Reps who talk &gt;60% in discovery calls close at less than half the rate of reps who talk &lt;50%. Discovery is where deals are won or lost — not in the presentation.
+      </div>
+
+      <div class="subsection-title">The MEDDICC Discovery Framework</div>
+      <div class="meddicc-grid">
+        <div class="meddicc-card">
+          <div class="meddicc-letter">M</div>
+          <div>
+            <div class="meddicc-title">Metrics</div>
+            <div class="meddicc-desc">What is the quantified impact of the problem? What is the cost of inaction? Force the buyer to articulate the economic magnitude of what they're solving.</div>
+          </div>
+        </div>
+        <div class="meddicc-card">
+          <div class="meddicc-letter">E</div>
+          <div>
+            <div class="meddicc-title">Economic Buyer</div>
+            <div class="meddicc-desc">Who owns the budget? Who has authority to sign? Selling to non-economic buyers is the most common reason deals die in late stages.</div>
+          </div>
+        </div>
+        <div class="meddicc-card">
+          <div class="meddicc-letter">D</div>
+          <div>
+            <div class="meddicc-title">Decision Criteria</div>
+            <div class="meddicc-desc">What are they evaluating? What does "good" look like to them? Map the explicit and implicit criteria so the presentation hits every one of them.</div>
+          </div>
+        </div>
+        <div class="meddicc-card">
+          <div class="meddicc-letter">D</div>
+          <div>
+            <div class="meddicc-title">Decision Process</div>
+            <div class="meddicc-desc">Who else is involved? What are the steps to a decision? What is the timeline? Map the entire buying committee and the sequence of approvals required.</div>
+          </div>
+        </div>
+        <div class="meddicc-card">
+          <div class="meddicc-letter">I</div>
+          <div>
+            <div class="meddicc-title">Identify Pain</div>
+            <div class="meddicc-desc">What is the specific pain point? How long have they had it? What have they tried? Pain that hasn't been solved by a prior solution has a reason — find it.</div>
+          </div>
+        </div>
+        <div class="meddicc-card">
+          <div class="meddicc-letter">C</div>
+          <div>
+            <div class="meddicc-title">Champion</div>
+            <div class="meddicc-desc">Is there an internal advocate who will fight for this solution when you're not in the room? Without a champion, you don't have a deal — you have an interest.</div>
+          </div>
+        </div>
+        <div class="meddicc-card">
+          <div class="meddicc-letter">C</div>
+          <div>
+            <div class="meddicc-title">Competition</div>
+            <div class="meddicc-desc">Who else are they evaluating? What do they like and dislike about alternatives? Understanding the competitive context shapes the entire presentation strategy.</div>
+          </div>
+        </div>
+        <div class="meddicc-card">
+          <div class="meddicc-letter">✓</div>
+          <div>
+            <div class="meddicc-title">Discovery Close</div>
+            <div class="meddicc-desc">"Based on what you've shared, here's what I'm hearing..." — always summarize the buyer's pain back to them before ending discovery. This confirms understanding and demonstrates you listened.</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="subsection-title">Discovery Best Practices</div>
+      <ul class="bullet-list">
+        <li>Use open-ended questions — "What," "How," and "Tell me more about" open thinking. "Do you" and "Are you" close it</li>
+        <li>Take notes visibly — signals you're listening and creates a paper trail for the presentation</li>
+        <li>Never pitch during discovery — stay in question mode. If you pitch during discovery, you've ended the discovery</li>
+        <li>Follow the MEDDICC sequence as a mental framework, not a script — move between elements based on the conversation</li>
+        <li>End with a recap: "Based on what you've shared, here's what I'm hearing..." — then summarize their pain before suggesting a next step</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- COMPONENT 5: Presentation Guide -->
+  <div class="component-card" id="comp-presentation">
+    <div class="component-header">
+      <div class="comp-num">5</div>
+      <div>
+        <div class="comp-title">Presentation / Demo Guide (3–5 Swim Lanes)</div>
+        <div class="comp-subtitle">A structured flow built on discovery context — not a one-size-fits-all product demo</div>
+      </div>
+      <a href="template-presentation.html" class="comp-link">Template →</a>
+    </div>
+    <div class="component-body">
+      <p>The presentation is where discovery context is converted into a tailored business case. The worst presentations replay the same demo regardless of what was learned in discovery. The best ones feel like they were built specifically for that buyer — because they were, from one of 3–5 pre-built swim lanes selected based on what discovery revealed.</p>
+
+      <div class="step-table-wrap">
+        <table class="data-table">
+          <thead>
+            <tr><th>Step</th><th>Objective</th><th>What to Say / Do</th></tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>1. Agenda-Setting</strong></td>
+              <td>Set expectations and secure agreement on the structure of the call</td>
+              <td>"Today I'm going to show you how we can help you [goal discovered in discovery] so we can decide together if this is a fit and discuss next steps. Does that work?"</td>
+            </tr>
+            <tr>
+              <td><strong>2. Discovery Recap</strong></td>
+              <td>Demonstrate you listened; confirm context before showing anything</td>
+              <td>"Last time you told us [pain point X, context Y, timeline Z]. Is that still accurate? Has anything changed?" — this is not a formality, it's the most important 2 minutes of the call</td>
+            </tr>
+            <tr>
+              <td><strong>3. Executive Summary</strong></td>
+              <td>Set up the three things you're going to show and why they matter to this buyer</td>
+              <td>"Today I'm going to show you three ways we can [benefit]. First [feature 1 tied to primary pain], then [feature 2], then [feature 3]."</td>
+            </tr>
+            <tr>
+              <td><strong>4. Feature 1 (Primary Pain)</strong></td>
+              <td>Show only what's relevant to their discovered primary pain; confirm agreement</td>
+              <td>Current process → Show feature and how it solves their specific pain → "Does this address the problem you described? Does this make sense?" Get explicit agreement before moving on.</td>
+            </tr>
+            <tr>
+              <td><strong>5. Features 2 &amp; 3 (Supporting Value)</strong></td>
+              <td>Additional value proof tied to secondary pain points from discovery</td>
+              <td>Same structure as Feature 1. Never show features that weren't surfaced in discovery — every feature you show that isn't tied to a discovered pain weakens the business case.</td>
+            </tr>
+            <tr>
+              <td><strong>6. Recap &amp; Close</strong></td>
+              <td>Confirm buy-in, ask for the business, define a specific next step with a date</td>
+              <td>"What we showed you was X, Y, Z. Does this address the problems you described? What are the next steps?" — then stop talking. Wait for the response.</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="subsection-title">Swim Lane Adaptation: 3-Lane Example</div>
+
+      <div class="swim-lanes">
+        <div class="swim-lane">
+          <div class="swim-lane-num">1</div>
+          <div class="swim-lane-label">Use Case A<br/>Vendor evaluation stage<br/>Primary pain: efficiency</div>
+        </div>
+        <div class="swim-lane">
+          <div class="swim-lane-num">2</div>
+          <div class="swim-lane-label">Use Case B<br/>Problem awareness stage<br/>Primary pain: growth</div>
+        </div>
+        <div class="swim-lane">
+          <div class="swim-lane-num">3</div>
+          <div class="swim-lane-label">Competitive<br/>Displacing incumbent<br/>Lead with differentiation</div>
+        </div>
+      </div>
+
+      <div class="callout callout-best-practice" style="margin-top: 14px;">
+        <div class="callout-title">Film Review After Every Presentation</div>
+        <p>After every recorded presentation, review against three questions: (1) Did the rep recap discovery before showing anything? (2) Did they show only features tied to discovered pain points? (3) Did they close clearly with a specific next step? If any answer is no, that rep has a specific coaching need — addressed in the Film Reviews section below.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- COMPONENT 6: CS Onboarding Guide -->
+  <div class="component-card" id="comp-cs">
+    <div class="component-header">
+      <div class="comp-num">6</div>
+      <div>
+        <div class="comp-title">CS Onboarding Guide (LIR-Focused)</div>
+        <div class="comp-subtitle">The bridge between "customer signed" and "customer achieves LIR"</div>
+      </div>
+      <a href="template-cs-playbook.html" class="comp-link">Template →</a>
+    </div>
+    <div class="component-body">
+      <p>The CS guide is not a generic onboarding checklist. It is the system for converting a signed contract into a customer who achieves LIR — the event that triggers both long-term retention and the second half of the sales rep's commission. Every element of the CS onboarding process is designed to reach that milestone.</p>
+
+      <div class="callout callout-warning">
+        <div class="callout-title">The Most Common CS Mistake</div>
+        <p>Treating every new customer identically. The sales process gathered buyer context, documented pain points, and tailored a solution across 3–5 swim lanes. Then the CS handoff discards all of that with a generic onboarding template. The customer feels the disconnect at the exact moment they are most sensitive to whether they made the right decision. The CS swim lanes prevent this.</p>
+      </div>
+
+      <div class="subsection-title">LIR Achievement Program Structure</div>
+      <div class="step-table-wrap">
+        <table class="data-table">
+          <thead>
+            <tr><th>Phase</th><th>Timing</th><th>CS Action</th><th>LIR Connection</th></tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>Kickoff</strong></td>
+              <td>Day 0–3</td>
+              <td>Kickoff meeting; set LIR as explicit success metric; intro to CSM; review implementation plan</td>
+              <td>Customer formally acknowledges LIR as the definition of success. This is not optional — it must be said explicitly in the kickoff call.</td>
+            </tr>
+            <tr>
+              <td><strong>Onboarding Phase</strong></td>
+              <td>Day 4 – T/2</td>
+              <td>Guided setup, training, first value delivery. Follow the CS swim lane matching the sales presentation used</td>
+              <td>Progress toward LIR tracked weekly. Customer is moving through the milestones defined in the LIR framework.</td>
+            </tr>
+            <tr>
+              <td><strong>LIR Achievement Check</strong></td>
+              <td>Day T/2</td>
+              <td>Formal mid-point check: is the customer on pace? If behind, trigger escalation intervention immediately</td>
+              <td>Midpoint intervention is the highest-leverage moment. A customer who is behind at T/2 has a statistically low probability of achieving LIR at T without intervention.</td>
+            </tr>
+            <tr>
+              <td><strong>LIR Completion</strong></td>
+              <td>Day T</td>
+              <td>Confirm LIR achieved. Document it. Release second half of sales rep commission.</td>
+              <td>LIR achieved = PMF confirmed for this customer. Renewal probability increases dramatically from this point.</td>
+            </tr>
+            <tr>
+              <td><strong>Expansion Conversation</strong></td>
+              <td>Day T+30</td>
+              <td>Now that value is proven, explore: where else in the organization can we expand? What's the next use case?</td>
+              <td>Expansion is only productive after LIR is achieved. Expansion conversations before LIR dilute focus and risk the core relationship.</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="subsection-title">3–5 CS Swim Lanes</div>
+      <p>Each CS swim lane mirrors the corresponding sales presentation swim lane. The onboarding path, milestone timeline, and intervention triggers are all adapted to the specific use case, company size, or competitive scenario that defined the sales swim lane used.</p>
+
+      <div class="swim-lanes">
+        <div class="swim-lane">
+          <div class="swim-lane-num">1</div>
+          <div class="swim-lane-label">SMB Path<br/>Lighter touch, faster T</div>
+        </div>
+        <div class="swim-lane">
+          <div class="swim-lane-num">2</div>
+          <div class="swim-lane-label">Mid-Market Path<br/>Standard onboarding</div>
+        </div>
+        <div class="swim-lane">
+          <div class="swim-lane-num">3</div>
+          <div class="swim-lane-label">Enterprise Path<br/>Multi-stakeholder, longer T</div>
+        </div>
+        <div class="swim-lane">
+          <div class="swim-lane-num">4</div>
+          <div class="swim-lane-label">Use Case B Path<br/>Different LIR event</div>
+        </div>
+        <div class="swim-lane">
+          <div class="swim-lane-num">5</div>
+          <div class="swim-lane-label">Migration Path<br/>Displaced prior vendor</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SECTION: Film Reviews -->
+  <div class="section-title">Film Reviews: The Continuous Improvement Engine</div>
+  <div class="section-intro">A playbook on paper is a document. A playbook lived through film reviews is a culture. Film reviews are the mechanism by which the playbook stays current, reps develop skill, and the team builds a shared vocabulary for great selling.</div>
+
+  <p style="font-size: 15px; margin-bottom: 20px;">Record every call. Review calls together. Update the playbook based on what you learn. The cadence and structure of film reviews is not optional — without it, the playbook decays as market conditions change and rep turnover introduces new habits.</p>
+
+  <div class="film-protocol">
+    <div class="film-step">
+      <div class="film-num">1</div>
+      <div class="film-text"><strong>Record all calls</strong> using Gong, Chorus, or equivalent. Every rep, every stage — from prospecting through close. Not selectively.</div>
+    </div>
+    <div class="film-step">
+      <div class="film-num">2</div>
+      <div class="film-text"><strong>Daily review (GTM Fit phase) / Weekly review (Growth &amp; Moat phase)</strong>. The cadence is the governance. Without it, the playbook decays between updates.</div>
+    </div>
+    <div class="film-step">
+      <div class="film-num">3</div>
+      <div class="film-text"><strong>Structured review questions</strong>: What worked? What didn't? What objections came up? What questions generated the best buyer responses? What would you do differently?</div>
+    </div>
+    <div class="film-step">
+      <div class="film-num">4</div>
+      <div class="film-text"><strong>Update the playbook in real-time</strong>. Every film review session produces at least one candidate update. Draft it. Test it with two reps. If it produces better results, publish it.</div>
+    </div>
+    <div class="film-step">
+      <div class="film-num">5</div>
+      <div class="film-text"><strong>Share winning recordings</strong> across the full team. Identify the 1–2 calls each month that best exemplify the playbook in action. Label them "Playbook of the Week." Make them required listening for new hires.</div>
+    </div>
+    <div class="film-step">
+      <div class="film-num">6</div>
+      <div class="film-text"><strong>Identify rep-level coaching needs</strong>. Film reviews surface patterns. A rep who consistently fails to recap discovery before presenting has a specific, addressable coaching need — not a general performance problem.</div>
+    </div>
+  </div>
+
+  <div class="subsection-title">Film Review Cadence by Stage</div>
+  <div class="cadence-row">
+    <div class="cadence-chip">GTM Fit Phase</div>
+    <div class="cadence-sep">→</div>
+    <span style="font-size:14px; color:var(--text);">Daily, 30-minute team session reviewing one call together. The playbook is being built in real time — every call is a data point.</span>
+  </div>
+  <div class="cadence-row" style="margin-top: 8px;">
+    <div class="cadence-chip soft">Growth &amp; Moat Phase</div>
+    <div class="cadence-sep">→</div>
+    <span style="font-size:14px; color:var(--text);">Weekly manager-led review per rep; monthly full-team session. Playbook is established — reviews maintain quality and calibrate new hires.</span>
+  </div>
+
+  <table class="data-table" style="margin-top: 24px;">
+    <thead>
+      <tr><th>Parameter</th><th>Recommendation</th></tr>
+    </thead>
+    <tbody>
+      <tr><td><strong>Group Size</strong></td><td>5–10 people. Smaller loses perspective diversity; larger becomes unwieldy for safe sharing.</td></tr>
+      <tr><td><strong>Who Should Attend</strong></td><td>Sales, Marketing, Product, Customer Success, and Founder/CEO. Cross-functional observation improves the entire GTM motion — not just the sales team.</td></tr>
+      <tr><td><strong>Session Format</strong></td><td>Rep shares call. Two observers pre-assigned: one for positive feedback, one for improvement. Rep reflects first. Group discusses. Leader closes with team-level takeaway.</td></tr>
+      <tr><td><strong>Output</strong></td><td>Every session produces one playbook candidate update, one coaching note per rep reviewed, and one "winning moment" shared in the team Slack channel.</td></tr>
+    </tbody>
+  </table>
+
+  <!-- SECTION: Playbook Governance -->
+  <div class="section-title">Playbook Governance</div>
+  <div class="section-intro">A great playbook is never finished. The market changes. Buyer behavior evolves. New competitive pressures emerge. Governance ensures the playbook reflects reality rather than history.</div>
+
+  <div style="background: var(--surface); border: 1.5px solid var(--border); border-radius: 10px; padding: 20px 24px; margin: 16px 0;">
+    <div class="governance-step">
+      <div class="gov-icon">1</div>
+      <div>
+        <div class="gov-title">Single Source of Truth</div>
+        <div class="gov-desc">One document, version-controlled. Not ten Slack messages, three Google Docs, and a deck from last quarter. Every rep knows exactly where the playbook lives — and that version is always current.</div>
+      </div>
+    </div>
+    <div class="governance-step">
+      <div class="gov-icon">2</div>
+      <div>
+        <div class="gov-title">Update Process</div>
+        <div class="gov-desc">New insights from Film Reviews → Draft update → Test with 2 reps → Validate results over 2 weeks → Publish. Do not update the playbook during a call. The update process protects playbook integrity.</div>
+      </div>
+    </div>
+    <div class="governance-step">
+      <div class="gov-icon">3</div>
+      <div>
+        <div class="gov-title">Quarterly Audit</div>
+        <div class="gov-desc">Full playbook audit against current win/loss data. Are the ICP criteria still producing Green customers who achieve LIR? Are the swim lanes still matching the most common buyer scenarios? Are the discovery questions surfacing what they were designed to surface?</div>
+      </div>
+    </div>
+    <div class="governance-step">
+      <div class="gov-icon">4</div>
+      <div>
+        <div class="gov-title">Ownership Structure</div>
+        <div class="gov-desc">RevOps maintains the document and version history. Sales Leader approves all changes. CS inputs on onboarding sections. Product provides monthly update on new features and competitive shifts. Marketing contributes on messaging evolution.</div>
+      </div>
+    </div>
+    <div class="governance-step">
+      <div class="gov-icon">5</div>
+      <div>
+        <div class="gov-title">New Hire Certification</div>
+        <div class="gov-desc">Every new rep must pass a playbook certification before their first live discovery call. The certification includes a discovery call roleplay scored against the MEDDICC framework, a presentation roleplay against the swim lane that matches their assigned territory, and a written ICP qualification exercise.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="related-section">
+    <div class="related-title">Related Pages</div>
+    <div class="related-links">
+      <a href="template-icp.html" class="related-link">ICP Template</a>
+      <a href="template-persona.html" class="related-link">Buyer Persona Template</a>
+      <a href="template-prospecting.html" class="related-link">Prospecting Guide Template</a>
+      <a href="template-discovery.html" class="related-link">Discovery Guide Template</a>
+      <a href="template-presentation.html" class="related-link">Presentation Guide Template</a>
+      <a href="template-cs-playbook.html" class="related-link">CS Playbook Template</a>
+      <a href="sos-checklist.html" class="related-link">GTM Scaling Checklist</a>
+      <a href="sos-gtm-fit.html" class="related-link">Stage 2: GTM Fit</a>
+      <a href="../pages/science-of-scaling.html" class="related-link">← Science of Scaling</a>
+      <a href="../index.html" class="related-link">← Home</a>
+    </div>
+  </div>
+</div>
+
+<script data-pplx-inline-edit>
+(function () {
+  if (window === window.top) return;
+
+  const allowedParentOrigins = ["https://www.perplexity.ai","https://perplexity.ai","https://testing.perplexity.ai","https://staging.perplexity.ai","https://*.preview.i.perplexity.ai","http://localhost:3000","http://127.0.0.1:3000","http://localhost:5173","http://127.0.0.1:5173"];
+  const MAX_FONT_BYTES = 500 * 1024;
+  const MAX_TOTAL_FONT_BYTES = 2 * 1024 * 1024;
+  let scrollForwarding = false;
+  let scrollRaf = 0;
+  let trustedTopOrigin = null;
+
+  // Allow entries like "https://*.preview.i.perplexity.ai" — the wildcard
+  // matches a single DNS label (no dots), so "https://*.foo" cannot stretch
+  // across multiple labels.
+  function matchesAllowedOrigin(origin) {
+    if (!origin) return false;
+    for (const entry of allowedParentOrigins) {
+      if (!entry.includes("*")) {
+        if (entry === origin) return true;
+        continue;
+      }
+      const pattern = new RegExp(
+        "^" +
+          entry.replace(/[.+?^${}()|[\]\\]/g, "\\$&").replace(/\*/g, "[^.]+") +
+          "$",
+      );
+      if (pattern.test(origin)) return true;
+    }
+    return false;
+  }
+
+  // Trust decision: when the sender is same-origin-visible (event.origin is a
+  // real origin like https://www.perplexity.ai) we trust event.origin directly.
+  // When event.origin is "null" (opaque broker srcdoc), we fall back to the
+  // broker's stamped `parentOrigin` to identify the top window. The fallback
+  // is claim-only — we rely on the browser's native `targetOrigin` enforcement
+  // on the response path (see postToTrustedTop) to ensure replies can't be
+  // delivered to anyone but the actual top window of that claimed origin.
+  function getTrustedParentOrigin(event) {
+    const forwardedParentOrigin =
+      typeof event.data.parentOrigin === "string" ? event.data.parentOrigin : null;
+    const parentOrigin = event.origin === "null" ? forwardedParentOrigin : event.origin;
+    return matchesAllowedOrigin(parentOrigin) ? parentOrigin : null;
+  }
+
+  // All responses go to window.top with targetOrigin = the allowlisted origin.
+  // An attacker that iframes us inside their own null-origin broker can claim
+  // any parentOrigin they like, but the browser will drop the reply whenever
+  // the real top's origin doesn't match — so the screenshot never leaves.
+  function postToTrustedTop(message) {
+    if (!trustedTopOrigin) return;
+    try {
+      window.top.postMessage(message, trustedTopOrigin);
+    } catch (_error) {}
+  }
+
+  function inlineAll(original, clone) {
+    if (original.nodeType !== 1 || clone.nodeType !== 1) return;
+
+    try {
+      const computedStyle = getComputedStyle(original);
+      // cssText on a computed style is the serialized declaration in modern
+      // Chromium/Safari — a single read beats enumerating ~400 longhand
+      // properties. Firefox returns "" here, so we fall back on empty.
+      const serialized = computedStyle.cssText;
+      if (serialized) {
+        clone.style.cssText = serialized;
+      } else {
+        const parts = new Array(computedStyle.length);
+        for (let index = 0; index < computedStyle.length; index += 1) {
+          const property = computedStyle[index];
+          parts[index] = `${property}:${computedStyle.getPropertyValue(property)};`;
+        }
+        clone.style.cssText = parts.join("");
+      }
+    } catch (_error) {}
+
+    const originalChildren = original.children;
+    const clonedChildren = clone.children;
+    for (
+      let index = 0;
+      index < originalChildren.length && index < clonedChildren.length;
+      index += 1
+    ) {
+      inlineAll(originalChildren[index], clonedChildren[index]);
+    }
+  }
+
+  function extractFontUrl(srcValue) {
+    const matches = [
+      ...srcValue.matchAll(
+        /url\(["']?([^"')]+)["']?\)(?:\s*format\(["']?([^"')]+)["']?\))?/gi,
+      ),
+    ];
+    if (matches.length === 0) return null;
+    const woff2 = matches.find((m) => m[2] && m[2].toLowerCase().includes("woff2"));
+    if (woff2) return woff2[1];
+    const woff = matches.find((m) => m[2] && m[2].toLowerCase().includes("woff"));
+    if (woff) return woff[1];
+    return matches[0][1];
+  }
+
+  // Cache resolved font URL -> data URI across captures. Fonts on a page
+  // essentially never change, and a batch run emits multiple captures back to
+  // back — without this we'd refetch + re-base64 every time.
+  const fontDataUriCache = new Map();
+  const SRC_DECLARATION_RE = /src\s*:\s*[^;}]+/i;
+
+  async function fetchAsDataUri(url) {
+    if (fontDataUriCache.has(url)) return fontDataUriCache.get(url);
+    let dataUri = null;
+    try {
+      const response = await fetch(url, { mode: "cors", credentials: "omit" });
+      if (response.ok) {
+        const blob = await response.blob();
+        if (blob.size <= MAX_FONT_BYTES) {
+          dataUri = await new Promise((resolve) => {
+            const reader = new FileReader();
+            reader.onloadend = () =>
+              resolve(typeof reader.result === "string" ? reader.result : null);
+            reader.onerror = () => resolve(null);
+            reader.readAsDataURL(blob);
+          });
+        }
+      }
+    } catch (_error) {
+      dataUri = null;
+    }
+    fontDataUriCache.set(url, dataUri);
+    return dataUri;
+  }
+
+  function collectFontFaceRuleTexts() {
+    const rules = [];
+    for (const sheet of document.styleSheets) {
+      let cssRules;
+      try {
+        cssRules = sheet.cssRules;
+      } catch (_error) {
+        continue;
+      }
+      if (!cssRules) continue;
+      for (const rule of cssRules) {
+        const cssText = rule.cssText || "";
+        if (cssText.startsWith("@font-face")) rules.push(cssText);
+      }
+    }
+    return rules;
+  }
+
+  async function buildInlinedFontCss() {
+    const ruleTexts = collectFontFaceRuleTexts();
+    if (ruleTexts.length === 0) return null;
+
+    const resolved = ruleTexts.map((cssText) => {
+      if (!SRC_DECLARATION_RE.test(cssText)) return null;
+      const srcMatch = cssText.match(/src\s*:\s*([^;}]+)[;}]/i);
+      if (!srcMatch) return null;
+      const url = extractFontUrl(srcMatch[1]);
+      if (!url) return null;
+      try {
+        return { cssText, url: new URL(url, document.baseURI).href };
+      } catch (_error) {
+        return null;
+      }
+    });
+
+    const dataUris = await Promise.all(
+      resolved.map((entry) => (entry ? fetchAsDataUri(entry.url) : Promise.resolve(null))),
+    );
+
+    const inlined = [];
+    let totalBytes = 0;
+    for (let index = 0; index < resolved.length; index += 1) {
+      const entry = resolved[index];
+      const dataUri = dataUris[index];
+      if (!entry || !dataUri) continue;
+      const approxBytes = dataUri.length * 0.75;
+      if (totalBytes + approxBytes > MAX_TOTAL_FONT_BYTES) break;
+      totalBytes += approxBytes;
+      inlined.push(entry.cssText.replace(SRC_DECLARATION_RE, `src: url("${dataUri}")`));
+    }
+    return inlined.length > 0 ? inlined.join("\n") : null;
+  }
+
+  function stripExternal(clone) {
+    const images = clone.querySelectorAll("img");
+    for (let index = 0; index < images.length; index += 1) {
+      const src = images[index].getAttribute("src");
+      if (src && !src.startsWith("data:")) images[index].removeAttribute("src");
+    }
+
+    const elements = clone.querySelectorAll("*");
+    for (let index = 0; index < elements.length; index += 1) {
+      const style = elements[index].style.cssText;
+      if (style && style.includes("url(")) {
+        elements[index].style.cssText = style.replace(
+          /url\(["']?(?!data:)[^)"']*["']?\)/gi,
+          "none",
+        );
+      }
+    }
+  }
+
+  function emitScroll() {
+    scrollRaf = 0;
+    if (!scrollForwarding) return;
+    postToTrustedTop({
+      type: "INLINE_EDIT_SCROLL",
+      scrollX: window.scrollX,
+      scrollY: window.scrollY,
+    });
+  }
+
+  window.addEventListener(
+    "scroll",
+    function () {
+      if (!scrollForwarding || scrollRaf) return;
+      scrollRaf = requestAnimationFrame(emitScroll);
+    },
+    { passive: true, capture: true },
+  );
+
+  async function handleCaptureRequest(event) {
+    const requestId = event.data.requestId;
+    const scrollX = window.scrollX;
+    const scrollY = window.scrollY;
+    const width = window.innerWidth;
+    const height = window.innerHeight;
+
+    function postResult(dataUrl) {
+      postToTrustedTop({
+        type: "INLINE_EDIT_SCREENSHOT_RESULT",
+        requestId,
+        dataUrl,
+        scrollX,
+        scrollY,
+      });
+    }
+
+    try {
+      // Wait for any pending web fonts to resolve so both inline metrics and
+      // the @font-face inlining below see the same loaded faces.
+      if (document.fonts && document.fonts.ready) {
+        try {
+          await document.fonts.ready;
+        } catch (_error) {}
+      }
+
+      const clone = document.documentElement.cloneNode(true);
+      inlineAll(document.documentElement, clone);
+
+      const removedNodes = clone.querySelectorAll("script,link[rel=\"stylesheet\"],style");
+      for (let index = 0; index < removedNodes.length; index += 1) {
+        removedNodes[index].remove();
+      }
+
+      stripExternal(clone);
+
+      // Re-embed web fonts as data-URI @font-face rules so the SVG rasterizer
+      // can resolve them — external font URLs aren't fetched during
+      // foreignObject rendering, which would otherwise force a fallback face
+      // and change text metrics.
+      const inlinedFontCss = await buildInlinedFontCss();
+      if (inlinedFontCss) {
+        const styleEl = document.createElement("style");
+        styleEl.textContent = inlinedFontCss;
+        const head = clone.querySelector("head");
+        if (head) head.appendChild(styleEl);
+        else clone.insertBefore(styleEl, clone.firstChild);
+      }
+
+      const html = new XMLSerializer().serializeToString(clone);
+      const svg =
+        `<svg xmlns="http://www.w3.org/2000/svg" width="${width}" height="${height}">` +
+        '<foreignObject width="100%" height="100%">' +
+        `<div xmlns="http://www.w3.org/1999/xhtml" style="width:${width}px;height:${height}px;overflow:hidden">` +
+        `<div style="transform:translate(-${scrollX}px,-${scrollY}px);transform-origin:top left">` +
+        html +
+        "</div></div></foreignObject></svg>";
+      const svgUrl = `data:image/svg+xml;charset=utf-8,${encodeURIComponent(svg)}`;
+      const image = new Image();
+      image.onload = function () {
+        const canvas = document.createElement("canvas");
+        canvas.width = width;
+        canvas.height = height;
+        canvas.getContext("2d").drawImage(image, 0, 0);
+        postResult(canvas.toDataURL("image/png"));
+      };
+      image.onerror = function () {
+        postResult(null);
+      };
+      image.src = svgUrl;
+    } catch (_error) {
+      postResult(null);
+    }
+  }
+
+  window.addEventListener("message", function (event) {
+    if (!event.data) return;
+    // Only accept messages from the direct parent frame. Blocks sibling /
+    // unrelated-window postMessage senders that could otherwise reach us.
+    if (event.source !== window.parent) return;
+
+    const trustedParentOrigin = getTrustedParentOrigin(event);
+    if (!trustedParentOrigin) return;
+    trustedTopOrigin = trustedParentOrigin;
+
+    if (event.data.type === "INLINE_EDIT_SCROLL_START") {
+      scrollForwarding = true;
+      emitScroll();
+      return;
+    }
+
+    if (event.data.type === "INLINE_EDIT_SCROLL_STOP") {
+      scrollForwarding = false;
+      if (scrollRaf) cancelAnimationFrame(scrollRaf);
+      scrollRaf = 0;
+      return;
+    }
+
+    if (event.data.type !== "INLINE_EDIT_CAPTURE_REQUEST") return;
+
+    handleCaptureRequest(event);
+  });
+})();
+
+
+</script></body>
+</html>

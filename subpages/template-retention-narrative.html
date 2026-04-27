@@ -1,0 +1,1126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Customer Retention Strategy Narrative — CRO Manual</title>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="../assets/shared.css"/>
+  <style>
+    :root { --res: #2C5F8A; }
+    .page-hero { background: var(--res); }
+
+    /* Slide card system */
+    .slide-card {
+      background: var(--surface);
+      border: 1.5px solid var(--border);
+      border-radius: 10px;
+      margin: 24px 0;
+      overflow: hidden;
+    }
+    .slide-header {
+      background: var(--res);
+      color: #fff;
+      padding: 16px 24px;
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+    .slide-num {
+      width: 36px; height: 36px;
+      background: rgba(255,255,255,0.2);
+      border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 16px; font-weight: 700;
+      flex-shrink: 0;
+    }
+    .slide-title-block { flex: 1; }
+    .slide-title { font-size: 18px; font-weight: 700; }
+    .slide-subtitle { font-size: 13px; opacity: 0.8; margin-top: 2px; }
+    .slide-purpose-badge {
+      font-size: 11px; font-weight: 700;
+      background: rgba(255,255,255,0.18);
+      padding: 4px 12px; border-radius: 20px;
+      white-space: nowrap;
+    }
+    .slide-body { padding: 24px; }
+
+    /* Content sections within slide card */
+    .slide-section { margin-bottom: 24px; }
+    .slide-section:last-child { margin-bottom: 0; }
+    .slide-section-title {
+      font-size: 13px; font-weight: 700;
+      text-transform: uppercase; letter-spacing: 0.8px;
+      color: var(--res); margin-bottom: 10px;
+      padding-bottom: 6px;
+      border-bottom: 1.5px solid #d0e4f2;
+    }
+
+    /* Narrative guidance box */
+    .narrative-box {
+      background: #f0f5fa;
+      border-left: 4px solid var(--res);
+      border-radius: 0 8px 8px 0;
+      padding: 14px 18px;
+      margin: 12px 0;
+      font-size: 14px; line-height: 1.7;
+    }
+    .narrative-box-label {
+      font-size: 11px; font-weight: 700;
+      text-transform: uppercase; letter-spacing: 1px;
+      color: var(--res); margin-bottom: 6px;
+    }
+
+    /* Data to include list */
+    .data-list { list-style: none; margin: 10px 0; }
+    .data-list li {
+      display: flex; align-items: flex-start; gap: 10px;
+      padding: 6px 0; font-size: 14px; line-height: 1.6;
+    }
+    .data-icon {
+      min-width: 20px; height: 20px;
+      background: var(--res); color: #fff;
+      border-radius: 4px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 10px; font-weight: 700;
+      flex-shrink: 0; margin-top: 2px;
+    }
+
+    /* Mistake warning */
+    .mistake-list { list-style: none; margin: 10px 0; }
+    .mistake-list li {
+      display: flex; align-items: flex-start; gap: 10px;
+      padding: 6px 0; font-size: 13px; line-height: 1.6;
+      color: var(--text-muted);
+    }
+    .mistake-icon {
+      min-width: 18px; height: 18px;
+      background: #A13544; color: #fff;
+      border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 10px; font-weight: 700;
+      flex-shrink: 0; margin-top: 2px;
+    }
+
+    /* Story arc visualization */
+    .story-arc {
+      display: flex;
+      gap: 0;
+      margin: 16px 0;
+      border-radius: 10px;
+      overflow: hidden;
+    }
+    .arc-seg {
+      flex: 1;
+      padding: 12px 14px;
+      text-align: center;
+    }
+    .arc-seg-label { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.8px; }
+    .arc-seg-desc { font-size: 11px; margin-top: 3px; line-height: 1.4; }
+    .arc-1 { background: #fce8e6; }
+    .arc-1 .arc-seg-label { color: #A13544; }
+    .arc-2 { background: #fff8f0; }
+    .arc-2 .arc-seg-label { color: #964219; }
+    .arc-3 { background: #fff8f0; }
+    .arc-3 .arc-seg-label { color: #964219; }
+    .arc-4 { background: #f0fff4; }
+    .arc-4 .arc-seg-label { color: #437A22; }
+    .arc-5 { background: #e8f0f8; }
+    .arc-5 .arc-seg-label { color: var(--res); }
+    .arc-6 { background: #f0f0f0; }
+    .arc-6 .arc-seg-label { color: var(--text-muted); }
+
+    /* Cohort example table */
+    .cohort-table-wrap { overflow-x: auto; margin: 16px 0; }
+    .cohort-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 13px;
+      min-width: 620px;
+    }
+    .cohort-table th {
+      background: var(--res); color: #fff;
+      padding: 9px 12px; text-align: center;
+      font-size: 11px; font-weight: 700;
+      letter-spacing: 0.5px; text-transform: uppercase;
+    }
+    .cohort-table th:first-child { text-align: left; }
+    .cohort-table td {
+      padding: 9px 12px;
+      border-bottom: 1px solid var(--border);
+      text-align: center;
+      font-size: 13px;
+    }
+    .cohort-table td:first-child { text-align: left; font-weight: 600; }
+    .cohort-table tr:nth-child(even) td { background: #fafaf8; }
+    .cohort-table .highlight-row td { background: #e8f0f8 !important; font-weight: 600; color: var(--res); }
+    .cohort-table .improve-row td { background: #f0fff4 !important; font-weight: 600; color: #437A22; }
+    .ret-low { color: #A13544; font-weight: 700; }
+    .ret-mid { color: #b8860b; font-weight: 700; }
+    .ret-high { color: #437A22; font-weight: 700; }
+    .ret-great { color: var(--res); font-weight: 700; }
+
+    /* Sensitivity table */
+    .sens-table-wrap { overflow-x: auto; margin: 16px 0; }
+    .sens-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 13px;
+      min-width: 500px;
+    }
+    .sens-table th {
+      background: #1C1B19; color: #fff;
+      padding: 9px 12px;
+      font-size: 11px; font-weight: 700;
+      letter-spacing: 0.5px; text-transform: uppercase;
+    }
+    .sens-table td {
+      padding: 9px 12px;
+      border-bottom: 1px solid var(--border);
+      text-align: center; font-size: 13px;
+    }
+    .sens-table td:first-child { text-align: left; font-weight: 600; }
+    .sens-table tr:last-child td { border-bottom: none; }
+    .sens-table .base-row td { background: #f0f5fa !important; font-weight: 700; color: var(--res); }
+
+    /* Deck overview cards */
+    .deck-overview {
+      display: grid;
+      grid-template-columns: repeat(6, 1fr);
+      gap: 8px;
+      margin: 20px 0;
+    }
+    @media (max-width: 768px) { .deck-overview { grid-template-columns: repeat(3, 1fr); } }
+    .deck-slide-card {
+      background: var(--surface);
+      border: 1.5px solid var(--border);
+      border-radius: 8px;
+      padding: 12px;
+      text-align: center;
+      cursor: pointer;
+      transition: all 0.15s;
+    }
+    .deck-slide-card:hover { border-color: var(--res); background: #f0f5fa; }
+    .dsc-num {
+      font-size: 20px; font-weight: 700;
+      color: var(--res); margin-bottom: 4px;
+    }
+    .dsc-title { font-size: 11px; font-weight: 700; color: var(--text); line-height: 1.3; }
+    .dsc-arc { font-size: 10px; color: var(--text-muted); margin-top: 4px; }
+  </style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav class="nav">
+  <span class="nav-logo">CRO <span>Manual</span></span>
+  <span class="nav-sep">/</span>
+  <a href="../pages/resources.html" class="nav-back">← Resources &amp; Templates</a>
+  <span class="nav-sep">/</span>
+  <span class="nav-current">Retention Strategy Narrative</span>
+  <span class="nav-spacer"></span>
+  <a href="../index.html" class="nav-home">Home</a>
+</nav>
+
+<!-- HERO -->
+<div class="page-hero">
+  <div class="hero-phase-label">Investor Materials · Resources &amp; Templates</div>
+  <h1 class="hero-title">Customer Retention Strategy Narrative</h1>
+  <p class="hero-subtitle">A structured narrative framework for communicating your customer retention strategy to investors, board members, or executive stakeholders. Based on the 6-slide retention strategy deck structure.</p>
+  <div class="hero-tags">
+    <span class="hero-tag">Investor Deck</span>
+    <span class="hero-tag">Retention</span>
+    <span class="hero-tag">ICP Analysis</span>
+    <span class="hero-tag">Cohort Data</span>
+    <span class="hero-tag">Board Presentation</span>
+  </div>
+</div>
+
+<!-- CONTENT -->
+<div class="content-wrap">
+
+  <nav class="breadcrumb">
+    <a href="../index.html">Home</a>
+    <span class="sep">›</span>
+    <a href="../pages/resources.html">Resources &amp; Templates</a>
+    <span class="sep">›</span>
+    <span class="current">Customer Retention Strategy Narrative</span>
+  </nav>
+
+  <!-- Intro -->
+  <h2 class="section-title">When to Use This Deck</h2>
+  <p class="section-intro">This narrative is for founders and CROs who need to communicate a retention problem — and a credible plan to fix it — to sophisticated investors or board members. It is not a defensive presentation. Done right, it is a signal of operational maturity.</p>
+
+  <div class="subsection">
+    <p>Investors and board members who fund SaaS businesses understand that early-stage retention is often imperfect. What they are evaluating is not whether retention is perfect — it rarely is — but whether you understand the root cause of the problem, whether you have a diagnosis grounded in data, whether the plan is coherent and based on first principles, and whether you are executing against it with urgency and discipline.</p>
+    <p>A retention narrative that leads with excuses, attributes churn to external factors, or presents a solution without a root cause analysis will destroy board credibility. A retention narrative that leads with data, names the specific causal factors, and presents a programmatic response tied to LIR achievement and ICP tightening will build the kind of trust that gets you through a difficult quarter.</p>
+    <p>This template follows a 6-slide structure that moves through the problem → root cause → solution → evidence → trajectory → supporting data arc. Do not reorder the slides. The arc is designed to establish credibility before asking the audience to believe in your trajectory.</p>
+  </div>
+
+  <!-- Deck overview -->
+  <h3 class="subsection-title">6-Slide Deck Structure</h3>
+  <div class="deck-overview">
+    <div class="deck-slide-card">
+      <div class="dsc-num">1</div>
+      <div class="dsc-title">The Problem</div>
+      <div class="dsc-arc">Establish the issue</div>
+    </div>
+    <div class="deck-slide-card">
+      <div class="dsc-num">2</div>
+      <div class="dsc-title">Root Cause</div>
+      <div class="dsc-arc">Name the driver</div>
+    </div>
+    <div class="deck-slide-card">
+      <div class="dsc-num">3</div>
+      <div class="dsc-title">The Solution</div>
+      <div class="dsc-arc">The intervention</div>
+    </div>
+    <div class="deck-slide-card">
+      <div class="dsc-num">4</div>
+      <div class="dsc-title">Evidence</div>
+      <div class="dsc-arc">Early proof</div>
+    </div>
+    <div class="deck-slide-card">
+      <div class="dsc-num">5</div>
+      <div class="dsc-title">Trajectory</div>
+      <div class="dsc-arc">The path to 90%</div>
+    </div>
+    <div class="deck-slide-card">
+      <div class="dsc-num">6</div>
+      <div class="dsc-title">Appendix</div>
+      <div class="dsc-arc">Supporting data</div>
+    </div>
+  </div>
+
+  <!-- Story arc visualization -->
+  <div class="story-arc">
+    <div class="arc-seg arc-1">
+      <div class="arc-seg-label">Problem</div>
+      <div class="arc-seg-desc">Retention below benchmark, revenue impact quantified</div>
+    </div>
+    <div class="arc-seg arc-2">
+      <div class="arc-seg-label">Root Cause</div>
+      <div class="arc-seg-desc">ICP drift identified through data</div>
+    </div>
+    <div class="arc-seg arc-3">
+      <div class="arc-seg-label">Solution</div>
+      <div class="arc-seg-desc">ICP filter tightened; comp aligned</div>
+    </div>
+    <div class="arc-seg arc-4">
+      <div class="arc-seg-label">Evidence</div>
+      <div class="arc-seg-desc">Recent cohorts show improvement</div>
+    </div>
+    <div class="arc-seg arc-5">
+      <div class="arc-seg-label">Trajectory</div>
+      <div class="arc-seg-desc">Path to 90%+ retention</div>
+    </div>
+    <div class="arc-seg arc-6">
+      <div class="arc-seg-label">Appendix</div>
+      <div class="arc-seg-desc">Full data for due diligence</div>
+    </div>
+  </div>
+
+  <!-- Slide 1 -->
+  <div class="slide-card">
+    <div class="slide-header">
+      <div class="slide-num">1</div>
+      <div class="slide-title-block">
+        <div class="slide-title">Slide 1 — The Problem: Current Retention State</div>
+        <div class="slide-subtitle">Lead with the problem, not the solution. Establish credibility by naming the issue clearly and quantifying the impact.</div>
+      </div>
+      <div class="slide-purpose-badge">Arc: Problem</div>
+    </div>
+    <div class="slide-body">
+
+      <div class="slide-section">
+        <div class="slide-section-title">Narrative Guidance</div>
+        <div class="narrative-box">
+          <div class="narrative-box-label">The Opening Move</div>
+          Slide 1 must lead with the problem, stated clearly and without defensiveness. Investors have seen hundreds of presentations that bury the churn rate in slide 8 surrounded by disclaimers. Opening with the problem demonstrates that you are operating from facts rather than spin. The narrative tone should be: "Here is what is true. Here is its impact. And here is what we are doing about it — which I will show you in the following slides."
+        </div>
+        <div class="narrative-box" style="border-color:#964219; background:#fff8f0;">
+          <div class="narrative-box-label" style="color:#964219;">Common Mistake to Avoid</div>
+          Do not open by qualifying the retention number ("it's actually better than it looks because...") or contextualizing it with competitor benchmarks before presenting your own number. Sophisticated investors will notice the defensive framing and it will damage your credibility for the rest of the presentation. State the number directly, quantify its revenue impact, and move on.
+        </div>
+      </div>
+
+      <div class="slide-section">
+        <div class="slide-section-title">Data to Include on This Slide</div>
+        <ul class="data-list">
+          <li>
+            <div class="data-icon">D</div>
+            <div><strong>Current 12-month gross revenue retention rate</strong> — state the actual number, not a blended or adjusted version. Example: "Our 12-month gross revenue retention rate is currently 74%."</div>
+          </li>
+          <li>
+            <div class="data-icon">D</div>
+            <div><strong>Benchmark comparison</strong> — after stating your number, provide context: "Best-in-class for our segment is 85–90%." This frames the gap without excusing it.</div>
+          </li>
+          <li>
+            <div class="data-icon">D</div>
+            <div><strong>Revenue impact of current churn</strong> — calculate the ARR impact of closing the gap to 85%. Example: "Improving retention from 74% to 85% on our current ARR base would represent $[X]M in incremental revenue at steady state."</div>
+          </li>
+          <li>
+            <div class="data-icon">D</div>
+            <div><strong>Cohort trend (trailing 6–8 quarters)</strong> — a simple line or bar chart showing retention by cohort quarter. If retention has been declining, show it. If it has been improving recently, show that too — you'll explain why on Slide 4.</div>
+          </li>
+          <li>
+            <div class="data-icon">D</div>
+            <div><strong>Churn by segment</strong> — if you can segment churn by company size, industry, or deal source, include the breakdown. This previews the root cause analysis on Slide 2.</div>
+          </li>
+        </ul>
+      </div>
+
+      <div class="slide-section">
+        <div class="slide-section-title">Example Data Layout (Simplified)</div>
+        <div class="cohort-table-wrap">
+          <table class="cohort-table">
+            <thead>
+              <tr>
+                <th>Cohort Quarter</th>
+                <th>New Customers</th>
+                <th>12-Mo Retention</th>
+                <th>vs. 85% Benchmark</th>
+                <th>ARR at Risk</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Q4 Y-2</td>
+                <td>14</td>
+                <td class="ret-mid">79%</td>
+                <td style="color:#A13544;">-6pp</td>
+                <td>$84K</td>
+              </tr>
+              <tr>
+                <td>Q1 Y-1</td>
+                <td>18</td>
+                <td class="ret-mid">76%</td>
+                <td style="color:#A13544;">-9pp</td>
+                <td>$162K</td>
+              </tr>
+              <tr>
+                <td>Q2 Y-1</td>
+                <td>22</td>
+                <td class="ret-low">71%</td>
+                <td style="color:#A13544;">-14pp</td>
+                <td>$308K</td>
+              </tr>
+              <tr>
+                <td>Q3 Y-1</td>
+                <td>27</td>
+                <td class="ret-low">68%</td>
+                <td style="color:#A13544;">-17pp</td>
+                <td>$459K</td>
+              </tr>
+              <tr>
+                <td>Q4 Y-1</td>
+                <td>31</td>
+                <td class="ret-low">72%</td>
+                <td style="color:#A13544;">-13pp</td>
+                <td>$403K</td>
+              </tr>
+              <tr class="highlight-row">
+                <td>Overall (TTM)</td>
+                <td>112</td>
+                <td>74%</td>
+                <td>-11pp gap</td>
+                <td>~$1.2M ARR</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- Slide 2 -->
+  <div class="slide-card">
+    <div class="slide-header">
+      <div class="slide-num">2</div>
+      <div class="slide-title-block">
+        <div class="slide-title">Slide 2 — Root Cause: ICP Analysis</div>
+        <div class="slide-subtitle">Identify and prove the specific causal factors driving churn using three layers of analysis</div>
+      </div>
+      <div class="slide-purpose-badge">Arc: Diagnosis</div>
+    </div>
+    <div class="slide-body">
+
+      <div class="slide-section">
+        <div class="slide-section-title">Narrative Guidance</div>
+        <div class="narrative-box">
+          <div class="narrative-box-label">The Diagnostic Move</div>
+          Slide 2 is the most important slide in the deck because it demonstrates analytical rigor. You are not claiming your product has a problem — you are identifying exactly which type of customer is churning, why they are churning, and how you know. The three-layer analysis structure forces you to be specific. "We were selling to companies that weren't ready for us" is not a diagnosis. "Companies below 150 employees churn at 31% vs. 8% for companies above 150 employees, and our win-loss data shows we were qualifying sub-150 companies on deal size alone, not on operational maturity" is a diagnosis.
+        </div>
+      </div>
+
+      <div class="slide-section">
+        <div class="slide-section-title">Three-Layer ICP Analysis</div>
+
+        <h4 style="font-size:14px;font-weight:700;margin:16px 0 10px;">Layer 1: Firmographic Segmentation</h4>
+        <p style="font-size:14px;color:var(--text-muted);line-height:1.6;margin-bottom:10px;">Segment your existing customers into firmographic groups and compare retention rates across segments. The goal is to identify which firmographic characteristics correlate with retention vs. churn.</p>
+        <div class="template-field" style="background:#f0f5fa;">
+          <div class="tf-label">Analysis to Run</div>
+          <div class="tf-prompt">Segment all customers by: (1) Company size at time of purchase. (2) Industry vertical. (3) Deal source (inbound vs. outbound, or by marketing channel). Compare 12-month retention rates across each segment. Highlight the segments where retention is &lt;70% — these are your ICP mismatches.</div>
+          <div class="tf-example">Example finding: "Customers in the 50–150 employee range retained at 61%. Customers in the 151–500 range retained at 88%. This identifies a clear firmographic mismatch in our ICP definition — we have been too loose on the lower bound."</div>
+        </div>
+
+        <h4 style="font-size:14px;font-weight:700;margin:16px 0 10px;">Layer 2: Qualification Criteria Audit</h4>
+        <p style="font-size:14px;color:var(--text-muted);line-height:1.6;margin-bottom:10px;">For the high-churn segments identified above, review a sample of churned accounts and their original qualification notes in the CRM. The question: were these accounts properly qualified, or were they mis-qualified in the sales process?</p>
+        <div class="template-field" style="background:#f0f5fa;">
+          <div class="tf-label">Analysis to Run</div>
+          <div class="tf-prompt">Pull 10–15 churned accounts from the high-churn segment. Review their CRM qualification notes. Look for patterns: Were the disqualification criteria being applied consistently? Were there skipped discovery questions? Were there deals that closed despite a "yellow flag"? Was the sales rep compensated on a deal structure that incentivized them to push through marginal qualifications?</div>
+          <div class="tf-example">Example finding: "8 of 12 reviewed churned accounts showed either no documentation of operational maturity questions in discovery, or documented answers that should have triggered disqualification. The most common pattern: rep asked about budget but not about team bandwidth to implement."</div>
+        </div>
+
+        <h4 style="font-size:14px;font-weight:700;margin:16px 0 10px;">Layer 3: Post-Sale Adoption Analysis (LIR Achievement)</h4>
+        <p style="font-size:14px;color:var(--text-muted);line-height:1.6;margin-bottom:10px;">Compare LIR achievement rates between the churned cohorts and the retained cohorts. This confirms whether the root cause is pre-sale (wrong customers entering the funnel) or post-sale (right customers failing to achieve value).</p>
+        <div class="template-field" style="background:#f0f5fa;">
+          <div class="tf-label">Analysis to Run</div>
+          <div class="tf-prompt">For the same cohorts shown on Slide 1, calculate the LIR achievement rate for (a) customers who renewed at 12 months and (b) customers who churned at 12 months. If churned customers consistently had lower LIR achievement, the problem is either ICP fit or CS onboarding quality. If churned customers had similar LIR achievement to retained customers, the problem is post-LIR — either the product lost its value over time, or a competitor solved the problem better.</div>
+          <div class="tf-example">Example finding: "Of churned accounts, 78% did not achieve LIR within 45 days. Of retained accounts, 91% achieved LIR within 45 days. This confirms the root cause is pre-sale ICP mismatch — we are acquiring customers who are not set up to get value from the product, not customers who get value and then leave."</div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- Slide 3 -->
+  <div class="slide-card">
+    <div class="slide-header">
+      <div class="slide-num">3</div>
+      <div class="slide-title-block">
+        <div class="slide-title">Slide 3 — The Solution: ICP-Only Acquisition</div>
+        <div class="slide-subtitle">How you are changing the acquisition filter to only target customers who will achieve LIR and renew</div>
+      </div>
+      <div class="slide-purpose-badge">Arc: Intervention</div>
+    </div>
+    <div class="slide-body">
+
+      <div class="slide-section">
+        <div class="slide-section-title">Narrative Guidance</div>
+        <div class="narrative-box">
+          <div class="narrative-box-label">The Solution Slide Principles</div>
+          The solution must be specific and credible. Three common mistakes: (1) Describing the solution in high-level terms without operational specifics ("we'll focus on the right customers") — this sounds like a plan you haven't built yet. (2) Presenting a solution that requires significant time to implement — investors want to see interventions that are already in flight. (3) Describing changes to the product rather than to the sales filter — churning the wrong customers is a sales and CS problem, not a product problem.
+        </div>
+      </div>
+
+      <div class="slide-section">
+        <div class="slide-section-title">Three Solution Components</div>
+
+        <div class="template-field">
+          <div class="tf-label">1. ICP Definition Tightening</div>
+          <div class="tf-prompt">Describe the specific changes to your ICP definition that result from the Layer 1 analysis on Slide 2. Be specific: what firmographic criteria have you added, tightened, or removed? What is the new hard disqualifier? Quantify how many accounts in your current pipeline would be disqualified under the new definition.</div>
+          <div class="tf-example">Example: "Effective [date], the minimum employee count for ICP qualification is raised from 50 to 150 employees. This disqualifies 18% of current pipeline. We have reviewed each account with the sales team and confirmed that none of the flagged accounts are expected to be exceptions to the new criteria."</div>
+        </div>
+        <div class="template-field">
+          <div class="tf-label">2. Qualification Process Changes</div>
+          <div class="tf-prompt">Based on the Layer 2 qualification audit, describe the specific changes to the discovery and qualification process. What new questions are required? What disqualification triggers have been added? How is compliance being tracked?</div>
+          <div class="tf-example">Example: "Added three mandatory discovery questions tied to operational maturity: (a) team bandwidth for implementation, (b) executive sponsor availability, and (c) integration complexity with existing stack. Any 'red flag' on two or more questions requires VP-level approval to continue the deal. Compliance tracked via mandatory CRM field — deal cannot advance stage without all three fields documented."</div>
+        </div>
+        <div class="template-field">
+          <div class="tf-label">3. Sales Compensation Alignment</div>
+          <div class="tf-prompt">The most important structural change: aligning rep incentives to customer retention rather than just deal closure. Describe the specific comp change — typically a retention clawback or LIR-tied payment structure — and when it takes effect.</div>
+          <div class="tf-example">Example: "Beginning [date], 20% of AE variable compensation is held in escrow and paid out at month 6 conditional on the customer achieving LIR within 45 days. This creates a direct financial incentive for reps to disqualify customers who are unlikely to succeed — not just close them. Expected impact: 5–8% reduction in new logo velocity in Q1, offset by 12–15pp improvement in 12-month retention in the affected cohorts by Q3–Q4."</div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- Slide 4 -->
+  <div class="slide-card">
+    <div class="slide-header">
+      <div class="slide-num">4</div>
+      <div class="slide-title-block">
+        <div class="slide-title">Slide 4 — Cohort Improvement Evidence</div>
+        <div class="slide-subtitle">Show before/after cohort data that proves the intervention is already working in the most recent cohorts</div>
+      </div>
+      <div class="slide-purpose-badge">Arc: Early Proof</div>
+    </div>
+    <div class="slide-body">
+
+      <div class="slide-section">
+        <div class="slide-section-title">Narrative Guidance</div>
+        <div class="narrative-box">
+          <div class="narrative-box-label">Evidence Credibility Rules</div>
+          Slide 4 is the proof point that separates a credible plan from a wishful one. If you have no before/after cohort data yet because the intervention is too new, say so explicitly and use leading indicators (LIR achievement rate improvement) as a proxy. Do not fabricate or project a before/after without being explicit that it is a projection. Sophisticated investors will ask about the methodology. The most compelling evidence is actual retention data from cohorts acquired under the new ICP criteria — even 2–3 months of data showing LIR achievement improvement tells a credible story.
+        </div>
+      </div>
+
+      <div class="slide-section">
+        <div class="slide-section-title">Before / After Cohort Table</div>
+        <div class="cohort-table-wrap">
+          <table class="cohort-table">
+            <thead>
+              <tr>
+                <th>Cohort</th>
+                <th>ICP Filter</th>
+                <th>New Customers</th>
+                <th>LIR Achievement Rate</th>
+                <th>12-Mo Retention</th>
+                <th>vs. 85% Target</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Q2 Y-1</td>
+                <td style="color:#A13544;">Old (loose)</td>
+                <td>22</td>
+                <td class="ret-low">44%</td>
+                <td class="ret-low">71%</td>
+                <td style="color:#A13544;">-14pp</td>
+              </tr>
+              <tr>
+                <td>Q3 Y-1</td>
+                <td style="color:#A13544;">Old (loose)</td>
+                <td>27</td>
+                <td class="ret-low">41%</td>
+                <td class="ret-low">68%</td>
+                <td style="color:#A13544;">-17pp</td>
+              </tr>
+              <tr>
+                <td>Q4 Y-1</td>
+                <td style="color:#b8860b;">Transition</td>
+                <td>31</td>
+                <td class="ret-mid">58%</td>
+                <td class="ret-mid">72%</td>
+                <td style="color:#A13544;">-13pp</td>
+              </tr>
+              <tr class="improve-row">
+                <td>Q1 Current</td>
+                <td style="color:#437A22;">New (tight)</td>
+                <td>19</td>
+                <td class="ret-high">71%</td>
+                <td>— (8 mo.)</td>
+                <td>LIR trend: ↑ strong</td>
+              </tr>
+              <tr class="improve-row">
+                <td>Q2 Current</td>
+                <td style="color:#437A22;">New (tight)</td>
+                <td>22</td>
+                <td class="ret-high">74%</td>
+                <td>— (5 mo.)</td>
+                <td>LIR trend: ↑ strong</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <p style="font-size:12px;color:var(--text-muted);margin-top:4px;">12-Mo Retention for Q1/Q2 Current cohorts not yet measurable — LIR achievement rate shown as leading indicator of future retention trajectory.</p>
+      </div>
+
+      <div class="slide-section">
+        <div class="slide-section-title">ICP Change Timeline + Retention Correlation</div>
+        <div class="template-field" style="background:#f0f5fa;">
+          <div class="tf-label">What to Show</div>
+          <div class="tf-prompt">Create a timeline visualization showing: (a) when each ICP change was implemented, (b) the first cohort fully acquired under the new criteria, and (c) the LIR achievement rate trend from that cohort forward. The goal is to show that the improvement in LIR achievement is not random — it correlates directly with the ICP filter change.</div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- Slide 5 -->
+  <div class="slide-card">
+    <div class="slide-header">
+      <div class="slide-num">5</div>
+      <div class="slide-title-block">
+        <div class="slide-title">Slide 5 — Trajectory: Path to 90%+ Retention</div>
+        <div class="slide-subtitle">Current state to 12-month milestone to 24-month target — with lever-by-lever sensitivity analysis</div>
+      </div>
+      <div class="slide-purpose-badge">Arc: Forward Trajectory</div>
+    </div>
+    <div class="slide-body">
+
+      <div class="slide-section">
+        <div class="slide-section-title">Narrative Guidance</div>
+        <div class="narrative-box">
+          <div class="narrative-box-label">The Trajectory Frame</div>
+          Slide 5 asks the board to believe in a trajectory, not just a current data point. Your credibility here depends entirely on the quality of the diagnosis and evidence on Slides 2–4. If those slides are strong, Slide 5 is the exciting part of the presentation. If those slides are weak, Slide 5 will feel like wishful projecting. The single most important element of Slide 5 is the sensitivity analysis — it shows that you've thought about the range of outcomes and not just the optimistic case.
+        </div>
+        <div class="narrative-box" style="border-color:#964219;background:#fff8f0;">
+          <div class="narrative-box-label" style="color:#964219;">Avoid: The Hockey Stick Without Assumptions</div>
+          The most credibility-destroying version of Slide 5 is a chart that shows retention jumping from 74% to 90% with no intermediate milestones, no stated assumptions, and no acknowledgment of risk. Show the work. State each lever, its expected contribution, and the timeline. Show what the trajectory looks like if the levers perform at 80% of plan, not just 100%.
+        </div>
+      </div>
+
+      <div class="slide-section">
+        <div class="slide-section-title">Three-Point Retention Trajectory</div>
+        <div class="metric-grid" style="grid-template-columns: repeat(3, 1fr);">
+          <div class="metric-card">
+            <div class="m-label">Current State (LTM)</div>
+            <div class="m-value" style="color:#A13544;">74%</div>
+            <div class="m-desc">12-month gross retention, all cohorts. Includes cohorts acquired under old ICP criteria.</div>
+          </div>
+          <div class="metric-card">
+            <div class="m-label">12-Month Milestone</div>
+            <div class="m-value" style="color:#b8860b;">83%</div>
+            <div class="m-desc">Target as ICP-qualified cohorts mature to 12 months. Based on LIR trajectory in current cohorts.</div>
+          </div>
+          <div class="metric-card">
+            <div class="m-label">24-Month Target</div>
+            <div class="m-value" style="color:#437A22;">90%+</div>
+            <div class="m-desc">Target when 100% of measured cohorts were acquired under the tightened ICP definition.</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="slide-section">
+        <div class="slide-section-title">Three Levers Being Pulled</div>
+        <ul class="data-list">
+          <li>
+            <div class="data-icon">1</div>
+            <div><strong>ICP Tightening</strong> — new minimum qualification criteria reduce the proportion of high-churn customers entering each cohort. Full impact on 12-month retention visible after 4 quarters of acquisition under the new criteria. Expected contribution: +8–10pp to 12-month retention at full run-rate.</div>
+          </li>
+          <li>
+            <div class="data-icon">2</div>
+            <div><strong>CS LIR Achievement Program</strong> — structured onboarding program with 45-day LIR milestone, weekly CSM check-ins, and intervention protocol for at-risk accounts. LIR achievement rate target: 70% (current: 58% across all cohorts, 74% in most recent ICP-qualified cohort). Expected contribution: +4–6pp to 12-month retention for customers who achieve LIR vs. those who don't.</div>
+          </li>
+          <li>
+            <div class="data-icon">3</div>
+            <div><strong>Compensation Alignment</strong> — 20% AE variable held in escrow, released at month 6 conditional on LIR achievement. Creates systemic incentive for self-correction in the sales qualification process. Expected contribution: reduces marginal-qualification deals by 15–20%, improving average cohort LIR rate over time.</div>
+          </li>
+        </ul>
+      </div>
+
+      <div class="slide-section">
+        <div class="slide-section-title">Sensitivity Analysis</div>
+        <div class="sens-table-wrap">
+          <table class="sens-table">
+            <thead>
+              <tr>
+                <th>LIR Achievement Rate Scenario</th>
+                <th>Expected 12-Mo Retention</th>
+                <th>ARR Impact vs. Current</th>
+                <th>Assessment</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Conservative: LIR rate stays at 58%</td>
+                <td class="ret-mid">78%</td>
+                <td>+$400K ARR</td>
+                <td style="color:#b8860b;">Below plan but an improvement</td>
+              </tr>
+              <tr class="base-row">
+                <td>Base Case: LIR rate improves to 70%</td>
+                <td class="ret-high">85%</td>
+                <td>+$1.1M ARR</td>
+                <td style="color:var(--res);">At plan</td>
+              </tr>
+              <tr>
+                <td>Upside: LIR rate improves to 78%</td>
+                <td class="ret-great">90%</td>
+                <td>+$1.6M ARR</td>
+                <td style="color:#437A22;">Above plan</td>
+              </tr>
+              <tr>
+                <td>Downside: LIR rate declines to 45%</td>
+                <td class="ret-low">72%</td>
+                <td>+$160K ARR</td>
+                <td style="color:#A13544;">Requires ICP re-audit</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- Slide 6 -->
+  <div class="slide-card">
+    <div class="slide-header">
+      <div class="slide-num">6</div>
+      <div class="slide-title-block">
+        <div class="slide-title">Slide 6 — Appendix: Supporting Data</div>
+        <div class="slide-subtitle">Comprehensive data tables for investor due diligence and board reference</div>
+      </div>
+      <div class="slide-purpose-badge">Arc: Credibility</div>
+    </div>
+    <div class="slide-body">
+
+      <div class="slide-section">
+        <div class="slide-section-title">Narrative Guidance</div>
+        <div class="narrative-box">
+          <div class="narrative-box-label">The Purpose of the Appendix</div>
+          The appendix is not an afterthought — it is the foundation of your narrative's credibility. Every claim made in Slides 1–5 should be traceable to a data table in the appendix. Before the board meeting, walk through the appendix data yourself and confirm that every assertion in the main deck is supported by data in the appendix. If a board member asks "how did you get to that number?", you should be able to point to the exact row in the appendix within 30 seconds.
+        </div>
+      </div>
+
+      <div class="slide-section">
+        <div class="slide-section-title">Required Appendix Tables</div>
+        <ul class="data-list">
+          <li>
+            <div class="data-icon">A</div>
+            <div><strong>Full Cohort Table</strong> — every customer cohort by acquisition month, showing new customers, LIR achievement rate, LIR achievement date, 12-month renewal (Y/N), and 12-month retention rate. This is the primary data source for Slides 1 and 4.</div>
+          </li>
+          <li>
+            <div class="data-icon">B</div>
+            <div><strong>Churn by Firmographic Segment</strong> — retention rate segmented by company size, industry vertical, deal source, and deal size. Minimum 3 quarters of data. Highlight the high-churn segments identified in Slide 2 Layer 1 analysis.</div>
+          </li>
+          <li>
+            <div class="data-icon">C</div>
+            <div><strong>LIR Achievement by Cohort</strong> — LIR achievement rate by acquisition cohort, compared to the 65% target. Show pre-ICP-change vs. post-ICP-change trend. This is the primary leading indicator for Slide 4.</div>
+          </li>
+          <li>
+            <div class="data-icon">D</div>
+            <div><strong>CSM Health Score Distribution</strong> — distribution of customer health scores across all active accounts, segmented by cohort quarter. Shows the current state of the customer base and which cohorts are most at-risk for upcoming renewal periods.</div>
+          </li>
+          <li>
+            <div class="data-icon">E</div>
+            <div><strong>Churned Account Analysis</strong> — for the most recent 12 months of churn, a breakdown by stated churn reason (from exit interview data or CSM notes), LIR achievement at time of churn, and time in product before churning. This data supports the Slide 2 root cause analysis.</div>
+          </li>
+          <li>
+            <div class="data-icon">F</div>
+            <div><strong>12-Month Revenue Projections (Retention Scenario)</strong> — the sensitivity analysis from Slide 5 expanded into a full 12-month ARR projection under each scenario (conservative, base, upside, downside). Shows ARR, expansion, and churn line items separately.</div>
+          </li>
+        </ul>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- Related links -->
+  <div class="related-section">
+    <div class="related-title">Related Pages</div>
+    <div class="related-links">
+      <a href="sos-lir.html" class="related-link">LIR Framework</a>
+      <a href="template-lir.html" class="related-link">LIR Journey Template</a>
+      <a href="template-ccac.html" class="related-link">C-CAC Template</a>
+      <a href="sos-pmf.html" class="related-link">PMF Framework</a>
+      <a href="../pages/resources.html" class="related-link">← All Templates</a>
+    </div>
+  </div>
+
+</div>
+<script data-pplx-inline-edit>
+(function () {
+  if (window === window.top) return;
+
+  const allowedParentOrigins = ["https://www.perplexity.ai","https://perplexity.ai","https://testing.perplexity.ai","https://staging.perplexity.ai","https://*.preview.i.perplexity.ai","http://localhost:3000","http://127.0.0.1:3000","http://localhost:5173","http://127.0.0.1:5173"];
+  const MAX_FONT_BYTES = 500 * 1024;
+  const MAX_TOTAL_FONT_BYTES = 2 * 1024 * 1024;
+  let scrollForwarding = false;
+  let scrollRaf = 0;
+  let trustedTopOrigin = null;
+
+  // Allow entries like "https://*.preview.i.perplexity.ai" — the wildcard
+  // matches a single DNS label (no dots), so "https://*.foo" cannot stretch
+  // across multiple labels.
+  function matchesAllowedOrigin(origin) {
+    if (!origin) return false;
+    for (const entry of allowedParentOrigins) {
+      if (!entry.includes("*")) {
+        if (entry === origin) return true;
+        continue;
+      }
+      const pattern = new RegExp(
+        "^" +
+          entry.replace(/[.+?^${}()|[\]\\]/g, "\\$&").replace(/\*/g, "[^.]+") +
+          "$",
+      );
+      if (pattern.test(origin)) return true;
+    }
+    return false;
+  }
+
+  // Trust decision: when the sender is same-origin-visible (event.origin is a
+  // real origin like https://www.perplexity.ai) we trust event.origin directly.
+  // When event.origin is "null" (opaque broker srcdoc), we fall back to the
+  // broker's stamped `parentOrigin` to identify the top window. The fallback
+  // is claim-only — we rely on the browser's native `targetOrigin` enforcement
+  // on the response path (see postToTrustedTop) to ensure replies can't be
+  // delivered to anyone but the actual top window of that claimed origin.
+  function getTrustedParentOrigin(event) {
+    const forwardedParentOrigin =
+      typeof event.data.parentOrigin === "string" ? event.data.parentOrigin : null;
+    const parentOrigin = event.origin === "null" ? forwardedParentOrigin : event.origin;
+    return matchesAllowedOrigin(parentOrigin) ? parentOrigin : null;
+  }
+
+  // All responses go to window.top with targetOrigin = the allowlisted origin.
+  // An attacker that iframes us inside their own null-origin broker can claim
+  // any parentOrigin they like, but the browser will drop the reply whenever
+  // the real top's origin doesn't match — so the screenshot never leaves.
+  function postToTrustedTop(message) {
+    if (!trustedTopOrigin) return;
+    try {
+      window.top.postMessage(message, trustedTopOrigin);
+    } catch (_error) {}
+  }
+
+  function inlineAll(original, clone) {
+    if (original.nodeType !== 1 || clone.nodeType !== 1) return;
+
+    try {
+      const computedStyle = getComputedStyle(original);
+      // cssText on a computed style is the serialized declaration in modern
+      // Chromium/Safari — a single read beats enumerating ~400 longhand
+      // properties. Firefox returns "" here, so we fall back on empty.
+      const serialized = computedStyle.cssText;
+      if (serialized) {
+        clone.style.cssText = serialized;
+      } else {
+        const parts = new Array(computedStyle.length);
+        for (let index = 0; index < computedStyle.length; index += 1) {
+          const property = computedStyle[index];
+          parts[index] = `${property}:${computedStyle.getPropertyValue(property)};`;
+        }
+        clone.style.cssText = parts.join("");
+      }
+    } catch (_error) {}
+
+    const originalChildren = original.children;
+    const clonedChildren = clone.children;
+    for (
+      let index = 0;
+      index < originalChildren.length && index < clonedChildren.length;
+      index += 1
+    ) {
+      inlineAll(originalChildren[index], clonedChildren[index]);
+    }
+  }
+
+  function extractFontUrl(srcValue) {
+    const matches = [
+      ...srcValue.matchAll(
+        /url\(["']?([^"')]+)["']?\)(?:\s*format\(["']?([^"')]+)["']?\))?/gi,
+      ),
+    ];
+    if (matches.length === 0) return null;
+    const woff2 = matches.find((m) => m[2] && m[2].toLowerCase().includes("woff2"));
+    if (woff2) return woff2[1];
+    const woff = matches.find((m) => m[2] && m[2].toLowerCase().includes("woff"));
+    if (woff) return woff[1];
+    return matches[0][1];
+  }
+
+  // Cache resolved font URL -> data URI across captures. Fonts on a page
+  // essentially never change, and a batch run emits multiple captures back to
+  // back — without this we'd refetch + re-base64 every time.
+  const fontDataUriCache = new Map();
+  const SRC_DECLARATION_RE = /src\s*:\s*[^;}]+/i;
+
+  async function fetchAsDataUri(url) {
+    if (fontDataUriCache.has(url)) return fontDataUriCache.get(url);
+    let dataUri = null;
+    try {
+      const response = await fetch(url, { mode: "cors", credentials: "omit" });
+      if (response.ok) {
+        const blob = await response.blob();
+        if (blob.size <= MAX_FONT_BYTES) {
+          dataUri = await new Promise((resolve) => {
+            const reader = new FileReader();
+            reader.onloadend = () =>
+              resolve(typeof reader.result === "string" ? reader.result : null);
+            reader.onerror = () => resolve(null);
+            reader.readAsDataURL(blob);
+          });
+        }
+      }
+    } catch (_error) {
+      dataUri = null;
+    }
+    fontDataUriCache.set(url, dataUri);
+    return dataUri;
+  }
+
+  function collectFontFaceRuleTexts() {
+    const rules = [];
+    for (const sheet of document.styleSheets) {
+      let cssRules;
+      try {
+        cssRules = sheet.cssRules;
+      } catch (_error) {
+        continue;
+      }
+      if (!cssRules) continue;
+      for (const rule of cssRules) {
+        const cssText = rule.cssText || "";
+        if (cssText.startsWith("@font-face")) rules.push(cssText);
+      }
+    }
+    return rules;
+  }
+
+  async function buildInlinedFontCss() {
+    const ruleTexts = collectFontFaceRuleTexts();
+    if (ruleTexts.length === 0) return null;
+
+    const resolved = ruleTexts.map((cssText) => {
+      if (!SRC_DECLARATION_RE.test(cssText)) return null;
+      const srcMatch = cssText.match(/src\s*:\s*([^;}]+)[;}]/i);
+      if (!srcMatch) return null;
+      const url = extractFontUrl(srcMatch[1]);
+      if (!url) return null;
+      try {
+        return { cssText, url: new URL(url, document.baseURI).href };
+      } catch (_error) {
+        return null;
+      }
+    });
+
+    const dataUris = await Promise.all(
+      resolved.map((entry) => (entry ? fetchAsDataUri(entry.url) : Promise.resolve(null))),
+    );
+
+    const inlined = [];
+    let totalBytes = 0;
+    for (let index = 0; index < resolved.length; index += 1) {
+      const entry = resolved[index];
+      const dataUri = dataUris[index];
+      if (!entry || !dataUri) continue;
+      const approxBytes = dataUri.length * 0.75;
+      if (totalBytes + approxBytes > MAX_TOTAL_FONT_BYTES) break;
+      totalBytes += approxBytes;
+      inlined.push(entry.cssText.replace(SRC_DECLARATION_RE, `src: url("${dataUri}")`));
+    }
+    return inlined.length > 0 ? inlined.join("\n") : null;
+  }
+
+  function stripExternal(clone) {
+    const images = clone.querySelectorAll("img");
+    for (let index = 0; index < images.length; index += 1) {
+      const src = images[index].getAttribute("src");
+      if (src && !src.startsWith("data:")) images[index].removeAttribute("src");
+    }
+
+    const elements = clone.querySelectorAll("*");
+    for (let index = 0; index < elements.length; index += 1) {
+      const style = elements[index].style.cssText;
+      if (style && style.includes("url(")) {
+        elements[index].style.cssText = style.replace(
+          /url\(["']?(?!data:)[^)"']*["']?\)/gi,
+          "none",
+        );
+      }
+    }
+  }
+
+  function emitScroll() {
+    scrollRaf = 0;
+    if (!scrollForwarding) return;
+    postToTrustedTop({
+      type: "INLINE_EDIT_SCROLL",
+      scrollX: window.scrollX,
+      scrollY: window.scrollY,
+    });
+  }
+
+  window.addEventListener(
+    "scroll",
+    function () {
+      if (!scrollForwarding || scrollRaf) return;
+      scrollRaf = requestAnimationFrame(emitScroll);
+    },
+    { passive: true, capture: true },
+  );
+
+  async function handleCaptureRequest(event) {
+    const requestId = event.data.requestId;
+    const scrollX = window.scrollX;
+    const scrollY = window.scrollY;
+    const width = window.innerWidth;
+    const height = window.innerHeight;
+
+    function postResult(dataUrl) {
+      postToTrustedTop({
+        type: "INLINE_EDIT_SCREENSHOT_RESULT",
+        requestId,
+        dataUrl,
+        scrollX,
+        scrollY,
+      });
+    }
+
+    try {
+      // Wait for any pending web fonts to resolve so both inline metrics and
+      // the @font-face inlining below see the same loaded faces.
+      if (document.fonts && document.fonts.ready) {
+        try {
+          await document.fonts.ready;
+        } catch (_error) {}
+      }
+
+      const clone = document.documentElement.cloneNode(true);
+      inlineAll(document.documentElement, clone);
+
+      const removedNodes = clone.querySelectorAll("script,link[rel=\"stylesheet\"],style");
+      for (let index = 0; index < removedNodes.length; index += 1) {
+        removedNodes[index].remove();
+      }
+
+      stripExternal(clone);
+
+      // Re-embed web fonts as data-URI @font-face rules so the SVG rasterizer
+      // can resolve them — external font URLs aren't fetched during
+      // foreignObject rendering, which would otherwise force a fallback face
+      // and change text metrics.
+      const inlinedFontCss = await buildInlinedFontCss();
+      if (inlinedFontCss) {
+        const styleEl = document.createElement("style");
+        styleEl.textContent = inlinedFontCss;
+        const head = clone.querySelector("head");
+        if (head) head.appendChild(styleEl);
+        else clone.insertBefore(styleEl, clone.firstChild);
+      }
+
+      const html = new XMLSerializer().serializeToString(clone);
+      const svg =
+        `<svg xmlns="http://www.w3.org/2000/svg" width="${width}" height="${height}">` +
+        '<foreignObject width="100%" height="100%">' +
+        `<div xmlns="http://www.w3.org/1999/xhtml" style="width:${width}px;height:${height}px;overflow:hidden">` +
+        `<div style="transform:translate(-${scrollX}px,-${scrollY}px);transform-origin:top left">` +
+        html +
+        "</div></div></foreignObject></svg>";
+      const svgUrl = `data:image/svg+xml;charset=utf-8,${encodeURIComponent(svg)}`;
+      const image = new Image();
+      image.onload = function () {
+        const canvas = document.createElement("canvas");
+        canvas.width = width;
+        canvas.height = height;
+        canvas.getContext("2d").drawImage(image, 0, 0);
+        postResult(canvas.toDataURL("image/png"));
+      };
+      image.onerror = function () {
+        postResult(null);
+      };
+      image.src = svgUrl;
+    } catch (_error) {
+      postResult(null);
+    }
+  }
+
+  window.addEventListener("message", function (event) {
+    if (!event.data) return;
+    // Only accept messages from the direct parent frame. Blocks sibling /
+    // unrelated-window postMessage senders that could otherwise reach us.
+    if (event.source !== window.parent) return;
+
+    const trustedParentOrigin = getTrustedParentOrigin(event);
+    if (!trustedParentOrigin) return;
+    trustedTopOrigin = trustedParentOrigin;
+
+    if (event.data.type === "INLINE_EDIT_SCROLL_START") {
+      scrollForwarding = true;
+      emitScroll();
+      return;
+    }
+
+    if (event.data.type === "INLINE_EDIT_SCROLL_STOP") {
+      scrollForwarding = false;
+      if (scrollRaf) cancelAnimationFrame(scrollRaf);
+      scrollRaf = 0;
+      return;
+    }
+
+    if (event.data.type !== "INLINE_EDIT_CAPTURE_REQUEST") return;
+
+    handleCaptureRequest(event);
+  });
+})();
+
+
+</script></body>
+</html>

@@ -1,0 +1,942 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Value Proposition — SaaS Revenue System</title>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="../assets/shared.css"/>
+  <style>
+    .page-hero { background: #20808D; }
+    .framework-card {
+      background: var(--surface);
+      border: 1.5px solid var(--border);
+      border-radius: 10px;
+      padding: 20px 24px;
+      margin-bottom: 16px;
+    }
+    .framework-card .fc-label {
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      color: #20808D;
+      margin-bottom: 4px;
+    }
+    .framework-card .fc-title {
+      font-size: 16px;
+      font-weight: 700;
+      color: var(--text);
+      margin-bottom: 10px;
+    }
+    .framework-card p {
+      font-size: 14px;
+      line-height: 1.7;
+      color: var(--text);
+      margin-bottom: 10px;
+    }
+    .framework-card p:last-child { margin-bottom: 0; }
+    .outcome-chain {
+      display: flex;
+      gap: 0;
+      align-items: stretch;
+      margin: 16px 0;
+      overflow-x: auto;
+    }
+    .oc-step {
+      flex: 1;
+      min-width: 120px;
+      background: var(--bg);
+      border: 1.5px solid var(--border);
+      padding: 12px 14px;
+      text-align: center;
+      position: relative;
+    }
+    .oc-step:not(:first-child) {
+      border-left: none;
+    }
+    .oc-step:first-child { border-radius: 8px 0 0 8px; }
+    .oc-step:last-child { border-radius: 0 8px 8px 0; }
+    .oc-step .os-level {
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      margin-bottom: 4px;
+    }
+    .oc-step .os-label {
+      font-size: 13px;
+      font-weight: 700;
+      color: var(--text);
+    }
+    .oc-step.highlight { background: #e6f7f8; border-color: #20808D; }
+    .oc-step.highlight .os-label { color: #20808D; }
+    .persona-block {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      gap: 12px;
+      margin: 16px 0;
+    }
+    .persona-card {
+      background: var(--surface);
+      border: 1.5px solid var(--border);
+      border-radius: 8px;
+      padding: 16px;
+    }
+    .persona-card .pc-title {
+      font-size: 13px;
+      font-weight: 700;
+      color: #20808D;
+      margin-bottom: 4px;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+    .persona-card .pc-name {
+      font-size: 15px;
+      font-weight: 700;
+      color: var(--text);
+      margin-bottom: 8px;
+    }
+    .persona-card p {
+      font-size: 13px;
+      line-height: 1.6;
+      color: var(--text);
+      margin-bottom: 8px;
+    }
+    .persona-card p:last-child { margin-bottom: 0; }
+    .persona-card .pc-cares {
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.5px;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      margin-bottom: 4px;
+      margin-top: 8px;
+    }
+    .roi-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      padding: 12px 0;
+      border-bottom: 1px solid var(--border);
+      font-size: 14px;
+      gap: 16px;
+    }
+    .roi-row:last-child { border-bottom: none; }
+    .roi-row .rr-input { font-weight: 700; min-width: 200px; }
+    .roi-row .rr-desc { color: var(--text-muted); flex: 1; font-size: 13px; }
+    .roi-row .rr-risk { font-size: 12px; color: #A13544; font-weight: 600; }
+    .stage-msg-block {
+      background: var(--surface);
+      border: 1.5px solid var(--border);
+      border-radius: 8px;
+      padding: 14px 18px;
+      margin-bottom: 10px;
+      display: flex;
+      gap: 16px;
+      align-items: flex-start;
+    }
+    .smb-badge {
+      min-width: 80px;
+      padding: 6px 10px;
+      border-radius: 6px;
+      font-size: 12px;
+      font-weight: 700;
+      text-align: center;
+      flex-shrink: 0;
+      color: #fff;
+    }
+    .stage-msg-block .smb-content { font-size: 14px; line-height: 1.65; }
+    .stage-msg-block .smb-content strong { display: block; margin-bottom: 3px; }
+    .message-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+      margin: 16px 0;
+    }
+    .msg-level {
+      background: var(--surface);
+      border: 1.5px solid var(--border);
+      border-radius: 8px;
+      padding: 14px 16px;
+    }
+    .msg-level .ml-label {
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      margin-bottom: 4px;
+    }
+    .msg-level .ml-title { font-size: 14px; font-weight: 700; color: #20808D; margin-bottom: 6px; }
+    .msg-level p { font-size: 13px; line-height: 1.6; color: var(--text); margin: 0; }
+    .competitive-block {
+      background: var(--surface);
+      border: 1.5px solid var(--border);
+      border-radius: 8px;
+      padding: 16px 20px;
+      margin-bottom: 12px;
+    }
+    .competitive-block .cb-header { display: flex; gap: 12px; align-items: center; margin-bottom: 8px; }
+    .competitive-block .cb-vs { font-size: 10px; font-weight: 700; letter-spacing: 1px; text-transform: uppercase; color: var(--text-muted); }
+    .competitive-block .cb-name { font-size: 15px; font-weight: 700; color: var(--text); }
+    .competitive-block p { font-size: 14px; line-height: 1.65; color: var(--text); margin-bottom: 8px; }
+    .competitive-block p:last-child { margin-bottom: 0; }
+    @media(max-width:768px){
+      .persona-block { grid-template-columns: 1fr; }
+      .message-grid { grid-template-columns: 1fr; }
+      .outcome-chain { flex-direction: column; }
+      .oc-step { border-radius: 0; border-left: 1.5px solid var(--border) !important; border-top: none; }
+      .oc-step:first-child { border-radius: 8px 8px 0 0; border-top: 1.5px solid var(--border) !important; }
+      .oc-step:last-child { border-radius: 0 0 8px 8px; }
+    }
+  </style>
+</head>
+<body>
+<nav class="nav">
+  <span class="nav-logo">SaaS <span>Revenue System</span></span>
+  <span class="nav-sep">|</span>
+  <a href="../index.html" class="nav-back">← Home</a>
+  <span class="nav-sep">|</span>
+  <a href="../pages/phase1.html" class="nav-back">Phase 1: Foundation</a>
+  <span class="nav-sep">|</span>
+  <span class="nav-current">Value Proposition</span>
+</nav>
+<div class="page-hero" style="background:#20808D">
+  <div class="hero-phase-label">Phase 1 — Foundation</div>
+  <div class="hero-title">Value Proposition — Building the Economic and Operational Case</div>
+  <div class="hero-subtitle">A value proposition is not a tagline. It is a precise, evidence-backed statement of why your product is worth more than it costs.</div>
+</div>
+<div class="content-wrap">
+  <div class="breadcrumb">
+    <a href="../index.html">Home</a><span class="sep">›</span>
+    <a href="../pages/phase1.html">Phase 1</a><span class="sep">›</span>
+    <span class="current">Value Proposition</span>
+  </div>
+
+  <!-- WHAT A VALUE PROP IS -->
+  <h2 class="section-title">What a Value Proposition Is — and Is Not</h2>
+  <p class="section-intro">Most SaaS companies confuse a tagline with a value proposition. "We make teams more productive" is a tagline. A value proposition answers a specific, demanding question: "Why should this specific customer choose us, right now, over every alternative — including doing nothing?" It is precise, it is evidence-backed, and it is relevant to the specific buyer's situation.</p>
+
+  <div class="callout callout-definition">
+    <div class="callout-title">The Value Proposition Definition</div>
+    <p>A value proposition is a clear statement of the quantifiable improvement that your product creates for a specific customer, for whom the cost of your product is demonstrably less than the value it delivers. It answers: (1) What problem do you solve? (2) For whom specifically? (3) How much better is life with you vs. without you? (4) Why are you better than all alternatives? Every word must be defensible with evidence.</p>
+  </div>
+
+  <div class="subsection">
+    <div class="subsection-title">What a Value Proposition is NOT</div>
+    <ul class="bullet-list">
+      <li><strong>Not a slogan:</strong> "The all-in-one platform for modern teams" is a category description, not a value prop. It makes no claim about outcomes.</li>
+      <li><strong>Not a feature list:</strong> Features are inputs. Value propositions are about outputs — what does the customer get? Listing 12 features without connecting them to business outcomes is feature dumping, not value communication.</li>
+      <li><strong>Not a category description:</strong> "The leading sales engagement platform" tells the customer what you are, not why you're worth the money.</li>
+      <li><strong>Not universal:</strong> A CFO, a VP Sales, and an SDR rep have completely different value propositions for the same product. A single value prop statement that tries to appeal to everyone is too vague to resonate with anyone.</li>
+      <li><strong>Not static:</strong> The value proposition must evolve as the product adds capabilities, as the market matures, and as competitors respond. An unchanged value prop from Series A is a warning sign at Series C.</li>
+    </ul>
+  </div>
+
+  <!-- THE TWO DIMENSIONS OF VALUE -->
+  <h2 class="section-title">The Two Dimensions of Value</h2>
+  <p class="section-intro">Every value proposition operates on two dimensions simultaneously: economic value (quantifiable, financial impact) and operational value (qualitative, functional improvement). Both matter, but they matter differently to different audiences at different stages of the sales cycle.</p>
+
+  <div style="display:grid; grid-template-columns: 1fr 1fr; gap:16px; margin:20px 0;">
+    <div class="framework-card">
+      <div class="fc-label">Dimension 1</div>
+      <div class="fc-title">Economic Value — "The CFO Test"</div>
+      <p>Economic value is the quantifiable financial impact of your product. It falls into three categories: (1) <strong>Revenue impact</strong> — your product helps the customer generate more revenue. Example: "Our customers see 23% higher close rates within 90 days of deployment." (2) <strong>Cost savings</strong> — your product reduces expenses. Example: "Average customer eliminates 2 FTE-equivalent manual data entry tasks." (3) <strong>Risk reduction</strong> — your product prevents costly failures. Example: "Reduces average security incident response time from 4 hours to 12 minutes."</p>
+      <p>Economic value closes enterprise deals. When the CFO or VP Finance asks "Can you show me the ROI on this?" — economic value is the answer. The champion needs economic value language to justify the purchase to an Economic Buyer. If you cannot articulate and quantify the economic value of your product, you will lose every deal that goes through procurement scrutiny.</p>
+    </div>
+    <div class="framework-card">
+      <div class="fc-label">Dimension 2</div>
+      <div class="fc-title">Operational Value — "The Champion Test"</div>
+      <p>Operational value is the functional improvement your product creates for the people who use it every day. It includes efficiency gains (time saved, workflows streamlined), capability gains (things the team can now do that they couldn't before), and experience improvements (reduced friction, better visibility, less frustration).</p>
+      <p>Operational value is what motivates champions. The VP of Sales who hates that her team can't track pipeline visibility, the engineering manager who is drowning in manual deployments, the CS manager who has no visibility into which customers are at risk — these are operational pain points. Your product solves them. Operational value is what gets the champion excited enough to become your internal advocate. Economic value is what they use to justify the purchase to their boss.</p>
+      <p>The best value propositions layer both: start with operational pain (what they feel every day), then translate it into economic impact (what it costs the business in dollars).</p>
+    </div>
+  </div>
+
+  <!-- VALUE PROP FRAMEWORKS -->
+  <h2 class="section-title">The Value Prop Framework — Four Methods</h2>
+  <p class="section-intro">No single framework fits every product or every buyer. Master all four, then apply the right one (or combination) based on your audience and sales stage.</p>
+
+  <div class="framework-card">
+    <div class="fc-label">Framework 1</div>
+    <div class="fc-title">Before / After / Bridge</div>
+    <p>The Before/After/Bridge framework forces you to articulate exactly what changes when a customer buys your product. It is the most accessible value communication framework for executives who don't have time for nuance.</p>
+    <p><strong>BEFORE:</strong> Describe the current state in vivid, accurate detail — the pain, the inefficiency, the cost, the frustration. Do not soften it. Make the prospect recognize their current reality. "Right now, your sales reps spend 2.5 hours per day on manual data entry. Your pipeline visibility is 48 hours delayed. You're flying blind every Monday morning forecast call."</p>
+    <p><strong>AFTER:</strong> Describe the desired future state — what life looks like with the problem solved. Be specific and quantified where possible. "Your reps spend zero minutes on manual data entry. Your pipeline visibility is real-time. Your Monday forecast call takes 15 minutes instead of 90."</p>
+    <p><strong>BRIDGE:</strong> Your product is the mechanism that gets them from Before to After. "Our platform automates all Salesforce data entry via email and calendar sync, provides real-time pipeline analytics, and delivers AI-generated forecasts. Here's how five companies like yours made the transition in under 30 days."</p>
+  </div>
+
+  <div class="framework-card">
+    <div class="fc-label">Framework 2</div>
+    <div class="fc-title">The "So What?" Test</div>
+    <p>The So What? Test is a diagnostic framework for evaluating whether a value claim has reached business impact. Start with any feature or capability claim and keep asking "so what?" until you reach a claim that an executive genuinely cares about.</p>
+    <p><strong>Example:</strong> "Our platform integrates with Salesforce in 15 minutes." — <em>So what?</em> — "Reps don't have to manually enter data." — <em>So what?</em> — "Each rep saves 2.5 hours per week." — <em>So what?</em> — "A 50-person sales team recovers 6,250 hours per year." — <em>So what?</em> — "At $75/hour fully-loaded cost, that's $468,750 in recovered productive capacity — or the equivalent of adding 3 new reps without headcount." — <strong>Now you have a value proposition.</strong></p>
+    <p>Apply this test to every feature in your product. The "so what" chain will be longer for some features than others — prioritize the features with the shortest chain to business impact in your top-of-funnel messaging.</p>
+  </div>
+
+  <div class="framework-card">
+    <div class="fc-label">Framework 3</div>
+    <div class="fc-title">Jobs-to-be-Done (JTBD)</div>
+    <p>Clayton Christensen's Jobs-to-be-Done theory reframes value proposition design: customers don't buy products, they hire products to do a job. The "job" is the progress they're trying to make in a specific context. Understanding the job forces you to define value in terms of the customer's goal, not the product's features.</p>
+    <p><strong>The JTBD Formula:</strong> "When [situation/context], I want to [motivation/goal], so I can [desired outcome]." Example for a sales analytics platform: "When I'm preparing for my Monday forecast call, I want to have accurate, real-time pipeline visibility with rep-level attribution, so I can confidently commit to my CEO and identify at-risk deals before they slip."</p>
+    <p>JTBD is particularly powerful for product positioning because it expands your competitive set. The "job" of sales visibility isn't just competed for by other analytics tools — spreadsheets, CRM dashboards, and management gut instinct are all alternatives "hired" for the same job. Understanding the full competitive landscape of a job helps you articulate why your approach to doing that job is superior to all alternatives.</p>
+  </div>
+
+  <div class="framework-card">
+    <div class="fc-label">Framework 4</div>
+    <div class="fc-title">The Outcome Hierarchy</div>
+    <p>The Outcome Hierarchy maps from product features to their ultimate strategic value. It ensures your value messaging connects individual capabilities to executive-level outcomes — the only level at which budget decisions are made.</p>
+  </div>
+
+  <div class="outcome-chain">
+    <div class="oc-step">
+      <div class="os-level">Level 1</div>
+      <div class="os-label">Feature</div>
+    </div>
+    <div class="oc-step">
+      <div class="os-level">Level 2</div>
+      <div class="os-label">Function</div>
+    </div>
+    <div class="oc-step">
+      <div class="os-level">Level 3</div>
+      <div class="os-label">Benefit</div>
+    </div>
+    <div class="oc-step">
+      <div class="os-level">Level 4</div>
+      <div class="os-label">Business Outcome</div>
+    </div>
+    <div class="oc-step highlight">
+      <div class="os-level">Level 5</div>
+      <div class="os-label">Strategic Impact</div>
+    </div>
+  </div>
+
+  <p class="section-intro" style="margin-top:8px;">Example: Automated data entry (Feature) → Salesforce always up-to-date without rep action (Function) → Reps focus on selling, not admin (Benefit) → 23% increase in outbound activity per rep (Business Outcome) → $2.3M additional revenue capacity without headcount increase (Strategic Impact). C-suite messages live at Level 4-5. Champion messages live at Level 3-4. End-user messages live at Level 2-3.</p>
+
+  <!-- VALUE PROP BY PERSONA -->
+  <h2 class="section-title">Building the Value Prop by Persona</h2>
+  <p class="section-intro">The same product delivers different value to different buyers. The mistake is using the same value message across all personas — it's either too abstract for the end user or too tactical for the Economic Buyer. Craft persona-specific value propositions that share a consistent core but speak to each stakeholder's specific motivations and concerns.</p>
+
+  <div class="persona-block">
+    <div class="persona-card">
+      <div class="pc-title">Economic Buyer</div>
+      <div class="pc-name">CFO / CEO / VP Finance</div>
+      <div class="pc-cares">Cares About</div>
+      <p>ROI, payback period, strategic impact on company growth, competitive advantage, risk reduction. Does this move the needle on a metric they're accountable for? Will the board see this as a smart investment?</p>
+      <div class="pc-cares">Value Language</div>
+      <p>"Our customers achieve payback in 6.2 months on average. At your scale, the model projects $1.8M in year-one impact from recovered capacity and reduced churn. Here are three CFO-level business cases from comparable companies."</p>
+    </div>
+    <div class="persona-card">
+      <div class="pc-title">Champion</div>
+      <div class="pc-name">VP Sales / VP Marketing / Dept. Head</div>
+      <div class="pc-cares">Cares About</div>
+      <p>Solving their specific department problem, looking smart to their boss, career advancement, operational improvement, ease of implementation. Will this make me a hero? Will it be worth the political capital I'm spending to push it through?</p>
+      <div class="pc-cares">Value Language</div>
+      <p>"Your team will have real-time pipeline visibility on Day 1. Average implementation is 3 days with zero IT involvement. Here's what three other sales leaders said about the impact on their forecast accuracy and rep productivity."</p>
+    </div>
+    <div class="persona-card">
+      <div class="pc-title">End User</div>
+      <div class="pc-name">Sales Rep / SDR / Analyst / Individual Contributor</div>
+      <div class="pc-cares">Cares About</div>
+      <p>Ease of use, time savings, removing friction from daily work, not having to learn a complex new system. Will this make my day easier or harder? Is this being forced on me or is it genuinely useful?</p>
+      <div class="pc-cares">Value Language</div>
+      <p>"Zero data entry — it syncs automatically. You'll get back 2+ hours per day. Takes 10 minutes to set up. Your manager gets the visibility they need without you doing anything different."</p>
+    </div>
+  </div>
+
+  <div class="callout callout-best-practice">
+    <div class="callout-title">Consistency Without Contradiction</div>
+    <p>The three value propositions above tell different stories, but they must not contradict each other. The Economic Buyer's "we project $1.8M in year-one impact" and the Champion's "real-time pipeline visibility on Day 1" must both be true simultaneously. Build a Message Hierarchy document that maps each persona value prop to the common proof points and evidence that supports all claims at every level. If any two persona value props create tension, you have a messaging problem that will surface in the sales cycle.</p>
+  </div>
+
+  <!-- THE ROI MODEL -->
+  <h2 class="section-title">The ROI Model — Building a Customer-Facing Business Case</h2>
+  <p class="section-intro">An ROI model is the quantitative backbone of your value proposition. In MEDDICC, Metrics are the first letter because quantified economic value is what enables champions to justify purchase to Economic Buyers. Building a credible, collaborative ROI model is one of the highest-leverage activities in enterprise SaaS sales.</p>
+
+  <div class="subsection">
+    <div class="subsection-title">ROI Model Structure</div>
+    <p>A sound ROI model has three sections: inputs (what data we take from the customer), assumptions (multipliers validated with the customer), and outputs (the calculated business impact). The most important word is "validated" — ROI models built with unilateral assumptions that the customer hasn't agreed to will be challenged and dismissed.</p>
+  </div>
+
+  <table class="data-table">
+    <thead>
+      <tr>
+        <th>Section</th>
+        <th>Example Variables</th>
+        <th>Validation Step</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><strong>Inputs (Customer Data)</strong></td>
+        <td>Number of sales reps, current close rate, average deal size, hours/week on admin tasks, monthly churn rate, average contract value</td>
+        <td>Ask the customer to confirm each number. "We typically see reps spending 2-3 hours/day on data entry — is that close to your experience?" Let them adjust.</td>
+      </tr>
+      <tr>
+        <td><strong>Assumptions (Validated Multipliers)</strong></td>
+        <td>Expected close rate improvement (validated by case study data), hours saved per rep per day, reduction in churn rate, time-to-onboarding improvement</td>
+        <td>Source every assumption from customer data or published benchmarks. "Our customers on average improve close rate by 18%. Would you be comfortable modeling 15% to be conservative?" Conservative modeling builds trust.</td>
+      </tr>
+      <tr>
+        <td><strong>Outputs (Calculated Impact)</strong></td>
+        <td>Additional revenue from close rate improvement, cost savings from time recovery, revenue retention improvement from churn reduction, Total Year 1 impact, Payback period</td>
+        <td>Present outputs as a range (conservative / base / optimistic). Single-point estimates feel precise but are fragile. A range with stated assumptions is far more credible to a sophisticated EB.</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div class="subsection">
+    <div class="subsection-title">Common ROI Model Mistakes</div>
+    <ul class="bullet-list">
+      <li><strong>Overpromising:</strong> A 300% ROI claim built on heroic assumptions destroys credibility. Sophisticated buyers will challenge every assumption. Build conservative models that hold up under scrutiny.</li>
+      <li><strong>Unvalidated assumptions:</strong> Using your own data without customer input creates distrust. "Our average customer sees X" is fine as a starting point — but "your ROI is X" built on assumptions you haven't discussed will be rejected.</li>
+      <li><strong>One-size-fits-all models:</strong> Every customer's ROI is different. A 5-person startup and a 500-person enterprise have fundamentally different ROI drivers. Customize the model to the specific customer's situation.</li>
+      <li><strong>Forgetting implementation cost:</strong> Include onboarding and implementation time as a cost in the model. Experienced buyers know that software deployment has costs. Including them makes your model more credible, not less.</li>
+      <li><strong>No payback period:</strong> CFOs think in payback periods. Always calculate and present time-to-payback. "Payback in 6 months" is a powerful one-liner that translates ROI into actionable timeline.</li>
+    </ul>
+  </div>
+
+  <div class="formula-block">
+    <div class="formula-label">ROI Model Formulas</div>
+    <div class="formula-main">Year 1 Net Impact = (Revenue Impact + Cost Savings + Risk Reduction) - (Software Cost + Implementation Cost)
+
+ROI % = Net Impact / Total Investment × 100
+
+Payback Period (months) = Total Investment / Monthly Net Impact
+
+Example:
+  Revenue impact (18% close rate improvement × 20 reps × $50K ACV × 1 additional deal/rep): $1,000,000
+  Cost savings (2 hrs/day × 20 reps × $75/hr × 250 days): $750,000
+  Total benefit: $1,750,000
+  Software + implementation cost: $200,000
+  Year 1 Net Impact: $1,550,000
+  ROI: 775%
+  Payback: 200K / (1,750K/12) = 1.4 months</div>
+  </div>
+
+  <!-- PROOF ASSETS -->
+  <h2 class="section-title">Proof Assets — Turning Claims into Evidence</h2>
+  <p class="section-intro">A value proposition without proof is just a claim. The most powerful force in enterprise sales is not your demo or your pitch — it is social proof from peers. "We delivered 23% close rate improvement" is marketing copy. "Acme Corp's VP Sales, after 90 days of deployment, reported a 23% increase in close rates and $1.2M in additional revenue in Q3" is proof. Build a comprehensive proof asset library and deploy it strategically throughout the sales cycle.</p>
+
+  <div class="subsection">
+    <div class="subsection-title">Customer Case Study Structure</div>
+    <p>A well-structured case study follows a precise format designed to maximize credibility and relevance to prospective buyers. Every element is deliberate — vague case studies ("we helped them grow their business") are nearly useless in sales; specific, quantified case studies are among the highest-ROI content assets in your library.</p>
+  </div>
+
+  <ol class="step-list">
+    <li>
+      <div class="step-content">
+        <span class="step-title">Customer Profile (Context)</span>
+        Company name (or anonymized by industry/size), industry, company size (employees, revenue), geographic footprint, and the specific use case. This enables prospects to immediately assess relevance: "Is this a company like mine?"
+      </div>
+    </li>
+    <li>
+      <div class="step-content">
+        <span class="step-title">The Problem — Specific & Operational</span>
+        What was the specific problem before your product? Use operational language, not marketing language. Include a quote from the customer in their own words. Include any quantification of the problem's cost: "We were losing an estimated $400K/quarter in preventable churn."
+      </div>
+    </li>
+    <li>
+      <div class="step-content">
+        <span class="step-title">Why They Chose You</span>
+        This is the most important section for competitive deals. What made them choose you over alternatives? What was the deciding factor? This section is your live competitive battle card — maintain it for every case study.
+      </div>
+    </li>
+    <li>
+      <div class="step-content">
+        <span class="step-title">The Solution</span>
+        Which specific features or capabilities did they use? How did they implement? How long did onboarding take? What was the adoption experience? Keep this section factual and brief — the next section is what buyers care about.
+      </div>
+    </li>
+    <li>
+      <div class="step-content">
+        <span class="step-title">Quantified Results (The Proof)</span>
+        The heart of the case study. Specific, quantified outcomes with timeframes. "23% increase in close rate within 90 days." "Reduced onboarding time from 45 days to 11 days." "$1.2M in incremental revenue in Q3." Multiple metrics across economic value (revenue, cost) and operational value (time, efficiency). A strong case study has 3-5 quantified outcomes.
+      </div>
+    </li>
+    <li>
+      <div class="step-content">
+        <span class="step-title">The Executive Quote</span>
+        A direct quote from the champion or EB that speaks to the business impact. The more specific and personal, the better. Avoid generic quotes ("It's been a great experience!"). Aim for: "Within 90 days, we had the pipeline visibility I'd been asking for for three years. It changed how we run our Monday forecasting call and directly contributed to hitting our Q3 number."
+      </div>
+    </li>
+  </ol>
+
+  <div class="subsection">
+    <div class="subsection-title">Third-Party Validation</div>
+    <p>Third-party validation reduces the "vendor bias" problem — prospects know that your own case studies are curated to look good. External validation from independent sources carries disproportionate credibility:</p>
+    <ul class="bullet-list">
+      <li><strong>Analyst reports:</strong> Gartner Magic Quadrant positioning, Forrester Wave evaluations, IDC reports. Being cited as a Leader in your category by Gartner is worth multiple AE headcount in terms of deal-closing credibility. Invest in analyst relations early.</li>
+      <li><strong>Review sites:</strong> G2, TrustRadius, and Capterra reviews are read by 85% of B2B buyers. A 4.6 with 250 reviews outperforms a 4.9 with 12 reviews in credibility terms. Volume signals market adoption; content signals real usage patterns.</li>
+      <li><strong>Awards:</strong> Industry awards (Inc. 5000, Deloitte Fast 500, Gartner Peer Insights Customers' Choice) provide independent credibility signals useful in outbound and on your website.</li>
+      <li><strong>Reference customers:</strong> The ability to connect a late-stage prospect with a current customer for a peer conversation is the highest-value proof asset in enterprise sales. Build a structured reference customer program with CS: identify willing references, brief them on the prospect's profile before the call, debrief after to capture what resonated.</li>
+    </ul>
+  </div>
+
+  <!-- COMPETITIVE VALUE POSITIONING -->
+  <h2 class="section-title">Competitive Value Positioning</h2>
+  <p class="section-intro">Your value proposition exists in a competitive context. Prospects are always evaluating alternatives — including doing nothing. Your competitive value positioning defines exactly why you are the right choice relative to each specific alternative.</p>
+
+  <div class="competitive-block">
+    <div class="cb-header">
+      <div class="cb-vs">vs.</div>
+      <div class="cb-name">Direct Competitor (Named Alternative)</div>
+    </div>
+    <p>When competing against a named competitor, your "why us vs. them" framework must be evidence-based, not aspirational. The structure: (1) Acknowledge what they do well — this builds credibility; dismissing a legitimate competitor makes you look defensive. (2) Identify the specific dimensions where you objectively outperform — and connect each dimension to customer outcomes, not feature lists. (3) Provide proof: case studies of customers who switched from them to you, G2 comparison data, benchmark results.</p>
+    <p><strong>Premium Pricing Positioning:</strong> If your product is priced above competitors, you must justify the premium with explicit value evidence. The justification must be quantifiable: "We are 35% more expensive than Competitor X. Our customers achieve 2.1x the close rate improvement they achieved on Competitor X's platform, as documented in these three migration case studies. The incremental cost is $50K/year; the incremental outcome is $300K in additional revenue." Premium pricing without quantified premium value is a negotiation you lose.</p>
+  </div>
+
+  <div class="competitive-block">
+    <div class="cb-header">
+      <div class="cb-vs">vs.</div>
+      <div class="cb-name">The Status Quo (Do Nothing)</div>
+    </div>
+    <p>In many deals, the real competitor is inertia — the decision to keep doing things the current way. This is the hardest objection to overcome because it requires creating urgency where none organically exists. The weapon against status quo is a Compelling Event + Cost of Inaction calculation.</p>
+    <p><strong>Cost of Inaction:</strong> Use the ROI model to calculate what it costs the company every month they delay: "Every month you continue with your current process, you are leaving an estimated $125K in close rate improvement unrealized and spending $62K in avoidable manual labor costs. Over a 6-month evaluation, the cost of doing nothing is $1.1M. Is that an acceptable risk while you're deliberating?" This reframes the decision from "should we buy this?" to "can we afford not to buy this?"</p>
+  </div>
+
+  <!-- VALUE MESSAGING BY STAGE -->
+  <h2 class="section-title">Value Messaging by Sales Stage</h2>
+  <p class="section-intro">The right value message at the wrong stage of the sales cycle is noise. A detailed ROI discussion in the first qualification call is premature and off-putting. A high-level awareness message in a Stage 3 proposal review is embarrassingly thin. Match the sophistication and specificity of your value message to the buyer's position in their decision journey.</p>
+
+  <div class="stage-msg-block">
+    <div class="smb-badge" style="background:#7A7974;">Awareness</div>
+    <div class="smb-content">
+      <strong>Category-Level Value — Educate & Create Curiosity</strong>
+      At the awareness stage, the prospect may not know your product exists or may not realize their problem is solvable. The value message is broad: "Here's a problem that companies like yours typically have. Here's the category of solution that addresses it. Here's evidence that this problem is expensive." The goal is not to sell — it is to create enough interest that they want to learn more. Channels: content marketing, SEO, thought leadership, paid social. Specificity: low. CTA: "Learn more" or "See how companies like yours are solving X."
+    </div>
+  </div>
+
+  <div class="stage-msg-block">
+    <div class="smb-badge" style="background:#20808D;">Discovery</div>
+    <div class="smb-content">
+      <strong>Pain-Specific Value — Connect to Their Situation</strong>
+      In discovery, you have enough information to connect your value proposition to the specific pain this prospect has articulated. The message shifts from category to situation: "Based on what you've told me, it sounds like you're experiencing [X]. Our customers with that specific situation typically achieve [Y outcome] in [Z timeframe]." Introduce the Before/After/Bridge framework using their specific Before scenario. The goal is to make the prospect feel genuinely understood.
+    </div>
+  </div>
+
+  <div class="stage-msg-block">
+    <div class="smb-badge" style="background:#437A22;">Evaluation</div>
+    <div class="smb-content">
+      <strong>Differentiated Value — Why You vs. Alternatives</strong>
+      During the evaluation stage, the prospect is actively comparing. The value message shifts to differentiation: "Here is specifically why our approach outperforms the alternatives you're evaluating, for your specific use case." Reference specific success criteria agreed in Stage 1 and demonstrate how your product meets each criterion better than alternatives. Introduce competitive case studies, G2 comparison data, and reference customers from similar situations.
+    </div>
+  </div>
+
+  <div class="stage-msg-block">
+    <div class="smb-badge" style="background:#964219;">Proposal</div>
+    <div class="smb-content">
+      <strong>ROI-Specific Value — The Business Case</strong>
+      At proposal stage, the Economic Buyer must see the financial case. Use the collaborative ROI model built in Stage 2. Present a written business case document with the customer's own numbers, validated assumptions, and projected outcomes in ranges. Include customer proof quotes and case studies from similar companies. The message is: "Here is the specific financial return on this investment, validated with your data, and supported by evidence from comparable companies."
+    </div>
+  </div>
+
+  <div class="stage-msg-block">
+    <div class="smb-badge" style="background:#6E522B;">Negotiation</div>
+    <div class="smb-content">
+      <strong>Risk-Reduction Value — Protect the Decision</strong>
+      In negotiation, buyers experience last-minute doubt. The value message shifts to risk mitigation: "Here is our implementation guarantee. Here is our customer success program. Here is the SLA we commit to. Here is the 30-day guarantee if your key success criteria aren't met." The message is about reducing the perceived risk of the decision — helping the buyer feel confident that they are making a safe bet. Never discount to close; instead, add value (additional training, implementation support, success milestones) to address the underlying hesitation.
+    </div>
+  </div>
+
+  <!-- MESSAGE HIERARCHY -->
+  <h2 class="section-title">The Message Hierarchy — Ensuring Cross-Touchpoint Consistency</h2>
+  <p class="section-intro">The message hierarchy organizes your value propositions from the broadest (company level) to the most specific (feature level), ensuring that every customer touchpoint — website, sales deck, email, proposal, champion brief — tells a consistent, reinforcing story. Inconsistency between touchpoints erodes trust and creates confusion.</p>
+
+  <div class="message-grid">
+    <div class="msg-level">
+      <div class="ml-label">Level 1</div>
+      <div class="ml-title">Company-Level Message</div>
+      <p>The single, overarching promise of the company. Who you serve, what you help them achieve, why you're the right choice. This is your homepage headline, your investor pitch opening, and your CEO's one-sentence answer to "what does your company do?" Must be memorable, differentiated, and outcome-focused.</p>
+    </div>
+    <div class="msg-level">
+      <div class="ml-label">Level 2</div>
+      <div class="ml-title">Solution-Level Message</div>
+      <p>How your core product or solution delivers on the company promise. The mechanism of value — what it does and why that matters. Typically organized by key pain point or use case cluster. This is the messaging for solution pages on your website and the sales deck overview.</p>
+    </div>
+    <div class="msg-level">
+      <div class="ml-label">Level 3</div>
+      <div class="ml-title">Product-Level Message</div>
+      <p>The specific outcomes that individual product modules or capabilities deliver. Organized by product area or workflow. Used in deep-dive demo scripts, feature pages on your website, and technical evaluations.</p>
+    </div>
+    <div class="msg-level">
+      <div class="ml-label">Level 4</div>
+      <div class="ml-title">Feature-Level Message</div>
+      <p>Individual feature descriptions and their immediate functional benefit. Used in help documentation, feature release notes, end-user training materials, and responses to detailed technical RFPs. This level should always connect upward — every feature message should reference its parent product or solution benefit.</p>
+    </div>
+  </div>
+
+  <!-- INDICATORS -->
+  <h2 class="section-title">Key Indicators</h2>
+
+  <div class="subsection">
+    <div class="subsection-title">Leading Indicators</div>
+    <div class="indicator-row">
+      <span class="indicator-tag ind-leading">Email Reply Rate (value message test)</span>
+      <span class="indicator-tag ind-leading">Demo Request Rate</span>
+      <span class="indicator-tag ind-leading">Champion Engagement with Business Case</span>
+      <span class="indicator-tag ind-leading">Stage Progression Velocity</span>
+      <span class="indicator-tag ind-leading">ROI Model Adoption Rate</span>
+    </div>
+  </div>
+
+  <div class="subsection">
+    <div class="subsection-title">Lagging Indicators</div>
+    <div class="indicator-row">
+      <span class="indicator-tag ind-lagging">Win Rate (ultimate value prop test)</span>
+      <span class="indicator-tag ind-lagging">Discount Rate</span>
+      <span class="indicator-tag ind-lagging">Competitive Win Rate</span>
+      <span class="indicator-tag ind-lagging">Lost to Status Quo %</span>
+      <span class="indicator-tag ind-lagging">Average ACV (vs. target)</span>
+    </div>
+  </div>
+
+  <div class="callout callout-best-practice">
+    <div class="callout-title">The Win Rate Test</div>
+    <p>Win rate is the ultimate empirical test of your value proposition. If win rate is declining, the value prop is eroding — competitors are improving their messaging, market expectations are rising, or your proof assets are aging. If discount rate is rising, your value prop isn't working against price objections — the perceived value isn't exceeding the price point. If you're losing disproportionately to Status Quo, you're failing to create urgency. Run a formal win/loss analysis quarterly and let the data tell you where your value prop is failing.</p>
+  </div>
+
+  <div class="related-section">
+    <div class="related-title">Related Sections</div>
+    <div class="related-links">
+      <a href="icp-definition.html" class="related-link">ICP Definition</a>
+      <a href="meddicc.html" class="related-link">MEDDICC</a>
+      <a href="competitive-positioning.html" class="related-link">Competitive Positioning</a>
+      <a href="pricing-strategy.html" class="related-link">Pricing Strategy</a>
+      <a href="discovery-framework.html" class="related-link">Discovery Framework</a>
+      <a href="../pages/phase1.html" class="related-link">Phase 1 Overview</a>
+    </div>
+  </div>
+</div>
+<script data-pplx-inline-edit>
+(function () {
+  if (window === window.top) return;
+
+  const allowedParentOrigins = ["https://www.perplexity.ai","https://perplexity.ai","https://testing.perplexity.ai","https://staging.perplexity.ai","https://*.preview.i.perplexity.ai","http://localhost:3000","http://127.0.0.1:3000","http://localhost:5173","http://127.0.0.1:5173"];
+  const MAX_FONT_BYTES = 500 * 1024;
+  const MAX_TOTAL_FONT_BYTES = 2 * 1024 * 1024;
+  let scrollForwarding = false;
+  let scrollRaf = 0;
+  let trustedTopOrigin = null;
+
+  // Allow entries like "https://*.preview.i.perplexity.ai" — the wildcard
+  // matches a single DNS label (no dots), so "https://*.foo" cannot stretch
+  // across multiple labels.
+  function matchesAllowedOrigin(origin) {
+    if (!origin) return false;
+    for (const entry of allowedParentOrigins) {
+      if (!entry.includes("*")) {
+        if (entry === origin) return true;
+        continue;
+      }
+      const pattern = new RegExp(
+        "^" +
+          entry.replace(/[.+?^${}()|[\]\\]/g, "\\$&").replace(/\*/g, "[^.]+") +
+          "$",
+      );
+      if (pattern.test(origin)) return true;
+    }
+    return false;
+  }
+
+  // Trust decision: when the sender is same-origin-visible (event.origin is a
+  // real origin like https://www.perplexity.ai) we trust event.origin directly.
+  // When event.origin is "null" (opaque broker srcdoc), we fall back to the
+  // broker's stamped `parentOrigin` to identify the top window. The fallback
+  // is claim-only — we rely on the browser's native `targetOrigin` enforcement
+  // on the response path (see postToTrustedTop) to ensure replies can't be
+  // delivered to anyone but the actual top window of that claimed origin.
+  function getTrustedParentOrigin(event) {
+    const forwardedParentOrigin =
+      typeof event.data.parentOrigin === "string" ? event.data.parentOrigin : null;
+    const parentOrigin = event.origin === "null" ? forwardedParentOrigin : event.origin;
+    return matchesAllowedOrigin(parentOrigin) ? parentOrigin : null;
+  }
+
+  // All responses go to window.top with targetOrigin = the allowlisted origin.
+  // An attacker that iframes us inside their own null-origin broker can claim
+  // any parentOrigin they like, but the browser will drop the reply whenever
+  // the real top's origin doesn't match — so the screenshot never leaves.
+  function postToTrustedTop(message) {
+    if (!trustedTopOrigin) return;
+    try {
+      window.top.postMessage(message, trustedTopOrigin);
+    } catch (_error) {}
+  }
+
+  function inlineAll(original, clone) {
+    if (original.nodeType !== 1 || clone.nodeType !== 1) return;
+
+    try {
+      const computedStyle = getComputedStyle(original);
+      // cssText on a computed style is the serialized declaration in modern
+      // Chromium/Safari — a single read beats enumerating ~400 longhand
+      // properties. Firefox returns "" here, so we fall back on empty.
+      const serialized = computedStyle.cssText;
+      if (serialized) {
+        clone.style.cssText = serialized;
+      } else {
+        const parts = new Array(computedStyle.length);
+        for (let index = 0; index < computedStyle.length; index += 1) {
+          const property = computedStyle[index];
+          parts[index] = `${property}:${computedStyle.getPropertyValue(property)};`;
+        }
+        clone.style.cssText = parts.join("");
+      }
+    } catch (_error) {}
+
+    const originalChildren = original.children;
+    const clonedChildren = clone.children;
+    for (
+      let index = 0;
+      index < originalChildren.length && index < clonedChildren.length;
+      index += 1
+    ) {
+      inlineAll(originalChildren[index], clonedChildren[index]);
+    }
+  }
+
+  function extractFontUrl(srcValue) {
+    const matches = [
+      ...srcValue.matchAll(
+        /url\(["']?([^"')]+)["']?\)(?:\s*format\(["']?([^"')]+)["']?\))?/gi,
+      ),
+    ];
+    if (matches.length === 0) return null;
+    const woff2 = matches.find((m) => m[2] && m[2].toLowerCase().includes("woff2"));
+    if (woff2) return woff2[1];
+    const woff = matches.find((m) => m[2] && m[2].toLowerCase().includes("woff"));
+    if (woff) return woff[1];
+    return matches[0][1];
+  }
+
+  // Cache resolved font URL -> data URI across captures. Fonts on a page
+  // essentially never change, and a batch run emits multiple captures back to
+  // back — without this we'd refetch + re-base64 every time.
+  const fontDataUriCache = new Map();
+  const SRC_DECLARATION_RE = /src\s*:\s*[^;}]+/i;
+
+  async function fetchAsDataUri(url) {
+    if (fontDataUriCache.has(url)) return fontDataUriCache.get(url);
+    let dataUri = null;
+    try {
+      const response = await fetch(url, { mode: "cors", credentials: "omit" });
+      if (response.ok) {
+        const blob = await response.blob();
+        if (blob.size <= MAX_FONT_BYTES) {
+          dataUri = await new Promise((resolve) => {
+            const reader = new FileReader();
+            reader.onloadend = () =>
+              resolve(typeof reader.result === "string" ? reader.result : null);
+            reader.onerror = () => resolve(null);
+            reader.readAsDataURL(blob);
+          });
+        }
+      }
+    } catch (_error) {
+      dataUri = null;
+    }
+    fontDataUriCache.set(url, dataUri);
+    return dataUri;
+  }
+
+  function collectFontFaceRuleTexts() {
+    const rules = [];
+    for (const sheet of document.styleSheets) {
+      let cssRules;
+      try {
+        cssRules = sheet.cssRules;
+      } catch (_error) {
+        continue;
+      }
+      if (!cssRules) continue;
+      for (const rule of cssRules) {
+        const cssText = rule.cssText || "";
+        if (cssText.startsWith("@font-face")) rules.push(cssText);
+      }
+    }
+    return rules;
+  }
+
+  async function buildInlinedFontCss() {
+    const ruleTexts = collectFontFaceRuleTexts();
+    if (ruleTexts.length === 0) return null;
+
+    const resolved = ruleTexts.map((cssText) => {
+      if (!SRC_DECLARATION_RE.test(cssText)) return null;
+      const srcMatch = cssText.match(/src\s*:\s*([^;}]+)[;}]/i);
+      if (!srcMatch) return null;
+      const url = extractFontUrl(srcMatch[1]);
+      if (!url) return null;
+      try {
+        return { cssText, url: new URL(url, document.baseURI).href };
+      } catch (_error) {
+        return null;
+      }
+    });
+
+    const dataUris = await Promise.all(
+      resolved.map((entry) => (entry ? fetchAsDataUri(entry.url) : Promise.resolve(null))),
+    );
+
+    const inlined = [];
+    let totalBytes = 0;
+    for (let index = 0; index < resolved.length; index += 1) {
+      const entry = resolved[index];
+      const dataUri = dataUris[index];
+      if (!entry || !dataUri) continue;
+      const approxBytes = dataUri.length * 0.75;
+      if (totalBytes + approxBytes > MAX_TOTAL_FONT_BYTES) break;
+      totalBytes += approxBytes;
+      inlined.push(entry.cssText.replace(SRC_DECLARATION_RE, `src: url("${dataUri}")`));
+    }
+    return inlined.length > 0 ? inlined.join("\n") : null;
+  }
+
+  function stripExternal(clone) {
+    const images = clone.querySelectorAll("img");
+    for (let index = 0; index < images.length; index += 1) {
+      const src = images[index].getAttribute("src");
+      if (src && !src.startsWith("data:")) images[index].removeAttribute("src");
+    }
+
+    const elements = clone.querySelectorAll("*");
+    for (let index = 0; index < elements.length; index += 1) {
+      const style = elements[index].style.cssText;
+      if (style && style.includes("url(")) {
+        elements[index].style.cssText = style.replace(
+          /url\(["']?(?!data:)[^)"']*["']?\)/gi,
+          "none",
+        );
+      }
+    }
+  }
+
+  function emitScroll() {
+    scrollRaf = 0;
+    if (!scrollForwarding) return;
+    postToTrustedTop({
+      type: "INLINE_EDIT_SCROLL",
+      scrollX: window.scrollX,
+      scrollY: window.scrollY,
+    });
+  }
+
+  window.addEventListener(
+    "scroll",
+    function () {
+      if (!scrollForwarding || scrollRaf) return;
+      scrollRaf = requestAnimationFrame(emitScroll);
+    },
+    { passive: true, capture: true },
+  );
+
+  async function handleCaptureRequest(event) {
+    const requestId = event.data.requestId;
+    const scrollX = window.scrollX;
+    const scrollY = window.scrollY;
+    const width = window.innerWidth;
+    const height = window.innerHeight;
+
+    function postResult(dataUrl) {
+      postToTrustedTop({
+        type: "INLINE_EDIT_SCREENSHOT_RESULT",
+        requestId,
+        dataUrl,
+        scrollX,
+        scrollY,
+      });
+    }
+
+    try {
+      // Wait for any pending web fonts to resolve so both inline metrics and
+      // the @font-face inlining below see the same loaded faces.
+      if (document.fonts && document.fonts.ready) {
+        try {
+          await document.fonts.ready;
+        } catch (_error) {}
+      }
+
+      const clone = document.documentElement.cloneNode(true);
+      inlineAll(document.documentElement, clone);
+
+      const removedNodes = clone.querySelectorAll("script,link[rel=\"stylesheet\"],style");
+      for (let index = 0; index < removedNodes.length; index += 1) {
+        removedNodes[index].remove();
+      }
+
+      stripExternal(clone);
+
+      // Re-embed web fonts as data-URI @font-face rules so the SVG rasterizer
+      // can resolve them — external font URLs aren't fetched during
+      // foreignObject rendering, which would otherwise force a fallback face
+      // and change text metrics.
+      const inlinedFontCss = await buildInlinedFontCss();
+      if (inlinedFontCss) {
+        const styleEl = document.createElement("style");
+        styleEl.textContent = inlinedFontCss;
+        const head = clone.querySelector("head");
+        if (head) head.appendChild(styleEl);
+        else clone.insertBefore(styleEl, clone.firstChild);
+      }
+
+      const html = new XMLSerializer().serializeToString(clone);
+      const svg =
+        `<svg xmlns="http://www.w3.org/2000/svg" width="${width}" height="${height}">` +
+        '<foreignObject width="100%" height="100%">' +
+        `<div xmlns="http://www.w3.org/1999/xhtml" style="width:${width}px;height:${height}px;overflow:hidden">` +
+        `<div style="transform:translate(-${scrollX}px,-${scrollY}px);transform-origin:top left">` +
+        html +
+        "</div></div></foreignObject></svg>";
+      const svgUrl = `data:image/svg+xml;charset=utf-8,${encodeURIComponent(svg)}`;
+      const image = new Image();
+      image.onload = function () {
+        const canvas = document.createElement("canvas");
+        canvas.width = width;
+        canvas.height = height;
+        canvas.getContext("2d").drawImage(image, 0, 0);
+        postResult(canvas.toDataURL("image/png"));
+      };
+      image.onerror = function () {
+        postResult(null);
+      };
+      image.src = svgUrl;
+    } catch (_error) {
+      postResult(null);
+    }
+  }
+
+  window.addEventListener("message", function (event) {
+    if (!event.data) return;
+    // Only accept messages from the direct parent frame. Blocks sibling /
+    // unrelated-window postMessage senders that could otherwise reach us.
+    if (event.source !== window.parent) return;
+
+    const trustedParentOrigin = getTrustedParentOrigin(event);
+    if (!trustedParentOrigin) return;
+    trustedTopOrigin = trustedParentOrigin;
+
+    if (event.data.type === "INLINE_EDIT_SCROLL_START") {
+      scrollForwarding = true;
+      emitScroll();
+      return;
+    }
+
+    if (event.data.type === "INLINE_EDIT_SCROLL_STOP") {
+      scrollForwarding = false;
+      if (scrollRaf) cancelAnimationFrame(scrollRaf);
+      scrollRaf = 0;
+      return;
+    }
+
+    if (event.data.type !== "INLINE_EDIT_CAPTURE_REQUEST") return;
+
+    handleCaptureRequest(event);
+  });
+})();
+
+
+</script></body>
+</html>

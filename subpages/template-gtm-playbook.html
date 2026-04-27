@@ -1,0 +1,1021 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>GTM Playbook Template — CRO Manual</title>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="../assets/shared.css"/>
+  <style>
+    :root { --sos: #0D5C63; }
+    .page-hero { background: var(--sos); }
+
+    /* Component card system */
+    .component-card {
+      background: var(--surface);
+      border: 1.5px solid var(--border);
+      border-radius: 10px;
+      margin: 24px 0;
+      overflow: hidden;
+    }
+    .component-header {
+      background: var(--sos);
+      color: #fff;
+      padding: 16px 24px;
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+    .comp-num {
+      width: 36px; height: 36px;
+      background: rgba(255,255,255,0.2);
+      border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 16px; font-weight: 700;
+      flex-shrink: 0;
+    }
+    .comp-title-block { flex: 1; }
+    .comp-title { font-size: 18px; font-weight: 700; }
+    .comp-subtitle { font-size: 13px; opacity: 0.8; margin-top: 2px; }
+    .comp-badge {
+      font-size: 11px; font-weight: 700;
+      background: rgba(255,255,255,0.18);
+      padding: 4px 12px; border-radius: 20px;
+    }
+    .component-body { padding: 24px; }
+
+    /* Sub-section within component */
+    .comp-section { margin-bottom: 24px; }
+    .comp-section:last-child { margin-bottom: 0; }
+    .comp-section-title {
+      font-size: 14px; font-weight: 700; color: var(--sos);
+      text-transform: uppercase; letter-spacing: 0.8px;
+      margin-bottom: 10px;
+      padding-bottom: 6px;
+      border-bottom: 1.5px solid #c2dfe2;
+    }
+
+    /* Template field */
+    .template-field {
+      background: #f7f6f2;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 14px 16px;
+      margin: 10px 0;
+    }
+    .tf-label {
+      font-size: 11px; font-weight: 700;
+      text-transform: uppercase; letter-spacing: 0.8px;
+      color: var(--text-muted); margin-bottom: 6px;
+    }
+    .tf-prompt { font-size: 13px; color: var(--text); line-height: 1.65; }
+    .tf-example {
+      font-size: 12px; color: var(--text-muted);
+      font-style: italic; margin-top: 6px; line-height: 1.5;
+    }
+
+    /* Two-column field layout */
+    .field-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+      margin: 10px 0;
+    }
+    @media (max-width: 680px) { .field-grid { grid-template-columns: 1fr; } }
+
+    /* Governance table */
+    .gov-table-wrap { overflow-x: auto; margin: 16px 0; }
+    .gov-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 13px;
+      min-width: 580px;
+    }
+    .gov-table th {
+      background: var(--sos); color: #fff;
+      padding: 10px 14px; text-align: left;
+      font-size: 11px; font-weight: 700;
+      letter-spacing: 0.5px; text-transform: uppercase;
+    }
+    .gov-table td { padding: 10px 14px; border-bottom: 1px solid var(--border); font-size: 13px; }
+    .gov-table tr:nth-child(even) td { background: #fafaf8; }
+    .gov-table tr:last-child td { border-bottom: none; }
+
+    /* Overview grid */
+    .overview-grid {
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      gap: 10px;
+      margin: 20px 0;
+    }
+    @media (max-width: 768px) { .overview-grid { grid-template-columns: 1fr 1fr; } }
+    .ov-card {
+      background: var(--surface);
+      border: 1.5px solid var(--border);
+      border-radius: 10px;
+      padding: 14px;
+      text-align: center;
+      cursor: pointer;
+      transition: all 0.15s;
+    }
+    .ov-card:hover { border-color: var(--sos); background: #eaf4f5; }
+    .ov-num {
+      width: 32px; height: 32px;
+      background: var(--sos); color: #fff;
+      border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 14px; font-weight: 700;
+      margin: 0 auto 8px;
+    }
+    .ov-title { font-size: 13px; font-weight: 700; color: var(--text); }
+    .ov-desc { font-size: 11px; color: var(--text-muted); margin-top: 4px; line-height: 1.4; }
+
+    /* Version table */
+    .version-table-wrap { overflow-x: auto; margin: 16px 0; }
+    .version-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 13px;
+    }
+    .version-table th {
+      background: #1C1B19; color: #fff;
+      padding: 9px 14px; text-align: left;
+      font-size: 11px; font-weight: 700;
+      letter-spacing: 0.5px; text-transform: uppercase;
+    }
+    .version-table td { padding: 9px 14px; border-bottom: 1px solid var(--border); }
+    .version-table tr:last-child td { border-bottom: none; }
+  </style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav class="nav">
+  <span class="nav-logo">CRO <span>Manual</span></span>
+  <span class="nav-sep">/</span>
+  <a href="../pages/resources.html" class="nav-back">← Resources &amp; Templates</a>
+  <span class="nav-sep">/</span>
+  <span class="nav-current">GTM Playbook Template</span>
+  <span class="nav-spacer"></span>
+  <a href="../index.html" class="nav-home">Home</a>
+</nav>
+
+<!-- HERO -->
+<div class="page-hero">
+  <div class="hero-phase-label">Science of Scaling · Resources &amp; Templates</div>
+  <h1 class="hero-title">GTM Playbook Template</h1>
+  <p class="hero-subtitle">The master template for building, documenting, and iterating your GTM Playbook. A living document that codifies your sales motion into a repeatable system any trained rep can execute.</p>
+  <div class="hero-tags">
+    <span class="hero-tag">ICP</span>
+    <span class="hero-tag">Buyer Journey</span>
+    <span class="hero-tag">Prospecting</span>
+    <span class="hero-tag">Discovery</span>
+    <span class="hero-tag">Presentation</span>
+    <span class="hero-tag">CS Onboarding</span>
+    <span class="hero-tag">Film Reviews</span>
+  </div>
+</div>
+
+<!-- CONTENT -->
+<div class="content-wrap">
+
+  <nav class="breadcrumb">
+    <a href="../index.html">Home</a>
+    <span class="sep">›</span>
+    <a href="../pages/resources.html">Resources &amp; Templates</a>
+    <span class="sep">›</span>
+    <span class="current">GTM Playbook Template</span>
+  </nav>
+
+  <!-- Intro -->
+  <h2 class="section-title">What Is a GTM Playbook?</h2>
+  <p class="section-intro">A GTM Playbook is the documented, iterated system that converts your founders' intuitive selling knowledge into a process that any trained rep can execute with consistent results.</p>
+
+  <div class="subsection">
+    <p>The GTM Playbook is not a slide deck or a set of talking points. It is the comprehensive documentation of every step in your customer acquisition process — from how you define your ICP to how you transition a newly closed customer to CS. Every element of the playbook should be based on evidence: what has worked in actual customer conversations, validated by win/loss data, and refined through film review sessions where the team reviews real calls together.</p>
+    <p>The playbook exists to solve three problems simultaneously. First, it reduces rep ramp time by giving new hires a documented system rather than requiring them to learn everything through trial and error. Second, it makes your sales process inspectable — managers can see exactly which step of the process is breaking down when a rep underperforms. Third, it creates a foundation for iteration — when market conditions change, you update the playbook rather than hoping reps figure it out individually.</p>
+    <p>The GTM Playbook is never finished. It should have a version number and a governance process that specifies who can propose changes, how changes are validated, and how updated versions are distributed to the team. A playbook that isn't being updated is a playbook that is slowly becoming obsolete.</p>
+  </div>
+
+  <div class="callout callout-warning">
+    <div class="callout-title">The Founder's Most Important Contribution</div>
+    <p>The most valuable version of the GTM Playbook is written by the founder before hiring the first sales leader. It captures the intuitive, pattern-matched knowledge the founder developed by closing the first 10–20 customers directly. This institutional knowledge is irreplaceable — it must be documented before it dissipates as the company scales and the founder moves further from day-to-day selling.</p>
+  </div>
+
+  <!-- 5-component overview -->
+  <h2 class="section-title">The 5-Component Structure</h2>
+  <p class="section-intro">Every GTM Playbook should contain exactly these five components. They map to the five stages of a B2B sales motion: who you sell to, how you find them, how you qualify them, how you convince them, and how you ensure they succeed.</p>
+
+  <div class="overview-grid">
+    <div class="ov-card">
+      <div class="ov-num">1</div>
+      <div class="ov-title">ICP Definition</div>
+      <div class="ov-desc">Who to target, who to avoid, and how to qualify quickly</div>
+    </div>
+    <div class="ov-card">
+      <div class="ov-num">2</div>
+      <div class="ov-title">Prospecting</div>
+      <div class="ov-desc">How to find and reach ICP buyers at scale</div>
+    </div>
+    <div class="ov-card">
+      <div class="ov-num">3</div>
+      <div class="ov-title">Discovery</div>
+      <div class="ov-desc">Questions to surface pain, context, and urgency</div>
+    </div>
+    <div class="ov-card">
+      <div class="ov-num">4</div>
+      <div class="ov-title">Presentation</div>
+      <div class="ov-desc">Demo and proposal framework tied to discovered pain</div>
+    </div>
+    <div class="ov-card">
+      <div class="ov-num">5</div>
+      <div class="ov-title">CS Onboarding</div>
+      <div class="ov-desc">LIR-driven onboarding to ensure customer success</div>
+    </div>
+  </div>
+
+  <!-- Component 1: ICP -->
+  <div class="component-card">
+    <div class="component-header">
+      <div class="comp-num">1</div>
+      <div class="comp-title-block">
+        <div class="comp-title">ICP Definition &amp; Qualification</div>
+        <div class="comp-subtitle">Define exactly who to target, what firmographic and behavioral signals qualify them, and what disqualifies them immediately</div>
+      </div>
+      <div class="comp-badge">See also: template-icp.html</div>
+    </div>
+    <div class="component-body">
+
+      <div class="comp-section">
+        <div class="comp-section-title">Firmographic Profile (Who They Are)</div>
+        <div class="field-grid">
+          <div class="template-field">
+            <div class="tf-label">Industry / Vertical</div>
+            <div class="tf-prompt">List the 2–3 industries or verticals where you have the highest win rate and customer retention. Be specific — not "technology companies" but "Series A–C SaaS companies building B2B products."</div>
+            <div class="tf-example">Example: "Manufacturing companies with 50–500 employees that operate at least 2 production facilities in North America."</div>
+          </div>
+          <div class="template-field">
+            <div class="tf-label">Company Size (Revenue or Headcount)</div>
+            <div class="tf-prompt">Define the range based on your top 10 customers. What size company is big enough to have the problem you solve but small enough that your price point is material to them?</div>
+            <div class="tf-example">Example: "200–2,000 employees. Below 200: problem isn't painful enough. Above 2,000: long sales cycles and enterprise procurement friction."</div>
+          </div>
+          <div class="template-field">
+            <div class="tf-label">Buyer Title / Persona</div>
+            <div class="tf-prompt">Who signs the check? Who uses the product day-to-day? Who can block the deal? Define each persona by title, responsibilities, primary concern, and how to find them on LinkedIn.</div>
+            <div class="tf-example">Example: "Economic Buyer: VP Operations or COO. Champion: Director of Ops or Plant Manager. Blocker: IT Director (security/integration concerns)."</div>
+          </div>
+          <div class="template-field">
+            <div class="tf-label">Technology Stack Signals</div>
+            <div class="tf-prompt">What tools in a company's stack indicate they are likely to buy? What tools indicate a competitor is in place?</div>
+            <div class="tf-example">Example: "Using Salesforce = likely to budget for adjacent tools. Using [Competitor] = displacement conversation needed. No CRM = may be too early-stage."</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="comp-section">
+        <div class="comp-section-title">Behavioral / Situational Qualifiers (What They're Going Through)</div>
+        <div class="template-field">
+          <div class="tf-label">Trigger Events — Buy Now Signals</div>
+          <div class="tf-prompt">What organizational events increase the likelihood they will buy in the next 90 days? List 4–6 specific trigger events. These become the basis of your prospecting sequence targeting logic.</div>
+          <div class="tf-example">Examples: "Just hired a new VP Operations (change agent, new budget)." / "Recently raised Series B or C funding." / "Job postings for ops or finance roles (scaling and feeling pain)." / "Recent mention of 'operational inefficiency' in press release or earnings call."</div>
+        </div>
+        <div class="template-field">
+          <div class="tf-label">Problem Conditions — Must Be True</div>
+          <div class="tf-prompt">What business conditions must be present for your solution to be valuable? These are discovery questions, not assumptions — but they define what you're listening for in discovery.</div>
+          <div class="tf-example">Examples: "Manual processes that consume &gt;3 hours/week of a skilled employee's time." / "More than one system of record for the same data type." / "Unable to answer 'how is the business performing?' without running multiple reports."</div>
+        </div>
+      </div>
+
+      <div class="comp-section">
+        <div class="comp-section-title">Disqualification Criteria (Who to Pass On)</div>
+        <div class="template-field">
+          <div class="tf-label">Hard Disqualifiers — Exit the Conversation</div>
+          <div class="tf-prompt">What characteristics, conditions, or answers should cause you to stop pursuing a prospect immediately? These protect rep time and prevent the wrong customers from entering the funnel and consuming post-sale CS resources.</div>
+          <div class="tf-example">Examples: "Evaluating for a subsidiary only (no authority to expand across the org)." / "Budget cycle doesn't reset for &gt;9 months." / "Currently in the middle of a platform migration — no bandwidth." / "Executive champion has just resigned."</div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- Component 2: Prospecting -->
+  <div class="component-card">
+    <div class="component-header">
+      <div class="comp-num">2</div>
+      <div class="comp-title-block">
+        <div class="comp-title">Prospecting Methodology</div>
+        <div class="comp-subtitle">How reps find ICP buyers, build lists, and execute outreach sequences that generate responses</div>
+      </div>
+      <div class="comp-badge">Outbound + Inbound</div>
+    </div>
+    <div class="component-body">
+
+      <div class="comp-section">
+        <div class="comp-section-title">List Building Process</div>
+        <div class="template-field">
+          <div class="tf-label">Target Account Sources</div>
+          <div class="tf-prompt">Where do reps source target accounts? List each source, how to use it, and the minimum qualification filter to apply before adding an account to the outreach queue.</div>
+          <div class="tf-example">Sources: "LinkedIn Sales Navigator (filters: industry, headcount, seniority, title). Trigger event tools (Bombora, ZoomInfo intent signals). CRM import of company lookalikes from closed-won accounts. Inbound lead overflow from SDR qualification."</div>
+        </div>
+        <div class="field-grid">
+          <div class="template-field">
+            <div class="tf-label">Account Research Checklist</div>
+            <div class="tf-prompt">Before any outreach, reps must complete this research. What are the 5–7 things a rep must know about a target account before reaching out?</div>
+            <div class="tf-example">1. Company size and recent funding. 2. Relevant trigger events in last 90 days. 3. Current tech stack (from LinkedIn jobs or G2 reviews). 4. Buyer persona titles confirmed. 5. Competitor presence (if any). 6. One specific business pain hypothesis based on research.</div>
+          </div>
+          <div class="template-field">
+            <div class="tf-label">Persona Identification Method</div>
+            <div class="tf-prompt">How does the rep identify the correct buyer personas at a target account? Which title do they reach first — the champion or the economic buyer?</div>
+            <div class="tf-example">"Start with the Champion (Director-level). Use LinkedIn to confirm the title exists. Identify the economic buyer through the org chart. Identify the potential blocker in IT by checking for an IT Director with 'security' in their profile."</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="comp-section">
+        <div class="comp-section-title">Outreach Sequence</div>
+        <div class="template-field">
+          <div class="tf-label">Sequence Structure (Days &amp; Touches)</div>
+          <div class="tf-prompt">Define the standard prospecting sequence for cold outreach. Include channel (email, phone, LinkedIn), timing, and the specific message intent at each touch. Document the exact email and call scripts for touches 1, 3, and 5 — the highest-leverage points.</div>
+          <div class="tf-example">Day 1: Personalized email referencing trigger event. Day 3: LinkedIn connection + note. Day 6: Follow-up email with one-sentence case study. Day 10: Phone + voicemail (if no response). Day 14: Break-up email with specific re-engagement offer. Day 21: Final LinkedIn message. Archive if no response.</div>
+        </div>
+        <div class="field-grid">
+          <div class="template-field">
+            <div class="tf-label">Email Subject Line Principles</div>
+            <div class="tf-prompt">What makes your best-performing subject lines work? Document 5–8 tested subject lines with their open rate (if tracked), and extract the common principles.</div>
+            <div class="tf-example">Principle: Reference a specific, observable pain point rather than your product. "How [Similar Co] reduced report time by 60%" outperforms "Introduction to [Your Product]" by 2.5× open rate.</div>
+          </div>
+          <div class="template-field">
+            <div class="tf-label">Call Talk Track (Opening + Bridge)</div>
+            <div class="tf-prompt">The first 30 seconds of a cold call determine whether you get a conversation or a hang-up. Document the exact talk track that your best reps use.</div>
+            <div class="tf-example">"Hi [Name], this is [Rep] from [Company]. I'll be direct — I'm calling because I noticed [specific trigger event]. We help [role] at companies your size [outcome without jargon]. Do you have 90 seconds so I can tell you why I called?"</div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- Component 3: Discovery -->
+  <div class="component-card">
+    <div class="component-header">
+      <div class="comp-num">3</div>
+      <div class="comp-title-block">
+        <div class="comp-title">Discovery Framework</div>
+        <div class="comp-subtitle">The structured approach to uncovering pain, urgency, decision process, and budget before presenting anything</div>
+      </div>
+      <div class="comp-badge">Most important component</div>
+    </div>
+    <div class="component-body">
+
+      <div class="comp-section">
+        <div class="comp-section-title">Discovery Call Structure</div>
+        <div class="template-field">
+          <div class="tf-label">Opening Frame (First 3 Minutes)</div>
+          <div class="tf-prompt">How does the rep open a discovery call? What is the agenda-setting script that establishes the rep as a peer, sets expectations for the call, and gets the buyer's permission to ask tough questions?</div>
+          <div class="tf-example">"Thanks for making time. I'd like to spend the first 20 minutes understanding your situation — your goals, what's working, and where things are frustrating. If it sounds like we can help, I'll share what that typically looks like for companies your size. If not, I'll tell you that directly. Does that work for you?"</div>
+        </div>
+      </div>
+
+      <div class="comp-section">
+        <div class="comp-section-title">Core Discovery Question Bank</div>
+        <p style="font-size:14px;color:var(--text-muted);line-height:1.6;margin-bottom:12px;">Document the 15–20 discovery questions that have generated the most insight across your best calls. Organize by category. These become the foundation of rep training and film review.</p>
+        <div class="field-grid">
+          <div class="template-field">
+            <div class="tf-label">Current State Questions (Where Are They Now?)</div>
+            <div class="tf-prompt">Questions that reveal the buyer's current processes, systems, and workarounds. What are they doing today to solve the problem you address?</div>
+            <div class="tf-example">"Walk me through how your team handles [process] today — from start to finish." / "How many people are involved in [process], and how long does it take?" / "What tools are you using to manage this?"</div>
+          </div>
+          <div class="template-field">
+            <div class="tf-label">Pain Quantification Questions (How Bad Is It?)</div>
+            <div class="tf-prompt">Questions that convert vague frustration into specific, measurable business impact. Pain that can be quantified is pain that can be solved with a budget.</div>
+            <div class="tf-example">"If you had to estimate the hours per week your team spends on this, what would you guess?" / "What does that cost you in terms of [salary / opportunity cost / error rate]?" / "Has this caused any specific business problems you can point to?"</div>
+          </div>
+          <div class="template-field">
+            <div class="tf-label">Future State Questions (What Would Success Look Like?)</div>
+            <div class="tf-prompt">Questions that let the buyer describe their desired outcome — which becomes the basis of your value proposition in the presentation.</div>
+            <div class="tf-example">"If we were having this conversation 12 months from now and things had gone really well, what would be different?" / "What would need to be true for this to be considered a successful investment?"</div>
+          </div>
+          <div class="template-field">
+            <div class="tf-label">Decision Process Questions (How Do They Buy?)</div>
+            <div class="tf-prompt">Questions that map the buying process, identify stakeholders, surface budget realities, and clarify the evaluation timeline before you invest time building a proposal.</div>
+            <div class="tf-example">"If you decided to move forward, what would the approval process look like?" / "Who else would need to be involved in evaluating something like this?" / "Do you have budget allocated for a project in this area, or would this require a new approval?"</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="comp-section">
+        <div class="comp-section-title">Discovery Recap (Bridge to Presentation)</div>
+        <div class="template-field">
+          <div class="tf-label">The Discovery Recap Template</div>
+          <div class="tf-prompt">Before showing anything, the rep must recap what they heard. This earns the right to present, confirms understanding, and ties the presentation directly to the buyer's specific situation.</div>
+          <div class="tf-example">"Before I show you anything, let me recap what I heard to make sure I've got it right. You're currently [current state] and that's costing you approximately [quantified pain]. If you could solve this, the outcome you'd need is [future state]. And the decision would involve [stakeholders] with a timeline of [timeframe]. Does that capture it?"</div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- Component 4: Presentation -->
+  <div class="component-card">
+    <div class="component-header">
+      <div class="comp-num">4</div>
+      <div class="comp-title-block">
+        <div class="comp-title">Presentation &amp; Demo Framework</div>
+        <div class="comp-subtitle">A pain-tied, discovery-informed demo and proposal structure that connects product capabilities to buyer outcomes</div>
+      </div>
+      <div class="comp-badge">Always pain-first</div>
+    </div>
+    <div class="component-body">
+
+      <div class="comp-section">
+        <div class="comp-section-title">Demo Structure Principles</div>
+        <div class="callout callout-definition" style="margin-bottom:16px;">
+          <div class="callout-title">The Anti-Pattern: Feature-First Demos</div>
+          <p>The most common demo mistake is showing features without first tying them to pain. Every feature shown in a demo should be preceded by: "Earlier you mentioned [specific pain]. Here's how we solve that." Features shown without a pain anchor are quickly forgotten.</p>
+        </div>
+        <div class="template-field">
+          <div class="tf-label">Demo Flow (Pain → Feature → Evidence → Next Step)</div>
+          <div class="tf-prompt">Structure every demo as a series of pain-feature-evidence sequences. One sequence per major pain point discovered. Never show more than 3 features in a first demo.</div>
+          <div class="tf-example">Pain anchor: "You mentioned your team spends 3 hours every Monday on manual reporting." → Feature: "This is the automated report builder — here's how it works for your use case." → Evidence: "A company similar to yours reduced that time to 20 minutes within the first week." → Question: "Does that solve the problem you described, or is there a nuance I'm missing?"</div>
+        </div>
+      </div>
+
+      <div class="comp-section">
+        <div class="comp-section-title">Objection Handlers</div>
+        <p style="font-size:13px;color:var(--text-muted);margin-bottom:10px;line-height:1.6;">Document the 8–10 most common objections encountered in the presentation stage and the proven responses. Build this from actual call recordings, not from the sales team's assumptions about what buyers say.</p>
+        <div class="gov-table-wrap">
+          <table class="gov-table">
+            <thead>
+              <tr>
+                <th>Objection</th>
+                <th>What's Behind It</th>
+                <th>Proven Response</th>
+                <th>Escalation Path</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>"It's too expensive."</td>
+                <td>Budget constraint or perceived value gap — not always the same problem</td>
+                <td>Acknowledge first, then quantify: "Let me make sure I understand — is it that the budget isn't available, or that you're not sure the value is there? Because those are different conversations." Then tie back to the quantified pain from discovery.</td>
+                <td>If genuinely budget-constrained: phased implementation, smaller initial scope. If value gap: schedule a value engineering session with your champion.</td>
+              </tr>
+              <tr>
+                <td>"We're already doing this with [internal solution]."</td>
+                <td>Status quo bias or sunk cost fallacy on existing investment</td>
+                <td>"Totally understand. A lot of our customers had something in place before they came to us. Can I ask — what does it cost you to maintain that, and does it actually solve [specific pain] the way you need it to?" Surface the total cost of the internal solution including maintenance, opportunity cost, and error rate.</td>
+                <td>If the internal solution is genuinely good enough for them, disqualify gracefully. Don't win customers who shouldn't be customers.</td>
+              </tr>
+              <tr>
+                <td>"We need to involve IT."</td>
+                <td>Security, integration, or procurement concern — almost always legitimate</td>
+                <td>"Absolutely — that's the right call. Let me make this easy for you. Can we schedule a 30-minute call with your IT counterpart? I have a one-pager that covers our security architecture, data practices, and typical integration scope that usually addresses the main concerns up front." Reduce friction, don't avoid it.</td>
+                <td>Prepare IT-specific materials (SOC 2, data residency, API documentation) before the meeting. Have your technical lead available if needed.</td>
+              </tr>
+              <tr>
+                <td>"Now isn't the right time."</td>
+                <td>Competing priorities or lack of urgency</td>
+                <td>Acknowledge and anchor to their stated pain: "I hear you. Can I ask — the problem you described earlier with [specific pain], is that still causing the impact you mentioned, or has something changed?" If pain is still real, reconnect to urgency. If circumstances changed, ask when to reconnect with a specific date.</td>
+                <td>If genuinely not ready: set a follow-up with a specific date trigger ("call me after Q3 closes"). Put in nurture sequence. Do not hold in active pipeline with a theoretical close date.</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- Component 5: CS Onboarding -->
+  <div class="component-card">
+    <div class="component-header">
+      <div class="comp-num">5</div>
+      <div class="comp-title-block">
+        <div class="comp-title">CS Onboarding &amp; LIR Achievement</div>
+        <div class="comp-subtitle">The handoff process and first-90-day onboarding plan designed to drive every new customer to LIR achievement within the defined time window</div>
+      </div>
+      <div class="comp-badge">LIR is the north star</div>
+    </div>
+    <div class="component-body">
+
+      <div class="comp-section">
+        <div class="comp-section-title">Sales-to-CS Handoff Protocol</div>
+        <div class="template-field">
+          <div class="tf-label">Handoff Document — Required Fields</div>
+          <div class="tf-prompt">Every closed deal must include a structured handoff document completed by the AE before the first CS call. This document is the foundation of the CS onboarding plan.</div>
+          <div class="tf-example">Required fields: (1) Why they bought — the specific pain and future state from discovery. (2) Champion and economic buyer names + roles. (3) Success criteria stated by the customer. (4) Any commitments made during the sales process. (5) Integration or implementation requirements. (6) Known risks or concerns (budget reviewer who wasn't sold, IT who is skeptical). (7) Recommended LIR milestone timeline based on company size and complexity.</div>
+        </div>
+      </div>
+
+      <div class="comp-section">
+        <div class="comp-section-title">First-90-Day LIR Achievement Plan</div>
+        <div class="gov-table-wrap">
+          <table class="gov-table">
+            <thead>
+              <tr>
+                <th>Milestone</th>
+                <th>Day Target</th>
+                <th>Owner</th>
+                <th>Success Criteria</th>
+                <th>Risk Signal (If Not Met)</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><strong>Kickoff Call</strong></td>
+                <td>Day 1–3</td>
+                <td>CSM + AE</td>
+                <td>Customer can articulate their success criteria. LIR event explained. First 30-day milestone agreed.</td>
+                <td>No-show or disengaged champion → escalate to economic buyer within 5 days</td>
+              </tr>
+              <tr>
+                <td><strong>Technical Setup Complete</strong></td>
+                <td>Day 7–14</td>
+                <td>CSM + Implementation</td>
+                <td>Product connected to customer's environment. First data imported or first workflow configured.</td>
+                <td>IT blocking → loop in AE immediately. Do not wait past Day 14 without escalation.</td>
+              </tr>
+              <tr>
+                <td><strong>First Value Event</strong></td>
+                <td>Day 14–21</td>
+                <td>CSM</td>
+                <td>Customer completes first meaningful action in product tied to their stated pain. CSM documents outcome.</td>
+                <td>No product login or minimal usage → CSM calls the champion proactively. Not an email.</td>
+              </tr>
+              <tr>
+                <td><strong>LIR Event Check-In</strong></td>
+                <td>Day 30</td>
+                <td>CSM</td>
+                <td>Customer is on track to complete LIR event by T (defined time window). Rate ≥ 50% of the way to the LIR threshold.</td>
+                <td>If behind: schedule emergency onboarding session. Identify and remove blockers. Escalate if needed.</td>
+              </tr>
+              <tr>
+                <td><strong>LIR Achievement</strong></td>
+                <td>Day T (e.g., Day 45)</td>
+                <td>CSM</td>
+                <td>Customer has completed the LIR event as defined. CSM documents and records in CRM.</td>
+                <td>LIR not achieved → this customer is at elevated churn risk. Activate intervention protocol immediately.</td>
+              </tr>
+              <tr>
+                <td><strong>First QBR</strong></td>
+                <td>Day 90</td>
+                <td>CSM</td>
+                <td>QBR connects product metrics to customer's stated business outcomes. Expansion opportunities identified.</td>
+                <td>Customer declines QBR → relationship risk signal. Schedule alternative touchpoint at the executive level.</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <div class="comp-section">
+        <div class="comp-section-title">Film Review Program</div>
+        <div class="template-field">
+          <div class="tf-label">Weekly Film Review — Format and Rules</div>
+          <div class="tf-prompt">The Film Review is the primary mechanism for improving the playbook. Document the format, the rules, and the process for incorporating learnings back into the playbook.</div>
+          <div class="tf-example">Format: 60-minute weekly session. Rotating rep submits a call recording (30 minutes, any stage). First 3 minutes: rep self-evaluates — what went well, what they'd change. Remaining 27 minutes: structured team review against playbook criteria. Rule: no one reviews their own manager's calls. Rule: all feedback is behavioral and specific, never personal. Learnings: anything that generates consensus improvement is proposed as a playbook edit within 48 hours and reviewed at the next week's session.</div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- Governance Process -->
+  <h2 class="section-title">Playbook Governance Process</h2>
+  <p class="section-intro">The playbook is a living document. These governance rules ensure it stays current, accurate, and team-owned rather than becoming an artifact that nobody reads.</p>
+
+  <div class="gov-table-wrap">
+    <table class="gov-table">
+      <thead>
+        <tr>
+          <th>Governance Element</th>
+          <th>Owner</th>
+          <th>Cadence</th>
+          <th>Description</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>Version Control</strong></td>
+          <td>Sales Leader</td>
+          <td>Every change</td>
+          <td>Every published version gets a version number (e.g., v2.3) and a changelog entry. Reps must always use the current version. Previous versions archived but accessible.</td>
+        </tr>
+        <tr>
+          <td><strong>Change Proposal Process</strong></td>
+          <td>Any team member</td>
+          <td>Any time</td>
+          <td>Any rep or CSM can propose a change using the standard change proposal template. Proposals must include: specific section to change, evidence for the change (call data, win/loss pattern), and proposed new text.</td>
+        </tr>
+        <tr>
+          <td><strong>Change Review</strong></td>
+          <td>Sales Leader + 2 reps</td>
+          <td>Weekly (at Film Review)</td>
+          <td>Pending proposals reviewed at weekly Film Review. Accepted changes published within 48 hours. Rejected changes documented with rationale to prevent duplicate proposals.</td>
+        </tr>
+        <tr>
+          <td><strong>Quarterly Audit</strong></td>
+          <td>Sales Leader</td>
+          <td>Quarterly</td>
+          <td>Full playbook review against current win/loss data. Any section not validated by recent wins is flagged for evidence-gathering or removal. ICP definition reviewed against last quarter's cohort LIR data.</td>
+        </tr>
+        <tr>
+          <td><strong>New Rep Certification</strong></td>
+          <td>Sales Leader + Peer</td>
+          <td>End of ramp</td>
+          <td>Every new rep must demonstrate mastery of all 5 playbook components before carrying a full quota. Certification includes: ICP quiz, role-play of discovery call, review of one recorded presentation against rubric.</td>
+        </tr>
+        <tr>
+          <td><strong>Annual Reset</strong></td>
+          <td>Sales Leader + Founder</td>
+          <td>Annual</td>
+          <td>Once per year, the full playbook is rebuilt from scratch based on current data — not incrementally patched from the previous version. This prevents "playbook debt" where outdated sections are never cleaned up.</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- Version history -->
+  <h3 class="subsection-title">Playbook Version History</h3>
+  <p style="font-size:14px;color:var(--text-muted);margin-bottom:12px;line-height:1.6;">Track every published version of your playbook. This creates accountability and allows you to understand which changes drove improvement in rep performance metrics.</p>
+  <div class="version-table-wrap">
+    <table class="version-table">
+      <thead>
+        <tr>
+          <th>Version</th>
+          <th>Date</th>
+          <th>Owner</th>
+          <th>Primary Changes</th>
+          <th>Impact on Rep Metrics</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>v1.0</td>
+          <td>—</td>
+          <td>Founder</td>
+          <td>Initial playbook from first 10–20 deals. ICP based on founder intuition; discovery from founder's selling style.</td>
+          <td>—</td>
+        </tr>
+        <tr>
+          <td>v1.1</td>
+          <td>—</td>
+          <td>First GTM Hire</td>
+          <td>ICP definition refined after 5 ramp deals. Added 3 new discovery questions from film review. Removed 2 demo features that created confusion.</td>
+          <td>—</td>
+        </tr>
+        <tr>
+          <td>v2.0</td>
+          <td>—</td>
+          <td>First Sales Leader</td>
+          <td>Full rebuild. Methodology formalized. Objection handlers documented from 30 call recordings. LIR achievement integrated into CS handoff protocol.</td>
+          <td>—</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- Related links -->
+  <div class="related-section">
+    <div class="related-title">Related Pages</div>
+    <div class="related-links">
+      <a href="template-icp.html" class="related-link">ICP Template</a>
+      <a href="template-persona.html" class="related-link">Persona Template</a>
+      <a href="template-message-house.html" class="related-link">Message House</a>
+      <a href="sos-gtm-playbook.html" class="related-link">GTM Playbook SoS</a>
+      <a href="template-lir.html" class="related-link">LIR Journey Template</a>
+      <a href="../pages/resources.html" class="related-link">← All Templates</a>
+    </div>
+  </div>
+
+</div>
+<script data-pplx-inline-edit>
+(function () {
+  if (window === window.top) return;
+
+  const allowedParentOrigins = ["https://www.perplexity.ai","https://perplexity.ai","https://testing.perplexity.ai","https://staging.perplexity.ai","https://*.preview.i.perplexity.ai","http://localhost:3000","http://127.0.0.1:3000","http://localhost:5173","http://127.0.0.1:5173"];
+  const MAX_FONT_BYTES = 500 * 1024;
+  const MAX_TOTAL_FONT_BYTES = 2 * 1024 * 1024;
+  let scrollForwarding = false;
+  let scrollRaf = 0;
+  let trustedTopOrigin = null;
+
+  // Allow entries like "https://*.preview.i.perplexity.ai" — the wildcard
+  // matches a single DNS label (no dots), so "https://*.foo" cannot stretch
+  // across multiple labels.
+  function matchesAllowedOrigin(origin) {
+    if (!origin) return false;
+    for (const entry of allowedParentOrigins) {
+      if (!entry.includes("*")) {
+        if (entry === origin) return true;
+        continue;
+      }
+      const pattern = new RegExp(
+        "^" +
+          entry.replace(/[.+?^${}()|[\]\\]/g, "\\$&").replace(/\*/g, "[^.]+") +
+          "$",
+      );
+      if (pattern.test(origin)) return true;
+    }
+    return false;
+  }
+
+  // Trust decision: when the sender is same-origin-visible (event.origin is a
+  // real origin like https://www.perplexity.ai) we trust event.origin directly.
+  // When event.origin is "null" (opaque broker srcdoc), we fall back to the
+  // broker's stamped `parentOrigin` to identify the top window. The fallback
+  // is claim-only — we rely on the browser's native `targetOrigin` enforcement
+  // on the response path (see postToTrustedTop) to ensure replies can't be
+  // delivered to anyone but the actual top window of that claimed origin.
+  function getTrustedParentOrigin(event) {
+    const forwardedParentOrigin =
+      typeof event.data.parentOrigin === "string" ? event.data.parentOrigin : null;
+    const parentOrigin = event.origin === "null" ? forwardedParentOrigin : event.origin;
+    return matchesAllowedOrigin(parentOrigin) ? parentOrigin : null;
+  }
+
+  // All responses go to window.top with targetOrigin = the allowlisted origin.
+  // An attacker that iframes us inside their own null-origin broker can claim
+  // any parentOrigin they like, but the browser will drop the reply whenever
+  // the real top's origin doesn't match — so the screenshot never leaves.
+  function postToTrustedTop(message) {
+    if (!trustedTopOrigin) return;
+    try {
+      window.top.postMessage(message, trustedTopOrigin);
+    } catch (_error) {}
+  }
+
+  function inlineAll(original, clone) {
+    if (original.nodeType !== 1 || clone.nodeType !== 1) return;
+
+    try {
+      const computedStyle = getComputedStyle(original);
+      // cssText on a computed style is the serialized declaration in modern
+      // Chromium/Safari — a single read beats enumerating ~400 longhand
+      // properties. Firefox returns "" here, so we fall back on empty.
+      const serialized = computedStyle.cssText;
+      if (serialized) {
+        clone.style.cssText = serialized;
+      } else {
+        const parts = new Array(computedStyle.length);
+        for (let index = 0; index < computedStyle.length; index += 1) {
+          const property = computedStyle[index];
+          parts[index] = `${property}:${computedStyle.getPropertyValue(property)};`;
+        }
+        clone.style.cssText = parts.join("");
+      }
+    } catch (_error) {}
+
+    const originalChildren = original.children;
+    const clonedChildren = clone.children;
+    for (
+      let index = 0;
+      index < originalChildren.length && index < clonedChildren.length;
+      index += 1
+    ) {
+      inlineAll(originalChildren[index], clonedChildren[index]);
+    }
+  }
+
+  function extractFontUrl(srcValue) {
+    const matches = [
+      ...srcValue.matchAll(
+        /url\(["']?([^"')]+)["']?\)(?:\s*format\(["']?([^"')]+)["']?\))?/gi,
+      ),
+    ];
+    if (matches.length === 0) return null;
+    const woff2 = matches.find((m) => m[2] && m[2].toLowerCase().includes("woff2"));
+    if (woff2) return woff2[1];
+    const woff = matches.find((m) => m[2] && m[2].toLowerCase().includes("woff"));
+    if (woff) return woff[1];
+    return matches[0][1];
+  }
+
+  // Cache resolved font URL -> data URI across captures. Fonts on a page
+  // essentially never change, and a batch run emits multiple captures back to
+  // back — without this we'd refetch + re-base64 every time.
+  const fontDataUriCache = new Map();
+  const SRC_DECLARATION_RE = /src\s*:\s*[^;}]+/i;
+
+  async function fetchAsDataUri(url) {
+    if (fontDataUriCache.has(url)) return fontDataUriCache.get(url);
+    let dataUri = null;
+    try {
+      const response = await fetch(url, { mode: "cors", credentials: "omit" });
+      if (response.ok) {
+        const blob = await response.blob();
+        if (blob.size <= MAX_FONT_BYTES) {
+          dataUri = await new Promise((resolve) => {
+            const reader = new FileReader();
+            reader.onloadend = () =>
+              resolve(typeof reader.result === "string" ? reader.result : null);
+            reader.onerror = () => resolve(null);
+            reader.readAsDataURL(blob);
+          });
+        }
+      }
+    } catch (_error) {
+      dataUri = null;
+    }
+    fontDataUriCache.set(url, dataUri);
+    return dataUri;
+  }
+
+  function collectFontFaceRuleTexts() {
+    const rules = [];
+    for (const sheet of document.styleSheets) {
+      let cssRules;
+      try {
+        cssRules = sheet.cssRules;
+      } catch (_error) {
+        continue;
+      }
+      if (!cssRules) continue;
+      for (const rule of cssRules) {
+        const cssText = rule.cssText || "";
+        if (cssText.startsWith("@font-face")) rules.push(cssText);
+      }
+    }
+    return rules;
+  }
+
+  async function buildInlinedFontCss() {
+    const ruleTexts = collectFontFaceRuleTexts();
+    if (ruleTexts.length === 0) return null;
+
+    const resolved = ruleTexts.map((cssText) => {
+      if (!SRC_DECLARATION_RE.test(cssText)) return null;
+      const srcMatch = cssText.match(/src\s*:\s*([^;}]+)[;}]/i);
+      if (!srcMatch) return null;
+      const url = extractFontUrl(srcMatch[1]);
+      if (!url) return null;
+      try {
+        return { cssText, url: new URL(url, document.baseURI).href };
+      } catch (_error) {
+        return null;
+      }
+    });
+
+    const dataUris = await Promise.all(
+      resolved.map((entry) => (entry ? fetchAsDataUri(entry.url) : Promise.resolve(null))),
+    );
+
+    const inlined = [];
+    let totalBytes = 0;
+    for (let index = 0; index < resolved.length; index += 1) {
+      const entry = resolved[index];
+      const dataUri = dataUris[index];
+      if (!entry || !dataUri) continue;
+      const approxBytes = dataUri.length * 0.75;
+      if (totalBytes + approxBytes > MAX_TOTAL_FONT_BYTES) break;
+      totalBytes += approxBytes;
+      inlined.push(entry.cssText.replace(SRC_DECLARATION_RE, `src: url("${dataUri}")`));
+    }
+    return inlined.length > 0 ? inlined.join("\n") : null;
+  }
+
+  function stripExternal(clone) {
+    const images = clone.querySelectorAll("img");
+    for (let index = 0; index < images.length; index += 1) {
+      const src = images[index].getAttribute("src");
+      if (src && !src.startsWith("data:")) images[index].removeAttribute("src");
+    }
+
+    const elements = clone.querySelectorAll("*");
+    for (let index = 0; index < elements.length; index += 1) {
+      const style = elements[index].style.cssText;
+      if (style && style.includes("url(")) {
+        elements[index].style.cssText = style.replace(
+          /url\(["']?(?!data:)[^)"']*["']?\)/gi,
+          "none",
+        );
+      }
+    }
+  }
+
+  function emitScroll() {
+    scrollRaf = 0;
+    if (!scrollForwarding) return;
+    postToTrustedTop({
+      type: "INLINE_EDIT_SCROLL",
+      scrollX: window.scrollX,
+      scrollY: window.scrollY,
+    });
+  }
+
+  window.addEventListener(
+    "scroll",
+    function () {
+      if (!scrollForwarding || scrollRaf) return;
+      scrollRaf = requestAnimationFrame(emitScroll);
+    },
+    { passive: true, capture: true },
+  );
+
+  async function handleCaptureRequest(event) {
+    const requestId = event.data.requestId;
+    const scrollX = window.scrollX;
+    const scrollY = window.scrollY;
+    const width = window.innerWidth;
+    const height = window.innerHeight;
+
+    function postResult(dataUrl) {
+      postToTrustedTop({
+        type: "INLINE_EDIT_SCREENSHOT_RESULT",
+        requestId,
+        dataUrl,
+        scrollX,
+        scrollY,
+      });
+    }
+
+    try {
+      // Wait for any pending web fonts to resolve so both inline metrics and
+      // the @font-face inlining below see the same loaded faces.
+      if (document.fonts && document.fonts.ready) {
+        try {
+          await document.fonts.ready;
+        } catch (_error) {}
+      }
+
+      const clone = document.documentElement.cloneNode(true);
+      inlineAll(document.documentElement, clone);
+
+      const removedNodes = clone.querySelectorAll("script,link[rel=\"stylesheet\"],style");
+      for (let index = 0; index < removedNodes.length; index += 1) {
+        removedNodes[index].remove();
+      }
+
+      stripExternal(clone);
+
+      // Re-embed web fonts as data-URI @font-face rules so the SVG rasterizer
+      // can resolve them — external font URLs aren't fetched during
+      // foreignObject rendering, which would otherwise force a fallback face
+      // and change text metrics.
+      const inlinedFontCss = await buildInlinedFontCss();
+      if (inlinedFontCss) {
+        const styleEl = document.createElement("style");
+        styleEl.textContent = inlinedFontCss;
+        const head = clone.querySelector("head");
+        if (head) head.appendChild(styleEl);
+        else clone.insertBefore(styleEl, clone.firstChild);
+      }
+
+      const html = new XMLSerializer().serializeToString(clone);
+      const svg =
+        `<svg xmlns="http://www.w3.org/2000/svg" width="${width}" height="${height}">` +
+        '<foreignObject width="100%" height="100%">' +
+        `<div xmlns="http://www.w3.org/1999/xhtml" style="width:${width}px;height:${height}px;overflow:hidden">` +
+        `<div style="transform:translate(-${scrollX}px,-${scrollY}px);transform-origin:top left">` +
+        html +
+        "</div></div></foreignObject></svg>";
+      const svgUrl = `data:image/svg+xml;charset=utf-8,${encodeURIComponent(svg)}`;
+      const image = new Image();
+      image.onload = function () {
+        const canvas = document.createElement("canvas");
+        canvas.width = width;
+        canvas.height = height;
+        canvas.getContext("2d").drawImage(image, 0, 0);
+        postResult(canvas.toDataURL("image/png"));
+      };
+      image.onerror = function () {
+        postResult(null);
+      };
+      image.src = svgUrl;
+    } catch (_error) {
+      postResult(null);
+    }
+  }
+
+  window.addEventListener("message", function (event) {
+    if (!event.data) return;
+    // Only accept messages from the direct parent frame. Blocks sibling /
+    // unrelated-window postMessage senders that could otherwise reach us.
+    if (event.source !== window.parent) return;
+
+    const trustedParentOrigin = getTrustedParentOrigin(event);
+    if (!trustedParentOrigin) return;
+    trustedTopOrigin = trustedParentOrigin;
+
+    if (event.data.type === "INLINE_EDIT_SCROLL_START") {
+      scrollForwarding = true;
+      emitScroll();
+      return;
+    }
+
+    if (event.data.type === "INLINE_EDIT_SCROLL_STOP") {
+      scrollForwarding = false;
+      if (scrollRaf) cancelAnimationFrame(scrollRaf);
+      scrollRaf = 0;
+      return;
+    }
+
+    if (event.data.type !== "INLINE_EDIT_CAPTURE_REQUEST") return;
+
+    handleCaptureRequest(event);
+  });
+})();
+
+
+</script></body>
+</html>

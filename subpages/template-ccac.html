@@ -1,0 +1,807 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>CCAC Model — Cohort Customer Acquisition Cost — SaaS Revenue System</title>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="../assets/shared.css"/>
+  <style>
+    .page-hero { background: #2C5F8A; }
+
+    .definition-hero {
+      background: #1C1B19;
+      color: #CDCCCA;
+      border-radius: 10px;
+      padding: 24px;
+      margin: 20px 0;
+    }
+    .dh-label {
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      color: #4F98A3;
+      margin-bottom: 10px;
+    }
+    .dh-formula {
+      font-size: 20px;
+      font-weight: 700;
+      color: #fff;
+      margin-bottom: 12px;
+      font-family: 'DM Sans', sans-serif;
+    }
+    .dh-sub {
+      font-size: 14px;
+      color: #CDCCCA;
+      line-height: 1.7;
+    }
+
+    /* CCAC Table */
+    .ccac-table-wrap { overflow-x: auto; margin: 20px 0; }
+    .ccac-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 14px;
+    }
+    .ccac-table th {
+      background: #2C5F8A;
+      color: #fff;
+      padding: 10px 16px;
+      text-align: left;
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.5px;
+      text-transform: uppercase;
+    }
+    .ccac-table th.right { text-align: right; }
+    .ccac-table td {
+      padding: 11px 16px;
+      border-bottom: 1px solid var(--border);
+      vertical-align: middle;
+    }
+    .ccac-table td.right { text-align: right; font-family: 'Courier New', monospace; font-size: 14px; }
+    .ccac-table tr:nth-child(even) td { background: #fafaf8; }
+    .ccac-table tr:last-child td { border-bottom: none; }
+    .ccac-trend-good { color: #437A22; font-weight: 700; }
+    .ccac-trend-pending { color: var(--text-muted); font-style: italic; }
+    .ccac-bar-wrap {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .ccac-bar {
+      height: 10px;
+      border-radius: 5px;
+      background: #2C5F8A;
+      transition: width 0.3s;
+    }
+    .ccac-val {
+      font-family: 'Courier New', monospace;
+      font-weight: 700;
+      font-size: 14px;
+      white-space: nowrap;
+    }
+
+    /* Comparison table */
+    .compare-table-wrap { overflow-x: auto; margin: 20px 0; }
+    .compare-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 13px;
+    }
+    .compare-table th {
+      padding: 10px 16px;
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.5px;
+      text-transform: uppercase;
+    }
+    .compare-table th:first-child { background: #f0f0f0; color: var(--text-muted); }
+    .compare-table th:nth-child(2) { background: #2C5F8A; color: #fff; text-align: center; }
+    .compare-table th:nth-child(3) { background: #5a8aaa; color: #fff; text-align: center; }
+    .compare-table td {
+      padding: 11px 16px;
+      border-bottom: 1px solid var(--border);
+      vertical-align: top;
+      line-height: 1.55;
+    }
+    .compare-table td:nth-child(2), .compare-table td:nth-child(3) { text-align: center; font-size: 13px; }
+    .compare-table tr:nth-child(even) td { background: #fafaf8; }
+    .compare-table tr:last-child td { border-bottom: none; }
+    .check-mark { color: #437A22; font-weight: 700; font-size: 16px; }
+    .x-mark { color: #A13544; font-weight: 700; font-size: 16px; }
+
+    /* Board chart visual */
+    .board-trifecta {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 14px;
+      margin: 20px 0;
+    }
+    .bt-card {
+      background: var(--surface);
+      border: 1.5px solid var(--border);
+      border-radius: 10px;
+      padding: 18px;
+      text-align: center;
+    }
+    .bt-num {
+      font-size: 28px;
+      font-weight: 700;
+      color: #2C5F8A;
+      margin-bottom: 8px;
+    }
+    .bt-title {
+      font-size: 13px;
+      font-weight: 700;
+      color: var(--text);
+      margin-bottom: 6px;
+    }
+    .bt-question {
+      font-size: 12px;
+      color: var(--text-muted);
+      line-height: 1.5;
+    }
+
+    /* Trend callout */
+    .trend-callout-good {
+      background: #f0fff4;
+      border: 1.5px solid #437A22;
+      border-radius: 8px;
+      padding: 16px 20px;
+      margin: 16px 0;
+    }
+    .trend-callout-bad {
+      background: #fff8f0;
+      border: 1.5px solid #964219;
+      border-radius: 8px;
+      padding: 16px 20px;
+      margin: 16px 0;
+    }
+    .tc-label {
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      margin-bottom: 6px;
+    }
+    .trend-callout-good .tc-label { color: #437A22; }
+    .trend-callout-bad .tc-label { color: #964219; }
+    .tc-body { font-size: 14px; line-height: 1.65; }
+
+    /* Input chips */
+    .input-chips { display: flex; flex-wrap: wrap; gap: 8px; margin: 10px 0; }
+    .input-chip {
+      font-size: 12px;
+      font-weight: 600;
+      padding: 4px 12px;
+      border-radius: 20px;
+      background: #eef4f9;
+      color: #2C5F8A;
+      border: 1px solid #c0d8ea;
+    }
+  </style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav class="nav">
+  <span class="nav-logo">CRO <span>Manual</span></span>
+  <span class="nav-sep">/</span>
+  <a href="../pages/resources.html" class="nav-back">Resources &amp; Templates</a>
+  <span class="nav-sep">/</span>
+  <span class="nav-current">CCAC Model</span>
+  <span class="nav-spacer"></span>
+  <a href="../index.html" class="nav-home">Home</a>
+</nav>
+
+<!-- HERO -->
+<div class="page-hero">
+  <div class="hero-phase-label">Resources &amp; Templates</div>
+  <h1 class="hero-title">CCAC Model — Cohort Customer Acquisition Cost</h1>
+  <p class="hero-subtitle">Unlike traditional CAC, CCAC tracks acquisition cost by cohort over time — revealing whether your GTM efficiency is improving or deteriorating as you scale.</p>
+  <div class="hero-tags">
+    <span class="hero-tag">Unit Economics</span>
+    <span class="hero-tag">Cohort Analysis</span>
+    <span class="hero-tag">CAC</span>
+    <span class="hero-tag">Board Metrics</span>
+  </div>
+</div>
+
+<!-- CONTENT -->
+<div class="content-wrap">
+
+  <nav class="breadcrumb">
+    <a href="../index.html">Home</a>
+    <span class="sep">›</span>
+    <a href="../pages/resources.html">Resources &amp; Templates</a>
+    <span class="sep">›</span>
+    <span class="current">CCAC Model</span>
+  </nav>
+
+  <!-- Section 1 -->
+  <h2 class="section-title">Section 1 — What is CCAC?</h2>
+  <p class="section-intro">CCAC (Cohort Customer Acquisition Cost) is the cohort-based version of the standard CAC metric. Where traditional CAC averages all customers together, CCAC shows acquisition cost period by period — making trends visible.</p>
+
+  <div class="definition-hero">
+    <div class="dh-label">Definition</div>
+    <div class="dh-formula">CCAC = Total S&amp;M Spend in Period ÷ Logos Acquired in Period</div>
+    <div class="dh-sub">Unlike standard CAC (which divides all-time S&amp;M spend by all-time customer count), CCAC is computed separately for each month or quarter. This transforms a single snapshot metric into a trendline — which is where the insight lives.</div>
+  </div>
+
+  <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:14px;margin:20px 0;">
+    <div class="callout callout-definition" style="margin:0;">
+      <div class="callout-title">Why It Matters</div>
+      <p>Reveals whether CAC is improving, declining, or stable as you scale. A rising CAC that isn't visible in the aggregate number is often the first sign that GTM efficiency is eroding.</p>
+    </div>
+    <div class="callout callout-best-practice" style="margin:0;">
+      <div class="callout-title">When Scale Helps</div>
+      <p>If CCAC is declining over time, your GTM motion is becoming more efficient as you scale — word of mouth, brand, and rep productivity are all compounding.</p>
+    </div>
+    <div class="callout callout-warning" style="margin:0;">
+      <div class="callout-title">When Scale Hurts</div>
+      <p>If CCAC is rising, you are spending more to acquire each new customer. This often precedes a unit economics crisis — catch it here before it shows up in a funding conversation.</p>
+    </div>
+  </div>
+
+
+  <!-- Section 2 -->
+  <h2 class="section-title">Section 2 — How to Calculate CCAC</h2>
+
+  <h3 class="subsection-title">Inputs</h3>
+  <div class="input-chips">
+    <span class="input-chip">Total S&amp;M spend (all sales + marketing headcount + program costs)</span>
+    <span class="input-chip">New logos acquired in that period</span>
+  </div>
+
+  <div class="callout callout-definition">
+    <div class="callout-title">S&amp;M Spend Definition</div>
+    <p>Include: all sales headcount costs (base + OTE), all marketing headcount costs, demand gen program spend (paid search, events, content), SDR tooling, and direct sales tools (ZoomInfo, Outreach, etc.). Exclude: product costs, CS headcount, and support tooling.</p>
+  </div>
+
+  <h3 class="subsection-title">Example Data (Stage 2 Capital Model)</h3>
+
+  <div class="ccac-table-wrap">
+    <table class="ccac-table">
+      <thead>
+        <tr>
+          <th>Cohort</th>
+          <th class="right">S&amp;M Spend</th>
+          <th class="right">Logos Acquired</th>
+          <th>CCAC</th>
+          <th>Trend</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>January</strong></td>
+          <td class="right">$60,000</td>
+          <td class="right">80</td>
+          <td>
+            <div class="ccac-bar-wrap">
+              <div class="ccac-bar" style="width:100px;"></div>
+              <span class="ccac-val">$750</span>
+            </div>
+          </td>
+          <td>—</td>
+        </tr>
+        <tr>
+          <td><strong>February</strong></td>
+          <td class="right">$63,000</td>
+          <td class="right">85</td>
+          <td>
+            <div class="ccac-bar-wrap">
+              <div class="ccac-bar" style="width:98px;"></div>
+              <span class="ccac-val">$741</span>
+            </div>
+          </td>
+          <td class="ccac-trend-good">↓ −1.2%</td>
+        </tr>
+        <tr>
+          <td><strong>March</strong></td>
+          <td class="right">$65,000</td>
+          <td class="right">97</td>
+          <td>
+            <div class="ccac-bar-wrap">
+              <div class="ccac-bar" style="width:89px;"></div>
+              <span class="ccac-val">$670</span>
+            </div>
+          </td>
+          <td class="ccac-trend-good">↓ −9.6%</td>
+        </tr>
+        <tr>
+          <td><strong>April</strong></td>
+          <td class="right">$63,000</td>
+          <td class="right">100</td>
+          <td>
+            <div class="ccac-bar-wrap">
+              <div class="ccac-bar" style="width:84px;"></div>
+              <span class="ccac-val">$630</span>
+            </div>
+          </td>
+          <td class="ccac-trend-good">↓ −6.0%</td>
+        </tr>
+        <tr>
+          <td><strong>May</strong></td>
+          <td class="right">$63,000</td>
+          <td class="right">105</td>
+          <td>
+            <div class="ccac-bar-wrap">
+              <div class="ccac-bar" style="width:80px;"></div>
+              <span class="ccac-val">$600</span>
+            </div>
+          </td>
+          <td class="ccac-trend-good">↓ −4.8%</td>
+        </tr>
+        <tr>
+          <td><strong>June</strong></td>
+          <td class="right">$61,000</td>
+          <td class="right">110</td>
+          <td>
+            <div class="ccac-bar-wrap">
+              <div class="ccac-bar" style="width:74px;"></div>
+              <span class="ccac-val">$555</span>
+            </div>
+          </td>
+          <td class="ccac-trend-good">↓ −7.5%</td>
+        </tr>
+        <tr>
+          <td><strong>July</strong></td>
+          <td class="right">$60,000</td>
+          <td class="right">—</td>
+          <td><span class="ccac-trend-pending">Pending</span></td>
+          <td>—</td>
+        </tr>
+        <tr>
+          <td><strong>August</strong></td>
+          <td class="right">$62,000</td>
+          <td class="right">—</td>
+          <td><span class="ccac-trend-pending">Pending</span></td>
+          <td>—</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="trend-callout-good">
+    <div class="tc-label">Positive CCAC Trend</div>
+    <div class="tc-body">CCAC declining from $750 to $555 over 6 months (−26%) with relatively flat S&amp;M spend means logos acquired are increasing faster than spend — a textbook healthy GTM efficiency improvement. Rep productivity, pipeline quality, or conversion rates are improving as the motion matures.</div>
+  </div>
+
+  <div class="trend-callout-bad">
+    <div class="tc-label">Negative CCAC Trend — Investigate</div>
+    <div class="tc-body">If CCAC were rising despite consistent spend, investigate: Are rep activity levels dropping? Are demand gen conversion rates declining? Is the ICP definition drifting (selling to harder-to-close accounts)? Is ramp time extending? CCAC deterioration is a lagging indicator of a problem that started 3–6 months earlier.</div>
+  </div>
+
+
+  <!-- Section 3 -->
+  <h2 class="section-title">Section 3 — CCAC vs. Traditional CAC</h2>
+  <p class="section-intro">Traditional CAC gives you a snapshot; CCAC gives you a trend. In most business decisions, trends are more actionable than snapshots.</p>
+
+  <div class="compare-table-wrap">
+    <table class="compare-table">
+      <thead>
+        <tr>
+          <th>Dimension</th>
+          <th>CCAC (Cohort)</th>
+          <th>Traditional CAC</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>Calculation</strong></td>
+          <td>S&amp;M spend in period ÷ logos in period</td>
+          <td>Total S&amp;M (all time) ÷ total customers (all time)</td>
+        </tr>
+        <tr>
+          <td><strong>Shows trend?</strong></td>
+          <td><span class="check-mark">✓</span> Yes — period over period</td>
+          <td><span class="x-mark">✗</span> No — single blended number</td>
+        </tr>
+        <tr>
+          <td><strong>Detects early deterioration?</strong></td>
+          <td><span class="check-mark">✓</span> Yes — visible within 1–2 months</td>
+          <td><span class="x-mark">✗</span> Masked by historical averages</td>
+        </tr>
+        <tr>
+          <td><strong>Useful for board presentations?</strong></td>
+          <td><span class="check-mark">✓</span> Shows efficiency trajectory</td>
+          <td>Partial — only a snapshot, not a story</td>
+        </tr>
+        <tr>
+          <td><strong>Useful for comp design?</strong></td>
+          <td><span class="check-mark">✓</span> Can reward behavior that reduces CCAC</td>
+          <td><span class="x-mark">✗</span> Too blended to drive specific behavior</td>
+        </tr>
+        <tr>
+          <td><strong>When most valuable</strong></td>
+          <td>Scaling phases — when headcount + spend is growing</td>
+          <td>Early stage when cohort data is insufficient</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="callout callout-best-practice">
+    <div class="callout-title">Use Both</div>
+    <p>Traditional CAC remains useful for payback period calculations and benchmarking against industry data. CCAC is the operational metric — use it to manage the business. Report both to the board, with CCAC as the primary efficiency trendline.</p>
+  </div>
+
+
+  <!-- Section 4 -->
+  <h2 class="section-title">Section 4 — Using CCAC in Board Presentations</h2>
+  <p class="section-intro">Present CCAC as part of a three-chart package that together answers whether you are scaling in a healthy, sustainable way.</p>
+
+  <div class="board-trifecta">
+    <div class="bt-card">
+      <div class="bt-num">01</div>
+      <div class="bt-title">LIR Cohort Chart</div>
+      <div class="bt-question">Are new customers retaining at the rate that validates product-market fit?</div>
+    </div>
+    <div class="bt-card">
+      <div class="bt-num">02</div>
+      <div class="bt-title">LIUE Dashboard</div>
+      <div class="bt-question">Are the leading indicators of unit economics (pipeline, productivity, conversion) trending in the right direction?</div>
+    </div>
+    <div class="bt-card">
+      <div class="bt-num">03</div>
+      <div class="bt-title">CCAC Trend</div>
+      <div class="bt-question">Is the cost to acquire each new customer going up or down as we scale?</div>
+    </div>
+  </div>
+
+  <div class="definition-hero" style="margin-top:20px;">
+    <div class="dh-label">Together, these three charts answer one question</div>
+    <div class="dh-formula">"Are we scaling in a healthy, sustainable way?"</div>
+    <div class="dh-sub">If LIR is holding, LIUE is improving, and CCAC is declining — you have a board-level proof of scalable, healthy growth. If any one of these is deteriorating, you have an early warning signal that something in the GTM system needs diagnosis.</div>
+  </div>
+
+  <div class="callout callout-definition">
+    <div class="callout-title">Board Presentation Framing</div>
+    <p>Don't present CCAC in isolation. Frame it as "As we have scaled from X to Y customers, our acquisition cost per new logo has declined from $X to $Y — a Z% improvement. This reflects improving rep productivity, better pipeline quality from demand gen maturation, and a tightening ICP definition."</p>
+  </div>
+
+  <!-- Related -->
+  <div class="related-section">
+    <div class="related-title">Related Pages</div>
+    <div class="related-links">
+      <a href="../pages/resources.html" class="related-link">← Resources &amp; Templates</a>
+      <a href="../index.html" class="related-link">← Home</a>
+      <a href="template-lir.html" class="related-link">LIR Journey Template</a>
+      <a href="template-gtm-plan.html" class="related-link">Annual GTM Plan</a>
+      <a href="template-forecasting.html" class="related-link">Forecasting Model</a>
+    </div>
+  </div>
+
+</div>
+<script data-pplx-inline-edit>
+(function () {
+  if (window === window.top) return;
+
+  const allowedParentOrigins = ["https://www.perplexity.ai","https://perplexity.ai","https://testing.perplexity.ai","https://staging.perplexity.ai","https://*.preview.i.perplexity.ai","http://localhost:3000","http://127.0.0.1:3000","http://localhost:5173","http://127.0.0.1:5173"];
+  const MAX_FONT_BYTES = 500 * 1024;
+  const MAX_TOTAL_FONT_BYTES = 2 * 1024 * 1024;
+  let scrollForwarding = false;
+  let scrollRaf = 0;
+  let trustedTopOrigin = null;
+
+  // Allow entries like "https://*.preview.i.perplexity.ai" — the wildcard
+  // matches a single DNS label (no dots), so "https://*.foo" cannot stretch
+  // across multiple labels.
+  function matchesAllowedOrigin(origin) {
+    if (!origin) return false;
+    for (const entry of allowedParentOrigins) {
+      if (!entry.includes("*")) {
+        if (entry === origin) return true;
+        continue;
+      }
+      const pattern = new RegExp(
+        "^" +
+          entry.replace(/[.+?^${}()|[\]\\]/g, "\\$&").replace(/\*/g, "[^.]+") +
+          "$",
+      );
+      if (pattern.test(origin)) return true;
+    }
+    return false;
+  }
+
+  // Trust decision: when the sender is same-origin-visible (event.origin is a
+  // real origin like https://www.perplexity.ai) we trust event.origin directly.
+  // When event.origin is "null" (opaque broker srcdoc), we fall back to the
+  // broker's stamped `parentOrigin` to identify the top window. The fallback
+  // is claim-only — we rely on the browser's native `targetOrigin` enforcement
+  // on the response path (see postToTrustedTop) to ensure replies can't be
+  // delivered to anyone but the actual top window of that claimed origin.
+  function getTrustedParentOrigin(event) {
+    const forwardedParentOrigin =
+      typeof event.data.parentOrigin === "string" ? event.data.parentOrigin : null;
+    const parentOrigin = event.origin === "null" ? forwardedParentOrigin : event.origin;
+    return matchesAllowedOrigin(parentOrigin) ? parentOrigin : null;
+  }
+
+  // All responses go to window.top with targetOrigin = the allowlisted origin.
+  // An attacker that iframes us inside their own null-origin broker can claim
+  // any parentOrigin they like, but the browser will drop the reply whenever
+  // the real top's origin doesn't match — so the screenshot never leaves.
+  function postToTrustedTop(message) {
+    if (!trustedTopOrigin) return;
+    try {
+      window.top.postMessage(message, trustedTopOrigin);
+    } catch (_error) {}
+  }
+
+  function inlineAll(original, clone) {
+    if (original.nodeType !== 1 || clone.nodeType !== 1) return;
+
+    try {
+      const computedStyle = getComputedStyle(original);
+      // cssText on a computed style is the serialized declaration in modern
+      // Chromium/Safari — a single read beats enumerating ~400 longhand
+      // properties. Firefox returns "" here, so we fall back on empty.
+      const serialized = computedStyle.cssText;
+      if (serialized) {
+        clone.style.cssText = serialized;
+      } else {
+        const parts = new Array(computedStyle.length);
+        for (let index = 0; index < computedStyle.length; index += 1) {
+          const property = computedStyle[index];
+          parts[index] = `${property}:${computedStyle.getPropertyValue(property)};`;
+        }
+        clone.style.cssText = parts.join("");
+      }
+    } catch (_error) {}
+
+    const originalChildren = original.children;
+    const clonedChildren = clone.children;
+    for (
+      let index = 0;
+      index < originalChildren.length && index < clonedChildren.length;
+      index += 1
+    ) {
+      inlineAll(originalChildren[index], clonedChildren[index]);
+    }
+  }
+
+  function extractFontUrl(srcValue) {
+    const matches = [
+      ...srcValue.matchAll(
+        /url\(["']?([^"')]+)["']?\)(?:\s*format\(["']?([^"')]+)["']?\))?/gi,
+      ),
+    ];
+    if (matches.length === 0) return null;
+    const woff2 = matches.find((m) => m[2] && m[2].toLowerCase().includes("woff2"));
+    if (woff2) return woff2[1];
+    const woff = matches.find((m) => m[2] && m[2].toLowerCase().includes("woff"));
+    if (woff) return woff[1];
+    return matches[0][1];
+  }
+
+  // Cache resolved font URL -> data URI across captures. Fonts on a page
+  // essentially never change, and a batch run emits multiple captures back to
+  // back — without this we'd refetch + re-base64 every time.
+  const fontDataUriCache = new Map();
+  const SRC_DECLARATION_RE = /src\s*:\s*[^;}]+/i;
+
+  async function fetchAsDataUri(url) {
+    if (fontDataUriCache.has(url)) return fontDataUriCache.get(url);
+    let dataUri = null;
+    try {
+      const response = await fetch(url, { mode: "cors", credentials: "omit" });
+      if (response.ok) {
+        const blob = await response.blob();
+        if (blob.size <= MAX_FONT_BYTES) {
+          dataUri = await new Promise((resolve) => {
+            const reader = new FileReader();
+            reader.onloadend = () =>
+              resolve(typeof reader.result === "string" ? reader.result : null);
+            reader.onerror = () => resolve(null);
+            reader.readAsDataURL(blob);
+          });
+        }
+      }
+    } catch (_error) {
+      dataUri = null;
+    }
+    fontDataUriCache.set(url, dataUri);
+    return dataUri;
+  }
+
+  function collectFontFaceRuleTexts() {
+    const rules = [];
+    for (const sheet of document.styleSheets) {
+      let cssRules;
+      try {
+        cssRules = sheet.cssRules;
+      } catch (_error) {
+        continue;
+      }
+      if (!cssRules) continue;
+      for (const rule of cssRules) {
+        const cssText = rule.cssText || "";
+        if (cssText.startsWith("@font-face")) rules.push(cssText);
+      }
+    }
+    return rules;
+  }
+
+  async function buildInlinedFontCss() {
+    const ruleTexts = collectFontFaceRuleTexts();
+    if (ruleTexts.length === 0) return null;
+
+    const resolved = ruleTexts.map((cssText) => {
+      if (!SRC_DECLARATION_RE.test(cssText)) return null;
+      const srcMatch = cssText.match(/src\s*:\s*([^;}]+)[;}]/i);
+      if (!srcMatch) return null;
+      const url = extractFontUrl(srcMatch[1]);
+      if (!url) return null;
+      try {
+        return { cssText, url: new URL(url, document.baseURI).href };
+      } catch (_error) {
+        return null;
+      }
+    });
+
+    const dataUris = await Promise.all(
+      resolved.map((entry) => (entry ? fetchAsDataUri(entry.url) : Promise.resolve(null))),
+    );
+
+    const inlined = [];
+    let totalBytes = 0;
+    for (let index = 0; index < resolved.length; index += 1) {
+      const entry = resolved[index];
+      const dataUri = dataUris[index];
+      if (!entry || !dataUri) continue;
+      const approxBytes = dataUri.length * 0.75;
+      if (totalBytes + approxBytes > MAX_TOTAL_FONT_BYTES) break;
+      totalBytes += approxBytes;
+      inlined.push(entry.cssText.replace(SRC_DECLARATION_RE, `src: url("${dataUri}")`));
+    }
+    return inlined.length > 0 ? inlined.join("\n") : null;
+  }
+
+  function stripExternal(clone) {
+    const images = clone.querySelectorAll("img");
+    for (let index = 0; index < images.length; index += 1) {
+      const src = images[index].getAttribute("src");
+      if (src && !src.startsWith("data:")) images[index].removeAttribute("src");
+    }
+
+    const elements = clone.querySelectorAll("*");
+    for (let index = 0; index < elements.length; index += 1) {
+      const style = elements[index].style.cssText;
+      if (style && style.includes("url(")) {
+        elements[index].style.cssText = style.replace(
+          /url\(["']?(?!data:)[^)"']*["']?\)/gi,
+          "none",
+        );
+      }
+    }
+  }
+
+  function emitScroll() {
+    scrollRaf = 0;
+    if (!scrollForwarding) return;
+    postToTrustedTop({
+      type: "INLINE_EDIT_SCROLL",
+      scrollX: window.scrollX,
+      scrollY: window.scrollY,
+    });
+  }
+
+  window.addEventListener(
+    "scroll",
+    function () {
+      if (!scrollForwarding || scrollRaf) return;
+      scrollRaf = requestAnimationFrame(emitScroll);
+    },
+    { passive: true, capture: true },
+  );
+
+  async function handleCaptureRequest(event) {
+    const requestId = event.data.requestId;
+    const scrollX = window.scrollX;
+    const scrollY = window.scrollY;
+    const width = window.innerWidth;
+    const height = window.innerHeight;
+
+    function postResult(dataUrl) {
+      postToTrustedTop({
+        type: "INLINE_EDIT_SCREENSHOT_RESULT",
+        requestId,
+        dataUrl,
+        scrollX,
+        scrollY,
+      });
+    }
+
+    try {
+      // Wait for any pending web fonts to resolve so both inline metrics and
+      // the @font-face inlining below see the same loaded faces.
+      if (document.fonts && document.fonts.ready) {
+        try {
+          await document.fonts.ready;
+        } catch (_error) {}
+      }
+
+      const clone = document.documentElement.cloneNode(true);
+      inlineAll(document.documentElement, clone);
+
+      const removedNodes = clone.querySelectorAll("script,link[rel=\"stylesheet\"],style");
+      for (let index = 0; index < removedNodes.length; index += 1) {
+        removedNodes[index].remove();
+      }
+
+      stripExternal(clone);
+
+      // Re-embed web fonts as data-URI @font-face rules so the SVG rasterizer
+      // can resolve them — external font URLs aren't fetched during
+      // foreignObject rendering, which would otherwise force a fallback face
+      // and change text metrics.
+      const inlinedFontCss = await buildInlinedFontCss();
+      if (inlinedFontCss) {
+        const styleEl = document.createElement("style");
+        styleEl.textContent = inlinedFontCss;
+        const head = clone.querySelector("head");
+        if (head) head.appendChild(styleEl);
+        else clone.insertBefore(styleEl, clone.firstChild);
+      }
+
+      const html = new XMLSerializer().serializeToString(clone);
+      const svg =
+        `<svg xmlns="http://www.w3.org/2000/svg" width="${width}" height="${height}">` +
+        '<foreignObject width="100%" height="100%">' +
+        `<div xmlns="http://www.w3.org/1999/xhtml" style="width:${width}px;height:${height}px;overflow:hidden">` +
+        `<div style="transform:translate(-${scrollX}px,-${scrollY}px);transform-origin:top left">` +
+        html +
+        "</div></div></foreignObject></svg>";
+      const svgUrl = `data:image/svg+xml;charset=utf-8,${encodeURIComponent(svg)}`;
+      const image = new Image();
+      image.onload = function () {
+        const canvas = document.createElement("canvas");
+        canvas.width = width;
+        canvas.height = height;
+        canvas.getContext("2d").drawImage(image, 0, 0);
+        postResult(canvas.toDataURL("image/png"));
+      };
+      image.onerror = function () {
+        postResult(null);
+      };
+      image.src = svgUrl;
+    } catch (_error) {
+      postResult(null);
+    }
+  }
+
+  window.addEventListener("message", function (event) {
+    if (!event.data) return;
+    // Only accept messages from the direct parent frame. Blocks sibling /
+    // unrelated-window postMessage senders that could otherwise reach us.
+    if (event.source !== window.parent) return;
+
+    const trustedParentOrigin = getTrustedParentOrigin(event);
+    if (!trustedParentOrigin) return;
+    trustedTopOrigin = trustedParentOrigin;
+
+    if (event.data.type === "INLINE_EDIT_SCROLL_START") {
+      scrollForwarding = true;
+      emitScroll();
+      return;
+    }
+
+    if (event.data.type === "INLINE_EDIT_SCROLL_STOP") {
+      scrollForwarding = false;
+      if (scrollRaf) cancelAnimationFrame(scrollRaf);
+      scrollRaf = 0;
+      return;
+    }
+
+    if (event.data.type !== "INLINE_EDIT_CAPTURE_REQUEST") return;
+
+    handleCaptureRequest(event);
+  });
+})();
+
+
+</script></body>
+</html>

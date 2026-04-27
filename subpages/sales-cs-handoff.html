@@ -1,0 +1,760 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>The Sales-to-CS Handoff — SaaS Revenue System</title>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="../assets/shared.css"/>
+  <style>
+    .page-hero { background: #28251D; }
+    .handoff-doc {
+      background: var(--surface);
+      border: 1.5px solid var(--border);
+      border-radius: 10px;
+      overflow: hidden;
+      margin: 20px 0;
+    }
+    .handoff-doc-header {
+      background: #28251D;
+      color: #fff;
+      padding: 14px 20px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .hdh-title { font-size: 15px; font-weight: 700; }
+    .hdh-subtitle { font-size: 11px; opacity: 0.6; }
+    .handoff-fields {
+      padding: 0;
+    }
+    .hf-row {
+      display: grid;
+      grid-template-columns: 220px 1fr;
+      border-bottom: 1px solid var(--border);
+    }
+    .hf-row:last-child { border-bottom: none; }
+    .hf-field {
+      padding: 14px 16px;
+      background: #fafaf8;
+      border-right: 1px solid var(--border);
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-start;
+    }
+    .hf-field-name {
+      font-size: 13px;
+      font-weight: 700;
+      color: var(--text);
+      margin-bottom: 3px;
+    }
+    .hf-field-why {
+      font-size: 11px;
+      color: var(--text-muted);
+      line-height: 1.4;
+    }
+    .hf-content {
+      padding: 14px 16px;
+      font-size: 13px;
+      line-height: 1.7;
+      color: var(--text);
+    }
+    .hf-example {
+      font-size: 12px;
+      color: #006494;
+      font-style: italic;
+      margin-top: 4px;
+    }
+    .msp-box {
+      background: #f0fff4;
+      border: 2px solid #437A22;
+      border-radius: 10px;
+      padding: 20px;
+      margin: 20px 0;
+    }
+    .msp-title { font-size: 13px; font-weight: 700; letter-spacing: 0.5px; text-transform: uppercase; color: #437A22; margin-bottom: 10px; }
+    .msp-sections {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+      margin-top: 14px;
+    }
+    .msp-section {
+      background: rgba(255,255,255,0.7);
+      border: 1px solid rgba(67,122,34,0.3);
+      border-radius: 6px;
+      padding: 12px 14px;
+    }
+    .msp-s-title { font-size: 12px; font-weight: 700; color: #437A22; margin-bottom: 6px; }
+    .msp-s-desc { font-size: 12px; line-height: 1.6; }
+    .warm-handoff {
+      background: var(--surface);
+      border: 1.5px solid var(--border);
+      border-radius: 10px;
+      overflow: hidden;
+      margin: 16px 0;
+    }
+    .wh-header {
+      background: #28251D;
+      color: #fff;
+      padding: 12px 18px;
+      font-size: 13px;
+      font-weight: 700;
+    }
+    .wh-agenda {
+      padding: 0;
+    }
+    .wh-item {
+      display: grid;
+      grid-template-columns: 80px 1fr;
+      border-bottom: 1px solid var(--border);
+    }
+    .wh-item:last-child { border-bottom: none; }
+    .wh-time { padding: 12px 14px; font-size: 12px; font-weight: 700; color: var(--text-muted); background: #fafaf8; border-right: 1px solid var(--border); display: flex; align-items: center; }
+    .wh-action { padding: 12px 14px; font-size: 13px; line-height: 1.6; }
+    .failure-card {
+      background: var(--surface);
+      border: 1.5px solid var(--border);
+      border-left: 4px solid #A13544;
+      border-radius: 8px;
+      padding: 16px 20px;
+      margin-bottom: 12px;
+    }
+    .fc-title { font-size: 14px; font-weight: 700; color: #A13544; margin-bottom: 8px; }
+    .fc-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+    .fc-diag, .fc-fix { font-size: 13px; line-height: 1.65; }
+    .fc-label { font-size: 10px; font-weight: 700; letter-spacing: 1px; text-transform: uppercase; color: var(--text-muted); margin-bottom: 4px; }
+    .audit-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 16px 0;
+    }
+    .audit-table th { background: #28251D; color: #fff; padding: 10px 14px; font-size: 12px; text-align: left; }
+    .audit-table td { padding: 12px 14px; font-size: 13px; border-bottom: 1px solid var(--border); line-height: 1.6; vertical-align: top; }
+    .audit-table tr:nth-child(even) td { background: #fafaf8; }
+  </style>
+</head>
+<body>
+<nav class="nav">
+  <span class="nav-logo">SaaS <span>Revenue System</span></span>
+  <span class="nav-sep">|</span>
+  <a href="../index.html" class="nav-back">← Home</a>
+  <span class="nav-sep">|</span>
+  <a href="../pages/handoffs.html" class="nav-back">Handoffs</a>
+  <span class="nav-sep">|</span>
+  <span class="nav-current">Sales-to-CS Handoff</span>
+</nav>
+<div class="page-hero" style="background:#28251D">
+  <div class="hero-phase-label">Handoffs</div>
+  <div class="hero-title">The Sales-to-CS Handoff</div>
+  <div class="hero-subtitle">Closing the Gap Between Promise and Delivery — The #2 Revenue Leak in SaaS</div>
+</div>
+<div class="content-wrap">
+  <div class="breadcrumb">
+    <a href="../index.html">Home</a><span class="sep">›</span>
+    <a href="../pages/handoffs.html">Handoffs</a><span class="sep">›</span>
+    <span class="current">Sales-to-CS Handoff</span>
+  </div>
+
+  <h2 class="section-title">Why This Is the #2 Revenue Leak</h2>
+  <div class="subsection">
+    <p>The MQL handoff is the #1 revenue leak in B2B SaaS. The sales-to-CS handoff is #2. When a customer closes, they have a set of explicit and implicit expectations set during the sales process: the implementation timeline the AE described, the use cases the champion believes will be solved, the success metrics the economic buyer committed to when signing, and the red flags the AE never surfaced because they were focused on closing.</p>
+    <p>If the CSM who takes ownership of this account doesn't know any of that context — because the AE wrote "great deal" in the CRM notes and moved on — the customer's first 90 days become a trust reconstruction project. That costs time, energy, and NRR. Research by Gainsight consistently finds that churn risk in the first year correlates directly with the quality of the sales-to-CS handoff, not the quality of the product.</p>
+    <div class="callout callout-warning">
+      <div class="callout-title">The Silent Handoff Problem</div>
+      <p>Most companies believe their handoff process works because the CSM does eventually receive access to the closed opportunity in Salesforce. But access to CRM data is not a handoff. A handoff is a bilateral knowledge transfer where the CSM understands the customer's context well enough to have an intelligent first conversation without the AE present. Test this: ask any CSM to describe the top 3 success criteria for a recently onboarded account without reading from the CRM. If they can't, you don't have a handoff process.</p>
+    </div>
+  </div>
+
+  <h2 class="section-title">The 12-Field Handoff Document</h2>
+  <p class="section-intro">This document is the minimum information required for a complete handoff. It is created during the sales process — not after close — and is treated as a mandatory Closed Won field in the CRM. No Closed Won status without a complete handoff document.</p>
+
+  <div class="handoff-doc">
+    <div class="handoff-doc-header">
+      <div>
+        <div class="hdh-title">Sales-to-CS Handoff Document</div>
+        <div class="hdh-subtitle">Required: Complete before or at deal close. Reviewed jointly in warm handoff call.</div>
+      </div>
+    </div>
+    <div class="handoff-fields">
+      <div class="hf-row">
+        <div class="hf-field">
+          <div class="hf-field-name">1. Champion</div>
+          <div class="hf-field-why">Person driving internal adoption. CS needs to know who to go to when decisions are stuck.</div>
+        </div>
+        <div class="hf-content">
+          Name, title, direct email, direct phone. Why they championed this deal. What they personally stand to gain from a successful implementation. Their management relationship — do they have access to the executive buyer?
+          <div class="hf-example">e.g., "Sarah Chen, Director of Revenue Ops. Championed because she owns the data quality problem that our product solves. Reports to VP Sales. Strong internal credibility — has CEO's ear on operational projects."</div>
+        </div>
+      </div>
+      <div class="hf-row">
+        <div class="hf-field">
+          <div class="hf-field-name">2. Economic Buyer (EB)</div>
+          <div class="hf-field-why">The person who signed the contract. CS must know who owns the renewal decision.</div>
+        </div>
+        <div class="hf-content">
+          Name, title, relationship to champion. Their priorities for the investment — what do they expect to see at the QBR? What does success look like to them in their own language?
+          <div class="hf-example">e.g., "Michael Torres, CRO. Cares about pipeline visibility and forecast accuracy — not tool features. He expects the first QBR to show improved forecast accuracy %. Make it quantitative."</div>
+        </div>
+      </div>
+      <div class="hf-row">
+        <div class="hf-field">
+          <div class="hf-field-name">3. Pain Identified</div>
+          <div class="hf-field-why">The specific problem that drove the purchase. Onboarding must solve this first.</div>
+        </div>
+        <div class="hf-content">
+          The primary business pain in the customer's own words (use their language, not yours). The secondary pains that surfaced during discovery. Prioritize: which pain is most urgent vs. which is aspirational?
+          <div class="hf-example">e.g., "Primary: CRM data is 40% incomplete because reps don't update. Sales ops spending 15 hrs/week manually cleaning data. Secondary: No visibility into multi-thread status of enterprise deals."</div>
+        </div>
+      </div>
+      <div class="hf-row">
+        <div class="hf-field">
+          <div class="hf-field-name">4. Success Criteria</div>
+          <div class="hf-field-why">The measurable outcomes the customer expects. These become the QBR scorecard.</div>
+        </div>
+        <div class="hf-content">
+          Quantified success metrics, agreed with the economic buyer during the sales process. Should be SMART: specific, measurable, achievable, relevant, time-bound. If success criteria were not defined in the sales process — this is a red flag that must be surfaced and resolved before close.
+          <div class="hf-example">e.g., "1. CRM data completeness to 90% within 60 days. 2. Rep time on CRM updates reduced from 4hrs/week to &lt;1hr/week. 3. Forecast accuracy within 15% by end of Q2."</div>
+        </div>
+      </div>
+      <div class="hf-row">
+        <div class="hf-field">
+          <div class="hf-field-name">5. Implementation Timeline</div>
+          <div class="hf-field-why">What was promised. Misaligned timelines are the #1 cause of early churn.</div>
+        </div>
+        <div class="hf-content">
+          What implementation timeline was described in the sales process. What milestone dates were committed to. Who owns implementation on the customer's side (an IT lead, a project manager, or the champion). Any technical constraints discovered during the sale.
+        </div>
+      </div>
+      <div class="hf-row">
+        <div class="hf-field">
+          <div class="hf-field-name">6. Products Sold</div>
+          <div class="hf-field-why">Precise SKU-level visibility. CS needs to know what was purchased, not just the contract value.</div>
+        </div>
+        <div class="hf-content">
+          Exact products/modules purchased, seat count, tier, contract start/end dates, renewal auto-renew or manual, payment terms. Any add-ons discussed but not purchased — these are expansion opportunities.
+        </div>
+      </div>
+      <div class="hf-row">
+        <div class="hf-field">
+          <div class="hf-field-name">7. Customizations / Commitments</div>
+          <div class="hf-field-why">Non-standard promises made during the sale that CS must honor and Product must know about.</div>
+        </div>
+        <div class="hf-content">
+          Any non-standard feature requests, integration commitments, custom reporting, SLA upgrades, or professional services included in or alongside the deal. Any roadmap items that were referenced as reasons to buy. These are landmines if undocumented.
+          <div class="hf-example">e.g., "AE committed to a custom Salesforce field mapping integration by March 1st. This needs a Product/Eng ticket immediately. Customer signed partly based on this."</div>
+        </div>
+      </div>
+      <div class="hf-row">
+        <div class="hf-field">
+          <div class="hf-field-name">8. Red Flags</div>
+          <div class="hf-field-why">The concerns that were present at close that CS needs to monitor proactively.</div>
+        </div>
+        <div class="hf-content">
+          Executive sponsor leaving the company. Budget was a stretch. Champion had internal resistance from IT or Finance. The product is replacing a legacy system with deep-rooted processes. Another department using a competing tool. These are things the AE knows but never writes down.
+        </div>
+      </div>
+      <div class="hf-row">
+        <div class="hf-field">
+          <div class="hf-field-name">9. Stakeholder Map</div>
+          <div class="hf-field-why">CS must know all relevant people — not just the champion — to successfully drive adoption.</div>
+        </div>
+        <div class="hf-content">
+          Key stakeholders involved in the buying process and likely involved in adoption. For each: name, title, their attitude toward the purchase (champion/supportive/neutral/skeptic), and their primary concern. The skeptics from the sales process are the churn risks if not converted to advocates.
+        </div>
+      </div>
+      <div class="hf-row">
+        <div class="hf-field">
+          <div class="hf-field-name">10. Next Steps / First Actions</div>
+          <div class="hf-field-why">The customer expects continuity — no restart, no confusion about what happens next.</div>
+        </div>
+        <div class="hf-content">
+          Exactly what was promised to happen post-signature. Kickoff meeting scheduled? Technical discovery call needed? Who sends the kickoff invite — AE, CS, or customer? What document is the customer expecting to receive? Clear ownership prevents the "we signed but haven't heard from anyone" email.
+        </div>
+      </div>
+      <div class="hf-row">
+        <div class="hf-field">
+          <div class="hf-field-name">11. Renewal Date</div>
+          <div class="hf-field-why">CS must start the renewal motion 90+ days before this date.</div>
+        </div>
+        <div class="hf-content">
+          Exact contract end date. Auto-renew terms and notification window. Any opt-out provisions. The CS calendar event for the renewal should be created on day 1 of onboarding — not 60 days before renewal.
+        </div>
+      </div>
+      <div class="hf-row">
+        <div class="hf-field">
+          <div class="hf-field-name">12. Expansion Potential</div>
+          <div class="hf-field-why">Turns CS into a revenue team from day 1 of ownership.</div>
+        </div>
+        <div class="hf-content">
+          Products discussed but not purchased. Other departments or business units that could benefit. Growth signals (hiring plans, funding rounds, geographic expansion, new initiatives mentioned in the sales process). These become the first expansion plays within 6 months of onboarding.
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <h2 class="section-title">The Mutual Success Plan (MSP)</h2>
+  <div class="msp-box">
+    <div class="msp-title">Mutual Success Plan</div>
+    <p>The Mutual Success Plan is a co-created document, built jointly by the AE and the customer champion during the final weeks of the sales process, that defines what success looks like, who is responsible for each milestone, and how it will be measured. At close, it is handed to the CSM as their primary onboarding guide — it is both a handoff document and the first working agenda for the customer relationship.</p>
+    <div class="msp-sections">
+      <div class="msp-section">
+        <div class="msp-s-title">Business Goals (from the Customer)</div>
+        <div class="msp-s-desc">The 3 quantified business outcomes the customer is investing to achieve. Written in their language. Used as the scorecard for QBRs.</div>
+      </div>
+      <div class="msp-section">
+        <div class="msp-s-title">Implementation Milestones</div>
+        <div class="msp-s-desc">Key technical milestones with dates and owners. Kickoff date, integration completion, user training, go-live. Red/yellow/green status tracked.</div>
+      </div>
+      <div class="msp-section">
+        <div class="msp-s-title">Customer Responsibilities</div>
+        <div class="msp-s-desc">What the customer must do for success: provide technical access, assign an internal project lead, complete user setup, attend training. Explicit, not assumed.</div>
+      </div>
+      <div class="msp-section">
+        <div class="msp-s-title">Vendor Responsibilities</div>
+        <div class="msp-s-desc">What you commit to: onboarding timeline, training sessions, escalation response times, integration support. Your signed commitments — not marketing language.</div>
+      </div>
+      <div class="msp-section">
+        <div class="msp-s-title">Success Metrics and Review Dates</div>
+        <div class="msp-s-desc">The 30/60/90-day metrics to be reviewed. The cadence for check-ins. Who attends the QBR and what the scorecard will show.</div>
+      </div>
+      <div class="msp-section">
+        <div class="msp-s-title">Escalation Path</div>
+        <div class="msp-s-desc">Who to call if something goes wrong. Named escalation contacts on both sides. Not a support ticket queue — a relationship path.</div>
+      </div>
+    </div>
+  </div>
+
+  <h2 class="section-title">The Warm Handoff Call Structure</h2>
+  <div class="warm-handoff">
+    <div class="wh-header">Warm Handoff Call Agenda (30 Minutes) — AE + CSM + Champion</div>
+    <div class="wh-agenda">
+      <div class="wh-item">
+        <div class="wh-time">0–5 min</div>
+        <div class="wh-action"><strong>Introductions.</strong> AE introduces CSM. CSM introduces themselves and their role. Establishes that the CSM is the primary owner from this point forward — not the AE (important for setting expectations, otherwise the champion keeps calling the AE).</div>
+      </div>
+      <div class="wh-item">
+        <div class="wh-time">5–15 min</div>
+        <div class="wh-action"><strong>AE Context Transfer.</strong> AE walks through the top 3 items from the handoff document: the primary pain, the success criteria, and any red flags. This is not a document dump — it is a story about why the customer bought and what they need. Champion confirms, corrects, or adds context.</div>
+      </div>
+      <div class="wh-item">
+        <div class="wh-time">15–25 min</div>
+        <div class="wh-action"><strong>CSM Transition.</strong> CSM takes ownership: walks through the Mutual Success Plan, confirms implementation timeline, confirms who the internal project lead is, schedules the kickoff meeting. Champions feel continuity — the CSM already knows the context.</div>
+      </div>
+      <div class="wh-item">
+        <div class="wh-time">25–30 min</div>
+        <div class="wh-action"><strong>Next steps and AE exit.</strong> CSM owns all next steps. AE confirms they are available for strategic support if needed but that the CSM is the go-to contact. AE does not remain the primary relationship owner — if they do, CSM has no authority and the handoff has failed.</div>
+      </div>
+    </div>
+  </div>
+
+  <h2 class="section-title">The Shadow CS Model</h2>
+  <div class="subsection">
+    <p>The Shadow CS model requires the assigned CSM to join the final 1-2 AE calls before close — specifically the negotiation/commercial stage and the stakeholder alignment call. This achieves three things simultaneously:</p>
+    <ul class="bullet-list">
+      <li>The CSM hears the success criteria and red flags firsthand — from the customer's mouth, not filtered through AE notes</li>
+      <li>The champion meets the CSM before the deal closes — the handoff becomes a continuation of a relationship, not the start of one</li>
+      <li>The CSM can raise concerns about implementation feasibility or resource requirements before the contract is signed — preventing post-close surprises</li>
+    </ul>
+    <p>Shadow CS requires AE willingness (some AEs are territorial about "their" calls) and CSM availability. At scale, this means matching CSMs to strategic deals based on capacity, not randomly. For deals above $50K ACV, Shadow CS should be standard practice.</p>
+  </div>
+
+  <h2 class="section-title">Audit Metrics</h2>
+  <table class="audit-table">
+    <thead>
+      <tr><th>Metric</th><th>Definition</th><th>Target</th></tr>
+    </thead>
+    <tbody>
+      <tr><td>Handoff Document Completeness Rate</td><td>% of Closed Won deals with all 12 handoff fields populated in CRM before or at close</td><td>&gt;95%. Enforce via mandatory field validation — deal cannot be set to Closed Won until fields are complete.</td></tr>
+      <tr><td>Days to Kickoff</td><td>Calendar days from contract signature to the first formal kickoff meeting with the customer</td><td>&lt;7 business days for SMB; &lt;14 for MM/Enterprise. Longer delays correlate with higher churn risk.</td></tr>
+      <tr><td>Warm Handoff Call Rate</td><td>% of new accounts where a tripartite handoff call (AE + CSM + customer) occurs before or within 5 days of close</td><td>&gt;80% for MM/Enterprise accounts. Below 50% signals a systemic handoff problem.</td></tr>
+      <tr><td>CSM-to-Champion Ratio</td><td>Number of active accounts per CSM; impacts handoff quality — overloaded CSMs cannot invest in thorough onboarding</td><td>SMB: 50-75 accounts/CSM; MM: 15-30; Enterprise: 5-10. Benchmark against revenue-per-CSM target.</td></tr>
+      <tr><td>30-Day Health Score</td><td>Composite health score (product adoption, stakeholder engagement, milestone completion) 30 days after kickoff</td><td>Healthy: &gt;70/100. Accounts below 50 at day 30 are at-risk; initiate proactive intervention immediately.</td></tr>
+      <tr><td>Year 1 NRR by Cohort</td><td>Net Revenue Retention for accounts onboarded in a given quarter, measured at the 12-month anniversary</td><td>Best-in-class: &gt;115%. Cohorts with poor handoffs typically show NRR 10-20 points below cohorts with strong handoffs.</td></tr>
+    </tbody>
+  </table>
+
+  <h2 class="section-title">Failure Modes</h2>
+  <div class="failure-card">
+    <div class="fc-title">1. AE writes "great customer" in notes and considers the handoff done</div>
+    <div class="fc-grid">
+      <div class="fc-diag"><div class="fc-label">Diagnostic</div>High rate of CSM/customer "expectation reset" meetings in months 1-2. CSMs spending time on discovery they should not need to do. Customer saying "I thought X was included in our contract."</div>
+      <div class="fc-fix"><div class="fc-label">Fix</div>Make handoff document a mandatory CRM field for Closed Won. Build a RevOps process that flags any deal with incomplete handoff data within 24 hours of close. Include handoff quality in AE performance reviews — not just quota attainment.</div>
+    </div>
+  </div>
+  <div class="failure-card">
+    <div class="fc-title">2. AE remains the primary relationship owner post-close</div>
+    <div class="fc-grid">
+      <div class="fc-diag"><div class="fc-label">Diagnostic</div>Champion keeps calling the AE for product questions and support issues. CSM has no authority because customer bypasses them. AE spends 20% of time on post-sale support for closed accounts.</div>
+      <div class="fc-fix"><div class="fc-label">Fix</div>Warm handoff call must include explicit statement: "From today, [CSM name] is your primary contact for everything." AE sets email auto-forward for customer emails to CSM. After 60 days, AE involvement in daily customer management should be zero.</div>
+    </div>
+  </div>
+  <div class="failure-card">
+    <div class="fc-title">3. Success criteria were never defined during the sale</div>
+    <div class="fc-grid">
+      <div class="fc-diag"><div class="fc-label">Diagnostic</div>CSM receives a handoff document where success criteria is "customer wants to use the product better." QBR has no scorecard. At renewal, customer says "I'm not sure we got value."</div>
+      <div class="fc-fix"><div class="fc-label">Fix</div>Add success criteria definition as a mandatory step in the late-stage sales process — it should be completed before the commercial proposal is sent, not during onboarding. Train AEs that undefined success criteria is a churn risk that costs them renewal commission.</div>
+    </div>
+  </div>
+  <div class="failure-card">
+    <div class="fc-title">4. Red flags are hidden because AE feared they would delay the deal</div>
+    <div class="fc-grid">
+      <div class="fc-diag"><div class="fc-label">Diagnostic</div>High year-1 churn in certain deal segments or from certain AEs. Post-churn interviews reveal known issues at close (exec sponsor leaving, budget fragility, IT resistance) that were never documented.</div>
+      <div class="fc-fix"><div class="fc-label">Fix</div>Create a "risk assessment" field in the handoff document. Reward AEs for honest red flag documentation — it helps CS manage the account proactively. Punish AEs who hide red flags only through churn cost analysis shown in comp plan design.</div>
+    </div>
+  </div>
+  <div class="failure-card">
+    <div class="fc-title">5. CSM is overloaded and onboarding is deprioritized</div>
+    <div class="fc-grid">
+      <div class="fc-diag"><div class="fc-label">Diagnostic</div>Days-to-kickoff trending above 21 days. Customer complaints about slow start. Health scores at day 30 below 50 for new accounts. CSMs managing 80+ accounts in a segment designed for 30.</div>
+      <div class="fc-fix"><div class="fc-label">Fix</div>Onboarding capacity must be modeled separately from steady-state CS capacity. Build a "launch queue" view in RevOps dashboard showing all accounts pending kickoff. Hire onboarding specialists (lower cost than CSMs) for the first 90 days of the customer lifecycle.</div>
+    </div>
+  </div>
+
+  <div class="indicator-row">
+    <span class="indicator-tag ind-leading">Leading: Handoff document completeness %, days to kickoff, warm handoff call completion</span>
+    <span class="indicator-tag ind-lagging">Lagging: Year-1 NRR by cohort, 90-day churn rate, customer health score at 30/60/90 days</span>
+  </div>
+
+  <div class="related-section">
+    <div class="related-title">Related Sections</div>
+    <div class="related-links">
+      <a href="mql-handoff.html" class="related-link">MQL Handoff</a>
+      <a href="expansion-handoff.html" class="related-link">Expansion Handoff</a>
+      <a href="onboarding-cs.html" class="related-link">CS Onboarding</a>
+      <a href="health-scoring.html" class="related-link">Health Scoring</a>
+      <a href="nrr.html" class="related-link">Net Revenue Retention</a>
+      <a href="expansion-selling.html" class="related-link">Expansion Selling</a>
+    </div>
+  </div>
+</div>
+<script data-pplx-inline-edit>
+(function () {
+  if (window === window.top) return;
+
+  const allowedParentOrigins = ["https://www.perplexity.ai","https://perplexity.ai","https://testing.perplexity.ai","https://staging.perplexity.ai","https://*.preview.i.perplexity.ai","http://localhost:3000","http://127.0.0.1:3000","http://localhost:5173","http://127.0.0.1:5173"];
+  const MAX_FONT_BYTES = 500 * 1024;
+  const MAX_TOTAL_FONT_BYTES = 2 * 1024 * 1024;
+  let scrollForwarding = false;
+  let scrollRaf = 0;
+  let trustedTopOrigin = null;
+
+  // Allow entries like "https://*.preview.i.perplexity.ai" — the wildcard
+  // matches a single DNS label (no dots), so "https://*.foo" cannot stretch
+  // across multiple labels.
+  function matchesAllowedOrigin(origin) {
+    if (!origin) return false;
+    for (const entry of allowedParentOrigins) {
+      if (!entry.includes("*")) {
+        if (entry === origin) return true;
+        continue;
+      }
+      const pattern = new RegExp(
+        "^" +
+          entry.replace(/[.+?^${}()|[\]\\]/g, "\\$&").replace(/\*/g, "[^.]+") +
+          "$",
+      );
+      if (pattern.test(origin)) return true;
+    }
+    return false;
+  }
+
+  // Trust decision: when the sender is same-origin-visible (event.origin is a
+  // real origin like https://www.perplexity.ai) we trust event.origin directly.
+  // When event.origin is "null" (opaque broker srcdoc), we fall back to the
+  // broker's stamped `parentOrigin` to identify the top window. The fallback
+  // is claim-only — we rely on the browser's native `targetOrigin` enforcement
+  // on the response path (see postToTrustedTop) to ensure replies can't be
+  // delivered to anyone but the actual top window of that claimed origin.
+  function getTrustedParentOrigin(event) {
+    const forwardedParentOrigin =
+      typeof event.data.parentOrigin === "string" ? event.data.parentOrigin : null;
+    const parentOrigin = event.origin === "null" ? forwardedParentOrigin : event.origin;
+    return matchesAllowedOrigin(parentOrigin) ? parentOrigin : null;
+  }
+
+  // All responses go to window.top with targetOrigin = the allowlisted origin.
+  // An attacker that iframes us inside their own null-origin broker can claim
+  // any parentOrigin they like, but the browser will drop the reply whenever
+  // the real top's origin doesn't match — so the screenshot never leaves.
+  function postToTrustedTop(message) {
+    if (!trustedTopOrigin) return;
+    try {
+      window.top.postMessage(message, trustedTopOrigin);
+    } catch (_error) {}
+  }
+
+  function inlineAll(original, clone) {
+    if (original.nodeType !== 1 || clone.nodeType !== 1) return;
+
+    try {
+      const computedStyle = getComputedStyle(original);
+      // cssText on a computed style is the serialized declaration in modern
+      // Chromium/Safari — a single read beats enumerating ~400 longhand
+      // properties. Firefox returns "" here, so we fall back on empty.
+      const serialized = computedStyle.cssText;
+      if (serialized) {
+        clone.style.cssText = serialized;
+      } else {
+        const parts = new Array(computedStyle.length);
+        for (let index = 0; index < computedStyle.length; index += 1) {
+          const property = computedStyle[index];
+          parts[index] = `${property}:${computedStyle.getPropertyValue(property)};`;
+        }
+        clone.style.cssText = parts.join("");
+      }
+    } catch (_error) {}
+
+    const originalChildren = original.children;
+    const clonedChildren = clone.children;
+    for (
+      let index = 0;
+      index < originalChildren.length && index < clonedChildren.length;
+      index += 1
+    ) {
+      inlineAll(originalChildren[index], clonedChildren[index]);
+    }
+  }
+
+  function extractFontUrl(srcValue) {
+    const matches = [
+      ...srcValue.matchAll(
+        /url\(["']?([^"')]+)["']?\)(?:\s*format\(["']?([^"')]+)["']?\))?/gi,
+      ),
+    ];
+    if (matches.length === 0) return null;
+    const woff2 = matches.find((m) => m[2] && m[2].toLowerCase().includes("woff2"));
+    if (woff2) return woff2[1];
+    const woff = matches.find((m) => m[2] && m[2].toLowerCase().includes("woff"));
+    if (woff) return woff[1];
+    return matches[0][1];
+  }
+
+  // Cache resolved font URL -> data URI across captures. Fonts on a page
+  // essentially never change, and a batch run emits multiple captures back to
+  // back — without this we'd refetch + re-base64 every time.
+  const fontDataUriCache = new Map();
+  const SRC_DECLARATION_RE = /src\s*:\s*[^;}]+/i;
+
+  async function fetchAsDataUri(url) {
+    if (fontDataUriCache.has(url)) return fontDataUriCache.get(url);
+    let dataUri = null;
+    try {
+      const response = await fetch(url, { mode: "cors", credentials: "omit" });
+      if (response.ok) {
+        const blob = await response.blob();
+        if (blob.size <= MAX_FONT_BYTES) {
+          dataUri = await new Promise((resolve) => {
+            const reader = new FileReader();
+            reader.onloadend = () =>
+              resolve(typeof reader.result === "string" ? reader.result : null);
+            reader.onerror = () => resolve(null);
+            reader.readAsDataURL(blob);
+          });
+        }
+      }
+    } catch (_error) {
+      dataUri = null;
+    }
+    fontDataUriCache.set(url, dataUri);
+    return dataUri;
+  }
+
+  function collectFontFaceRuleTexts() {
+    const rules = [];
+    for (const sheet of document.styleSheets) {
+      let cssRules;
+      try {
+        cssRules = sheet.cssRules;
+      } catch (_error) {
+        continue;
+      }
+      if (!cssRules) continue;
+      for (const rule of cssRules) {
+        const cssText = rule.cssText || "";
+        if (cssText.startsWith("@font-face")) rules.push(cssText);
+      }
+    }
+    return rules;
+  }
+
+  async function buildInlinedFontCss() {
+    const ruleTexts = collectFontFaceRuleTexts();
+    if (ruleTexts.length === 0) return null;
+
+    const resolved = ruleTexts.map((cssText) => {
+      if (!SRC_DECLARATION_RE.test(cssText)) return null;
+      const srcMatch = cssText.match(/src\s*:\s*([^;}]+)[;}]/i);
+      if (!srcMatch) return null;
+      const url = extractFontUrl(srcMatch[1]);
+      if (!url) return null;
+      try {
+        return { cssText, url: new URL(url, document.baseURI).href };
+      } catch (_error) {
+        return null;
+      }
+    });
+
+    const dataUris = await Promise.all(
+      resolved.map((entry) => (entry ? fetchAsDataUri(entry.url) : Promise.resolve(null))),
+    );
+
+    const inlined = [];
+    let totalBytes = 0;
+    for (let index = 0; index < resolved.length; index += 1) {
+      const entry = resolved[index];
+      const dataUri = dataUris[index];
+      if (!entry || !dataUri) continue;
+      const approxBytes = dataUri.length * 0.75;
+      if (totalBytes + approxBytes > MAX_TOTAL_FONT_BYTES) break;
+      totalBytes += approxBytes;
+      inlined.push(entry.cssText.replace(SRC_DECLARATION_RE, `src: url("${dataUri}")`));
+    }
+    return inlined.length > 0 ? inlined.join("\n") : null;
+  }
+
+  function stripExternal(clone) {
+    const images = clone.querySelectorAll("img");
+    for (let index = 0; index < images.length; index += 1) {
+      const src = images[index].getAttribute("src");
+      if (src && !src.startsWith("data:")) images[index].removeAttribute("src");
+    }
+
+    const elements = clone.querySelectorAll("*");
+    for (let index = 0; index < elements.length; index += 1) {
+      const style = elements[index].style.cssText;
+      if (style && style.includes("url(")) {
+        elements[index].style.cssText = style.replace(
+          /url\(["']?(?!data:)[^)"']*["']?\)/gi,
+          "none",
+        );
+      }
+    }
+  }
+
+  function emitScroll() {
+    scrollRaf = 0;
+    if (!scrollForwarding) return;
+    postToTrustedTop({
+      type: "INLINE_EDIT_SCROLL",
+      scrollX: window.scrollX,
+      scrollY: window.scrollY,
+    });
+  }
+
+  window.addEventListener(
+    "scroll",
+    function () {
+      if (!scrollForwarding || scrollRaf) return;
+      scrollRaf = requestAnimationFrame(emitScroll);
+    },
+    { passive: true, capture: true },
+  );
+
+  async function handleCaptureRequest(event) {
+    const requestId = event.data.requestId;
+    const scrollX = window.scrollX;
+    const scrollY = window.scrollY;
+    const width = window.innerWidth;
+    const height = window.innerHeight;
+
+    function postResult(dataUrl) {
+      postToTrustedTop({
+        type: "INLINE_EDIT_SCREENSHOT_RESULT",
+        requestId,
+        dataUrl,
+        scrollX,
+        scrollY,
+      });
+    }
+
+    try {
+      // Wait for any pending web fonts to resolve so both inline metrics and
+      // the @font-face inlining below see the same loaded faces.
+      if (document.fonts && document.fonts.ready) {
+        try {
+          await document.fonts.ready;
+        } catch (_error) {}
+      }
+
+      const clone = document.documentElement.cloneNode(true);
+      inlineAll(document.documentElement, clone);
+
+      const removedNodes = clone.querySelectorAll("script,link[rel=\"stylesheet\"],style");
+      for (let index = 0; index < removedNodes.length; index += 1) {
+        removedNodes[index].remove();
+      }
+
+      stripExternal(clone);
+
+      // Re-embed web fonts as data-URI @font-face rules so the SVG rasterizer
+      // can resolve them — external font URLs aren't fetched during
+      // foreignObject rendering, which would otherwise force a fallback face
+      // and change text metrics.
+      const inlinedFontCss = await buildInlinedFontCss();
+      if (inlinedFontCss) {
+        const styleEl = document.createElement("style");
+        styleEl.textContent = inlinedFontCss;
+        const head = clone.querySelector("head");
+        if (head) head.appendChild(styleEl);
+        else clone.insertBefore(styleEl, clone.firstChild);
+      }
+
+      const html = new XMLSerializer().serializeToString(clone);
+      const svg =
+        `<svg xmlns="http://www.w3.org/2000/svg" width="${width}" height="${height}">` +
+        '<foreignObject width="100%" height="100%">' +
+        `<div xmlns="http://www.w3.org/1999/xhtml" style="width:${width}px;height:${height}px;overflow:hidden">` +
+        `<div style="transform:translate(-${scrollX}px,-${scrollY}px);transform-origin:top left">` +
+        html +
+        "</div></div></foreignObject></svg>";
+      const svgUrl = `data:image/svg+xml;charset=utf-8,${encodeURIComponent(svg)}`;
+      const image = new Image();
+      image.onload = function () {
+        const canvas = document.createElement("canvas");
+        canvas.width = width;
+        canvas.height = height;
+        canvas.getContext("2d").drawImage(image, 0, 0);
+        postResult(canvas.toDataURL("image/png"));
+      };
+      image.onerror = function () {
+        postResult(null);
+      };
+      image.src = svgUrl;
+    } catch (_error) {
+      postResult(null);
+    }
+  }
+
+  window.addEventListener("message", function (event) {
+    if (!event.data) return;
+    // Only accept messages from the direct parent frame. Blocks sibling /
+    // unrelated-window postMessage senders that could otherwise reach us.
+    if (event.source !== window.parent) return;
+
+    const trustedParentOrigin = getTrustedParentOrigin(event);
+    if (!trustedParentOrigin) return;
+    trustedTopOrigin = trustedParentOrigin;
+
+    if (event.data.type === "INLINE_EDIT_SCROLL_START") {
+      scrollForwarding = true;
+      emitScroll();
+      return;
+    }
+
+    if (event.data.type === "INLINE_EDIT_SCROLL_STOP") {
+      scrollForwarding = false;
+      if (scrollRaf) cancelAnimationFrame(scrollRaf);
+      scrollRaf = 0;
+      return;
+    }
+
+    if (event.data.type !== "INLINE_EDIT_CAPTURE_REQUEST") return;
+
+    handleCaptureRequest(event);
+  });
+})();
+
+
+</script></body>
+</html>

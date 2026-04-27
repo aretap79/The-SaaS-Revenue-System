@@ -1,0 +1,949 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>LIR Journey Template — SaaS Revenue System</title>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="../assets/shared.css"/>
+  <style>
+    .page-hero { background: #0D5C63; }
+
+    .option-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 16px;
+      margin: 20px 0;
+    }
+    .option-card {
+      background: var(--surface);
+      border: 1.5px solid var(--border);
+      border-radius: 10px;
+      overflow: hidden;
+    }
+    .option-header {
+      padding: 14px 20px;
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      color: #fff;
+    }
+    .option-num {
+      width: 32px;
+      height: 32px;
+      background: rgba(255,255,255,0.22);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 15px;
+      font-weight: 700;
+      flex-shrink: 0;
+    }
+    .option-title { font-size: 15px; font-weight: 700; }
+    .option-subtitle { font-size: 12px; opacity: 0.75; margin-top: 2px; }
+    .option-body { padding: 18px 20px; }
+    .option-body p { font-size: 14px; line-height: 1.65; color: var(--text); margin-bottom: 10px; }
+
+    .input-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin: 10px 0;
+    }
+    .input-chip {
+      font-size: 12px;
+      font-weight: 600;
+      padding: 4px 12px;
+      border-radius: 20px;
+      background: #eef6f6;
+      color: #0D5C63;
+      border: 1px solid #c2dfe2;
+    }
+    .output-chip {
+      font-size: 12px;
+      font-weight: 600;
+      padding: 4px 12px;
+      border-radius: 20px;
+      background: #f0fff4;
+      color: #437A22;
+      border: 1px solid #b2d8b2;
+    }
+
+    .cohort-table-wrap {
+      overflow-x: auto;
+      margin: 16px 0;
+    }
+    .cohort-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 13px;
+      min-width: 700px;
+    }
+    .cohort-table th {
+      background: #0D5C63;
+      color: #fff;
+      padding: 9px 12px;
+      text-align: center;
+      font-weight: 700;
+      font-size: 11px;
+      letter-spacing: 0.5px;
+      text-transform: uppercase;
+    }
+    .cohort-table th:first-child { text-align: left; }
+    .cohort-table td {
+      padding: 9px 12px;
+      border-bottom: 1px solid var(--border);
+      text-align: center;
+    }
+    .cohort-table td:first-child { text-align: left; font-weight: 600; }
+    .cohort-table tr:nth-child(even) td { background: #fafaf8; }
+    .cell-green { background: #d4edda !important; color: #1a5c2a; font-weight: 700; }
+    .cell-yellow { background: #fff3cd !important; color: #7a5a00; font-weight: 700; }
+    .cell-red { background: #f8d7da !important; color: #7a1a1a; font-weight: 700; }
+
+    .zone-legend {
+      display: flex;
+      gap: 16px;
+      flex-wrap: wrap;
+      margin: 12px 0 24px;
+    }
+    .zone-item {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 13px;
+    }
+    .zone-dot {
+      width: 14px;
+      height: 14px;
+      border-radius: 3px;
+      flex-shrink: 0;
+    }
+    .zone-green { background: #d4edda; }
+    .zone-yellow { background: #fff3cd; }
+    .zone-red { background: #f8d7da; }
+
+    .setup-block {
+      background: var(--surface);
+      border: 1.5px solid var(--border);
+      border-radius: 10px;
+      padding: 20px;
+      margin: 16px 0;
+    }
+    .setup-block-title {
+      font-size: 13px;
+      font-weight: 700;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      color: #0D5C63;
+      margin-bottom: 14px;
+    }
+
+    .formula-lir {
+      background: #1C1B19;
+      color: #CDCCCA;
+      border-radius: 8px;
+      padding: 16px 20px;
+      margin: 16px 0;
+      font-size: 15px;
+    }
+    .formula-lir .fl-label {
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 1.2px;
+      text-transform: uppercase;
+      color: #4F98A3;
+      margin-bottom: 8px;
+      font-family: 'DM Sans', sans-serif;
+    }
+    .formula-lir .fl-main {
+      color: #fff;
+      font-weight: 700;
+      font-size: 17px;
+      letter-spacing: 0.2px;
+    }
+    .formula-lir .fl-vars {
+      margin-top: 10px;
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      gap: 8px;
+    }
+    .fl-var {
+      background: rgba(255,255,255,0.06);
+      border-radius: 6px;
+      padding: 8px 10px;
+    }
+    .fl-var-key { font-size: 12px; font-weight: 700; color: #4F98A3; font-family: 'DM Sans', sans-serif; }
+    .fl-var-val { font-size: 12px; color: #CDCCCA; font-family: 'DM Sans', sans-serif; }
+
+    .validation-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 14px;
+      margin: 16px 0;
+    }
+    .val-card {
+      border-radius: 8px;
+      padding: 16px;
+    }
+    .val-card.strong { background: #f0fff4; border: 1.5px solid #437A22; }
+    .val-card.weak { background: #fff8f0; border: 1.5px solid #964219; }
+    .val-card-label {
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      margin-bottom: 8px;
+    }
+    .val-card.strong .val-card-label { color: #437A22; }
+    .val-card.weak .val-card-label { color: #964219; }
+    .val-card p { font-size: 13px; line-height: 1.6; }
+
+    .diag-list { list-style: none; margin: 12px 0; }
+    .diag-list li {
+      padding: 8px 0 8px 24px;
+      position: relative;
+      font-size: 14px;
+      line-height: 1.65;
+      border-bottom: 1px solid var(--border);
+    }
+    .diag-list li:last-child { border-bottom: none; }
+    .diag-list li::before {
+      content: '?';
+      position: absolute;
+      left: 0;
+      width: 18px;
+      height: 18px;
+      background: #0D5C63;
+      color: #fff;
+      border-radius: 50%;
+      font-size: 11px;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      top: 9px;
+      text-align: center;
+      line-height: 18px;
+    }
+
+    .threshold-bar {
+      display: flex;
+      gap: 4px;
+      margin: 12px 0;
+      flex-wrap: wrap;
+    }
+    .threshold-chip {
+      font-size: 12px;
+      font-weight: 700;
+      padding: 5px 10px;
+      border-radius: 6px;
+      background: #eef6f6;
+      color: #0D5C63;
+      border: 1px solid #c2dfe2;
+    }
+    .threshold-chip.active {
+      background: #0D5C63;
+      color: #fff;
+      border-color: #0D5C63;
+    }
+  </style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav class="nav">
+  <span class="nav-logo">CRO <span>Manual</span></span>
+  <span class="nav-sep">/</span>
+  <a href="../pages/resources.html" class="nav-back">Resources &amp; Templates</a>
+  <span class="nav-sep">/</span>
+  <span class="nav-current">LIR Journey Template</span>
+  <span class="nav-spacer"></span>
+  <a href="../index.html" class="nav-home">Home</a>
+</nav>
+
+<!-- HERO -->
+<div class="page-hero">
+  <div class="hero-phase-label">Resources &amp; Templates</div>
+  <h1 class="hero-title">LIR Journey Template</h1>
+  <p class="hero-subtitle">Build and track your Leading Indicator of Retention. Choose the right tracking option for your stage, fill in the framework, and use cohort charts to verify PMF is holding.</p>
+  <div class="hero-tags">
+    <span class="hero-tag">Pre-PMF</span>
+    <span class="hero-tag">Post-PMF</span>
+    <span class="hero-tag">Cohort Analysis</span>
+    <span class="hero-tag">Retention</span>
+  </div>
+</div>
+
+<!-- CONTENT -->
+<div class="content-wrap">
+
+  <!-- Breadcrumb -->
+  <nav class="breadcrumb">
+    <a href="../index.html">Home</a>
+    <span class="sep">›</span>
+    <a href="../pages/resources.html">Resources &amp; Templates</a>
+    <span class="sep">›</span>
+    <span class="current">LIR Journey Template</span>
+  </nav>
+
+  <!-- Section 1 -->
+  <h2 class="section-title">Section 1 — Template Overview</h2>
+  <p class="section-intro">Choose the tracking option that matches your current stage. All three options produce the same output: a chart showing what % of customers are achieving your LIR threshold over time.</p>
+
+  <div class="formula-lir">
+    <div class="fl-label">The LIR Formula</div>
+    <div class="fl-main">P% of customers achieve E event(s) within T days</div>
+    <div class="fl-vars">
+      <div class="fl-var">
+        <div class="fl-var-key">P = Percentage</div>
+        <div class="fl-var-val">e.g., 70% of customers</div>
+      </div>
+      <div class="fl-var">
+        <div class="fl-var-key">E = Event</div>
+        <div class="fl-var-val">e.g., complete 5 transactions</div>
+      </div>
+      <div class="fl-var">
+        <div class="fl-var-key">T = Time window</div>
+        <div class="fl-var-val">e.g., within 60 days</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="option-grid">
+
+    <!-- Option 1 -->
+    <div class="option-card">
+      <div class="option-header" style="background:#0D5C63;">
+        <div class="option-num">1</div>
+        <div>
+          <div class="option-title">Track Raw Event Counts</div>
+          <div class="option-subtitle">Best for: Pre-PMF, Early Stage</div>
+        </div>
+      </div>
+      <div class="option-body">
+        <p>Track the raw number of your key event per customer per month. Simple to implement — just count how many times each customer completes the event each month.</p>
+        <div style="margin-bottom:10px;">
+          <div style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:1px;color:var(--text-muted);margin-bottom:6px;">Template Inputs</div>
+          <div class="input-row">
+            <span class="input-chip">Customer Name</span>
+            <span class="input-chip">Close Date</span>
+            <span class="input-chip">ACV</span>
+            <span class="input-chip">ICP? (Y/N)</span>
+            <span class="input-chip">Month 1 Events</span>
+            <span class="input-chip">Month 2 Events</span>
+            <span class="input-chip">... Month 12</span>
+          </div>
+        </div>
+        <div>
+          <div style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:1px;color:var(--text-muted);margin-bottom:6px;">Template Output</div>
+          <div class="input-row">
+            <span class="output-chip">Chart: % customers achieving LIR threshold over time</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Option 2 -->
+    <div class="option-card">
+      <div class="option-header" style="background:#0a4d54;">
+        <div class="option-num">2</div>
+        <div>
+          <div class="option-title">Track % of Expected Events Achieved</div>
+          <div class="option-subtitle">Best for: Pre-PMF, Intermediate Stage</div>
+        </div>
+      </div>
+      <div class="option-body">
+        <p>Instead of raw counts, track what fraction of the total expected events each customer has completed. Useful when customers have different expected usage volumes based on their size or plan tier.</p>
+        <div style="margin-bottom:10px;">
+          <div style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:1px;color:var(--text-muted);margin-bottom:6px;">Additional Field</div>
+          <div class="input-row">
+            <span class="input-chip">Expected Total Events</span>
+            <span class="input-chip">e.g., 20 transactions expected</span>
+          </div>
+        </div>
+        <div class="callout callout-formula" style="margin-top:12px;margin-bottom:12px;">
+          <div class="callout-title">Monthly Calculation</div>
+          <p><strong>Monthly score = Actual events ÷ Expected total events</strong><br/>
+          LIR threshold example: customer achieves 25% of expected events</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Option 3 -->
+    <div class="option-card">
+      <div class="option-header" style="background:#083e44;">
+        <div class="option-num">3</div>
+        <div>
+          <div class="option-title">Track Milestone Progression (Graduated Thresholds)</div>
+          <div class="option-subtitle">Best for: Pre-PMF, Advanced Stage</div>
+        </div>
+      </div>
+      <div class="option-body">
+        <p>Instead of a single pass/fail threshold, use graduated milestones to see the <em>pace</em> of adoption. This reveals customers who are progressing toward the LIR milestone, not just those who have or haven't hit it.</p>
+        <div style="margin-bottom:10px;">
+          <div style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:1px;color:var(--text-muted);margin-bottom:6px;">Graduated LIR Thresholds</div>
+          <div class="threshold-bar">
+            <span class="threshold-chip">10%</span>
+            <span class="threshold-chip">15%</span>
+            <span class="threshold-chip">20%</span>
+            <span class="threshold-chip">25%</span>
+            <span class="threshold-chip">40%</span>
+            <span class="threshold-chip">50%</span>
+            <span class="threshold-chip">60%</span>
+            <span class="threshold-chip">70%</span>
+            <span class="threshold-chip">80%</span>
+            <span class="threshold-chip">90%</span>
+            <span class="threshold-chip active">100%</span>
+          </div>
+        </div>
+        <p style="font-size:13px;color:var(--text-muted);">Shows not just pass/fail but the pace of adoption toward the full LIR milestone — critical for early warning and CS intervention planning.</p>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- Post-PMF -->
+  <h3 class="subsection-title">Post-PMF Tracking (Monthly Cohort)</h3>
+  <p>Once you have sufficient customer volume, switch to monthly cohort tracking. This is the primary method for monitoring PMF at scale.</p>
+
+  <div class="cohort-table-wrap">
+    <table class="cohort-table">
+      <thead>
+        <tr>
+          <th>Acquisition Cohort</th>
+          <th>Month 0<br/><span style="font-weight:400;opacity:0.7;">Customers Acquired</span></th>
+          <th>Month 1</th>
+          <th>Month 2</th>
+          <th>Month 3</th>
+          <th>Month 4</th>
+          <th>Month 6</th>
+          <th>Month 9</th>
+          <th>Month 12</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Jan 2024</td>
+          <td>42</td>
+          <td class="cell-green">74%</td>
+          <td class="cell-green">78%</td>
+          <td class="cell-green">81%</td>
+          <td class="cell-green">83%</td>
+          <td class="cell-green">85%</td>
+          <td class="cell-green">86%</td>
+          <td class="cell-green">87%</td>
+        </tr>
+        <tr>
+          <td>Feb 2024</td>
+          <td>38</td>
+          <td class="cell-yellow">65%</td>
+          <td class="cell-green">71%</td>
+          <td class="cell-green">75%</td>
+          <td class="cell-green">77%</td>
+          <td class="cell-green">79%</td>
+          <td class="cell-green">80%</td>
+          <td>—</td>
+        </tr>
+        <tr>
+          <td>Mar 2024</td>
+          <td>51</td>
+          <td class="cell-red">52%</td>
+          <td class="cell-yellow">61%</td>
+          <td class="cell-yellow">66%</td>
+          <td class="cell-green">72%</td>
+          <td class="cell-green">74%</td>
+          <td>—</td>
+          <td>—</td>
+        </tr>
+        <tr>
+          <td>Apr 2024</td>
+          <td>47</td>
+          <td class="cell-red">48%</td>
+          <td class="cell-red">54%</td>
+          <td class="cell-yellow">63%</td>
+          <td class="cell-yellow">67%</td>
+          <td>—</td>
+          <td>—</td>
+          <td>—</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="zone-legend">
+    <div class="zone-item"><div class="zone-dot zone-green"></div> Green = Above LIR threshold (PMF holding)</div>
+    <div class="zone-item"><div class="zone-dot zone-yellow"></div> Yellow = Approaching threshold (watch closely)</div>
+    <div class="zone-item"><div class="zone-dot zone-red"></div> Red = Below threshold (PMF at risk)</div>
+  </div>
+
+  <div class="callout callout-definition">
+    <div class="callout-title">Column Definitions</div>
+    <p><strong>Month 0:</strong> Total customers acquired in that cohort. <strong>Month 1–12:</strong> % of that cohort who have achieved the LIR threshold by that point in their lifecycle.</p>
+  </div>
+
+
+  <!-- Section 2 -->
+  <h2 class="section-title">Section 2 — Step-by-Step: How to Fill Out the Template</h2>
+  <p class="section-intro">Follow these setup steps before entering any data. Getting the definitions right upfront determines whether the template produces actionable signal.</p>
+
+  <div class="setup-block">
+    <div class="setup-block-title">Pre-PMF Setup</div>
+    <ol class="step-list">
+      <li>
+        <div class="step-content">
+          <span class="step-title">Define your LIR</span>
+          Write it in the formula: <em>P% of customers achieve E event(s) within T days</em>. Be specific — the event must be measurable and unambiguous.
+        </div>
+      </li>
+      <li>
+        <div class="step-content">
+          <span class="step-title">Enter your P threshold</span>
+          Example: 70% of customers. This is the line between PMF confirmed and PMF at risk.
+        </div>
+      </li>
+      <li>
+        <div class="step-content">
+          <span class="step-title">Choose your E event</span>
+          The specific, measurable action that correlates with long-term retention. Examples: "completes 5 API calls," "creates 3 projects," "invites 2 team members."
+        </div>
+      </li>
+      <li>
+        <div class="step-content">
+          <span class="step-title">Choose your T window</span>
+          Common windows: 30, 60, or 90 days. For complex enterprise software, 90–120 days may be appropriate. Match to your typical onboarding arc.
+        </div>
+      </li>
+      <li>
+        <div class="step-content">
+          <span class="step-title">Enter monthly event counts per customer</span>
+          The template auto-calculates whether each customer is tracking toward LIR based on the event definition and threshold you set in steps 1–4.
+        </div>
+      </li>
+    </ol>
+  </div>
+
+  <div class="setup-block">
+    <div class="setup-block-title">Post-PMF Setup (Cohort Tracking)</div>
+    <ol class="step-list">
+      <li>
+        <div class="step-content">
+          <span class="step-title">Group customers by acquisition month (or quarter)</span>
+          For larger companies (&gt;50 new customers/month), consider quarterly cohorts to reduce noise.
+        </div>
+      </li>
+      <li>
+        <div class="step-content">
+          <span class="step-title">For each cohort, track % achieving LIR by month</span>
+          Each cell = (customers in cohort who achieved LIR by month N) ÷ (total customers in cohort).
+        </div>
+      </li>
+      <li>
+        <div class="step-content">
+          <span class="step-title">Watch for cohort trends</span>
+          <strong>Improving cohorts:</strong> positive trend — each new cohort hits LIR faster than the last. <strong>Flat cohorts:</strong> stable PMF. <strong>Declining cohorts:</strong> alarm — investigate immediately.
+        </div>
+      </li>
+    </ol>
+  </div>
+
+
+  <!-- Section 3 -->
+  <h2 class="section-title">Section 3 — How to Interpret the Cohort Chart</h2>
+  <p class="section-intro">The cohort chart is your primary PMF health monitor. Read it by zone, then ask the right diagnostic questions when a zone turns yellow or red.</p>
+
+  <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:14px;margin:20px 0;">
+    <div style="background:#f0fff4;border:1.5px solid #437A22;border-radius:10px;padding:18px;">
+      <div style="font-size:11px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:#437A22;margin-bottom:8px;">Green Zone</div>
+      <div style="font-size:22px;font-weight:700;color:#437A22;margin-bottom:6px;">Above Threshold</div>
+      <p style="font-size:13px;line-height:1.6;color:var(--text);">PMF is holding. The product is delivering value at the rate required to retain customers. Continue monitoring monthly.</p>
+    </div>
+    <div style="background:#fff8e6;border:1.5px solid #b8860b;border-radius:10px;padding:18px;">
+      <div style="font-size:11px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:#b8860b;margin-bottom:8px;">Yellow Zone</div>
+      <div style="font-size:22px;font-weight:700;color:#b8860b;margin-bottom:6px;">Approaching</div>
+      <p style="font-size:13px;line-height:1.6;color:var(--text);">Watch closely. May indicate product changes, onboarding issues, or ICP drift. Do not wait for red — investigate now.</p>
+    </div>
+    <div style="background:#fff0f0;border:1.5px solid #A13544;border-radius:10px;padding:18px;">
+      <div style="font-size:11px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:#A13544;margin-bottom:8px;">Red Zone</div>
+      <div style="font-size:22px;font-weight:700;color:#A13544;margin-bottom:6px;">Below Threshold</div>
+      <p style="font-size:13px;line-height:1.6;color:var(--text);">PMF at risk. Stop scaling new customer acquisition. Investigate immediately and root-cause before resuming growth spending.</p>
+    </div>
+  </div>
+
+  <h3 class="subsection-title">Diagnostic Questions When Cohorts Drop</h3>
+  <ul class="diag-list">
+    <li><strong>Did ICP change?</strong> Are you selling to customers outside your defined ICP? Non-ICP customers consistently underperform on the LIR metric.</li>
+    <li><strong>Did the onboarding process change?</strong> Was a step removed, automated poorly, or handed to a less experienced CSM? Onboarding changes often show up in the LIR chart 30–60 days later.</li>
+    <li><strong>Did the product change?</strong> Was a feature that drove the LIR event deprecated, moved in the UI, or changed in behavior? Engineering and CS must align on this.</li>
+    <li><strong>Did the CS team change?</strong> New CSMs, departures of experienced CSMs, or a CS org reorg can affect the LIR rate for 1–2 cohorts before stabilizing.</li>
+  </ul>
+
+
+  <!-- Section 4 -->
+  <h2 class="section-title">Section 4 — Verification Analysis (12–18 Month Cohorts)</h2>
+  <p class="section-intro">Before trusting your LIR definition, verify it using customers acquired 12–18 months ago. You now have enough retention data to check whether the LIR actually predicts retention.</p>
+
+  <div class="callout callout-definition">
+    <div class="callout-title">How to Run the Verification</div>
+    <p>Take all customers acquired 12–18 months ago. Split them into two groups: <strong>Achieved LIR</strong> and <strong>Did not achieve LIR</strong>. Calculate the actual annual retention rate for each group. Compare.</p>
+  </div>
+
+  <div class="validation-grid">
+    <div class="val-card strong">
+      <div class="val-card-label">Strong Validation</div>
+      <p><strong>Achieved LIR group:</strong> retains at 85–95%<br/><strong>Did not achieve LIR group:</strong> retains at 30–50%<br/><br/>A 35–65 percentage point gap confirms the LIR event is a genuine predictor of retention. Lock in this definition.</p>
+    </div>
+    <div class="val-card weak">
+      <div class="val-card-label">Weak Validation — Redefine</div>
+      <p><strong>Gap &lt; 20 percentage points</strong> between the two groups<br/><br/>The LIR event is not sufficiently predictive. The event you chose does not separate retained from churned customers. Redefine the event and re-run the analysis.</p>
+    </div>
+  </div>
+
+  <div class="callout callout-warning">
+    <div class="callout-title">Common Mistake</div>
+    <p>Choosing an LIR event that is correlated with success but not causal. Example: "sent first email" is correlated with retention but does not <em>cause</em> it. Choose events that represent deep product adoption, not superficial onboarding completion.</p>
+  </div>
+
+  <!-- Related -->
+  <div class="related-section">
+    <div class="related-title">Related Pages</div>
+    <div class="related-links">
+      <a href="../pages/resources.html" class="related-link">← Resources &amp; Templates</a>
+      <a href="../index.html" class="related-link">← Home</a>
+      <a href="template-gtm-plan.html" class="related-link">Annual GTM Plan Template</a>
+      <a href="template-ccac.html" class="related-link">CCAC Model</a>
+    </div>
+  </div>
+
+</div>
+<script data-pplx-inline-edit>
+(function () {
+  if (window === window.top) return;
+
+  const allowedParentOrigins = ["https://www.perplexity.ai","https://perplexity.ai","https://testing.perplexity.ai","https://staging.perplexity.ai","https://*.preview.i.perplexity.ai","http://localhost:3000","http://127.0.0.1:3000","http://localhost:5173","http://127.0.0.1:5173"];
+  const MAX_FONT_BYTES = 500 * 1024;
+  const MAX_TOTAL_FONT_BYTES = 2 * 1024 * 1024;
+  let scrollForwarding = false;
+  let scrollRaf = 0;
+  let trustedTopOrigin = null;
+
+  // Allow entries like "https://*.preview.i.perplexity.ai" — the wildcard
+  // matches a single DNS label (no dots), so "https://*.foo" cannot stretch
+  // across multiple labels.
+  function matchesAllowedOrigin(origin) {
+    if (!origin) return false;
+    for (const entry of allowedParentOrigins) {
+      if (!entry.includes("*")) {
+        if (entry === origin) return true;
+        continue;
+      }
+      const pattern = new RegExp(
+        "^" +
+          entry.replace(/[.+?^${}()|[\]\\]/g, "\\$&").replace(/\*/g, "[^.]+") +
+          "$",
+      );
+      if (pattern.test(origin)) return true;
+    }
+    return false;
+  }
+
+  // Trust decision: when the sender is same-origin-visible (event.origin is a
+  // real origin like https://www.perplexity.ai) we trust event.origin directly.
+  // When event.origin is "null" (opaque broker srcdoc), we fall back to the
+  // broker's stamped `parentOrigin` to identify the top window. The fallback
+  // is claim-only — we rely on the browser's native `targetOrigin` enforcement
+  // on the response path (see postToTrustedTop) to ensure replies can't be
+  // delivered to anyone but the actual top window of that claimed origin.
+  function getTrustedParentOrigin(event) {
+    const forwardedParentOrigin =
+      typeof event.data.parentOrigin === "string" ? event.data.parentOrigin : null;
+    const parentOrigin = event.origin === "null" ? forwardedParentOrigin : event.origin;
+    return matchesAllowedOrigin(parentOrigin) ? parentOrigin : null;
+  }
+
+  // All responses go to window.top with targetOrigin = the allowlisted origin.
+  // An attacker that iframes us inside their own null-origin broker can claim
+  // any parentOrigin they like, but the browser will drop the reply whenever
+  // the real top's origin doesn't match — so the screenshot never leaves.
+  function postToTrustedTop(message) {
+    if (!trustedTopOrigin) return;
+    try {
+      window.top.postMessage(message, trustedTopOrigin);
+    } catch (_error) {}
+  }
+
+  function inlineAll(original, clone) {
+    if (original.nodeType !== 1 || clone.nodeType !== 1) return;
+
+    try {
+      const computedStyle = getComputedStyle(original);
+      // cssText on a computed style is the serialized declaration in modern
+      // Chromium/Safari — a single read beats enumerating ~400 longhand
+      // properties. Firefox returns "" here, so we fall back on empty.
+      const serialized = computedStyle.cssText;
+      if (serialized) {
+        clone.style.cssText = serialized;
+      } else {
+        const parts = new Array(computedStyle.length);
+        for (let index = 0; index < computedStyle.length; index += 1) {
+          const property = computedStyle[index];
+          parts[index] = `${property}:${computedStyle.getPropertyValue(property)};`;
+        }
+        clone.style.cssText = parts.join("");
+      }
+    } catch (_error) {}
+
+    const originalChildren = original.children;
+    const clonedChildren = clone.children;
+    for (
+      let index = 0;
+      index < originalChildren.length && index < clonedChildren.length;
+      index += 1
+    ) {
+      inlineAll(originalChildren[index], clonedChildren[index]);
+    }
+  }
+
+  function extractFontUrl(srcValue) {
+    const matches = [
+      ...srcValue.matchAll(
+        /url\(["']?([^"')]+)["']?\)(?:\s*format\(["']?([^"')]+)["']?\))?/gi,
+      ),
+    ];
+    if (matches.length === 0) return null;
+    const woff2 = matches.find((m) => m[2] && m[2].toLowerCase().includes("woff2"));
+    if (woff2) return woff2[1];
+    const woff = matches.find((m) => m[2] && m[2].toLowerCase().includes("woff"));
+    if (woff) return woff[1];
+    return matches[0][1];
+  }
+
+  // Cache resolved font URL -> data URI across captures. Fonts on a page
+  // essentially never change, and a batch run emits multiple captures back to
+  // back — without this we'd refetch + re-base64 every time.
+  const fontDataUriCache = new Map();
+  const SRC_DECLARATION_RE = /src\s*:\s*[^;}]+/i;
+
+  async function fetchAsDataUri(url) {
+    if (fontDataUriCache.has(url)) return fontDataUriCache.get(url);
+    let dataUri = null;
+    try {
+      const response = await fetch(url, { mode: "cors", credentials: "omit" });
+      if (response.ok) {
+        const blob = await response.blob();
+        if (blob.size <= MAX_FONT_BYTES) {
+          dataUri = await new Promise((resolve) => {
+            const reader = new FileReader();
+            reader.onloadend = () =>
+              resolve(typeof reader.result === "string" ? reader.result : null);
+            reader.onerror = () => resolve(null);
+            reader.readAsDataURL(blob);
+          });
+        }
+      }
+    } catch (_error) {
+      dataUri = null;
+    }
+    fontDataUriCache.set(url, dataUri);
+    return dataUri;
+  }
+
+  function collectFontFaceRuleTexts() {
+    const rules = [];
+    for (const sheet of document.styleSheets) {
+      let cssRules;
+      try {
+        cssRules = sheet.cssRules;
+      } catch (_error) {
+        continue;
+      }
+      if (!cssRules) continue;
+      for (const rule of cssRules) {
+        const cssText = rule.cssText || "";
+        if (cssText.startsWith("@font-face")) rules.push(cssText);
+      }
+    }
+    return rules;
+  }
+
+  async function buildInlinedFontCss() {
+    const ruleTexts = collectFontFaceRuleTexts();
+    if (ruleTexts.length === 0) return null;
+
+    const resolved = ruleTexts.map((cssText) => {
+      if (!SRC_DECLARATION_RE.test(cssText)) return null;
+      const srcMatch = cssText.match(/src\s*:\s*([^;}]+)[;}]/i);
+      if (!srcMatch) return null;
+      const url = extractFontUrl(srcMatch[1]);
+      if (!url) return null;
+      try {
+        return { cssText, url: new URL(url, document.baseURI).href };
+      } catch (_error) {
+        return null;
+      }
+    });
+
+    const dataUris = await Promise.all(
+      resolved.map((entry) => (entry ? fetchAsDataUri(entry.url) : Promise.resolve(null))),
+    );
+
+    const inlined = [];
+    let totalBytes = 0;
+    for (let index = 0; index < resolved.length; index += 1) {
+      const entry = resolved[index];
+      const dataUri = dataUris[index];
+      if (!entry || !dataUri) continue;
+      const approxBytes = dataUri.length * 0.75;
+      if (totalBytes + approxBytes > MAX_TOTAL_FONT_BYTES) break;
+      totalBytes += approxBytes;
+      inlined.push(entry.cssText.replace(SRC_DECLARATION_RE, `src: url("${dataUri}")`));
+    }
+    return inlined.length > 0 ? inlined.join("\n") : null;
+  }
+
+  function stripExternal(clone) {
+    const images = clone.querySelectorAll("img");
+    for (let index = 0; index < images.length; index += 1) {
+      const src = images[index].getAttribute("src");
+      if (src && !src.startsWith("data:")) images[index].removeAttribute("src");
+    }
+
+    const elements = clone.querySelectorAll("*");
+    for (let index = 0; index < elements.length; index += 1) {
+      const style = elements[index].style.cssText;
+      if (style && style.includes("url(")) {
+        elements[index].style.cssText = style.replace(
+          /url\(["']?(?!data:)[^)"']*["']?\)/gi,
+          "none",
+        );
+      }
+    }
+  }
+
+  function emitScroll() {
+    scrollRaf = 0;
+    if (!scrollForwarding) return;
+    postToTrustedTop({
+      type: "INLINE_EDIT_SCROLL",
+      scrollX: window.scrollX,
+      scrollY: window.scrollY,
+    });
+  }
+
+  window.addEventListener(
+    "scroll",
+    function () {
+      if (!scrollForwarding || scrollRaf) return;
+      scrollRaf = requestAnimationFrame(emitScroll);
+    },
+    { passive: true, capture: true },
+  );
+
+  async function handleCaptureRequest(event) {
+    const requestId = event.data.requestId;
+    const scrollX = window.scrollX;
+    const scrollY = window.scrollY;
+    const width = window.innerWidth;
+    const height = window.innerHeight;
+
+    function postResult(dataUrl) {
+      postToTrustedTop({
+        type: "INLINE_EDIT_SCREENSHOT_RESULT",
+        requestId,
+        dataUrl,
+        scrollX,
+        scrollY,
+      });
+    }
+
+    try {
+      // Wait for any pending web fonts to resolve so both inline metrics and
+      // the @font-face inlining below see the same loaded faces.
+      if (document.fonts && document.fonts.ready) {
+        try {
+          await document.fonts.ready;
+        } catch (_error) {}
+      }
+
+      const clone = document.documentElement.cloneNode(true);
+      inlineAll(document.documentElement, clone);
+
+      const removedNodes = clone.querySelectorAll("script,link[rel=\"stylesheet\"],style");
+      for (let index = 0; index < removedNodes.length; index += 1) {
+        removedNodes[index].remove();
+      }
+
+      stripExternal(clone);
+
+      // Re-embed web fonts as data-URI @font-face rules so the SVG rasterizer
+      // can resolve them — external font URLs aren't fetched during
+      // foreignObject rendering, which would otherwise force a fallback face
+      // and change text metrics.
+      const inlinedFontCss = await buildInlinedFontCss();
+      if (inlinedFontCss) {
+        const styleEl = document.createElement("style");
+        styleEl.textContent = inlinedFontCss;
+        const head = clone.querySelector("head");
+        if (head) head.appendChild(styleEl);
+        else clone.insertBefore(styleEl, clone.firstChild);
+      }
+
+      const html = new XMLSerializer().serializeToString(clone);
+      const svg =
+        `<svg xmlns="http://www.w3.org/2000/svg" width="${width}" height="${height}">` +
+        '<foreignObject width="100%" height="100%">' +
+        `<div xmlns="http://www.w3.org/1999/xhtml" style="width:${width}px;height:${height}px;overflow:hidden">` +
+        `<div style="transform:translate(-${scrollX}px,-${scrollY}px);transform-origin:top left">` +
+        html +
+        "</div></div></foreignObject></svg>";
+      const svgUrl = `data:image/svg+xml;charset=utf-8,${encodeURIComponent(svg)}`;
+      const image = new Image();
+      image.onload = function () {
+        const canvas = document.createElement("canvas");
+        canvas.width = width;
+        canvas.height = height;
+        canvas.getContext("2d").drawImage(image, 0, 0);
+        postResult(canvas.toDataURL("image/png"));
+      };
+      image.onerror = function () {
+        postResult(null);
+      };
+      image.src = svgUrl;
+    } catch (_error) {
+      postResult(null);
+    }
+  }
+
+  window.addEventListener("message", function (event) {
+    if (!event.data) return;
+    // Only accept messages from the direct parent frame. Blocks sibling /
+    // unrelated-window postMessage senders that could otherwise reach us.
+    if (event.source !== window.parent) return;
+
+    const trustedParentOrigin = getTrustedParentOrigin(event);
+    if (!trustedParentOrigin) return;
+    trustedTopOrigin = trustedParentOrigin;
+
+    if (event.data.type === "INLINE_EDIT_SCROLL_START") {
+      scrollForwarding = true;
+      emitScroll();
+      return;
+    }
+
+    if (event.data.type === "INLINE_EDIT_SCROLL_STOP") {
+      scrollForwarding = false;
+      if (scrollRaf) cancelAnimationFrame(scrollRaf);
+      scrollRaf = 0;
+      return;
+    }
+
+    if (event.data.type !== "INLINE_EDIT_CAPTURE_REQUEST") return;
+
+    handleCaptureRequest(event);
+  });
+})();
+
+
+</script></body>
+</html>

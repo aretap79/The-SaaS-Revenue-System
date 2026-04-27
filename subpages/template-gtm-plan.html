@@ -1,0 +1,1301 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Annual GTM Plan Template — SaaS Revenue System</title>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="../assets/shared.css"/>
+  <style>
+    .page-hero { background: #2C5F8A; }
+
+    .four-part-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 14px;
+      margin: 20px 0;
+    }
+    .fp-card {
+      background: var(--surface);
+      border: 1.5px solid var(--border);
+      border-radius: 10px;
+      padding: 18px;
+    }
+    .fp-num {
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      color: #2C5F8A;
+      margin-bottom: 6px;
+    }
+    .fp-question {
+      font-size: 17px;
+      font-weight: 700;
+      color: var(--text);
+      margin-bottom: 6px;
+      line-height: 1.3;
+    }
+    .fp-arrow {
+      font-size: 13px;
+      color: #2C5F8A;
+      font-weight: 600;
+      margin-bottom: 8px;
+    }
+    .fp-desc {
+      font-size: 13px;
+      color: var(--text-muted);
+      line-height: 1.6;
+    }
+
+    .benchmark-table-wrap { overflow-x: auto; margin: 20px 0; }
+    .benchmark-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 13px;
+      min-width: 600px;
+    }
+    .benchmark-table th {
+      background: #2C5F8A;
+      color: #fff;
+      padding: 10px 14px;
+      text-align: left;
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.5px;
+      text-transform: uppercase;
+    }
+    .benchmark-table td {
+      padding: 10px 14px;
+      border-bottom: 1px solid var(--border);
+      vertical-align: top;
+      line-height: 1.5;
+      font-size: 13px;
+    }
+    .benchmark-table tr:nth-child(even) td { background: #fafaf8; }
+    .benchmark-table tr:last-child td { border-bottom: none; }
+    .metric-col { font-weight: 600; }
+    .tq-highlight { background: #e8f0f8 !important; color: #2C5F8A; font-weight: 700; }
+
+    .plan-table-wrap { overflow-x: auto; margin: 20px 0; }
+    .plan-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 13px;
+    }
+    .plan-table th {
+      background: #2C5F8A;
+      color: #fff;
+      padding: 9px 14px;
+      text-align: center;
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.5px;
+      text-transform: uppercase;
+    }
+    .plan-table th:first-child { text-align: left; }
+    .plan-table td {
+      padding: 9px 14px;
+      border-bottom: 1px solid var(--border);
+      text-align: center;
+    }
+    .plan-table td:first-child { text-align: left; font-size: 13px; }
+    .plan-table tr:nth-child(even) td { background: #fafaf8; }
+    .plan-table tr:last-child td { border-bottom: none; }
+    .plan-table .sub-row td:first-child { padding-left: 28px; color: var(--text-muted); font-style: italic; }
+    .plan-table .section-row td {
+      background: #eef4f9 !important;
+      font-weight: 700;
+      font-size: 12px;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      color: #2C5F8A;
+    }
+    .plan-table .total-row td { font-weight: 700; background: #f5f0ff !important; }
+    .empty-cell { background: #f9f9f7; color: #ccc; font-style: italic; font-size: 12px; }
+
+    .demand-table-wrap { overflow-x: auto; margin: 20px 0; }
+    .demand-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 12px;
+      min-width: 700px;
+    }
+    .demand-table th {
+      background: #2C5F8A;
+      color: #fff;
+      padding: 9px 10px;
+      text-align: center;
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 0.5px;
+      text-transform: uppercase;
+    }
+    .demand-table th:first-child, .demand-table th:nth-child(2) { text-align: left; }
+    .demand-table td {
+      padding: 8px 10px;
+      border-bottom: 1px solid var(--border);
+      text-align: center;
+    }
+    .demand-table td:first-child { text-align: left; font-weight: 600; font-size: 12px; }
+    .demand-table td:nth-child(2) { text-align: left; font-size: 12px; color: var(--text-muted); }
+    .demand-table tr:nth-child(even) td { background: #fafaf8; }
+    .demand-table .total-row td { font-weight: 700; background: #eef4f9 !important; color: #2C5F8A; }
+
+    .hc-table-wrap { overflow-x: auto; margin: 20px 0; }
+    .hc-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 13px;
+    }
+    .hc-table th {
+      background: #2C5F8A;
+      color: #fff;
+      padding: 9px 14px;
+      text-align: center;
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.5px;
+      text-transform: uppercase;
+    }
+    .hc-table th:first-child { text-align: left; }
+    .hc-table td {
+      padding: 9px 14px;
+      border-bottom: 1px solid var(--border);
+      text-align: center;
+    }
+    .hc-table td:first-child { text-align: left; font-weight: 600; }
+    .hc-table tr:nth-child(even) td { background: #fafaf8; }
+
+    .okr-table-wrap { overflow-x: auto; margin: 20px 0; }
+    .okr-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 13px;
+    }
+    .okr-table th {
+      background: #2C5F8A;
+      color: #fff;
+      padding: 9px 14px;
+      text-align: left;
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.5px;
+      text-transform: uppercase;
+    }
+    .okr-table td {
+      padding: 11px 14px;
+      border-bottom: 1px solid var(--border);
+      vertical-align: top;
+      font-size: 13px;
+    }
+    .okr-table tr:last-child td { border-bottom: none; }
+    .okr-table .obj-row td { background: #eef4f9 !important; font-weight: 700; color: #2C5F8A; font-size: 14px; }
+    .okr-table .key-row td { font-size: 13px; }
+
+    .contingency-box {
+      background: #fff8f0;
+      border: 1.5px solid #964219;
+      border-radius: 10px;
+      padding: 20px;
+      margin: 20px 0;
+    }
+    .contingency-title {
+      font-size: 13px;
+      font-weight: 700;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      color: #964219;
+      margin-bottom: 10px;
+    }
+
+    .li-ue-table-wrap { overflow-x: auto; margin: 20px 0; }
+    .li-ue-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 13px;
+    }
+    .li-ue-table th {
+      background: #2C5F8A;
+      color: #fff;
+      padding: 9px 14px;
+      text-align: center;
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.5px;
+      text-transform: uppercase;
+    }
+    .li-ue-table th:first-child { text-align: left; min-width: 260px; }
+    .li-ue-table td {
+      padding: 9px 14px;
+      border-bottom: 1px solid var(--border);
+      text-align: center;
+    }
+    .li-ue-table td:first-child { text-align: left; font-size: 13px; }
+    .li-ue-table tr:nth-child(even) td { background: #fafaf8; }
+
+    .phase-context-bar {
+      background: #f0f8f9;
+      border-bottom: 2px solid #c2dde0;
+      padding: 0;
+    }
+    .pcb-inner {
+      max-width: 960px;
+      margin: 0 auto;
+      padding: 10px 32px;
+      display: flex;
+      align-items: center;
+      gap: 20px;
+      flex-wrap: wrap;
+    }
+    .pcb-item { display: flex; flex-direction: column; gap: 1px; }
+    .pcb-label { font-size: 9px; font-weight: 700; letter-spacing: 1px; text-transform: uppercase; color: #7A7974; }
+    .pcb-value { font-size: 12px; font-weight: 700; color: #0D5C63; }
+    .pcb-divider { width: 1px; height: 28px; background: #c2dde0; }
+    .pcb-link { font-size: 11px; font-weight: 700; color: #0D5C63; background: rgba(13,92,99,0.08); padding: 4px 10px; border-radius: 4px; text-decoration: none; transition: background 0.15s; }
+    .pcb-link:hover { background: rgba(13,92,99,0.16); color: #0D5C63; text-decoration: none; }
+  </style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav class="nav">
+  <span class="nav-logo">CRO <span>Manual</span></span>
+  <span class="nav-sep">/</span>
+  <a href="../pages/resources.html" class="nav-back">Resources &amp; Templates</a>
+  <span class="nav-sep">/</span>
+  <span class="nav-current">Annual GTM Plan</span>
+  <span class="nav-spacer"></span>
+  <a href="../index.html" class="nav-home">Home</a>
+</nav>
+
+<!-- HERO -->
+<div class="page-hero">
+  <div class="hero-phase-label">Resources &amp; Templates</div>
+  <h1 class="hero-title">Annual GTM Plan Template</h1>
+  <p class="hero-subtitle">A 4-part process to set goals, build a baseline plan, identify the gap, and define exactly how you will close it — with benchmark data, demand gen tables, headcount plans, and OKRs.</p>
+  <div class="hero-tags">
+    <span class="hero-tag">Annual Planning</span>
+    <span class="hero-tag">GTM Strategy</span>
+    <span class="hero-tag">Benchmarks</span>
+    <span class="hero-tag">OKRs</span>
+  </div>
+</div>
+
+<div class="phase-context-bar">
+  <div class="pcb-inner">
+    <div class="pcb-item">
+      <span class="pcb-label">Primary Phase</span>
+      <span class="pcb-value">Phase 3 — GTM, Demand Gen &amp; Segmentation</span>
+    </div>
+    <div class="pcb-divider"></div>
+    <div class="pcb-item">
+      <span class="pcb-label">Science of Scaling Stage</span>
+      <span class="pcb-value">Stage 2: GTM Fit</span>
+    </div>
+    <div class="pcb-divider"></div>
+    <div class="pcb-item">
+      <span class="pcb-label">Governing Metric</span>
+      <span class="pcb-value">LIUE &gt; 3</span>
+    </div>
+    <a href="../pages/phase3.html" class="pcb-link">View Phase →</a>
+    <a href="../subpages/sos-gtm-fit.html" class="pcb-link">View Stage →</a>
+  </div>
+</div>
+
+<!-- CONTENT -->
+<div class="content-wrap">
+
+  <nav class="breadcrumb">
+    <a href="../index.html">Home</a>
+    <span class="sep">›</span>
+    <a href="../pages/resources.html">Resources &amp; Templates</a>
+    <span class="sep">›</span>
+    <span class="current">Annual GTM Plan Template</span>
+  </nav>
+
+  <!-- Section 1 -->
+  <h2 class="section-title">Section 1 — Overview: The 4-Part Planning Process</h2>
+  <p class="section-intro">Every annual GTM plan follows the same four-question sequence. Skip any step and the plan will be either unrealistic or underambitious.</p>
+
+  <div class="four-part-grid">
+    <div class="fp-card">
+      <div class="fp-num">Step 1</div>
+      <div class="fp-question">Where are you going?</div>
+      <div class="fp-arrow">→ Set Realistic Goals via Benchmarking</div>
+      <div class="fp-desc">Use external benchmark data (see Section 2) to define what top-quartile and median performance looks like for your stage. Set targets that are ambitious but grounded.</div>
+    </div>
+    <div class="fp-card">
+      <div class="fp-num">Step 2</div>
+      <div class="fp-question">Where are you now?</div>
+      <div class="fp-arrow">→ Bottoms-Up Model → Baseline Plan</div>
+      <div class="fp-desc">Build the Baseline Plan: what revenue will you generate if you do nothing different? Use the Bottoms-Up model with current headcount, quotas, ramp schedules, and historical conversion rates.</div>
+    </div>
+    <div class="fp-card">
+      <div class="fp-num">Step 3</div>
+      <div class="fp-question">What's the gap?</div>
+      <div class="fp-arrow">→ Goal minus Baseline</div>
+      <div class="fp-desc">The gap is not a problem — it is an opportunity. Quantify it precisely: How much additional ARR do you need beyond the current trajectory to hit your goal?</div>
+    </div>
+    <div class="fp-card">
+      <div class="fp-num">Step 4</div>
+      <div class="fp-question">How do we close it?</div>
+      <div class="fp-arrow">→ Target Plan with Levers</div>
+      <div class="fp-desc">Identify the levers: rep productivity improvements, demand gen investment, headcount additions. Quantify the expected impact of each lever and build the Target Plan.</div>
+    </div>
+  </div>
+
+  <div class="contingency-box">
+    <div class="contingency-title">Contingency Plan — Required</div>
+    <p style="font-size:14px;line-height:1.65;">Define your Contingency Plan before the year begins — not after you miss two quarters. The trigger for the Contingency Plan is either of: (1) runway drops below 12–18 months, or (2) you miss two consecutive quarters against the Baseline Plan. The Contingency Plan shows how you grow slower but reach breakeven — which channels to cut, which headcount additions to defer, and what the revised growth rate looks like.</p>
+  </div>
+
+
+  <!-- Section 2 -->
+  <h2 class="section-title">Section 2 — Benchmark Data</h2>
+  <p class="section-intro">Use these benchmarks to set realistic goals. Source: Stage 2 Capital / OpenView 2022 SaaS Benchmark Report.</p>
+
+  <div class="benchmark-table-wrap">
+    <table class="benchmark-table">
+      <thead>
+        <tr>
+          <th>Metric</th>
+          <th>Seed Median</th>
+          <th>Seed Top Quartile</th>
+          <th>Series A Median</th>
+          <th>Series A Top Quartile</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td class="metric-col">Revenue / ARR Growth</td>
+          <td>70% YoY</td>
+          <td class="tq-highlight">100% YoY</td>
+          <td>100% YoY</td>
+          <td class="tq-highlight">180% YoY</td>
+        </tr>
+        <tr>
+          <td class="metric-col">NRR (Net Revenue Retention)</td>
+          <td>101%</td>
+          <td class="tq-highlight">115%</td>
+          <td>108%</td>
+          <td class="tq-highlight">120%</td>
+        </tr>
+        <tr>
+          <td class="metric-col">CAC Payback (months)</td>
+          <td>9 months</td>
+          <td class="tq-highlight">3 months</td>
+          <td>14 months</td>
+          <td class="tq-highlight">7 months</td>
+        </tr>
+        <tr>
+          <td class="metric-col">S&amp;M Spend as % of ARR</td>
+          <td>31%</td>
+          <td>—</td>
+          <td>30%</td>
+          <td>—</td>
+        </tr>
+        <tr>
+          <td class="metric-col">Gross Margin</td>
+          <td>80–85%</td>
+          <td>—</td>
+          <td>80–85%</td>
+          <td>—</td>
+        </tr>
+        <tr>
+          <td class="metric-col">Monthly Cash Burn / Runway</td>
+          <td colspan="4">12+ months runway or plan to reach breakeven</td>
+        </tr>
+        <tr>
+          <td class="metric-col">Headcount: Sales</td>
+          <td colspan="4">15–20% of total headcount</td>
+        </tr>
+        <tr>
+          <td class="metric-col">Headcount: Marketing</td>
+          <td colspan="4">7% of total headcount</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  <p style="font-size:12px;color:var(--text-muted);">Source: Stage 2 Capital / OpenView 2022 SaaS Benchmark Report. Top Quartile = top 25% of performers at that stage.</p>
+
+  <!-- Section 3 -->
+  <h2 class="section-title">Section 3 — Baseline Plan Summary (by Quarter)</h2>
+  <p class="section-intro">The Baseline Plan is what happens if you make no changes. Build it bottoms-up from current headcount, ramp schedules, and conversion rates.</p>
+
+  <div class="plan-table-wrap">
+    <table class="plan-table">
+      <thead>
+        <tr>
+          <th>Metric</th>
+          <th>Q1 Plan</th>
+          <th>Q2 Plan</th>
+          <th>Q3 Plan</th>
+          <th>Q4 Plan</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr class="section-row"><td colspan="5">Revenue / ARR</td></tr>
+        <tr>
+          <td>Total ARR (EOP)</td>
+          <td class="empty-cell">—</td>
+          <td class="empty-cell">—</td>
+          <td class="empty-cell">—</td>
+          <td class="empty-cell">—</td>
+        </tr>
+        <tr class="sub-row">
+          <td>→ New ARR</td>
+          <td class="empty-cell">—</td>
+          <td class="empty-cell">—</td>
+          <td class="empty-cell">—</td>
+          <td class="empty-cell">—</td>
+        </tr>
+        <tr class="sub-row">
+          <td>→ Expansion ARR</td>
+          <td class="empty-cell">—</td>
+          <td class="empty-cell">—</td>
+          <td class="empty-cell">—</td>
+          <td class="empty-cell">—</td>
+        </tr>
+        <tr class="sub-row">
+          <td>→ Churn ARR</td>
+          <td class="empty-cell">—</td>
+          <td class="empty-cell">—</td>
+          <td class="empty-cell">—</td>
+          <td class="empty-cell">—</td>
+        </tr>
+        <tr class="section-row"><td colspan="5">Unit Economics</td></tr>
+        <tr>
+          <td>NRR</td>
+          <td class="empty-cell">—</td>
+          <td class="empty-cell">—</td>
+          <td class="empty-cell">—</td>
+          <td class="empty-cell">—</td>
+        </tr>
+        <tr>
+          <td>CAC Payback (months)</td>
+          <td class="empty-cell">—</td>
+          <td class="empty-cell">—</td>
+          <td class="empty-cell">—</td>
+          <td class="empty-cell">—</td>
+        </tr>
+        <tr>
+          <td>S&amp;M Spend % of ARR</td>
+          <td class="empty-cell">—</td>
+          <td class="empty-cell">—</td>
+          <td class="empty-cell">—</td>
+          <td class="empty-cell">—</td>
+        </tr>
+        <tr>
+          <td>Gross Margin</td>
+          <td class="empty-cell">—</td>
+          <td class="empty-cell">—</td>
+          <td class="empty-cell">—</td>
+          <td class="empty-cell">—</td>
+        </tr>
+        <tr class="section-row"><td colspan="5">Cash &amp; Runway</td></tr>
+        <tr>
+          <td>Monthly Cash Burn</td>
+          <td class="empty-cell">—</td>
+          <td class="empty-cell">—</td>
+          <td class="empty-cell">—</td>
+          <td class="empty-cell">—</td>
+        </tr>
+        <tr>
+          <td>Runway (months)</td>
+          <td class="empty-cell">—</td>
+          <td class="empty-cell">—</td>
+          <td class="empty-cell">—</td>
+          <td class="empty-cell">—</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- Section 4 -->
+  <h2 class="section-title">Section 4 — Target Plan Summary</h2>
+  <p class="section-intro">The Target Plan includes the uplift from levers: rep productivity improvements, incremental demand gen, and new headcount additions. Use the same table structure as the Baseline Plan, plus a summary of changes.</p>
+
+  <div class="plan-table-wrap">
+    <table class="plan-table">
+      <thead>
+        <tr>
+          <th>Metric</th>
+          <th>Q1 Plan</th>
+          <th>Q2 Plan</th>
+          <th>Q3 Plan</th>
+          <th>Q4 Plan</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr class="section-row"><td colspan="5">Revenue / ARR</td></tr>
+        <tr>
+          <td>Total ARR (EOP)</td>
+          <td class="empty-cell">—</td>
+          <td class="empty-cell">—</td>
+          <td class="empty-cell">—</td>
+          <td class="empty-cell">—</td>
+        </tr>
+        <tr class="sub-row">
+          <td>→ New ARR</td>
+          <td class="empty-cell">—</td>
+          <td class="empty-cell">—</td>
+          <td class="empty-cell">—</td>
+          <td class="empty-cell">—</td>
+        </tr>
+        <tr class="sub-row">
+          <td>→ Expansion ARR</td>
+          <td class="empty-cell">—</td>
+          <td class="empty-cell">—</td>
+          <td class="empty-cell">—</td>
+          <td class="empty-cell">—</td>
+        </tr>
+        <tr class="sub-row">
+          <td>→ Churn ARR</td>
+          <td class="empty-cell">—</td>
+          <td class="empty-cell">—</td>
+          <td class="empty-cell">—</td>
+          <td class="empty-cell">—</td>
+        </tr>
+        <tr class="section-row"><td colspan="5">Unit Economics</td></tr>
+        <tr>
+          <td>NRR</td>
+          <td class="empty-cell">—</td>
+          <td class="empty-cell">—</td>
+          <td class="empty-cell">—</td>
+          <td class="empty-cell">—</td>
+        </tr>
+        <tr>
+          <td>CAC Payback (months)</td>
+          <td class="empty-cell">—</td>
+          <td class="empty-cell">—</td>
+          <td class="empty-cell">—</td>
+          <td class="empty-cell">—</td>
+        </tr>
+        <tr>
+          <td>S&amp;M Spend % of ARR</td>
+          <td class="empty-cell">—</td>
+          <td class="empty-cell">—</td>
+          <td class="empty-cell">—</td>
+          <td class="empty-cell">—</td>
+        </tr>
+        <tr>
+          <td>Gross Margin</td>
+          <td class="empty-cell">—</td>
+          <td class="empty-cell">—</td>
+          <td class="empty-cell">—</td>
+          <td class="empty-cell">—</td>
+        </tr>
+        <tr class="section-row"><td colspan="5">Cash &amp; Runway</td></tr>
+        <tr>
+          <td>Monthly Cash Burn</td>
+          <td class="empty-cell">—</td>
+          <td class="empty-cell">—</td>
+          <td class="empty-cell">—</td>
+          <td class="empty-cell">—</td>
+        </tr>
+        <tr>
+          <td>Runway (months)</td>
+          <td class="empty-cell">—</td>
+          <td class="empty-cell">—</td>
+          <td class="empty-cell">—</td>
+          <td class="empty-cell">—</td>
+        </tr>
+        <tr class="total-row">
+          <td>Summary of Changes from Base Plan</td>
+          <td class="empty-cell">—</td>
+          <td class="empty-cell">—</td>
+          <td class="empty-cell">—</td>
+          <td class="empty-cell">—</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- Section 5 -->
+  <h2 class="section-title">Section 5 — Key Drivers: Leading Indicators of Unit Economics</h2>
+  <p class="section-intro">These are the leading indicators that predict whether you will hit your unit economics targets. Track these monthly; they move before the lagging financials do.</p>
+
+  <div class="li-ue-table-wrap">
+    <table class="li-ue-table">
+      <thead>
+        <tr>
+          <th>Leading Indicator</th>
+          <th>Q4 Actual</th>
+          <th>Q1 Plan</th>
+          <th>Q2 Plan</th>
+          <th>Q3 Plan</th>
+          <th>Q4 Plan</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>AE Productivity: MQLs / SQLs per rep per month</td>
+          <td class="empty-cell">—</td>
+          <td class="empty-cell">—</td>
+          <td class="empty-cell">—</td>
+          <td class="empty-cell">—</td>
+          <td class="empty-cell">—</td>
+        </tr>
+        <tr>
+          <td>AE Productivity: Qualified Opps per rep per month</td>
+          <td class="empty-cell">—</td>
+          <td class="empty-cell">—</td>
+          <td class="empty-cell">—</td>
+          <td class="empty-cell">—</td>
+          <td class="empty-cell">—</td>
+        </tr>
+        <tr>
+          <td>AE Productivity: Deals per rep per month</td>
+          <td class="empty-cell">—</td>
+          <td class="empty-cell">—</td>
+          <td class="empty-cell">—</td>
+          <td class="empty-cell">—</td>
+          <td class="empty-cell">—</td>
+        </tr>
+        <tr>
+          <td>Average Deal Size</td>
+          <td class="empty-cell">—</td>
+          <td class="empty-cell">—</td>
+          <td class="empty-cell">—</td>
+          <td class="empty-cell">—</td>
+          <td class="empty-cell">—</td>
+        </tr>
+        <tr>
+          <td>Cost per SQL</td>
+          <td class="empty-cell">—</td>
+          <td class="empty-cell">—</td>
+          <td class="empty-cell">—</td>
+          <td class="empty-cell">—</td>
+          <td class="empty-cell">—</td>
+        </tr>
+        <tr>
+          <td>Cost per Deal</td>
+          <td class="empty-cell">—</td>
+          <td class="empty-cell">—</td>
+          <td class="empty-cell">—</td>
+          <td class="empty-cell">—</td>
+          <td class="empty-cell">—</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- Section 6 -->
+  <h2 class="section-title">Section 6 — Demand Generation Plan</h2>
+  <p class="section-intro">Build the demand gen plan by channel and quarter. Track both volume (#) and expected revenue contribution ($) for each channel.</p>
+
+  <div class="demand-table-wrap">
+    <table class="demand-table">
+      <thead>
+        <tr>
+          <th>Channel</th>
+          <th>Pipeline Stage</th>
+          <th>Q1 #</th>
+          <th>Q1 $</th>
+          <th>Q2 #</th>
+          <th>Q2 $</th>
+          <th>Q3 #</th>
+          <th>Q3 $</th>
+          <th>Q4 #</th>
+          <th>Q4 $</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Inbound</td>
+          <td>MQL</td>
+          <td class="empty-cell">—</td>
+          <td class="empty-cell">—</td>
+          <td class="empty-cell">—</td>
+          <td class="empty-cell">—</td>
+          <td class="empty-cell">—</td>
+          <td class="empty-cell">—</td>
+          <td class="empty-cell">—</td>
+          <td class="empty-cell">—</td>
+        </tr>
+        <tr>
+          <td>Inbound</td>
+          <td>SQL</td>
+          <td class="empty-cell">—</td>
+          <td class="empty-cell">—</td>
+          <td class="empty-cell">—</td>
+          <td class="empty-cell">—</td>
+          <td class="empty-cell">—</td>
+          <td class="empty-cell">—</td>
+          <td class="empty-cell">—</td>
+          <td class="empty-cell">—</td>
+        </tr>
+        <tr>
+          <td>Inbound</td>
+          <td>Deals</td>
+          <td class="empty-cell">—</td>
+          <td class="empty-cell">—</td>
+          <td class="empty-cell">—</td>
+          <td class="empty-cell">—</td>
+          <td class="empty-cell">—</td>
+          <td class="empty-cell">—</td>
+          <td class="empty-cell">—</td>
+          <td class="empty-cell">—</td>
+        </tr>
+        <tr>
+          <td>Outbound</td>
+          <td>SQL</td>
+          <td class="empty-cell">—</td>
+          <td class="empty-cell">—</td>
+          <td class="empty-cell">—</td>
+          <td class="empty-cell">—</td>
+          <td class="empty-cell">—</td>
+          <td class="empty-cell">—</td>
+          <td class="empty-cell">—</td>
+          <td class="empty-cell">—</td>
+        </tr>
+        <tr>
+          <td>Outbound</td>
+          <td>Deals</td>
+          <td class="empty-cell">—</td>
+          <td class="empty-cell">—</td>
+          <td class="empty-cell">—</td>
+          <td class="empty-cell">—</td>
+          <td class="empty-cell">—</td>
+          <td class="empty-cell">—</td>
+          <td class="empty-cell">—</td>
+          <td class="empty-cell">—</td>
+        </tr>
+        <tr class="total-row">
+          <td><strong>Total</strong></td>
+          <td>MQL</td>
+          <td class="empty-cell">—</td>
+          <td class="empty-cell">—</td>
+          <td class="empty-cell">—</td>
+          <td class="empty-cell">—</td>
+          <td class="empty-cell">—</td>
+          <td class="empty-cell">—</td>
+          <td class="empty-cell">—</td>
+          <td class="empty-cell">—</td>
+        </tr>
+        <tr class="total-row">
+          <td><strong>Total</strong></td>
+          <td>SQL</td>
+          <td class="empty-cell">—</td>
+          <td class="empty-cell">—</td>
+          <td class="empty-cell">—</td>
+          <td class="empty-cell">—</td>
+          <td class="empty-cell">—</td>
+          <td class="empty-cell">—</td>
+          <td class="empty-cell">—</td>
+          <td class="empty-cell">—</td>
+        </tr>
+        <tr class="total-row">
+          <td><strong>Total</strong></td>
+          <td>Deals</td>
+          <td class="empty-cell">—</td>
+          <td class="empty-cell">—</td>
+          <td class="empty-cell">—</td>
+          <td class="empty-cell">—</td>
+          <td class="empty-cell">—</td>
+          <td class="empty-cell">—</td>
+          <td class="empty-cell">—</td>
+          <td class="empty-cell">—</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- Section 7 -->
+  <h2 class="section-title">Section 7 — Headcount Plan</h2>
+  <p class="section-intro">Plan headcount by role, accounting for ramp time. A rep hired in Q1 may not be fully productive until Q3 — the headcount plan must account for this.</p>
+
+  <div class="hc-table-wrap">
+    <table class="hc-table">
+      <thead>
+        <tr>
+          <th>Role</th>
+          <th>Quota (Monthly)</th>
+          <th>Months to Ramp</th>
+          <th>Q1 HC</th>
+          <th>Q2 HC</th>
+          <th>Q3 HC</th>
+          <th>Q4 HC</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>AE — SMB</td>
+          <td class="empty-cell">—</td>
+          <td class="empty-cell">—</td>
+          <td class="empty-cell">—</td>
+          <td class="empty-cell">—</td>
+          <td class="empty-cell">—</td>
+          <td class="empty-cell">—</td>
+        </tr>
+        <tr>
+          <td>AE — Mid-Market</td>
+          <td class="empty-cell">—</td>
+          <td class="empty-cell">—</td>
+          <td class="empty-cell">—</td>
+          <td class="empty-cell">—</td>
+          <td class="empty-cell">—</td>
+          <td class="empty-cell">—</td>
+        </tr>
+        <tr>
+          <td>AE — Enterprise</td>
+          <td class="empty-cell">—</td>
+          <td class="empty-cell">—</td>
+          <td class="empty-cell">—</td>
+          <td class="empty-cell">—</td>
+          <td class="empty-cell">—</td>
+          <td class="empty-cell">—</td>
+        </tr>
+        <tr>
+          <td>SDR / BDR</td>
+          <td class="empty-cell">—</td>
+          <td class="empty-cell">—</td>
+          <td class="empty-cell">—</td>
+          <td class="empty-cell">—</td>
+          <td class="empty-cell">—</td>
+          <td class="empty-cell">—</td>
+        </tr>
+        <tr>
+          <td>Sales Manager</td>
+          <td class="empty-cell">—</td>
+          <td class="empty-cell">—</td>
+          <td class="empty-cell">—</td>
+          <td class="empty-cell">—</td>
+          <td class="empty-cell">—</td>
+          <td class="empty-cell">—</td>
+        </tr>
+        <tr>
+          <td>CSM</td>
+          <td class="empty-cell">—</td>
+          <td class="empty-cell">—</td>
+          <td class="empty-cell">—</td>
+          <td class="empty-cell">—</td>
+          <td class="empty-cell">—</td>
+          <td class="empty-cell">—</td>
+        </tr>
+        <tr>
+          <td>Marketing</td>
+          <td class="empty-cell">—</td>
+          <td class="empty-cell">—</td>
+          <td class="empty-cell">—</td>
+          <td class="empty-cell">—</td>
+          <td class="empty-cell">—</td>
+          <td class="empty-cell">—</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- Section 8 -->
+  <h2 class="section-title">Section 8 — Leading Indicator of Retention</h2>
+  <p class="section-intro">The LIR belongs in the annual GTM plan because it is the primary signal that what you're selling is actually working. Include it explicitly.</p>
+
+  <div class="callout callout-definition">
+    <div class="callout-title">LIR Definition for This Plan</div>
+    <p><strong>LI of Retention:</strong> X% of customers do [specific action] every [time period]<br/><br/>Fill in this field before finalizing the plan. It is the single most important leading indicator of whether your retention assumptions will hold.</p>
+  </div>
+
+  <div class="callout callout-best-practice">
+    <div class="callout-title">Cohort Chart Requirement</div>
+    <p>Produce a monthly cohort chart as part of the GTM plan. Present it at every board meeting alongside CCAC and LIUE data. See the <a href="template-lir.html">LIR Journey Template</a> for the full methodology and how to build the cohort chart.</p>
+  </div>
+
+  <!-- Section 9 -->
+  <h2 class="section-title">Section 9 — OKRs to Deliver the Plan</h2>
+  <p class="section-intro">Three objectives with key activities and measurable results. OKRs should be specific enough that anyone on the team knows whether they are on track or off track each week.</p>
+
+  <div class="okr-table-wrap">
+    <table class="okr-table">
+      <thead>
+        <tr>
+          <th>Component</th>
+          <th>Objective 1</th>
+          <th>Objective 2</th>
+          <th>Objective 3</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr class="obj-row">
+          <td>Objective</td>
+          <td class="empty-cell">Define objective</td>
+          <td class="empty-cell">Define objective</td>
+          <td class="empty-cell">Define objective</td>
+        </tr>
+        <tr>
+          <td><strong>Key Activities</strong></td>
+          <td>
+            <ol style="padding-left:16px;font-size:13px;line-height:1.65;">
+              <li class="empty-cell" style="margin-bottom:4px;">Activity 1</li>
+              <li class="empty-cell" style="margin-bottom:4px;">Activity 2</li>
+              <li class="empty-cell">Activity 3</li>
+            </ol>
+          </td>
+          <td>
+            <ol style="padding-left:16px;font-size:13px;line-height:1.65;">
+              <li class="empty-cell" style="margin-bottom:4px;">Activity 1</li>
+              <li class="empty-cell" style="margin-bottom:4px;">Activity 2</li>
+              <li class="empty-cell">Activity 3</li>
+            </ol>
+          </td>
+          <td>
+            <ol style="padding-left:16px;font-size:13px;line-height:1.65;">
+              <li class="empty-cell" style="margin-bottom:4px;">Activity 1</li>
+              <li class="empty-cell" style="margin-bottom:4px;">Activity 2</li>
+              <li class="empty-cell">Activity 3</li>
+            </ol>
+          </td>
+        </tr>
+        <tr>
+          <td><strong>Result</strong></td>
+          <td class="empty-cell">Measurable result</td>
+          <td class="empty-cell">Measurable result</td>
+          <td class="empty-cell">Measurable result</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- Related -->
+  <div class="related-section">
+    <div class="related-title">Related Pages</div>
+    <div class="related-links">
+      <a href="../pages/resources.html" class="related-link">← Resources &amp; Templates</a>
+      <a href="../index.html" class="related-link">← Home</a>
+      <a href="template-lir.html" class="related-link">LIR Journey Template</a>
+      <a href="template-ccac.html" class="related-link">CCAC Model</a>
+      <a href="template-forecasting.html" class="related-link">Forecasting Model</a>
+    </div>
+  </div>
+
+</div>
+<script data-pplx-inline-edit>
+(function () {
+  if (window === window.top) return;
+
+  const allowedParentOrigins = ["https://www.perplexity.ai","https://perplexity.ai","https://testing.perplexity.ai","https://staging.perplexity.ai","https://*.preview.i.perplexity.ai","http://localhost:3000","http://127.0.0.1:3000","http://localhost:5173","http://127.0.0.1:5173"];
+  const MAX_FONT_BYTES = 500 * 1024;
+  const MAX_TOTAL_FONT_BYTES = 2 * 1024 * 1024;
+  let scrollForwarding = false;
+  let scrollRaf = 0;
+  let trustedTopOrigin = null;
+
+  // Allow entries like "https://*.preview.i.perplexity.ai" — the wildcard
+  // matches a single DNS label (no dots), so "https://*.foo" cannot stretch
+  // across multiple labels.
+  function matchesAllowedOrigin(origin) {
+    if (!origin) return false;
+    for (const entry of allowedParentOrigins) {
+      if (!entry.includes("*")) {
+        if (entry === origin) return true;
+        continue;
+      }
+      const pattern = new RegExp(
+        "^" +
+          entry.replace(/[.+?^${}()|[\]\\]/g, "\\$&").replace(/\*/g, "[^.]+") +
+          "$",
+      );
+      if (pattern.test(origin)) return true;
+    }
+    return false;
+  }
+
+  // Trust decision: when the sender is same-origin-visible (event.origin is a
+  // real origin like https://www.perplexity.ai) we trust event.origin directly.
+  // When event.origin is "null" (opaque broker srcdoc), we fall back to the
+  // broker's stamped `parentOrigin` to identify the top window. The fallback
+  // is claim-only — we rely on the browser's native `targetOrigin` enforcement
+  // on the response path (see postToTrustedTop) to ensure replies can't be
+  // delivered to anyone but the actual top window of that claimed origin.
+  function getTrustedParentOrigin(event) {
+    const forwardedParentOrigin =
+      typeof event.data.parentOrigin === "string" ? event.data.parentOrigin : null;
+    const parentOrigin = event.origin === "null" ? forwardedParentOrigin : event.origin;
+    return matchesAllowedOrigin(parentOrigin) ? parentOrigin : null;
+  }
+
+  // All responses go to window.top with targetOrigin = the allowlisted origin.
+  // An attacker that iframes us inside their own null-origin broker can claim
+  // any parentOrigin they like, but the browser will drop the reply whenever
+  // the real top's origin doesn't match — so the screenshot never leaves.
+  function postToTrustedTop(message) {
+    if (!trustedTopOrigin) return;
+    try {
+      window.top.postMessage(message, trustedTopOrigin);
+    } catch (_error) {}
+  }
+
+  function inlineAll(original, clone) {
+    if (original.nodeType !== 1 || clone.nodeType !== 1) return;
+
+    try {
+      const computedStyle = getComputedStyle(original);
+      // cssText on a computed style is the serialized declaration in modern
+      // Chromium/Safari — a single read beats enumerating ~400 longhand
+      // properties. Firefox returns "" here, so we fall back on empty.
+      const serialized = computedStyle.cssText;
+      if (serialized) {
+        clone.style.cssText = serialized;
+      } else {
+        const parts = new Array(computedStyle.length);
+        for (let index = 0; index < computedStyle.length; index += 1) {
+          const property = computedStyle[index];
+          parts[index] = `${property}:${computedStyle.getPropertyValue(property)};`;
+        }
+        clone.style.cssText = parts.join("");
+      }
+    } catch (_error) {}
+
+    const originalChildren = original.children;
+    const clonedChildren = clone.children;
+    for (
+      let index = 0;
+      index < originalChildren.length && index < clonedChildren.length;
+      index += 1
+    ) {
+      inlineAll(originalChildren[index], clonedChildren[index]);
+    }
+  }
+
+  function extractFontUrl(srcValue) {
+    const matches = [
+      ...srcValue.matchAll(
+        /url\(["']?([^"')]+)["']?\)(?:\s*format\(["']?([^"')]+)["']?\))?/gi,
+      ),
+    ];
+    if (matches.length === 0) return null;
+    const woff2 = matches.find((m) => m[2] && m[2].toLowerCase().includes("woff2"));
+    if (woff2) return woff2[1];
+    const woff = matches.find((m) => m[2] && m[2].toLowerCase().includes("woff"));
+    if (woff) return woff[1];
+    return matches[0][1];
+  }
+
+  // Cache resolved font URL -> data URI across captures. Fonts on a page
+  // essentially never change, and a batch run emits multiple captures back to
+  // back — without this we'd refetch + re-base64 every time.
+  const fontDataUriCache = new Map();
+  const SRC_DECLARATION_RE = /src\s*:\s*[^;}]+/i;
+
+  async function fetchAsDataUri(url) {
+    if (fontDataUriCache.has(url)) return fontDataUriCache.get(url);
+    let dataUri = null;
+    try {
+      const response = await fetch(url, { mode: "cors", credentials: "omit" });
+      if (response.ok) {
+        const blob = await response.blob();
+        if (blob.size <= MAX_FONT_BYTES) {
+          dataUri = await new Promise((resolve) => {
+            const reader = new FileReader();
+            reader.onloadend = () =>
+              resolve(typeof reader.result === "string" ? reader.result : null);
+            reader.onerror = () => resolve(null);
+            reader.readAsDataURL(blob);
+          });
+        }
+      }
+    } catch (_error) {
+      dataUri = null;
+    }
+    fontDataUriCache.set(url, dataUri);
+    return dataUri;
+  }
+
+  function collectFontFaceRuleTexts() {
+    const rules = [];
+    for (const sheet of document.styleSheets) {
+      let cssRules;
+      try {
+        cssRules = sheet.cssRules;
+      } catch (_error) {
+        continue;
+      }
+      if (!cssRules) continue;
+      for (const rule of cssRules) {
+        const cssText = rule.cssText || "";
+        if (cssText.startsWith("@font-face")) rules.push(cssText);
+      }
+    }
+    return rules;
+  }
+
+  async function buildInlinedFontCss() {
+    const ruleTexts = collectFontFaceRuleTexts();
+    if (ruleTexts.length === 0) return null;
+
+    const resolved = ruleTexts.map((cssText) => {
+      if (!SRC_DECLARATION_RE.test(cssText)) return null;
+      const srcMatch = cssText.match(/src\s*:\s*([^;}]+)[;}]/i);
+      if (!srcMatch) return null;
+      const url = extractFontUrl(srcMatch[1]);
+      if (!url) return null;
+      try {
+        return { cssText, url: new URL(url, document.baseURI).href };
+      } catch (_error) {
+        return null;
+      }
+    });
+
+    const dataUris = await Promise.all(
+      resolved.map((entry) => (entry ? fetchAsDataUri(entry.url) : Promise.resolve(null))),
+    );
+
+    const inlined = [];
+    let totalBytes = 0;
+    for (let index = 0; index < resolved.length; index += 1) {
+      const entry = resolved[index];
+      const dataUri = dataUris[index];
+      if (!entry || !dataUri) continue;
+      const approxBytes = dataUri.length * 0.75;
+      if (totalBytes + approxBytes > MAX_TOTAL_FONT_BYTES) break;
+      totalBytes += approxBytes;
+      inlined.push(entry.cssText.replace(SRC_DECLARATION_RE, `src: url("${dataUri}")`));
+    }
+    return inlined.length > 0 ? inlined.join("\n") : null;
+  }
+
+  function stripExternal(clone) {
+    const images = clone.querySelectorAll("img");
+    for (let index = 0; index < images.length; index += 1) {
+      const src = images[index].getAttribute("src");
+      if (src && !src.startsWith("data:")) images[index].removeAttribute("src");
+    }
+
+    const elements = clone.querySelectorAll("*");
+    for (let index = 0; index < elements.length; index += 1) {
+      const style = elements[index].style.cssText;
+      if (style && style.includes("url(")) {
+        elements[index].style.cssText = style.replace(
+          /url\(["']?(?!data:)[^)"']*["']?\)/gi,
+          "none",
+        );
+      }
+    }
+  }
+
+  function emitScroll() {
+    scrollRaf = 0;
+    if (!scrollForwarding) return;
+    postToTrustedTop({
+      type: "INLINE_EDIT_SCROLL",
+      scrollX: window.scrollX,
+      scrollY: window.scrollY,
+    });
+  }
+
+  window.addEventListener(
+    "scroll",
+    function () {
+      if (!scrollForwarding || scrollRaf) return;
+      scrollRaf = requestAnimationFrame(emitScroll);
+    },
+    { passive: true, capture: true },
+  );
+
+  async function handleCaptureRequest(event) {
+    const requestId = event.data.requestId;
+    const scrollX = window.scrollX;
+    const scrollY = window.scrollY;
+    const width = window.innerWidth;
+    const height = window.innerHeight;
+
+    function postResult(dataUrl) {
+      postToTrustedTop({
+        type: "INLINE_EDIT_SCREENSHOT_RESULT",
+        requestId,
+        dataUrl,
+        scrollX,
+        scrollY,
+      });
+    }
+
+    try {
+      // Wait for any pending web fonts to resolve so both inline metrics and
+      // the @font-face inlining below see the same loaded faces.
+      if (document.fonts && document.fonts.ready) {
+        try {
+          await document.fonts.ready;
+        } catch (_error) {}
+      }
+
+      const clone = document.documentElement.cloneNode(true);
+      inlineAll(document.documentElement, clone);
+
+      const removedNodes = clone.querySelectorAll("script,link[rel=\"stylesheet\"],style");
+      for (let index = 0; index < removedNodes.length; index += 1) {
+        removedNodes[index].remove();
+      }
+
+      stripExternal(clone);
+
+      // Re-embed web fonts as data-URI @font-face rules so the SVG rasterizer
+      // can resolve them — external font URLs aren't fetched during
+      // foreignObject rendering, which would otherwise force a fallback face
+      // and change text metrics.
+      const inlinedFontCss = await buildInlinedFontCss();
+      if (inlinedFontCss) {
+        const styleEl = document.createElement("style");
+        styleEl.textContent = inlinedFontCss;
+        const head = clone.querySelector("head");
+        if (head) head.appendChild(styleEl);
+        else clone.insertBefore(styleEl, clone.firstChild);
+      }
+
+      const html = new XMLSerializer().serializeToString(clone);
+      const svg =
+        `<svg xmlns="http://www.w3.org/2000/svg" width="${width}" height="${height}">` +
+        '<foreignObject width="100%" height="100%">' +
+        `<div xmlns="http://www.w3.org/1999/xhtml" style="width:${width}px;height:${height}px;overflow:hidden">` +
+        `<div style="transform:translate(-${scrollX}px,-${scrollY}px);transform-origin:top left">` +
+        html +
+        "</div></div></foreignObject></svg>";
+      const svgUrl = `data:image/svg+xml;charset=utf-8,${encodeURIComponent(svg)}`;
+      const image = new Image();
+      image.onload = function () {
+        const canvas = document.createElement("canvas");
+        canvas.width = width;
+        canvas.height = height;
+        canvas.getContext("2d").drawImage(image, 0, 0);
+        postResult(canvas.toDataURL("image/png"));
+      };
+      image.onerror = function () {
+        postResult(null);
+      };
+      image.src = svgUrl;
+    } catch (_error) {
+      postResult(null);
+    }
+  }
+
+  window.addEventListener("message", function (event) {
+    if (!event.data) return;
+    // Only accept messages from the direct parent frame. Blocks sibling /
+    // unrelated-window postMessage senders that could otherwise reach us.
+    if (event.source !== window.parent) return;
+
+    const trustedParentOrigin = getTrustedParentOrigin(event);
+    if (!trustedParentOrigin) return;
+    trustedTopOrigin = trustedParentOrigin;
+
+    if (event.data.type === "INLINE_EDIT_SCROLL_START") {
+      scrollForwarding = true;
+      emitScroll();
+      return;
+    }
+
+    if (event.data.type === "INLINE_EDIT_SCROLL_STOP") {
+      scrollForwarding = false;
+      if (scrollRaf) cancelAnimationFrame(scrollRaf);
+      scrollRaf = 0;
+      return;
+    }
+
+    if (event.data.type !== "INLINE_EDIT_CAPTURE_REQUEST") return;
+
+    handleCaptureRequest(event);
+  });
+})();
+
+
+</script></body>
+</html>

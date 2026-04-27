@@ -1,0 +1,1058 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Presentation &amp; Demo Guide — GTM Playbook</title>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="../assets/shared.css"/>
+  <style>
+    .page-hero { background: #2C5F8A; }
+
+    /* ── Step cards ── */
+    .step-card {
+      background: var(--surface);
+      border: 1.5px solid var(--border);
+      border-radius: 10px;
+      padding: 24px 26px;
+      margin-bottom: 16px;
+      position: relative;
+      padding-left: 76px;
+    }
+    .step-num {
+      position: absolute;
+      left: 22px;
+      top: 22px;
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      background: #2C5F8A;
+      color: #fff;
+      font-size: 16px;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .step-card-title {
+      font-size: 16px;
+      font-weight: 700;
+      color: var(--text);
+      margin-bottom: 4px;
+    }
+    .step-card-subtitle {
+      font-size: 12px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      color: #2C5F8A;
+      margin-bottom: 12px;
+    }
+    .step-card-body {
+      font-size: 14px;
+      line-height: 1.65;
+      color: var(--text-muted);
+    }
+    .step-card-body p { margin-bottom: 10px; }
+    .step-card-body p:last-child { margin-bottom: 0; }
+    .step-card-body strong { color: var(--text); }
+
+    /* ── Fatal error callout ── */
+    .fatal-block {
+      background: #fff5f5;
+      border: 1.5px solid #A13544;
+      border-radius: 8px;
+      padding: 14px 18px;
+      margin: 14px 0;
+      font-size: 14px;
+      color: #7a2232;
+      line-height: 1.6;
+    }
+    .fatal-label {
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      color: #A13544;
+      margin-bottom: 4px;
+    }
+
+    /* ── Script block ── */
+    .script-block {
+      background: #f0f5fa;
+      border-left: 3px solid #2C5F8A;
+      border-radius: 0 6px 6px 0;
+      padding: 12px 16px;
+      margin: 10px 0;
+      font-size: 14px;
+      font-style: italic;
+      color: #1a3d5c;
+      line-height: 1.6;
+    }
+    .script-label {
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      color: #2C5F8A;
+      margin-bottom: 4px;
+      font-style: normal;
+    }
+
+    /* ── Callout ── */
+    .callout {
+      background: #eef4fa;
+      border: 1.5px solid #2C5F8A;
+      border-radius: 8px;
+      padding: 16px 20px;
+      margin: 18px 0;
+      font-size: 14px;
+      color: #1a3d5c;
+      line-height: 1.65;
+    }
+    .callout strong { color: #1a3d5c; }
+
+    /* ── Principle callout ── */
+    .principle-box {
+      background: var(--surface);
+      border: 1.5px solid var(--border);
+      border-radius: 8px;
+      padding: 16px 20px;
+      margin: 14px 0;
+      font-size: 14px;
+      line-height: 1.65;
+    }
+    .principle-label {
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      color: #2C5F8A;
+      margin-bottom: 4px;
+    }
+
+    /* ── Swim lanes ── */
+    .swim-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 14px;
+      margin: 20px 0;
+    }
+    .swim-card {
+      background: var(--surface);
+      border: 1.5px solid var(--border);
+      border-radius: 10px;
+      padding: 20px;
+    }
+    .swim-lane-label {
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      color: #2C5F8A;
+      margin-bottom: 6px;
+    }
+    .swim-lane-name {
+      font-size: 15px;
+      font-weight: 700;
+      color: var(--text);
+      margin-bottom: 10px;
+      line-height: 1.3;
+    }
+    .swim-lane-feat {
+      font-size: 12px;
+      font-weight: 600;
+      color: var(--text-muted);
+      margin-bottom: 6px;
+    }
+    .swim-card ul {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+    }
+    .swim-card ul li {
+      font-size: 13px;
+      color: var(--text-muted);
+      padding: 3px 0 3px 14px;
+      position: relative;
+      line-height: 1.5;
+    }
+    .swim-card ul li::before {
+      content: '·';
+      position: absolute;
+      left: 3px;
+      color: #2C5F8A;
+      font-weight: 700;
+    }
+    .swim-build-steps {
+      counter-reset: swim-steps;
+      list-style: none;
+      padding: 0;
+      margin: 16px 0;
+    }
+    .swim-build-steps li {
+      counter-increment: swim-steps;
+      display: flex;
+      gap: 12px;
+      margin-bottom: 12px;
+      align-items: flex-start;
+      font-size: 14px;
+      color: var(--text);
+      line-height: 1.6;
+    }
+    .swim-build-steps li::before {
+      content: counter(swim-steps);
+      min-width: 24px;
+      height: 24px;
+      border-radius: 50%;
+      background: #2C5F8A;
+      color: #fff;
+      font-size: 12px;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      margin-top: 2px;
+    }
+
+    /* ── Objection table ── */
+    .obj-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 20px 0;
+      background: var(--surface);
+      border-radius: 10px;
+      overflow: hidden;
+      border: 1.5px solid var(--border);
+    }
+    .obj-table thead {
+      background: #2C5F8A;
+      color: #fff;
+    }
+    .obj-table thead th {
+      padding: 12px 16px;
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: 0.8px;
+      text-transform: uppercase;
+      text-align: left;
+    }
+    .obj-table td {
+      padding: 14px 16px;
+      font-size: 14px;
+      vertical-align: top;
+      border-bottom: 1px solid var(--border);
+      line-height: 1.55;
+    }
+    .obj-table tr:last-child td { border-bottom: none; }
+    .obj-table tr:nth-child(even) td { background: #fafaf8; }
+    .obj-title { font-weight: 700; color: var(--text); }
+    .obj-poor { color: #A13544; font-size: 13px; }
+    .obj-strong { color: #437A22; font-size: 13px; font-style: italic; }
+
+    /* ── Film review ── */
+    .review-rubric {
+      list-style: none;
+      counter-reset: rubric;
+      margin: 16px 0;
+    }
+    .review-rubric li {
+      counter-increment: rubric;
+      display: flex;
+      gap: 14px;
+      margin-bottom: 14px;
+      align-items: flex-start;
+    }
+    .review-rubric li::before {
+      content: counter(rubric);
+      min-width: 28px;
+      height: 28px;
+      border-radius: 50%;
+      background: #eef4fa;
+      border: 1.5px solid #2C5F8A;
+      color: #2C5F8A;
+      font-size: 12px;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      margin-top: 1px;
+    }
+    .review-body {
+      font-size: 14px;
+      line-height: 1.65;
+      color: var(--text);
+    }
+    .review-body strong { display: block; margin-bottom: 2px; }
+    .review-body span { color: var(--text-muted); font-size: 13px; }
+
+    /* ── Metrics table ── */
+    .metrics-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 20px 0;
+      background: var(--surface);
+      border-radius: 10px;
+      overflow: hidden;
+      border: 1.5px solid var(--border);
+    }
+    .metrics-table thead {
+      background: #2C5F8A;
+      color: #fff;
+    }
+    .metrics-table thead th {
+      padding: 12px 16px;
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: 0.8px;
+      text-transform: uppercase;
+      text-align: left;
+    }
+    .metrics-table td {
+      padding: 13px 16px;
+      font-size: 14px;
+      vertical-align: top;
+      border-bottom: 1px solid var(--border);
+      line-height: 1.5;
+    }
+    .metrics-table tr:last-child td { border-bottom: none; }
+    .metrics-table tr:nth-child(even) td { background: #fafaf8; }
+    .metric-name { font-weight: 700; color: var(--text); }
+    .metric-bench { font-weight: 700; color: #2C5F8A; }
+
+    /* ── Hero tags ── */
+    .hero-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-top: 16px;
+    }
+    .hero-tag {
+      font-size: 11px;
+      font-weight: 600;
+      padding: 4px 12px;
+      border-radius: 20px;
+      background: rgba(255,255,255,0.18);
+      color: rgba(255,255,255,0.92);
+      letter-spacing: 0.3px;
+    }
+
+    @media (max-width: 768px) {
+      .swim-grid { grid-template-columns: 1fr; }
+      .step-card { padding-left: 20px; padding-top: 64px; }
+      .step-num { top: 16px; left: 16px; }
+    }
+  </style>
+</head>
+<body>
+
+<nav class="nav">
+  <span class="nav-logo">CRO <span>Manual</span></span>
+  <span class="nav-sep">/</span>
+  <a href="../index.html" class="nav-back">← Home</a>
+  <span class="nav-sep">/</span>
+  <a href="../pages/resources.html" class="nav-back">Resources &amp; Templates</a>
+  <span class="nav-sep">/</span>
+  <span class="nav-current">Presentation &amp; Demo Guide</span>
+</nav>
+
+<div class="page-hero">
+  <div class="hero-phase-label">GTM PLAYBOOK TOOL · STAGE 2</div>
+  <div class="hero-title">Presentation &amp; Demo Guide</div>
+  <div class="hero-subtitle">A presentation that follows discovery is a confirmation of what the buyer already told you they need — not a product tour. Every feature shown must connect back to a specific pain uncovered in discovery.</div>
+  <div class="hero-tags">
+    <span class="hero-tag">Demo</span>
+    <span class="hero-tag">Presentation</span>
+    <span class="hero-tag">Discovery Recap</span>
+    <span class="hero-tag">Swim Lanes</span>
+    <span class="hero-tag">Closing</span>
+    <span class="hero-tag">Film Reviews</span>
+  </div>
+</div>
+
+<div class="content-wrap">
+
+  <div class="breadcrumb">
+    <a href="../index.html">Home</a>
+    <span class="sep">›</span>
+    <a href="../pages/resources.html">Resources &amp; Templates</a>
+    <span class="sep">›</span>
+    <span class="current">Presentation &amp; Demo Guide</span>
+  </div>
+
+  <!-- SECTION 1: THE PURPOSE -->
+  <div class="section-title">1. The Purpose of the Presentation/Demo</div>
+  <div class="section-intro">The demo is not a product tour. It is the proof that you can solve the specific problems the buyer told you they have. Discovery earned you the right to present. The presentation earns you the right to next steps — and eventually, the contract.</div>
+
+  <div class="subsection">
+    <ul class="bullet-list">
+      <li>Not a product tour — a proof that you can solve their specific problem, framed in their language</li>
+      <li>The discovery call earned you the right to present; the presentation earns you the right to next steps</li>
+      <li>Only show features directly tied to pains discovered in the discovery call — everything else is noise</li>
+      <li>The buyer should feel, after a great demo: "They clearly understand my problem better than I do — and they have a solution"</li>
+    </ul>
+
+    <div class="fatal-block">
+      <div class="fatal-label">Fatal Error: Feature Dumping</div>
+      "Let me show you everything we can do" → The buyer gets confused, sees 15 features they don't need, focuses on what's missing from their specific use case, and leaves the demo with less confidence than they arrived with. Every feature you show that doesn't address a discovered pain is a liability, not an asset.
+    </div>
+
+    <div class="callout">
+      <strong>The Core Principle:</strong> A demo following poor discovery is a random walk through your product. A demo following excellent discovery is a highly targeted answer to a question the buyer already knows they need answered. Always run discovery before every demo — no exceptions.
+    </div>
+  </div>
+
+  <!-- SECTION 2: THE 6-STEP FRAMEWORK -->
+  <div class="section-title">2. The 6-Step Presentation Framework</div>
+  <div class="section-intro">This structure works for every demo — 45 minutes to 90 minutes, SMB to enterprise. The steps are not optional. Skipping any one of them degrades conversion. The order matters: you are building a logical arc that the buyer follows to a natural "yes."</div>
+
+  <div class="subsection">
+
+    <div class="step-card">
+      <div class="step-num">1</div>
+      <div class="step-card-subtitle">Step One</div>
+      <div class="step-card-title">Agenda Setting</div>
+      <div class="step-card-body">
+        <p><strong>Goal:</strong> Set expectations and create a micro-commitment before you begin. An agreed agenda eliminates surprises and signals that you are organized and respectful of their time.</p>
+        <div class="script-block">
+          <div class="script-label">Opening Script</div>
+          "Today I want to: (1) confirm I understood your situation correctly from our last conversation, (2) show you three specific areas where I think we can help, and (3) get your completely honest reaction — including what doesn't fit. Does that work?"
+        </div>
+        <p><strong>Why it works:</strong> "Get your honest reaction" signals you're not there to pitch — you're there to collaborate. This drops buyer defenses. The micro-commitment ("does that work?") also makes the buyer an active participant from the first moment.</p>
+      </div>
+    </div>
+
+    <div class="step-card">
+      <div class="step-num">2</div>
+      <div class="step-card-subtitle">Step Two</div>
+      <div class="step-card-title">Discovery Recap</div>
+      <div class="step-card-body">
+        <p><strong>Goal:</strong> Spend 3–5 minutes summarizing what you heard in discovery — in the buyer's words, not product language. This is the single highest-ROI step in the entire presentation.</p>
+        <div class="script-block">
+          <div class="script-label">Discovery Recap Script</div>
+          "Last time, you told me that [pain 1 in their exact words], and that [pain 2] is costing you [quantified impact they gave you]. And you mentioned that the biggest priority for you heading into Q[X] is [primary need]. Does that still reflect where things stand?"
+        </div>
+        <p><strong>Why it works:</strong> Confirms you listened, demonstrates you took notes, allows them to correct misunderstandings before you pitch, and builds the trust that makes every subsequent product claim more credible.</p>
+        <p><strong>If they correct you:</strong> Write it down, thank them, and adapt your demo sequence in real-time. Do not proceed with the original plan if the priority has changed — nothing destroys a demo faster than showing a solution to a problem the buyer no longer has.</p>
+      </div>
+    </div>
+
+    <div class="step-card">
+      <div class="step-num">3</div>
+      <div class="step-card-subtitle">Step Three</div>
+      <div class="step-card-title">Executive Summary</div>
+      <div class="step-card-body">
+        <p><strong>Goal:</strong> Before opening the product, give a 60-second roadmap of exactly what you'll show and why. This respects the buyer's time and sets up a mental framework they can follow.</p>
+        <div class="script-block">
+          <div class="script-label">Executive Summary Script</div>
+          "Based on what you shared, I'm going to show you three specific things today: [Area 1] to address [Pain 1 in their words], [Area 2] to address [Pain 2], and [Area 3] to address [Pain 3]. I'm going to skip everything else — we can always come back to other features if you want. But today I want to stay completely focused on what's most relevant for your team."
+        </div>
+        <p><strong>Why it works:</strong> This signals respect for their time and keeps the entire demo relevant. It also primes the buyer to evaluate the three specific areas you've chosen — which you've pre-aligned to their stated priorities.</p>
+      </div>
+    </div>
+
+    <div class="step-card">
+      <div class="step-num">4</div>
+      <div class="step-card-subtitle">Step Four</div>
+      <div class="step-card-title">Feature 1 — Primary Pain</div>
+      <div class="step-card-body">
+        <p><strong>Goal:</strong> Show the feature that most directly solves their primary, highest-urgency pain. Use a story format — not a walkthrough format.</p>
+        <div class="principle-box">
+          <div class="principle-label">Story Format for Every Feature</div>
+          <strong>Step 1 — Their reality:</strong> "You told me that [pain]. Most [ICP type] we work with experience this because [root cause]."<br/>
+          <strong>Step 2 — The product:</strong> "Here's exactly what you would do in [product name]: [show it live, not as a slideshow]."<br/>
+          <strong>Step 3 — The outcome:</strong> "The result: [specific, quantified outcome]. [Customer name] reduced [metric] by [X%] in [timeframe]."
+        </div>
+        <p><strong>After every feature, ask:</strong> "Does this address the challenge you described to me? Any questions before we move to the next area?" Never advance to Feature 2 if they still have questions about Feature 1 — unresolved questions become unspoken objections.</p>
+      </div>
+    </div>
+
+    <div class="step-card">
+      <div class="step-num">5</div>
+      <div class="step-card-subtitle">Step Five</div>
+      <div class="step-card-title">Features 2 &amp; 3 — Supporting Value</div>
+      <div class="step-card-body">
+        <p><strong>Goal:</strong> Show 2 additional pain points from discovery using the same story format. Quality over quantity — maximum 3 main features per 45–60 minute demo. Every additional feature shown beyond 3 dilutes the impact of the first three.</p>
+        <ul class="bullet-list" style="margin-bottom:12px;">
+          <li>Use the same story format: their reality → product action → quantified outcome</li>
+          <li>Save a "wow moment" for Feature 2 or 3 — something unexpected but directly relevant to their stated goals</li>
+          <li>The wow moment should make them think: "I didn't know it could do that — and I need that"</li>
+          <li>After each feature: check in before moving forward — never leave an open question behind you</li>
+        </ul>
+        <div class="callout">
+          <strong>The 3-Feature Rule:</strong> For every additional feature you show beyond 3, you add cognitive load and reduce the buyer's confidence that they understand what they're buying. A buyer who is confused cannot say yes.
+        </div>
+      </div>
+    </div>
+
+    <div class="step-card">
+      <div class="step-num">6</div>
+      <div class="step-card-subtitle">Step Six</div>
+      <div class="step-card-title">Recap &amp; Close</div>
+      <div class="step-card-body">
+        <p><strong>Goal:</strong> Summarize, confirm fit, and advance to a specific next step. A demo without a definitive close is a performance — not a sales motion.</p>
+        <div class="script-block">
+          <div class="script-label">Closing Summary</div>
+          "Let me summarize what we showed you today: [Feature 1] addresses [Pain 1 in their language], [Feature 2] addresses [Pain 2], and [Feature 3] addresses [Pain 3]. Based on everything we've covered — does this solve the problems you described to me?"
+        </div>
+        <div class="script-block">
+          <div class="script-label">Discovery Close</div>
+          "Based on what we've seen — what does your internal process look like from here to move forward?" (This surfaces the decision process and economic buyer without asking directly.)
+        </div>
+        <p><strong>Do not leave without:</strong> A specific next step with a confirmed date, time, and named attendees. "I'll follow up" is not a next step. "Can we schedule 30 minutes next Thursday at 2pm to include [Economic Buyer name] and discuss next steps?" is a next step.</p>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- SECTION 3: SWIM LANE DESIGN -->
+  <div class="section-title">3. Swim Lane Design</div>
+  <div class="section-intro">A swim lane is a pre-built version of the presentation customized for a specific ICP segment, use case, or buyer situation. Swim lanes eliminate the improvisation that leads to feature-dumping and ensure every rep tells the same best-in-class story.</div>
+
+  <div class="subsection">
+    <div class="swim-grid">
+      <div class="swim-card">
+        <div class="swim-lane-label">Swim Lane 1</div>
+        <div class="swim-lane-name">Mid-Market, Primary Use Case</div>
+        <div class="swim-lane-feat">Features: A, B, C</div>
+        <ul>
+          <li>Buyer journey: evaluation stage, 1–2 stakeholders</li>
+          <li>Primary pain: operational efficiency, manual process</li>
+          <li>Demo emphasis: ease of implementation, time-to-value</li>
+          <li>Social proof: similar mid-market customer names and results</li>
+          <li>Close path: champion → economic buyer approval in 2–3 weeks</li>
+        </ul>
+      </div>
+      <div class="swim-card">
+        <div class="swim-lane-label">Swim Lane 2</div>
+        <div class="swim-lane-name">Enterprise, Compliance-Focused</div>
+        <div class="swim-lane-feat">Features: D, E, F</div>
+        <ul>
+          <li>Buyer journey: procurement + security review, 4–6 stakeholders</li>
+          <li>Primary pain: risk, compliance, auditability</li>
+          <li>Demo emphasis: security architecture, permission controls, audit logs</li>
+          <li>Social proof: enterprise customer logos and compliance credentials</li>
+          <li>Close path: security review → legal → executive approval in 6–12 weeks</li>
+        </ul>
+      </div>
+      <div class="swim-card">
+        <div class="swim-lane-label">Swim Lane 3</div>
+        <div class="swim-lane-name">Competitive Displacement</div>
+        <div class="swim-lane-feat">Modified features + differentiation framing</div>
+        <ul>
+          <li>Buyer journey: switching from [Competitor], switching cost concern</li>
+          <li>Primary pain: gaps in current solution, migration risk</li>
+          <li>Demo emphasis: migration path, feature comparison, switching cost ROI</li>
+          <li>Social proof: customers who switched from [Competitor] and their results</li>
+          <li>Objection handling: 2–3 specific slides addressing common competitive objections</li>
+        </ul>
+      </div>
+    </div>
+
+    <p style="font-size:15px; font-weight:700; color:var(--text); margin: 20px 0 10px;">How to Build Swim Lanes</p>
+    <ul class="swim-build-steps">
+      <li>Analyze your top 20 closed-won deals — which features were cited as most important in the post-sale survey or call recording? Look for patterns, not individual preferences.</li>
+      <li>Group by segment and use case — do clusters emerge around company size, vertical, or primary pain? Each cluster is a candidate swim lane.</li>
+      <li>Build a base demo script for each cluster — opening narrative, 3 core features with story format, specific social proof for that segment, close language.</li>
+      <li>Test with 2–3 reps over 4–6 demos each — collect Film Review scores and conversion data.</li>
+      <li>Iterate based on Film Review data — which features drove the most positive buyer reactions? Which objections appeared repeatedly in that swim lane?</li>
+    </ul>
+  </div>
+
+  <!-- SECTION 4: DEMO OBJECTIONS -->
+  <div class="section-title">4. Handling Demo Objections</div>
+  <div class="section-intro">Objections during a demo are opportunities, not threats. They signal the buyer is engaged and evaluating. The goal is not to eliminate objections but to handle them in a way that deepens trust and moves the conversation forward.</div>
+
+  <div class="subsection">
+    <table class="obj-table">
+      <thead>
+        <tr>
+          <th>Objection</th>
+          <th>Poor Response</th>
+          <th>Strong Response</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><span class="obj-title">"We'd need to see [feature you don't have]"</span></td>
+          <td><span class="obj-poor">Defensive: "We have something similar..." — vague and unconvincing. Signals you know it's a gap.</span></td>
+          <td><span class="obj-strong">"Tell me more — what would that feature need to do specifically? I want to understand whether what we have addresses the need underneath that request."</span></td>
+        </tr>
+        <tr>
+          <td><span class="obj-title">"This looks complex to implement"</span></td>
+          <td><span class="obj-poor">Dismissive: "Actually, it's really easy" — invalidates their concern and destroys trust.</span></td>
+          <td><span class="obj-strong">"That's a fair concern to raise. Customers similar to yours typically go live in 6 weeks. Want me to walk you through exactly what that onboarding looks like?"</span></td>
+        </tr>
+        <tr>
+          <td><span class="obj-title">"We're looking at [Competitor]"</span></td>
+          <td><span class="obj-poor">Competitive: "We're much better than them" — triggers defensiveness. Never badmouth.</span></td>
+          <td><span class="obj-strong">"What do you like about [Competitor]? I want to make sure you have full information to make the comparison — I can speak to specifically where we're different."</span></td>
+        </tr>
+        <tr>
+          <td><span class="obj-title">"The price seems high"</span></td>
+          <td><span class="obj-poor">Anxious: "I can probably do a discount" — erodes your value and trains the buyer to extract concessions.</span></td>
+          <td><span class="obj-strong">"Can you tell me more about what you're comparing it to? I want to understand what the right value frame is — the ROI conversation looks very different depending on the comparison point."</span></td>
+        </tr>
+        <tr>
+          <td><span class="obj-title">"We don't have budget right now"</span></td>
+          <td><span class="obj-poor">Eager: "We have flexible payment terms" — signals desperation and skips the real diagnosis.</span></td>
+          <td><span class="obj-strong">"Is budget something that opens up at a specific time — like a new quarter or fiscal year reset? Or is this more of a priority question? I want to understand whether timing or priority is the real barrier."</span></td>
+        </tr>
+        <tr>
+          <td><span class="obj-title">"We need to involve [other person/team]"</span></td>
+          <td><span class="obj-poor">Passive: "Sure, have them reach out to me" — you lose control of the process entirely.</span></td>
+          <td><span class="obj-strong">"Absolutely — that makes sense. Can we set up a 30-minute call that includes [other person]? I'd like to make sure they have the same context we've built together. What's the best way to get time on their calendar?"</span></td>
+        </tr>
+      </tbody>
+    </table>
+
+    <div class="callout">
+      <strong>Universal Objection Principle:</strong> Acknowledge before answering. Never jump straight to the response — always validate the concern first. "That's a completely fair question / concern" before every response. Buyers who feel heard are dramatically more receptive to the answer that follows.
+    </div>
+  </div>
+
+  <!-- SECTION 5: FILM REVIEW PROTOCOL -->
+  <div class="section-title">5. Film Review Protocol</div>
+  <div class="section-intro">Film reviews are the highest-ROI coaching tool in a sales organization. A 30-minute weekly session with call recordings improves demo quality faster than any training program. The goal is not to critique — it is to identify and replicate what works.</div>
+
+  <div class="subsection">
+    <ul class="bullet-list" style="margin-bottom:20px;">
+      <li>Record every demo — Gong, Chorus, Clari Copilot, or Zoom built-in recording. Non-negotiable.</li>
+      <li>Weekly 30-minute session: manager + team reviews one full recording together</li>
+      <li>Rotate recordings: the same rep should present their own call at least once per month</li>
+      <li>Share top recordings as "Gold Standard" examples — positive reinforcement drives behavior change faster than critique</li>
+      <li>Never review a recording to punish performance — always to understand what works and replicate it at scale</li>
+    </ul>
+
+    <p style="font-size:15px; font-weight:700; color:var(--text); margin-bottom:12px;">Film Review Scoring Rubric (Score 1–5 on Each Dimension)</p>
+    <ul class="review-rubric">
+      <li>
+        <div class="review-body">
+          <strong>Discovery Recap Present</strong>
+          <span>Did the rep spend at least 3 minutes summarizing what was heard in discovery — in the buyer's words? Did the buyer confirm or correct before the demo began?</span>
+        </div>
+      </li>
+      <li>
+        <div class="review-body">
+          <strong>Agenda Was Set</strong>
+          <span>Was an agenda explicitly stated at the start? Did the rep get agreement ("does that work?") before proceeding? Was the agenda actually followed?</span>
+        </div>
+      </li>
+      <li>
+        <div class="review-body">
+          <strong>Only Relevant Features Shown</strong>
+          <span>Were all features shown directly tied to pains from the discovery call? Were any features shown that weren't tied to a stated buyer need? Count the features shown — was it more than 3?</span>
+        </div>
+      </li>
+      <li>
+        <div class="review-body">
+          <strong>Objections Handled Well</strong>
+          <span>Did the rep acknowledge before answering? Was the response specific and evidence-based? Did the rep recover control of the conversation after each objection?</span>
+        </div>
+      </li>
+      <li>
+        <div class="review-body">
+          <strong>Clear Close With Next Steps</strong>
+          <span>Did the rep use a discovery close to surface the decision process? Was a specific next step confirmed — date, time, named attendees? Was the next step confirmed before the call ended?</span>
+        </div>
+      </li>
+    </ul>
+
+    <div class="callout">
+      <strong>Gold Standard Benchmark:</strong> A demo that scores 4–5 on all five dimensions should be shared immediately with the entire team as a model. Index your coaching on replicating top performance — not managing up from the bottom.
+    </div>
+  </div>
+
+  <!-- SECTION 6: METRICS -->
+  <div class="section-title">6. Presentation Metrics</div>
+  <div class="section-intro">These five metrics tell you whether your demo motion is working. Track them at the rep level and the team level. Divergences between reps on the same metrics reveal coaching opportunities and process gaps.</div>
+
+  <div class="subsection">
+    <table class="metrics-table">
+      <thead>
+        <tr>
+          <th>Metric</th>
+          <th>Definition</th>
+          <th>Target</th>
+          <th>How to Track</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><span class="metric-name">Demo-to-Opportunity Rate</span></td>
+          <td>% of demos that advance to formal opportunity stage in CRM</td>
+          <td><span class="metric-bench">&gt;60%</span></td>
+          <td>CRM stage transition report</td>
+        </tr>
+        <tr>
+          <td><span class="metric-name">Demo-to-Close Rate</span></td>
+          <td>% of all demos that result in a closed-won deal (all-in)</td>
+          <td><span class="metric-bench">20–35%</span></td>
+          <td>CRM closed-won / total demos in cohort</td>
+        </tr>
+        <tr>
+          <td><span class="metric-name">Average Demos to Close</span></td>
+          <td>Average number of demos per closed-won deal</td>
+          <td><span class="metric-bench">&lt;3</span></td>
+          <td>CRM demo count field per deal</td>
+        </tr>
+        <tr>
+          <td><span class="metric-name">Discovery Recap Usage</span></td>
+          <td>% of demo calls that include a documented discovery recap in the first 5 minutes</td>
+          <td><span class="metric-bench">100%</span></td>
+          <td>Film review scoring, Gong call analysis</td>
+        </tr>
+        <tr>
+          <td><span class="metric-name">Objection Handle Rate</span></td>
+          <td>% of recorded objections that are successfully navigated (no stall or topic drop)</td>
+          <td><span class="metric-bench">&gt;70%</span></td>
+          <td>Film review scoring, weekly session</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- RELATED LINKS -->
+  <div class="related-section">
+    <div class="related-title">Related Tools &amp; Templates</div>
+    <div class="related-links">
+      <a href="template-discovery.html" class="related-link">Discovery Guide</a>
+      <a href="template-prospecting.html" class="related-link">Prospecting Guide</a>
+      <a href="sos-gtm-playbook.html" class="related-link">GTM Playbook SOS</a>
+      <a href="template-cs-playbook.html" class="related-link">Customer Success Playbook</a>
+    </div>
+  </div>
+
+</div><!-- /content-wrap -->
+<script data-pplx-inline-edit>
+(function () {
+  if (window === window.top) return;
+
+  const allowedParentOrigins = ["https://www.perplexity.ai","https://perplexity.ai","https://testing.perplexity.ai","https://staging.perplexity.ai","https://*.preview.i.perplexity.ai","http://localhost:3000","http://127.0.0.1:3000","http://localhost:5173","http://127.0.0.1:5173"];
+  const MAX_FONT_BYTES = 500 * 1024;
+  const MAX_TOTAL_FONT_BYTES = 2 * 1024 * 1024;
+  let scrollForwarding = false;
+  let scrollRaf = 0;
+  let trustedTopOrigin = null;
+
+  // Allow entries like "https://*.preview.i.perplexity.ai" — the wildcard
+  // matches a single DNS label (no dots), so "https://*.foo" cannot stretch
+  // across multiple labels.
+  function matchesAllowedOrigin(origin) {
+    if (!origin) return false;
+    for (const entry of allowedParentOrigins) {
+      if (!entry.includes("*")) {
+        if (entry === origin) return true;
+        continue;
+      }
+      const pattern = new RegExp(
+        "^" +
+          entry.replace(/[.+?^${}()|[\]\\]/g, "\\$&").replace(/\*/g, "[^.]+") +
+          "$",
+      );
+      if (pattern.test(origin)) return true;
+    }
+    return false;
+  }
+
+  // Trust decision: when the sender is same-origin-visible (event.origin is a
+  // real origin like https://www.perplexity.ai) we trust event.origin directly.
+  // When event.origin is "null" (opaque broker srcdoc), we fall back to the
+  // broker's stamped `parentOrigin` to identify the top window. The fallback
+  // is claim-only — we rely on the browser's native `targetOrigin` enforcement
+  // on the response path (see postToTrustedTop) to ensure replies can't be
+  // delivered to anyone but the actual top window of that claimed origin.
+  function getTrustedParentOrigin(event) {
+    const forwardedParentOrigin =
+      typeof event.data.parentOrigin === "string" ? event.data.parentOrigin : null;
+    const parentOrigin = event.origin === "null" ? forwardedParentOrigin : event.origin;
+    return matchesAllowedOrigin(parentOrigin) ? parentOrigin : null;
+  }
+
+  // All responses go to window.top with targetOrigin = the allowlisted origin.
+  // An attacker that iframes us inside their own null-origin broker can claim
+  // any parentOrigin they like, but the browser will drop the reply whenever
+  // the real top's origin doesn't match — so the screenshot never leaves.
+  function postToTrustedTop(message) {
+    if (!trustedTopOrigin) return;
+    try {
+      window.top.postMessage(message, trustedTopOrigin);
+    } catch (_error) {}
+  }
+
+  function inlineAll(original, clone) {
+    if (original.nodeType !== 1 || clone.nodeType !== 1) return;
+
+    try {
+      const computedStyle = getComputedStyle(original);
+      // cssText on a computed style is the serialized declaration in modern
+      // Chromium/Safari — a single read beats enumerating ~400 longhand
+      // properties. Firefox returns "" here, so we fall back on empty.
+      const serialized = computedStyle.cssText;
+      if (serialized) {
+        clone.style.cssText = serialized;
+      } else {
+        const parts = new Array(computedStyle.length);
+        for (let index = 0; index < computedStyle.length; index += 1) {
+          const property = computedStyle[index];
+          parts[index] = `${property}:${computedStyle.getPropertyValue(property)};`;
+        }
+        clone.style.cssText = parts.join("");
+      }
+    } catch (_error) {}
+
+    const originalChildren = original.children;
+    const clonedChildren = clone.children;
+    for (
+      let index = 0;
+      index < originalChildren.length && index < clonedChildren.length;
+      index += 1
+    ) {
+      inlineAll(originalChildren[index], clonedChildren[index]);
+    }
+  }
+
+  function extractFontUrl(srcValue) {
+    const matches = [
+      ...srcValue.matchAll(
+        /url\(["']?([^"')]+)["']?\)(?:\s*format\(["']?([^"')]+)["']?\))?/gi,
+      ),
+    ];
+    if (matches.length === 0) return null;
+    const woff2 = matches.find((m) => m[2] && m[2].toLowerCase().includes("woff2"));
+    if (woff2) return woff2[1];
+    const woff = matches.find((m) => m[2] && m[2].toLowerCase().includes("woff"));
+    if (woff) return woff[1];
+    return matches[0][1];
+  }
+
+  // Cache resolved font URL -> data URI across captures. Fonts on a page
+  // essentially never change, and a batch run emits multiple captures back to
+  // back — without this we'd refetch + re-base64 every time.
+  const fontDataUriCache = new Map();
+  const SRC_DECLARATION_RE = /src\s*:\s*[^;}]+/i;
+
+  async function fetchAsDataUri(url) {
+    if (fontDataUriCache.has(url)) return fontDataUriCache.get(url);
+    let dataUri = null;
+    try {
+      const response = await fetch(url, { mode: "cors", credentials: "omit" });
+      if (response.ok) {
+        const blob = await response.blob();
+        if (blob.size <= MAX_FONT_BYTES) {
+          dataUri = await new Promise((resolve) => {
+            const reader = new FileReader();
+            reader.onloadend = () =>
+              resolve(typeof reader.result === "string" ? reader.result : null);
+            reader.onerror = () => resolve(null);
+            reader.readAsDataURL(blob);
+          });
+        }
+      }
+    } catch (_error) {
+      dataUri = null;
+    }
+    fontDataUriCache.set(url, dataUri);
+    return dataUri;
+  }
+
+  function collectFontFaceRuleTexts() {
+    const rules = [];
+    for (const sheet of document.styleSheets) {
+      let cssRules;
+      try {
+        cssRules = sheet.cssRules;
+      } catch (_error) {
+        continue;
+      }
+      if (!cssRules) continue;
+      for (const rule of cssRules) {
+        const cssText = rule.cssText || "";
+        if (cssText.startsWith("@font-face")) rules.push(cssText);
+      }
+    }
+    return rules;
+  }
+
+  async function buildInlinedFontCss() {
+    const ruleTexts = collectFontFaceRuleTexts();
+    if (ruleTexts.length === 0) return null;
+
+    const resolved = ruleTexts.map((cssText) => {
+      if (!SRC_DECLARATION_RE.test(cssText)) return null;
+      const srcMatch = cssText.match(/src\s*:\s*([^;}]+)[;}]/i);
+      if (!srcMatch) return null;
+      const url = extractFontUrl(srcMatch[1]);
+      if (!url) return null;
+      try {
+        return { cssText, url: new URL(url, document.baseURI).href };
+      } catch (_error) {
+        return null;
+      }
+    });
+
+    const dataUris = await Promise.all(
+      resolved.map((entry) => (entry ? fetchAsDataUri(entry.url) : Promise.resolve(null))),
+    );
+
+    const inlined = [];
+    let totalBytes = 0;
+    for (let index = 0; index < resolved.length; index += 1) {
+      const entry = resolved[index];
+      const dataUri = dataUris[index];
+      if (!entry || !dataUri) continue;
+      const approxBytes = dataUri.length * 0.75;
+      if (totalBytes + approxBytes > MAX_TOTAL_FONT_BYTES) break;
+      totalBytes += approxBytes;
+      inlined.push(entry.cssText.replace(SRC_DECLARATION_RE, `src: url("${dataUri}")`));
+    }
+    return inlined.length > 0 ? inlined.join("\n") : null;
+  }
+
+  function stripExternal(clone) {
+    const images = clone.querySelectorAll("img");
+    for (let index = 0; index < images.length; index += 1) {
+      const src = images[index].getAttribute("src");
+      if (src && !src.startsWith("data:")) images[index].removeAttribute("src");
+    }
+
+    const elements = clone.querySelectorAll("*");
+    for (let index = 0; index < elements.length; index += 1) {
+      const style = elements[index].style.cssText;
+      if (style && style.includes("url(")) {
+        elements[index].style.cssText = style.replace(
+          /url\(["']?(?!data:)[^)"']*["']?\)/gi,
+          "none",
+        );
+      }
+    }
+  }
+
+  function emitScroll() {
+    scrollRaf = 0;
+    if (!scrollForwarding) return;
+    postToTrustedTop({
+      type: "INLINE_EDIT_SCROLL",
+      scrollX: window.scrollX,
+      scrollY: window.scrollY,
+    });
+  }
+
+  window.addEventListener(
+    "scroll",
+    function () {
+      if (!scrollForwarding || scrollRaf) return;
+      scrollRaf = requestAnimationFrame(emitScroll);
+    },
+    { passive: true, capture: true },
+  );
+
+  async function handleCaptureRequest(event) {
+    const requestId = event.data.requestId;
+    const scrollX = window.scrollX;
+    const scrollY = window.scrollY;
+    const width = window.innerWidth;
+    const height = window.innerHeight;
+
+    function postResult(dataUrl) {
+      postToTrustedTop({
+        type: "INLINE_EDIT_SCREENSHOT_RESULT",
+        requestId,
+        dataUrl,
+        scrollX,
+        scrollY,
+      });
+    }
+
+    try {
+      // Wait for any pending web fonts to resolve so both inline metrics and
+      // the @font-face inlining below see the same loaded faces.
+      if (document.fonts && document.fonts.ready) {
+        try {
+          await document.fonts.ready;
+        } catch (_error) {}
+      }
+
+      const clone = document.documentElement.cloneNode(true);
+      inlineAll(document.documentElement, clone);
+
+      const removedNodes = clone.querySelectorAll("script,link[rel=\"stylesheet\"],style");
+      for (let index = 0; index < removedNodes.length; index += 1) {
+        removedNodes[index].remove();
+      }
+
+      stripExternal(clone);
+
+      // Re-embed web fonts as data-URI @font-face rules so the SVG rasterizer
+      // can resolve them — external font URLs aren't fetched during
+      // foreignObject rendering, which would otherwise force a fallback face
+      // and change text metrics.
+      const inlinedFontCss = await buildInlinedFontCss();
+      if (inlinedFontCss) {
+        const styleEl = document.createElement("style");
+        styleEl.textContent = inlinedFontCss;
+        const head = clone.querySelector("head");
+        if (head) head.appendChild(styleEl);
+        else clone.insertBefore(styleEl, clone.firstChild);
+      }
+
+      const html = new XMLSerializer().serializeToString(clone);
+      const svg =
+        `<svg xmlns="http://www.w3.org/2000/svg" width="${width}" height="${height}">` +
+        '<foreignObject width="100%" height="100%">' +
+        `<div xmlns="http://www.w3.org/1999/xhtml" style="width:${width}px;height:${height}px;overflow:hidden">` +
+        `<div style="transform:translate(-${scrollX}px,-${scrollY}px);transform-origin:top left">` +
+        html +
+        "</div></div></foreignObject></svg>";
+      const svgUrl = `data:image/svg+xml;charset=utf-8,${encodeURIComponent(svg)}`;
+      const image = new Image();
+      image.onload = function () {
+        const canvas = document.createElement("canvas");
+        canvas.width = width;
+        canvas.height = height;
+        canvas.getContext("2d").drawImage(image, 0, 0);
+        postResult(canvas.toDataURL("image/png"));
+      };
+      image.onerror = function () {
+        postResult(null);
+      };
+      image.src = svgUrl;
+    } catch (_error) {
+      postResult(null);
+    }
+  }
+
+  window.addEventListener("message", function (event) {
+    if (!event.data) return;
+    // Only accept messages from the direct parent frame. Blocks sibling /
+    // unrelated-window postMessage senders that could otherwise reach us.
+    if (event.source !== window.parent) return;
+
+    const trustedParentOrigin = getTrustedParentOrigin(event);
+    if (!trustedParentOrigin) return;
+    trustedTopOrigin = trustedParentOrigin;
+
+    if (event.data.type === "INLINE_EDIT_SCROLL_START") {
+      scrollForwarding = true;
+      emitScroll();
+      return;
+    }
+
+    if (event.data.type === "INLINE_EDIT_SCROLL_STOP") {
+      scrollForwarding = false;
+      if (scrollRaf) cancelAnimationFrame(scrollRaf);
+      scrollRaf = 0;
+      return;
+    }
+
+    if (event.data.type !== "INLINE_EDIT_CAPTURE_REQUEST") return;
+
+    handleCaptureRequest(event);
+  });
+})();
+
+
+</script></body>
+</html>

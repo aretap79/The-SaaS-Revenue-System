@@ -1,0 +1,1282 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Leading Indicator of Unit Economics (LIUE) — Science of Scaling</title>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="../assets/shared.css"/>
+  <style>
+    :root { --sos: #0D5C63; --sos-light: #e6f2f3; --sos-mid: #c2dde0; }
+    .page-hero { background: var(--sos); }
+
+    .step-list li::before { background: var(--sos); }
+    .bullet-list li::before { color: var(--sos); }
+
+    /* ── Philosophy Comparison ── */
+    .philosophy-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+      margin: 16px 0 24px;
+    }
+    .phil-card { border-radius: 8px; padding: 18px 20px; }
+    .phil-card.lagging { background: #fce8e6; border: 1.5px solid #ef9a9a; }
+    .phil-card.leading { background: #e8f5e9; border: 1.5px solid #a5d6a7; }
+    .phil-card .pc-title {
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      margin-bottom: 8px;
+    }
+    .phil-card.lagging .pc-title { color: #a13544; }
+    .phil-card.leading .pc-title { color: #437a22; }
+    .phil-card .pc-body { font-size: 14px; line-height: 1.65; }
+
+    /* ── LIUE Big Formula Box ── */
+    .liue-formula-box {
+      background: var(--sos);
+      color: #fff;
+      border-radius: 12px;
+      padding: 30px 32px;
+      margin: 24px 0;
+    }
+    .lfb-title {
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      opacity: 0.7;
+      margin-bottom: 20px;
+    }
+    .lfb-main {
+      font-size: 20px;
+      font-weight: 700;
+      line-height: 1.5;
+      margin-bottom: 16px;
+    }
+    .lfb-accent { color: #7ecdd2; }
+    .lfb-divider {
+      border: none;
+      border-top: 2px solid rgba(255,255,255,0.25);
+      margin: 14px 0;
+    }
+    .lfb-component {
+      font-size: 14px;
+      line-height: 1.9;
+      opacity: 0.9;
+    }
+    .lfb-component-title {
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      opacity: 0.55;
+      margin-top: 12px;
+    }
+    .lfb-result {
+      margin-top: 20px;
+      font-size: 18px;
+      font-weight: 700;
+      background: rgba(255,255,255,0.12);
+      border-radius: 8px;
+      padding: 12px 16px;
+    }
+    .lfb-result-green { color: #7ecdd2; }
+
+    /* ── Variable Definition Table ── */
+
+    /* ── Threshold Interpretation Table ── */
+    .threshold-row-critical { background: #fce8e6 !important; }
+    .threshold-row-poor { background: #fff8f0 !important; }
+    .threshold-row-below { background: #fff8e1 !important; }
+    .threshold-row-good { background: #f0fff4 !important; }
+    .threshold-row-great { background: #e6f4ea !important; }
+    .threshold-badge {
+      display: inline-block;
+      padding: 3px 10px;
+      border-radius: 12px;
+      font-size: 12px;
+      font-weight: 700;
+    }
+    .tb-stop { background: #A13544; color: #fff; }
+    .tb-improve { background: #e07b0a; color: #fff; }
+    .tb-optimize { background: #d4a017; color: #fff; }
+    .tb-scale { background: #437A22; color: #fff; }
+    .tb-accelerate { background: #0D5C63; color: #fff; }
+
+    /* ── Worked Example: Input Grid ── */
+    .example-inputs {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 10px;
+      margin: 16px 0;
+    }
+    .ei-card {
+      background: #f3f8f8;
+      border: 1.5px solid var(--sos-mid);
+      border-radius: 8px;
+      padding: 14px 16px;
+    }
+    .ei-card .eic-label {
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      color: var(--sos);
+      margin-bottom: 4px;
+    }
+    .ei-card .eic-value {
+      font-size: 20px;
+      font-weight: 700;
+      color: var(--text);
+    }
+
+    .example-inputs.bad-example .ei-card {
+      background: #fff0f0;
+      border-color: #ef9a9a;
+    }
+    .example-inputs.bad-example .ei-card .eic-label { color: #a13544; }
+
+    /* ── Calculation Rows ── */
+    .example-calcs { margin: 16px 0; }
+    .calc-row {
+      display: flex;
+      align-items: baseline;
+      gap: 12px;
+      padding: 10px 0;
+      border-bottom: 1px solid var(--border);
+      font-size: 14px;
+    }
+    .calc-row:last-child { border-bottom: none; }
+    .cr-label { font-weight: 700; color: var(--text); min-width: 170px; flex-shrink: 0; }
+    .cr-math { color: var(--text-muted); flex: 1; }
+    .cr-result { font-weight: 700; color: var(--sos); min-width: 110px; text-align: right; }
+    .calc-row.final {
+      background: #f3f8f8;
+      padding: 12px 16px;
+      border-radius: 8px;
+      margin-top: 8px;
+    }
+    .calc-row.final .cr-result { font-size: 20px; color: #437a22; }
+    .calc-row.final-bad {
+      background: #fce8e6;
+      padding: 12px 16px;
+      border-radius: 8px;
+      margin-top: 8px;
+    }
+    .calc-row.final-bad .cr-result { font-size: 20px; color: #A13544; }
+
+    /* ── Lever Cards ── */
+    .lever-section {
+      background: var(--surface);
+      border: 1.5px solid var(--border);
+      border-radius: 10px;
+      padding: 18px 22px;
+      margin: 12px 0;
+    }
+    .lever-section .ls-label {
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      color: var(--sos);
+      margin-bottom: 4px;
+    }
+    .lever-section .ls-title {
+      font-size: 16px;
+      font-weight: 700;
+      color: var(--text);
+      margin-bottom: 12px;
+    }
+    .lever-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 8px;
+    }
+    .lv-item {
+      background: #f7f6f2;
+      border-radius: 6px;
+      padding: 10px 14px;
+      font-size: 13px;
+    }
+    .lv-item strong { display: block; margin-bottom: 2px; font-size: 13px; color: var(--text); }
+    .lv-item span { color: var(--text-muted); }
+
+    /* ── Segment LIUE Table ── */
+    .segment-wrap { overflow-x: auto; margin: 16px 0; }
+
+    /* ── Dashboard Tracking Section ── */
+    .dashboard-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 10px;
+      margin: 16px 0;
+    }
+    .dash-card {
+      background: var(--surface);
+      border: 1.5px solid var(--border);
+      border-radius: 8px;
+      padding: 14px 16px;
+    }
+    .dash-card .dc-label {
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      color: var(--sos);
+      margin-bottom: 4px;
+    }
+    .dash-card .dc-title {
+      font-size: 14px;
+      font-weight: 700;
+      color: var(--text);
+      margin-bottom: 6px;
+    }
+    .dash-card .dc-desc {
+      font-size: 12px;
+      color: var(--text-muted);
+      line-height: 1.5;
+    }
+
+    /* ── Red Flags List ── */
+    .redflag-list {
+      list-style: none;
+      margin: 12px 0;
+    }
+    .redflag-list li {
+      display: flex;
+      gap: 12px;
+      align-items: flex-start;
+      padding: 10px 0;
+      border-bottom: 1px solid var(--border);
+      font-size: 14px;
+      line-height: 1.6;
+    }
+    .redflag-list li:last-child { border-bottom: none; }
+    .rf-icon { font-size: 16px; flex-shrink: 0; margin-top: 2px; }
+
+    /* ── Metric Comparison Table ── */
+    .mc-badge {
+      display: inline-block;
+      font-size: 11px;
+      font-weight: 700;
+      padding: 2px 8px;
+      border-radius: 10px;
+    }
+    .mcb-current { background: #e6f4ea; color: #437A22; }
+    .mcb-lagging { background: #fce8e6; color: #A13544; }
+    .mcb-medium { background: #fff8e1; color: #7a6000; }
+
+    /* ── Formula Chain ── */
+    .formula-chain { margin: 20px 0; }
+    .fc-step {
+      background: var(--surface);
+      border: 1.5px solid var(--border);
+      border-radius: 8px;
+      padding: 14px 18px;
+      margin-bottom: 6px;
+    }
+    .fc-step .fs-label {
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      color: var(--sos);
+      margin-bottom: 6px;
+    }
+    .fc-step .fs-formula {
+      font-size: 15px;
+      font-weight: 600;
+      color: var(--text);
+      line-height: 1.6;
+    }
+    .fc-step .fs-formula em { font-style: normal; color: var(--sos); }
+    .fc-arrow {
+      text-align: center;
+      color: var(--sos);
+      font-size: 20px;
+      font-weight: 700;
+      margin: 2px 0 4px;
+    }
+
+    @media (max-width: 768px) {
+      .philosophy-grid { grid-template-columns: 1fr; }
+      .example-inputs { grid-template-columns: 1fr 1fr; }
+      .lever-grid { grid-template-columns: 1fr; }
+      .dashboard-grid { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+<nav class="nav">
+  <span class="nav-logo">CRO <span>Manual</span></span>
+  <span class="nav-sep">|</span>
+  <a href="../index.html" class="nav-back">← Home</a>
+  <span class="nav-sep">|</span>
+  <a href="../pages/science-of-scaling.html" class="nav-back">Science of Scaling</a>
+  <span class="nav-sep">|</span>
+  <span class="nav-current">LIUE</span>
+</nav>
+
+<div class="page-hero">
+  <div class="hero-phase-label">Metric · Science of Scaling</div>
+  <div class="hero-title">Leading Indicator of Unit Economics (LIUE)</div>
+  <div class="hero-subtitle">The Stage 2 equivalent of LIR. LIUE tells you whether your GTM motion will generate scalable unit economics — before you've committed to the hiring plan that would take 18 months to prove out through LTV.</div>
+  <div class="hero-tags">
+    <span class="hero-tag">Unit Economics</span>
+    <span class="hero-tag">LTV/CAC</span>
+    <span class="hero-tag">GTM Fit</span>
+    <span class="hero-tag">Demand Gen</span>
+    <span class="hero-tag">Pricing</span>
+  </div>
+</div>
+
+<div class="content-wrap">
+
+  <div class="breadcrumb">
+    <a href="../index.html">Home</a><span class="sep">›</span>
+    <a href="../pages/science-of-scaling.html">Science of Scaling</a><span class="sep">›</span>
+    <span class="current">Leading Indicator of Unit Economics (LIUE)</span>
+  </div>
+
+  <!-- ══════════════════════════════════════════════
+       SECTION 1: WHY LIUE EXISTS
+  ══════════════════════════════════════════════ -->
+  <div class="section-title">Why LIUE Exists</div>
+  <div class="section-intro">Unit economics — specifically LTV/CAC — are the definitive test of whether a GTM model is sustainable. The problem is that they require 12–24 months of customer cohort data to calculate meaningfully. LIUE solves this problem the same way LIR solved the retention problem.</div>
+
+  <div class="philosophy-grid">
+    <div class="phil-card lagging">
+      <div class="pc-title">Traditional LTV/CAC — The Problem</div>
+      <div class="pc-body">Definitive but delayed. To calculate LTV accurately, you need customers who have been with you long enough that their lifetime value is observable. That means 12–24 months minimum. By the time you know whether your GTM model works, you've already hired a team, burned through a significant portion of runway, and built a revenue plan around an unvalidated assumption.</div>
+    </div>
+    <div class="phil-card leading">
+      <div class="pc-title">LIUE — The Solution</div>
+      <div class="pc-body">Uses current, monthly data points that are the mathematical components of LTV/CAC. Not a proxy — these are the exact same variables inside the formula. Calculating LIUE today gives you the same signal as calculating LTV/CAC will give you 12–18 months from now, but in real time. Allows hiring decisions on a quarterly basis instead of waiting for cohort maturity.</div>
+    </div>
+  </div>
+
+  <div class="subsection">
+    <div class="subsection-title">Named in Parallel with LIR</div>
+    <p>LIUE and LIR are both "leading indicators" — they apply the same logic to different problems. LIR takes the lagging outcome "customer renewal" and decomposes it into an early product behavior. LIUE takes the lagging outcome "LTV/CAC &gt; 3" and decomposes it into monthly business metrics. Both allow faster decision-making at critical stages.</p>
+  </div>
+
+  <div class="callout callout-definition">
+    <div class="callout-title">The Practical Decision Rule</div>
+    <p><strong>If LIUE &gt; 3 today:</strong> safe to add headcount. The current economics, if they hold, will produce sustainable unit economics at cohort maturity.<br/>
+    <strong>If LIUE &lt; 3 today:</strong> identify which lever is broken, fix it, and don't add headcount until LIUE exceeds 3. Adding headcount when LIUE &lt; 3 amplifies the problem — more headcount produces more customers with unsustainable unit economics.</p>
+  </div>
+
+  <!-- ══════════════════════════════════════════════
+       SECTION 2: THE FULL LIUE FORMULA
+  ══════════════════════════════════════════════ -->
+  <div class="section-title">The Full LIUE Formula</div>
+  <div class="section-intro">LIUE is derived by taking the LTV/CAC formula and substituting each term with its underlying components until every variable is one that can be measured from current data — not historical cohort maturity.</div>
+
+  <div class="formula-chain">
+    <div class="fc-step">
+      <div class="fs-label">The Goal</div>
+      <div class="fs-formula"><em>LTV / CAC &gt; 3</em></div>
+    </div>
+    <div class="fc-arrow">↓ expand LTV</div>
+    <div class="fc-step">
+      <div class="fs-label">LTV Formula</div>
+      <div class="fs-formula">LTV = <em>ACV × GM%</em> ÷ <em>Annual Churn Rate</em></div>
+    </div>
+    <div class="fc-arrow">↓ expand CAC into its two components</div>
+    <div class="fc-step">
+      <div class="fs-label">CAC — Marketing Component</div>
+      <div class="fs-formula">CAC<sub>Marketing</sub> = <em>Cost per SQL</em> ÷ <em>SQL-to-Customer%</em></div>
+    </div>
+    <div class="fc-step">
+      <div class="fs-label">CAC — Sales Component</div>
+      <div class="fs-formula">CAC<sub>Sales</sub> = <em>Salesperson Monthly Cost</em> ÷ (<em>SQLs per Salesperson per Month</em> × <em>SQL-to-Customer%</em>)</div>
+    </div>
+    <div class="fc-arrow">↓ combine into the full LIUE expression</div>
+  </div>
+
+  <div class="liue-formula-box">
+    <div class="lfb-title">The Full LIUE Formula</div>
+    <div class="lfb-main">
+      LIUE = <span class="lfb-accent">LTV</span> / <span class="lfb-accent">CAC</span>
+    </div>
+    <hr class="lfb-divider"/>
+    <div class="lfb-component-title">LTV Numerator</div>
+    <div class="lfb-component">
+      <span class="lfb-accent">ACV</span> × <span class="lfb-accent">GM%</span> ÷ <span class="lfb-accent">Annual Churn Rate</span>
+    </div>
+    <div class="lfb-component-title">CAC Denominator</div>
+    <div class="lfb-component">
+      [<span class="lfb-accent">Cost per SQL</span> ÷ <span class="lfb-accent">SQL-to-Customer%</span>]
+      &nbsp;+&nbsp;
+      [<span class="lfb-accent">Salesperson Monthly Cost</span> ÷ (<span class="lfb-accent">SQLs per Salesperson per Month</span> × <span class="lfb-accent">SQL-to-Customer%</span>)]
+    </div>
+    <div class="lfb-result">
+      LIUE <span class="lfb-result-green">&gt; 3</span> → GTM Fit achieved. Safe to add headcount.
+    </div>
+  </div>
+
+  <div class="subsection-title">Variable Reference Table</div>
+  <table class="data-table">
+    <thead>
+      <tr><th>Variable</th><th>Full Name</th><th>Typical Range</th><th>How to Calculate</th></tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><strong>ACV</strong></td>
+        <td>Annual Contract Value</td>
+        <td>Varies by market</td>
+        <td>Average signed contract value, annualized. Use median, not mean (avoid outlier distortion).</td>
+      </tr>
+      <tr>
+        <td><strong>GM%</strong></td>
+        <td>Gross Margin %</td>
+        <td>70–85% for SaaS</td>
+        <td>(Revenue − COGS) ÷ Revenue. Include all COGS: hosting, support, implementation.</td>
+      </tr>
+      <tr>
+        <td><strong>Annual Churn Rate</strong></td>
+        <td>Annual Revenue Churn</td>
+        <td>&lt;10% target; &lt;5% excellent</td>
+        <td>ARR churned in 12 months ÷ beginning ARR. Can estimate as monthly churn × 12 for early cohorts.</td>
+      </tr>
+      <tr>
+        <td><strong>Cost per SQL</strong></td>
+        <td>Marketing cost per Sales-Qualified Lead</td>
+        <td>Varies by channel and ACV</td>
+        <td>Total marketing spend attributed to SQL generation ÷ SQLs produced in that period.</td>
+      </tr>
+      <tr>
+        <td><strong>SQL-to-Customer%</strong></td>
+        <td>Win Rate from SQL Stage</td>
+        <td>20–40% typical for B2B SaaS</td>
+        <td>Closed-won deals ÷ total SQLs from same period. Use 3–6 month aged data to capture full close cycle.</td>
+      </tr>
+      <tr>
+        <td><strong>Salesperson Monthly Cost</strong></td>
+        <td>Fully loaded rep cost per month</td>
+        <td>$15–25K/month all-in</td>
+        <td>Base salary ÷ 12 + variable OTE ÷ 12 + benefits + tools + management overhead. Use 115–125% of total cash comp as fully loaded multiplier.</td>
+      </tr>
+      <tr>
+        <td><strong>SQLs per Salesperson per Month</strong></td>
+        <td>Rep productivity metric</td>
+        <td>4–10 depending on ACV/segment</td>
+        <td>Pull from CRM: SQLs assigned to rep in a given month. Use ramped reps only (exclude first 90 days).</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <!-- ══════════════════════════════════════════════
+       SECTION 3: THE LIUE THRESHOLD — WHY > 3?
+  ══════════════════════════════════════════════ -->
+  <div class="section-title">The LIUE Threshold: Why &gt; 3?</div>
+  <div class="section-intro">The 3x threshold is the industry standard minimum for SaaS unit economics. Understanding the math behind it — and the meaning of different LIUE levels — prevents both premature scaling and unnecessary conservatism.</div>
+
+  <div class="subsection">
+    <div class="subsection-title">What the Thresholds Mean</div>
+    <p style="font-size: 15px; margin-bottom: 16px;">A LIUE of 3 means: for every dollar spent acquiring a customer, you expect to generate $3 in gross profit over the customer's lifetime. This provides enough margin to cover operating expenses, reinvest in product, and still generate a return.</p>
+  </div>
+
+  <table class="data-table">
+    <thead>
+      <tr><th>LIUE</th><th>Interpretation</th><th>Implication</th><th>Action</th></tr>
+    </thead>
+    <tbody>
+      <tr class="threshold-row-critical">
+        <td><strong>&lt; 1.0</strong></td>
+        <td><span class="threshold-badge tb-stop">Destroying Value</span></td>
+        <td>You spend more acquiring a customer than you'll ever earn back. Every customer is a net loss even before operating expenses.</td>
+        <td>Stop all hiring immediately. Diagnose whether to fix CAC, fix churn, or exit the segment.</td>
+      </tr>
+      <tr class="threshold-row-poor">
+        <td><strong>1.0–2.0</strong></td>
+        <td><span class="threshold-badge tb-improve">Marginal</span></td>
+        <td>You recover CAC, but the margin is not sufficient to justify growth capital. Would need very long customer lifetimes and no overhead to be viable.</td>
+        <td>No headcount growth. Significant improvement required before any scaling consideration.</td>
+      </tr>
+      <tr class="threshold-row-below">
+        <td><strong>2.0–3.0</strong></td>
+        <td><span class="threshold-badge tb-optimize">Below Threshold</span></td>
+        <td>Unit economics exist but are not yet strong enough for confident scaling. CAC payback is too long relative to the risk of churn before recovery.</td>
+        <td>Optimize specific levers. Do not add headcount until consistently above 3.</td>
+      </tr>
+      <tr class="threshold-row-good">
+        <td><strong>3.0–5.0</strong></td>
+        <td><span class="threshold-badge tb-scale">GTM Fit Achieved</span></td>
+        <td>Industry standard healthy range. Strong enough to scale with appropriate capital. Payback period is reasonable (typically 12–18 months).</td>
+        <td>Scale at pace. Hire 2/month. Monitor LIUE monthly to ensure it holds under scale.</td>
+      </tr>
+      <tr class="threshold-row-great">
+        <td><strong>5.0+</strong></td>
+        <td><span class="threshold-badge tb-accelerate">Strong GTM Fit</span></td>
+        <td>Excellent unit economics. High-growth SaaS companies consistently operate in this range. Every dollar of S&amp;M investment is highly efficient.</td>
+        <td>Accelerate hiring. Add demand gen channels. Begin aggressive market share capture.</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div class="callout callout-formula">
+    <div class="callout-title">Why Not Just Use Payback Period?</div>
+    <p>Payback period measures how long to recover CAC — useful, but incomplete. A company with 12-month payback and 3% annual churn has very different economics than one with 12-month payback and 30% churn. LTV/CAC (LIUE) captures both dimensions simultaneously: the payback speed AND the customer lifetime length that determines the total return. LIUE &gt; 3 is the correct complete signal.</p>
+  </div>
+
+  <!-- ══════════════════════════════════════════════
+       SECTION 4: WORKED EXAMPLES
+  ══════════════════════════════════════════════ -->
+  <div class="section-title">Worked Examples</div>
+  <div class="section-intro">Two full numerical examples — one showing strong economics, one showing value-destructive economics — illustrate how the formula responds to different business inputs.</div>
+
+  <div class="subsection">
+    <div class="subsection-title">Example 1: Strong Economics — Enterprise SaaS</div>
+
+    <div class="example-inputs">
+      <div class="ei-card">
+        <div class="eic-label">ACV</div>
+        <div class="eic-value">$36,000</div>
+      </div>
+      <div class="ei-card">
+        <div class="eic-label">GM%</div>
+        <div class="eic-value">75%</div>
+      </div>
+      <div class="ei-card">
+        <div class="eic-label">Annual Churn</div>
+        <div class="eic-value">10%</div>
+      </div>
+      <div class="ei-card">
+        <div class="eic-label">Cost per SQL</div>
+        <div class="eic-value">$500</div>
+      </div>
+      <div class="ei-card">
+        <div class="eic-label">SQL-to-Customer%</div>
+        <div class="eic-value">30%</div>
+      </div>
+      <div class="ei-card">
+        <div class="eic-label">Rep Monthly Cost</div>
+        <div class="eic-value">$18,000</div>
+      </div>
+      <div class="ei-card">
+        <div class="eic-label">SQLs per Rep/Mo</div>
+        <div class="eic-value">6</div>
+      </div>
+    </div>
+
+    <div class="example-calcs">
+      <div class="calc-row">
+        <div class="cr-label">LTV</div>
+        <div class="cr-math">$36,000 × 75% ÷ 10%</div>
+        <div class="cr-result">$270,000</div>
+      </div>
+      <div class="calc-row">
+        <div class="cr-label">CAC (Marketing)</div>
+        <div class="cr-math">$500 ÷ 30%</div>
+        <div class="cr-result">$1,667</div>
+      </div>
+      <div class="calc-row">
+        <div class="cr-label">CAC (Sales)</div>
+        <div class="cr-math">$18,000 ÷ (6 × 30%)</div>
+        <div class="cr-result">$10,000</div>
+      </div>
+      <div class="calc-row">
+        <div class="cr-label">Total CAC</div>
+        <div class="cr-math">$1,667 + $10,000</div>
+        <div class="cr-result">$11,667</div>
+      </div>
+      <div class="calc-row final">
+        <div class="cr-label" style="color: var(--text);">LIUE</div>
+        <div class="cr-math" style="color: var(--text-muted);">$270,000 ÷ $11,667</div>
+        <div class="cr-result">23.1 ✓</div>
+      </div>
+    </div>
+
+    <div class="callout callout-best-practice" style="margin-top: 8px;">
+      <div class="callout-title" style="color: #437a22;">Result: Exceptionally Strong</div>
+      <p>LIUE of 23.1 is outstanding — this business has significant pricing power and very low churn. At this level, the constraint is not unit economics but market size, management capacity, and ability to recruit fast enough. Accelerate hiring aggressively.</p>
+    </div>
+  </div>
+
+  <div class="subsection" style="margin-top: 32px;">
+    <div class="subsection-title">Example 2: Poor Economics — SMB SaaS</div>
+
+    <div class="example-inputs bad-example">
+      <div class="ei-card">
+        <div class="eic-label">ACV</div>
+        <div class="eic-value">$12,000</div>
+      </div>
+      <div class="ei-card">
+        <div class="eic-label">GM%</div>
+        <div class="eic-value">65%</div>
+      </div>
+      <div class="ei-card">
+        <div class="eic-label">Annual Churn</div>
+        <div class="eic-value">25%</div>
+      </div>
+      <div class="ei-card">
+        <div class="eic-label">Cost per SQL</div>
+        <div class="eic-value">$800</div>
+      </div>
+      <div class="ei-card">
+        <div class="eic-label">SQL-to-Customer%</div>
+        <div class="eic-value">15%</div>
+      </div>
+      <div class="ei-card">
+        <div class="eic-label">Rep Monthly Cost</div>
+        <div class="eic-value">$15,000</div>
+      </div>
+      <div class="ei-card">
+        <div class="eic-label">SQLs per Rep/Mo</div>
+        <div class="eic-value">3</div>
+      </div>
+    </div>
+
+    <div class="example-calcs">
+      <div class="calc-row">
+        <div class="cr-label">LTV</div>
+        <div class="cr-math">$12,000 × 65% ÷ 25%</div>
+        <div class="cr-result">$31,200</div>
+      </div>
+      <div class="calc-row">
+        <div class="cr-label">CAC (Marketing)</div>
+        <div class="cr-math">$800 ÷ 15%</div>
+        <div class="cr-result">$5,333</div>
+      </div>
+      <div class="calc-row">
+        <div class="cr-label">CAC (Sales)</div>
+        <div class="cr-math">$15,000 ÷ (3 × 15%)</div>
+        <div class="cr-result">$33,333</div>
+      </div>
+      <div class="calc-row">
+        <div class="cr-label">Total CAC</div>
+        <div class="cr-math">$5,333 + $33,333</div>
+        <div class="cr-result">$38,667</div>
+      </div>
+      <div class="calc-row final-bad">
+        <div class="cr-label" style="color: var(--text);">LIUE</div>
+        <div class="cr-math" style="color: var(--text-muted);">$31,200 ÷ $38,667</div>
+        <div class="cr-result">0.81 ✗</div>
+      </div>
+    </div>
+
+    <div class="callout callout-warning" style="margin-top: 8px;">
+      <div class="callout-title">Result: Destroying Value — STOP SCALING</div>
+      <p>LIUE of 0.81 means every new customer costs more to acquire than they will ever return in gross profit. The primary culprits here: high annual churn (25% wipes out LTV), low SQL-to-Customer% (15% creates enormous CAC), and low rep productivity (3 SQLs/month means the rep's $15K/month cost is spread across very few deals). All three must be addressed before any additional sales headcount.</p>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════════════
+       SECTION 5: HOW TO IMPROVE LIUE
+  ══════════════════════════════════════════════ -->
+  <div class="section-title">How to Improve LIUE</div>
+  <div class="section-intro">When LIUE &lt; 3, the formula tells you exactly where the problem is. Each lever maps to a specific variable. Identify the weakest lever first — it will have the highest return on improvement effort.</div>
+
+  <div class="lever-section">
+    <div class="ls-label">LTV Levers — Increase the Numerator</div>
+    <div class="ls-title">Pull when: LTV is small relative to CAC — often caused by high churn or low ACV</div>
+    <div class="lever-grid">
+      <div class="lv-item">
+        <strong>Increase ACV</strong>
+        <span>Reprice, move upmarket, add seat/usage tiers. A 20% ACV increase raises LTV 20% directly. Example: $30K → $36K ACV improves LIUE by ~20% holding everything else constant.</span>
+      </div>
+      <div class="lv-item">
+        <strong>Improve Gross Margin %</strong>
+        <span>Optimize infrastructure/hosting costs, reduce support burden through better onboarding, negotiate vendor contracts at scale. GM% 65% → 75% raises LTV by ~15%.</span>
+      </div>
+      <div class="lv-item">
+        <strong>Reduce Annual Churn</strong>
+        <span>The highest leverage LTV lever. Annual churn 20% → 10% doubles LTV (10÷20 vs. 10÷10). LIR programs are the primary tool — churn is a product-market fit symptom, not a CS symptom.</span>
+      </div>
+      <div class="lv-item">
+        <strong>Increase Contract Length</strong>
+        <span>Multi-year contracts reduce effective annual churn (customer can't leave at annual renewal) and improve LTV visibility. Offer 5–10% discount for 2-year, 10–15% for 3-year commitments.</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="lever-section" style="margin-top: 12px;">
+    <div class="ls-label">CAC Levers — Reduce the Denominator</div>
+    <div class="ls-title">Pull when: CAC is high relative to LTV — often caused by poor conversion rates or low rep productivity</div>
+    <div class="lever-grid">
+      <div class="lv-item">
+        <strong>Reduce Cost per SQL</strong>
+        <span>Improve demand gen channel targeting. Shift spend to lower-cost channels. Test new content formats. Example: $1,000 → $750 cost per SQL reduces marketing CAC by 25%.</span>
+      </div>
+      <div class="lv-item">
+        <strong>Increase SQL-to-Customer%</strong>
+        <span>Most powerful lever — appears in both CAC components. Improve discovery/qualification, tighten ICP definition, improve demo quality. 20% → 25% SQL-to-Customer% improves total CAC by ~20%.</span>
+      </div>
+      <div class="lv-item">
+        <strong>Increase SQLs per Rep per Month</strong>
+        <span>Better demand gen alignment, improved prospecting cadence, better ICP targeting. 4 → 6 SQLs/rep/month reduces sales CAC by 33%. Most effective when combined with better demand gen.</span>
+      </div>
+      <div class="lv-item">
+        <strong>Reduce Salesperson Monthly Cost</strong>
+        <span>Hire junior reps once playbook is fully codified. Use SDR + AE model (SDRs at lower cost per SQL; AEs at higher conversion). Don't reduce OTE below market — drives turnover.</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="callout callout-definition" style="margin-top: 14px;">
+    <div class="callout-title">The SQL-to-Customer% Leverage Effect</div>
+    <p>SQL-to-Customer% appears in the denominator of <em>both</em> CAC components simultaneously. This means a 10% improvement in SQL-to-Customer% (e.g., from 20% to 22%) reduces total CAC by approximately 9% in both components at once — a compounding improvement that no other single lever matches. Always improve this before anything else.</p>
+  </div>
+
+  <!-- ══════════════════════════════════════════════
+       SECTION 6: LIUE BY SEGMENT
+  ══════════════════════════════════════════════ -->
+  <div class="section-title">LIUE by Segment</div>
+  <div class="section-intro">Blended LIUE is a dangerous metric in growth-stage companies. It averages across segments with fundamentally different economics — masking both the segments that should be scaled and the segments that are destroying value.</div>
+
+  <div class="subsection">
+    <p>A company's overall blended LIUE of 4 may contain an SMB segment with LIUE of 0.8 that is hidden inside an Enterprise segment with LIUE of 8. The blended number tells you nothing actionable. The segment-level number tells you to stop investing in SMB immediately and double down on Enterprise.</p>
+
+    <p>Calculate LIUE separately for each dimension:</p>
+    <ul class="bullet-list">
+      <li><strong>Market segment</strong> — SMB, Mid-Market, Enterprise, each independently</li>
+      <li><strong>Demand gen channel</strong> — inbound, outbound, paid, partner, PLG — each independently</li>
+      <li><strong>Product line</strong> — each product or bundle independently if multiple exist</li>
+    </ul>
+  </div>
+
+  <div class="subsection-title">Segment LIUE Example — $20M ARR SaaS Company</div>
+  <div class="segment-wrap">
+    <table class="data-table">
+      <thead>
+        <tr><th>Segment</th><th>ACV</th><th>Annual Churn</th><th>Cost/SQL</th><th>SQL→Cust%</th><th>LTV</th><th>CAC</th><th>LIUE</th><th>Decision</th></tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>Enterprise Direct</strong></td>
+          <td>$72K</td>
+          <td>5%</td>
+          <td>$1,200</td>
+          <td>35%</td>
+          <td>$1,080,000</td>
+          <td>$91,000</td>
+          <td style="color: #437A22; font-weight: 700;">11.9</td>
+          <td><span style="background:#e6f4ea;color:#437A22;font-weight:700;font-size:11px;padding:2px 8px;border-radius:10px;">SCALE</span></td>
+        </tr>
+        <tr>
+          <td><strong>Mid-Market Direct</strong></td>
+          <td>$24K</td>
+          <td>12%</td>
+          <td>$600</td>
+          <td>28%</td>
+          <td>$140,000</td>
+          <td>$42,000</td>
+          <td style="color: #437A22; font-weight: 700;">3.3</td>
+          <td><span style="background:#e6f4ea;color:#437A22;font-weight:700;font-size:11px;padding:2px 8px;border-radius:10px;">SCALE</span></td>
+        </tr>
+        <tr>
+          <td><strong>SMB Direct</strong></td>
+          <td>$8K</td>
+          <td>28%</td>
+          <td>$400</td>
+          <td>18%</td>
+          <td>$21,400</td>
+          <td>$26,900</td>
+          <td style="color: #A13544; font-weight: 700;">0.8</td>
+          <td><span style="background:#fce8e6;color:#A13544;font-weight:700;font-size:11px;padding:2px 8px;border-radius:10px;">STOP</span></td>
+        </tr>
+        <tr>
+          <td><strong>Blended Average</strong></td>
+          <td>$34K</td>
+          <td>13%</td>
+          <td>$700</td>
+          <td>27%</td>
+          <td>—</td>
+          <td>—</td>
+          <td style="color: #7a6000; font-weight: 700;">~4.1</td>
+          <td><span style="background:#fff8e1;color:#7a6000;font-weight:700;font-size:11px;padding:2px 8px;border-radius:10px;">MISLEADING</span></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <p style="font-size: 13px; color: var(--text-muted); margin-top: 8px;">Blended LIUE of 4.1 would suggest healthy scaling conditions. Segment-level analysis reveals that SMB Direct (LIUE 0.8) is destroying value and must be stopped immediately — regardless of what the blended number shows.</p>
+
+  <!-- ══════════════════════════════════════════════
+       SECTION 7: LIUE DASHBOARD — HOW TO TRACK IT
+  ══════════════════════════════════════════════ -->
+  <div class="section-title">LIUE Dashboard: How to Track It</div>
+  <div class="section-intro">LIUE is a monthly tracking metric, not a quarterly or annual one. Each of the four input metrics must be monitored every month so that degradation is caught before it compounds into a hiring decision problem.</div>
+
+  <div class="subsection">
+    <div class="subsection-title">The 5 Dashboard Metrics to Track Monthly</div>
+    <div class="dashboard-grid">
+      <div class="dash-card">
+        <div class="dc-label">Dashboard Metric 1</div>
+        <div class="dc-title">LIUE Overall</div>
+        <div class="dc-desc">The headline number. Must stay &gt; 3. Track month-over-month trend — a declining trend is as important as the absolute level.</div>
+      </div>
+      <div class="dash-card">
+        <div class="dc-label">Dashboard Metric 2</div>
+        <div class="dc-title">LIUE by Segment</div>
+        <div class="dc-desc">Separate calculation for each market segment and demand gen channel. Never rely on blended LIUE alone for scaling decisions.</div>
+      </div>
+      <div class="dash-card">
+        <div class="dc-label">Dashboard Metric 3</div>
+        <div class="dc-title">LTV Trend</div>
+        <div class="dc-desc">Driven by ACV, GM%, and churn. Rising LTV trend = pricing power and retention improving. Declining LTV = churn or pricing problem developing.</div>
+      </div>
+      <div class="dash-card">
+        <div class="dc-label">Dashboard Metric 4</div>
+        <div class="dc-title">CAC Trend</div>
+        <div class="dc-desc">Driven by Cost per SQL, SQL-to-Customer%, and rep productivity. Rising CAC is the most common failure mode in growth-stage companies. Catch it monthly, not quarterly.</div>
+      </div>
+      <div class="dash-card">
+        <div class="dc-label">Dashboard Metric 5</div>
+        <div class="dc-title">4 LIUE Input Metrics</div>
+        <div class="dc-desc">SQLs per rep, Cost per SQL, SQL-to-Customer%, ACV — each tracked with a target line. Any metric below target for 2+ consecutive months triggers investigation.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="subsection">
+    <div class="subsection-title">LIUE Red Flags: Early Warning Signals</div>
+    <ul class="redflag-list">
+      <li>
+        <div class="rf-icon">🔴</div>
+        <div><strong>Rising Cost per SQL (2+ months).</strong> Demand gen efficiency is declining. Your best-performing channel is saturating, or targeting has drifted off-ICP. Investigate channel mix and campaign targeting before the CAC impact appears in LIUE.</div>
+      </li>
+      <li>
+        <div class="rf-icon">🔴</div>
+        <div><strong>Falling SQL-to-Customer% (on aged data).</strong> Win rate is declining. Often caused by: ICP drift (targeting less-qualified prospects), competitive pressure, or playbook degradation as new reps ramp. The most important lever — a small drop in win rate has a large LIUE impact.</div>
+      </li>
+      <li>
+        <div class="rf-icon">🔴</div>
+        <div><strong>Rising annual churn rate.</strong> LIR is breaking before LIUE shows it. Rising churn is almost always a symptom of PMF degradation — the wrong customers being acquired, or the product not delivering value consistently. Fix LIR first; churn follows LIR, not the reverse.</div>
+      </li>
+      <li>
+        <div class="rf-icon">🟡</div>
+        <div><strong>Declining ACV (average deal size).</strong> Reps are discounting to close or targeting smaller accounts. Both compress LTV. A 15% ACV reduction requires a 17% improvement elsewhere to hold LIUE constant. Track average ACV by rep and by month.</div>
+      </li>
+      <li>
+        <div class="rf-icon">🟡</div>
+        <div><strong>Declining SQLs per rep per month (on ramped reps).</strong> Rep productivity is falling. Causes: demand gen volume not keeping up with headcount, inbound channel saturating, reps not prospecting enough, leads being recycled. Requires immediate attention before it compounds across the whole team.</div>
+      </li>
+    </ul>
+  </div>
+
+  <div class="callout callout-best-practice">
+    <div class="callout-title">The Healthy LIUE Trend</div>
+    <p>A healthy Stage 2 company shows LIUE rising quarter-over-quarter as the playbook is refined. Month 1 LIUE of 2.5 → Month 6 LIUE of 3.8 → Month 12 LIUE of 5.1 is the expected arc. If LIUE is flat or declining despite active improvement work, something structural is wrong with the GTM motion or the product-market fit in that segment.</p>
+  </div>
+
+  <div class="subitem-grid">
+    <a href="sos-bottoms-up.html" class="subitem-card">
+      <div class="sc-title">Bottoms-Up GTM Model</div>
+      <div class="sc-desc">Full LIUE-driven GTM forecasting model with rep capacity, pipeline, and unit economics projections</div>
+      <span class="sc-arrow">→</span>
+    </a>
+  </div>
+
+  <!-- ══════════════════════════════════════════════
+       SECTION 8: LIUE VS. OTHER UNIT ECONOMIC METRICS
+  ══════════════════════════════════════════════ -->
+  <div class="section-title">LIUE vs. Other Unit Economic Metrics</div>
+  <div class="section-intro">LIUE complements, but does not replace, other unit economic metrics. Each captures a different dimension. Understanding what each one measures — and what it misses — prevents over-reliance on any single signal.</div>
+
+  <table class="data-table">
+    <thead>
+      <tr><th>Metric</th><th>Measures</th><th>Data Lag</th><th>Predictiveness</th><th>Key Limitation</th></tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><strong>LIUE (LTV/CAC Real-Time)</strong></td>
+        <td>Real-time unit economics using current monthly data</td>
+        <td><span class="mc-badge mcb-current">Current data</span></td>
+        <td>Very High — same formula as LTV/CAC, no lag</td>
+        <td>Relies on churn estimate, which may be imprecise in early cohorts</td>
+      </tr>
+      <tr>
+        <td><strong>LTV/CAC (Traditional)</strong></td>
+        <td>Historical unit economics from fully matured cohorts</td>
+        <td><span class="mc-badge mcb-lagging">12–24 month lag</span></td>
+        <td>High — definitive signal from actual retention data</td>
+        <td>Too slow for real-time scaling decisions; always describes the past</td>
+      </tr>
+      <tr>
+        <td><strong>CAC Payback Period</strong></td>
+        <td>Months to recover acquisition cost from gross margin</td>
+        <td><span class="mc-badge mcb-current">Current data</span></td>
+        <td>Medium — doesn't account for customer lifetime after payback</td>
+        <td>Two companies with same payback but different churn have very different economics</td>
+      </tr>
+      <tr>
+        <td><strong>Magic Number</strong></td>
+        <td>S&amp;M efficiency: new ARR ÷ prior-quarter S&amp;M spend</td>
+        <td><span class="mc-badge mcb-medium">Quarterly lag</span></td>
+        <td>Medium — good capital efficiency signal</td>
+        <td>Doesn't differentiate between new customer acquisition and expansion ARR</td>
+      </tr>
+      <tr>
+        <td><strong>CAC Ratio</strong></td>
+        <td>CAC as % of ACV (payback expressed as ratio of first year)</td>
+        <td><span class="mc-badge mcb-current">Current data</span></td>
+        <td>Medium — simple, directionally useful</td>
+        <td>Ignores gross margin and churn rate — two companies with same CAC ratio can have very different LIUE</td>
+      </tr>
+      <tr>
+        <td><strong>NRR (Net Revenue Retention)</strong></td>
+        <td>Revenue retained + expanded from existing customers</td>
+        <td><span class="mc-badge mcb-medium">Quarterly</span></td>
+        <td>High — strong long-term retention and expansion proxy</td>
+        <td>Doesn't measure new customer acquisition efficiency; can mask churn with expansion</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div class="callout callout-definition" style="margin-top: 14px;">
+    <div class="callout-title">Use All of These — But Start with LIUE</div>
+    <p>For GTM scaling decisions in Stage 2, LIUE is the primary metric. For board reporting and investor communication, add Magic Number and CAC Payback. For long-term health monitoring, add NRR. For final validation of GTM model before Series B, confirm with traditional LTV/CAC using matured cohorts. Each metric adds a piece; none is complete alone.</p>
+  </div>
+
+  <!-- ══════════════════════════════════════════════
+       RELATED LINKS
+  ══════════════════════════════════════════════ -->
+  <div class="related-section">
+    <div class="related-title">Related Pages</div>
+    <div class="related-links">
+      <a href="sos-gtm-fit.html" class="related-link">Stage 2: GTM Fit</a>
+      <a href="sos-growth-moat.html" class="related-link">Stage 3: Growth &amp; Moat</a>
+      <a href="sos-lir.html" class="related-link">LIR Deep Dive</a>
+      <a href="sos-bottoms-up.html" class="related-link">Bottoms-Up GTM Model</a>
+      <a href="../pages/science-of-scaling.html" class="related-link">← Science of Scaling</a>
+      <a href="../index.html" class="related-link">Home</a>
+    </div>
+  </div>
+
+</div>
+<script data-pplx-inline-edit>
+(function () {
+  if (window === window.top) return;
+
+  const allowedParentOrigins = ["https://www.perplexity.ai","https://perplexity.ai","https://testing.perplexity.ai","https://staging.perplexity.ai","https://*.preview.i.perplexity.ai","http://localhost:3000","http://127.0.0.1:3000","http://localhost:5173","http://127.0.0.1:5173"];
+  const MAX_FONT_BYTES = 500 * 1024;
+  const MAX_TOTAL_FONT_BYTES = 2 * 1024 * 1024;
+  let scrollForwarding = false;
+  let scrollRaf = 0;
+  let trustedTopOrigin = null;
+
+  // Allow entries like "https://*.preview.i.perplexity.ai" — the wildcard
+  // matches a single DNS label (no dots), so "https://*.foo" cannot stretch
+  // across multiple labels.
+  function matchesAllowedOrigin(origin) {
+    if (!origin) return false;
+    for (const entry of allowedParentOrigins) {
+      if (!entry.includes("*")) {
+        if (entry === origin) return true;
+        continue;
+      }
+      const pattern = new RegExp(
+        "^" +
+          entry.replace(/[.+?^${}()|[\]\\]/g, "\\$&").replace(/\*/g, "[^.]+") +
+          "$",
+      );
+      if (pattern.test(origin)) return true;
+    }
+    return false;
+  }
+
+  // Trust decision: when the sender is same-origin-visible (event.origin is a
+  // real origin like https://www.perplexity.ai) we trust event.origin directly.
+  // When event.origin is "null" (opaque broker srcdoc), we fall back to the
+  // broker's stamped `parentOrigin` to identify the top window. The fallback
+  // is claim-only — we rely on the browser's native `targetOrigin` enforcement
+  // on the response path (see postToTrustedTop) to ensure replies can't be
+  // delivered to anyone but the actual top window of that claimed origin.
+  function getTrustedParentOrigin(event) {
+    const forwardedParentOrigin =
+      typeof event.data.parentOrigin === "string" ? event.data.parentOrigin : null;
+    const parentOrigin = event.origin === "null" ? forwardedParentOrigin : event.origin;
+    return matchesAllowedOrigin(parentOrigin) ? parentOrigin : null;
+  }
+
+  // All responses go to window.top with targetOrigin = the allowlisted origin.
+  // An attacker that iframes us inside their own null-origin broker can claim
+  // any parentOrigin they like, but the browser will drop the reply whenever
+  // the real top's origin doesn't match — so the screenshot never leaves.
+  function postToTrustedTop(message) {
+    if (!trustedTopOrigin) return;
+    try {
+      window.top.postMessage(message, trustedTopOrigin);
+    } catch (_error) {}
+  }
+
+  function inlineAll(original, clone) {
+    if (original.nodeType !== 1 || clone.nodeType !== 1) return;
+
+    try {
+      const computedStyle = getComputedStyle(original);
+      // cssText on a computed style is the serialized declaration in modern
+      // Chromium/Safari — a single read beats enumerating ~400 longhand
+      // properties. Firefox returns "" here, so we fall back on empty.
+      const serialized = computedStyle.cssText;
+      if (serialized) {
+        clone.style.cssText = serialized;
+      } else {
+        const parts = new Array(computedStyle.length);
+        for (let index = 0; index < computedStyle.length; index += 1) {
+          const property = computedStyle[index];
+          parts[index] = `${property}:${computedStyle.getPropertyValue(property)};`;
+        }
+        clone.style.cssText = parts.join("");
+      }
+    } catch (_error) {}
+
+    const originalChildren = original.children;
+    const clonedChildren = clone.children;
+    for (
+      let index = 0;
+      index < originalChildren.length && index < clonedChildren.length;
+      index += 1
+    ) {
+      inlineAll(originalChildren[index], clonedChildren[index]);
+    }
+  }
+
+  function extractFontUrl(srcValue) {
+    const matches = [
+      ...srcValue.matchAll(
+        /url\(["']?([^"')]+)["']?\)(?:\s*format\(["']?([^"')]+)["']?\))?/gi,
+      ),
+    ];
+    if (matches.length === 0) return null;
+    const woff2 = matches.find((m) => m[2] && m[2].toLowerCase().includes("woff2"));
+    if (woff2) return woff2[1];
+    const woff = matches.find((m) => m[2] && m[2].toLowerCase().includes("woff"));
+    if (woff) return woff[1];
+    return matches[0][1];
+  }
+
+  // Cache resolved font URL -> data URI across captures. Fonts on a page
+  // essentially never change, and a batch run emits multiple captures back to
+  // back — without this we'd refetch + re-base64 every time.
+  const fontDataUriCache = new Map();
+  const SRC_DECLARATION_RE = /src\s*:\s*[^;}]+/i;
+
+  async function fetchAsDataUri(url) {
+    if (fontDataUriCache.has(url)) return fontDataUriCache.get(url);
+    let dataUri = null;
+    try {
+      const response = await fetch(url, { mode: "cors", credentials: "omit" });
+      if (response.ok) {
+        const blob = await response.blob();
+        if (blob.size <= MAX_FONT_BYTES) {
+          dataUri = await new Promise((resolve) => {
+            const reader = new FileReader();
+            reader.onloadend = () =>
+              resolve(typeof reader.result === "string" ? reader.result : null);
+            reader.onerror = () => resolve(null);
+            reader.readAsDataURL(blob);
+          });
+        }
+      }
+    } catch (_error) {
+      dataUri = null;
+    }
+    fontDataUriCache.set(url, dataUri);
+    return dataUri;
+  }
+
+  function collectFontFaceRuleTexts() {
+    const rules = [];
+    for (const sheet of document.styleSheets) {
+      let cssRules;
+      try {
+        cssRules = sheet.cssRules;
+      } catch (_error) {
+        continue;
+      }
+      if (!cssRules) continue;
+      for (const rule of cssRules) {
+        const cssText = rule.cssText || "";
+        if (cssText.startsWith("@font-face")) rules.push(cssText);
+      }
+    }
+    return rules;
+  }
+
+  async function buildInlinedFontCss() {
+    const ruleTexts = collectFontFaceRuleTexts();
+    if (ruleTexts.length === 0) return null;
+
+    const resolved = ruleTexts.map((cssText) => {
+      if (!SRC_DECLARATION_RE.test(cssText)) return null;
+      const srcMatch = cssText.match(/src\s*:\s*([^;}]+)[;}]/i);
+      if (!srcMatch) return null;
+      const url = extractFontUrl(srcMatch[1]);
+      if (!url) return null;
+      try {
+        return { cssText, url: new URL(url, document.baseURI).href };
+      } catch (_error) {
+        return null;
+      }
+    });
+
+    const dataUris = await Promise.all(
+      resolved.map((entry) => (entry ? fetchAsDataUri(entry.url) : Promise.resolve(null))),
+    );
+
+    const inlined = [];
+    let totalBytes = 0;
+    for (let index = 0; index < resolved.length; index += 1) {
+      const entry = resolved[index];
+      const dataUri = dataUris[index];
+      if (!entry || !dataUri) continue;
+      const approxBytes = dataUri.length * 0.75;
+      if (totalBytes + approxBytes > MAX_TOTAL_FONT_BYTES) break;
+      totalBytes += approxBytes;
+      inlined.push(entry.cssText.replace(SRC_DECLARATION_RE, `src: url("${dataUri}")`));
+    }
+    return inlined.length > 0 ? inlined.join("\n") : null;
+  }
+
+  function stripExternal(clone) {
+    const images = clone.querySelectorAll("img");
+    for (let index = 0; index < images.length; index += 1) {
+      const src = images[index].getAttribute("src");
+      if (src && !src.startsWith("data:")) images[index].removeAttribute("src");
+    }
+
+    const elements = clone.querySelectorAll("*");
+    for (let index = 0; index < elements.length; index += 1) {
+      const style = elements[index].style.cssText;
+      if (style && style.includes("url(")) {
+        elements[index].style.cssText = style.replace(
+          /url\(["']?(?!data:)[^)"']*["']?\)/gi,
+          "none",
+        );
+      }
+    }
+  }
+
+  function emitScroll() {
+    scrollRaf = 0;
+    if (!scrollForwarding) return;
+    postToTrustedTop({
+      type: "INLINE_EDIT_SCROLL",
+      scrollX: window.scrollX,
+      scrollY: window.scrollY,
+    });
+  }
+
+  window.addEventListener(
+    "scroll",
+    function () {
+      if (!scrollForwarding || scrollRaf) return;
+      scrollRaf = requestAnimationFrame(emitScroll);
+    },
+    { passive: true, capture: true },
+  );
+
+  async function handleCaptureRequest(event) {
+    const requestId = event.data.requestId;
+    const scrollX = window.scrollX;
+    const scrollY = window.scrollY;
+    const width = window.innerWidth;
+    const height = window.innerHeight;
+
+    function postResult(dataUrl) {
+      postToTrustedTop({
+        type: "INLINE_EDIT_SCREENSHOT_RESULT",
+        requestId,
+        dataUrl,
+        scrollX,
+        scrollY,
+      });
+    }
+
+    try {
+      // Wait for any pending web fonts to resolve so both inline metrics and
+      // the @font-face inlining below see the same loaded faces.
+      if (document.fonts && document.fonts.ready) {
+        try {
+          await document.fonts.ready;
+        } catch (_error) {}
+      }
+
+      const clone = document.documentElement.cloneNode(true);
+      inlineAll(document.documentElement, clone);
+
+      const removedNodes = clone.querySelectorAll("script,link[rel=\"stylesheet\"],style");
+      for (let index = 0; index < removedNodes.length; index += 1) {
+        removedNodes[index].remove();
+      }
+
+      stripExternal(clone);
+
+      // Re-embed web fonts as data-URI @font-face rules so the SVG rasterizer
+      // can resolve them — external font URLs aren't fetched during
+      // foreignObject rendering, which would otherwise force a fallback face
+      // and change text metrics.
+      const inlinedFontCss = await buildInlinedFontCss();
+      if (inlinedFontCss) {
+        const styleEl = document.createElement("style");
+        styleEl.textContent = inlinedFontCss;
+        const head = clone.querySelector("head");
+        if (head) head.appendChild(styleEl);
+        else clone.insertBefore(styleEl, clone.firstChild);
+      }
+
+      const html = new XMLSerializer().serializeToString(clone);
+      const svg =
+        `<svg xmlns="http://www.w3.org/2000/svg" width="${width}" height="${height}">` +
+        '<foreignObject width="100%" height="100%">' +
+        `<div xmlns="http://www.w3.org/1999/xhtml" style="width:${width}px;height:${height}px;overflow:hidden">` +
+        `<div style="transform:translate(-${scrollX}px,-${scrollY}px);transform-origin:top left">` +
+        html +
+        "</div></div></foreignObject></svg>";
+      const svgUrl = `data:image/svg+xml;charset=utf-8,${encodeURIComponent(svg)}`;
+      const image = new Image();
+      image.onload = function () {
+        const canvas = document.createElement("canvas");
+        canvas.width = width;
+        canvas.height = height;
+        canvas.getContext("2d").drawImage(image, 0, 0);
+        postResult(canvas.toDataURL("image/png"));
+      };
+      image.onerror = function () {
+        postResult(null);
+      };
+      image.src = svgUrl;
+    } catch (_error) {
+      postResult(null);
+    }
+  }
+
+  window.addEventListener("message", function (event) {
+    if (!event.data) return;
+    // Only accept messages from the direct parent frame. Blocks sibling /
+    // unrelated-window postMessage senders that could otherwise reach us.
+    if (event.source !== window.parent) return;
+
+    const trustedParentOrigin = getTrustedParentOrigin(event);
+    if (!trustedParentOrigin) return;
+    trustedTopOrigin = trustedParentOrigin;
+
+    if (event.data.type === "INLINE_EDIT_SCROLL_START") {
+      scrollForwarding = true;
+      emitScroll();
+      return;
+    }
+
+    if (event.data.type === "INLINE_EDIT_SCROLL_STOP") {
+      scrollForwarding = false;
+      if (scrollRaf) cancelAnimationFrame(scrollRaf);
+      scrollRaf = 0;
+      return;
+    }
+
+    if (event.data.type !== "INLINE_EDIT_CAPTURE_REQUEST") return;
+
+    handleCaptureRequest(event);
+  });
+})();
+
+
+</script></body>
+</html>

@@ -1,0 +1,1407 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Customer Success Playbook — GTM Playbook</title>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="../assets/shared.css"/>
+  <style>
+    .page-hero { background: #7A39BB; }
+
+    /* Override primary for CS purple context on links */
+    .cs-accent { color: #7A39BB; }
+
+    /* ── LIR banner ── */
+    .lir-banner {
+      background: #1e0a3c;
+      color: #fff;
+      border-radius: 10px;
+      padding: 22px 28px;
+      margin: 20px 0;
+      display: flex;
+      gap: 20px;
+      align-items: center;
+    }
+    .lir-banner-icon {
+      font-size: 36px;
+      flex-shrink: 0;
+    }
+    .lir-banner-content {}
+    .lir-banner-title {
+      font-size: 16px;
+      font-weight: 700;
+      margin-bottom: 6px;
+      color: #fff;
+    }
+    .lir-banner-body {
+      font-size: 14px;
+      line-height: 1.65;
+      color: rgba(255,255,255,0.78);
+    }
+    .lir-banner-body strong { color: #fff; }
+
+    /* ── Onboarding timeline ── */
+    .onboard-timeline {
+      list-style: none;
+      padding: 0;
+      margin: 20px 0;
+      position: relative;
+    }
+    .onboard-timeline::before {
+      content: '';
+      position: absolute;
+      left: 18px;
+      top: 8px;
+      bottom: 8px;
+      width: 2px;
+      background: var(--border);
+    }
+    .onboard-phase {
+      display: flex;
+      gap: 16px;
+      margin-bottom: 24px;
+      position: relative;
+    }
+    .onboard-dot {
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      background: #7A39BB;
+      color: #fff;
+      font-size: 12px;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      z-index: 1;
+      position: relative;
+      white-space: nowrap;
+    }
+    .onboard-body {
+      flex: 1;
+      padding-top: 4px;
+    }
+    .onboard-phase-label {
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 1.2px;
+      text-transform: uppercase;
+      color: #7A39BB;
+      margin-bottom: 3px;
+    }
+    .onboard-phase-title {
+      font-size: 15px;
+      font-weight: 700;
+      color: var(--text);
+      margin-bottom: 6px;
+    }
+    .onboard-phase-desc {
+      font-size: 14px;
+      color: var(--text-muted);
+      line-height: 1.6;
+    }
+    .onboard-phase-desc ul {
+      list-style: none;
+      padding: 0;
+      margin: 8px 0 0;
+    }
+    .onboard-phase-desc ul li {
+      padding: 3px 0 3px 16px;
+      position: relative;
+      font-size: 13px;
+    }
+    .onboard-phase-desc ul li::before {
+      content: '·';
+      position: absolute;
+      left: 3px;
+      color: #7A39BB;
+      font-weight: 700;
+    }
+
+    /* ── LIR Achieved milestone box ── */
+    .lir-milestone {
+      background: linear-gradient(135deg, #7A39BB 0%, #5b1ea0 100%);
+      color: #fff;
+      border-radius: 10px;
+      padding: 20px 24px;
+      margin: 16px 0;
+    }
+    .lir-milestone-label {
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.7);
+      margin-bottom: 6px;
+    }
+    .lir-milestone-title {
+      font-size: 17px;
+      font-weight: 700;
+      margin-bottom: 8px;
+    }
+    .lir-milestone-body {
+      font-size: 13px;
+      color: rgba(255,255,255,0.82);
+      line-height: 1.6;
+    }
+
+    /* ── Intervention protocol ── */
+    .intervention-steps {
+      counter-reset: int-steps;
+      list-style: none;
+      padding: 0;
+      margin: 16px 0;
+    }
+    .intervention-steps li {
+      counter-increment: int-steps;
+      display: flex;
+      gap: 14px;
+      margin-bottom: 16px;
+      align-items: flex-start;
+    }
+    .intervention-steps li::before {
+      content: counter(int-steps);
+      min-width: 30px;
+      height: 30px;
+      border-radius: 50%;
+      background: #fff5f5;
+      border: 1.5px solid #A13544;
+      color: #A13544;
+      font-size: 13px;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      margin-top: 1px;
+    }
+    .int-body {
+      font-size: 14px;
+      line-height: 1.65;
+      color: var(--text);
+    }
+    .int-body strong { display: block; margin-bottom: 3px; color: var(--text); }
+    .int-body span { color: var(--text-muted); font-size: 13px; }
+
+    /* ── Escalation matrix ── */
+    .esc-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 20px 0;
+      background: var(--surface);
+      border-radius: 10px;
+      overflow: hidden;
+      border: 1.5px solid var(--border);
+    }
+    .esc-table thead {
+      background: #7A39BB;
+      color: #fff;
+    }
+    .esc-table thead th {
+      padding: 12px 16px;
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: 0.8px;
+      text-transform: uppercase;
+      text-align: left;
+    }
+    .esc-table td {
+      padding: 13px 16px;
+      font-size: 14px;
+      vertical-align: top;
+      border-bottom: 1px solid var(--border);
+      line-height: 1.5;
+    }
+    .esc-table tr:last-child td { border-bottom: none; }
+    .esc-table tr:nth-child(even) td { background: #fafaf8; }
+    .risk-green { font-weight: 700; color: #437A22; }
+    .risk-yellow { font-weight: 700; color: #a07800; }
+    .risk-red { font-weight: 700; color: #A13544; }
+    .risk-critical { font-weight: 700; color: #7a0a2a; }
+
+    /* ── Swim lane grid ── */
+    .cs-swim-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 14px;
+      margin: 20px 0;
+    }
+    .cs-swim-card {
+      background: var(--surface);
+      border: 1.5px solid var(--border);
+      border-radius: 10px;
+      padding: 20px;
+    }
+    .cs-swim-label {
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      color: #7A39BB;
+      margin-bottom: 6px;
+    }
+    .cs-swim-name {
+      font-size: 15px;
+      font-weight: 700;
+      color: var(--text);
+      margin-bottom: 12px;
+      line-height: 1.3;
+    }
+    .cs-swim-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      margin-bottom: 6px;
+      gap: 8px;
+    }
+    .cs-swim-key {
+      font-size: 11px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.8px;
+      color: var(--text-muted);
+      white-space: nowrap;
+      flex-shrink: 0;
+    }
+    .cs-swim-val {
+      font-size: 13px;
+      color: var(--text);
+      text-align: right;
+      line-height: 1.4;
+    }
+    .cs-swim-activities {
+      margin-top: 12px;
+    }
+    .cs-swim-activities-label {
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      margin-bottom: 5px;
+    }
+    .cs-swim-card ul {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+    }
+    .cs-swim-card ul li {
+      font-size: 12px;
+      color: var(--text-muted);
+      padding: 3px 0 3px 14px;
+      position: relative;
+      line-height: 1.5;
+    }
+    .cs-swim-card ul li::before {
+      content: '·';
+      position: absolute;
+      left: 3px;
+      color: #7A39BB;
+      font-weight: 700;
+    }
+
+    /* ── QBR agenda ── */
+    .qbr-list {
+      list-style: none;
+      counter-reset: qbr;
+      margin: 16px 0;
+    }
+    .qbr-list li {
+      counter-increment: qbr;
+      display: flex;
+      gap: 14px;
+      margin-bottom: 12px;
+      align-items: flex-start;
+    }
+    .qbr-list li::before {
+      content: counter(qbr);
+      min-width: 28px;
+      height: 28px;
+      border-radius: 50%;
+      background: #ede7f6;
+      border: 1.5px solid #7A39BB;
+      color: #7A39BB;
+      font-size: 12px;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      margin-top: 1px;
+    }
+    .qbr-body {
+      font-size: 14px;
+      line-height: 1.6;
+      color: var(--text);
+      padding-top: 4px;
+    }
+    .qbr-body strong { color: var(--text); }
+
+    /* ── Health score table ── */
+    .health-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 20px 0;
+      background: var(--surface);
+      border-radius: 10px;
+      overflow: hidden;
+      border: 1.5px solid var(--border);
+    }
+    .health-table thead {
+      background: #7A39BB;
+      color: #fff;
+    }
+    .health-table thead th {
+      padding: 12px 16px;
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: 0.8px;
+      text-transform: uppercase;
+      text-align: left;
+    }
+    .health-table td {
+      padding: 13px 16px;
+      font-size: 14px;
+      vertical-align: top;
+      border-bottom: 1px solid var(--border);
+      line-height: 1.5;
+    }
+    .health-table tr:last-child td { border-bottom: none; }
+    .health-table tr:nth-child(even) td { background: #fafaf8; }
+    .h-signal { font-weight: 700; color: var(--text); }
+    .h-weight { font-size: 12px; font-weight: 700; color: #7A39BB; }
+    .h-green { color: #437A22; font-size: 13px; }
+    .h-yellow { color: #a07800; font-size: 13px; }
+    .h-red { color: #A13544; font-size: 13px; }
+
+    /* ── Expansion timing ── */
+    .expand-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 12px;
+      margin: 20px 0;
+    }
+    .expand-card {
+      background: var(--surface);
+      border: 1.5px solid var(--border);
+      border-radius: 8px;
+      padding: 16px 18px;
+    }
+    .expand-label {
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 1.2px;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      margin-bottom: 6px;
+    }
+    .expand-name {
+      font-size: 14px;
+      font-weight: 700;
+      color: var(--text);
+      margin-bottom: 6px;
+    }
+    .expand-desc {
+      font-size: 13px;
+      color: var(--text-muted);
+      line-height: 1.55;
+    }
+
+    /* ── Hiring criteria ── */
+    .criteria-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 14px;
+      margin: 20px 0;
+    }
+    .criteria-card {
+      background: var(--surface);
+      border: 1.5px solid var(--border);
+      border-radius: 10px;
+      padding: 20px;
+    }
+    .criteria-weight {
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      margin-bottom: 4px;
+    }
+    .criteria-weight.high { color: #7A39BB; }
+    .criteria-weight.medium { color: var(--text-muted); }
+    .criteria-name {
+      font-size: 15px;
+      font-weight: 700;
+      color: var(--text);
+      margin-bottom: 8px;
+    }
+    .criteria-desc {
+      font-size: 13px;
+      color: var(--text-muted);
+      line-height: 1.6;
+    }
+
+    /* ── CS Metrics table ── */
+    .cs-metrics-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 20px 0;
+      background: var(--surface);
+      border-radius: 10px;
+      overflow: hidden;
+      border: 1.5px solid var(--border);
+    }
+    .cs-metrics-table thead {
+      background: #7A39BB;
+      color: #fff;
+    }
+    .cs-metrics-table thead th {
+      padding: 12px 16px;
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: 0.8px;
+      text-transform: uppercase;
+      text-align: left;
+    }
+    .cs-metrics-table td {
+      padding: 13px 16px;
+      font-size: 14px;
+      vertical-align: top;
+      border-bottom: 1px solid var(--border);
+      line-height: 1.5;
+    }
+    .cs-metrics-table tr:last-child td { border-bottom: none; }
+    .cs-metrics-table tr:nth-child(even) td { background: #fafaf8; }
+    .cs-metric-name { font-weight: 700; color: var(--text); }
+    .cs-metric-target { font-weight: 700; color: #7A39BB; }
+
+    /* ── Callout ── */
+    .callout {
+      background: #f4eefb;
+      border: 1.5px solid #7A39BB;
+      border-radius: 8px;
+      padding: 16px 20px;
+      margin: 18px 0;
+      font-size: 14px;
+      color: #3b1a6b;
+      line-height: 1.65;
+    }
+    .callout strong { color: #3b1a6b; }
+
+    /* ── Hero tags ── */
+    .hero-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-top: 16px;
+    }
+    .hero-tag {
+      font-size: 11px;
+      font-weight: 600;
+      padding: 4px 12px;
+      border-radius: 20px;
+      background: rgba(255,255,255,0.18);
+      color: rgba(255,255,255,0.92);
+      letter-spacing: 0.3px;
+    }
+
+    @media (max-width: 768px) {
+      .cs-swim-grid { grid-template-columns: 1fr; }
+      .expand-grid { grid-template-columns: 1fr; }
+      .criteria-grid { grid-template-columns: 1fr; }
+    }
+
+    .phase-context-bar {
+      background: #f0f8f9;
+      border-bottom: 2px solid #c2dde0;
+      padding: 0;
+    }
+    .pcb-inner {
+      max-width: 960px;
+      margin: 0 auto;
+      padding: 10px 32px;
+      display: flex;
+      align-items: center;
+      gap: 20px;
+      flex-wrap: wrap;
+    }
+    .pcb-item { display: flex; flex-direction: column; gap: 1px; }
+    .pcb-label { font-size: 9px; font-weight: 700; letter-spacing: 1px; text-transform: uppercase; color: #7A7974; }
+    .pcb-value { font-size: 12px; font-weight: 700; color: #0D5C63; }
+    .pcb-divider { width: 1px; height: 28px; background: #c2dde0; }
+    .pcb-link { font-size: 11px; font-weight: 700; color: #0D5C63; background: rgba(13,92,99,0.08); padding: 4px 10px; border-radius: 4px; text-decoration: none; transition: background 0.15s; }
+    .pcb-link:hover { background: rgba(13,92,99,0.16); color: #0D5C63; text-decoration: none; }
+  </style>
+</head>
+<body>
+
+<nav class="nav">
+  <span class="nav-logo">CRO <span>Manual</span></span>
+  <span class="nav-sep">/</span>
+  <a href="../index.html" class="nav-back">← Home</a>
+  <span class="nav-sep">/</span>
+  <a href="../pages/resources.html" class="nav-back">Resources &amp; Templates</a>
+  <span class="nav-sep">/</span>
+  <span class="nav-current">Customer Success Playbook</span>
+</nav>
+
+<div class="page-hero">
+  <div class="hero-phase-label">CUSTOMER SUCCESS · GTM PLAYBOOK</div>
+  <div class="hero-title">Customer Success Playbook</div>
+  <div class="hero-subtitle">Customer Success is the revenue engine behind SaaS. CS doesn't just retain customers — it drives expansion, builds moat through switching costs, and generates the LIR achievement that validates your entire GTM motion.</div>
+  <div class="hero-tags">
+    <span class="hero-tag">LIR Achievement</span>
+    <span class="hero-tag">Onboarding</span>
+    <span class="hero-tag">QBRs</span>
+    <span class="hero-tag">Expansion</span>
+    <span class="hero-tag">Churn Prevention</span>
+    <span class="hero-tag">Health Scoring</span>
+  </div>
+</div>
+
+<div class="phase-context-bar">
+  <div class="pcb-inner">
+    <div class="pcb-item">
+      <span class="pcb-label">Primary Phase</span>
+      <span class="pcb-value">Customer Success — LIR Achievement Engine</span>
+    </div>
+    <div class="pcb-divider"></div>
+    <div class="pcb-item">
+      <span class="pcb-label">Science of Scaling Stage</span>
+      <span class="pcb-value">All Stages — LIR is the CS north star</span>
+    </div>
+    <div class="pcb-divider"></div>
+    <div class="pcb-item">
+      <span class="pcb-label">Governing Metric</span>
+      <span class="pcb-value">LIR Achievement Rate · NRR</span>
+    </div>
+    <a href="../pages/customer-success.html" class="pcb-link">View Phase →</a>
+    <a href="../subpages/sos-lir.html" class="pcb-link">View Stage →</a>
+  </div>
+</div>
+
+<div class="content-wrap">
+
+  <div class="breadcrumb">
+    <a href="../index.html">Home</a>
+    <span class="sep">›</span>
+    <a href="../pages/resources.html">Resources &amp; Templates</a>
+    <span class="sep">›</span>
+    <span class="current">Customer Success Playbook</span>
+  </div>
+
+  <!-- SECTION 1: CS PHILOSOPHY -->
+  <div class="section-title">1. CS Philosophy: LIR is the North Star</div>
+  <div class="section-intro">Customer Success is not a support function. It is a revenue function — responsible for retention, expansion, and the proof that your GTM motion is creating real value. Every CS activity should be traceable back to one outcome: LIR achievement.</div>
+
+  <div class="subsection">
+    <div class="lir-banner">
+      <div class="lir-banner-icon">⭐</div>
+      <div class="lir-banner-content">
+        <div class="lir-banner-title">The North Star: LIR Achievement</div>
+        <div class="lir-banner-body">
+          <strong>LIR (Leading Indicator of Retention)</strong> is the single most important early signal that a customer will retain and expand. When a customer achieves LIR, they have experienced the core value of your product — the thing that makes them stick. CS mission: ensure that every customer who is capable of achieving LIR does so, within time T. Everything else is supporting activity.
+        </div>
+      </div>
+    </div>
+
+    <ul class="bullet-list">
+      <li>LIR achievement = the single leading indicator of retention = the validation of your entire GTM motion</li>
+      <li>Everything the CS team does — kickoffs, training, check-ins, QBRs — should be oriented around accelerating time to LIR</li>
+      <li>CS primary mission: ensure every capable customer achieves LIR in time T</li>
+      <li>CS secondary mission: expand revenue within retained accounts (drive NRR &gt; 100%)</li>
+      <li>A customer who achieves LIR is 3–5x more likely to renew and 2x more likely to expand — LIR is not just a metric, it is the revenue foundation</li>
+    </ul>
+
+    <div class="callout">
+      <strong>LIR and GTM Alignment:</strong> Sales qualification, discovery, and CS onboarding must all reference the same LIR definition. Sales closes the customer on LIR achievement as the value anchor. CS delivers on that promise. Misalignment between what Sales promises and what CS delivers is the root cause of most onboarding friction and early churn.
+    </div>
+  </div>
+
+  <!-- SECTION 2: ONBOARDING PLAYBOOK -->
+  <div class="section-title">2. The CS Onboarding Playbook (0 to LIR)</div>
+  <div class="section-intro">The onboarding journey is not a feature tour or a training curriculum — it is a structured path from contract signature to LIR achievement. Every phase has a specific goal, and every goal is a milestone on the path to confirmed customer value.</div>
+
+  <div class="subsection">
+    <ul class="onboard-timeline">
+
+      <li class="onboard-phase">
+        <div class="onboard-dot">D0</div>
+        <div class="onboard-body">
+          <div class="onboard-phase-label">Phase 1</div>
+          <div class="onboard-phase-title">Kickoff — Day 0 to Day 3</div>
+          <div class="onboard-phase-desc">
+            Make the customer feel confident, set LIR as the explicit and shared success target, introduce the CSM as the primary contact, and create a shared implementation plan with LIR as the primary milestone.
+            <ul>
+              <li><strong>Attendees:</strong> CSM + customer champion + key stakeholders who will use the product</li>
+              <li><strong>Deliverable 1:</strong> Implementation timeline with LIR achievement date as the primary milestone — not feature rollout date</li>
+              <li><strong>Deliverable 2:</strong> Shared success plan document — what does LIR look like for this customer specifically? How will we know it was achieved?</li>
+              <li><strong>CSM Action:</strong> Review deal notes from AE, confirm LIR definition matches what was promised in the sale, flag any expectation gaps before they become issues</li>
+            </ul>
+          </div>
+        </div>
+      </li>
+
+      <li class="onboard-phase">
+        <div class="onboard-dot" style="font-size:10px;">D4+</div>
+        <div class="onboard-body">
+          <div class="onboard-phase-label">Phase 2</div>
+          <div class="onboard-phase-title">Onboarding — Day 4 to Day T/2</div>
+          <div class="onboard-phase-desc">
+            Guided setup, structured training, and first value delivery. The goal is to reach the LIR precursor event — the first signal that the customer is on the path to LIR — before the midpoint assessment.
+            <ul>
+              <li><strong>Guided Setup:</strong> 2–3 structured sessions to complete core configuration. CSM drives the agenda — do not wait for the customer to ask what to do next.</li>
+              <li><strong>Training:</strong> End-user training for the primary use case that maps directly to LIR achievement</li>
+              <li><strong>Quick Win:</strong> Identify and celebrate the first LIR precursor event — the customer's first experience of the specific value your product delivers</li>
+              <li><strong>Check-In Cadence:</strong> Weekly during onboarding. Standing agenda: what was accomplished, what's blocking, what's next before LIR</li>
+              <li><strong>Risk Signal:</strong> If customer misses 2 consecutive weekly check-ins, flag as Yellow. If they miss 3, flag as Red.</li>
+            </ul>
+          </div>
+        </div>
+      </li>
+
+      <li class="onboard-phase">
+        <div class="onboard-dot" style="font-size:10px;">T/2</div>
+        <div class="onboard-body">
+          <div class="onboard-phase-label">Phase 3</div>
+          <div class="onboard-phase-title">Mid-Point Assessment — Day T/2</div>
+          <div class="onboard-phase-desc">
+            A formal assessment of whether the customer is on track to achieve LIR by Day T. This is not a check-in — it is a diagnostic gate.
+            <ul>
+              <li><strong>On Track:</strong> Customer has achieved the LIR precursor event. CSM confirms milestones and accelerates toward final LIR event.</li>
+              <li><strong>Off Track:</strong> LIR precursor has not been achieved. Trigger the LIR Intervention Protocol immediately (see Section 3). Do not wait until Day T.</li>
+              <li><strong>Review:</strong> What blockers exist? Are they technical (product), organizational (customer hasn't allocated resources), or motivational (champion has deprioritized)?</li>
+            </ul>
+          </div>
+        </div>
+      </li>
+
+      <li class="onboard-phase">
+        <div class="onboard-dot" style="font-size:10px;">Day T</div>
+        <div class="onboard-body">
+          <div class="onboard-phase-label">Phase 4</div>
+          <div class="onboard-phase-title">LIR Achievement — Day T</div>
+          <div class="onboard-phase-desc">
+            The LIR event has been confirmed as achieved. This is the most important milestone in the customer lifecycle.
+            <ul>
+              <li><strong>Confirmation:</strong> LIR must be instrumentable — confirmed via product analytics, not self-reported by the customer. "We think we're using it well" is not LIR achievement.</li>
+              <li><strong>Sales Commission:</strong> Second 50% of AE commission is released upon confirmed LIR achievement — this aligns Sales incentives with actual customer value delivery</li>
+              <li><strong>Documentation:</strong> Record the specific customer actions that led to LIR. What barriers were overcome? What accelerated progress? This data informs the onboarding playbook improvements.</li>
+              <li><strong>Transition:</strong> Formal shift from "onboarding" cadence to "ongoing success" cadence. Relationship deepens — from project-mode to partner-mode.</li>
+            </ul>
+          </div>
+        </div>
+      </li>
+
+    </ul>
+
+    <div class="lir-milestone">
+      <div class="lir-milestone-label">LIR Achieved</div>
+      <div class="lir-milestone-title">The Onboarding Finish Line</div>
+      <div class="lir-milestone-body">When LIR is confirmed, celebrate it explicitly with the customer. Acknowledge the milestone in writing, thank the champion, and use this moment to plant the seed for the expansion conversation: "Now that you've proven this works for your team — let's talk about where you want to go from here."</div>
+    </div>
+  </div>
+
+  <!-- SECTION 3: LIR INTERVENTION PROTOCOL -->
+  <div class="section-title">3. The LIR Intervention Protocol</div>
+  <div class="section-intro">When a customer is at risk of missing LIR, the intervention protocol is triggered immediately — not at the end of the onboarding period. Early intervention at T/2 has 3x the success rate of intervention at T. Late action on churn risk is the most expensive mistake in CS.</div>
+
+  <div class="subsection">
+    <div class="callout">
+      <strong>Trigger:</strong> Customer has not achieved the LIR precursor event by Day T/2, or on-track signals are weak (no engagement, missed check-ins, no product usage in the past 7 days).
+    </div>
+
+    <ul class="intervention-steps">
+      <li>
+        <div class="int-body">
+          <strong>Diagnostic Call</strong>
+          <span>30-minute session with the customer champion to understand blockers. Is the issue technical (product isn't working as expected), organizational (resources haven't been allocated), or prioritization (other things have taken over)? The diagnosis determines the response.</span>
+        </div>
+      </li>
+      <li>
+        <div class="int-body">
+          <strong>Escalation to Economic Buyer</strong>
+          <span>If the blocker is organizational — customer hasn't allocated internal resources, or champion has lost organizational support — loop in the Economic Buyer. This is a structured escalation, not a complaint call. Frame it as: "I want to make sure we're set up for you to get full value from this investment."</span>
+        </div>
+      </li>
+      <li>
+        <div class="int-body">
+          <strong>Recovery Plan</strong>
+          <span>A 30-day remediation plan with specific milestones and weekly checkpoints. The plan should be written and signed off by both the CSM and the customer champion. Shared accountability is critical — a verbal agreement is not a recovery plan.</span>
+        </div>
+      </li>
+      <li>
+        <div class="int-body">
+          <strong>Executive Alignment</strong>
+          <span>If the recovery plan is rejected, ignored after 2 weeks, or the customer fails to meet 2 consecutive recovery milestones, flag as high-churn risk. Escalate to VP CS. Prepare a save plan that addresses the root cause — not just the symptoms.</span>
+        </div>
+      </li>
+    </ul>
+
+    <p style="font-size:15px; font-weight:700; color:var(--text); margin:20px 0 12px;">Escalation Matrix</p>
+    <table class="esc-table">
+      <thead>
+        <tr>
+          <th>Risk Level</th>
+          <th>Trigger</th>
+          <th>Action</th>
+          <th>Owner</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><span class="risk-green">Green</span></td>
+          <td>On-track at T/2. Precursor event achieved.</td>
+          <td>Standard cadence. Accelerate toward LIR confirmation.</td>
+          <td>CSM</td>
+        </tr>
+        <tr>
+          <td><span class="risk-yellow">Yellow</span></td>
+          <td>Off-track at T/2. No precursor event. Low engagement signals.</td>
+          <td>Diagnostic call within 48 hours. Build recovery plan. Flag to manager.</td>
+          <td>CSM + CS Manager</td>
+        </tr>
+        <tr>
+          <td><span class="risk-red">Red</span></td>
+          <td>Missed LIR at Day T. Recovery plan not adopted or failing.</td>
+          <td>Executive escalation. VP CS joins next customer call. AE looped in to support champion.</td>
+          <td>VP CS + AE</td>
+        </tr>
+        <tr>
+          <td><span class="risk-critical">Critical</span></td>
+          <td>No meaningful engagement after T+30. No product usage. Champion unresponsive.</td>
+          <td>Churn prevention protocol: CRO direct outreach to Economic Buyer. Save plan prepared.</td>
+          <td>CRO + Economic Buyer call</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- SECTION 4: SWIM LANES -->
+  <div class="section-title">4. Onboarding Swim Lanes</div>
+  <div class="section-intro">Not all customers follow the same onboarding path. The appropriate level of CSM involvement is determined by segment, complexity, and strategic value — not by default. Over-investing in SMB onboarding destroys unit economics. Under-investing in enterprise onboarding destroys retention.</div>
+
+  <div class="subsection">
+    <div class="cs-swim-grid">
+
+      <div class="cs-swim-card">
+        <div class="cs-swim-label">Swim Lane 1</div>
+        <div class="cs-swim-name">Self-Serve / SMB</div>
+        <div class="cs-swim-row">
+          <span class="cs-swim-key">LIR Timeline</span>
+          <span class="cs-swim-val">14–30 days</span>
+        </div>
+        <div class="cs-swim-row">
+          <span class="cs-swim-key">CSM Time</span>
+          <span class="cs-swim-val">&lt;2 hrs / month</span>
+        </div>
+        <div class="cs-swim-row">
+          <span class="cs-swim-key">Escalation Path</span>
+          <span class="cs-swim-val">Pooled CSM team</span>
+        </div>
+        <div class="cs-swim-activities">
+          <div class="cs-swim-activities-label">Key Activities</div>
+          <ul>
+            <li>Product-led onboarding with in-app checklists and tooltips</li>
+            <li>Automated email nurture tied to LIR precursor milestones</li>
+            <li>LIR tracked via product analytics — no self-reporting</li>
+            <li>CSM intervenes only on health score drop below threshold</li>
+            <li>Office hours for questions — not dedicated calls</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="cs-swim-card">
+        <div class="cs-swim-label">Swim Lane 2</div>
+        <div class="cs-swim-name">Mid-Market, Guided</div>
+        <div class="cs-swim-row">
+          <span class="cs-swim-key">LIR Timeline</span>
+          <span class="cs-swim-val">30–60 days</span>
+        </div>
+        <div class="cs-swim-row">
+          <span class="cs-swim-key">CSM Time</span>
+          <span class="cs-swim-val">3–5 hrs / month</span>
+        </div>
+        <div class="cs-swim-row">
+          <span class="cs-swim-key">Escalation Path</span>
+          <span class="cs-swim-val">Named CSM + Manager</span>
+        </div>
+        <div class="cs-swim-activities">
+          <div class="cs-swim-activities-label">Key Activities</div>
+          <ul>
+            <li>Weekly 30-min CSM calls during onboarding</li>
+            <li>Structured milestone checklist with shared visibility</li>
+            <li>Shared Slack or Teams channel for async questions</li>
+            <li>Mid-point formal assessment at T/2</li>
+            <li>Champion empowerment kit — ROI data, internal sell materials</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="cs-swim-card">
+        <div class="cs-swim-label">Swim Lane 3</div>
+        <div class="cs-swim-name">Enterprise, White-Glove</div>
+        <div class="cs-swim-row">
+          <span class="cs-swim-key">LIR Timeline</span>
+          <span class="cs-swim-val">60–120 days</span>
+        </div>
+        <div class="cs-swim-row">
+          <span class="cs-swim-key">CSM Time</span>
+          <span class="cs-swim-val">8–15 hrs / month</span>
+        </div>
+        <div class="cs-swim-row">
+          <span class="cs-swim-key">Escalation Path</span>
+          <span class="cs-swim-val">Named CSM + VP CS</span>
+        </div>
+        <div class="cs-swim-activities">
+          <div class="cs-swim-activities-label">Key Activities</div>
+          <ul>
+            <li>Dedicated CSM with executive sponsor engagement from Day 0</li>
+            <li>Custom implementation plan — not templated</li>
+            <li>Formal QBRs from Month 3 onward</li>
+            <li>Weekly steering committee calls during initial onboarding</li>
+            <li>Integration support, security review support, change management assistance</li>
+          </ul>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- SECTION 5: ONGOING SUCCESS MOTIONS -->
+  <div class="section-title">5. Ongoing Success Motions (Post-LIR)</div>
+  <div class="section-intro">Once LIR is achieved, the CS relationship shifts from onboarding to partnership. The primary motions are QBRs (to maintain and expand ROI) and health score management (to identify risk before it becomes churn).</div>
+
+  <div class="subsection">
+
+    <p style="font-size:15px; font-weight:700; color:var(--text); margin-bottom:12px;">QBR (Quarterly Business Review) Framework</p>
+
+    <ul class="qbr-list">
+      <li><div class="qbr-body"><strong>LIR Achievement Recap</strong> — Review the journey from Day 0 to LIR. Quantify the value delivered in the customer's own metrics. This anchors the value conversation before any renewal or expansion discussion.</div></li>
+      <li><div class="qbr-body"><strong>Usage &amp; Adoption Metrics</strong> — Present current product engagement data. Are the right users using the right features? Are power users growing or shrinking? Is usage trending toward or away from expansion?</div></li>
+      <li><div class="qbr-body"><strong>ROI Delivered</strong> — Translate usage into business impact. Not "you sent 1,000 reports" — but "based on your usage data, your team has saved approximately X hours and $Y in [cost category]." Use the metrics established in discovery as the frame.</div></li>
+      <li><div class="qbr-body"><strong>Roadmap Alignment</strong> — Share 1–2 upcoming features most relevant to the customer's stated goals. This signals you're investing in their future, not just their past. Do not share the full roadmap — only what's directly relevant to their priorities.</div></li>
+      <li><div class="qbr-body"><strong>Expansion Opportunity</strong> — If ROI has been demonstrated and the relationship is strong, open the expansion conversation. "Given the value you're seeing in [current area], we've been thinking about where you might get the most value next." Use this as discovery, not a pitch.</div></li>
+    </ul>
+
+    <div class="callout">
+      <strong>QBR Attendees:</strong> CSM + customer champion is the minimum. For expansion conversations, the economic buyer should attend if possible. "You may want to include [Economic Buyer name] in this one — I want to show them the ROI data we've been tracking." This naturally draws the buyer back in for expansion.
+    </div>
+
+    <p style="font-size:15px; font-weight:700; color:var(--text); margin: 24px 0 12px;">Customer Health Score Model</p>
+    <table class="health-table">
+      <thead>
+        <tr>
+          <th>Signal</th>
+          <th>Weight</th>
+          <th>Green</th>
+          <th>Yellow</th>
+          <th>Red</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><span class="h-signal">LIR Achievement</span></td>
+          <td><span class="h-weight">40%</span></td>
+          <td><span class="h-green">Achieved on time</span></td>
+          <td><span class="h-yellow">Achieved late (past T)</span></td>
+          <td><span class="h-red">Not yet achieved</span></td>
+        </tr>
+        <tr>
+          <td><span class="h-signal">Product Engagement</span></td>
+          <td><span class="h-weight">25%</span></td>
+          <td><span class="h-green">Daily active users increasing month-over-month</span></td>
+          <td><span class="h-yellow">Stable — no growth but no decline</span></td>
+          <td><span class="h-red">Declining usage, dropped features, or dormant users</span></td>
+        </tr>
+        <tr>
+          <td><span class="h-signal">Support Tickets</span></td>
+          <td><span class="h-weight">15%</span></td>
+          <td><span class="h-green">Low volume, resolved quickly, mostly how-to questions</span></td>
+          <td><span class="h-yellow">Moderate volume, some recurring issues</span></td>
+          <td><span class="h-red">High volume, unresolved tickets, repeated escalations</span></td>
+        </tr>
+        <tr>
+          <td><span class="h-signal">Contract Renewal</span></td>
+          <td><span class="h-weight">20%</span></td>
+          <td><span class="h-green">Auto-renew confirmed, or upsell conversation open</span></td>
+          <td><span class="h-yellow">On-track for standard renewal, no expansion signal</span></td>
+          <td><span class="h-red">At-risk signal, renewal conversation stalled, or downgrade inquiry</span></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- SECTION 6: EXPANSION MOTION -->
+  <div class="section-title">6. Expansion Motion</div>
+  <div class="section-intro">The most efficient revenue in SaaS comes from existing customers who have already proven ROI. Expansion built on a foundation of LIR achievement and demonstrated value closes faster, discounts less, and churns at a fraction of the rate of new logo ARR.</div>
+
+  <div class="subsection">
+    <p style="font-size:15px; font-weight:700; color:var(--text); margin-bottom:12px;">Expansion Frameworks</p>
+    <ul class="bullet-list" style="margin-bottom:20px;">
+      <li><strong>Land and Expand:</strong> Start with one team or use case. Prove LIR and ROI. Expand to adjacent teams using the same champion, who is now a proven internal sponsor. Reduce customer acquisition friction by making expansion feel like an obvious next step, not a new sale.</li>
+      <li><strong>Multi-Product:</strong> After LIR is confirmed on Product A, introduce Product B to the same champion with a direct link to their stated next priority. Use the ROI data from Product A as the proof point for Product B's value potential.</li>
+      <li><strong>Upsell Triggers:</strong> Usage approaching plan limits, new hires added to the team, a strategic initiative aligned to a new product feature, or a company event (funding, acquisition, growth milestone) that creates new buying intent.</li>
+    </ul>
+
+    <p style="font-size:15px; font-weight:700; color:var(--text); margin-bottom:12px;">Expansion Conversation Timing</p>
+    <div class="expand-grid">
+      <div class="expand-card">
+        <div class="expand-label">Earliest</div>
+        <div class="expand-name">LIR + 30 Days</div>
+        <div class="expand-desc">Customer has tangible ROI to reference. Timing is aggressive — only appropriate if the champion proactively raises expansion interest. Do not push; respond.</div>
+      </div>
+      <div class="expand-card">
+        <div class="expand-label">Optimal</div>
+        <div class="expand-name">QBR at Month 6</div>
+        <div class="expand-desc">Full quarter of post-LIR data. Relationship is established. Champion has had time to demonstrate internal success. Economic buyer has seen ROI in a formal review. Best conversion rate.</div>
+      </div>
+      <div class="expand-card">
+        <div class="expand-label">Red Flag</div>
+        <div class="expand-name">Before LIR</div>
+        <div class="expand-desc">Selling more to a customer who hasn't yet proven value is the fastest way to lose them. They are in a fragile state. Expansion before LIR increases churn probability — never do this.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SECTION 7: CS METRICS -->
+  <div class="section-title">7. CS Metrics</div>
+  <div class="section-intro">These seven metrics tell the full CS story — from onboarding effectiveness to expansion engine health. Track monthly at the portfolio level and by CSM. Deviations from target at the CSM level reveal coaching opportunities.</div>
+
+  <div class="subsection">
+    <table class="cs-metrics-table">
+      <thead>
+        <tr>
+          <th>Metric</th>
+          <th>Definition</th>
+          <th>Target</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><span class="cs-metric-name">LIR Achievement Rate</span></td>
+          <td>% of new customers achieving LIR by Day T</td>
+          <td><span class="cs-metric-target">≥60–80% (match PMF threshold)</span></td>
+        </tr>
+        <tr>
+          <td><span class="cs-metric-name">Time to LIR</span></td>
+          <td>Days from contract start to confirmed LIR event — track monthly average</td>
+          <td><span class="cs-metric-target">Minimize — track trend, not absolute</span></td>
+        </tr>
+        <tr>
+          <td><span class="cs-metric-name">Gross Revenue Retention (GRR)</span></td>
+          <td>ARR retained from existing customers excluding expansion, only counting downsells and churn</td>
+          <td><span class="cs-metric-target">≥90%</span></td>
+        </tr>
+        <tr>
+          <td><span class="cs-metric-name">Net Revenue Retention (NRR)</span></td>
+          <td>ARR retained from existing customers including expansion, minus churn and downsell</td>
+          <td><span class="cs-metric-target">≥110% (≥120% for growth stage)</span></td>
+        </tr>
+        <tr>
+          <td><span class="cs-metric-name">Health Score</span></td>
+          <td>Composite score of LIR achievement, engagement, support, and renewal signals</td>
+          <td><span class="cs-metric-target">80%+ of portfolio Green</span></td>
+        </tr>
+        <tr>
+          <td><span class="cs-metric-name">CSAT / NPS</span></td>
+          <td>Customer satisfaction (CSAT) and Net Promoter Score measured post-LIR and at QBR</td>
+          <td><span class="cs-metric-target">NPS &gt;40, CSAT &gt;85%</span></td>
+        </tr>
+        <tr>
+          <td><span class="cs-metric-name">Expansion ARR</span></td>
+          <td>New ARR generated from existing customers via upsell, cross-sell, and seat expansion</td>
+          <td><span class="cs-metric-target">&gt;30% of new ARR target</span></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- SECTION 8: HIRING FOR CS -->
+  <div class="section-title">8. Hiring for CS</div>
+  <div class="section-intro">CS hiring is different from sales hiring. The characteristics that drive retention and expansion — empathy, strategic thinking, cross-functional influence — are different from those that drive prospecting and closing. Use a structured scorecard to avoid hiring based on personality fit alone.</div>
+
+  <div class="subsection">
+    <p style="font-size:14px; color:var(--text-muted); margin-bottom:18px;">Four core criteria for CS hire evaluation. High-weight criteria are table-stakes — a miss on either is disqualifying.</p>
+
+    <div class="criteria-grid">
+      <div class="criteria-card">
+        <div class="criteria-weight high">High Weight — Table Stakes</div>
+        <div class="criteria-name">Relationship Management</div>
+        <div class="criteria-desc">
+          Builds genuine trust with customers at all levels — from end user to economic buyer. Examples of long-term customer partnerships where they were the primary reason for renewal and expansion. Not just "liked by customers" — <em>trusted and relied upon</em> as an advisor.
+        </div>
+      </div>
+      <div class="criteria-card">
+        <div class="criteria-weight high">High Weight — Table Stakes</div>
+        <div class="criteria-name">Strategic Thinking</div>
+        <div class="criteria-desc">
+          Understands customer business goals beyond product usage. Proactively identifies risk and opportunity before they arise — not in response to customer escalations. Can translate product capabilities into customer business outcomes without being prompted.
+        </div>
+      </div>
+      <div class="criteria-card">
+        <div class="criteria-weight medium">Medium Weight</div>
+        <div class="criteria-name">Cross-Functional Collaboration</div>
+        <div class="criteria-desc">
+          Works effectively with Sales, Product, and Marketing. Known by other departments as a high-quality handoff partner — provides specific, actionable context rather than vague notes. Escalates issues constructively, with solutions rather than just problems.
+        </div>
+      </div>
+      <div class="criteria-card">
+        <div class="criteria-weight medium">Medium Weight</div>
+        <div class="criteria-name">Growth Mindset</div>
+        <div class="criteria-desc">
+          Learns from losses — can articulate specific things they've changed based on a customer churn they experienced. Actively seeks coaching rather than waiting for it. Demonstrates measurable improvement call-over-call and QBR-over-QBR.
+        </div>
+      </div>
+    </div>
+
+    <div class="callout" style="margin-top:20px;">
+      <strong>Structured Scorecard:</strong> Use the CS Hire Interview Scorecard to score each candidate numerically on these four criteria. Gut-feel hiring in CS produces high variance in outcomes. Structured evaluation produces consistent CS teams. See template-scorecard-cs.html for the full scorecard.
+    </div>
+  </div>
+
+  <!-- RELATED LINKS -->
+  <div class="related-section">
+    <div class="related-title">Related Tools &amp; Templates</div>
+    <div class="related-links">
+      <a href="sos-lir.html" class="related-link">LIR Framework SOS</a>
+      <a href="sos-gtm-playbook.html" class="related-link">GTM Playbook SOS</a>
+      <a href="template-icp.html" class="related-link">ICP Worksheet</a>
+      <a href="template-presentation.html" class="related-link">Presentation &amp; Demo Guide</a>
+      <a href="template-scorecard-cs.html" class="related-link">CS Hire Scorecard</a>
+    </div>
+  </div>
+
+</div><!-- /content-wrap -->
+<script data-pplx-inline-edit>
+(function () {
+  if (window === window.top) return;
+
+  const allowedParentOrigins = ["https://www.perplexity.ai","https://perplexity.ai","https://testing.perplexity.ai","https://staging.perplexity.ai","https://*.preview.i.perplexity.ai","http://localhost:3000","http://127.0.0.1:3000","http://localhost:5173","http://127.0.0.1:5173"];
+  const MAX_FONT_BYTES = 500 * 1024;
+  const MAX_TOTAL_FONT_BYTES = 2 * 1024 * 1024;
+  let scrollForwarding = false;
+  let scrollRaf = 0;
+  let trustedTopOrigin = null;
+
+  // Allow entries like "https://*.preview.i.perplexity.ai" — the wildcard
+  // matches a single DNS label (no dots), so "https://*.foo" cannot stretch
+  // across multiple labels.
+  function matchesAllowedOrigin(origin) {
+    if (!origin) return false;
+    for (const entry of allowedParentOrigins) {
+      if (!entry.includes("*")) {
+        if (entry === origin) return true;
+        continue;
+      }
+      const pattern = new RegExp(
+        "^" +
+          entry.replace(/[.+?^${}()|[\]\\]/g, "\\$&").replace(/\*/g, "[^.]+") +
+          "$",
+      );
+      if (pattern.test(origin)) return true;
+    }
+    return false;
+  }
+
+  // Trust decision: when the sender is same-origin-visible (event.origin is a
+  // real origin like https://www.perplexity.ai) we trust event.origin directly.
+  // When event.origin is "null" (opaque broker srcdoc), we fall back to the
+  // broker's stamped `parentOrigin` to identify the top window. The fallback
+  // is claim-only — we rely on the browser's native `targetOrigin` enforcement
+  // on the response path (see postToTrustedTop) to ensure replies can't be
+  // delivered to anyone but the actual top window of that claimed origin.
+  function getTrustedParentOrigin(event) {
+    const forwardedParentOrigin =
+      typeof event.data.parentOrigin === "string" ? event.data.parentOrigin : null;
+    const parentOrigin = event.origin === "null" ? forwardedParentOrigin : event.origin;
+    return matchesAllowedOrigin(parentOrigin) ? parentOrigin : null;
+  }
+
+  // All responses go to window.top with targetOrigin = the allowlisted origin.
+  // An attacker that iframes us inside their own null-origin broker can claim
+  // any parentOrigin they like, but the browser will drop the reply whenever
+  // the real top's origin doesn't match — so the screenshot never leaves.
+  function postToTrustedTop(message) {
+    if (!trustedTopOrigin) return;
+    try {
+      window.top.postMessage(message, trustedTopOrigin);
+    } catch (_error) {}
+  }
+
+  function inlineAll(original, clone) {
+    if (original.nodeType !== 1 || clone.nodeType !== 1) return;
+
+    try {
+      const computedStyle = getComputedStyle(original);
+      // cssText on a computed style is the serialized declaration in modern
+      // Chromium/Safari — a single read beats enumerating ~400 longhand
+      // properties. Firefox returns "" here, so we fall back on empty.
+      const serialized = computedStyle.cssText;
+      if (serialized) {
+        clone.style.cssText = serialized;
+      } else {
+        const parts = new Array(computedStyle.length);
+        for (let index = 0; index < computedStyle.length; index += 1) {
+          const property = computedStyle[index];
+          parts[index] = `${property}:${computedStyle.getPropertyValue(property)};`;
+        }
+        clone.style.cssText = parts.join("");
+      }
+    } catch (_error) {}
+
+    const originalChildren = original.children;
+    const clonedChildren = clone.children;
+    for (
+      let index = 0;
+      index < originalChildren.length && index < clonedChildren.length;
+      index += 1
+    ) {
+      inlineAll(originalChildren[index], clonedChildren[index]);
+    }
+  }
+
+  function extractFontUrl(srcValue) {
+    const matches = [
+      ...srcValue.matchAll(
+        /url\(["']?([^"')]+)["']?\)(?:\s*format\(["']?([^"')]+)["']?\))?/gi,
+      ),
+    ];
+    if (matches.length === 0) return null;
+    const woff2 = matches.find((m) => m[2] && m[2].toLowerCase().includes("woff2"));
+    if (woff2) return woff2[1];
+    const woff = matches.find((m) => m[2] && m[2].toLowerCase().includes("woff"));
+    if (woff) return woff[1];
+    return matches[0][1];
+  }
+
+  // Cache resolved font URL -> data URI across captures. Fonts on a page
+  // essentially never change, and a batch run emits multiple captures back to
+  // back — without this we'd refetch + re-base64 every time.
+  const fontDataUriCache = new Map();
+  const SRC_DECLARATION_RE = /src\s*:\s*[^;}]+/i;
+
+  async function fetchAsDataUri(url) {
+    if (fontDataUriCache.has(url)) return fontDataUriCache.get(url);
+    let dataUri = null;
+    try {
+      const response = await fetch(url, { mode: "cors", credentials: "omit" });
+      if (response.ok) {
+        const blob = await response.blob();
+        if (blob.size <= MAX_FONT_BYTES) {
+          dataUri = await new Promise((resolve) => {
+            const reader = new FileReader();
+            reader.onloadend = () =>
+              resolve(typeof reader.result === "string" ? reader.result : null);
+            reader.onerror = () => resolve(null);
+            reader.readAsDataURL(blob);
+          });
+        }
+      }
+    } catch (_error) {
+      dataUri = null;
+    }
+    fontDataUriCache.set(url, dataUri);
+    return dataUri;
+  }
+
+  function collectFontFaceRuleTexts() {
+    const rules = [];
+    for (const sheet of document.styleSheets) {
+      let cssRules;
+      try {
+        cssRules = sheet.cssRules;
+      } catch (_error) {
+        continue;
+      }
+      if (!cssRules) continue;
+      for (const rule of cssRules) {
+        const cssText = rule.cssText || "";
+        if (cssText.startsWith("@font-face")) rules.push(cssText);
+      }
+    }
+    return rules;
+  }
+
+  async function buildInlinedFontCss() {
+    const ruleTexts = collectFontFaceRuleTexts();
+    if (ruleTexts.length === 0) return null;
+
+    const resolved = ruleTexts.map((cssText) => {
+      if (!SRC_DECLARATION_RE.test(cssText)) return null;
+      const srcMatch = cssText.match(/src\s*:\s*([^;}]+)[;}]/i);
+      if (!srcMatch) return null;
+      const url = extractFontUrl(srcMatch[1]);
+      if (!url) return null;
+      try {
+        return { cssText, url: new URL(url, document.baseURI).href };
+      } catch (_error) {
+        return null;
+      }
+    });
+
+    const dataUris = await Promise.all(
+      resolved.map((entry) => (entry ? fetchAsDataUri(entry.url) : Promise.resolve(null))),
+    );
+
+    const inlined = [];
+    let totalBytes = 0;
+    for (let index = 0; index < resolved.length; index += 1) {
+      const entry = resolved[index];
+      const dataUri = dataUris[index];
+      if (!entry || !dataUri) continue;
+      const approxBytes = dataUri.length * 0.75;
+      if (totalBytes + approxBytes > MAX_TOTAL_FONT_BYTES) break;
+      totalBytes += approxBytes;
+      inlined.push(entry.cssText.replace(SRC_DECLARATION_RE, `src: url("${dataUri}")`));
+    }
+    return inlined.length > 0 ? inlined.join("\n") : null;
+  }
+
+  function stripExternal(clone) {
+    const images = clone.querySelectorAll("img");
+    for (let index = 0; index < images.length; index += 1) {
+      const src = images[index].getAttribute("src");
+      if (src && !src.startsWith("data:")) images[index].removeAttribute("src");
+    }
+
+    const elements = clone.querySelectorAll("*");
+    for (let index = 0; index < elements.length; index += 1) {
+      const style = elements[index].style.cssText;
+      if (style && style.includes("url(")) {
+        elements[index].style.cssText = style.replace(
+          /url\(["']?(?!data:)[^)"']*["']?\)/gi,
+          "none",
+        );
+      }
+    }
+  }
+
+  function emitScroll() {
+    scrollRaf = 0;
+    if (!scrollForwarding) return;
+    postToTrustedTop({
+      type: "INLINE_EDIT_SCROLL",
+      scrollX: window.scrollX,
+      scrollY: window.scrollY,
+    });
+  }
+
+  window.addEventListener(
+    "scroll",
+    function () {
+      if (!scrollForwarding || scrollRaf) return;
+      scrollRaf = requestAnimationFrame(emitScroll);
+    },
+    { passive: true, capture: true },
+  );
+
+  async function handleCaptureRequest(event) {
+    const requestId = event.data.requestId;
+    const scrollX = window.scrollX;
+    const scrollY = window.scrollY;
+    const width = window.innerWidth;
+    const height = window.innerHeight;
+
+    function postResult(dataUrl) {
+      postToTrustedTop({
+        type: "INLINE_EDIT_SCREENSHOT_RESULT",
+        requestId,
+        dataUrl,
+        scrollX,
+        scrollY,
+      });
+    }
+
+    try {
+      // Wait for any pending web fonts to resolve so both inline metrics and
+      // the @font-face inlining below see the same loaded faces.
+      if (document.fonts && document.fonts.ready) {
+        try {
+          await document.fonts.ready;
+        } catch (_error) {}
+      }
+
+      const clone = document.documentElement.cloneNode(true);
+      inlineAll(document.documentElement, clone);
+
+      const removedNodes = clone.querySelectorAll("script,link[rel=\"stylesheet\"],style");
+      for (let index = 0; index < removedNodes.length; index += 1) {
+        removedNodes[index].remove();
+      }
+
+      stripExternal(clone);
+
+      // Re-embed web fonts as data-URI @font-face rules so the SVG rasterizer
+      // can resolve them — external font URLs aren't fetched during
+      // foreignObject rendering, which would otherwise force a fallback face
+      // and change text metrics.
+      const inlinedFontCss = await buildInlinedFontCss();
+      if (inlinedFontCss) {
+        const styleEl = document.createElement("style");
+        styleEl.textContent = inlinedFontCss;
+        const head = clone.querySelector("head");
+        if (head) head.appendChild(styleEl);
+        else clone.insertBefore(styleEl, clone.firstChild);
+      }
+
+      const html = new XMLSerializer().serializeToString(clone);
+      const svg =
+        `<svg xmlns="http://www.w3.org/2000/svg" width="${width}" height="${height}">` +
+        '<foreignObject width="100%" height="100%">' +
+        `<div xmlns="http://www.w3.org/1999/xhtml" style="width:${width}px;height:${height}px;overflow:hidden">` +
+        `<div style="transform:translate(-${scrollX}px,-${scrollY}px);transform-origin:top left">` +
+        html +
+        "</div></div></foreignObject></svg>";
+      const svgUrl = `data:image/svg+xml;charset=utf-8,${encodeURIComponent(svg)}`;
+      const image = new Image();
+      image.onload = function () {
+        const canvas = document.createElement("canvas");
+        canvas.width = width;
+        canvas.height = height;
+        canvas.getContext("2d").drawImage(image, 0, 0);
+        postResult(canvas.toDataURL("image/png"));
+      };
+      image.onerror = function () {
+        postResult(null);
+      };
+      image.src = svgUrl;
+    } catch (_error) {
+      postResult(null);
+    }
+  }
+
+  window.addEventListener("message", function (event) {
+    if (!event.data) return;
+    // Only accept messages from the direct parent frame. Blocks sibling /
+    // unrelated-window postMessage senders that could otherwise reach us.
+    if (event.source !== window.parent) return;
+
+    const trustedParentOrigin = getTrustedParentOrigin(event);
+    if (!trustedParentOrigin) return;
+    trustedTopOrigin = trustedParentOrigin;
+
+    if (event.data.type === "INLINE_EDIT_SCROLL_START") {
+      scrollForwarding = true;
+      emitScroll();
+      return;
+    }
+
+    if (event.data.type === "INLINE_EDIT_SCROLL_STOP") {
+      scrollForwarding = false;
+      if (scrollRaf) cancelAnimationFrame(scrollRaf);
+      scrollRaf = 0;
+      return;
+    }
+
+    if (event.data.type !== "INLINE_EDIT_CAPTURE_REQUEST") return;
+
+    handleCaptureRequest(event);
+  });
+})();
+
+
+</script></body>
+</html>

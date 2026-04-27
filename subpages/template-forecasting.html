@@ -1,0 +1,937 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Demand-Driven Forecasting Model — SaaS Revenue System</title>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="../assets/shared.css"/>
+  <style>
+    .page-hero { background: #2C5F8A; }
+
+    /* Comparison: Traditional vs Demand-Driven */
+    .method-compare {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 14px;
+      margin: 20px 0;
+    }
+    .mc-card {
+      border-radius: 10px;
+      padding: 18px;
+      border: 1.5px solid var(--border);
+    }
+    .mc-card.old { background: #fff8f8; border-color: #d4a0a0; }
+    .mc-card.new { background: #f0fff4; border-color: #437A22; }
+    .mc-label {
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      margin-bottom: 8px;
+    }
+    .mc-card.old .mc-label { color: #A13544; }
+    .mc-card.new .mc-label { color: #437A22; }
+    .mc-title {
+      font-size: 16px;
+      font-weight: 700;
+      color: var(--text);
+      margin-bottom: 8px;
+    }
+    .mc-list {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+    }
+    .mc-list li {
+      font-size: 13px;
+      line-height: 1.65;
+      padding: 4px 0 4px 18px;
+      position: relative;
+    }
+    .mc-card.old .mc-list li::before { content: '✗'; position: absolute; left: 0; color: #A13544; font-weight: 700; }
+    .mc-card.new .mc-list li::before { content: '✓'; position: absolute; left: 0; color: #437A22; font-weight: 700; }
+
+    /* Model inputs */
+    .inputs-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 14px;
+      margin: 20px 0;
+    }
+    .inputs-card {
+      background: var(--surface);
+      border: 1.5px solid var(--border);
+      border-radius: 10px;
+      padding: 18px;
+    }
+    .inputs-title {
+      font-size: 13px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.8px;
+      color: #2C5F8A;
+      margin-bottom: 10px;
+    }
+    .inputs-list {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+    }
+    .inputs-list li {
+      font-size: 13px;
+      line-height: 1.65;
+      padding: 4px 0 4px 16px;
+      position: relative;
+    }
+    .inputs-list li::before {
+      content: '→';
+      position: absolute;
+      left: 0;
+      color: #2C5F8A;
+      font-weight: 700;
+    }
+
+    /* Rate table */
+    .rate-table-wrap { overflow-x: auto; margin: 20px 0; }
+    .rate-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 13px;
+    }
+    .rate-table th {
+      background: #2C5F8A;
+      color: #fff;
+      padding: 9px 12px;
+      text-align: center;
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.5px;
+      text-transform: uppercase;
+    }
+    .rate-table th:first-child, .rate-table th:nth-child(2) { text-align: left; }
+    .rate-table td {
+      padding: 9px 12px;
+      border-bottom: 1px solid var(--border);
+      text-align: center;
+      font-size: 13px;
+    }
+    .rate-table td:first-child { text-align: left; font-weight: 600; }
+    .rate-table td:nth-child(2) { text-align: left; }
+    .rate-table tr:nth-child(even) td { background: #fafaf8; }
+    .rate-table .segment-smb td:first-child { color: #006494; }
+    .rate-table .segment-mm td:first-child { color: #437A22; }
+    .rate-table .segment-ent td:first-child { color: #7A39BB; }
+    .rate-good { color: #437A22; font-weight: 700; }
+    .rate-mid { color: #b8860b; font-weight: 700; }
+    .rate-low { color: var(--text-muted); }
+
+    /* Forecast output */
+    .forecast-output {
+      background: #1C1B19;
+      border-radius: 10px;
+      padding: 24px;
+      margin: 20px 0;
+    }
+    .fo-title {
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      color: #4F98A3;
+      margin-bottom: 16px;
+    }
+    .fo-row {
+      display: grid;
+      grid-template-columns: 2fr 1fr 1fr 1fr;
+      gap: 8px;
+      padding: 8px 0;
+      border-bottom: 1px solid rgba(255,255,255,0.08);
+      font-size: 13px;
+    }
+    .fo-row.header {
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 0.5px;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.4);
+      border-bottom: 1px solid rgba(255,255,255,0.15);
+    }
+    .fo-row.total-row {
+      border-top: 2px solid rgba(255,255,255,0.2);
+      border-bottom: none;
+      margin-top: 4px;
+      padding-top: 12px;
+      font-weight: 700;
+    }
+    .fo-segment { color: #CDCCCA; }
+    .fo-customers { color: #fff; font-family: 'Courier New', monospace; }
+    .fo-arr { color: #4F98A3; font-family: 'Courier New', monospace; }
+    .fo-note { color: rgba(255,255,255,0.4); font-size: 11px; }
+    .fo-total-arr { color: #fff; font-size: 18px; font-family: 'Courier New', monospace; }
+
+    /* Steps */
+    .forecast-step {
+      background: var(--surface);
+      border: 1.5px solid var(--border);
+      border-radius: 10px;
+      padding: 20px;
+      margin: 12px 0;
+      display: flex;
+      gap: 16px;
+      align-items: flex-start;
+    }
+    .fs-num {
+      width: 32px;
+      height: 32px;
+      background: #2C5F8A;
+      color: #fff;
+      border-radius: 50%;
+      font-size: 15px;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+    .fs-body { flex: 1; }
+    .fs-title {
+      font-size: 14px;
+      font-weight: 700;
+      color: var(--text);
+      margin-bottom: 4px;
+    }
+    .fs-desc {
+      font-size: 13px;
+      color: var(--text-muted);
+      line-height: 1.65;
+    }
+
+    /* Accuracy table */
+    .accuracy-table-wrap { overflow-x: auto; margin: 20px 0; }
+    .accuracy-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 13px;
+    }
+    .accuracy-table th {
+      background: #2C5F8A;
+      color: #fff;
+      padding: 9px 14px;
+      text-align: left;
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.5px;
+      text-transform: uppercase;
+    }
+    .accuracy-table td {
+      padding: 10px 14px;
+      border-bottom: 1px solid var(--border);
+      vertical-align: top;
+      font-size: 13px;
+      line-height: 1.55;
+    }
+    .accuracy-table tr:last-child td { border-bottom: none; }
+    .accuracy-table tr:nth-child(even) td { background: #fafaf8; }
+    .issue-source { font-weight: 600; color: var(--text); }
+    .issue-symptom { color: #A13544; font-size: 12px; }
+  </style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav class="nav">
+  <span class="nav-logo">CRO <span>Manual</span></span>
+  <span class="nav-sep">/</span>
+  <a href="../pages/resources.html" class="nav-back">Resources &amp; Templates</a>
+  <span class="nav-sep">/</span>
+  <span class="nav-current">Forecasting Model</span>
+  <span class="nav-spacer"></span>
+  <a href="../index.html" class="nav-home">Home</a>
+</nav>
+
+<!-- HERO -->
+<div class="page-hero">
+  <div class="hero-phase-label">Resources &amp; Templates</div>
+  <h1 class="hero-title">Demand-Driven Forecasting Model</h1>
+  <p class="hero-subtitle">Replace subjective rep-by-rep estimates with a pipeline-based model that calculates expected revenue by segment, source, and time-in-pipeline — then tracks forecast accuracy to improve over time.</p>
+  <div class="hero-tags">
+    <span class="hero-tag">Forecasting</span>
+    <span class="hero-tag">Pipeline</span>
+    <span class="hero-tag">Segment Analysis</span>
+    <span class="hero-tag">Accuracy Tracking</span>
+  </div>
+</div>
+
+<!-- CONTENT -->
+<div class="content-wrap">
+
+  <nav class="breadcrumb">
+    <a href="../index.html">Home</a>
+    <span class="sep">›</span>
+    <a href="../pages/resources.html">Resources &amp; Templates</a>
+    <span class="sep">›</span>
+    <span class="current">Demand-Driven Forecasting Model</span>
+  </nav>
+
+  <!-- Section 1 -->
+  <h2 class="section-title">Section 1 — What is Demand-Driven Forecasting?</h2>
+  <p class="section-intro">The fundamental problem with traditional sales forecasting is that it relies on human judgment — which is optimistic by nature. Demand-driven forecasting replaces judgment with pipeline math.</p>
+
+  <div class="method-compare">
+    <div class="mc-card old">
+      <div class="mc-label">Traditional ("Gut") Forecasting</div>
+      <div class="mc-title">Rep-by-rep estimates</div>
+      <ul class="mc-list">
+        <li>Each rep submits their "commit" for the month</li>
+        <li>Manager adds their own judgment on top</li>
+        <li>Systematically optimistic — reps and managers both have incentives to show confidence</li>
+        <li>Provides no insight into which part of the funnel is responsible for variance</li>
+        <li>Cannot be improved systematically — no model to calibrate</li>
+      </ul>
+    </div>
+    <div class="mc-card new">
+      <div class="mc-label">Demand-Driven Forecasting</div>
+      <div class="mc-title">Pipeline math by segment and source</div>
+      <ul class="mc-list">
+        <li>Calculate expected revenue from pipeline using historical close rates by age</li>
+        <li>Break down by segment (SMB/MM/Ent) and source (inbound/outbound/AE)</li>
+        <li>Objective — not subject to individual rep optimism</li>
+        <li>Reveals exactly which segments or sources are under/over-forecasting</li>
+        <li>Improves over time as close rate data accumulates</li>
+      </ul>
+    </div>
+  </div>
+
+
+  <!-- Section 2 -->
+  <h2 class="section-title">Section 2 — The Model Structure</h2>
+  <p class="section-intro">Build the model segment by segment (SMB, Mid-Market, Enterprise) and source by source (MQL from inbound, SDR-sourced, AE-sourced). Each combination has its own close rate profile.</p>
+
+  <div class="inputs-grid">
+    <div class="inputs-card">
+      <div class="inputs-title">Inputs per Segment × Source</div>
+      <ul class="inputs-list">
+        <li>Volume of open opportunities in pipeline</li>
+        <li>Age of each opportunity (days in pipeline)</li>
+        <li>Close rate by age band (&lt;1 month, 1-2 months, 2-3 months, etc.)</li>
+        <li>ARR per customer for this segment</li>
+        <li>Source (MQL inbound / SDR-sourced / AE-sourced)</li>
+      </ul>
+    </div>
+    <div class="inputs-card">
+      <div class="inputs-title">Outputs</div>
+      <ul class="inputs-list">
+        <li>Expected customers closing this month by segment</li>
+        <li>Expected ARR by segment and source</li>
+        <li>Total forecast revenue for the month</li>
+        <li>Pipeline coverage needed to hit target</li>
+        <li>Variance analysis vs. prior forecast</li>
+      </ul>
+    </div>
+  </div>
+
+  <h3 class="subsection-title">Close Rate Data by Segment and Source</h3>
+  <p>The model uses historical close rates broken down by how long the opportunity has been in the pipeline. Older opportunities have lower close rates — representing opportunities that have stalled.</p>
+
+  <div class="rate-table-wrap">
+    <table class="rate-table">
+      <thead>
+        <tr>
+          <th>Segment</th>
+          <th>Source</th>
+          <th>&lt;1 Month</th>
+          <th>1–2 Months</th>
+          <th>2–3 Months</th>
+          <th>3–4 Months</th>
+          <th>&gt;4 Months</th>
+          <th>ARR / Customer</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr class="segment-smb">
+          <td>SMB</td>
+          <td>MQL (Inbound)</td>
+          <td class="rate-mid">1.0%</td>
+          <td class="rate-good">5.0%</td>
+          <td class="rate-mid">2.0%</td>
+          <td class="rate-low">1.5%</td>
+          <td class="rate-low">0.5%</td>
+          <td>$10,000</td>
+        </tr>
+        <tr class="segment-smb">
+          <td>SMB</td>
+          <td>SDR Appointments</td>
+          <td class="rate-mid">0.625%</td>
+          <td class="rate-good">3.75%</td>
+          <td class="rate-mid">4.375%</td>
+          <td class="rate-low">—</td>
+          <td class="rate-low">—</td>
+          <td>$13,000</td>
+        </tr>
+        <tr class="segment-smb">
+          <td>SMB</td>
+          <td>AE-Sourced</td>
+          <td class="rate-mid">1.25%</td>
+          <td class="rate-good">10.0%</td>
+          <td class="rate-mid">7.5%</td>
+          <td class="rate-low">—</td>
+          <td class="rate-low">—</td>
+          <td>$14,000</td>
+        </tr>
+        <tr class="segment-mm">
+          <td>Mid-Market</td>
+          <td>MQL (Inbound)</td>
+          <td class="rate-low">0.5%</td>
+          <td class="rate-mid">1.0%</td>
+          <td class="rate-mid">2.0%</td>
+          <td class="rate-low">—</td>
+          <td class="rate-low">—</td>
+          <td>$28,000</td>
+        </tr>
+        <tr class="segment-mm">
+          <td>Mid-Market</td>
+          <td>SDR Appointments</td>
+          <td class="rate-low">0.2%</td>
+          <td class="rate-mid">2.14%</td>
+          <td class="rate-good">5.0%</td>
+          <td class="rate-low">—</td>
+          <td class="rate-low">—</td>
+          <td>$34,000</td>
+        </tr>
+        <tr class="segment-mm">
+          <td>Mid-Market</td>
+          <td>AE-Sourced</td>
+          <td class="rate-low">0.33%</td>
+          <td class="rate-mid">3.33%</td>
+          <td class="rate-good">6.67%</td>
+          <td class="rate-low">—</td>
+          <td class="rate-low">—</td>
+          <td>$38,000</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="callout callout-definition">
+    <div class="callout-title">Why Close Rates Vary by Source</div>
+    <p><strong>AE-sourced pipeline</strong> closes at higher rates because the AE has direct context on the buyer and self-selects to create opportunities where they have a genuine relationship. <strong>SDR appointments</strong> are pre-qualified but early. <strong>MQL inbound</strong> has the widest variance — some highly qualified, some exploratory.</p>
+  </div>
+
+
+  <!-- Section 3 -->
+  <h2 class="section-title">Section 3 — Running the Forecast</h2>
+  <p class="section-intro">At the beginning of each month, run the forecast using current pipeline data. The four-step process takes 30–60 minutes in a spreadsheet or CRM-connected model.</p>
+
+  <div class="forecast-step">
+    <div class="fs-num">1</div>
+    <div class="fs-body">
+      <div class="fs-title">Pull open pipeline by segment and source</div>
+      <div class="fs-desc">Export all open opportunities. Tag each by segment (SMB / Mid-Market / Enterprise) and source (MQL / SDR appointment / AE-sourced). Calculate the age of each opportunity in days from creation date.</div>
+    </div>
+  </div>
+  <div class="forecast-step">
+    <div class="fs-num">2</div>
+    <div class="fs-body">
+      <div class="fs-title">Apply close rates by age band</div>
+      <div class="fs-desc">Multiply the count of opportunities in each age band × the historical close rate for that band, segment, and source. This gives expected customers closing this month from each pipeline bucket.</div>
+    </div>
+  </div>
+  <div class="forecast-step">
+    <div class="fs-num">3</div>
+    <div class="fs-body">
+      <div class="fs-title">Multiply by ARR per customer</div>
+      <div class="fs-desc">Expected customers × average ARR per customer for that segment = expected revenue from each bucket. Sum across all buckets to produce the total forecast.</div>
+    </div>
+  </div>
+  <div class="forecast-step">
+    <div class="fs-num">4</div>
+    <div class="fs-body">
+      <div class="fs-title">Compare to quota and calculate pipeline coverage needed</div>
+      <div class="fs-desc">If total forecast is below quota, calculate how much additional pipeline you need to create to close the gap — at the average close rate for that segment and source. This is your demand gen gap for the month.</div>
+    </div>
+  </div>
+
+  <h3 class="subsection-title">Example Output — Current Month Forecast</h3>
+
+  <div class="forecast-output">
+    <div class="fo-title">Monthly Forecast — Example (Stage 2 Capital Model)</div>
+    <div class="fo-row header">
+      <span>Segment / Source</span>
+      <span>In Pipeline</span>
+      <span>Expected Customers</span>
+      <span>Expected ARR</span>
+    </div>
+    <div class="fo-row">
+      <span class="fo-segment">SMB — MQL Inbound</span>
+      <span class="fo-customers">260 opps</span>
+      <span class="fo-customers">16.8</span>
+      <span class="fo-arr">$168,000</span>
+    </div>
+    <div class="fo-row">
+      <span class="fo-segment">SMB — SDR Appointments</span>
+      <span class="fo-customers">78 opps</span>
+      <span class="fo-customers">5.1</span>
+      <span class="fo-arr">$65,800</span>
+    </div>
+    <div class="fo-row">
+      <span class="fo-segment">SMB — AE-Sourced</span>
+      <span class="fo-customers">31 opps</span>
+      <span class="fo-customers">3.0</span>
+      <span class="fo-arr">$41,500</span>
+    </div>
+    <div class="fo-row">
+      <span class="fo-segment">Mid-Market — MQL Inbound</span>
+      <span class="fo-customers">45 opps</span>
+      <span class="fo-customers">1.4</span>
+      <span class="fo-arr">$38,500</span>
+    </div>
+    <div class="fo-row">
+      <span class="fo-segment">Mid-Market — SDR Appointments</span>
+      <span class="fo-customers">42 opps</span>
+      <span class="fo-customers">2.1</span>
+      <span class="fo-arr">$71,400</span>
+    </div>
+    <div class="fo-row">
+      <span class="fo-segment">Mid-Market — AE-Sourced</span>
+      <span class="fo-customers">28 opps</span>
+      <span class="fo-customers">1.9</span>
+      <span class="fo-arr">$71,400</span>
+    </div>
+    <div class="fo-row">
+      <span class="fo-segment">Enterprise</span>
+      <span class="fo-customers">12 opps</span>
+      <span class="fo-customers">0.6</span>
+      <span class="fo-arr">$50,200</span>
+    </div>
+    <div class="fo-row total-row">
+      <span class="fo-segment" style="color:#fff;font-weight:700;">TOTAL FORECAST</span>
+      <span class="fo-customers">—</span>
+      <span class="fo-customers">30.9 customers</span>
+      <span class="fo-total-arr">$506,800</span>
+    </div>
+  </div>
+
+
+  <!-- Section 4 -->
+  <h2 class="section-title">Section 4 — Improving Forecast Accuracy Over Time</h2>
+  <p class="section-intro">The model only becomes valuable when you close the feedback loop. Track forecast vs. actual every month and update close rates based on observed performance.</p>
+
+  <div style="display:grid;grid-template-columns:repeat(5,1fr);gap:10px;margin:20px 0;">
+    <div style="background:var(--surface);border:1.5px solid var(--border);border-radius:8px;padding:14px;text-align:center;">
+      <div style="font-size:20px;font-weight:700;color:#2C5F8A;margin-bottom:6px;">1</div>
+      <div style="font-size:12px;font-weight:700;color:var(--text);margin-bottom:4px;">Record</div>
+      <div style="font-size:11px;color:var(--text-muted);line-height:1.5;">At start of month, record the model forecast for each segment × source bucket</div>
+    </div>
+    <div style="background:var(--surface);border:1.5px solid var(--border);border-radius:8px;padding:14px;text-align:center;">
+      <div style="font-size:20px;font-weight:700;color:#2C5F8A;margin-bottom:6px;">2</div>
+      <div style="font-size:12px;font-weight:700;color:var(--text);margin-bottom:4px;">Track Actual</div>
+      <div style="font-size:11px;color:var(--text-muted);line-height:1.5;">At end of month, record actual closed customers and revenue by bucket</div>
+    </div>
+    <div style="background:var(--surface);border:1.5px solid var(--border);border-radius:8px;padding:14px;text-align:center;">
+      <div style="font-size:20px;font-weight:700;color:#2C5F8A;margin-bottom:6px;">3</div>
+      <div style="font-size:12px;font-weight:700;color:var(--text);margin-bottom:4px;">Variance</div>
+      <div style="font-size:11px;color:var(--text-muted);line-height:1.5;">Calculate (Actual − Forecast) ÷ Forecast. Target: ±10% total forecast accuracy</div>
+    </div>
+    <div style="background:var(--surface);border:1.5px solid var(--border);border-radius:8px;padding:14px;text-align:center;">
+      <div style="font-size:20px;font-weight:700;color:#2C5F8A;margin-bottom:6px;">4</div>
+      <div style="font-size:12px;font-weight:700;color:var(--text);margin-bottom:4px;">Diagnose</div>
+      <div style="font-size:11px;color:var(--text-muted);line-height:1.5;">Identify which buckets consistently over or under-forecast and why</div>
+    </div>
+    <div style="background:var(--surface);border:1.5px solid var(--border);border-radius:8px;padding:14px;text-align:center;">
+      <div style="font-size:20px;font-weight:700;color:#2C5F8A;margin-bottom:6px;">5</div>
+      <div style="font-size:12px;font-weight:700;color:var(--text);margin-bottom:4px;">Update</div>
+      <div style="font-size:11px;color:var(--text-muted);line-height:1.5;">Update close rate assumptions in the model. Most significant updates in first 6 months</div>
+    </div>
+  </div>
+
+  <div class="callout callout-definition" style="margin-bottom:6px;">
+    <div class="callout-title">Target Accuracy</div>
+    <p>A well-calibrated demand-driven model should achieve ±10% total forecast accuracy within 3–4 months of consistent use. Segment-level accuracy will vary — manage this variation at the model level, not by reverting to gut forecasting.</p>
+  </div>
+
+  <h3 class="subsection-title">Common Forecast Accuracy Issues</h3>
+
+  <div class="accuracy-table-wrap">
+    <table class="accuracy-table">
+      <thead>
+        <tr>
+          <th>Issue</th>
+          <th>Symptom</th>
+          <th>Root Cause</th>
+          <th>Fix</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><span class="issue-source">SDR-sourced pipeline overestimates</span></td>
+          <td><span class="issue-symptom">SDR bucket consistently 40%+ above forecast</span></td>
+          <td>Reps inflate pipeline stage to show activity metrics. Opportunities are not as qualified as the stage implies.</td>
+          <td>Add a stage gate that requires a demo completed or a specific qualification criterion. Re-calibrate the close rate down for this bucket.</td>
+        </tr>
+        <tr>
+          <td><span class="issue-source">Recent-quarter opportunities over-count</span></td>
+          <td><span class="issue-symptom">New pipeline created in current month rarely closes that same month</span></td>
+          <td>Sales cycle is longer than assumed. Opportunities in the &lt;30-day bucket are truly exploratory — close rate for this band should be near zero.</td>
+          <td>Reduce close rates for &lt;30-day bucket to near zero. Add a minimum qualification threshold before an opportunity enters the forecast model.</td>
+        </tr>
+        <tr>
+          <td><span class="issue-source">Enterprise pipeline is unreliable</span></td>
+          <td><span class="issue-symptom">High variance in enterprise forecast — sometimes 3× the forecast, sometimes 0</span></td>
+          <td>Enterprise deal count is small (single digits) so each deal is a large % of the total. Close rates are meaningless with small sample sizes.</td>
+          <td>For enterprise deals, use deal-specific probability estimates from the AE rather than statistical close rates. Treat enterprise as a list, not a funnel.</td>
+        </tr>
+        <tr>
+          <td><span class="issue-source">AE-sourced pipeline is most accurate</span></td>
+          <td><span class="issue-symptom">AE-sourced actual within ±5% of forecast consistently</span></td>
+          <td>AEs have direct relationship context and self-select to create opportunities where they have genuine close probability. This is expected and healthy.</td>
+          <td>No fix needed. Use this as a benchmark for calibrating other sources. Consider increasing the AE-sourced pipeline % of total.</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- Related -->
+  <div class="related-section">
+    <div class="related-title">Related Pages</div>
+    <div class="related-links">
+      <a href="../pages/resources.html" class="related-link">← Resources &amp; Templates</a>
+      <a href="../index.html" class="related-link">← Home</a>
+      <a href="template-gtm-plan.html" class="related-link">Annual GTM Plan</a>
+      <a href="template-ccac.html" class="related-link">CCAC Model</a>
+      <a href="forecast-methodology.html" class="related-link">Forecast Methodology</a>
+      <a href="forecast-integrity.html" class="related-link">Forecast Integrity</a>
+    </div>
+  </div>
+
+</div>
+<script data-pplx-inline-edit>
+(function () {
+  if (window === window.top) return;
+
+  const allowedParentOrigins = ["https://www.perplexity.ai","https://perplexity.ai","https://testing.perplexity.ai","https://staging.perplexity.ai","https://*.preview.i.perplexity.ai","http://localhost:3000","http://127.0.0.1:3000","http://localhost:5173","http://127.0.0.1:5173"];
+  const MAX_FONT_BYTES = 500 * 1024;
+  const MAX_TOTAL_FONT_BYTES = 2 * 1024 * 1024;
+  let scrollForwarding = false;
+  let scrollRaf = 0;
+  let trustedTopOrigin = null;
+
+  // Allow entries like "https://*.preview.i.perplexity.ai" — the wildcard
+  // matches a single DNS label (no dots), so "https://*.foo" cannot stretch
+  // across multiple labels.
+  function matchesAllowedOrigin(origin) {
+    if (!origin) return false;
+    for (const entry of allowedParentOrigins) {
+      if (!entry.includes("*")) {
+        if (entry === origin) return true;
+        continue;
+      }
+      const pattern = new RegExp(
+        "^" +
+          entry.replace(/[.+?^${}()|[\]\\]/g, "\\$&").replace(/\*/g, "[^.]+") +
+          "$",
+      );
+      if (pattern.test(origin)) return true;
+    }
+    return false;
+  }
+
+  // Trust decision: when the sender is same-origin-visible (event.origin is a
+  // real origin like https://www.perplexity.ai) we trust event.origin directly.
+  // When event.origin is "null" (opaque broker srcdoc), we fall back to the
+  // broker's stamped `parentOrigin` to identify the top window. The fallback
+  // is claim-only — we rely on the browser's native `targetOrigin` enforcement
+  // on the response path (see postToTrustedTop) to ensure replies can't be
+  // delivered to anyone but the actual top window of that claimed origin.
+  function getTrustedParentOrigin(event) {
+    const forwardedParentOrigin =
+      typeof event.data.parentOrigin === "string" ? event.data.parentOrigin : null;
+    const parentOrigin = event.origin === "null" ? forwardedParentOrigin : event.origin;
+    return matchesAllowedOrigin(parentOrigin) ? parentOrigin : null;
+  }
+
+  // All responses go to window.top with targetOrigin = the allowlisted origin.
+  // An attacker that iframes us inside their own null-origin broker can claim
+  // any parentOrigin they like, but the browser will drop the reply whenever
+  // the real top's origin doesn't match — so the screenshot never leaves.
+  function postToTrustedTop(message) {
+    if (!trustedTopOrigin) return;
+    try {
+      window.top.postMessage(message, trustedTopOrigin);
+    } catch (_error) {}
+  }
+
+  function inlineAll(original, clone) {
+    if (original.nodeType !== 1 || clone.nodeType !== 1) return;
+
+    try {
+      const computedStyle = getComputedStyle(original);
+      // cssText on a computed style is the serialized declaration in modern
+      // Chromium/Safari — a single read beats enumerating ~400 longhand
+      // properties. Firefox returns "" here, so we fall back on empty.
+      const serialized = computedStyle.cssText;
+      if (serialized) {
+        clone.style.cssText = serialized;
+      } else {
+        const parts = new Array(computedStyle.length);
+        for (let index = 0; index < computedStyle.length; index += 1) {
+          const property = computedStyle[index];
+          parts[index] = `${property}:${computedStyle.getPropertyValue(property)};`;
+        }
+        clone.style.cssText = parts.join("");
+      }
+    } catch (_error) {}
+
+    const originalChildren = original.children;
+    const clonedChildren = clone.children;
+    for (
+      let index = 0;
+      index < originalChildren.length && index < clonedChildren.length;
+      index += 1
+    ) {
+      inlineAll(originalChildren[index], clonedChildren[index]);
+    }
+  }
+
+  function extractFontUrl(srcValue) {
+    const matches = [
+      ...srcValue.matchAll(
+        /url\(["']?([^"')]+)["']?\)(?:\s*format\(["']?([^"')]+)["']?\))?/gi,
+      ),
+    ];
+    if (matches.length === 0) return null;
+    const woff2 = matches.find((m) => m[2] && m[2].toLowerCase().includes("woff2"));
+    if (woff2) return woff2[1];
+    const woff = matches.find((m) => m[2] && m[2].toLowerCase().includes("woff"));
+    if (woff) return woff[1];
+    return matches[0][1];
+  }
+
+  // Cache resolved font URL -> data URI across captures. Fonts on a page
+  // essentially never change, and a batch run emits multiple captures back to
+  // back — without this we'd refetch + re-base64 every time.
+  const fontDataUriCache = new Map();
+  const SRC_DECLARATION_RE = /src\s*:\s*[^;}]+/i;
+
+  async function fetchAsDataUri(url) {
+    if (fontDataUriCache.has(url)) return fontDataUriCache.get(url);
+    let dataUri = null;
+    try {
+      const response = await fetch(url, { mode: "cors", credentials: "omit" });
+      if (response.ok) {
+        const blob = await response.blob();
+        if (blob.size <= MAX_FONT_BYTES) {
+          dataUri = await new Promise((resolve) => {
+            const reader = new FileReader();
+            reader.onloadend = () =>
+              resolve(typeof reader.result === "string" ? reader.result : null);
+            reader.onerror = () => resolve(null);
+            reader.readAsDataURL(blob);
+          });
+        }
+      }
+    } catch (_error) {
+      dataUri = null;
+    }
+    fontDataUriCache.set(url, dataUri);
+    return dataUri;
+  }
+
+  function collectFontFaceRuleTexts() {
+    const rules = [];
+    for (const sheet of document.styleSheets) {
+      let cssRules;
+      try {
+        cssRules = sheet.cssRules;
+      } catch (_error) {
+        continue;
+      }
+      if (!cssRules) continue;
+      for (const rule of cssRules) {
+        const cssText = rule.cssText || "";
+        if (cssText.startsWith("@font-face")) rules.push(cssText);
+      }
+    }
+    return rules;
+  }
+
+  async function buildInlinedFontCss() {
+    const ruleTexts = collectFontFaceRuleTexts();
+    if (ruleTexts.length === 0) return null;
+
+    const resolved = ruleTexts.map((cssText) => {
+      if (!SRC_DECLARATION_RE.test(cssText)) return null;
+      const srcMatch = cssText.match(/src\s*:\s*([^;}]+)[;}]/i);
+      if (!srcMatch) return null;
+      const url = extractFontUrl(srcMatch[1]);
+      if (!url) return null;
+      try {
+        return { cssText, url: new URL(url, document.baseURI).href };
+      } catch (_error) {
+        return null;
+      }
+    });
+
+    const dataUris = await Promise.all(
+      resolved.map((entry) => (entry ? fetchAsDataUri(entry.url) : Promise.resolve(null))),
+    );
+
+    const inlined = [];
+    let totalBytes = 0;
+    for (let index = 0; index < resolved.length; index += 1) {
+      const entry = resolved[index];
+      const dataUri = dataUris[index];
+      if (!entry || !dataUri) continue;
+      const approxBytes = dataUri.length * 0.75;
+      if (totalBytes + approxBytes > MAX_TOTAL_FONT_BYTES) break;
+      totalBytes += approxBytes;
+      inlined.push(entry.cssText.replace(SRC_DECLARATION_RE, `src: url("${dataUri}")`));
+    }
+    return inlined.length > 0 ? inlined.join("\n") : null;
+  }
+
+  function stripExternal(clone) {
+    const images = clone.querySelectorAll("img");
+    for (let index = 0; index < images.length; index += 1) {
+      const src = images[index].getAttribute("src");
+      if (src && !src.startsWith("data:")) images[index].removeAttribute("src");
+    }
+
+    const elements = clone.querySelectorAll("*");
+    for (let index = 0; index < elements.length; index += 1) {
+      const style = elements[index].style.cssText;
+      if (style && style.includes("url(")) {
+        elements[index].style.cssText = style.replace(
+          /url\(["']?(?!data:)[^)"']*["']?\)/gi,
+          "none",
+        );
+      }
+    }
+  }
+
+  function emitScroll() {
+    scrollRaf = 0;
+    if (!scrollForwarding) return;
+    postToTrustedTop({
+      type: "INLINE_EDIT_SCROLL",
+      scrollX: window.scrollX,
+      scrollY: window.scrollY,
+    });
+  }
+
+  window.addEventListener(
+    "scroll",
+    function () {
+      if (!scrollForwarding || scrollRaf) return;
+      scrollRaf = requestAnimationFrame(emitScroll);
+    },
+    { passive: true, capture: true },
+  );
+
+  async function handleCaptureRequest(event) {
+    const requestId = event.data.requestId;
+    const scrollX = window.scrollX;
+    const scrollY = window.scrollY;
+    const width = window.innerWidth;
+    const height = window.innerHeight;
+
+    function postResult(dataUrl) {
+      postToTrustedTop({
+        type: "INLINE_EDIT_SCREENSHOT_RESULT",
+        requestId,
+        dataUrl,
+        scrollX,
+        scrollY,
+      });
+    }
+
+    try {
+      // Wait for any pending web fonts to resolve so both inline metrics and
+      // the @font-face inlining below see the same loaded faces.
+      if (document.fonts && document.fonts.ready) {
+        try {
+          await document.fonts.ready;
+        } catch (_error) {}
+      }
+
+      const clone = document.documentElement.cloneNode(true);
+      inlineAll(document.documentElement, clone);
+
+      const removedNodes = clone.querySelectorAll("script,link[rel=\"stylesheet\"],style");
+      for (let index = 0; index < removedNodes.length; index += 1) {
+        removedNodes[index].remove();
+      }
+
+      stripExternal(clone);
+
+      // Re-embed web fonts as data-URI @font-face rules so the SVG rasterizer
+      // can resolve them — external font URLs aren't fetched during
+      // foreignObject rendering, which would otherwise force a fallback face
+      // and change text metrics.
+      const inlinedFontCss = await buildInlinedFontCss();
+      if (inlinedFontCss) {
+        const styleEl = document.createElement("style");
+        styleEl.textContent = inlinedFontCss;
+        const head = clone.querySelector("head");
+        if (head) head.appendChild(styleEl);
+        else clone.insertBefore(styleEl, clone.firstChild);
+      }
+
+      const html = new XMLSerializer().serializeToString(clone);
+      const svg =
+        `<svg xmlns="http://www.w3.org/2000/svg" width="${width}" height="${height}">` +
+        '<foreignObject width="100%" height="100%">' +
+        `<div xmlns="http://www.w3.org/1999/xhtml" style="width:${width}px;height:${height}px;overflow:hidden">` +
+        `<div style="transform:translate(-${scrollX}px,-${scrollY}px);transform-origin:top left">` +
+        html +
+        "</div></div></foreignObject></svg>";
+      const svgUrl = `data:image/svg+xml;charset=utf-8,${encodeURIComponent(svg)}`;
+      const image = new Image();
+      image.onload = function () {
+        const canvas = document.createElement("canvas");
+        canvas.width = width;
+        canvas.height = height;
+        canvas.getContext("2d").drawImage(image, 0, 0);
+        postResult(canvas.toDataURL("image/png"));
+      };
+      image.onerror = function () {
+        postResult(null);
+      };
+      image.src = svgUrl;
+    } catch (_error) {
+      postResult(null);
+    }
+  }
+
+  window.addEventListener("message", function (event) {
+    if (!event.data) return;
+    // Only accept messages from the direct parent frame. Blocks sibling /
+    // unrelated-window postMessage senders that could otherwise reach us.
+    if (event.source !== window.parent) return;
+
+    const trustedParentOrigin = getTrustedParentOrigin(event);
+    if (!trustedParentOrigin) return;
+    trustedTopOrigin = trustedParentOrigin;
+
+    if (event.data.type === "INLINE_EDIT_SCROLL_START") {
+      scrollForwarding = true;
+      emitScroll();
+      return;
+    }
+
+    if (event.data.type === "INLINE_EDIT_SCROLL_STOP") {
+      scrollForwarding = false;
+      if (scrollRaf) cancelAnimationFrame(scrollRaf);
+      scrollRaf = 0;
+      return;
+    }
+
+    if (event.data.type !== "INLINE_EDIT_CAPTURE_REQUEST") return;
+
+    handleCaptureRequest(event);
+  });
+})();
+
+
+</script></body>
+</html>

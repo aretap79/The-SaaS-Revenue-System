@@ -1,0 +1,902 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Editorial Calendar Template — CRO Manual</title>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="../assets/shared.css"/>
+  <style>
+    .page-hero { background: #006494; }
+
+    .cal-table-wrap { overflow-x: auto; margin: 20px 0; }
+    .cal-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 13px;
+      min-width: 900px;
+    }
+    .cal-table th {
+      background: #006494;
+      color: #fff;
+      padding: 10px 12px;
+      text-align: left;
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.5px;
+      text-transform: uppercase;
+      white-space: nowrap;
+    }
+    .cal-table td {
+      padding: 10px 12px;
+      border-bottom: 1px solid var(--border);
+      vertical-align: top;
+      line-height: 1.5;
+    }
+    .cal-table tr:nth-child(even) td { background: #fafaf8; }
+    .cal-table tr:last-child td { border-bottom: none; }
+
+    .stage-badge {
+      display: inline-block;
+      font-size: 11px;
+      font-weight: 700;
+      padding: 2px 8px;
+      border-radius: 4px;
+      white-space: nowrap;
+    }
+    .stage-awareness { background: #e8f4f8; color: #006494; }
+    .stage-consideration { background: #fff3cd; color: #7a5a00; }
+    .stage-decision { background: #d4edda; color: #1a5c2a; }
+    .stage-retention { background: #ede7f6; color: #7A39BB; }
+
+    .status-dot {
+      display: inline-block;
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      margin-right: 6px;
+    }
+    .dot-draft { background: #BAB9B4; }
+    .dot-review { background: #2a7fa8; }
+    .dot-scheduled { background: #964219; }
+    .dot-published { background: #437A22; }
+
+    .planning-process {
+      background: var(--surface);
+      border: 1.5px solid var(--border);
+      border-radius: 10px;
+      overflow: hidden;
+      margin: 20px 0;
+    }
+    .pp-header {
+      background: #1C1B19;
+      color: #fff;
+      padding: 14px 20px;
+      font-size: 13px;
+      font-weight: 700;
+      letter-spacing: 0.5px;
+      text-transform: uppercase;
+    }
+    .pp-body { padding: 20px; }
+
+    .quality-checklist {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+      margin: 16px 0;
+    }
+    .qc-item {
+      display: flex;
+      gap: 10px;
+      align-items: flex-start;
+      background: var(--surface);
+      border: 1.5px solid var(--border);
+      border-radius: 8px;
+      padding: 12px 14px;
+    }
+    .qc-check {
+      width: 20px;
+      height: 20px;
+      background: #d4edda;
+      border: 1.5px solid #437A22;
+      border-radius: 4px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 11px;
+      color: #437A22;
+      font-weight: 700;
+      flex-shrink: 0;
+      margin-top: 1px;
+    }
+    .qc-text { font-size: 13px; line-height: 1.5; color: var(--text); }
+    .qc-title { font-weight: 700; display: block; margin-bottom: 2px; }
+
+    .month-section {
+      margin: 24px 0;
+    }
+    .month-header {
+      font-size: 13px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 1.5px;
+      color: #006494;
+      border-bottom: 2px solid #006494;
+      padding-bottom: 6px;
+      margin-bottom: 12px;
+    }
+
+    .perf-table-wrap { overflow-x: auto; margin: 20px 0; }
+    .perf-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 13px;
+      min-width: 700px;
+    }
+    .perf-table th {
+      background: #28251D;
+      color: #fff;
+      padding: 10px 14px;
+      text-align: left;
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.5px;
+      text-transform: uppercase;
+    }
+    .perf-table td {
+      padding: 10px 14px;
+      border-bottom: 1px solid var(--border);
+      vertical-align: top;
+    }
+    .perf-table tr:nth-child(even) td { background: #fafaf8; }
+    .perf-table tr:last-child td { border-bottom: none; }
+
+    .perf-bar {
+      height: 6px;
+      border-radius: 3px;
+      background: #e8f4f8;
+      overflow: hidden;
+      margin-top: 4px;
+    }
+    .perf-fill { height: 100%; border-radius: 3px; background: #006494; }
+
+    @media (max-width: 640px) {
+      .quality-checklist { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav class="nav">
+  <span class="nav-logo">CRO <span>Manual</span></span>
+  <span class="nav-sep">/</span>
+  <a href="../pages/resources.html" class="nav-back">Resources &amp; Templates</a>
+  <span class="nav-sep">/</span>
+  <span class="nav-current">Editorial Calendar</span>
+  <span class="nav-spacer"></span>
+  <a href="../index.html" class="nav-home">Home</a>
+</nav>
+
+<!-- HERO -->
+<div class="page-hero">
+  <div class="hero-phase-label">Marketing · Resources &amp; Templates</div>
+  <h1 class="hero-title">Editorial Calendar</h1>
+  <p class="hero-subtitle">A disciplined editorial calendar ensures consistent content production, aligned to ICP buyer journeys and SEO strategy. Without a calendar, content becomes reactive, inconsistent, and decoupled from pipeline goals.</p>
+  <div class="hero-tags">
+    <span class="hero-tag">Content Planning</span>
+    <span class="hero-tag">SEO</span>
+    <span class="hero-tag">Blog</span>
+    <span class="hero-tag">Publishing Cadence</span>
+    <span class="hero-tag">Persona Mapping</span>
+    <span class="hero-tag">Keyword Strategy</span>
+  </div>
+</div>
+
+<!-- CONTENT -->
+<div class="content-wrap">
+
+  <!-- Breadcrumb -->
+  <nav class="breadcrumb">
+    <a href="../index.html">Home</a>
+    <span class="sep">›</span>
+    <a href="../pages/resources.html">Resources &amp; Templates</a>
+    <span class="sep">›</span>
+    <span class="current">Editorial Calendar</span>
+  </nav>
+
+  <!-- Section 1 -->
+  <h2 class="section-title">Editorial Calendar Structure</h2>
+  <p class="section-intro">The editorial calendar is the operational backbone of a content marketing program. Each column captures information needed to plan, produce, publish, and measure each piece of content. Never remove columns — every field exists for a reason.</p>
+
+  <div class="cal-table-wrap">
+    <table class="cal-table">
+      <thead>
+        <tr>
+          <th>Column</th>
+          <th>Definition</th>
+          <th>Required?</th>
+          <th>Example</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>Post Title</strong></td>
+          <td>The specific, keyword-optimized working title for the article — not a generic topic description</td>
+          <td>Required</td>
+          <td>"How VP Operations Teams Reduce Manual Reporting by 60%"</td>
+        </tr>
+        <tr>
+          <td><strong>Status</strong></td>
+          <td>Current production stage: Draft → In Review → Scheduled → Published</td>
+          <td>Required</td>
+          <td>In Review</td>
+        </tr>
+        <tr>
+          <td><strong>Author</strong></td>
+          <td>The person writing the piece — a named individual, not a team or vendor</td>
+          <td>Required</td>
+          <td>Sarah Chen (Marketing), or Agency Writer</td>
+        </tr>
+        <tr>
+          <td><strong>Primary Keyword</strong></td>
+          <td>The main SEO keyword this piece is targeting — one keyword per post, validated in keyword research</td>
+          <td>Required</td>
+          <td>"operations reporting software"</td>
+        </tr>
+        <tr>
+          <td><strong>Persona</strong></td>
+          <td>Which buyer persona this content is written for — should match the ICP persona library</td>
+          <td>Required</td>
+          <td>VP Operations (Economic Buyer)</td>
+        </tr>
+        <tr>
+          <td><strong>Buyer Journey Stage</strong></td>
+          <td>Which stage in the buyer journey this content serves: Awareness, Consideration, Decision, or Retention</td>
+          <td>Required</td>
+          <td>Awareness</td>
+        </tr>
+        <tr>
+          <td><strong>Publish Date</strong></td>
+          <td>The specific scheduled publication date — not a week or month, a specific date with a publishing slot</td>
+          <td>Required</td>
+          <td>March 14, 2025 (Tuesday 9am)</td>
+        </tr>
+        <tr>
+          <td><strong>Distribution Channels</strong></td>
+          <td>All channels where this content will be actively shared — filled in before production begins</td>
+          <td>Required</td>
+          <td>Blog, LinkedIn, Email Newsletter, Reddit r/[industry]</td>
+        </tr>
+        <tr>
+          <td><strong>Result / Notes</strong></td>
+          <td>Post-publish performance notes: traffic, leads generated, shares, backlinks, pipeline influence</td>
+          <td>Post-publish</td>
+          <td>"3,200 sessions / 47 MQL / 2 backlinks from G2"</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- Section 2 -->
+  <h2 class="section-title">Monthly Planning Process</h2>
+  <p class="section-intro">Run this process in Week 1 of each month, planning 6 weeks ahead. Planning ahead creates buffer for research, drafting, review, and revision cycles without missing publish dates.</p>
+
+  <div class="planning-process">
+    <div class="pp-header">Week 1 Planning Workflow — Run Monthly</div>
+    <div class="pp-body">
+      <ol class="step-list">
+        <li>
+          <div class="step-content">
+            <span class="step-title">Keyword Research</span>
+            Pull the top 20 target keywords with search volume and keyword difficulty. Prioritize keywords with volume ≥500/month and difficulty ≤60 (achievable in 6–12 months). Use Semrush or Ahrefs to identify trending terms in your category.
+          </div>
+        </li>
+        <li>
+          <div class="step-content">
+            <span class="step-title">Competitor Gap Analysis</span>
+            Identify keywords and topics where your competitors are ranking in positions 1–10 that you are not. These are your highest-priority content gaps — an existing ranking competitor proves demand exists for the topic.
+          </div>
+        </li>
+        <li>
+          <div class="step-content">
+            <span class="step-title">ICP Alignment Review</span>
+            Map the shortlisted topics to buyer personas and journey stages. Every 4-week block should include at least 1 Awareness post, 1 Consideration post, and 1 Decision or Retention post. Imbalanced calendars over-index on Awareness and underinvest in pipeline conversion content.
+          </div>
+        </li>
+        <li>
+          <div class="step-content">
+            <span class="step-title">Assign Authors</span>
+            Mix internal subject matter experts (who have ICP-relevant knowledge but need writing support) with external SEO writers (who can produce volume efficiently). Internal SME pieces convert better; external pieces scale authority faster.
+          </div>
+        </li>
+        <li>
+          <div class="step-content">
+            <span class="step-title">Set Publish Dates with Lead Time</span>
+            Assign specific publish dates with a minimum 2-week lead time for internal review. Mark review deadlines in the calendar — missing the review deadline is the primary cause of missed publish dates.
+          </div>
+        </li>
+      </ol>
+    </div>
+  </div>
+
+  <!-- Section 3 -->
+  <h2 class="section-title">Content Review &amp; Quality Standards</h2>
+  <p class="section-intro">Every piece of content must pass five quality gates before being approved for publication. A piece that fails any gate goes back to draft — there are no exceptions. Quantity without quality destroys SEO authority and brand credibility.</p>
+
+  <div class="quality-checklist">
+    <div class="qc-item">
+      <div class="qc-check">✓</div>
+      <div class="qc-text">
+        <span class="qc-title">ICP Alignment</span>
+        Would your ideal buyer read this willingly? If your ICP would not find this article valuable or relevant to their work, it should not be published.
+      </div>
+    </div>
+    <div class="qc-item">
+      <div class="qc-check">✓</div>
+      <div class="qc-text">
+        <span class="qc-title">Keyword Optimization</span>
+        Primary keyword appears in the H1, URL slug, meta description, and within the first 100 words. 3–5 secondary keywords distributed naturally throughout.
+      </div>
+    </div>
+    <div class="qc-item">
+      <div class="qc-check">✓</div>
+      <div class="qc-text">
+        <span class="qc-title">Clear CTA</span>
+        Every piece has one primary CTA — not three competing CTAs. Examples: "Download the guide," "Book a demo," "Subscribe to our newsletter." CTA placement: end of post and 1 inline mention.
+      </div>
+    </div>
+    <div class="qc-item">
+      <div class="qc-check">✓</div>
+      <div class="qc-text">
+        <span class="qc-title">Factual Accuracy</span>
+        All statistics and claims are sourced from verified publications or original research. No unverified "industry expert" statements. Outdated statistics (2+ years old) must be replaced or flagged.
+      </div>
+    </div>
+    <div class="qc-item">
+      <div class="qc-check">✓</div>
+      <div class="qc-text">
+        <span class="qc-title">Length Standards</span>
+        Pillar content: 2,000–3,500 words for comprehensive topic coverage. Supporting cluster posts: 800–1,500 words. No padding — every paragraph must add new information.
+      </div>
+    </div>
+    <div class="qc-item">
+      <div class="qc-check">✓</div>
+      <div class="qc-text">
+        <span class="qc-title">Internal Linking</span>
+        Minimum 3 internal links to related content. Each link uses descriptive anchor text (not "click here"). Links point both to pillar pages (up the cluster) and supporting pages (down the cluster).
+      </div>
+    </div>
+  </div>
+
+  <!-- Section 4 -->
+  <h2 class="section-title">Sample Editorial Calendar — Q1</h2>
+  <p class="section-intro">This sample calendar distributes 8 posts across January–March, covering all four buyer journey stages. Use this as a template for your own Q1 calendar — replace topics with ICP-relevant keywords from your own research.</p>
+
+  <div class="month-section">
+    <div class="month-header">January — 3 Posts (2 Awareness, 1 Decision)</div>
+    <div class="cal-table-wrap">
+      <table class="cal-table">
+        <thead>
+          <tr>
+            <th>Publish Date</th>
+            <th>Post Title</th>
+            <th>Journey Stage</th>
+            <th>Primary Keyword</th>
+            <th>Author</th>
+            <th>Persona</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Jan 7</td>
+            <td><strong>How to [solve ICP problem]: a practical guide for [ICP role]s</strong></td>
+            <td><span class="stage-badge stage-awareness">Awareness</span></td>
+            <td>"how to [solve ICP problem]"</td>
+            <td>External SEO Writer + Internal SME review</td>
+            <td>VP / Director (Economic Buyer)</td>
+          </tr>
+          <tr>
+            <td>Jan 14</td>
+            <td>[Industry] benchmarks every [ICP role] should know in 2025</td>
+            <td><span class="stage-badge stage-awareness">Awareness</span></td>
+            <td>"[industry] benchmarks 2025"</td>
+            <td>Marketing (data-driven original research)</td>
+            <td>All Personas</td>
+          </tr>
+          <tr>
+            <td>Jan 28</td>
+            <td>[Customer Name] Case Study: achieving [LIR event] in 45 days</td>
+            <td><span class="stage-badge stage-decision">Decision</span></td>
+            <td>"[your product] case study"</td>
+            <td>CS + Marketing co-authored</td>
+            <td>Economic Buyer (Evaluation Stage)</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <div class="month-section">
+    <div class="month-header">February — 3 Posts (1 Awareness, 2 Consideration)</div>
+    <div class="cal-table-wrap">
+      <table class="cal-table">
+        <thead>
+          <tr>
+            <th>Publish Date</th>
+            <th>Post Title</th>
+            <th>Journey Stage</th>
+            <th>Primary Keyword</th>
+            <th>Author</th>
+            <th>Persona</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Feb 4</td>
+            <td>The hidden cost of [ICP pain]: what most [ICP role]s underestimate</td>
+            <td><span class="stage-badge stage-awareness">Awareness</span></td>
+            <td>"cost of [ICP pain]"</td>
+            <td>VP Sales (thought leadership)</td>
+            <td>Economic Buyer</td>
+          </tr>
+          <tr>
+            <td>Feb 11</td>
+            <td>[Competitor A] vs [Competitor B] vs [Your Product]: an honest comparison</td>
+            <td><span class="stage-badge stage-consideration">Consideration</span></td>
+            <td>"[competitor] alternative"</td>
+            <td>Marketing / PMM</td>
+            <td>Active Evaluator</td>
+          </tr>
+          <tr>
+            <td>Feb 25</td>
+            <td>How to build your [category] RFP: a template for [ICP role]s</td>
+            <td><span class="stage-badge stage-consideration">Consideration</span></td>
+            <td>"[category] software RFP template"</td>
+            <td>External Writer + Sales review</td>
+            <td>Champion (buying process navigator)</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <div class="month-section">
+    <div class="month-header">March — 2 Posts (1 Decision, 1 Retention)</div>
+    <div class="cal-table-wrap">
+      <table class="cal-table">
+        <thead>
+          <tr>
+            <th>Publish Date</th>
+            <th>Post Title</th>
+            <th>Journey Stage</th>
+            <th>Primary Keyword</th>
+            <th>Author</th>
+            <th>Persona</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Mar 4</td>
+            <td>[Customer Name]: from [before state] to [after state] in 90 days</td>
+            <td><span class="stage-badge stage-decision">Decision</span></td>
+            <td>"[your product] ROI" / "[industry] success story"</td>
+            <td>CS + Marketing (customer-approved)</td>
+            <td>Economic Buyer (late evaluation)</td>
+          </tr>
+          <tr>
+            <td>Mar 18</td>
+            <td>Getting the most out of [feature]: a step-by-step adoption guide</td>
+            <td><span class="stage-badge stage-retention">Retention</span></td>
+            <td>"[product] [feature] tutorial"</td>
+            <td>CS + Product Marketing</td>
+            <td>End User (post-purchase adoption)</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- Section 5 -->
+  <h2 class="section-title">Content Performance Metrics</h2>
+  <p class="section-intro">Review content performance monthly. Posts that consistently underperform after 90 days should be updated (new keywords, expanded content, better CTAs) rather than replaced — preserving link equity and rankings.</p>
+
+  <div class="perf-table-wrap">
+    <table class="perf-table">
+      <thead>
+        <tr>
+          <th>Metric</th>
+          <th>What It Tells You</th>
+          <th>Benchmark</th>
+          <th>Action if Below Benchmark</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>Organic Sessions per Post</strong></td>
+          <td>How well the post is ranking for its target keyword</td>
+          <td>&gt;500 sessions/month (mature, 6+ months)</td>
+          <td>Refresh content, build backlinks, improve internal linking</td>
+        </tr>
+        <tr>
+          <td><strong>Avg. Time on Page</strong></td>
+          <td>Whether readers are engaging with the content or bouncing</td>
+          <td>&gt;3 min for long-form (&gt;1,500 words)</td>
+          <td>Improve formatting, add visuals, tighten the opening paragraph</td>
+        </tr>
+        <tr>
+          <td><strong>Backlinks Acquired</strong></td>
+          <td>Authority signal — other sites linking to this content</td>
+          <td>≥2 backlinks in first 90 days</td>
+          <td>Run outreach campaign, pitch to industry publications</td>
+        </tr>
+        <tr>
+          <td><strong>Leads Generated</strong></td>
+          <td>MQLs attributed to this specific piece</td>
+          <td>&gt;5 MQL/month for top-of-funnel posts</td>
+          <td>Add or optimize gated content CTA, test offer relevance</td>
+        </tr>
+        <tr>
+          <td><strong>Pipeline Influenced</strong></td>
+          <td>Deals where this content was consumed before close</td>
+          <td>&gt;3 deals influenced per month (at scale)</td>
+          <td>Add to relevant sales sequences, share in deal rooms</td>
+        </tr>
+        <tr>
+          <td><strong>Search Position (avg.)</strong></td>
+          <td>Where this post ranks on Google for its target keyword</td>
+          <td>Top 10 for primary keyword within 12 months</td>
+          <td>Expand word count, improve E-E-A-T signals, build links</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="callout callout-warning">
+    <div class="callout-title">Common Editorial Calendar Failure Modes</div>
+    <p><strong>Too much Awareness, not enough Decision content.</strong> Blogs are easy to write; case studies are hard to produce. Most calendars are 80% Awareness, leaving sales without trust-building assets at the evaluation stage.<br/><br/>
+    <strong>No keyword strategy.</strong> Writing about topics without keyword validation produces content that ICP buyers never find through search.<br/><br/>
+    <strong>Missing publish date discipline.</strong> A content operation that misses publish dates consistently signals operational dysfunction. Build buffer time into the calendar to protect against delays.</p>
+  </div>
+
+  <!-- Related -->
+  <div class="related-section">
+    <div class="related-title">Related Pages</div>
+    <div class="related-links">
+      <a href="../pages/resources.html" class="related-link">← Resources &amp; Templates</a>
+      <a href="template-content-marketing.html" class="related-link">Content Marketing Worksheet</a>
+      <a href="template-demand-gen-channels.html" class="related-link">Demand Gen Channel Guide</a>
+    </div>
+  </div>
+
+</div>
+<script data-pplx-inline-edit>
+(function () {
+  if (window === window.top) return;
+
+  const allowedParentOrigins = ["https://www.perplexity.ai","https://perplexity.ai","https://testing.perplexity.ai","https://staging.perplexity.ai","https://*.preview.i.perplexity.ai","http://localhost:3000","http://127.0.0.1:3000","http://localhost:5173","http://127.0.0.1:5173"];
+  const MAX_FONT_BYTES = 500 * 1024;
+  const MAX_TOTAL_FONT_BYTES = 2 * 1024 * 1024;
+  let scrollForwarding = false;
+  let scrollRaf = 0;
+  let trustedTopOrigin = null;
+
+  // Allow entries like "https://*.preview.i.perplexity.ai" — the wildcard
+  // matches a single DNS label (no dots), so "https://*.foo" cannot stretch
+  // across multiple labels.
+  function matchesAllowedOrigin(origin) {
+    if (!origin) return false;
+    for (const entry of allowedParentOrigins) {
+      if (!entry.includes("*")) {
+        if (entry === origin) return true;
+        continue;
+      }
+      const pattern = new RegExp(
+        "^" +
+          entry.replace(/[.+?^${}()|[\]\\]/g, "\\$&").replace(/\*/g, "[^.]+") +
+          "$",
+      );
+      if (pattern.test(origin)) return true;
+    }
+    return false;
+  }
+
+  // Trust decision: when the sender is same-origin-visible (event.origin is a
+  // real origin like https://www.perplexity.ai) we trust event.origin directly.
+  // When event.origin is "null" (opaque broker srcdoc), we fall back to the
+  // broker's stamped `parentOrigin` to identify the top window. The fallback
+  // is claim-only — we rely on the browser's native `targetOrigin` enforcement
+  // on the response path (see postToTrustedTop) to ensure replies can't be
+  // delivered to anyone but the actual top window of that claimed origin.
+  function getTrustedParentOrigin(event) {
+    const forwardedParentOrigin =
+      typeof event.data.parentOrigin === "string" ? event.data.parentOrigin : null;
+    const parentOrigin = event.origin === "null" ? forwardedParentOrigin : event.origin;
+    return matchesAllowedOrigin(parentOrigin) ? parentOrigin : null;
+  }
+
+  // All responses go to window.top with targetOrigin = the allowlisted origin.
+  // An attacker that iframes us inside their own null-origin broker can claim
+  // any parentOrigin they like, but the browser will drop the reply whenever
+  // the real top's origin doesn't match — so the screenshot never leaves.
+  function postToTrustedTop(message) {
+    if (!trustedTopOrigin) return;
+    try {
+      window.top.postMessage(message, trustedTopOrigin);
+    } catch (_error) {}
+  }
+
+  function inlineAll(original, clone) {
+    if (original.nodeType !== 1 || clone.nodeType !== 1) return;
+
+    try {
+      const computedStyle = getComputedStyle(original);
+      // cssText on a computed style is the serialized declaration in modern
+      // Chromium/Safari — a single read beats enumerating ~400 longhand
+      // properties. Firefox returns "" here, so we fall back on empty.
+      const serialized = computedStyle.cssText;
+      if (serialized) {
+        clone.style.cssText = serialized;
+      } else {
+        const parts = new Array(computedStyle.length);
+        for (let index = 0; index < computedStyle.length; index += 1) {
+          const property = computedStyle[index];
+          parts[index] = `${property}:${computedStyle.getPropertyValue(property)};`;
+        }
+        clone.style.cssText = parts.join("");
+      }
+    } catch (_error) {}
+
+    const originalChildren = original.children;
+    const clonedChildren = clone.children;
+    for (
+      let index = 0;
+      index < originalChildren.length && index < clonedChildren.length;
+      index += 1
+    ) {
+      inlineAll(originalChildren[index], clonedChildren[index]);
+    }
+  }
+
+  function extractFontUrl(srcValue) {
+    const matches = [
+      ...srcValue.matchAll(
+        /url\(["']?([^"')]+)["']?\)(?:\s*format\(["']?([^"')]+)["']?\))?/gi,
+      ),
+    ];
+    if (matches.length === 0) return null;
+    const woff2 = matches.find((m) => m[2] && m[2].toLowerCase().includes("woff2"));
+    if (woff2) return woff2[1];
+    const woff = matches.find((m) => m[2] && m[2].toLowerCase().includes("woff"));
+    if (woff) return woff[1];
+    return matches[0][1];
+  }
+
+  // Cache resolved font URL -> data URI across captures. Fonts on a page
+  // essentially never change, and a batch run emits multiple captures back to
+  // back — without this we'd refetch + re-base64 every time.
+  const fontDataUriCache = new Map();
+  const SRC_DECLARATION_RE = /src\s*:\s*[^;}]+/i;
+
+  async function fetchAsDataUri(url) {
+    if (fontDataUriCache.has(url)) return fontDataUriCache.get(url);
+    let dataUri = null;
+    try {
+      const response = await fetch(url, { mode: "cors", credentials: "omit" });
+      if (response.ok) {
+        const blob = await response.blob();
+        if (blob.size <= MAX_FONT_BYTES) {
+          dataUri = await new Promise((resolve) => {
+            const reader = new FileReader();
+            reader.onloadend = () =>
+              resolve(typeof reader.result === "string" ? reader.result : null);
+            reader.onerror = () => resolve(null);
+            reader.readAsDataURL(blob);
+          });
+        }
+      }
+    } catch (_error) {
+      dataUri = null;
+    }
+    fontDataUriCache.set(url, dataUri);
+    return dataUri;
+  }
+
+  function collectFontFaceRuleTexts() {
+    const rules = [];
+    for (const sheet of document.styleSheets) {
+      let cssRules;
+      try {
+        cssRules = sheet.cssRules;
+      } catch (_error) {
+        continue;
+      }
+      if (!cssRules) continue;
+      for (const rule of cssRules) {
+        const cssText = rule.cssText || "";
+        if (cssText.startsWith("@font-face")) rules.push(cssText);
+      }
+    }
+    return rules;
+  }
+
+  async function buildInlinedFontCss() {
+    const ruleTexts = collectFontFaceRuleTexts();
+    if (ruleTexts.length === 0) return null;
+
+    const resolved = ruleTexts.map((cssText) => {
+      if (!SRC_DECLARATION_RE.test(cssText)) return null;
+      const srcMatch = cssText.match(/src\s*:\s*([^;}]+)[;}]/i);
+      if (!srcMatch) return null;
+      const url = extractFontUrl(srcMatch[1]);
+      if (!url) return null;
+      try {
+        return { cssText, url: new URL(url, document.baseURI).href };
+      } catch (_error) {
+        return null;
+      }
+    });
+
+    const dataUris = await Promise.all(
+      resolved.map((entry) => (entry ? fetchAsDataUri(entry.url) : Promise.resolve(null))),
+    );
+
+    const inlined = [];
+    let totalBytes = 0;
+    for (let index = 0; index < resolved.length; index += 1) {
+      const entry = resolved[index];
+      const dataUri = dataUris[index];
+      if (!entry || !dataUri) continue;
+      const approxBytes = dataUri.length * 0.75;
+      if (totalBytes + approxBytes > MAX_TOTAL_FONT_BYTES) break;
+      totalBytes += approxBytes;
+      inlined.push(entry.cssText.replace(SRC_DECLARATION_RE, `src: url("${dataUri}")`));
+    }
+    return inlined.length > 0 ? inlined.join("\n") : null;
+  }
+
+  function stripExternal(clone) {
+    const images = clone.querySelectorAll("img");
+    for (let index = 0; index < images.length; index += 1) {
+      const src = images[index].getAttribute("src");
+      if (src && !src.startsWith("data:")) images[index].removeAttribute("src");
+    }
+
+    const elements = clone.querySelectorAll("*");
+    for (let index = 0; index < elements.length; index += 1) {
+      const style = elements[index].style.cssText;
+      if (style && style.includes("url(")) {
+        elements[index].style.cssText = style.replace(
+          /url\(["']?(?!data:)[^)"']*["']?\)/gi,
+          "none",
+        );
+      }
+    }
+  }
+
+  function emitScroll() {
+    scrollRaf = 0;
+    if (!scrollForwarding) return;
+    postToTrustedTop({
+      type: "INLINE_EDIT_SCROLL",
+      scrollX: window.scrollX,
+      scrollY: window.scrollY,
+    });
+  }
+
+  window.addEventListener(
+    "scroll",
+    function () {
+      if (!scrollForwarding || scrollRaf) return;
+      scrollRaf = requestAnimationFrame(emitScroll);
+    },
+    { passive: true, capture: true },
+  );
+
+  async function handleCaptureRequest(event) {
+    const requestId = event.data.requestId;
+    const scrollX = window.scrollX;
+    const scrollY = window.scrollY;
+    const width = window.innerWidth;
+    const height = window.innerHeight;
+
+    function postResult(dataUrl) {
+      postToTrustedTop({
+        type: "INLINE_EDIT_SCREENSHOT_RESULT",
+        requestId,
+        dataUrl,
+        scrollX,
+        scrollY,
+      });
+    }
+
+    try {
+      // Wait for any pending web fonts to resolve so both inline metrics and
+      // the @font-face inlining below see the same loaded faces.
+      if (document.fonts && document.fonts.ready) {
+        try {
+          await document.fonts.ready;
+        } catch (_error) {}
+      }
+
+      const clone = document.documentElement.cloneNode(true);
+      inlineAll(document.documentElement, clone);
+
+      const removedNodes = clone.querySelectorAll("script,link[rel=\"stylesheet\"],style");
+      for (let index = 0; index < removedNodes.length; index += 1) {
+        removedNodes[index].remove();
+      }
+
+      stripExternal(clone);
+
+      // Re-embed web fonts as data-URI @font-face rules so the SVG rasterizer
+      // can resolve them — external font URLs aren't fetched during
+      // foreignObject rendering, which would otherwise force a fallback face
+      // and change text metrics.
+      const inlinedFontCss = await buildInlinedFontCss();
+      if (inlinedFontCss) {
+        const styleEl = document.createElement("style");
+        styleEl.textContent = inlinedFontCss;
+        const head = clone.querySelector("head");
+        if (head) head.appendChild(styleEl);
+        else clone.insertBefore(styleEl, clone.firstChild);
+      }
+
+      const html = new XMLSerializer().serializeToString(clone);
+      const svg =
+        `<svg xmlns="http://www.w3.org/2000/svg" width="${width}" height="${height}">` +
+        '<foreignObject width="100%" height="100%">' +
+        `<div xmlns="http://www.w3.org/1999/xhtml" style="width:${width}px;height:${height}px;overflow:hidden">` +
+        `<div style="transform:translate(-${scrollX}px,-${scrollY}px);transform-origin:top left">` +
+        html +
+        "</div></div></foreignObject></svg>";
+      const svgUrl = `data:image/svg+xml;charset=utf-8,${encodeURIComponent(svg)}`;
+      const image = new Image();
+      image.onload = function () {
+        const canvas = document.createElement("canvas");
+        canvas.width = width;
+        canvas.height = height;
+        canvas.getContext("2d").drawImage(image, 0, 0);
+        postResult(canvas.toDataURL("image/png"));
+      };
+      image.onerror = function () {
+        postResult(null);
+      };
+      image.src = svgUrl;
+    } catch (_error) {
+      postResult(null);
+    }
+  }
+
+  window.addEventListener("message", function (event) {
+    if (!event.data) return;
+    // Only accept messages from the direct parent frame. Blocks sibling /
+    // unrelated-window postMessage senders that could otherwise reach us.
+    if (event.source !== window.parent) return;
+
+    const trustedParentOrigin = getTrustedParentOrigin(event);
+    if (!trustedParentOrigin) return;
+    trustedTopOrigin = trustedParentOrigin;
+
+    if (event.data.type === "INLINE_EDIT_SCROLL_START") {
+      scrollForwarding = true;
+      emitScroll();
+      return;
+    }
+
+    if (event.data.type === "INLINE_EDIT_SCROLL_STOP") {
+      scrollForwarding = false;
+      if (scrollRaf) cancelAnimationFrame(scrollRaf);
+      scrollRaf = 0;
+      return;
+    }
+
+    if (event.data.type !== "INLINE_EDIT_CAPTURE_REQUEST") return;
+
+    handleCaptureRequest(event);
+  });
+})();
+
+
+</script></body>
+</html>

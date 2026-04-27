@@ -1,0 +1,865 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>First GTM Hire Scorecard — CRO Manual</title>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="../assets/shared.css"/>
+  <style>
+    :root { --res: #2C5F8A; }
+    .page-hero { background: var(--res); }
+
+    /* Rubric card system */
+    .rubric-card {
+      background: var(--surface);
+      border: 1.5px solid var(--border);
+      border-radius: 10px;
+      margin: 20px 0;
+      overflow: hidden;
+    }
+    .rubric-header {
+      background: var(--res);
+      color: #fff;
+      padding: 14px 20px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+    .rubric-skill-name { font-size: 16px; font-weight: 700; }
+    .rubric-badge {
+      font-size: 12px; font-weight: 700;
+      background: rgba(255,255,255,0.2);
+      padding: 3px 14px; border-radius: 20px;
+    }
+    .rubric-meta {
+      padding: 14px 20px 10px;
+      background: #f0f5fa;
+      border-bottom: 1px solid var(--border);
+    }
+    .rubric-meta-row {
+      display: grid; grid-template-columns: 1fr 1fr; gap: 10px;
+    }
+    .rubric-meta-label {
+      font-size: 11px; font-weight: 700;
+      text-transform: uppercase; letter-spacing: 0.8px;
+      color: var(--res); margin-bottom: 3px;
+    }
+    .rubric-meta-text { font-size: 13px; line-height: 1.6; color: var(--text); }
+    .rubric-question {
+      padding: 12px 20px;
+      background: #fffdf0;
+      border-bottom: 1px solid var(--border);
+      font-size: 13px; font-style: italic; line-height: 1.6;
+    }
+    .rubric-question strong {
+      font-style: normal; font-size: 11px; font-weight: 700;
+      text-transform: uppercase; letter-spacing: 0.8px;
+      color: #b8860b; display: block; margin-bottom: 6px;
+    }
+    .rubric-tiers { display: grid; grid-template-columns: 1fr 1fr 1fr; }
+    @media (max-width: 680px) { .rubric-tiers { grid-template-columns: 1fr; } }
+    .rubric-tier {
+      padding: 16px 18px;
+      border-right: 1px solid var(--border);
+    }
+    .rubric-tier:last-child { border-right: none; }
+    .tier-score {
+      font-size: 11px; font-weight: 700;
+      text-transform: uppercase; letter-spacing: 1px;
+      margin-bottom: 8px;
+    }
+    .tier-high { background: #f6fff8; }
+    .tier-high .tier-score { color: #437A22; }
+    .tier-mid { background: #fffdf0; }
+    .tier-mid .tier-score { color: #b8860b; }
+    .tier-low { background: #fff8f8; }
+    .tier-low .tier-score { color: #A13544; }
+    .tier-desc { font-size: 13px; line-height: 1.65; color: var(--text); }
+
+    /* Score summary table */
+    .sc-table-wrap { overflow-x: auto; margin: 20px 0; }
+    .sc-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 13px;
+      min-width: 580px;
+    }
+    .sc-table th {
+      background: var(--res); color: #fff;
+      padding: 10px 14px; text-align: left;
+      font-size: 11px; font-weight: 700;
+      letter-spacing: 0.5px; text-transform: uppercase;
+    }
+    .sc-table th.center { text-align: center; }
+    .sc-table td {
+      padding: 10px 14px;
+      border-bottom: 1px solid var(--border);
+      vertical-align: middle;
+    }
+    .sc-table td.center { text-align: center; }
+    .sc-table tr:nth-child(even) td { background: #fafaf8; }
+    .sc-table .total-row td {
+      background: #1C1B19 !important; color: #fff; font-weight: 700;
+    }
+    .w-high {
+      display: inline-block; font-size: 12px; font-weight: 700;
+      padding: 2px 10px; border-radius: 20px;
+      background: #e8f0f8; color: var(--res);
+    }
+    .w-med {
+      display: inline-block; font-size: 12px; font-weight: 700;
+      padding: 2px 10px; border-radius: 20px;
+      background: #f0f5f0; color: #437A22;
+    }
+
+    /* Profile pillars */
+    .profile-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 14px;
+      margin: 20px 0;
+    }
+    @media (max-width: 700px) { .profile-grid { grid-template-columns: 1fr; } }
+    .profile-card {
+      background: var(--surface);
+      border: 1.5px solid var(--border);
+      border-radius: 10px;
+      padding: 18px;
+      text-align: center;
+    }
+    .profile-num {
+      width: 40px; height: 40px;
+      background: var(--res); color: #fff;
+      border-radius: 10px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 18px; font-weight: 700;
+      margin: 0 auto 10px;
+    }
+    .profile-title { font-size: 14px; font-weight: 700; margin-bottom: 6px; }
+    .profile-desc { font-size: 12px; color: var(--text-muted); line-height: 1.55; }
+
+    /* Threshold row */
+    .threshold-grid {
+      display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; margin: 20px 0;
+    }
+    @media (max-width: 700px) { .threshold-grid { grid-template-columns: 1fr 1fr; } }
+    .ht-card { border-radius: 10px; padding: 16px; text-align: center; }
+    .ht-card.no { background: #fff0f0; border: 1.5px solid #A13544; }
+    .ht-card.cond { background: #fff8f0; border: 1.5px solid #964219; }
+    .ht-card.strong { background: #f0fff4; border: 1.5px solid #437A22; }
+    .ht-card.excep { background: #e8f0f8; border: 1.5px solid var(--res); }
+    .ht-score { font-size: 20px; font-weight: 700; margin-bottom: 3px; }
+    .ht-label { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.8px; }
+    .ht-pct { font-size: 12px; color: var(--text-muted); margin-top: 5px; }
+    .ht-card.no .ht-score, .ht-card.no .ht-label { color: #A13544; }
+    .ht-card.cond .ht-score, .ht-card.cond .ht-label { color: #964219; }
+    .ht-card.strong .ht-score, .ht-card.strong .ht-label { color: #437A22; }
+    .ht-card.excep .ht-score, .ht-card.excep .ht-label { color: var(--res); }
+  </style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav class="nav">
+  <span class="nav-logo">CRO <span>Manual</span></span>
+  <span class="nav-sep">/</span>
+  <a href="../pages/resources.html" class="nav-back">← Resources &amp; Templates</a>
+  <span class="nav-sep">/</span>
+  <span class="nav-current">First GTM Hire Scorecard</span>
+  <span class="nav-spacer"></span>
+  <a href="../index.html" class="nav-home">Home</a>
+</nav>
+
+<!-- HERO -->
+<div class="page-hero">
+  <div class="hero-phase-label">Hiring · Resources &amp; Templates</div>
+  <h1 class="hero-title">First GTM Hire Scorecard</h1>
+  <p class="hero-subtitle">The first GTM hire at a pre-GTM-Fit company must be a rare combination: technically credible, consultative, and able to codify a playbook while also closing deals. This scorecard helps you identify them.</p>
+  <div class="hero-tags">
+    <span class="hero-tag">First GTM</span>
+    <span class="hero-tag">Founding AE</span>
+    <span class="hero-tag">Playbook Builder</span>
+    <span class="hero-tag">Technical</span>
+    <span class="hero-tag">Consultative</span>
+  </div>
+</div>
+
+<!-- CONTENT -->
+<div class="content-wrap">
+
+  <nav class="breadcrumb">
+    <a href="../index.html">Home</a>
+    <span class="sep">›</span>
+    <a href="../pages/resources.html">Resources &amp; Templates</a>
+    <span class="sep">›</span>
+    <span class="current">First GTM Hire Scorecard</span>
+  </nav>
+
+  <!-- Section 1: The First GTM Hire -->
+  <h2 class="section-title">The First GTM Hire: Context and Profile</h2>
+  <p class="section-intro">The first GTM hire is one of the rarest profiles in the market — someone who can do three distinct jobs simultaneously and write down what they learn.</p>
+
+  <div class="subsection">
+    <p>At the pre-GTM-Fit stage, you are not hiring someone to execute a proven playbook. That playbook doesn't exist yet. You're hiring someone who can help you build it — while also closing deals. This creates a hiring paradox: the profile you need is simultaneously a strong individual contributor, a consultative advisor to your prospects, and a disciplined documentarian who can codify what's working into a system.</p>
+    <p>Most experienced salespeople are great executors of existing playbooks. The first GTM hire is almost always someone earlier in their career who is more adaptable, more curious, and more willing to build systems as they go — because they haven't yet learned to rely on systems that already exist.</p>
+  </div>
+
+  <div class="profile-grid">
+    <div class="profile-card">
+      <div class="profile-num">1</div>
+      <div class="profile-title">Technically Credible</div>
+      <div class="profile-desc">Can hold a substantive conversation with technical buyers and users. Understands the product domain well enough to be taken seriously by the people evaluating the product.</div>
+    </div>
+    <div class="profile-card">
+      <div class="profile-num">2</div>
+      <div class="profile-title">Genuinely Consultative</div>
+      <div class="profile-desc">Asks before pitching. Buyer-centric by disposition, not just training. Curious about the buyer's business. Believes that great discovery is the most important skill in sales.</div>
+    </div>
+    <div class="profile-card">
+      <div class="profile-num">3</div>
+      <div class="profile-title">Playbook Builder</div>
+      <div class="profile-desc">Documents what works. Writes down discovery questions that succeed. Builds templates from individual deals. Can eventually hand the playbook to the first sales leader they report to.</div>
+    </div>
+  </div>
+
+  <div class="callout callout-warning">
+    <div class="callout-title">The Most Common Wrong Hire</div>
+    <p>The most common mistake is hiring a polished, experienced AE from a company 3× your size who is excellent at executing a defined playbook but has no instinct for building one from scratch. They will close some deals using pattern recognition from their previous role, generate overconfidence in your GTM motion, and leave when you're trying to hire a sales leader — because they don't want to report to someone new.</p>
+  </div>
+
+  <!-- Section 2: The 5-Criteria Scorecard -->
+  <h2 class="section-title">The 5-Criteria Scorecard</h2>
+  <p class="section-intro">Score each criterion 1–10. Apply the weight multiplier. Total possible: 110 points.</p>
+
+  <div class="sc-table-wrap">
+    <table class="sc-table">
+      <thead>
+        <tr>
+          <th>#</th>
+          <th>Criterion</th>
+          <th class="center">Weight</th>
+          <th class="center">Multiplier</th>
+          <th class="center">Max</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>1</td>
+          <td><strong>Technical Knowledge</strong></td>
+          <td class="center"><span class="w-high">High</span></td>
+          <td class="center">3×</td>
+          <td class="center">30</td>
+        </tr>
+        <tr>
+          <td>2</td>
+          <td><strong>Communication Skills</strong></td>
+          <td class="center"><span class="w-high">High</span></td>
+          <td class="center">3×</td>
+          <td class="center">30</td>
+        </tr>
+        <tr>
+          <td>3</td>
+          <td><strong>Consultative Approach</strong></td>
+          <td class="center"><span class="w-high">High</span></td>
+          <td class="center">3×</td>
+          <td class="center">30</td>
+        </tr>
+        <tr>
+          <td>4</td>
+          <td><strong>Objection Handling</strong></td>
+          <td class="center"><span class="w-med">Medium</span></td>
+          <td class="center">2×</td>
+          <td class="center">20</td>
+        </tr>
+        <tr>
+          <td>5</td>
+          <td><strong>Collaboration</strong></td>
+          <td class="center"><span class="w-med">Medium</span></td>
+          <td class="center">2×</td>
+          <td class="center">20</td>
+        </tr>
+        <tr class="total-row">
+          <td colspan="4"><strong>TOTAL POSSIBLE</strong></td>
+          <td class="center"><strong>130</strong></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="formula-block">
+    <div class="formula-label">Weighted Score Formula</div>
+    <div class="formula-main">Weighted Total = (Technical + Communication + Consultative) × 3 + (Objection + Collaboration) × 2</div>
+    <div class="formula-note">Maximum: (10+10+10)×3 + (10+10)×2 = 90 + 40 = 130 points</div>
+  </div>
+
+  <!-- Criterion 1: Technical Knowledge -->
+  <div class="rubric-card">
+    <div class="rubric-header">
+      <div class="rubric-skill-name">1. Technical Knowledge</div>
+      <div class="rubric-badge">High Weight · 3× · Max 30 pts</div>
+    </div>
+    <div class="rubric-meta">
+      <div class="rubric-meta-row">
+        <div>
+          <div class="rubric-meta-label">Definition</div>
+          <div class="rubric-meta-text">Understands the product domain deeply enough to hold a substantive conversation with technical buyers without requiring an SE on every call. Can speak to the implications of technical decisions, not just the surface features. Has built enough context in the domain to anticipate technical objections before they surface.</div>
+        </div>
+        <div>
+          <div class="rubric-meta-label">Why It Matters for GTM Hire #1</div>
+          <div class="rubric-meta-text">At pre-GTM-Fit stage, deals often involve technical evaluation. The first GTM hire needs to carry early technical conversations independently. If they require an SE on every call, they're not building the playbook — they're creating a dependency that won't scale.</div>
+        </div>
+      </div>
+    </div>
+    <div class="rubric-question">
+      <strong>Interview Question</strong>
+      "Walk me through what you understand about [your product domain]. What are the 2–3 things that technical buyers care most about when evaluating solutions in this space? What would a VP of Engineering's main objections be to adopting a tool like ours?"
+    </div>
+    <div class="rubric-tiers">
+      <div class="rubric-tier tier-low">
+        <div class="tier-score">Score 1–3: Risk</div>
+        <div class="tier-desc">Limited technical understanding of the domain. Cannot hold a substantive conversation with a technical buyer without extensive support. Would require an SE or solutions engineer on every call. Cannot anticipate technical objections. Product knowledge is surface-level.</div>
+      </div>
+      <div class="rubric-tier tier-mid">
+        <div class="tier-score">Score 4–7: Capable</div>
+        <div class="tier-desc">Solid domain understanding. Can navigate most technical conversations independently. Knows when to involve technical support and when they can handle it themselves. Understands the technical landscape well enough to have credibility with technical buyers in first conversations.</div>
+      </div>
+      <div class="rubric-tier tier-high">
+        <div class="tier-score">Score 8–10: Exceptional</div>
+        <div class="tier-desc">Domain expert. Can hold peer-level technical conversations with developers, engineers, and architects. Anticipates technical objections before they surface. Has formed opinions about the technical landscape and can articulate them clearly. Buyers feel they're talking to a knowledgeable advisor, not just a salesperson. Would reduce reliance on SE support significantly.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Criterion 2: Communication Skills -->
+  <div class="rubric-card">
+    <div class="rubric-header">
+      <div class="rubric-skill-name">2. Communication Skills</div>
+      <div class="rubric-badge">High Weight · 3× · Max 30 pts</div>
+    </div>
+    <div class="rubric-meta">
+      <div class="rubric-meta-row">
+        <div>
+          <div class="rubric-meta-label">Definition</div>
+          <div class="rubric-meta-text">Writes and speaks persuasively. Concise and precise — adapts message to audience without losing depth. Can explain a complex technical concept to a CFO and a detailed implementation question to a CTO in the same meeting. Strong written communication is equally important, as the first GTM hire will write the playbook.</div>
+        </div>
+        <div>
+          <div class="rubric-meta-label">What to Test in the Interview</div>
+          <div class="rubric-meta-text">Ask them to explain something complex in under 60 seconds. Listen for structure, precision, and economy of words. Ask for a written work sample — an email they've sent to a technical stakeholder. Communication quality in writing predicts how well they'll document the playbook.</div>
+        </div>
+      </div>
+    </div>
+    <div class="rubric-question">
+      <strong>Interview Question</strong>
+      "Explain what we do to two different audiences: first, to a CFO who wants to understand business value; then to a VP of Engineering who wants to understand how it works. You have 90 seconds total."
+    </div>
+    <div class="rubric-question" style="border-top:1px solid var(--border);">
+      <strong>Written Sample Request</strong>
+      Before the interview, ask for a follow-up email they sent after a discovery call with a technical stakeholder. Score on: Does it reference the specific pain they heard? Is it concise? Does it advance the deal clearly? Is the writing clear and professional?
+    </div>
+    <div class="rubric-tiers">
+      <div class="rubric-tier tier-low">
+        <div class="tier-score">Score 1–3: Risk</div>
+        <div class="tier-desc">One-size-fits-all communication. Cannot adapt message to audience without prompting. Written communication is vague or poorly structured. Takes too long to get to the point. Would struggle to write a playbook that others could execute. Will confuse buyers with overly technical or overly generic pitches.</div>
+      </div>
+      <div class="rubric-tier tier-mid">
+        <div class="tier-score">Score 4–7: Capable</div>
+        <div class="tier-desc">Communicates clearly and adapts with some coaching. Written communication is solid. Can tailor message to a degree. Occasionally over-explains or under-explains based on the audience. Good enough for most sales scenarios, but will need coaching on the more complex audience adaptations.</div>
+      </div>
+      <div class="rubric-tier tier-high">
+        <div class="tier-score">Score 8–10: Exceptional</div>
+        <div class="tier-desc">Seamlessly adapts message to the listener's frame of reference. Written communication is crisp and structured. Can explain the same concept in multiple ways without losing precision. Buyers feel understood immediately. Playbook writing would be excellent — their documentation would be usable by any trained rep without interpretation.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Criterion 3: Consultative Approach -->
+  <div class="rubric-card">
+    <div class="rubric-header">
+      <div class="rubric-skill-name">3. Consultative Approach</div>
+      <div class="rubric-badge">High Weight · 3× · Max 30 pts</div>
+    </div>
+    <div class="rubric-meta">
+      <div class="rubric-meta-row">
+        <div>
+          <div class="rubric-meta-label">Definition</div>
+          <div class="rubric-meta-text">Asks before pitching. Buyer-centric by disposition — not just by training. Genuinely curious about the buyer's situation, goals, and constraints before formulating a recommendation. Believes that understanding the problem is the most important step in the sales process. Would slow a demo down rather than speed it up if they haven't finished discovery.</div>
+        </div>
+        <div>
+          <div class="rubric-meta-label">What to Watch For</div>
+          <div class="rubric-meta-text">In the role-play scenario, a consultative rep will ask clarifying questions before presenting. An execution-oriented rep will launch into features immediately. At the GTM Hire #1 stage, you want someone who, when given a scenario, says "Can I ask you a few more questions before I respond?" — not someone who starts pitching.</div>
+        </div>
+      </div>
+    </div>
+    <div class="rubric-question">
+      <strong>Role-Play / Discovery Question</strong>
+      Give them this scenario: "You're on a first call with a Director of Operations at a 150-person logistics company. They said on the inbound form that they're 'struggling with visibility across their warehouse operations.' You have 30 minutes. Start the call." Score their question-to-pitch ratio in the first 10 minutes.
+    </div>
+    <div class="rubric-tiers">
+      <div class="rubric-tier tier-low">
+        <div class="tier-score">Score 1–3: Risk</div>
+        <div class="tier-desc">Pitches immediately after hearing the first pain point. Demo-first approach without completing discovery. Asks questions to confirm their hypothesis rather than to genuinely understand the buyer's situation. Will build a demo-heavy playbook that doesn't scale to complex deals.</div>
+      </div>
+      <div class="rubric-tier tier-mid">
+        <div class="tier-score">Score 4–7: Capable</div>
+        <div class="tier-desc">Asks discovery questions before pitching. Generally buyer-centric. May rush discovery when they think they've heard enough. Follows a structured discovery framework but may not go deep enough on the buyer's underlying business goals. Good in straightforward scenarios; struggles with complex or ambiguous buyers.</div>
+      </div>
+      <div class="rubric-tier tier-high">
+        <div class="tier-score">Score 8–10: Exceptional</div>
+        <div class="tier-desc">Asks questions that reveal the buyer's unstated goals and constraints. Explores why the problem matters to the business, not just what the problem is. Would end a 30-minute discovery call with 80% questions and 20% product. Buyers describe conversations with them as "the most useful conversation I've had in the evaluation process." Their discovery questions are interesting enough to document directly in the playbook.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Criterion 4: Objection Handling -->
+  <div class="rubric-card">
+    <div class="rubric-header">
+      <div class="rubric-skill-name">4. Objection Handling</div>
+      <div class="rubric-badge">Medium Weight · 2× · Max 20 pts</div>
+    </div>
+    <div class="rubric-meta">
+      <div class="rubric-meta-row">
+        <div>
+          <div class="rubric-meta-label">Definition</div>
+          <div class="rubric-meta-text">Does not fold under pressure. Listens to objections completely before responding — does not interrupt. Reframes objections without dismissing them. Has a mental model for distinguishing genuine objections from stalls. Comfortable sitting in ambiguity when a buyer is uncertain rather than rushing to close or concede.</div>
+        </div>
+        <div>
+          <div class="rubric-meta-label">How to Test</div>
+          <div class="rubric-meta-text">During the interview or role-play, throw a realistic hard objection: "We've seen this category and we're not convinced it works." Watch whether they (a) acknowledge the objection, (b) ask what's behind it, and (c) address the underlying concern rather than the surface statement. The ideal response takes longer than most candidates expect.</div>
+        </div>
+      </div>
+    </div>
+    <div class="rubric-question">
+      <strong>Live Objection Test</strong>
+      During or after the role-play, say: "Honestly, we've evaluated 3 products in this space in the last 18 months and none of them stuck. I'm skeptical this is any different." Score their response on: (1) Did they acknowledge the experience before responding? (2) Did they ask what specifically didn't work before defending your product? (3) Did they reframe without dismissing?
+    </div>
+    <div class="rubric-tiers">
+      <div class="rubric-tier tier-low">
+        <div class="tier-score">Score 1–3: Risk</div>
+        <div class="tier-desc">Folds immediately or goes defensive. Either concedes too quickly (drops price, skips steps) or argues back directly. Does not listen to the full objection. Does not ask what's behind it. Treats objections as rejections rather than requests for more information.</div>
+      </div>
+      <div class="rubric-tier tier-mid">
+        <div class="tier-score">Score 4–7: Capable</div>
+        <div class="tier-desc">Acknowledges objections and asks clarifying questions. Handles common objections comfortably. May struggle with unusual or layered objections. Can reframe most objections but occasionally gets flustered under sustained pressure. Solid in standard scenarios.</div>
+      </div>
+      <div class="rubric-tier tier-high">
+        <div class="tier-score">Score 8–10: Exceptional</div>
+        <div class="tier-desc">Treats every objection as a data point. Asks "what's behind that?" before responding. Comfortable sitting in the objection without rushing to resolve it. Can distinguish between a genuine blocking concern and a test of resolve. Has a mental model for each objection type and responds differently to each. Buyers feel heard even when they disagree.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Criterion 5: Collaboration -->
+  <div class="rubric-card">
+    <div class="rubric-header">
+      <div class="rubric-skill-name">5. Collaboration</div>
+      <div class="rubric-badge">Medium Weight · 2× · Max 20 pts</div>
+    </div>
+    <div class="rubric-meta">
+      <div class="rubric-meta-row">
+        <div>
+          <div class="rubric-meta-label">Definition</div>
+          <div class="rubric-meta-text">Works cross-functionally without being asked. Loops in CS and Product proactively when customer feedback is relevant. Shares insights back to the team — doesn't hoard deal learnings. Sees their role as part of a system, not as a solo performer. The playbook they build should reflect collaboration with product, not just their personal sales intuition.</div>
+        </div>
+        <div>
+          <div class="rubric-meta-label">The Playbook Builder Test</div>
+          <div class="rubric-meta-text">A truly collaborative first GTM hire writes down what they learn. After every 5 deals, they update their discovery question list. They share winning emails with the team. They flag product feedback to the CTO with structured context. Ask for evidence of this behavior from a previous role.</div>
+        </div>
+      </div>
+    </div>
+    <div class="rubric-question">
+      <strong>Interview Question</strong>
+      "Tell me about a deal you worked on where you involved other parts of your organization — product, CS, or engineering. What was the situation? How did you loop them in? What did you learn from working with them that changed how you sell? Have you ever documented that learning and shared it with your team?"
+    </div>
+    <div class="rubric-tiers">
+      <div class="rubric-tier tier-low">
+        <div class="tier-score">Score 1–3: Risk</div>
+        <div class="tier-desc">Solo performer. Keeps deal intelligence to themselves. Doesn't loop in other functions unless forced. No examples of proactively sharing learnings or building cross-functional process. Their playbook would be hard to replicate because it's all in their head.</div>
+      </div>
+      <div class="rubric-tier tier-mid">
+        <div class="tier-score">Score 4–7: Capable</div>
+        <div class="tier-desc">Collaborates when it's clearly needed. Joins cross-functional conversations when invited. Shares some learnings informally. Would benefit from structure around documentation. Good team player but not proactively building shared systems.</div>
+      </div>
+      <div class="rubric-tier tier-high">
+        <div class="tier-score">Score 8–10: Exceptional</div>
+        <div class="tier-desc">Proactively loops in CS and Product with customer context — structured and specific, not just "a customer mentioned X." Shares winning emails, discovery frameworks, and competitive insights back to the team. Has documented their own sales process in a previous role. Sees the playbook as a collaborative artifact, not a personal asset. Their learnings would accelerate the next rep hired.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Section 3: Scoring Thresholds -->
+  <h2 class="section-title">Scoring Thresholds</h2>
+  <p class="section-intro">Total possible: 130 points.</p>
+
+  <div class="threshold-grid">
+    <div class="ht-card no">
+      <div class="ht-score">&lt; 78</div>
+      <div class="ht-label">Do Not Hire</div>
+      <div class="ht-pct">Below 60%</div>
+    </div>
+    <div class="ht-card cond">
+      <div class="ht-score">78–97</div>
+      <div class="ht-label">Conditional</div>
+      <div class="ht-pct">60–75% — written plan required</div>
+    </div>
+    <div class="ht-card strong">
+      <div class="ht-score">97–117</div>
+      <div class="ht-label">Strong Hire</div>
+      <div class="ht-pct">75–90%</div>
+    </div>
+    <div class="ht-card excep">
+      <div class="ht-score">117+</div>
+      <div class="ht-label">Exceptional</div>
+      <div class="ht-pct">90%+ — move fast</div>
+    </div>
+  </div>
+
+  <div class="callout callout-definition">
+    <div class="callout-title">The Non-Negotiable Criteria</div>
+    <p>For the First GTM Hire, <strong>Consultative Approach</strong> is the hardest skill to teach and the most important for building a scalable playbook. A candidate who scores below 6 on Consultative Approach should not be hired as a first GTM hire, regardless of total score. You can coach technical knowledge; you cannot coach consultative disposition in a 3-month ramp.</p>
+  </div>
+
+  <!-- Related links -->
+  <div class="related-section">
+    <div class="related-title">Related Pages</div>
+    <div class="related-links">
+      <a href="sos-hiring-sales-leader.html" class="related-link">Science of Scaling: Hiring Sales Leader</a>
+      <a href="template-scorecard-sales.html" class="related-link">Sales Rep Scorecard</a>
+      <a href="sos-pmf.html" class="related-link">PMF Framework</a>
+      <a href="../pages/resources.html" class="related-link">← All Templates</a>
+    </div>
+  </div>
+
+</div>
+<script data-pplx-inline-edit>
+(function () {
+  if (window === window.top) return;
+
+  const allowedParentOrigins = ["https://www.perplexity.ai","https://perplexity.ai","https://testing.perplexity.ai","https://staging.perplexity.ai","https://*.preview.i.perplexity.ai","http://localhost:3000","http://127.0.0.1:3000","http://localhost:5173","http://127.0.0.1:5173"];
+  const MAX_FONT_BYTES = 500 * 1024;
+  const MAX_TOTAL_FONT_BYTES = 2 * 1024 * 1024;
+  let scrollForwarding = false;
+  let scrollRaf = 0;
+  let trustedTopOrigin = null;
+
+  // Allow entries like "https://*.preview.i.perplexity.ai" — the wildcard
+  // matches a single DNS label (no dots), so "https://*.foo" cannot stretch
+  // across multiple labels.
+  function matchesAllowedOrigin(origin) {
+    if (!origin) return false;
+    for (const entry of allowedParentOrigins) {
+      if (!entry.includes("*")) {
+        if (entry === origin) return true;
+        continue;
+      }
+      const pattern = new RegExp(
+        "^" +
+          entry.replace(/[.+?^${}()|[\]\\]/g, "\\$&").replace(/\*/g, "[^.]+") +
+          "$",
+      );
+      if (pattern.test(origin)) return true;
+    }
+    return false;
+  }
+
+  // Trust decision: when the sender is same-origin-visible (event.origin is a
+  // real origin like https://www.perplexity.ai) we trust event.origin directly.
+  // When event.origin is "null" (opaque broker srcdoc), we fall back to the
+  // broker's stamped `parentOrigin` to identify the top window. The fallback
+  // is claim-only — we rely on the browser's native `targetOrigin` enforcement
+  // on the response path (see postToTrustedTop) to ensure replies can't be
+  // delivered to anyone but the actual top window of that claimed origin.
+  function getTrustedParentOrigin(event) {
+    const forwardedParentOrigin =
+      typeof event.data.parentOrigin === "string" ? event.data.parentOrigin : null;
+    const parentOrigin = event.origin === "null" ? forwardedParentOrigin : event.origin;
+    return matchesAllowedOrigin(parentOrigin) ? parentOrigin : null;
+  }
+
+  // All responses go to window.top with targetOrigin = the allowlisted origin.
+  // An attacker that iframes us inside their own null-origin broker can claim
+  // any parentOrigin they like, but the browser will drop the reply whenever
+  // the real top's origin doesn't match — so the screenshot never leaves.
+  function postToTrustedTop(message) {
+    if (!trustedTopOrigin) return;
+    try {
+      window.top.postMessage(message, trustedTopOrigin);
+    } catch (_error) {}
+  }
+
+  function inlineAll(original, clone) {
+    if (original.nodeType !== 1 || clone.nodeType !== 1) return;
+
+    try {
+      const computedStyle = getComputedStyle(original);
+      // cssText on a computed style is the serialized declaration in modern
+      // Chromium/Safari — a single read beats enumerating ~400 longhand
+      // properties. Firefox returns "" here, so we fall back on empty.
+      const serialized = computedStyle.cssText;
+      if (serialized) {
+        clone.style.cssText = serialized;
+      } else {
+        const parts = new Array(computedStyle.length);
+        for (let index = 0; index < computedStyle.length; index += 1) {
+          const property = computedStyle[index];
+          parts[index] = `${property}:${computedStyle.getPropertyValue(property)};`;
+        }
+        clone.style.cssText = parts.join("");
+      }
+    } catch (_error) {}
+
+    const originalChildren = original.children;
+    const clonedChildren = clone.children;
+    for (
+      let index = 0;
+      index < originalChildren.length && index < clonedChildren.length;
+      index += 1
+    ) {
+      inlineAll(originalChildren[index], clonedChildren[index]);
+    }
+  }
+
+  function extractFontUrl(srcValue) {
+    const matches = [
+      ...srcValue.matchAll(
+        /url\(["']?([^"')]+)["']?\)(?:\s*format\(["']?([^"')]+)["']?\))?/gi,
+      ),
+    ];
+    if (matches.length === 0) return null;
+    const woff2 = matches.find((m) => m[2] && m[2].toLowerCase().includes("woff2"));
+    if (woff2) return woff2[1];
+    const woff = matches.find((m) => m[2] && m[2].toLowerCase().includes("woff"));
+    if (woff) return woff[1];
+    return matches[0][1];
+  }
+
+  // Cache resolved font URL -> data URI across captures. Fonts on a page
+  // essentially never change, and a batch run emits multiple captures back to
+  // back — without this we'd refetch + re-base64 every time.
+  const fontDataUriCache = new Map();
+  const SRC_DECLARATION_RE = /src\s*:\s*[^;}]+/i;
+
+  async function fetchAsDataUri(url) {
+    if (fontDataUriCache.has(url)) return fontDataUriCache.get(url);
+    let dataUri = null;
+    try {
+      const response = await fetch(url, { mode: "cors", credentials: "omit" });
+      if (response.ok) {
+        const blob = await response.blob();
+        if (blob.size <= MAX_FONT_BYTES) {
+          dataUri = await new Promise((resolve) => {
+            const reader = new FileReader();
+            reader.onloadend = () =>
+              resolve(typeof reader.result === "string" ? reader.result : null);
+            reader.onerror = () => resolve(null);
+            reader.readAsDataURL(blob);
+          });
+        }
+      }
+    } catch (_error) {
+      dataUri = null;
+    }
+    fontDataUriCache.set(url, dataUri);
+    return dataUri;
+  }
+
+  function collectFontFaceRuleTexts() {
+    const rules = [];
+    for (const sheet of document.styleSheets) {
+      let cssRules;
+      try {
+        cssRules = sheet.cssRules;
+      } catch (_error) {
+        continue;
+      }
+      if (!cssRules) continue;
+      for (const rule of cssRules) {
+        const cssText = rule.cssText || "";
+        if (cssText.startsWith("@font-face")) rules.push(cssText);
+      }
+    }
+    return rules;
+  }
+
+  async function buildInlinedFontCss() {
+    const ruleTexts = collectFontFaceRuleTexts();
+    if (ruleTexts.length === 0) return null;
+
+    const resolved = ruleTexts.map((cssText) => {
+      if (!SRC_DECLARATION_RE.test(cssText)) return null;
+      const srcMatch = cssText.match(/src\s*:\s*([^;}]+)[;}]/i);
+      if (!srcMatch) return null;
+      const url = extractFontUrl(srcMatch[1]);
+      if (!url) return null;
+      try {
+        return { cssText, url: new URL(url, document.baseURI).href };
+      } catch (_error) {
+        return null;
+      }
+    });
+
+    const dataUris = await Promise.all(
+      resolved.map((entry) => (entry ? fetchAsDataUri(entry.url) : Promise.resolve(null))),
+    );
+
+    const inlined = [];
+    let totalBytes = 0;
+    for (let index = 0; index < resolved.length; index += 1) {
+      const entry = resolved[index];
+      const dataUri = dataUris[index];
+      if (!entry || !dataUri) continue;
+      const approxBytes = dataUri.length * 0.75;
+      if (totalBytes + approxBytes > MAX_TOTAL_FONT_BYTES) break;
+      totalBytes += approxBytes;
+      inlined.push(entry.cssText.replace(SRC_DECLARATION_RE, `src: url("${dataUri}")`));
+    }
+    return inlined.length > 0 ? inlined.join("\n") : null;
+  }
+
+  function stripExternal(clone) {
+    const images = clone.querySelectorAll("img");
+    for (let index = 0; index < images.length; index += 1) {
+      const src = images[index].getAttribute("src");
+      if (src && !src.startsWith("data:")) images[index].removeAttribute("src");
+    }
+
+    const elements = clone.querySelectorAll("*");
+    for (let index = 0; index < elements.length; index += 1) {
+      const style = elements[index].style.cssText;
+      if (style && style.includes("url(")) {
+        elements[index].style.cssText = style.replace(
+          /url\(["']?(?!data:)[^)"']*["']?\)/gi,
+          "none",
+        );
+      }
+    }
+  }
+
+  function emitScroll() {
+    scrollRaf = 0;
+    if (!scrollForwarding) return;
+    postToTrustedTop({
+      type: "INLINE_EDIT_SCROLL",
+      scrollX: window.scrollX,
+      scrollY: window.scrollY,
+    });
+  }
+
+  window.addEventListener(
+    "scroll",
+    function () {
+      if (!scrollForwarding || scrollRaf) return;
+      scrollRaf = requestAnimationFrame(emitScroll);
+    },
+    { passive: true, capture: true },
+  );
+
+  async function handleCaptureRequest(event) {
+    const requestId = event.data.requestId;
+    const scrollX = window.scrollX;
+    const scrollY = window.scrollY;
+    const width = window.innerWidth;
+    const height = window.innerHeight;
+
+    function postResult(dataUrl) {
+      postToTrustedTop({
+        type: "INLINE_EDIT_SCREENSHOT_RESULT",
+        requestId,
+        dataUrl,
+        scrollX,
+        scrollY,
+      });
+    }
+
+    try {
+      // Wait for any pending web fonts to resolve so both inline metrics and
+      // the @font-face inlining below see the same loaded faces.
+      if (document.fonts && document.fonts.ready) {
+        try {
+          await document.fonts.ready;
+        } catch (_error) {}
+      }
+
+      const clone = document.documentElement.cloneNode(true);
+      inlineAll(document.documentElement, clone);
+
+      const removedNodes = clone.querySelectorAll("script,link[rel=\"stylesheet\"],style");
+      for (let index = 0; index < removedNodes.length; index += 1) {
+        removedNodes[index].remove();
+      }
+
+      stripExternal(clone);
+
+      // Re-embed web fonts as data-URI @font-face rules so the SVG rasterizer
+      // can resolve them — external font URLs aren't fetched during
+      // foreignObject rendering, which would otherwise force a fallback face
+      // and change text metrics.
+      const inlinedFontCss = await buildInlinedFontCss();
+      if (inlinedFontCss) {
+        const styleEl = document.createElement("style");
+        styleEl.textContent = inlinedFontCss;
+        const head = clone.querySelector("head");
+        if (head) head.appendChild(styleEl);
+        else clone.insertBefore(styleEl, clone.firstChild);
+      }
+
+      const html = new XMLSerializer().serializeToString(clone);
+      const svg =
+        `<svg xmlns="http://www.w3.org/2000/svg" width="${width}" height="${height}">` +
+        '<foreignObject width="100%" height="100%">' +
+        `<div xmlns="http://www.w3.org/1999/xhtml" style="width:${width}px;height:${height}px;overflow:hidden">` +
+        `<div style="transform:translate(-${scrollX}px,-${scrollY}px);transform-origin:top left">` +
+        html +
+        "</div></div></foreignObject></svg>";
+      const svgUrl = `data:image/svg+xml;charset=utf-8,${encodeURIComponent(svg)}`;
+      const image = new Image();
+      image.onload = function () {
+        const canvas = document.createElement("canvas");
+        canvas.width = width;
+        canvas.height = height;
+        canvas.getContext("2d").drawImage(image, 0, 0);
+        postResult(canvas.toDataURL("image/png"));
+      };
+      image.onerror = function () {
+        postResult(null);
+      };
+      image.src = svgUrl;
+    } catch (_error) {
+      postResult(null);
+    }
+  }
+
+  window.addEventListener("message", function (event) {
+    if (!event.data) return;
+    // Only accept messages from the direct parent frame. Blocks sibling /
+    // unrelated-window postMessage senders that could otherwise reach us.
+    if (event.source !== window.parent) return;
+
+    const trustedParentOrigin = getTrustedParentOrigin(event);
+    if (!trustedParentOrigin) return;
+    trustedTopOrigin = trustedParentOrigin;
+
+    if (event.data.type === "INLINE_EDIT_SCROLL_START") {
+      scrollForwarding = true;
+      emitScroll();
+      return;
+    }
+
+    if (event.data.type === "INLINE_EDIT_SCROLL_STOP") {
+      scrollForwarding = false;
+      if (scrollRaf) cancelAnimationFrame(scrollRaf);
+      scrollRaf = 0;
+      return;
+    }
+
+    if (event.data.type !== "INLINE_EDIT_CAPTURE_REQUEST") return;
+
+    handleCaptureRequest(event);
+  });
+})();
+
+
+</script></body>
+</html>

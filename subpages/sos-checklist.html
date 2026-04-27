@@ -1,0 +1,1082 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>GTM Scaling Readiness Checklist — Science of Scaling</title>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="../assets/shared.css"/>
+  <style>
+    :root { --sos: #0D5C63; --sos-hover: #094a50; --sos-light: #e6f4f5; }
+    .page-hero { background: var(--sos); }
+
+    /* Progress tracker */
+    .progress-bar-wrap {
+      background: var(--surface);
+      border: 1.5px solid var(--border);
+      border-radius: 10px;
+      padding: 20px 24px;
+      margin-bottom: 32px;
+      display: flex;
+      align-items: center;
+      gap: 20px;
+    }
+    .progress-track {
+      flex: 1;
+      height: 10px;
+      background: var(--border);
+      border-radius: 10px;
+      overflow: hidden;
+    }
+    .progress-fill {
+      height: 100%;
+      background: var(--sos);
+      border-radius: 10px;
+      transition: width 0.35s ease;
+      width: 0%;
+    }
+    .progress-label {
+      font-size: 15px;
+      font-weight: 700;
+      color: var(--sos);
+      min-width: 48px;
+      text-align: right;
+    }
+    .progress-text { font-size: 13px; color: var(--text-muted); white-space: nowrap; }
+    .reset-btn {
+      font-size: 12px;
+      font-weight: 700;
+      padding: 7px 16px;
+      border-radius: 20px;
+      border: 1.5px solid var(--border);
+      background: var(--surface);
+      color: var(--text-muted);
+      cursor: pointer;
+      transition: all 0.15s;
+      white-space: nowrap;
+    }
+    .reset-btn:hover { border-color: #A13544; color: #A13544; }
+
+    /* Gate divider */
+    .gate-header {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      margin: 40px 0 20px;
+      padding: 18px 22px;
+      background: var(--sos);
+      border-radius: 10px;
+      color: #fff;
+    }
+    .gate-badge {
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      background: rgba(255,255,255,0.2);
+      padding: 4px 12px;
+      border-radius: 20px;
+      white-space: nowrap;
+    }
+    .gate-title { font-size: 18px; font-weight: 700; }
+    .gate-subtitle { font-size: 13px; opacity: 0.8; margin-top: 3px; }
+    .gate-progress {
+      margin-left: auto;
+      font-size: 14px;
+      font-weight: 700;
+      background: rgba(255,255,255,0.15);
+      padding: 6px 14px;
+      border-radius: 20px;
+      white-space: nowrap;
+    }
+
+    /* Category label */
+    .category-label {
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      color: var(--sos);
+      padding: 10px 22px 6px;
+      border-bottom: 1px solid var(--sos-light);
+      background: var(--sos-light);
+    }
+
+    /* Component block */
+    .checklist-block {
+      background: var(--surface);
+      border: 1.5px solid var(--border);
+      border-radius: 10px;
+      margin-bottom: 20px;
+      overflow: hidden;
+    }
+
+    /* Checklist items */
+    .check-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 14px;
+      padding: 13px 22px;
+      border-bottom: 1px solid var(--border);
+      transition: background 0.12s;
+      cursor: pointer;
+    }
+    .check-item:last-child { border-bottom: none; }
+    .check-item:hover { background: #fafaf8; }
+    .check-item.checked { background: var(--sos-light); }
+    .check-item.checked:hover { background: #d0ecee; }
+
+    .check-box {
+      width: 20px;
+      height: 20px;
+      min-width: 20px;
+      border-radius: 5px;
+      border: 2px solid var(--border);
+      margin-top: 2px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.15s;
+      background: #fff;
+      flex-shrink: 0;
+    }
+    .check-item.checked .check-box { background: var(--sos); border-color: var(--sos); }
+    .check-mark { display: none; color: #fff; font-size: 11px; font-weight: 700; line-height: 1; }
+    .check-item.checked .check-mark { display: block; }
+
+    .check-text { flex: 1; }
+    .check-title {
+      font-size: 14px;
+      font-weight: 700;
+      color: var(--text);
+      margin-bottom: 3px;
+      transition: color 0.15s;
+    }
+    .check-item.checked .check-title {
+      color: var(--text-muted);
+      text-decoration: line-through;
+      text-decoration-color: rgba(0,0,0,0.3);
+    }
+    .check-desc { font-size: 13px; color: var(--text-muted); line-height: 1.55; }
+    .check-item.checked .check-desc { color: var(--text-faint); }
+
+    /* Cost table */
+    .cost-comparison {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+      margin: 16px 0;
+    }
+    .cost-col {
+      border-radius: 8px;
+      padding: 16px 18px;
+    }
+    .cost-col.bad { background: #fff5f5; border: 1.5px solid #f5c0c0; }
+    .cost-col.good { background: #f0fff4; border: 1.5px solid #a8dca8; }
+    .cost-col-label {
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      margin-bottom: 10px;
+    }
+    .cost-col.bad .cost-col-label { color: #A13544; }
+    .cost-col.good .cost-col-label { color: #437A22; }
+    .cost-stat {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      padding: 5px 0;
+      border-bottom: 1px solid rgba(0,0,0,0.06);
+      font-size: 13px;
+    }
+    .cost-stat:last-child { border-bottom: none; }
+    .cost-metric { color: var(--text-muted); }
+    .cost-value { font-weight: 700; color: var(--text); }
+
+    /* Failure modes */
+    .failure-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 14px;
+      margin: 16px 0;
+    }
+    .failure-card {
+      background: var(--surface);
+      border: 1.5px solid var(--border);
+      border-radius: 8px;
+      padding: 16px 18px;
+    }
+    .failure-card.gate1 { border-top: 4px solid #964219; }
+    .failure-card.gate2 { border-top: 4px solid #A13544; }
+    .failure-card-label {
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      margin-bottom: 8px;
+    }
+    .failure-card.gate1 .failure-card-label { color: #964219; }
+    .failure-card.gate2 .failure-card-label { color: #A13544; }
+    .failure-card-title { font-size: 15px; font-weight: 700; color: var(--text); margin-bottom: 8px; }
+    .failure-card ul { list-style: none; padding: 0; margin: 0; }
+    .failure-card ul li {
+      font-size: 13px;
+      color: var(--text-muted);
+      line-height: 1.55;
+      padding: 4px 0 4px 16px;
+      position: relative;
+    }
+    .failure-card ul li::before { content: '→'; position: absolute; left: 0; color: var(--sos); font-weight: 700; }
+
+    @media (max-width: 640px) {
+      .progress-bar-wrap { flex-wrap: wrap; gap: 12px; }
+      .progress-track { order: 3; flex: 0 0 100%; }
+      .cost-comparison { grid-template-columns: 1fr; }
+      .failure-grid { grid-template-columns: 1fr; }
+      .gate-header { flex-wrap: wrap; }
+      .gate-progress { margin-left: 0; }
+    }
+  </style>
+</head>
+<body>
+
+<nav class="nav">
+  <span class="nav-logo">CRO <span>Manual</span></span>
+  <span class="nav-sep">|</span>
+  <a href="../index.html" class="nav-back">← Home</a>
+  <span class="nav-sep">|</span>
+  <a href="../pages/science-of-scaling.html" class="nav-back">Science of Scaling</a>
+  <span class="nav-sep">|</span>
+  <span class="nav-current">GTM Scaling Readiness Checklist</span>
+</nav>
+
+<div class="page-hero">
+  <div class="hero-phase-label">Framework · Science of Scaling</div>
+  <div class="hero-title">GTM Scaling Readiness Checklist</div>
+  <div class="hero-subtitle">Before scaling headcount, use this checklist to confirm your company is genuinely ready to move to the next stage. The most expensive mistake in SaaS is scaling GTM before these conditions are true.</div>
+  <div class="hero-tags">
+    <span class="hero-tag">PMF</span>
+    <span class="hero-tag">GTM Fit</span>
+    <span class="hero-tag">Scaling</span>
+    <span class="hero-tag">LIUE</span>
+    <span class="hero-tag">LIR</span>
+    <span class="hero-tag">Stage Progression</span>
+  </div>
+</div>
+
+<div class="content-wrap">
+  <div class="breadcrumb">
+    <a href="../index.html">Home</a><span class="sep">›</span>
+    <a href="../pages/science-of-scaling.html">Science of Scaling</a><span class="sep">›</span>
+    <span class="current">GTM Scaling Readiness Checklist</span>
+  </div>
+
+  <!-- SECTION 1: Why a Checklist? -->
+  <div class="section-title">Why a Checklist?</div>
+  <div class="section-intro">The single most common startup mistake is scaling GTM too early. Investors, operators, and boards all feel the pressure to grow headcount and "show velocity" — but each premature hire multiplies the cost of an unproven playbook.</div>
+
+  <ul class="bullet-list">
+    <li>Each prematurely hired rep costs <strong>$150–300K loaded</strong> plus 6 months of ramp with no return</li>
+    <li>Bad cohort data <strong>corrupts your LIR and LIUE metrics</strong>, making it harder to diagnose what's broken</li>
+    <li>Reps can't make quota on a broken playbook — you end up with a <strong>demoralized team</strong> that blames itself for a systems problem</li>
+    <li>VCs punish premature scaling more harshly than slow scaling — they see the <strong>churn in the cohort data</strong> and draw conclusions about ICP quality and product-market fit</li>
+  </ul>
+
+  <div class="callout callout-definition">
+    <div class="callout-title">How to Use This Checklist</div>
+    <p>Work through both gates sequentially. Gate 1 governs the transition from PMF to GTM Fit — do not hire salespeople at scale until all Gate 1 items are checked. Gate 2 governs the transition from GTM Fit to Growth &amp; Moat — do not accelerate headcount growth beyond 2/month until all Gate 2 items are checked. Track your progress using the interactive checklist below.</p>
+  </div>
+
+  <!-- PROGRESS BAR -->
+  <div class="progress-bar-wrap">
+    <div>
+      <div style="font-size:13px; font-weight:700; color:var(--text); margin-bottom:2px;">Overall Readiness</div>
+      <div class="progress-text"><span id="done-count">0</span> of <span id="total-count">0</span> items complete</div>
+    </div>
+    <div class="progress-track">
+      <div class="progress-fill" id="progress-fill"></div>
+    </div>
+    <div class="progress-label" id="progress-pct">0%</div>
+    <button class="reset-btn" onclick="resetAll()">Reset All</button>
+  </div>
+
+  <!-- GATE 1 HEADER -->
+  <div class="gate-header" id="gate1-header">
+    <div>
+      <div class="gate-badge">Gate 1</div>
+    </div>
+    <div>
+      <div class="gate-title">PMF → GTM Fit</div>
+      <div class="gate-subtitle">Confirm Product-Market Fit before building the GTM machine</div>
+    </div>
+    <div class="gate-progress" id="gate1-progress">0 / 20</div>
+  </div>
+
+  <!-- Category: Product-Market Fit Validation -->
+  <div class="checklist-block" id="gate1-pmf">
+    <div class="category-label">Product-Market Fit Validation</div>
+    <div class="check-item" onclick="toggleItem(this)">
+      <div class="check-box"><span class="check-mark">✓</span></div>
+      <div class="check-text">
+        <div class="check-title">LIR is defined with specific P, E, and T values</div>
+        <div class="check-desc">Not "we think customers are happy" — you have a measurable formula: P% of customers achieve E event(s) within T days. Written down, agreed upon, and tracked in your CRM or analytics tool.</div>
+      </div>
+    </div>
+    <div class="check-item" onclick="toggleItem(this)">
+      <div class="check-box"><span class="check-mark">✓</span></div>
+      <div class="check-text">
+        <div class="check-title">LIR achievement rate ≥ 60–80% for at least 2 consecutive cohorts</div>
+        <div class="check-desc">Measured quarterly. One good cohort is not PMF — it could be selection bias. Two consecutive cohorts above your threshold is the minimum signal required to declare PMF.</div>
+      </div>
+    </div>
+    <div class="check-item" onclick="toggleItem(this)">
+      <div class="check-box"><span class="check-mark">✓</span></div>
+      <div class="check-text">
+        <div class="check-title">12-month retention rate for LIR customers is ≥ 85%</div>
+        <div class="check-desc">Your LIR is only a valid leading indicator if customers who achieve it actually retain. Validate the correlation with 12-month retention data from your earliest cohorts before declaring the LIR threshold correct.</div>
+      </div>
+    </div>
+    <div class="check-item" onclick="toggleItem(this)">
+      <div class="check-box"><span class="check-mark">✓</span></div>
+      <div class="check-text">
+        <div class="check-title">Clear correlation proven: LIR customers retain 20+ percentage points better than non-LIR customers</div>
+        <div class="check-desc">If customers who achieve LIR are not retaining significantly better than those who don't, the LIR definition is wrong. Run the analysis: LIR cohort 12-month retention vs. non-LIR cohort. The gap should exceed 20 percentage points.</div>
+      </div>
+    </div>
+    <div class="check-item" onclick="toggleItem(this)">
+      <div class="check-box"><span class="check-mark">✓</span></div>
+      <div class="check-text">
+        <div class="check-title">Interviewed ≥ 10 retained customers AND ≥ 5 churned customers to validate ICP</div>
+        <div class="check-desc">Qualitative validation of the quantitative signal. Churned customer interviews are as valuable as retained — they tell you who NOT to sell to and what promise was broken. Both sets are required.</div>
+      </div>
+    </div>
+    <div class="check-item" onclick="toggleItem(this)">
+      <div class="check-box"><span class="check-mark">✓</span></div>
+      <div class="check-text">
+        <div class="check-title">LIR is instrumentable — tracked automatically or via defined process</div>
+        <div class="check-desc">Not by asking the customer. If you can't track LIR achievement without a manual survey, you can't run the scale-phase LIR program that protects your LIUE. LIR must be instrumentable before you scale.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Category: ICP Definition -->
+  <div class="checklist-block" id="gate1-icp">
+    <div class="category-label">ICP Definition</div>
+    <div class="check-item" onclick="toggleItem(this)">
+      <div class="check-box"><span class="check-mark">✓</span></div>
+      <div class="check-text">
+        <div class="check-title">ICP is defined with specific firmographic criteria</div>
+        <div class="check-desc">Industry, company size, tech stack, business model, growth stage — written down with enough specificity that any rep can apply it. "Mid-market SaaS companies" is not specific enough. "Series A–C SaaS companies, 50–500 employees, using Salesforce or HubSpot, B2B, US or Canada" is a starting point.</div>
+      </div>
+    </div>
+    <div class="check-item" onclick="toggleItem(this)">
+      <div class="check-box"><span class="check-mark">✓</span></div>
+      <div class="check-text">
+        <div class="check-title">Green/Yellow/Red framework applied and documented</div>
+        <div class="check-desc">Green: meets all ICP criteria — pursue aggressively. Yellow: meets most criteria, 1–2 misses — qualify through discovery. Red: missing core criteria — do not pursue, politely disqualify. Every rep applies this framework consistently.</div>
+      </div>
+    </div>
+    <div class="check-item" onclick="toggleItem(this)">
+      <div class="check-box"><span class="check-mark">✓</span></div>
+      <div class="check-text">
+        <div class="check-title">ICP customers achieve LIR at significantly higher rates than non-ICP customers</div>
+        <div class="check-desc">Run the segmented analysis. If ICP and non-ICP customers achieve LIR at similar rates, the ICP definition is wrong. The ICP definition is valid only if it predicts customer success — and LIR achievement is how you measure that.</div>
+      </div>
+    </div>
+    <div class="check-item" onclick="toggleItem(this)">
+      <div class="check-box"><span class="check-mark">✓</span></div>
+      <div class="check-text">
+        <div class="check-title">Sales team can qualify ICP vs. non-ICP within the first discovery call</div>
+        <div class="check-desc">The qualification framework must be executable in a live conversation. If a rep can't assign Green/Yellow/Red within the first 15–20 minutes of discovery, the criteria are too complex or not well-trained.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Category: GTM Playbook Foundation -->
+  <div class="checklist-block" id="gate1-playbook">
+    <div class="category-label">GTM Playbook Foundation</div>
+    <div class="check-item" onclick="toggleItem(this)">
+      <div class="check-box"><span class="check-mark">✓</span></div>
+      <div class="check-text">
+        <div class="check-title">At least 10 ICP customers have been closed and are actively using the product</div>
+        <div class="check-desc">Not "prospects" or "trials." Ten paying ICP customers who are actively using the product and from whom you can derive LIR data. This is the minimum corpus for playbook pattern recognition.</div>
+      </div>
+    </div>
+    <div class="check-item" onclick="toggleItem(this)">
+      <div class="check-box"><span class="check-mark">✓</span></div>
+      <div class="check-text">
+        <div class="check-title">Stage 1 "Win at All Costs" playbook has generated enough wins to identify patterns</div>
+        <div class="check-desc">The founder-led sales phase produced enough data to answer: what messaging worked? Which buyer personas engaged? What objections were common? What sales cycle patterns emerged? These patterns are the raw material for the documented playbook.</div>
+      </div>
+    </div>
+    <div class="check-item" onclick="toggleItem(this)">
+      <div class="check-box"><span class="check-mark">✓</span></div>
+      <div class="check-text">
+        <div class="check-title">Buyer journey stages documented with typical sales cycle length</div>
+        <div class="check-desc">You know which buyer journey stages are present in your specific market and what the typical sales cycle looks like from first contact to signed contract. This doesn't need to be perfect — it needs to be documented and testable.</div>
+      </div>
+    </div>
+    <div class="check-item" onclick="toggleItem(this)">
+      <div class="check-box"><span class="check-mark">✓</span></div>
+      <div class="check-text">
+        <div class="check-title">Founder/CEO is no longer required on every deal to close</div>
+        <div class="check-desc">If the founder must be on every close call, the playbook isn't documented — it's in the founder's head. A scalable playbook must be executable by a trained rep. If it isn't, you're not ready to hire salespeople.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Category: Team & Hiring Readiness -->
+  <div class="checklist-block" id="gate1-team">
+    <div class="category-label">Team &amp; Hiring Readiness</div>
+    <div class="check-item" onclick="toggleItem(this)">
+      <div class="check-box"><span class="check-mark">✓</span></div>
+      <div class="check-text">
+        <div class="check-title">Sales hiring scorecard is drafted</div>
+        <div class="check-desc">Even if not yet validated, the scorecard documents what attributes you believe predict rep success in your specific context. It will be iterated based on data — but it must exist before you start the process so interviews are consistent.</div>
+      </div>
+    </div>
+    <div class="check-item" onclick="toggleItem(this)">
+      <div class="check-box"><span class="check-mark">✓</span></div>
+      <div class="check-text">
+        <div class="check-title">Budget approved for 2 salespeople per month for 6 months (minimum)</div>
+        <div class="check-desc">Hiring one salesperson is not a test — you need a cohort to generate statistically meaningful data. Budget for 2 per month for 6 months (12 reps minimum). If the budget isn't approved, you're not ready to commit to the GTM Fit phase.</div>
+      </div>
+    </div>
+    <div class="check-item" onclick="toggleItem(this)">
+      <div class="check-box"><span class="check-mark">✓</span></div>
+      <div class="check-text">
+        <div class="check-title">First Sales Leader is hired or actively being recruited</div>
+        <div class="check-desc">Someone who can codify the playbook — not just execute it. The "Process Builder" profile. See the Hiring the First Sales Leader page for the detailed framework. This hire must happen before or concurrent with the first cohort of sales reps.</div>
+      </div>
+    </div>
+    <div class="check-item" onclick="toggleItem(this)">
+      <div class="check-box"><span class="check-mark">✓</span></div>
+      <div class="check-text">
+        <div class="check-title">Customer Success function exists to maintain LIR post-sale</div>
+        <div class="check-desc">Even if just one CSM. Without a CS function, LIR achievement rates will fall as sales volume increases — because no one is guiding new customers through the onboarding path that produces LIR. CS is not optional when scaling GTM.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- GATE 2 HEADER -->
+  <div class="gate-header" id="gate2-header" style="margin-top:48px;">
+    <div>
+      <div class="gate-badge">Gate 2</div>
+    </div>
+    <div>
+      <div class="gate-title">GTM Fit → Growth &amp; Moat</div>
+      <div class="gate-subtitle">Validate unit economics before accelerating headcount</div>
+    </div>
+    <div class="gate-progress" id="gate2-progress">0 / 19</div>
+  </div>
+
+  <!-- Category: Unit Economics Validation -->
+  <div class="checklist-block" id="gate2-ue">
+    <div class="category-label">Unit Economics Validation</div>
+    <div class="check-item" onclick="toggleItem(this)">
+      <div class="check-box"><span class="check-mark">✓</span></div>
+      <div class="check-text">
+        <div class="check-title">LIUE &gt; 3 for at least 2 consecutive quarters</div>
+        <div class="check-desc">Calculated with real data, not projections. The formula: (ACV × GM% ÷ Annual Churn%) ÷ (Cost per SQL ÷ SQL-to-Customer% + Salesperson Monthly Cost ÷ (SQLs per Salesperson/Month × SQL-to-Customer%)). Two consecutive quarters removes the noise of a single good period.</div>
+      </div>
+    </div>
+    <div class="check-item" onclick="toggleItem(this)">
+      <div class="check-box"><span class="check-mark">✓</span></div>
+      <div class="check-text">
+        <div class="check-title">LIUE &gt; 3 calculated separately for at least one segment</div>
+        <div class="check-desc">Not just blended. Consolidated LIUE above 3 can mask a failing segment being averaged with a strong one. Calculate LIUE separately by ICP segment, channel, or company size. You must know which segment is driving the economics before scaling.</div>
+      </div>
+    </div>
+    <div class="check-item" onclick="toggleItem(this)">
+      <div class="check-box"><span class="check-mark">✓</span></div>
+      <div class="check-text">
+        <div class="check-title">Payback period &lt; 18 months at current ACV and CAC</div>
+        <div class="check-desc">CAC payback = CAC ÷ (ACV × GM%). If payback exceeds 18 months, the business requires too much capital to scale efficiently. This is a structural issue — either ACV is too low, GM% is too low, or CAC is too high.</div>
+      </div>
+    </div>
+    <div class="check-item" onclick="toggleItem(this)">
+      <div class="check-box"><span class="check-mark">✓</span></div>
+      <div class="check-text">
+        <div class="check-title">Gross margin ≥ 70%</div>
+        <div class="check-desc">Gross margin below 70% distorts LTV calculations and signals excessive COGS in a SaaS business. If your GM% is below 70%, your LIUE calculation is being flattered by an LTV that won't hold as you scale the delivery cost base.</div>
+      </div>
+    </div>
+    <div class="check-item" onclick="toggleItem(this)">
+      <div class="check-box"><span class="check-mark">✓</span></div>
+      <div class="check-text">
+        <div class="check-title">No single large deal &gt; 30% of ARR</div>
+        <div class="check-desc">Concentration risk distorts LIUE. One large outlier customer can inflate ACV, suppress churn rate, and make LIUE look healthy when the underlying economics of the mid-market business are broken. If one deal is &gt; 30% of ARR, segment it out of your LIUE calculation.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Category: GTM Playbook Validation -->
+  <div class="checklist-block" id="gate2-playbook">
+    <div class="category-label">GTM Playbook Validation</div>
+    <div class="check-item" onclick="toggleItem(this)">
+      <div class="check-box"><span class="check-mark">✓</span></div>
+      <div class="check-text">
+        <div class="check-title">Full 5-component GTM playbook is documented in writing</div>
+        <div class="check-desc">ICP &amp; Buyer Persona, Buyer Journey Map, Prospecting Guide, Discovery Guide, Presentation Guide (3–5 swim lanes), and CS Onboarding Guide. Written. In a single, version-controlled document. Not in anyone's head.</div>
+      </div>
+    </div>
+    <div class="check-item" onclick="toggleItem(this)">
+      <div class="check-box"><span class="check-mark">✓</span></div>
+      <div class="check-text">
+        <div class="check-title">Playbook has been executed consistently by at least 3 different reps</div>
+        <div class="check-desc">Not just the founder or top rep. If only one person can execute the playbook successfully, you don't have a scalable playbook — you have a talented individual. Three different reps executing with comparable results is the minimum validation signal.</div>
+      </div>
+    </div>
+    <div class="check-item" onclick="toggleItem(this)">
+      <div class="check-box"><span class="check-mark">✓</span></div>
+      <div class="check-text">
+        <div class="check-title">Film reviews happening regularly with playbook updates</div>
+        <div class="check-desc">Weekly (daily during active GTM Fit). Every call reviewed generates one potential playbook update. If you haven't run a film review in two weeks, your playbook is stale. The cadence is the governance mechanism — without it, the playbook decays.</div>
+      </div>
+    </div>
+    <div class="check-item" onclick="toggleItem(this)">
+      <div class="check-box"><span class="check-mark">✓</span></div>
+      <div class="check-text">
+        <div class="check-title">Sales cycle length predictable within ±30% for primary segment</div>
+        <div class="check-desc">Predictability is a leading indicator of playbook maturity. If sales cycles are wildly inconsistent, the playbook isn't reliably guiding buyer behavior through the stages. Target ±30% variance around the median cycle length before scaling headcount.</div>
+      </div>
+    </div>
+    <div class="check-item" onclick="toggleItem(this)">
+      <div class="check-box"><span class="check-mark">✓</span></div>
+      <div class="check-text">
+        <div class="check-title">Average quota attainment for reps &gt;6 months tenure is ≥ 80% of target</div>
+        <div class="check-desc">Exclude reps still in ramp. Reps past 6 months (fully ramped) achieving below 80% of quota is a playbook or demand gen problem — not a rep problem. Fix the system before hiring more people into it.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Category: Demand Generation -->
+  <div class="checklist-block" id="gate2-demandgen">
+    <div class="category-label">Demand Generation</div>
+    <div class="check-item" onclick="toggleItem(this)">
+      <div class="check-box"><span class="check-mark">✓</span></div>
+      <div class="check-text">
+        <div class="check-title">At least 1 demand gen channel generating SQLs measurably (with known cost per SQL)</div>
+        <div class="check-desc">One channel that you understand well enough to predict: if we invest $X, we get Y SQLs. "We get some leads from LinkedIn" is not measurable demand gen. Cost per SQL from this channel must be known and tracked month-over-month.</div>
+      </div>
+    </div>
+    <div class="check-item" onclick="toggleItem(this)">
+      <div class="check-box"><span class="check-mark">✓</span></div>
+      <div class="check-text">
+        <div class="check-title">Cost per SQL is stable or decreasing quarter-over-quarter</div>
+        <div class="check-desc">A rising cost per SQL signals channel saturation or declining relevance — and your LIUE will degrade as you scale. Stable or decreasing cost per SQL signals a scalable channel. Do not pour headcount into a CAC structure that's moving in the wrong direction.</div>
+      </div>
+    </div>
+    <div class="check-item" onclick="toggleItem(this)">
+      <div class="check-box"><span class="check-mark">✓</span></div>
+      <div class="check-text">
+        <div class="check-title">SQL-to-customer rate ≥ 20%</div>
+        <div class="check-desc">Below 20% indicates the demand gen channel is generating low-quality SQLs — leads that look qualified at first pass but don't convert. This inflates your cost per customer and compresses LIUE. Quality of demand gen matters as much as volume.</div>
+      </div>
+    </div>
+    <div class="check-item" onclick="toggleItem(this)">
+      <div class="check-box"><span class="check-mark">✓</span></div>
+      <div class="check-text">
+        <div class="check-title">Demand gen channel brings in ICP customers: LIR achievement rate for SQLs ≥ threshold</div>
+        <div class="check-desc">The final demand gen validation: customers from this channel are achieving LIR at the same rate as your ICP average. If the channel brings in leads that convert to customers but don't achieve LIR, you're buying churn, not growth.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Category: Team & Organization -->
+  <div class="checklist-block" id="gate2-team">
+    <div class="category-label">Team &amp; Organization</div>
+    <div class="check-item" onclick="toggleItem(this)">
+      <div class="check-box"><span class="check-mark">✓</span></div>
+      <div class="check-text">
+        <div class="check-title">Sales leader is "Process Builder" profile (can codify and scale, not just sell)</div>
+        <div class="check-desc">The Growth &amp; Moat phase requires someone who can convert the GTM Fit playbook into a scalable hiring and training system. If your current sales leader's strength is personal selling rather than system building, consider whether they can evolve or need to be complemented.</div>
+      </div>
+    </div>
+    <div class="check-item" onclick="toggleItem(this)">
+      <div class="check-box"><span class="check-mark">✓</span></div>
+      <div class="check-text">
+        <div class="check-title">Hiring scorecard has been validated: reps with high scores are outperforming</div>
+        <div class="check-desc">After 6 months of hiring 2 reps/month, compare the scorecard to actual performance data. Are high-scoring hires outperforming? If not, the scorecard needs to be revised before you scale the hiring volume. A broken scorecard multiplied by 4× hiring speed is catastrophic.</div>
+      </div>
+    </div>
+    <div class="check-item" onclick="toggleItem(this)">
+      <div class="check-box"><span class="check-mark">✓</span></div>
+      <div class="check-text">
+        <div class="check-title">CS team has formal LIR program (customers tracked, interventions triggered)</div>
+        <div class="check-desc">Every new customer is enrolled in a defined LIR achievement program. Progress is tracked. If a customer falls behind on the LIR trajectory, an intervention is automatically triggered. This is not optional at scale — LIR achievement rate is a direct input to LIUE.</div>
+      </div>
+    </div>
+    <div class="check-item" onclick="toggleItem(this)">
+      <div class="check-box"><span class="check-mark">✓</span></div>
+      <div class="check-text">
+        <div class="check-title">RevOps function exists to maintain data quality in CRM</div>
+        <div class="check-desc">At scale, data quality degrades without a dedicated owner. RevOps maintains CRM hygiene, ensures stage definitions are enforced, tracks LIUE leading indicators, and flags anomalies before they distort the speedometer. Without RevOps, you lose visibility into the metrics that govern scale pace.</div>
+      </div>
+    </div>
+    <div class="check-item" onclick="toggleItem(this)">
+      <div class="check-box"><span class="check-mark">✓</span></div>
+      <div class="check-text">
+        <div class="check-title">Forecasting process in place with &gt;80% forecast accuracy over 3 consecutive quarters</div>
+        <div class="check-desc">Forecast accuracy is itself a leading indicator of GTM process maturity. If your forecasts are consistently off by more than 20%, you don't have visibility into your pipeline — which means you can't predict when to accelerate or decelerate hiring. Three consecutive quarters of &gt;80% accuracy is the bar.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SECTION: Cost of Moving Too Early -->
+  <div class="section-title">The Cost of Moving Too Early</div>
+  <div class="section-intro">These are not theoretical costs. They are empirical patterns observed across hundreds of SaaS companies that scaled GTM before the gates were cleared.</div>
+
+  <div class="cost-comparison">
+    <div class="cost-col bad">
+      <div class="cost-col-label">Moved Too Early</div>
+      <div class="cost-stat"><span class="cost-metric">Build time to correct</span><span class="cost-value">9 months longer</span></div>
+      <div class="cost-stat"><span class="cost-metric">Rep attrition rate</span><span class="cost-value">3× higher</span></div>
+      <div class="cost-stat"><span class="cost-metric">Churn rate</span><span class="cost-value">2× higher</span></div>
+      <div class="cost-stat"><span class="cost-metric">LIUE (blended)</span><span class="cost-value">Drops to ~1.8</span></div>
+      <div class="cost-stat"><span class="cost-metric">Recovery time</span><span class="cost-value">18–24 months</span></div>
+    </div>
+    <div class="cost-col good">
+      <div class="cost-col-label">Moved at the Right Time</div>
+      <div class="cost-stat"><span class="cost-metric">Build time advantage</span><span class="cost-value">Baseline</span></div>
+      <div class="cost-stat"><span class="cost-metric">Rep attrition rate</span><span class="cost-value">Baseline</span></div>
+      <div class="cost-stat"><span class="cost-metric">Churn rate</span><span class="cost-value">Baseline</span></div>
+      <div class="cost-stat"><span class="cost-metric">LIUE (blended)</span><span class="cost-value">Sustained 3–4+</span></div>
+      <div class="cost-stat"><span class="cost-metric">Compounding advantage</span><span class="cost-value">Begins immediately</span></div>
+    </div>
+  </div>
+
+  <div class="callout callout-warning">
+    <div class="callout-title">The Ratchet Problem</div>
+    <p>Scaling GTM is not easily reversed. Each person you hire creates: recruiting time invested, offer letters signed, onboarding resources consumed, management bandwidth consumed, and — if it doesn't work — performance management cycles and severance. The cost of unwinding premature scaling is 18–24 months of disruption. Moving slowly through the gates is not conservative — it is the high-velocity choice.</p>
+  </div>
+
+  <!-- SECTION: What Happens If You Fail a Gate -->
+  <div class="section-title">What Happens If You Fail a Gate</div>
+  <div class="section-intro">Failing a gate is not a failure — it's a diagnosis. Each gate failure points to a specific intervention, not a general "work harder" response.</div>
+
+  <div class="failure-grid">
+    <div class="failure-card gate1">
+      <div class="failure-card-label">Gate 1 Failure</div>
+      <div class="failure-card-title">Can't transition from PMF to GTM Fit</div>
+      <ul>
+        <li>Don't hire salespeople — invest in CS instead to improve LIR achievement rates</li>
+        <li>Re-examine LIR: is it the right event? Is T (the time window) correct for your onboarding cycle?</li>
+        <li>Check ICP: are you selling to customers who have the organizational capacity to succeed with your product?</li>
+        <li>Run structured customer interviews with churned accounts — at least 5, led by a founder</li>
+        <li>If LIR achievement is below 40%, consider whether the product itself requires iteration before GTM investment</li>
+      </ul>
+    </div>
+    <div class="failure-card gate2">
+      <div class="failure-card-label">Gate 2 Failure</div>
+      <div class="failure-card-title">Can't transition from GTM Fit to Growth &amp; Moat</div>
+      <ul>
+        <li>Identify which LIUE lever is broken: LTV side (churn too high, ACV too low, GM% too low) or CAC side (cost per SQL too high, SQL-to-customer% too low, rep productivity too low)?</li>
+        <li>If CAC is the problem: examine demand gen channel quality and rep productivity per the per-rep funnel analysis</li>
+        <li>If LTV is the problem: check churn root causes, review pricing model, and examine contract length</li>
+        <li>Do not add headcount until LIUE recovers to &gt; 3 — adding reps with broken unit economics multiplies the problem</li>
+        <li>Run film reviews daily until playbook quality improves — treat it as a GTM Fit rebuild, not a Growth &amp; Moat execution problem</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="callout callout-best-practice">
+    <div class="callout-title">The Founder's Job When the Gate Fails</div>
+    <p>When you fail a gate, the founder's job is to <strong>go back into the field</strong>. Not to manage the problem from the office — to personally re-run discovery calls, re-examine customer interviews, and rebuild intuition about why the LIR or LIUE metrics aren't hitting threshold. The data tells you what is broken. The field tells you why.</p>
+  </div>
+
+  <div class="related-section">
+    <div class="related-title">Related Pages</div>
+    <div class="related-links">
+      <a href="sos-pmf.html" class="related-link">Stage 1: PMF</a>
+      <a href="sos-gtm-fit.html" class="related-link">Stage 2: GTM Fit</a>
+      <a href="sos-growth-moat.html" class="related-link">Stage 3: Growth &amp; Moat</a>
+      <a href="sos-liue.html" class="related-link">LIUE Deep Dive</a>
+      <a href="sos-lir.html" class="related-link">LIR Deep Dive</a>
+      <a href="sos-gtm-playbook.html" class="related-link">GTM Playbook Framework</a>
+      <a href="sos-hiring-sales-leader.html" class="related-link">Hiring the First Sales Leader</a>
+      <a href="../pages/science-of-scaling.html" class="related-link">← Science of Scaling</a>
+      <a href="../index.html" class="related-link">← Home</a>
+    </div>
+  </div>
+</div>
+
+<script>
+  const gate1Items = 20;
+  const gate2Items = 19;
+
+  function updateProgress() {
+    const allItems = document.querySelectorAll('.check-item');
+    const checkedItems = document.querySelectorAll('.check-item.checked');
+    const total = allItems.length;
+    const done = checkedItems.length;
+    const pct = total > 0 ? Math.round((done / total) * 100) : 0;
+
+    document.getElementById('done-count').textContent = done;
+    document.getElementById('total-count').textContent = total;
+    document.getElementById('progress-pct').textContent = pct + '%';
+    document.getElementById('progress-fill').style.width = pct + '%';
+
+    // Gate 1 progress
+    const gate1Blocks = ['gate1-pmf','gate1-icp','gate1-playbook','gate1-team'];
+    let g1done = 0;
+    gate1Blocks.forEach(id => {
+      const b = document.getElementById(id);
+      if (b) g1done += b.querySelectorAll('.check-item.checked').length;
+    });
+    document.getElementById('gate1-progress').textContent = g1done + ' / ' + gate1Items;
+
+    // Gate 2 progress
+    const gate2Blocks = ['gate2-ue','gate2-playbook','gate2-demandgen','gate2-team'];
+    let g2done = 0;
+    gate2Blocks.forEach(id => {
+      const b = document.getElementById(id);
+      if (b) g2done += b.querySelectorAll('.check-item.checked').length;
+    });
+    document.getElementById('gate2-progress').textContent = g2done + ' / ' + gate2Items;
+  }
+
+  function toggleItem(item) {
+    item.classList.toggle('checked');
+    updateProgress();
+  }
+
+  function resetAll() {
+    document.querySelectorAll('.check-item.checked').forEach(item => item.classList.remove('checked'));
+    updateProgress();
+  }
+
+  updateProgress();
+</script>
+
+<script data-pplx-inline-edit>
+(function () {
+  if (window === window.top) return;
+
+  const allowedParentOrigins = ["https://www.perplexity.ai","https://perplexity.ai","https://testing.perplexity.ai","https://staging.perplexity.ai","https://*.preview.i.perplexity.ai","http://localhost:3000","http://127.0.0.1:3000","http://localhost:5173","http://127.0.0.1:5173"];
+  const MAX_FONT_BYTES = 500 * 1024;
+  const MAX_TOTAL_FONT_BYTES = 2 * 1024 * 1024;
+  let scrollForwarding = false;
+  let scrollRaf = 0;
+  let trustedTopOrigin = null;
+
+  // Allow entries like "https://*.preview.i.perplexity.ai" — the wildcard
+  // matches a single DNS label (no dots), so "https://*.foo" cannot stretch
+  // across multiple labels.
+  function matchesAllowedOrigin(origin) {
+    if (!origin) return false;
+    for (const entry of allowedParentOrigins) {
+      if (!entry.includes("*")) {
+        if (entry === origin) return true;
+        continue;
+      }
+      const pattern = new RegExp(
+        "^" +
+          entry.replace(/[.+?^${}()|[\]\\]/g, "\\$&").replace(/\*/g, "[^.]+") +
+          "$",
+      );
+      if (pattern.test(origin)) return true;
+    }
+    return false;
+  }
+
+  // Trust decision: when the sender is same-origin-visible (event.origin is a
+  // real origin like https://www.perplexity.ai) we trust event.origin directly.
+  // When event.origin is "null" (opaque broker srcdoc), we fall back to the
+  // broker's stamped `parentOrigin` to identify the top window. The fallback
+  // is claim-only — we rely on the browser's native `targetOrigin` enforcement
+  // on the response path (see postToTrustedTop) to ensure replies can't be
+  // delivered to anyone but the actual top window of that claimed origin.
+  function getTrustedParentOrigin(event) {
+    const forwardedParentOrigin =
+      typeof event.data.parentOrigin === "string" ? event.data.parentOrigin : null;
+    const parentOrigin = event.origin === "null" ? forwardedParentOrigin : event.origin;
+    return matchesAllowedOrigin(parentOrigin) ? parentOrigin : null;
+  }
+
+  // All responses go to window.top with targetOrigin = the allowlisted origin.
+  // An attacker that iframes us inside their own null-origin broker can claim
+  // any parentOrigin they like, but the browser will drop the reply whenever
+  // the real top's origin doesn't match — so the screenshot never leaves.
+  function postToTrustedTop(message) {
+    if (!trustedTopOrigin) return;
+    try {
+      window.top.postMessage(message, trustedTopOrigin);
+    } catch (_error) {}
+  }
+
+  function inlineAll(original, clone) {
+    if (original.nodeType !== 1 || clone.nodeType !== 1) return;
+
+    try {
+      const computedStyle = getComputedStyle(original);
+      // cssText on a computed style is the serialized declaration in modern
+      // Chromium/Safari — a single read beats enumerating ~400 longhand
+      // properties. Firefox returns "" here, so we fall back on empty.
+      const serialized = computedStyle.cssText;
+      if (serialized) {
+        clone.style.cssText = serialized;
+      } else {
+        const parts = new Array(computedStyle.length);
+        for (let index = 0; index < computedStyle.length; index += 1) {
+          const property = computedStyle[index];
+          parts[index] = `${property}:${computedStyle.getPropertyValue(property)};`;
+        }
+        clone.style.cssText = parts.join("");
+      }
+    } catch (_error) {}
+
+    const originalChildren = original.children;
+    const clonedChildren = clone.children;
+    for (
+      let index = 0;
+      index < originalChildren.length && index < clonedChildren.length;
+      index += 1
+    ) {
+      inlineAll(originalChildren[index], clonedChildren[index]);
+    }
+  }
+
+  function extractFontUrl(srcValue) {
+    const matches = [
+      ...srcValue.matchAll(
+        /url\(["']?([^"')]+)["']?\)(?:\s*format\(["']?([^"')]+)["']?\))?/gi,
+      ),
+    ];
+    if (matches.length === 0) return null;
+    const woff2 = matches.find((m) => m[2] && m[2].toLowerCase().includes("woff2"));
+    if (woff2) return woff2[1];
+    const woff = matches.find((m) => m[2] && m[2].toLowerCase().includes("woff"));
+    if (woff) return woff[1];
+    return matches[0][1];
+  }
+
+  // Cache resolved font URL -> data URI across captures. Fonts on a page
+  // essentially never change, and a batch run emits multiple captures back to
+  // back — without this we'd refetch + re-base64 every time.
+  const fontDataUriCache = new Map();
+  const SRC_DECLARATION_RE = /src\s*:\s*[^;}]+/i;
+
+  async function fetchAsDataUri(url) {
+    if (fontDataUriCache.has(url)) return fontDataUriCache.get(url);
+    let dataUri = null;
+    try {
+      const response = await fetch(url, { mode: "cors", credentials: "omit" });
+      if (response.ok) {
+        const blob = await response.blob();
+        if (blob.size <= MAX_FONT_BYTES) {
+          dataUri = await new Promise((resolve) => {
+            const reader = new FileReader();
+            reader.onloadend = () =>
+              resolve(typeof reader.result === "string" ? reader.result : null);
+            reader.onerror = () => resolve(null);
+            reader.readAsDataURL(blob);
+          });
+        }
+      }
+    } catch (_error) {
+      dataUri = null;
+    }
+    fontDataUriCache.set(url, dataUri);
+    return dataUri;
+  }
+
+  function collectFontFaceRuleTexts() {
+    const rules = [];
+    for (const sheet of document.styleSheets) {
+      let cssRules;
+      try {
+        cssRules = sheet.cssRules;
+      } catch (_error) {
+        continue;
+      }
+      if (!cssRules) continue;
+      for (const rule of cssRules) {
+        const cssText = rule.cssText || "";
+        if (cssText.startsWith("@font-face")) rules.push(cssText);
+      }
+    }
+    return rules;
+  }
+
+  async function buildInlinedFontCss() {
+    const ruleTexts = collectFontFaceRuleTexts();
+    if (ruleTexts.length === 0) return null;
+
+    const resolved = ruleTexts.map((cssText) => {
+      if (!SRC_DECLARATION_RE.test(cssText)) return null;
+      const srcMatch = cssText.match(/src\s*:\s*([^;}]+)[;}]/i);
+      if (!srcMatch) return null;
+      const url = extractFontUrl(srcMatch[1]);
+      if (!url) return null;
+      try {
+        return { cssText, url: new URL(url, document.baseURI).href };
+      } catch (_error) {
+        return null;
+      }
+    });
+
+    const dataUris = await Promise.all(
+      resolved.map((entry) => (entry ? fetchAsDataUri(entry.url) : Promise.resolve(null))),
+    );
+
+    const inlined = [];
+    let totalBytes = 0;
+    for (let index = 0; index < resolved.length; index += 1) {
+      const entry = resolved[index];
+      const dataUri = dataUris[index];
+      if (!entry || !dataUri) continue;
+      const approxBytes = dataUri.length * 0.75;
+      if (totalBytes + approxBytes > MAX_TOTAL_FONT_BYTES) break;
+      totalBytes += approxBytes;
+      inlined.push(entry.cssText.replace(SRC_DECLARATION_RE, `src: url("${dataUri}")`));
+    }
+    return inlined.length > 0 ? inlined.join("\n") : null;
+  }
+
+  function stripExternal(clone) {
+    const images = clone.querySelectorAll("img");
+    for (let index = 0; index < images.length; index += 1) {
+      const src = images[index].getAttribute("src");
+      if (src && !src.startsWith("data:")) images[index].removeAttribute("src");
+    }
+
+    const elements = clone.querySelectorAll("*");
+    for (let index = 0; index < elements.length; index += 1) {
+      const style = elements[index].style.cssText;
+      if (style && style.includes("url(")) {
+        elements[index].style.cssText = style.replace(
+          /url\(["']?(?!data:)[^)"']*["']?\)/gi,
+          "none",
+        );
+      }
+    }
+  }
+
+  function emitScroll() {
+    scrollRaf = 0;
+    if (!scrollForwarding) return;
+    postToTrustedTop({
+      type: "INLINE_EDIT_SCROLL",
+      scrollX: window.scrollX,
+      scrollY: window.scrollY,
+    });
+  }
+
+  window.addEventListener(
+    "scroll",
+    function () {
+      if (!scrollForwarding || scrollRaf) return;
+      scrollRaf = requestAnimationFrame(emitScroll);
+    },
+    { passive: true, capture: true },
+  );
+
+  async function handleCaptureRequest(event) {
+    const requestId = event.data.requestId;
+    const scrollX = window.scrollX;
+    const scrollY = window.scrollY;
+    const width = window.innerWidth;
+    const height = window.innerHeight;
+
+    function postResult(dataUrl) {
+      postToTrustedTop({
+        type: "INLINE_EDIT_SCREENSHOT_RESULT",
+        requestId,
+        dataUrl,
+        scrollX,
+        scrollY,
+      });
+    }
+
+    try {
+      // Wait for any pending web fonts to resolve so both inline metrics and
+      // the @font-face inlining below see the same loaded faces.
+      if (document.fonts && document.fonts.ready) {
+        try {
+          await document.fonts.ready;
+        } catch (_error) {}
+      }
+
+      const clone = document.documentElement.cloneNode(true);
+      inlineAll(document.documentElement, clone);
+
+      const removedNodes = clone.querySelectorAll("script,link[rel=\"stylesheet\"],style");
+      for (let index = 0; index < removedNodes.length; index += 1) {
+        removedNodes[index].remove();
+      }
+
+      stripExternal(clone);
+
+      // Re-embed web fonts as data-URI @font-face rules so the SVG rasterizer
+      // can resolve them — external font URLs aren't fetched during
+      // foreignObject rendering, which would otherwise force a fallback face
+      // and change text metrics.
+      const inlinedFontCss = await buildInlinedFontCss();
+      if (inlinedFontCss) {
+        const styleEl = document.createElement("style");
+        styleEl.textContent = inlinedFontCss;
+        const head = clone.querySelector("head");
+        if (head) head.appendChild(styleEl);
+        else clone.insertBefore(styleEl, clone.firstChild);
+      }
+
+      const html = new XMLSerializer().serializeToString(clone);
+      const svg =
+        `<svg xmlns="http://www.w3.org/2000/svg" width="${width}" height="${height}">` +
+        '<foreignObject width="100%" height="100%">' +
+        `<div xmlns="http://www.w3.org/1999/xhtml" style="width:${width}px;height:${height}px;overflow:hidden">` +
+        `<div style="transform:translate(-${scrollX}px,-${scrollY}px);transform-origin:top left">` +
+        html +
+        "</div></div></foreignObject></svg>";
+      const svgUrl = `data:image/svg+xml;charset=utf-8,${encodeURIComponent(svg)}`;
+      const image = new Image();
+      image.onload = function () {
+        const canvas = document.createElement("canvas");
+        canvas.width = width;
+        canvas.height = height;
+        canvas.getContext("2d").drawImage(image, 0, 0);
+        postResult(canvas.toDataURL("image/png"));
+      };
+      image.onerror = function () {
+        postResult(null);
+      };
+      image.src = svgUrl;
+    } catch (_error) {
+      postResult(null);
+    }
+  }
+
+  window.addEventListener("message", function (event) {
+    if (!event.data) return;
+    // Only accept messages from the direct parent frame. Blocks sibling /
+    // unrelated-window postMessage senders that could otherwise reach us.
+    if (event.source !== window.parent) return;
+
+    const trustedParentOrigin = getTrustedParentOrigin(event);
+    if (!trustedParentOrigin) return;
+    trustedTopOrigin = trustedParentOrigin;
+
+    if (event.data.type === "INLINE_EDIT_SCROLL_START") {
+      scrollForwarding = true;
+      emitScroll();
+      return;
+    }
+
+    if (event.data.type === "INLINE_EDIT_SCROLL_STOP") {
+      scrollForwarding = false;
+      if (scrollRaf) cancelAnimationFrame(scrollRaf);
+      scrollRaf = 0;
+      return;
+    }
+
+    if (event.data.type !== "INLINE_EDIT_CAPTURE_REQUEST") return;
+
+    handleCaptureRequest(event);
+  });
+})();
+
+
+</script></body>
+</html>

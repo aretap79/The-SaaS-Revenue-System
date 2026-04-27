@@ -1,0 +1,1548 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Stage 3: Growth &amp; Moat — Science of Scaling</title>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="../assets/shared.css"/>
+  <style>
+    :root { --sos: #0D5C63; --sos-light: #e6f2f3; --sos-mid: #c2dde0; }
+    .page-hero { background: var(--sos); }
+
+    /* ── Speedometer ── */
+    .speedometer-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 14px;
+      margin: 20px 0;
+    }
+    .speedometer-card {
+      background: var(--surface);
+      border: 2px solid var(--sos);
+      border-radius: 10px;
+      padding: 20px 22px;
+    }
+    .speedometer-card .sp-num {
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      color: var(--sos);
+      margin-bottom: 6px;
+    }
+    .speedometer-card .sp-title {
+      font-size: 16px;
+      font-weight: 700;
+      color: var(--text);
+      margin-bottom: 8px;
+    }
+    .speedometer-card .sp-desc {
+      font-size: 14px;
+      color: var(--text-muted);
+      line-height: 1.6;
+      margin-bottom: 10px;
+    }
+    .zone-row {
+      display: flex;
+      gap: 6px;
+      flex-wrap: wrap;
+      margin-top: 10px;
+    }
+    .zone-tag {
+      font-size: 11px;
+      font-weight: 700;
+      padding: 3px 10px;
+      border-radius: 12px;
+      letter-spacing: 0.5px;
+    }
+    .zone-green { background: #e6f4ea; color: #437A22; }
+    .zone-yellow { background: #fff8e1; color: #7a6000; }
+    .zone-red { background: #fce8e6; color: #A13544; }
+
+    /* ── Speed Action ── */
+    .speed-action {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+      margin: 16px 0;
+    }
+    .sa-card {
+      border-radius: 8px;
+      padding: 16px 18px;
+    }
+    .sa-card.red-card { background: #fce8e6; border: 1.5px solid #ef9a9a; }
+    .sa-card.green-card { background: #e8f5e9; border: 1.5px solid #a5d6a7; }
+    .sa-card .sac-title {
+      font-size: 13px;
+      font-weight: 700;
+      letter-spacing: 0.5px;
+      text-transform: uppercase;
+      margin-bottom: 6px;
+    }
+    .sa-card.red-card .sac-title { color: #a13544; }
+    .sa-card.green-card .sac-title { color: #437a22; }
+    .sa-card .sac-body { font-size: 14px; line-height: 1.55; }
+
+    /* ── Segment Decision Grid ── */
+    .decision-3col {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      gap: 12px;
+      margin: 20px 0;
+    }
+    .dec-card {
+      border-radius: 10px;
+      padding: 18px 20px;
+    }
+    .dec-card.scale { background: #e6f4ea; border: 2px solid #a5d6a7; }
+    .dec-card.experiment { background: #fff8e1; border: 2px solid #ffe082; }
+    .dec-card.ignore { background: #f5f5f3; border: 2px solid var(--border); }
+    .dec-card .dec-label {
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      margin-bottom: 8px;
+    }
+    .dec-card.scale .dec-label { color: #437A22; }
+    .dec-card.experiment .dec-label { color: #7a6000; }
+    .dec-card.ignore .dec-label { color: var(--text-muted); }
+    .dec-card .dec-title {
+      font-size: 16px;
+      font-weight: 700;
+      margin-bottom: 10px;
+    }
+    .dec-card.scale .dec-title { color: #437A22; }
+    .dec-card.experiment .dec-title { color: #7a6000; }
+    .dec-card.ignore .dec-title { color: var(--text-muted); }
+    .dec-card ul {
+      list-style: none;
+      margin: 0;
+      padding: 0;
+    }
+    .dec-card ul li {
+      font-size: 13px;
+      line-height: 1.55;
+      padding: 4px 0 4px 16px;
+      position: relative;
+    }
+    .dec-card ul li::before {
+      content: '·';
+      position: absolute;
+      left: 4px;
+      font-weight: 700;
+    }
+
+    /* ── Acme Example ── */
+    .acme-badge {
+      display: inline-block;
+      padding: 3px 10px;
+      border-radius: 12px;
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.5px;
+    }
+    .acme-badge.scale { background: #e6f4ea; color: #437A22; }
+    .acme-badge.experiment { background: #fff8e1; color: #7a6000; }
+    .acme-badge.ignore { background: #f5f5f3; color: var(--text-muted); }
+
+    /* ── Pace Timeline ── */
+    .pace-timeline {
+      margin: 20px 0;
+    }
+    .pace-step {
+      display: flex;
+      gap: 0;
+      align-items: flex-start;
+      margin-bottom: 0;
+    }
+    .pace-step:last-child .pt-line { display: none; }
+    .pt-left {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      width: 44px;
+      flex-shrink: 0;
+    }
+    .pt-dot {
+      width: 14px;
+      height: 14px;
+      border-radius: 50%;
+      background: var(--sos);
+      flex-shrink: 0;
+      margin-top: 4px;
+    }
+    .pt-line {
+      width: 2px;
+      flex: 1;
+      min-height: 36px;
+      background: var(--sos-mid);
+    }
+    .pt-body {
+      padding-bottom: 22px;
+      flex: 1;
+    }
+    .pt-body .ptb-step {
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      color: var(--sos);
+      margin-bottom: 3px;
+    }
+    .pt-body .ptb-title {
+      font-size: 14px;
+      font-weight: 700;
+      color: var(--text);
+      margin-bottom: 4px;
+    }
+    .pt-body .ptb-desc {
+      font-size: 13px;
+      color: var(--text-muted);
+      line-height: 1.55;
+    }
+
+    /* ── Pace rationale cards ── */
+    .pace-rationale {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+      margin: 16px 0;
+    }
+    .pr-card {
+      background: var(--surface);
+      border: 1.5px solid var(--border);
+      border-radius: 8px;
+      padding: 14px 16px;
+      display: flex;
+      gap: 12px;
+      align-items: flex-start;
+    }
+    .pr-num {
+      min-width: 28px;
+      height: 28px;
+      border-radius: 50%;
+      background: var(--sos);
+      color: #fff;
+      font-size: 12px;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+    .pr-body { font-size: 13px; line-height: 1.55; }
+    .pr-body strong { color: var(--text); display: block; margin-bottom: 2px; font-size: 13px; }
+
+    /* ── Scorecard ── */
+    .scorecard-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 8px;
+      margin: 16px 0;
+    }
+    .sc-item {
+      background: var(--surface);
+      border: 1.5px solid var(--border);
+      border-radius: 6px;
+      padding: 12px 14px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .sc-weight {
+      min-width: 34px;
+      height: 34px;
+      border-radius: 50%;
+      color: #fff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 13px;
+      font-weight: 700;
+      flex-shrink: 0;
+    }
+    .sc-weight.high { background: #0D5C63; }
+    .sc-weight.med { background: #4a8c92; }
+    .sc-weight.low { background: #8bbfc4; }
+    .sc-label { font-size: 13px; font-weight: 600; color: var(--text); line-height: 1.4; }
+
+    /* ── Promotion Path ── */
+    .promo-path { margin: 20px 0; }
+    .promo-step {
+      display: flex;
+      gap: 0;
+      align-items: flex-start;
+    }
+    .promo-step:last-child .ps-line { display: none; }
+    .promo-left {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      width: 40px;
+      flex-shrink: 0;
+    }
+    .ps-dot {
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+      background: var(--sos);
+      flex-shrink: 0;
+      margin-top: 6px;
+    }
+    .ps-line {
+      width: 2px;
+      flex: 1;
+      min-height: 40px;
+      background: var(--sos-mid);
+    }
+    .promo-body { padding-bottom: 22px; flex: 1; }
+    .promo-body .pb-title { font-size: 15px; font-weight: 700; color: var(--text); margin-bottom: 3px; }
+    .promo-body .pb-criteria { font-size: 13px; color: var(--text-muted); line-height: 1.55; }
+
+    /* ── Moat Cards ── */
+    .moat-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 10px;
+      margin: 20px 0;
+    }
+    .moat-card {
+      background: var(--surface);
+      border: 1.5px solid var(--border);
+      border-left: 4px solid var(--sos);
+      border-radius: 8px;
+      padding: 18px 20px;
+      display: grid;
+      grid-template-columns: 40px 1fr;
+      gap: 14px;
+      align-items: flex-start;
+    }
+    .mc-num {
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      background: var(--sos);
+      color: #fff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 14px;
+      font-weight: 700;
+      flex-shrink: 0;
+    }
+    .mc-title { font-size: 15px; font-weight: 700; color: var(--text); margin-bottom: 6px; }
+    .mc-body { font-size: 13px; color: var(--text-muted); line-height: 1.6; margin-bottom: 8px; }
+    .mc-meta {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      gap: 8px;
+      margin-top: 10px;
+    }
+    .mc-meta-item { font-size: 11px; line-height: 1.4; }
+    .mc-meta-label {
+      font-weight: 700;
+      letter-spacing: 0.5px;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      display: block;
+      margin-bottom: 2px;
+    }
+    .mc-meta-value { font-size: 12px; color: var(--text); }
+    .mc-defensibility {
+      display: inline-block;
+      font-size: 11px;
+      font-weight: 700;
+      padding: 2px 8px;
+      border-radius: 10px;
+      background: var(--sos-light);
+      color: var(--sos);
+    }
+
+    /* ── Demand Gen Channels ── */
+    .channel-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 10px;
+      margin: 16px 0;
+    }
+    .ch-card {
+      background: var(--surface);
+      border: 1.5px solid var(--border);
+      border-radius: 8px;
+      padding: 14px 16px;
+    }
+    .ch-title { font-size: 13px; font-weight: 700; color: var(--text); margin-bottom: 4px; }
+    .ch-desc { font-size: 12px; color: var(--text-muted); line-height: 1.5; }
+
+    /* ── Key Metrics Table ── */
+    .metrics-table-wrap { overflow-x: auto; margin: 16px 0; }
+
+    /* ── Summary Stage Cards ── */
+    .summary-stage {
+      background: var(--surface);
+      border: 1.5px solid var(--border);
+      border-radius: 10px;
+      padding: 18px 22px;
+      margin: 10px 0;
+    }
+    .summary-stage .ss-label {
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      color: var(--sos);
+      margin-bottom: 4px;
+    }
+    .summary-stage .ss-title {
+      font-size: 16px;
+      font-weight: 700;
+      color: var(--text);
+      margin-bottom: 8px;
+    }
+    .summary-stage .ss-body {
+      font-size: 13px;
+      color: var(--text-muted);
+      line-height: 1.7;
+    }
+
+    @media (max-width: 768px) {
+      .speedometer-grid { grid-template-columns: 1fr; }
+      .speed-action { grid-template-columns: 1fr; }
+      .decision-3col { grid-template-columns: 1fr; }
+      .pace-rationale { grid-template-columns: 1fr; }
+      .scorecard-grid { grid-template-columns: 1fr; }
+      .channel-grid { grid-template-columns: 1fr 1fr; }
+      .mc-meta { grid-template-columns: 1fr; }
+    }
+
+    .phase-map-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+      gap: 12px;
+      margin: 16px 0 32px;
+    }
+    .phase-map-card {
+      background: var(--surface);
+      border: 1.5px solid var(--border);
+      border-radius: 8px;
+      padding: 14px 16px;
+      text-decoration: none;
+      display: block;
+      transition: all 0.15s;
+    }
+    .phase-map-card:hover { text-decoration: none; transform: translateY(-1px); box-shadow: 0 3px 10px rgba(0,0,0,0.08); border-color: var(--sos); }
+    .pm-phase-label { font-size: 10px; font-weight: 700; letter-spacing: 0.8px; text-transform: uppercase; color: var(--sos); margin-bottom: 4px; }
+    .pm-title { font-size: 13px; font-weight: 700; color: var(--text); margin-bottom: 4px; line-height: 1.3; }
+    .pm-desc { font-size: 11px; color: var(--text-muted); line-height: 1.5; }
+
+    .tools-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 12px; margin: 16px 0 32px; }
+    .tool-card { background: var(--surface); border: 1.5px solid var(--border); border-radius: 8px; padding: 14px 16px; text-decoration: none; display: block; transition: all 0.15s; }
+    .tool-card:hover { text-decoration: none; transform: translateY(-1px); box-shadow: 0 3px 10px rgba(0,0,0,0.08); }
+    .tc-sos { border-left: 3px solid #0D5C63; }
+    .tc-res { border-left: 3px solid #2C5F8A; }
+    .tc-phase { font-size: 10px; font-weight: 700; letter-spacing: 0.8px; text-transform: uppercase; color: #0D5C63; margin-bottom: 4px; }
+    .tc-res .tc-phase { color: #2C5F8A; }
+    .tc-title { font-size: 13px; font-weight: 700; color: var(--text); margin-bottom: 4px; line-height: 1.3; }
+    .tc-desc { font-size: 11px; color: var(--text-muted); line-height: 1.5; }
+  </style>
+</head>
+<body>
+
+<nav class="nav">
+  <span class="nav-logo">CRO <span>Manual</span></span>
+  <span class="nav-sep">|</span>
+  <a href="../index.html" class="nav-back">← Home</a>
+  <span class="nav-sep">|</span>
+  <a href="../pages/science-of-scaling.html" class="nav-back">Science of Scaling</a>
+  <span class="nav-sep">|</span>
+  <span class="nav-current">Stage 3: Growth &amp; Moat</span>
+</nav>
+
+<div class="page-hero">
+  <div class="hero-phase-label">Stage 3 · Science of Scaling</div>
+  <div class="hero-title">Growth &amp; Moat</div>
+  <div class="hero-subtitle">With PMF and GTM Fit proven, Stage 3 is about maximizing revenue growth rate while building sustainable competitive advantages that compound over time.</div>
+  <div class="hero-tags">
+    <span class="hero-tag">Revenue Growth Rate</span>
+    <span class="hero-tag">Segment Analysis</span>
+    <span class="hero-tag">Competitive Moat</span>
+    <span class="hero-tag">Scaling Pace</span>
+    <span class="hero-tag">Compensation</span>
+  </div>
+</div>
+
+<div class="content-wrap">
+
+  <div class="breadcrumb">
+    <a href="../index.html">Home</a><span class="sep">›</span>
+    <a href="../pages/science-of-scaling.html">Science of Scaling</a><span class="sep">›</span>
+    <span class="current">Stage 3: Growth &amp; Moat</span>
+  </div>
+
+  <!-- ══════════════════════════════════════════════
+       SECTION 1: WHAT IS STAGE 3?
+  ══════════════════════════════════════════════ -->
+  <div class="section-title">What Is Stage 3?</div>
+  <div class="section-intro">Stage 3 begins the moment both prior stages are validated. The question changes entirely — from "does this work?" to "how fast can we grow without breaking it?"</div>
+
+  <div class="subsection">
+    <p>In Stage 1, you discovered whether customers genuinely succeed with your product. In Stage 2, you proved your sales and marketing motion generates positive unit economics. Stage 3 accepts both as given and asks: what is the maximum sustainable growth rate?</p>
+
+    <div class="subsection-title">The Three Shifts at Stage 3</div>
+    <table class="data-table">
+      <thead>
+        <tr><th>Dimension</th><th>Stage 1–2 Focus</th><th>Stage 3 Focus</th></tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>The Goal</strong></td>
+          <td>Proving unit economics</td>
+          <td>Maximizing revenue growth rate</td>
+        </tr>
+        <tr>
+          <td><strong>The Risk</strong></td>
+          <td>Scaling too early</td>
+          <td>Not scaling fast enough</td>
+        </tr>
+        <tr>
+          <td><strong>The Metrics</strong></td>
+          <td>LIR achievement rate, LIUE approaching 3</td>
+          <td>NRR, market share, moat construction — with LIUE &gt; 3 and LIR ≥ threshold as guardrails</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="callout callout-best-practice">
+    <div class="callout-title">Key Principle — Stage 3</div>
+    <p><strong>"Scale as fast as possible without losing GTM Fit (LIUE &gt; 3) or PMF (LIR ≥ threshold)."</strong><br/>
+    LIUE and LIR no longer need to be improved — they need to be preserved. The moment either degrades, you slow down and fix before continuing to add headcount.</p>
+  </div>
+
+  <div class="subsection">
+    <div class="subsection-title">Why Stage 3 Is Hard</div>
+    <p>The most common Series B failure mode is confusing revenue growth with sustainable growth. Companies hire large batches of salespeople, open new markets simultaneously, and launch new demand gen channels — all at once. The result: diluted management attention, degraded playbook fidelity, corrupted LIUE measurement, and a cohort of underperforming reps who are expensive to remove.</p>
+    <p>Stage 3 discipline means growing as fast as your gauges allow — not as fast as your board demands.</p>
+  </div>
+
+  <!-- ══════════════════════════════════════════════
+       SECTION 2: THE SPEEDOMETER
+  ══════════════════════════════════════════════ -->
+  <div class="section-title">The Speedometer — Knowing When to Accelerate</div>
+  <div class="section-intro">Two continuously monitored gauges define how fast you can grow. Both must stay green. The moment either turns red, you stop adding headcount and diagnose the cause.</div>
+
+  <div class="speedometer-grid">
+    <div class="speedometer-card">
+      <div class="sp-num">Gauge 1</div>
+      <div class="sp-title">LIR Cohort Chart</div>
+      <div class="sp-desc">Tracks the percentage of new customers hitting LIR by acquisition cohort over time. Each monthly cohort should be achieving LIR at the same rate as the cohorts that proved PMF. If the rate drops below threshold, STOP scaling and investigate — it means the playbook is not transferring correctly to new reps or new customers.</div>
+      <div class="zone-row">
+        <span class="zone-tag zone-green">Green: LIR rate ≥ threshold</span>
+        <span class="zone-tag zone-yellow">Yellow: within 10 pts</span>
+        <span class="zone-tag zone-red">Red: below threshold</span>
+      </div>
+    </div>
+    <div class="speedometer-card">
+      <div class="sp-num">Gauge 2</div>
+      <div class="sp-title">LIUE Dashboard</div>
+      <div class="sp-desc">Tracks the LTV/CAC ratio by cohort and by segment. All four LIUE input metrics (SQLs per rep, Cost per SQL, SQL-to-Customer%, ACV) must stay on target. If LIUE drops below 3, STOP scaling — adding headcount when unit economics are degrading destroys value at scale.</div>
+      <div class="zone-row">
+        <span class="zone-tag zone-green">Green: LIUE &gt; 3</span>
+        <span class="zone-tag zone-yellow">Yellow: 2.5–3</span>
+        <span class="zone-tag zone-red">Red: LIUE &lt; 2.5</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="speed-action">
+    <div class="sa-card red-card">
+      <div class="sac-title">Either Gauge Goes Red → Pause</div>
+      <div class="sac-body">Stop adding salespeople immediately. The signal is real — something in the playbook, the target market, or the onboarding has broken. Diagnose the root cause. Do not resume at pace until both gauges return to green for two consecutive months.</div>
+    </div>
+    <div class="sa-card green-card">
+      <div class="sac-title">Both Gauges Stay Green → Accelerate</div>
+      <div class="sac-body">Both green means the playbook is scaling cleanly. Double the hiring pace. Add new demand gen channels. Begin investing in EXPERIMENT segments. The green light is your evidence-based authorization to move faster than you feel comfortable moving.</div>
+    </div>
+  </div>
+
+  <div class="callout callout-definition">
+    <div class="callout-title">Scientific Answer to Board Pressure</div>
+    <p>When investors push you to hire 20 reps immediately: "We will hire 2 salespeople per month and monitor our leading indicators. If both speedometers stay green for 60 days, we will double to 4 per month. This is the fastest safe rate." Show the board the gauges. Let the data make the decision.</p>
+  </div>
+
+  <!-- ══════════════════════════════════════════════
+       SECTION 3: SEGMENT ANALYSIS
+  ══════════════════════════════════════════════ -->
+  <div class="section-title">Segment Analysis: Scale, Experiment, or Ignore</div>
+  <div class="section-intro">The most dangerous analytical mistake in growth-stage companies is using consolidated metrics that average across all segments. A company with LIUE of 4 overall may have a segment with LIUE of 0.8 hidden inside a segment with LIUE of 7. That 0.8 segment is destroying value. The 7 segment is being underinvested. Consolidated metrics make both invisible.</div>
+
+  <p style="font-size: 15px; margin-bottom: 16px;">Every product × market × channel combination must be evaluated independently using the Growth &amp; Moat decision matrix. The three possible decisions:</p>
+
+  <div class="decision-3col">
+    <div class="dec-card scale">
+      <div class="dec-label">Decision 1</div>
+      <div class="dec-title">SCALE</div>
+      <p style="font-size: 13px; margin-bottom: 10px; color: #1a3a1a;"><strong>All criteria must be true:</strong></p>
+      <ul>
+        <li>LIUE &gt; 3 (positive unit economics validated)</li>
+        <li>LIR achievement rate ≥ threshold (PMF maintained)</li>
+        <li>Sufficient TAM to justify continued investment</li>
+        <li>Proven, codified playbook in place</li>
+      </ul>
+      <p style="font-size: 12px; color: #437A22; margin-top: 10px; font-weight: 600;">Action: Add headcount at 2/month cadence. Scale demand gen. Build moat.</p>
+    </div>
+    <div class="dec-card experiment">
+      <div class="dec-label">Decision 2</div>
+      <div class="dec-title">EXPERIMENT</div>
+      <p style="font-size: 13px; margin-bottom: 10px; color: #3a2a00;"><strong>One or more conditions present:</strong></p>
+      <ul>
+        <li>LIUE between 1–3 (marginal economics — optimize before scaling)</li>
+        <li>LIR below threshold in some cohorts (PMF uncertain — investigate)</li>
+        <li>Emerging segment with promising early signals but insufficient data</li>
+        <li>GTM playbook not yet codified for this segment</li>
+      </ul>
+      <p style="font-size: 12px; color: #7a6000; margin-top: 10px; font-weight: 600;">Action: Small cross-functional team (2 AE + 1 CSM). Run the Stage 1 → Stage 2 sequence independently.</p>
+    </div>
+    <div class="dec-card ignore">
+      <div class="dec-label">Decision 3</div>
+      <div class="dec-title">IGNORE</div>
+      <p style="font-size: 13px; margin-bottom: 10px; color: #3a3a38;"><strong>Any one condition present:</strong></p>
+      <ul>
+        <li>LIUE &lt; 1 (actively destroying value)</li>
+        <li>LIR persistently below threshold (customers don't succeed)</li>
+        <li>Market too small or too competitive to build a moat</li>
+        <li>No credible path to LIUE &gt; 3 within 12 months</li>
+      </ul>
+      <p style="font-size: 12px; color: var(--text-muted); margin-top: 10px; font-weight: 600;">Action: Reallocate resources. Do not invest management attention here.</p>
+    </div>
+  </div>
+
+  <div class="subsection-title" style="margin-top: 28px;">Acme Software Example — $30M ARR</div>
+  <p style="font-size: 14px; color: var(--text-muted); margin-bottom: 12px;">Evaluating four segments independently reveals that consolidated metrics would have masked the International segment's value-destructive economics:</p>
+
+  <table class="data-table">
+    <thead>
+      <tr><th>Segment</th><th>LIUE (LTV/CAC)</th><th>LIR Rate</th><th>TAM</th><th>Decision</th></tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><strong>Direct Mid-Market</strong></td>
+        <td>5.2</td>
+        <td>78%</td>
+        <td>Large</td>
+        <td><span class="acme-badge scale">SCALE</span></td>
+      </tr>
+      <tr>
+        <td><strong>Direct Enterprise</strong></td>
+        <td>4.1</td>
+        <td>71%</td>
+        <td>Large</td>
+        <td><span class="acme-badge scale">SCALE</span></td>
+      </tr>
+      <tr>
+        <td><strong>SMB via Partners</strong></td>
+        <td>2.1</td>
+        <td>48%</td>
+        <td>Very Large</td>
+        <td><span class="acme-badge experiment">EXPERIMENT</span></td>
+      </tr>
+      <tr>
+        <td><strong>International</strong></td>
+        <td>0.8</td>
+        <td>39%</td>
+        <td>Uncertain</td>
+        <td><span class="acme-badge ignore">IGNORE</span></td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div class="callout callout-warning" style="margin-top: 12px;">
+    <div class="callout-title">The Hidden Trap</div>
+    <p>Acme's blended LIUE is approximately 3.5 — which looks healthy and would pass the threshold check. But International (LIUE 0.8) is destroying value, and SMB Partners (LIUE 2.1) is consuming resources without clear payback. Only granular segment analysis surfaces these decisions.</p>
+  </div>
+
+  <!-- ══════════════════════════════════════════════
+       SECTION 4: SCALING PACE
+  ══════════════════════════════════════════════ -->
+  <div class="section-title">Scaling Pace: The 2-Per-Month Rule</div>
+  <div class="section-intro">The recommended pace for Growth &amp; Moat: hire 2 salespeople per month for 6 months. Then review. Then decide whether to accelerate, maintain, or pause. This isn't conservative — it's scientific.</div>
+
+  <div class="callout callout-formula" style="margin-bottom: 20px;">
+    <div class="callout-title">Why Not Hire in Batches?</div>
+    <p>Hiring 10 reps at once means: if the hiring scorecard is wrong, all 10 are wrong. If onboarding has a gap, all 10 experience it. You won't know for 6 months. By month 6, you've committed to all 10. With paced hiring, you catch problems in month 2 before months 3–6.</p>
+  </div>
+
+  <div class="subsection-title">Why Paced Hiring Works: Four Mechanisms</div>
+  <div class="pace-rationale">
+    <div class="pr-card">
+      <div class="pr-num">1</div>
+      <div class="pr-body"><strong>Ramp Staggering</strong>You get early signals from Month 1 reps before you've committed to Month 6 reps. If Month 1 reps show a pattern of selling to wrong-fit customers, you catch it before it compounds.</div>
+    </div>
+    <div class="pr-card">
+      <div class="pr-num">2</div>
+      <div class="pr-body"><strong>Cohort Learning</strong>Each monthly cohort becomes a natural experiment. You iterate the hiring scorecard and onboarding based on what you learn from each cohort before the next begins.</div>
+    </div>
+    <div class="pr-card">
+      <div class="pr-num">3</div>
+      <div class="pr-body"><strong>Manager Span Control</strong>Each manager can handle a controlled ramp. A manager with 2 new reps per month can maintain coaching quality. A manager with 10 new reps at once cannot. Quality of coaching → quality of early customer relationships.</div>
+    </div>
+    <div class="pr-card">
+      <div class="pr-num">4</div>
+      <div class="pr-body"><strong>LIR/LIUE Protection</strong>If a cohort of reps sells to wrong-fit customers, the LIR drop appears in month 2–3, not month 6. You stop and fix before it cascades into a cohort of customers who churn at month 12.</div>
+    </div>
+  </div>
+
+  <div class="subsection-title" style="margin-top: 24px;">The 6-Month Iteration Cycle</div>
+  <div class="pace-timeline">
+    <div class="pace-step">
+      <div class="pt-left"><div class="pt-dot"></div><div class="pt-line"></div></div>
+      <div class="pt-body">
+        <div class="ptb-step">Month 1</div>
+        <div class="ptb-title">Hire First 2 Reps</div>
+        <div class="ptb-desc">Apply the hiring scorecard rigorously. Begin structured onboarding. Set 30/60/90 milestones. Do not compromise on scorecard criteria under timeline pressure — a below-threshold hire costs 18+ months and damages LIUE.</div>
+      </div>
+    </div>
+    <div class="pace-step">
+      <div class="pt-left"><div class="pt-dot"></div><div class="pt-line"></div></div>
+      <div class="pt-body">
+        <div class="ptb-step">Months 2–5</div>
+        <div class="ptb-title">Hire 2 Per Month, Monitor Gauges</div>
+        <div class="ptb-desc">Track ramp speed, quota attainment rate, and quality of customers closed (LIR achievement by rep cohort). If Month 1 reps show LIR rates below threshold from their customer base, stop and investigate before Month 6 hiring.</div>
+      </div>
+    </div>
+    <div class="pace-step">
+      <div class="pt-left"><div class="pt-dot"></div><div class="pt-line"></div></div>
+      <div class="pt-body">
+        <div class="ptb-step">Month 6</div>
+        <div class="ptb-title">Scorecard Review</div>
+        <div class="ptb-desc">Compare top performers vs. bottom performers against the original scorecard. Which attributes actually predicted success? Which were false positives? Update the scorecard to reflect observed predictors, not assumed ones.</div>
+      </div>
+    </div>
+    <div class="pace-step">
+      <div class="pt-left"><div class="pt-dot"></div><div class="pt-line"></div></div>
+      <div class="pt-body">
+        <div class="ptb-step">Month 7+</div>
+        <div class="ptb-title">Accelerate or Maintain Based on Gauges</div>
+        <div class="ptb-desc">If both speedometers stayed green through the first 6 months: accelerate to 4 per month. If either broke: fix, then restart at 2. Update onboarding based on Month 1–6 learnings. Begin next iteration cycle.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════════════
+       SECTION 5: SALES HIRING FORMULA
+  ══════════════════════════════════════════════ -->
+  <div class="section-title">The Sales Hiring Formula in Stage 3</div>
+  <div class="section-intro">Stage 2 hired Process Builders who designed the playbook. Stage 3 hires Process Executors who execute it with consistency. The profile shift is fundamental — and the hiring scorecard must reflect it.</div>
+
+  <div class="subsection">
+    <div class="subsection-title">Profile Shift: Builder → Executor</div>
+    <table class="data-table">
+      <thead>
+        <tr><th>Attribute</th><th>Stage 2: Process Builder</th><th>Stage 3: Process Executor</th></tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>Playbook Relationship</strong></td>
+          <td>Creates the playbook from scratch</td>
+          <td>Follows the playbook precisely; iterates within bounds</td>
+        </tr>
+        <tr>
+          <td><strong>Forecasting</strong></td>
+          <td>Uncertain — market is still being defined</td>
+          <td>Consistent and accurate — predictable pipeline behavior</td>
+        </tr>
+        <tr>
+          <td><strong>CRM Discipline</strong></td>
+          <td>Moderate — speed matters more than hygiene</td>
+          <td>High — data accuracy enables LIUE measurement</td>
+        </tr>
+        <tr>
+          <td><strong>Coaching Receptivity</strong></td>
+          <td>Helpful but not defining</td>
+          <td>Critical — coachability is the top-weighted attribute</td>
+        </tr>
+        <tr>
+          <td><strong>Ambiguity Tolerance</strong></td>
+          <td>Very high</td>
+          <td>Moderate — playbook provides structure</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="subsection-title">Sales Hire Scorecard — Weighted Attributes</div>
+  <p style="font-size: 14px; color: var(--text-muted); margin-bottom: 12px;">Based on Mark Roberge's research at HubSpot. Each attribute is scored 1–10 and multiplied by the weight. Total score must exceed threshold for an offer. Do not compromise on the threshold under hiring pressure.</p>
+
+  <div class="scorecard-grid">
+    <div class="sc-item">
+      <div class="sc-weight high">9</div>
+      <div class="sc-label">Coachability — eagerly absorbs feedback; doesn't defend, improves</div>
+    </div>
+    <div class="sc-item">
+      <div class="sc-weight high">9</div>
+      <div class="sc-label">Curiosity — asks great questions; intellectually hungry</div>
+    </div>
+    <div class="sc-item">
+      <div class="sc-weight high">8</div>
+      <div class="sc-label">Work Ethic — disciplined daily routine; consistent activity</div>
+    </div>
+    <div class="sc-item">
+      <div class="sc-weight high">8</div>
+      <div class="sc-label">Intelligence — connects buyer context to solution quickly</div>
+    </div>
+    <div class="sc-item">
+      <div class="sc-weight med">7</div>
+      <div class="sc-label">Prior Success — evidence of achievement, not just experience or tenure</div>
+    </div>
+    <div class="sc-item">
+      <div class="sc-weight med">5</div>
+      <div class="sc-label">Passion — genuine enthusiasm for the problem domain</div>
+    </div>
+    <div class="sc-item">
+      <div class="sc-weight low">3</div>
+      <div class="sc-label">Preparedness — showed up ready; researched the company</div>
+    </div>
+    <div class="sc-item">
+      <div class="sc-weight low">3</div>
+      <div class="sc-label">Adaptability — adjusts approach when direction changes</div>
+    </div>
+    <div class="sc-item">
+      <div class="sc-weight low">3</div>
+      <div class="sc-label">Competitiveness — motivated by beating targets and peers</div>
+    </div>
+    <div class="sc-item">
+      <div class="sc-weight low">3</div>
+      <div class="sc-label">Communication Brevity — says a lot in few words</div>
+    </div>
+  </div>
+
+  <div class="callout callout-warning" style="margin-top: 16px;">
+    <div class="callout-title">The Scorecard Iteration Rule</div>
+    <p>At month 6 of each hiring cohort, compare the top-quartile reps vs. bottom-quartile reps against the original scorecard. Which attributes predicted success? Which didn't? Update weights accordingly. A bad rep hire costs 18+ months of lost productivity, pipeline damage, and customer LIR degradation — the scorecard is not a bureaucratic exercise, it's risk management.</p>
+  </div>
+
+  <div class="subitem-grid" style="margin-top: 20px;">
+    <a href="template-scorecard-sales.html" class="subitem-card">
+      <div class="sc-title">Sales Rep Scorecard Template</div>
+      <div class="sc-desc">Full scoring worksheet with weighted attributes and evaluation rubrics for structured interview panels</div>
+      <span class="sc-arrow">→</span>
+    </a>
+    <a href="template-scorecard-sales-leader.html" class="subitem-card">
+      <div class="sc-title">Sales Leader Scorecard Template</div>
+      <div class="sc-desc">Scorecard adapted for VP Sales, Sales Director, and Team Lead evaluations</div>
+      <span class="sc-arrow">→</span>
+    </a>
+  </div>
+
+  <!-- ══════════════════════════════════════════════
+       SECTION 6: COMPENSATION — ADD PROMOTION PATH
+  ══════════════════════════════════════════════ -->
+  <div class="section-title">Compensation in Stage 3: Add Promotion Path</div>
+  <div class="section-intro">Stage 2's 50/50 compensation structure is maintained. Stage 3 adds a data-driven, objective promotion path — because in high-growth companies, retaining your best reps is as strategically important as hiring new ones.</div>
+
+  <div class="subsection">
+    <div class="subsection-title">Maintain the 50/50 Commission Structure</div>
+    <ul class="bullet-list">
+      <li><strong>50% at contract close</strong> — rewards the sale</li>
+      <li><strong>50% when customer achieves LIR</strong> (within T + 30 day grace) — rewards the right sale</li>
+      <li>This structure ensures reps self-select better-fit customers. A rep who closes 10 poor-fit customers earns 50% of expected commission. A rep who closes 10 great-fit customers earns 100%.</li>
+    </ul>
+  </div>
+
+  <div class="subsection">
+    <div class="subsection-title">Why Promotion Path Matters in Stage 3</div>
+    <p>In a 10-person company, career progression is visible. In a 100-person company, it's invisible unless you make it explicit. Ambitious top performers need a clear, objective path forward. Without it, they listen to recruiters. With it, they stay to build.</p>
+
+    <div class="callout callout-best-practice" style="margin-top: 12px;">
+      <div class="callout-title">The No-Subjectivity Rule</div>
+      <p>Every promotion criterion must be measurable and objective. No "demonstrated leadership" without definition. No "ready in the manager's judgment." Subjective promotions create fairness perceptions and destroy culture. Objective promotions create predictability and trust.</p>
+    </div>
+  </div>
+
+  <div class="subsection-title">Data-Driven Promotion Path — AE Track</div>
+  <div class="promo-path">
+    <div class="promo-step">
+      <div class="promo-left"><div class="ps-dot"></div><div class="ps-line"></div></div>
+      <div class="promo-body">
+        <div class="pb-title">AE1 → AE2</div>
+        <div class="pb-criteria">Achieve ≥110% quota attainment for 2 consecutive quarters AND LIR achievement rate &gt; 75% of their closed customers. Both criteria required — a rep who sells to wrong-fit customers is not eligible regardless of quota attainment.</div>
+      </div>
+    </div>
+    <div class="promo-step">
+      <div class="promo-left"><div class="ps-dot"></div><div class="ps-line"></div></div>
+      <div class="promo-body">
+        <div class="pb-title">AE2 → Senior AE</div>
+        <div class="pb-criteria">≥110% quota attainment for 3 consecutive quarters AND LIR achievement rate maintained AND demonstrated active mentorship of 1+ new AE through ramp (verified by manager and mentee).</div>
+      </div>
+    </div>
+    <div class="promo-step">
+      <div class="promo-left"><div class="ps-dot"></div><div class="ps-line"></div></div>
+      <div class="promo-body">
+        <div class="pb-title">Senior AE → Team Lead</div>
+        <div class="pb-criteria">≥110% quota attainment for 4 consecutive quarters AND LIR achievement rate &gt; threshold AND peer evaluation score &gt; 8/10 from fellow ICs AND demonstrated coaching ability (at least 1 mentee who independently achieved quota attainment).</div>
+      </div>
+    </div>
+    <div class="promo-step">
+      <div class="promo-left"><div class="ps-dot"></div><div class="ps-line"></div></div>
+      <div class="promo-body">
+        <div class="pb-title">Team Lead → Sales Manager</div>
+        <div class="pb-criteria">Minimum 2 quarters as Team Lead with team quota attainment ≥100% AND team LIR rate ≥ threshold AND 360° eval from direct reports &gt; 8/10. Transition to manager quota (team-based) replaces individual quota.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════════════
+       SECTION 7: THE 5 SUSTAINABLE MOATS
+  ══════════════════════════════════════════════ -->
+  <div class="section-title">The 5 Sustainable Moats</div>
+  <div class="section-intro">Growth attracts competition. The "Moat" half of Growth &amp; Moat is the deliberate construction of structural competitive advantages that make your position increasingly difficult to replicate — even by a better-funded or better-engineered competitor.</div>
+
+  <div class="callout callout-definition">
+    <div class="callout-title">The Disruption Test</div>
+    <p>"If 10 brilliant ex-Google engineers replicated your product and sold it for half the price — why would you still win?" If you don't have a clear answer, you have a first-mover advantage, not a moat. First-mover advantages erode. Moats compound.</p>
+  </div>
+
+  <div class="moat-grid">
+    <div class="moat-card">
+      <div class="mc-num">1</div>
+      <div>
+        <div class="mc-title">Network Effects</div>
+        <div class="mc-body">The product becomes more valuable as more customers use it. Each new customer increases value for all existing customers, creating a compounding advantage that replication cannot match — because replication can copy the product but not the network.</div>
+        <div class="mc-body"><strong>Examples:</strong> Marketplaces (more buyers attract more sellers), communication tools (more users = more utility), data networks (more data = smarter outputs).</div>
+        <div class="mc-meta">
+          <div class="mc-meta-item">
+            <span class="mc-meta-label">How to Build</span>
+            <span class="mc-meta-value">Design product interactions that create value for existing users when new users join. Add data aggregation layers.</span>
+          </div>
+          <div class="mc-meta-item">
+            <span class="mc-meta-label">Leading Indicator</span>
+            <span class="mc-meta-value">DAU/MAU ratio, inter-user connections, data contributed per customer/month</span>
+          </div>
+          <div class="mc-meta-item">
+            <span class="mc-meta-label">Defensibility</span>
+            <span class="mc-defensibility">Extremely High</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="moat-card">
+      <div class="mc-num">2</div>
+      <div>
+        <div class="mc-title">Brand &amp; Category Ownership</div>
+        <div class="mc-body">Becoming the default mental association when someone thinks of your problem category. The goal is not brand awareness — it's category definition. When buyers search for a solution, they think of your name first.</div>
+        <div class="mc-body"><strong>Examples:</strong> Salesforce = CRM, Zoom = video calls, HubSpot = inbound marketing, Slack = team messaging. Each company did not just win the category — they named it.</div>
+        <div class="mc-meta">
+          <div class="mc-meta-item">
+            <span class="mc-meta-label">How to Build</span>
+            <span class="mc-meta-value">Consistent thought leadership, category-level content, customer success stories at scale, analyst relations</span>
+          </div>
+          <div class="mc-meta-item">
+            <span class="mc-meta-label">Leading Indicator</span>
+            <span class="mc-meta-value">Branded search volume, share of voice, analyst placement, inbound % of pipeline</span>
+          </div>
+          <div class="mc-meta-item">
+            <span class="mc-meta-label">Defensibility</span>
+            <span class="mc-defensibility">High</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="moat-card">
+      <div class="mc-num">3</div>
+      <div>
+        <div class="mc-title">Viral Distribution</div>
+        <div class="mc-body">Product-led growth where each customer naturally acquires additional customers through normal product use. Measured by the viral coefficient (K-factor): number of new users each existing user brings in. K &gt; 1 creates exponential growth without proportional CAC increase.</div>
+        <div class="mc-body"><strong>Examples:</strong> Slack (invite teammates to a channel), Dropbox (share a folder → recipient needs an account), Calendly (share a scheduling link → sender exposes recipient to the product).</div>
+        <div class="mc-meta">
+          <div class="mc-meta-item">
+            <span class="mc-meta-label">How to Build</span>
+            <span class="mc-meta-value">Design sharing moments into core workflows. Make the product's value visible to non-users. Reduce friction to join.</span>
+          </div>
+          <div class="mc-meta-item">
+            <span class="mc-meta-label">Leading Indicator</span>
+            <span class="mc-meta-value">K-factor (viral coefficient), % of new customers from existing-customer referral, organic signup rate</span>
+          </div>
+          <div class="mc-meta-item">
+            <span class="mc-meta-label">Defensibility</span>
+            <span class="mc-defensibility">High</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="moat-card">
+      <div class="mc-num">4</div>
+      <div>
+        <div class="mc-title">Switching Costs</div>
+        <div class="mc-body">Deep product integration into customer workflows such that the cost of migrating to a competitor is high — in time, risk, and organizational disruption. Switching costs don't prevent churn from failing to deliver value, but they create meaningful friction for customers who are satisfied but curious about alternatives.</div>
+        <div class="mc-body"><strong>Examples:</strong> ERP systems (years of financial data and configured workflows), data platforms (petabytes of stored data), deeply integrated APIs (rewriting integrations is a multi-month engineering project).</div>
+        <div class="mc-meta">
+          <div class="mc-meta-item">
+            <span class="mc-meta-label">How to Build</span>
+            <span class="mc-meta-value">Deliberate onboarding design that deepens integration. Data import and configuration tools. API ecosystem development. Multi-team adoption.</span>
+          </div>
+          <div class="mc-meta-item">
+            <span class="mc-meta-label">Leading Indicator</span>
+            <span class="mc-meta-value">Integrations per customer, data volume in platform, % of customer teams actively using product, multi-year contract rate</span>
+          </div>
+          <div class="mc-meta-item">
+            <span class="mc-meta-label">Defensibility</span>
+            <span class="mc-defensibility">High</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="moat-card">
+      <div class="mc-num">5</div>
+      <div>
+        <div class="mc-title">Learning Algorithms</div>
+        <div class="mc-body">AI/ML models that improve in accuracy and performance as more customer data flows through them. Creates a compounding data moat: more customers → more data → better model → more customers. A new entrant cannot replicate this advantage without equivalent data volume, which requires equivalent market share — which they don't have.</div>
+        <div class="mc-body"><strong>Examples:</strong> Recommendation engines (Netflix, Spotify), predictive forecasting tools, fraud detection models, speech-to-text (more usage = more training = better accuracy).</div>
+        <div class="mc-meta">
+          <div class="mc-meta-item">
+            <span class="mc-meta-label">How to Build</span>
+            <span class="mc-meta-value">Instrument data collection from day 1. Train models on customer behavior. Surface model outputs as product features to create a data flywheel.</span>
+          </div>
+          <div class="mc-meta-item">
+            <span class="mc-meta-label">Leading Indicator</span>
+            <span class="mc-meta-value">Model accuracy over time, training data volume, feature adoption rate of AI-powered features</span>
+          </div>
+          <div class="mc-meta-item">
+            <span class="mc-meta-label">Defensibility</span>
+            <span class="mc-defensibility">Extremely High</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════════════
+       SECTION 8: DEMAND GEN IN STAGE 3
+  ══════════════════════════════════════════════ -->
+  <div class="section-title">Demand Gen in Stage 3: Multiple Aligned Channels</div>
+  <div class="section-intro">Stage 2 proved one scalable demand gen channel. Stage 3 adds additional channels — but only using the same selection criteria that worked in Stage 2. Each channel must align to ICP, be measurable, be testable rapidly, and produce customers who achieve LIR.</div>
+
+  <div class="subsection">
+    <div class="subsection-title">The Multi-Channel Framework</div>
+    <p style="font-size: 15px; margin-bottom: 16px;">Stage 3 demand gen targets a portfolio of aligned channels. The sequencing matters — scale proven channels first, then experiment with adjacent channels:</p>
+
+    <div class="channel-grid">
+      <div class="ch-card">
+        <div class="ch-title">Content Marketing</div>
+        <div class="ch-desc">SEO-driven inbound. Long-term compounding asset. Measures: organic traffic, MQL quality, SQL conversion from organic. Requires 6–12 month investment before scale.</div>
+      </div>
+      <div class="ch-card">
+        <div class="ch-title">Paid Acquisition</div>
+        <div class="ch-desc">Fastest to test. Immediate feedback on cost per SQL. Measures: Cost per SQL by channel, SQL-to-Customer%, LIR achievement rate from paid cohorts.</div>
+      </div>
+      <div class="ch-card">
+        <div class="ch-title">Outbound Sales</div>
+        <div class="ch-desc">Rep-driven prospecting. Highest control over ICP targeting. Measures: response rate, meeting rate, SQL quality score, pipeline from outbound.</div>
+      </div>
+      <div class="ch-card">
+        <div class="ch-title">Partner / Channel</div>
+        <div class="ch-desc">Leverage partner networks to reach segments outside direct sales reach. Measures: partner-sourced ARR, partner-close LIR rate (often lower — watch carefully).</div>
+      </div>
+      <div class="ch-card">
+        <div class="ch-title">Events &amp; Community</div>
+        <div class="ch-desc">Category building. High cost, high brand impact. Measures: pipeline sourced from events, brand search lift, community member-to-SQL conversion rate.</div>
+      </div>
+      <div class="ch-card">
+        <div class="ch-title">Product-Led Growth</div>
+        <div class="ch-desc">Freemium or free-trial self-service. Viral coefficient driver. Measures: free-to-paid conversion, time-to-conversion, LIUE of PLG segment vs. direct sales segment.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="subsection">
+    <div class="subsection-title">The 4 Channel Selection Criteria (Same as Stage 2)</div>
+    <p style="font-size: 15px; margin-bottom: 12px;">Every new channel must pass all four criteria before investment scales:</p>
+    <ul class="bullet-list">
+      <li><strong>ICP Alignment</strong> — does this channel reach buyers who match your ICP? If not, the customers it produces will have lower LIR achievement rates.</li>
+      <li><strong>Measurability</strong> — can you track cost per SQL, SQL-to-Customer%, and LIR rate by channel? If attribution is impossible, LIUE by segment becomes unmeasurable.</li>
+      <li><strong>Rapid Test Potential</strong> — can you run a 30-60 day test with statistically meaningful results? Channels that require 12+ months to evaluate consume budget before feedback arrives.</li>
+      <li><strong>Customer Success Alignment</strong> — does the customer acquisition process set expectations that match what successful customers actually experience? Channels that overpromise produce customers who miss LIR.</li>
+    </ul>
+  </div>
+
+  <div class="callout callout-warning">
+    <div class="callout-title">Attribution Danger in Stage 3</div>
+    <p>Adding multiple channels simultaneously corrupts LIUE measurement unless attribution is clean. If you can't tell which channel sourced each SQL, you can't calculate cost per SQL by channel. If you can't calculate cost per SQL by channel, you can't know which channels are producing positive LIUE and which are destroying it. Track SQL quality by channel — not just quantity.</p>
+  </div>
+
+  <!-- ══════════════════════════════════════════════
+       SECTION 9: KEY METRICS IN STAGE 3
+  ══════════════════════════════════════════════ -->
+  <div class="section-title">Key Metrics in Stage 3</div>
+  <div class="section-intro">Stage 3 introduces revenue growth and market position metrics alongside the Stage 1–2 guardrails. All prior metrics remain active — they are floors, not targets. The targets in Stage 3 are NRR, ARR growth rate, and market share.</div>
+
+  <div class="metrics-table-wrap">
+    <table class="data-table">
+      <thead>
+        <tr>
+          <th>Metric</th>
+          <th>Definition</th>
+          <th>Target</th>
+          <th>Role</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>NRR</strong></td>
+          <td>Net Revenue Retention — ARR retained + expanded from existing customers</td>
+          <td>&gt;120%</td>
+          <td>Primary growth flywheel signal</td>
+        </tr>
+        <tr>
+          <td><strong>ARR Growth Rate</strong></td>
+          <td>Year-over-year ARR increase</td>
+          <td>Maximize (within LIUE &gt; 3)</td>
+          <td>Primary Stage 3 objective</td>
+        </tr>
+        <tr>
+          <td><strong>LIUE</strong></td>
+          <td>LTV/CAC ratio (full formula)</td>
+          <td>&gt;3 (guardrail)</td>
+          <td>Gauge 2 — must stay green</td>
+        </tr>
+        <tr>
+          <td><strong>LIR Achievement Rate</strong></td>
+          <td>% of monthly cohort hitting LIR event within T days</td>
+          <td>≥ threshold (guardrail)</td>
+          <td>Gauge 1 — must stay green</td>
+        </tr>
+        <tr>
+          <td><strong>Market Share</strong></td>
+          <td>Share of serviceable addressable market captured</td>
+          <td>Growing vs. competitors</td>
+          <td>Moat construction signal</td>
+        </tr>
+        <tr>
+          <td><strong>Viral Coefficient (K-Factor)</strong></td>
+          <td>New customers acquired per existing customer organically</td>
+          <td>&gt;0.5 for material impact; &gt;1.0 for virality</td>
+          <td>Distribution moat indicator</td>
+        </tr>
+        <tr>
+          <td><strong>Payback Period</strong></td>
+          <td>Months to recover fully loaded CAC from gross margin</td>
+          <td>&lt;18 months</td>
+          <td>Capital efficiency signal</td>
+        </tr>
+        <tr>
+          <td><strong>Magic Number</strong></td>
+          <td>Net new ARR ÷ S&amp;M spend from prior quarter</td>
+          <td>&gt;1.0</td>
+          <td>GTM efficiency at scale</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="callout callout-definition" style="margin-top: 12px;">
+    <div class="callout-title">Metric Hierarchy in Stage 3</div>
+    <p>LIUE &gt; 3 and LIR ≥ threshold are <strong>floors</strong> — non-negotiable conditions for continued scaling. ARR growth rate is the <strong>primary objective</strong>. NRR &gt; 120% is the <strong>highest-leverage input</strong> to ARR growth, because expansion revenue compounds without additional CAC. If you can only fix one thing, fix the expansion motion first.</p>
+  </div>
+
+  <!-- ══════════════════════════════════════════════
+       RELATED LINKS
+  ══════════════════════════════════════════════ -->
+  <div class="section-title">In the 6-Phase Revenue System</div>
+  <p class="section-intro">Stage 3 (Growth &amp; Moat) is the operational context for Phase 5. Roberge's repeatability test IS the Stage 2→3 gate condition. NRR and revenue growth rate are the Stage 3 north star metrics.</p>
+
+  <div class="phase-map-grid">
+    <a href="../pages/phase5.html" class="phase-map-card">
+      <div class="pm-phase-label">Phase 5 — Primary Home</div>
+      <div class="pm-title">Scale, Repeatability &amp; NRR</div>
+      <div class="pm-desc">Stage 3 execution: 2-per-month hiring pace, segment analysis (Scale/Experiment/Ignore), NRR &gt; 120% target, moat construction through CS and product strategy.</div>
+    </a>
+    <a href="../pages/phase2.html" class="phase-map-card">
+      <div class="pm-phase-label">Phase 2 — Hiring Mode</div>
+      <div class="pm-title">Process Executor at Scale</div>
+      <div class="pm-desc">Stage 3 hiring: Process Executor profile, data-driven promotion path (AE1→AE2→Senior AE→Team Lead), cohort scorecard iteration every 6 months.</div>
+    </a>
+    <a href="../pages/phase3.html" class="phase-map-card">
+      <div class="pm-phase-label">Phase 3 — Multi-Channel</div>
+      <div class="pm-title">Multiple Demand Gen Channels</div>
+      <div class="pm-desc">Stage 3 demand gen: diversify to multiple aligned channels. Each must still pass the 4 criteria. Track LIUE by channel — reallocate quarterly based on ROI.</div>
+    </a>
+    <a href="../pages/phase6.html" class="phase-map-card">
+      <div class="pm-phase-label">Phase 6 — If Growth Stalls</div>
+      <div class="pm-title">Growth Stall Diagnostic</div>
+      <div class="pm-desc">Growth slowing with LIUE &gt; 3? Run segment analysis. Are you over-investing in EXPERIMENT or IGNORE segments? Is a moat being eroded by a new competitor?</div>
+    </a>
+  </div>
+
+  <div class="section-title">Key Tools for This Stage</div>
+  <div class="tools-grid">
+    <a href="sos-bottoms-up.html" class="tool-card tc-sos">
+      <div class="tc-phase">Model</div>
+      <div class="tc-title">GTM Bottoms-Up Model</div>
+      <div class="tc-desc">Translate Stage 3 segment decisions (Scale/Experiment/Ignore) into a headcount model grounded in rep productivity data.</div>
+    </a>
+    <a href="sos-checklist.html" class="tool-card tc-sos">
+      <div class="tc-phase">Stage Gate</div>
+      <div class="tc-title">GTM Scaling Checklist</div>
+      <div class="tc-desc">Gate 2 checklist: 19 items to verify before scaling into Stage 3. Prevents the most expensive mistake — scaling a broken GTM motion.</div>
+    </a>
+    <a href="template-cs-playbook.html" class="tool-card tc-res">
+      <div class="tc-phase">Template</div>
+      <div class="tc-title">CS Playbook — NRR Engine</div>
+      <div class="tc-desc">NRR &gt; 120% in Stage 3 requires a systematic CS motion. LIR-focused onboarding, QBR framework, expansion triggers, health scoring.</div>
+    </a>
+    <a href="template-scorecard-sales.html" class="tool-card tc-res">
+      <div class="tc-phase">Template</div>
+      <div class="tc-title">Sales Rep Scorecard (Stage 3)</div>
+      <div class="tc-desc">Process Executor attributes. Iterate scorecard at month 6 of each hiring cohort. Add promotion path criteria for AE1→AE2→Senior AE→Team Lead.</div>
+    </a>
+  </div>
+
+  <div class="related-section">
+    <div class="related-title">Related Pages</div>
+    <div class="related-links">
+      <a href="../pages/science-of-scaling.html" class="related-link">← Science of Scaling Overview</a>
+      <a href="sos-pmf.html" class="related-link">Stage 1: PMF</a>
+      <a href="sos-gtm-fit.html" class="related-link">Stage 2: GTM Fit</a>
+      <a href="sos-lir.html" class="related-link">LIR Deep Dive</a>
+      <a href="sos-liue.html" class="related-link">LIUE Deep Dive</a>
+      <a href="sos-bottoms-up.html" class="related-link">Bottoms-Up GTM Model</a>
+      <a href="../index.html" class="related-link">Home</a>
+    </div>
+  </div>
+
+</div>
+<script data-pplx-inline-edit>
+(function () {
+  if (window === window.top) return;
+
+  const allowedParentOrigins = ["https://www.perplexity.ai","https://perplexity.ai","https://testing.perplexity.ai","https://staging.perplexity.ai","https://*.preview.i.perplexity.ai","http://localhost:3000","http://127.0.0.1:3000","http://localhost:5173","http://127.0.0.1:5173"];
+  const MAX_FONT_BYTES = 500 * 1024;
+  const MAX_TOTAL_FONT_BYTES = 2 * 1024 * 1024;
+  let scrollForwarding = false;
+  let scrollRaf = 0;
+  let trustedTopOrigin = null;
+
+  // Allow entries like "https://*.preview.i.perplexity.ai" — the wildcard
+  // matches a single DNS label (no dots), so "https://*.foo" cannot stretch
+  // across multiple labels.
+  function matchesAllowedOrigin(origin) {
+    if (!origin) return false;
+    for (const entry of allowedParentOrigins) {
+      if (!entry.includes("*")) {
+        if (entry === origin) return true;
+        continue;
+      }
+      const pattern = new RegExp(
+        "^" +
+          entry.replace(/[.+?^${}()|[\]\\]/g, "\\$&").replace(/\*/g, "[^.]+") +
+          "$",
+      );
+      if (pattern.test(origin)) return true;
+    }
+    return false;
+  }
+
+  // Trust decision: when the sender is same-origin-visible (event.origin is a
+  // real origin like https://www.perplexity.ai) we trust event.origin directly.
+  // When event.origin is "null" (opaque broker srcdoc), we fall back to the
+  // broker's stamped `parentOrigin` to identify the top window. The fallback
+  // is claim-only — we rely on the browser's native `targetOrigin` enforcement
+  // on the response path (see postToTrustedTop) to ensure replies can't be
+  // delivered to anyone but the actual top window of that claimed origin.
+  function getTrustedParentOrigin(event) {
+    const forwardedParentOrigin =
+      typeof event.data.parentOrigin === "string" ? event.data.parentOrigin : null;
+    const parentOrigin = event.origin === "null" ? forwardedParentOrigin : event.origin;
+    return matchesAllowedOrigin(parentOrigin) ? parentOrigin : null;
+  }
+
+  // All responses go to window.top with targetOrigin = the allowlisted origin.
+  // An attacker that iframes us inside their own null-origin broker can claim
+  // any parentOrigin they like, but the browser will drop the reply whenever
+  // the real top's origin doesn't match — so the screenshot never leaves.
+  function postToTrustedTop(message) {
+    if (!trustedTopOrigin) return;
+    try {
+      window.top.postMessage(message, trustedTopOrigin);
+    } catch (_error) {}
+  }
+
+  function inlineAll(original, clone) {
+    if (original.nodeType !== 1 || clone.nodeType !== 1) return;
+
+    try {
+      const computedStyle = getComputedStyle(original);
+      // cssText on a computed style is the serialized declaration in modern
+      // Chromium/Safari — a single read beats enumerating ~400 longhand
+      // properties. Firefox returns "" here, so we fall back on empty.
+      const serialized = computedStyle.cssText;
+      if (serialized) {
+        clone.style.cssText = serialized;
+      } else {
+        const parts = new Array(computedStyle.length);
+        for (let index = 0; index < computedStyle.length; index += 1) {
+          const property = computedStyle[index];
+          parts[index] = `${property}:${computedStyle.getPropertyValue(property)};`;
+        }
+        clone.style.cssText = parts.join("");
+      }
+    } catch (_error) {}
+
+    const originalChildren = original.children;
+    const clonedChildren = clone.children;
+    for (
+      let index = 0;
+      index < originalChildren.length && index < clonedChildren.length;
+      index += 1
+    ) {
+      inlineAll(originalChildren[index], clonedChildren[index]);
+    }
+  }
+
+  function extractFontUrl(srcValue) {
+    const matches = [
+      ...srcValue.matchAll(
+        /url\(["']?([^"')]+)["']?\)(?:\s*format\(["']?([^"')]+)["']?\))?/gi,
+      ),
+    ];
+    if (matches.length === 0) return null;
+    const woff2 = matches.find((m) => m[2] && m[2].toLowerCase().includes("woff2"));
+    if (woff2) return woff2[1];
+    const woff = matches.find((m) => m[2] && m[2].toLowerCase().includes("woff"));
+    if (woff) return woff[1];
+    return matches[0][1];
+  }
+
+  // Cache resolved font URL -> data URI across captures. Fonts on a page
+  // essentially never change, and a batch run emits multiple captures back to
+  // back — without this we'd refetch + re-base64 every time.
+  const fontDataUriCache = new Map();
+  const SRC_DECLARATION_RE = /src\s*:\s*[^;}]+/i;
+
+  async function fetchAsDataUri(url) {
+    if (fontDataUriCache.has(url)) return fontDataUriCache.get(url);
+    let dataUri = null;
+    try {
+      const response = await fetch(url, { mode: "cors", credentials: "omit" });
+      if (response.ok) {
+        const blob = await response.blob();
+        if (blob.size <= MAX_FONT_BYTES) {
+          dataUri = await new Promise((resolve) => {
+            const reader = new FileReader();
+            reader.onloadend = () =>
+              resolve(typeof reader.result === "string" ? reader.result : null);
+            reader.onerror = () => resolve(null);
+            reader.readAsDataURL(blob);
+          });
+        }
+      }
+    } catch (_error) {
+      dataUri = null;
+    }
+    fontDataUriCache.set(url, dataUri);
+    return dataUri;
+  }
+
+  function collectFontFaceRuleTexts() {
+    const rules = [];
+    for (const sheet of document.styleSheets) {
+      let cssRules;
+      try {
+        cssRules = sheet.cssRules;
+      } catch (_error) {
+        continue;
+      }
+      if (!cssRules) continue;
+      for (const rule of cssRules) {
+        const cssText = rule.cssText || "";
+        if (cssText.startsWith("@font-face")) rules.push(cssText);
+      }
+    }
+    return rules;
+  }
+
+  async function buildInlinedFontCss() {
+    const ruleTexts = collectFontFaceRuleTexts();
+    if (ruleTexts.length === 0) return null;
+
+    const resolved = ruleTexts.map((cssText) => {
+      if (!SRC_DECLARATION_RE.test(cssText)) return null;
+      const srcMatch = cssText.match(/src\s*:\s*([^;}]+)[;}]/i);
+      if (!srcMatch) return null;
+      const url = extractFontUrl(srcMatch[1]);
+      if (!url) return null;
+      try {
+        return { cssText, url: new URL(url, document.baseURI).href };
+      } catch (_error) {
+        return null;
+      }
+    });
+
+    const dataUris = await Promise.all(
+      resolved.map((entry) => (entry ? fetchAsDataUri(entry.url) : Promise.resolve(null))),
+    );
+
+    const inlined = [];
+    let totalBytes = 0;
+    for (let index = 0; index < resolved.length; index += 1) {
+      const entry = resolved[index];
+      const dataUri = dataUris[index];
+      if (!entry || !dataUri) continue;
+      const approxBytes = dataUri.length * 0.75;
+      if (totalBytes + approxBytes > MAX_TOTAL_FONT_BYTES) break;
+      totalBytes += approxBytes;
+      inlined.push(entry.cssText.replace(SRC_DECLARATION_RE, `src: url("${dataUri}")`));
+    }
+    return inlined.length > 0 ? inlined.join("\n") : null;
+  }
+
+  function stripExternal(clone) {
+    const images = clone.querySelectorAll("img");
+    for (let index = 0; index < images.length; index += 1) {
+      const src = images[index].getAttribute("src");
+      if (src && !src.startsWith("data:")) images[index].removeAttribute("src");
+    }
+
+    const elements = clone.querySelectorAll("*");
+    for (let index = 0; index < elements.length; index += 1) {
+      const style = elements[index].style.cssText;
+      if (style && style.includes("url(")) {
+        elements[index].style.cssText = style.replace(
+          /url\(["']?(?!data:)[^)"']*["']?\)/gi,
+          "none",
+        );
+      }
+    }
+  }
+
+  function emitScroll() {
+    scrollRaf = 0;
+    if (!scrollForwarding) return;
+    postToTrustedTop({
+      type: "INLINE_EDIT_SCROLL",
+      scrollX: window.scrollX,
+      scrollY: window.scrollY,
+    });
+  }
+
+  window.addEventListener(
+    "scroll",
+    function () {
+      if (!scrollForwarding || scrollRaf) return;
+      scrollRaf = requestAnimationFrame(emitScroll);
+    },
+    { passive: true, capture: true },
+  );
+
+  async function handleCaptureRequest(event) {
+    const requestId = event.data.requestId;
+    const scrollX = window.scrollX;
+    const scrollY = window.scrollY;
+    const width = window.innerWidth;
+    const height = window.innerHeight;
+
+    function postResult(dataUrl) {
+      postToTrustedTop({
+        type: "INLINE_EDIT_SCREENSHOT_RESULT",
+        requestId,
+        dataUrl,
+        scrollX,
+        scrollY,
+      });
+    }
+
+    try {
+      // Wait for any pending web fonts to resolve so both inline metrics and
+      // the @font-face inlining below see the same loaded faces.
+      if (document.fonts && document.fonts.ready) {
+        try {
+          await document.fonts.ready;
+        } catch (_error) {}
+      }
+
+      const clone = document.documentElement.cloneNode(true);
+      inlineAll(document.documentElement, clone);
+
+      const removedNodes = clone.querySelectorAll("script,link[rel=\"stylesheet\"],style");
+      for (let index = 0; index < removedNodes.length; index += 1) {
+        removedNodes[index].remove();
+      }
+
+      stripExternal(clone);
+
+      // Re-embed web fonts as data-URI @font-face rules so the SVG rasterizer
+      // can resolve them — external font URLs aren't fetched during
+      // foreignObject rendering, which would otherwise force a fallback face
+      // and change text metrics.
+      const inlinedFontCss = await buildInlinedFontCss();
+      if (inlinedFontCss) {
+        const styleEl = document.createElement("style");
+        styleEl.textContent = inlinedFontCss;
+        const head = clone.querySelector("head");
+        if (head) head.appendChild(styleEl);
+        else clone.insertBefore(styleEl, clone.firstChild);
+      }
+
+      const html = new XMLSerializer().serializeToString(clone);
+      const svg =
+        `<svg xmlns="http://www.w3.org/2000/svg" width="${width}" height="${height}">` +
+        '<foreignObject width="100%" height="100%">' +
+        `<div xmlns="http://www.w3.org/1999/xhtml" style="width:${width}px;height:${height}px;overflow:hidden">` +
+        `<div style="transform:translate(-${scrollX}px,-${scrollY}px);transform-origin:top left">` +
+        html +
+        "</div></div></foreignObject></svg>";
+      const svgUrl = `data:image/svg+xml;charset=utf-8,${encodeURIComponent(svg)}`;
+      const image = new Image();
+      image.onload = function () {
+        const canvas = document.createElement("canvas");
+        canvas.width = width;
+        canvas.height = height;
+        canvas.getContext("2d").drawImage(image, 0, 0);
+        postResult(canvas.toDataURL("image/png"));
+      };
+      image.onerror = function () {
+        postResult(null);
+      };
+      image.src = svgUrl;
+    } catch (_error) {
+      postResult(null);
+    }
+  }
+
+  window.addEventListener("message", function (event) {
+    if (!event.data) return;
+    // Only accept messages from the direct parent frame. Blocks sibling /
+    // unrelated-window postMessage senders that could otherwise reach us.
+    if (event.source !== window.parent) return;
+
+    const trustedParentOrigin = getTrustedParentOrigin(event);
+    if (!trustedParentOrigin) return;
+    trustedTopOrigin = trustedParentOrigin;
+
+    if (event.data.type === "INLINE_EDIT_SCROLL_START") {
+      scrollForwarding = true;
+      emitScroll();
+      return;
+    }
+
+    if (event.data.type === "INLINE_EDIT_SCROLL_STOP") {
+      scrollForwarding = false;
+      if (scrollRaf) cancelAnimationFrame(scrollRaf);
+      scrollRaf = 0;
+      return;
+    }
+
+    if (event.data.type !== "INLINE_EDIT_CAPTURE_REQUEST") return;
+
+    handleCaptureRequest(event);
+  });
+})();
+
+
+</script></body>
+</html>

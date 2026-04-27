@@ -1,0 +1,813 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>GTM Bottoms-Up Revenue Model — CRO Manual</title>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="../assets/shared.css"/>
+  <style>
+    :root { --sos: #0D5C63; --sos-hover: #094a50; }
+    .page-hero { background: var(--sos); }
+    .step-list li::before { background: var(--sos); }
+    .bullet-list li::before { color: var(--sos); }
+
+    /* ARR waterfall */
+    .arr-waterfall {
+      background: var(--surface);
+      border: 1.5px solid var(--border);
+      border-radius: 10px;
+      overflow: hidden;
+      margin: 20px 0;
+    }
+    .arr-row {
+      display: flex;
+      align-items: center;
+      padding: 12px 20px;
+      border-bottom: 1px solid var(--border);
+      gap: 16px;
+      font-size: 15px;
+    }
+    .arr-row:last-child { border-bottom: none; }
+    .arr-row.total {
+      background: var(--sos);
+      color: #fff;
+      font-weight: 700;
+      font-size: 16px;
+    }
+    .arr-sign {
+      font-size: 18px;
+      font-weight: 700;
+      min-width: 20px;
+      color: var(--text-muted);
+    }
+    .arr-row.total .arr-sign { color: rgba(255,255,255,0.7); }
+    .arr-sign.plus { color: #437A22; }
+    .arr-sign.minus { color: #A13544; }
+    .arr-label { flex: 1; font-weight: 500; }
+    .arr-desc { font-size: 13px; color: var(--text-muted); font-weight: 400; }
+    .arr-row.total .arr-desc { color: rgba(255,255,255,0.75); }
+
+    /* Ramp stages */
+    .ramp-timeline {
+      display: flex;
+      gap: 0;
+      margin: 20px 0;
+      overflow-x: auto;
+    }
+    .ramp-stage {
+      flex: 1;
+      min-width: 120px;
+      border: 1.5px solid var(--border);
+      padding: 16px 14px;
+      text-align: center;
+      position: relative;
+    }
+    .ramp-stage:not(:last-child) { border-right: none; }
+    .ramp-stage:first-child { border-radius: 8px 0 0 8px; }
+    .ramp-stage:last-child { border-radius: 0 8px 8px 0; border-right: 1.5px solid var(--border); }
+    .ramp-stage.active { background: var(--sos); border-color: var(--sos); color: #fff; }
+    .ramp-month { font-size: 11px; font-weight: 700; letter-spacing: 1px; text-transform: uppercase; margin-bottom: 8px; opacity: 0.7; }
+    .ramp-pct { font-size: 24px; font-weight: 700; margin-bottom: 4px; }
+    .ramp-stage.active .ramp-month { opacity: 0.8; }
+    .ramp-label { font-size: 12px; line-height: 1.4; }
+    .ramp-stage.active .ramp-label { color: rgba(255,255,255,0.85); }
+
+    /* Assumptions grid */
+    .assumptions-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      gap: 12px;
+      margin: 20px 0;
+    }
+    .assumption-card {
+      background: var(--surface);
+      border: 1.5px solid var(--border);
+      border-radius: 8px;
+      padding: 14px 16px;
+    }
+    .assumption-label {
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      color: var(--sos);
+      margin-bottom: 4px;
+    }
+    .assumption-name {
+      font-size: 14px;
+      font-weight: 700;
+      color: var(--text);
+      margin-bottom: 4px;
+    }
+    .assumption-desc {
+      font-size: 13px;
+      color: var(--text-muted);
+      line-height: 1.5;
+    }
+
+    /* Board meeting structure */
+    .board-steps {
+      counter-reset: board;
+      margin: 20px 0;
+    }
+    .board-step {
+      display: flex;
+      gap: 16px;
+      margin-bottom: 14px;
+      align-items: flex-start;
+    }
+    .board-num {
+      counter-increment: board;
+      min-width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      background: var(--sos);
+      color: #fff;
+      font-size: 13px;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+    .board-content { padding-top: 4px; }
+    .board-title { font-size: 15px; font-weight: 700; margin-bottom: 2px; }
+    .board-desc { font-size: 14px; color: var(--text-muted); line-height: 1.5; }
+
+    @media (max-width: 640px) {
+      .ramp-timeline { flex-direction: column; }
+      .ramp-stage { border-right: 1.5px solid var(--border) !important; border-bottom: none; border-radius: 0 !important; }
+      .ramp-stage:first-child { border-radius: 8px 8px 0 0 !important; }
+      .ramp-stage:last-child { border-radius: 0 0 8px 8px !important; border-bottom: 1.5px solid var(--border) !important; }
+    }
+  </style>
+</head>
+<body>
+
+<nav class="nav">
+  <span class="nav-logo">SaaS <span>Revenue System</span></span>
+  <span class="nav-sep">|</span>
+  <a href="../index.html" class="nav-back">← Home</a>
+  <span class="nav-sep">|</span>
+  <a href="../pages/science-of-scaling.html" class="nav-back">Science of Scaling</a>
+  <span class="nav-sep">|</span>
+  <span class="nav-current">GTM Bottoms-Up Model</span>
+</nav>
+
+<div class="page-hero">
+  <div class="hero-phase-label">SCIENCE OF SCALING</div>
+  <div class="hero-title">GTM Bottoms-Up Revenue Model</div>
+  <div class="hero-subtitle">Build a financial forecast from GTM activity inputs — not arbitrary top-down targets. The Science of Scaling approach to realistic, defensible revenue planning.</div>
+</div>
+
+<div class="content-wrap">
+  <div class="breadcrumb">
+    <a href="../index.html">Home</a><span class="sep">›</span>
+    <a href="../pages/science-of-scaling.html">Science of Scaling</a><span class="sep">›</span>
+    <span class="current">GTM Bottoms-Up Revenue Model</span>
+  </div>
+
+  <!-- SECTION 1 -->
+  <h2 class="section-title">What Is the Bottoms-Up Model?</h2>
+  <div class="section-intro">A financial model built from GTM activity inputs — not top-down revenue targets handed down from a board deck.</div>
+
+  <div class="subsection">
+    <p>Most companies build their revenue forecast the wrong way: starting with a number the board wants to see, then working backward to justify it. The bottoms-up model flips this. It starts with what your GTM team can actually produce — rep productivity, pipeline generation, headcount capacity, and retention — and builds the revenue forecast from those real inputs.</p>
+    <p>The result is a monthly forecast you can defend, a plan your team believes in, and a hiring roadmap that's tied to real output rather than optimism.</p>
+  </div>
+
+  <div class="callout callout-definition">
+    <div class="callout-title">The Four Inputs</div>
+    <p>The bottoms-up model is built from four core inputs: <strong>(1) productivity per rep</strong>, <strong>(2) demand gen pipeline</strong>, <strong>(3) headcount plan</strong>, and <strong>(4) retention and expansion</strong>. These four levers, combined, produce your monthly revenue forecast with sensitivity analysis.</p>
+  </div>
+
+  <div class="assumptions-grid">
+    <div class="assumption-card">
+      <div class="assumption-label">Use Case 1</div>
+      <div class="assumption-name">Set Realistic Quotas</div>
+      <div class="assumption-desc">Anchor quota in rep productivity data — not what the CFO needs the rep to produce.</div>
+    </div>
+    <div class="assumption-card">
+      <div class="assumption-label">Use Case 2</div>
+      <div class="assumption-name">Determine Hiring Pace</div>
+      <div class="assumption-desc">Know exactly when to add headcount based on pipeline coverage ratios and ramp timelines.</div>
+    </div>
+    <div class="assumption-card">
+      <div class="assumption-label">Use Case 3</div>
+      <div class="assumption-name">Measure GTM Fit</div>
+      <div class="assumption-desc">Track whether your unit economics are improving or degrading quarter over quarter.</div>
+    </div>
+    <div class="assumption-card">
+      <div class="assumption-label">Use Case 4</div>
+      <div class="assumption-name">Present to Board</div>
+      <div class="assumption-desc">Show baseline, target, and contingency plans built from the same underlying model.</div>
+    </div>
+  </div>
+
+  <!-- SECTION 2 -->
+  <h2 class="section-title">The 4 Drivers (from Stage 2 Capital GTM Plan)</h2>
+  <div class="section-intro">Each driver feeds a specific part of the model and produces a measurable output. Improve all four and you improve the forecast.</div>
+
+  <table class="data-table">
+    <thead>
+      <tr>
+        <th>Driver</th>
+        <th>What It Is</th>
+        <th>Output</th>
+        <th>Key Consideration</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><strong>Rep Productivity</strong></td>
+        <td>What a rep needs to hit quota: average deal size + pipeline conversion rate</td>
+        <td>Leading Indicators of Unit Economics</td>
+        <td>Focus on improving productivity <em>before</em> adding headcount. More reps with broken unit economics just scales the problem.</td>
+      </tr>
+      <tr>
+        <td><strong>Cost to Generate Qualified Pipeline</strong></td>
+        <td>Total S&amp;M cost including headcount, marketing spend, tools, and overhead</td>
+        <td>Demand Generation Plan</td>
+        <td>Determine number of qualified opps needed by channel; align marketing initiatives to each channel's cost-per-SQL.</td>
+      </tr>
+      <tr>
+        <td><strong>Number of Ramped Reps</strong></td>
+        <td>Number of reps hired by role, adjusted for ramp time before full productivity</td>
+        <td>Headcount Plan</td>
+        <td>Ensure quotas are aligned to % of S&amp;M spend goal; hire in twos, not all at once, to preserve coaching bandwidth.</td>
+      </tr>
+      <tr>
+        <td><strong>Customer Retention / Expansion</strong></td>
+        <td>The ability to forecast, retain, and expand existing customer revenue</td>
+        <td>Leading Indicator of Retention</td>
+        <td>Use the LIR framework; see Science of Scaling materials for detailed implementation instructions.</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <!-- SECTION 3 -->
+  <h2 class="section-title">The Model Structure</h2>
+  <div class="section-intro">The revenue model is a simple waterfall. Every line is either a source of ARR or a drain on it. The discipline is in making each line defensible.</div>
+
+  <div class="arr-waterfall">
+    <div class="arr-row">
+      <span class="arr-sign">▶</span>
+      <span class="arr-label">Starting ARR <span class="arr-desc">— ARR carried into the period from prior month</span></span>
+    </div>
+    <div class="arr-row">
+      <span class="arr-sign plus">+</span>
+      <span class="arr-label">New ARR <span class="arr-desc">— ARR from new logos closed during the period</span></span>
+    </div>
+    <div class="arr-row">
+      <span class="arr-sign plus">+</span>
+      <span class="arr-label">Expansion ARR <span class="arr-desc">— ARR from upsell and cross-sell of existing customers</span></span>
+    </div>
+    <div class="arr-row">
+      <span class="arr-sign minus">−</span>
+      <span class="arr-label">Contraction ARR <span class="arr-desc">— ARR lost from downgrades (customers paying less)</span></span>
+    </div>
+    <div class="arr-row">
+      <span class="arr-sign minus">−</span>
+      <span class="arr-label">Churn ARR <span class="arr-desc">— ARR lost from full cancellations</span></span>
+    </div>
+    <div class="arr-row total">
+      <span class="arr-sign">=</span>
+      <span class="arr-label">Total ARR (End of Period) <span class="arr-desc">— Your closing ARR, which becomes next month's Starting ARR</span></span>
+    </div>
+  </div>
+
+  <h3 class="subsection-title">Key Model Assumptions to Set</h3>
+  <div class="assumptions-grid">
+    <div class="assumption-card">
+      <div class="assumption-label">AE Productivity</div>
+      <div class="assumption-name">New customers / AE / month</div>
+      <div class="assumption-desc">How many new logos can a fully-ramped AE close each month? Ground this in actual historical data, not aspirations.</div>
+    </div>
+    <div class="assumption-card">
+      <div class="assumption-label">AE Quota</div>
+      <div class="assumption-name">Monthly quota by ramp stage</div>
+      <div class="assumption-desc">Set different quota levels for months 1–2, 3–4, and 5+ to reflect ramp reality. See Section 4.</div>
+    </div>
+    <div class="assumption-card">
+      <div class="assumption-label">CS Expansion</div>
+      <div class="assumption-name">Expansion ARR / CSM / month</div>
+      <div class="assumption-desc">How much expansion ARR does each CSM drive monthly? Separate from new logo quota.</div>
+    </div>
+    <div class="assumption-card">
+      <div class="assumption-label">Gross Margin %</div>
+      <div class="assumption-name">Revenue retained after COGS</div>
+      <div class="assumption-desc">Required for unit economics calculations. Target 70–80%+ for SaaS.</div>
+    </div>
+    <div class="assumption-card">
+      <div class="assumption-label">Pipeline Split</div>
+      <div class="assumption-name">Inbound vs. outbound %</div>
+      <div class="assumption-desc">Example: 80% inbound / 20% outbound. Affects CAC and the cost-per-SQL calculation for each channel.</div>
+    </div>
+    <div class="assumption-card">
+      <div class="assumption-label">LIR Threshold</div>
+      <div class="assumption-name">P% achieving E event in T days</div>
+      <div class="assumption-desc">The leading indicator of retention. Set the threshold that predicts long-term customer health.</div>
+    </div>
+  </div>
+
+  <!-- SECTION 4 -->
+  <h2 class="section-title">Headcount Ramp Model</h2>
+  <div class="section-intro">New reps don't produce at 100% from day one. Baking ramp into the model is what separates a realistic forecast from a fantasy.</div>
+
+  <div class="ramp-timeline">
+    <div class="ramp-stage">
+      <div class="ramp-month">Month 0</div>
+      <div class="ramp-pct">0%</div>
+      <div class="ramp-label">Hired — onboarding, no revenue</div>
+    </div>
+    <div class="ramp-stage">
+      <div class="ramp-month">Months 1–2</div>
+      <div class="ramp-pct">25–50%</div>
+      <div class="ramp-label">Ramping — first pipeline building</div>
+    </div>
+    <div class="ramp-stage">
+      <div class="ramp-month">Months 3–4</div>
+      <div class="ramp-pct">75%</div>
+      <div class="ramp-label">Approaching full productivity</div>
+    </div>
+    <div class="ramp-stage active">
+      <div class="ramp-month">Month 5+</div>
+      <div class="ramp-pct">100%</div>
+      <div class="ramp-label">Full productivity — fully counted in model</div>
+    </div>
+  </div>
+
+  <div class="callout callout-warning">
+    <div class="callout-title">The 25% Buffer Rule</div>
+    <p>Always add a 25% buffer to your salesperson cost to account for three hidden costs: <strong>(1) sales management overhead</strong> — every 6–8 AEs requires a manager who is largely non-quota-carrying; <strong>(2) ramp period cost</strong> — you're paying full salary before they produce full revenue; <strong>(3) attrition and replacement cost</strong> — average B2B SaaS AE tenure is 18–24 months; replacement searches cost time and fees. Plan for this upfront.</p>
+  </div>
+
+  <!-- SECTION 5 -->
+  <h2 class="section-title">AE Quota Setting</h2>
+  <div class="section-intro">Quota is both a planning input and a motivational contract. The Science of Scaling approach is to design quotas that are achievable by most well-supported reps — not aspirational by design.</div>
+
+  <div class="assumptions-grid">
+    <div class="assumption-card">
+      <div class="assumption-label">Quota Multiple</div>
+      <div class="assumption-name">Annual Quota = 4–5× OTE</div>
+      <div class="assumption-desc">On-Target Earnings. This ratio ensures the comp plan is economically sustainable while remaining competitive for talent.</div>
+    </div>
+    <div class="assumption-card">
+      <div class="assumption-label">Monthly Quota</div>
+      <div class="assumption-name">Annual Quota ÷ 12</div>
+      <div class="assumption-desc">Simple monthly division of annual quota. Adjust for seasonality if deal timing is heavily weighted to certain months.</div>
+    </div>
+  </div>
+
+  <table class="data-table">
+    <thead>
+      <tr><th>Attainment Signal</th><th>What It Means</th><th>Correct Action</th></tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>60–70% of reps at or above quota</td>
+        <td>Healthy plan — quota is challenging but achievable</td>
+        <td>Maintain design. Monitor for drift.</td>
+      </tr>
+      <tr>
+        <td>&gt;80% of reps hitting quota</td>
+        <td>Quotas are too low — you're leaving revenue and growth on the table</td>
+        <td>Raise quotas next planning cycle. Do not adjust mid-year.</td>
+      </tr>
+      <tr>
+        <td>&lt;50% of reps hitting quota</td>
+        <td>Quotas too high OR reps were hired before pipeline was ready to support them</td>
+        <td>Diagnose pipeline coverage first. Then revisit quota or hiring timing.</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <!-- SECTION 6 -->
+  <h2 class="section-title">Key Output Metrics</h2>
+  <div class="section-intro">These six metrics are the monthly dashboard for the bottoms-up model. Track them consistently and you'll see GTM health before it shows up in revenue.</div>
+
+  <div class="metric-grid">
+    <div class="metric-card">
+      <div class="m-label">CAC Payback</div>
+      <div class="m-value">Months</div>
+      <div class="m-desc">How many months to recover the cost of acquiring a customer. Target: under 18 months for most SaaS.</div>
+    </div>
+    <div class="metric-card">
+      <div class="m-label">S&amp;M as % of ARR</div>
+      <div class="m-value">%</div>
+      <div class="m-desc">Total sales &amp; marketing spend divided by total ARR. Tracks efficiency of the GTM motion overall.</div>
+    </div>
+    <div class="metric-card">
+      <div class="m-label">Outbound SQLs / AE</div>
+      <div class="m-value">/ Month</div>
+      <div class="m-desc">Sales-qualified leads generated outbound per AE per month. Measures rep prospecting effectiveness.</div>
+    </div>
+    <div class="metric-card">
+      <div class="m-label">Inbound MQLs</div>
+      <div class="m-value">/ Month</div>
+      <div class="m-desc">Marketing-qualified leads generated inbound. Input to demand gen cost-per-opportunity calculation.</div>
+    </div>
+    <div class="metric-card">
+      <div class="m-label">SQL-to-Customer %</div>
+      <div class="m-value">%</div>
+      <div class="m-desc">Conversion rate from sales-qualified lead to closed customer. Critical efficiency metric.</div>
+    </div>
+    <div class="metric-card">
+      <div class="m-label">New Customers</div>
+      <div class="m-value">/ Month</div>
+      <div class="m-desc">New logos closed per month. The most direct output metric from the new business motion.</div>
+    </div>
+  </div>
+
+  <!-- SECTION 7 -->
+  <h2 class="section-title">How to Use the Bottoms-Up Model in Board Meetings</h2>
+  <div class="section-intro">The bottoms-up model is most powerful when presented alongside your leading indicators — not as a standalone financial table. Structure the board narrative in this order.</div>
+
+  <div class="board-steps">
+    <div class="board-step">
+      <div class="board-num">1</div>
+      <div class="board-content">
+        <div class="board-title">Start with the LIR Cohort Chart</div>
+        <div class="board-desc">Show Product-Market Fit health. Are customers achieving the leading indicator of retention at the expected rate? This establishes confidence that the product deserves to be scaled.</div>
+      </div>
+    </div>
+    <div class="board-step">
+      <div class="board-num">2</div>
+      <div class="board-content">
+        <div class="board-title">Show the LIUE Dashboard</div>
+        <div class="board-desc">Present Leading Indicators of Unit Economics — GTM Fit health. Are your CAC, pipeline conversion, and AE productivity trending in the right direction?</div>
+      </div>
+    </div>
+    <div class="board-step">
+      <div class="board-num">3</div>
+      <div class="board-content">
+        <div class="board-title">Present the Bottoms-Up Model (Baseline Plan)</div>
+        <div class="board-desc">Show the model built from current rep productivity, pipeline, and headcount. This is the plan you will execute if everything goes to plan.</div>
+      </div>
+    </div>
+    <div class="board-step">
+      <div class="board-num">4</div>
+      <div class="board-content">
+        <div class="board-title">Present the Target Plan</div>
+        <div class="board-desc">Show the stretch plan with specific productivity improvement and pipeline growth assumptions. Be explicit about what has to be true for the target plan to materialize.</div>
+      </div>
+    </div>
+    <div class="board-step">
+      <div class="board-num">5</div>
+      <div class="board-content">
+        <div class="board-title">Present the Contingency Plan</div>
+        <div class="board-desc">What happens if you miss two quarters or runway drops below 12–18 months? Show the pre-built response: which hires get deferred, which programs get paused, and what the revised model looks like. Boards fund leaders who plan for failure, not just success.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="callout callout-best-practice">
+    <div class="callout-title">The Credibility Rule</div>
+    <p>A board presentation built from a bottoms-up model — even if the numbers are lower than a top-down wish list — creates more investor confidence than inflated projections that don't survive scrutiny. Show your work. A CFO or board member who understands your unit economics will ask fewer alarming questions because they'll understand where the number comes from.</p>
+  </div>
+
+  <div class="related-section">
+    <div class="related-title">Related Pages</div>
+    <div class="related-links">
+      <a href="sos-checklist.html" class="related-link">GTM Scaling Checklist</a>
+      <a href="sos-gtm-playbook.html" class="related-link">GTM Playbook Framework</a>
+      <a href="sos-hiring-sales-leader.html" class="related-link">Hiring the First Sales Leader</a>
+      <a href="quota-design.html" class="related-link">Quota Design</a>
+      <a href="ramp-design.html" class="related-link">Ramp Design</a>
+      <a href="../pages/science-of-scaling.html" class="related-link">← Science of Scaling</a>
+      <a href="../index.html" class="related-link">← Home</a>
+    </div>
+  </div>
+</div>
+
+<script data-pplx-inline-edit>
+(function () {
+  if (window === window.top) return;
+
+  const allowedParentOrigins = ["https://www.perplexity.ai","https://perplexity.ai","https://testing.perplexity.ai","https://staging.perplexity.ai","https://*.preview.i.perplexity.ai","http://localhost:3000","http://127.0.0.1:3000","http://localhost:5173","http://127.0.0.1:5173"];
+  const MAX_FONT_BYTES = 500 * 1024;
+  const MAX_TOTAL_FONT_BYTES = 2 * 1024 * 1024;
+  let scrollForwarding = false;
+  let scrollRaf = 0;
+  let trustedTopOrigin = null;
+
+  // Allow entries like "https://*.preview.i.perplexity.ai" — the wildcard
+  // matches a single DNS label (no dots), so "https://*.foo" cannot stretch
+  // across multiple labels.
+  function matchesAllowedOrigin(origin) {
+    if (!origin) return false;
+    for (const entry of allowedParentOrigins) {
+      if (!entry.includes("*")) {
+        if (entry === origin) return true;
+        continue;
+      }
+      const pattern = new RegExp(
+        "^" +
+          entry.replace(/[.+?^${}()|[\]\\]/g, "\\$&").replace(/\*/g, "[^.]+") +
+          "$",
+      );
+      if (pattern.test(origin)) return true;
+    }
+    return false;
+  }
+
+  // Trust decision: when the sender is same-origin-visible (event.origin is a
+  // real origin like https://www.perplexity.ai) we trust event.origin directly.
+  // When event.origin is "null" (opaque broker srcdoc), we fall back to the
+  // broker's stamped `parentOrigin` to identify the top window. The fallback
+  // is claim-only — we rely on the browser's native `targetOrigin` enforcement
+  // on the response path (see postToTrustedTop) to ensure replies can't be
+  // delivered to anyone but the actual top window of that claimed origin.
+  function getTrustedParentOrigin(event) {
+    const forwardedParentOrigin =
+      typeof event.data.parentOrigin === "string" ? event.data.parentOrigin : null;
+    const parentOrigin = event.origin === "null" ? forwardedParentOrigin : event.origin;
+    return matchesAllowedOrigin(parentOrigin) ? parentOrigin : null;
+  }
+
+  // All responses go to window.top with targetOrigin = the allowlisted origin.
+  // An attacker that iframes us inside their own null-origin broker can claim
+  // any parentOrigin they like, but the browser will drop the reply whenever
+  // the real top's origin doesn't match — so the screenshot never leaves.
+  function postToTrustedTop(message) {
+    if (!trustedTopOrigin) return;
+    try {
+      window.top.postMessage(message, trustedTopOrigin);
+    } catch (_error) {}
+  }
+
+  function inlineAll(original, clone) {
+    if (original.nodeType !== 1 || clone.nodeType !== 1) return;
+
+    try {
+      const computedStyle = getComputedStyle(original);
+      // cssText on a computed style is the serialized declaration in modern
+      // Chromium/Safari — a single read beats enumerating ~400 longhand
+      // properties. Firefox returns "" here, so we fall back on empty.
+      const serialized = computedStyle.cssText;
+      if (serialized) {
+        clone.style.cssText = serialized;
+      } else {
+        const parts = new Array(computedStyle.length);
+        for (let index = 0; index < computedStyle.length; index += 1) {
+          const property = computedStyle[index];
+          parts[index] = `${property}:${computedStyle.getPropertyValue(property)};`;
+        }
+        clone.style.cssText = parts.join("");
+      }
+    } catch (_error) {}
+
+    const originalChildren = original.children;
+    const clonedChildren = clone.children;
+    for (
+      let index = 0;
+      index < originalChildren.length && index < clonedChildren.length;
+      index += 1
+    ) {
+      inlineAll(originalChildren[index], clonedChildren[index]);
+    }
+  }
+
+  function extractFontUrl(srcValue) {
+    const matches = [
+      ...srcValue.matchAll(
+        /url\(["']?([^"')]+)["']?\)(?:\s*format\(["']?([^"')]+)["']?\))?/gi,
+      ),
+    ];
+    if (matches.length === 0) return null;
+    const woff2 = matches.find((m) => m[2] && m[2].toLowerCase().includes("woff2"));
+    if (woff2) return woff2[1];
+    const woff = matches.find((m) => m[2] && m[2].toLowerCase().includes("woff"));
+    if (woff) return woff[1];
+    return matches[0][1];
+  }
+
+  // Cache resolved font URL -> data URI across captures. Fonts on a page
+  // essentially never change, and a batch run emits multiple captures back to
+  // back — without this we'd refetch + re-base64 every time.
+  const fontDataUriCache = new Map();
+  const SRC_DECLARATION_RE = /src\s*:\s*[^;}]+/i;
+
+  async function fetchAsDataUri(url) {
+    if (fontDataUriCache.has(url)) return fontDataUriCache.get(url);
+    let dataUri = null;
+    try {
+      const response = await fetch(url, { mode: "cors", credentials: "omit" });
+      if (response.ok) {
+        const blob = await response.blob();
+        if (blob.size <= MAX_FONT_BYTES) {
+          dataUri = await new Promise((resolve) => {
+            const reader = new FileReader();
+            reader.onloadend = () =>
+              resolve(typeof reader.result === "string" ? reader.result : null);
+            reader.onerror = () => resolve(null);
+            reader.readAsDataURL(blob);
+          });
+        }
+      }
+    } catch (_error) {
+      dataUri = null;
+    }
+    fontDataUriCache.set(url, dataUri);
+    return dataUri;
+  }
+
+  function collectFontFaceRuleTexts() {
+    const rules = [];
+    for (const sheet of document.styleSheets) {
+      let cssRules;
+      try {
+        cssRules = sheet.cssRules;
+      } catch (_error) {
+        continue;
+      }
+      if (!cssRules) continue;
+      for (const rule of cssRules) {
+        const cssText = rule.cssText || "";
+        if (cssText.startsWith("@font-face")) rules.push(cssText);
+      }
+    }
+    return rules;
+  }
+
+  async function buildInlinedFontCss() {
+    const ruleTexts = collectFontFaceRuleTexts();
+    if (ruleTexts.length === 0) return null;
+
+    const resolved = ruleTexts.map((cssText) => {
+      if (!SRC_DECLARATION_RE.test(cssText)) return null;
+      const srcMatch = cssText.match(/src\s*:\s*([^;}]+)[;}]/i);
+      if (!srcMatch) return null;
+      const url = extractFontUrl(srcMatch[1]);
+      if (!url) return null;
+      try {
+        return { cssText, url: new URL(url, document.baseURI).href };
+      } catch (_error) {
+        return null;
+      }
+    });
+
+    const dataUris = await Promise.all(
+      resolved.map((entry) => (entry ? fetchAsDataUri(entry.url) : Promise.resolve(null))),
+    );
+
+    const inlined = [];
+    let totalBytes = 0;
+    for (let index = 0; index < resolved.length; index += 1) {
+      const entry = resolved[index];
+      const dataUri = dataUris[index];
+      if (!entry || !dataUri) continue;
+      const approxBytes = dataUri.length * 0.75;
+      if (totalBytes + approxBytes > MAX_TOTAL_FONT_BYTES) break;
+      totalBytes += approxBytes;
+      inlined.push(entry.cssText.replace(SRC_DECLARATION_RE, `src: url("${dataUri}")`));
+    }
+    return inlined.length > 0 ? inlined.join("\n") : null;
+  }
+
+  function stripExternal(clone) {
+    const images = clone.querySelectorAll("img");
+    for (let index = 0; index < images.length; index += 1) {
+      const src = images[index].getAttribute("src");
+      if (src && !src.startsWith("data:")) images[index].removeAttribute("src");
+    }
+
+    const elements = clone.querySelectorAll("*");
+    for (let index = 0; index < elements.length; index += 1) {
+      const style = elements[index].style.cssText;
+      if (style && style.includes("url(")) {
+        elements[index].style.cssText = style.replace(
+          /url\(["']?(?!data:)[^)"']*["']?\)/gi,
+          "none",
+        );
+      }
+    }
+  }
+
+  function emitScroll() {
+    scrollRaf = 0;
+    if (!scrollForwarding) return;
+    postToTrustedTop({
+      type: "INLINE_EDIT_SCROLL",
+      scrollX: window.scrollX,
+      scrollY: window.scrollY,
+    });
+  }
+
+  window.addEventListener(
+    "scroll",
+    function () {
+      if (!scrollForwarding || scrollRaf) return;
+      scrollRaf = requestAnimationFrame(emitScroll);
+    },
+    { passive: true, capture: true },
+  );
+
+  async function handleCaptureRequest(event) {
+    const requestId = event.data.requestId;
+    const scrollX = window.scrollX;
+    const scrollY = window.scrollY;
+    const width = window.innerWidth;
+    const height = window.innerHeight;
+
+    function postResult(dataUrl) {
+      postToTrustedTop({
+        type: "INLINE_EDIT_SCREENSHOT_RESULT",
+        requestId,
+        dataUrl,
+        scrollX,
+        scrollY,
+      });
+    }
+
+    try {
+      // Wait for any pending web fonts to resolve so both inline metrics and
+      // the @font-face inlining below see the same loaded faces.
+      if (document.fonts && document.fonts.ready) {
+        try {
+          await document.fonts.ready;
+        } catch (_error) {}
+      }
+
+      const clone = document.documentElement.cloneNode(true);
+      inlineAll(document.documentElement, clone);
+
+      const removedNodes = clone.querySelectorAll("script,link[rel=\"stylesheet\"],style");
+      for (let index = 0; index < removedNodes.length; index += 1) {
+        removedNodes[index].remove();
+      }
+
+      stripExternal(clone);
+
+      // Re-embed web fonts as data-URI @font-face rules so the SVG rasterizer
+      // can resolve them — external font URLs aren't fetched during
+      // foreignObject rendering, which would otherwise force a fallback face
+      // and change text metrics.
+      const inlinedFontCss = await buildInlinedFontCss();
+      if (inlinedFontCss) {
+        const styleEl = document.createElement("style");
+        styleEl.textContent = inlinedFontCss;
+        const head = clone.querySelector("head");
+        if (head) head.appendChild(styleEl);
+        else clone.insertBefore(styleEl, clone.firstChild);
+      }
+
+      const html = new XMLSerializer().serializeToString(clone);
+      const svg =
+        `<svg xmlns="http://www.w3.org/2000/svg" width="${width}" height="${height}">` +
+        '<foreignObject width="100%" height="100%">' +
+        `<div xmlns="http://www.w3.org/1999/xhtml" style="width:${width}px;height:${height}px;overflow:hidden">` +
+        `<div style="transform:translate(-${scrollX}px,-${scrollY}px);transform-origin:top left">` +
+        html +
+        "</div></div></foreignObject></svg>";
+      const svgUrl = `data:image/svg+xml;charset=utf-8,${encodeURIComponent(svg)}`;
+      const image = new Image();
+      image.onload = function () {
+        const canvas = document.createElement("canvas");
+        canvas.width = width;
+        canvas.height = height;
+        canvas.getContext("2d").drawImage(image, 0, 0);
+        postResult(canvas.toDataURL("image/png"));
+      };
+      image.onerror = function () {
+        postResult(null);
+      };
+      image.src = svgUrl;
+    } catch (_error) {
+      postResult(null);
+    }
+  }
+
+  window.addEventListener("message", function (event) {
+    if (!event.data) return;
+    // Only accept messages from the direct parent frame. Blocks sibling /
+    // unrelated-window postMessage senders that could otherwise reach us.
+    if (event.source !== window.parent) return;
+
+    const trustedParentOrigin = getTrustedParentOrigin(event);
+    if (!trustedParentOrigin) return;
+    trustedTopOrigin = trustedParentOrigin;
+
+    if (event.data.type === "INLINE_EDIT_SCROLL_START") {
+      scrollForwarding = true;
+      emitScroll();
+      return;
+    }
+
+    if (event.data.type === "INLINE_EDIT_SCROLL_STOP") {
+      scrollForwarding = false;
+      if (scrollRaf) cancelAnimationFrame(scrollRaf);
+      scrollRaf = 0;
+      return;
+    }
+
+    if (event.data.type !== "INLINE_EDIT_CAPTURE_REQUEST") return;
+
+    handleCaptureRequest(event);
+  });
+})();
+
+
+</script></body>
+</html>

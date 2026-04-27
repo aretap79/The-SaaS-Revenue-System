@@ -1,0 +1,1169 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Prospecting Guide — GTM Playbook</title>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="../assets/shared.css"/>
+  <style>
+    .page-hero { background: #2C5F8A; }
+
+    /* ── Step cards ── */
+    .step-card {
+      background: var(--surface);
+      border: 1.5px solid var(--border);
+      border-radius: 10px;
+      padding: 24px 26px;
+      margin-bottom: 16px;
+      position: relative;
+      padding-left: 76px;
+    }
+    .step-num {
+      position: absolute;
+      left: 22px;
+      top: 22px;
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      background: #2C5F8A;
+      color: #fff;
+      font-size: 16px;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+    .step-card-title {
+      font-size: 16px;
+      font-weight: 700;
+      color: var(--text);
+      margin-bottom: 4px;
+    }
+    .step-card-subtitle {
+      font-size: 12px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      color: #2C5F8A;
+      margin-bottom: 12px;
+    }
+    .step-card-body {
+      font-size: 14px;
+      line-height: 1.65;
+      color: var(--text-muted);
+    }
+    .step-card-body p { margin-bottom: 10px; }
+    .step-card-body p:last-child { margin-bottom: 0; }
+    .step-card-body strong { color: var(--text); }
+
+    /* ── Script block ── */
+    .script-block {
+      background: #f0f5fa;
+      border-left: 3px solid #2C5F8A;
+      border-radius: 0 6px 6px 0;
+      padding: 12px 16px;
+      margin: 10px 0;
+      font-size: 14px;
+      font-style: italic;
+      color: #1a3d5c;
+      line-height: 1.6;
+    }
+    .script-label {
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      color: #2C5F8A;
+      margin-bottom: 4px;
+      font-style: normal;
+    }
+
+    /* ── Don't do ── */
+    .dont-block {
+      background: #fff5f5;
+      border-left: 3px solid #A13544;
+      border-radius: 0 6px 6px 0;
+      padding: 12px 16px;
+      margin: 10px 0;
+      font-size: 14px;
+      color: #7a2232;
+      line-height: 1.6;
+    }
+    .dont-label {
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      color: #A13544;
+      margin-bottom: 4px;
+    }
+
+    /* ── Do block ── */
+    .do-block {
+      background: #f0fff4;
+      border-left: 3px solid #437A22;
+      border-radius: 0 6px 6px 0;
+      padding: 12px 16px;
+      margin: 10px 0;
+      font-size: 14px;
+      color: #2a5515;
+      line-height: 1.6;
+    }
+    .do-label {
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      color: #437A22;
+      margin-bottom: 4px;
+    }
+
+    /* ── Channel cards ── */
+    .channel-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 14px;
+      margin: 20px 0;
+    }
+    .channel-card {
+      background: var(--surface);
+      border: 1.5px solid var(--border);
+      border-radius: 10px;
+      padding: 20px;
+    }
+    .channel-icon {
+      font-size: 22px;
+      margin-bottom: 8px;
+    }
+    .channel-name {
+      font-size: 15px;
+      font-weight: 700;
+      color: var(--text);
+      margin-bottom: 4px;
+    }
+    .channel-bench {
+      font-size: 12px;
+      font-weight: 600;
+      color: #2C5F8A;
+      margin-bottom: 10px;
+    }
+    .channel-card ul {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+    }
+    .channel-card ul li {
+      font-size: 13px;
+      color: var(--text-muted);
+      padding: 4px 0;
+      padding-left: 14px;
+      position: relative;
+      line-height: 1.5;
+    }
+    .channel-card ul li::before {
+      content: '·';
+      position: absolute;
+      left: 3px;
+      color: #2C5F8A;
+      font-weight: 700;
+    }
+    .channel-divider {
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 1.2px;
+      text-transform: uppercase;
+      color: var(--text-faint);
+      margin: 10px 0 4px;
+    }
+
+    /* ── Sequence table ── */
+    .seq-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 20px 0;
+      background: var(--surface);
+      border-radius: 10px;
+      overflow: hidden;
+      border: 1.5px solid var(--border);
+    }
+    .seq-table thead {
+      background: #2C5F8A;
+      color: #fff;
+    }
+    .seq-table thead th {
+      padding: 12px 16px;
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: 0.8px;
+      text-transform: uppercase;
+      text-align: left;
+    }
+    .seq-table tbody tr {
+      border-bottom: 1px solid var(--border);
+    }
+    .seq-table tbody tr:last-child {
+      border-bottom: none;
+    }
+    .seq-table tbody tr:nth-child(even) td {
+      background: #fafaf8;
+    }
+    .seq-table td {
+      padding: 12px 16px;
+      font-size: 14px;
+      color: var(--text);
+      vertical-align: top;
+    }
+    .seq-day {
+      font-weight: 700;
+      color: #2C5F8A;
+      white-space: nowrap;
+    }
+    .seq-touch {
+      font-weight: 600;
+      font-size: 12px;
+      color: var(--text-muted);
+    }
+    .seq-channel-badge {
+      display: inline-block;
+      font-size: 11px;
+      font-weight: 700;
+      padding: 2px 8px;
+      border-radius: 10px;
+      white-space: nowrap;
+    }
+    .badge-email { background: #dbeafe; color: #1e40af; }
+    .badge-linkedin { background: #e0f2fe; color: #0369a1; }
+    .badge-phone { background: #dcfce7; color: #166534; }
+
+    /* ── Tier personalization ── */
+    .tier-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 12px;
+      margin: 20px 0;
+    }
+    .tier-card {
+      background: var(--surface);
+      border: 1.5px solid var(--border);
+      border-radius: 10px;
+      padding: 18px 20px;
+    }
+    .tier-label {
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 1.2px;
+      text-transform: uppercase;
+      color: #2C5F8A;
+      margin-bottom: 6px;
+    }
+    .tier-name {
+      font-size: 15px;
+      font-weight: 700;
+      color: var(--text);
+      margin-bottom: 8px;
+    }
+    .tier-time {
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--text-muted);
+      margin-bottom: 8px;
+    }
+    .tier-desc {
+      font-size: 13px;
+      color: var(--text-muted);
+      line-height: 1.55;
+    }
+
+    /* ── Variable tags ── */
+    .var-list {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin: 14px 0;
+    }
+    .var-tag {
+      font-size: 12px;
+      font-weight: 600;
+      font-family: monospace;
+      background: #eef4fa;
+      color: #1a3d5c;
+      border: 1.5px solid #c2d8ec;
+      border-radius: 4px;
+      padding: 4px 10px;
+    }
+
+    /* ── Metrics table ── */
+    .metrics-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 20px 0;
+      background: var(--surface);
+      border-radius: 10px;
+      overflow: hidden;
+      border: 1.5px solid var(--border);
+    }
+    .metrics-table thead {
+      background: #2C5F8A;
+      color: #fff;
+    }
+    .metrics-table thead th {
+      padding: 12px 16px;
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: 0.8px;
+      text-transform: uppercase;
+      text-align: left;
+    }
+    .metrics-table td {
+      padding: 13px 16px;
+      font-size: 14px;
+      vertical-align: top;
+      border-bottom: 1px solid var(--border);
+      line-height: 1.5;
+    }
+    .metrics-table tr:last-child td { border-bottom: none; }
+    .metrics-table tr:nth-child(even) td { background: #fafaf8; }
+    .metric-name { font-weight: 700; color: var(--text); }
+    .metric-bench { font-weight: 700; color: #2C5F8A; }
+
+    /* ── Callout box ── */
+    .callout {
+      background: #eef4fa;
+      border: 1.5px solid #2C5F8A;
+      border-radius: 8px;
+      padding: 16px 20px;
+      margin: 18px 0;
+      font-size: 14px;
+      color: #1a3d5c;
+      line-height: 1.65;
+    }
+    .callout strong { color: #1a3d5c; }
+
+    /* ── Hero tags ── */
+    .hero-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-top: 16px;
+    }
+    .hero-tag {
+      font-size: 11px;
+      font-weight: 600;
+      padding: 4px 12px;
+      border-radius: 20px;
+      background: rgba(255,255,255,0.18);
+      color: rgba(255,255,255,0.92);
+      letter-spacing: 0.3px;
+    }
+
+    .phase-context-bar {
+      background: #f0f8f9;
+      border-bottom: 2px solid #c2dde0;
+      padding: 0;
+    }
+    .pcb-inner {
+      max-width: 960px;
+      margin: 0 auto;
+      padding: 10px 32px;
+      display: flex;
+      align-items: center;
+      gap: 20px;
+      flex-wrap: wrap;
+    }
+    .pcb-item { display: flex; flex-direction: column; gap: 1px; }
+    .pcb-label { font-size: 9px; font-weight: 700; letter-spacing: 1px; text-transform: uppercase; color: #7A7974; }
+    .pcb-value { font-size: 12px; font-weight: 700; color: #0D5C63; }
+    .pcb-divider { width: 1px; height: 28px; background: #c2dde0; }
+    .pcb-link { font-size: 11px; font-weight: 700; color: #0D5C63; background: rgba(13,92,99,0.08); padding: 4px 10px; border-radius: 4px; text-decoration: none; transition: background 0.15s; }
+    .pcb-link:hover { background: rgba(13,92,99,0.16); color: #0D5C63; text-decoration: none; }
+
+    @media (max-width: 768px) {
+      .channel-grid { grid-template-columns: 1fr; }
+      .tier-grid { grid-template-columns: 1fr; }
+      .step-card { padding-left: 20px; padding-top: 64px; }
+      .step-num { top: 16px; left: 16px; }
+    }
+  </style>
+</head>
+<body>
+
+<nav class="nav">
+  <span class="nav-logo">CRO <span>Manual</span></span>
+  <span class="nav-sep">/</span>
+  <a href="../index.html" class="nav-back">← Home</a>
+  <span class="nav-sep">/</span>
+  <a href="../pages/resources.html" class="nav-back">Resources &amp; Templates</a>
+  <span class="nav-sep">/</span>
+  <span class="nav-current">Prospecting Guide</span>
+</nav>
+
+<div class="page-hero">
+  <div class="hero-phase-label">GTM PLAYBOOK TOOL · STAGE 2</div>
+  <div class="hero-title">Prospecting Guide</div>
+  <div class="hero-subtitle">A systematic, repeatable framework for initiating conversations with ICP buyers. Built outside-in from buyer behavior — not rep comfort. Every step is designed to earn the right to the next step.</div>
+  <div class="hero-tags">
+    <span class="hero-tag">Cold Outreach</span>
+    <span class="hero-tag">ICP Targeting</span>
+    <span class="hero-tag">Sequencing</span>
+    <span class="hero-tag">LinkedIn</span>
+    <span class="hero-tag">Email</span>
+    <span class="hero-tag">Permission-Based</span>
+  </div>
+</div>
+
+<div class="phase-context-bar">
+  <div class="pcb-inner">
+    <div class="pcb-item">
+      <span class="pcb-label">Primary Phase</span>
+      <span class="pcb-value">Phase 4 — Pipeline, MEDDICC &amp; Forecasting</span>
+    </div>
+    <div class="pcb-divider"></div>
+    <div class="pcb-item">
+      <span class="pcb-label">Science of Scaling Stage</span>
+      <span class="pcb-value">Stage 2: GTM Fit</span>
+    </div>
+    <div class="pcb-divider"></div>
+    <div class="pcb-item">
+      <span class="pcb-label">Governing Metric</span>
+      <span class="pcb-value">SQLs per Rep per Month · SQL-to-Customer%</span>
+    </div>
+    <a href="../pages/phase4.html" class="pcb-link">View Phase →</a>
+    <a href="../subpages/sos-gtm-fit.html" class="pcb-link">View Stage →</a>
+  </div>
+</div>
+
+<div class="content-wrap">
+
+  <div class="breadcrumb">
+    <a href="../index.html">Home</a>
+    <span class="sep">›</span>
+    <a href="../pages/resources.html">Resources &amp; Templates</a>
+    <span class="sep">›</span>
+    <span class="current">Prospecting Guide</span>
+  </div>
+
+  <!-- SECTION 1: THE PURPOSE OF PROSPECTING -->
+  <div class="section-title">1. The Purpose of Prospecting</div>
+  <div class="section-intro">Prospecting is the top of the funnel — and the most vulnerable link in the GTM chain. A bad prospecting motion is invisible: leads look fine in the CRM, but quality is low and LIR achievement suffers downstream.</div>
+
+  <div class="subsection">
+    <div class="callout">
+      <strong>The Four Goals of Prospecting:</strong> (1) Reach ICP buyers only. (2) Earn their attention. (3) Qualify Green/Yellow/Red fast. (4) Book a discovery call — with the right person, at the right company, about the right problem.
+    </div>
+
+    <ul class="bullet-list">
+      <li>Prospecting is the single most upstream quality control point in your revenue motion</li>
+      <li>Every unqualified meeting booked is a tax on every other part of the system — discovery, demo, CS, and forecast accuracy all degrade</li>
+      <li>A bad prospecting motion is invisible: pipeline looks fine, reps are busy, but LIUE (LIR Underlying Economic) suffers because customer quality is wrong from the start</li>
+      <li>The cost of one misfit customer is not just the ARR lost at churn — it's the CSM time, the support load, the product distraction, and the NPS hit</li>
+    </ul>
+
+    <div class="dont-block">
+      <div class="dont-label">Anti-Goal</div>
+      Booking meetings with anyone who will take them. This is the most common prospecting failure mode. It destroys SQL quality, inflates pipeline with noise, and misleads the entire revenue forecast.
+    </div>
+  </div>
+
+  <!-- SECTION 2: THE 4-STEP PROSPECTING FRAMEWORK -->
+  <div class="section-title">2. The 4-Step Prospecting Framework</div>
+  <div class="section-intro">Every prospecting conversation — regardless of channel — should follow these four steps. The framework is built from buyer psychology, not rep preference. Each step earns the right to the next.</div>
+
+  <div class="subsection">
+
+    <div class="step-card">
+      <div class="step-num">1</div>
+      <div class="step-card-subtitle">Step One</div>
+      <div class="step-card-title">Ask Permission</div>
+      <div class="step-card-body">
+        <p><strong>Goal:</strong> Create a micro-commitment before pitching. Asking permission shifts the dynamic — the prospect becomes an active participant rather than a passive recipient of a pitch.</p>
+        <div class="script-block">
+          <div class="script-label">Primary Script</div>
+          "Is it okay if I take 30 seconds to explain why I'm reaching out?"
+        </div>
+        <div class="script-block">
+          <div class="script-label">Alternative</div>
+          "I know I'm reaching out cold — do you have 2 minutes for a quick context?"
+        </div>
+        <div class="dont-block">
+          <div class="dont-label">What NOT to Do</div>
+          "Hi [Name], I wanted to introduce myself and our product..." — This is inward-focused. It assumes the prospect cares about you before you've given them any reason to. Start with them, not you.
+        </div>
+        <p><strong>Psychology:</strong> Asking permission increases engagement vs. launching immediately into a pitch. The simple act of being asked triggers a reciprocity instinct — they said "yes," so they're more likely to listen genuinely.</p>
+        <p><strong>Expected Response:</strong> ~60–70% will say "sure" or "go ahead." This is your opening. If they say no or hang up, that's useful qualification data — they are almost certainly not a buyer right now.</p>
+      </div>
+    </div>
+
+    <div class="step-card">
+      <div class="step-num">2</div>
+      <div class="step-card-subtitle">Step Two</div>
+      <div class="step-card-title">Value Statement</div>
+      <div class="step-card-body">
+        <p><strong>Goal:</strong> Communicate specifically how you've helped companies like theirs — in one sentence. Specificity is everything. Generic value statements are the leading cause of ignored outreach.</p>
+        <p><strong>Formula:</strong> "We help [specific ICP type] who [experience this specific problem] to [achieve this specific outcome]. [Social proof: company name or stat]."</p>
+        <div class="do-block">
+          <div class="do-label">Good Example</div>
+          "We help mid-market AEC firms who spend 30+ hours per week managing project data to cut that time by 60% — firms like [similar company name] have reduced rework costs by 40%."
+        </div>
+        <div class="dont-block">
+          <div class="dont-label">Bad Example</div>
+          "We're a leading SaaS platform that helps companies optimize their workflows." — This says nothing about who you help, what specific problem you solve, or what outcome you deliver. Every competitor could say the same thing.
+        </div>
+        <p><strong>Persona-Specific:</strong> Your value statement must change based on who you're talking to. An economic buyer cares about ROI, headcount savings, and competitive advantage. An end user cares about daily friction reduction. A champion cares about making their team look good and advancing their career.</p>
+      </div>
+    </div>
+
+    <div class="step-card">
+      <div class="step-num">3</div>
+      <div class="step-card-subtitle">Step Three</div>
+      <div class="step-card-title">Engage</div>
+      <div class="step-card-body">
+        <p><strong>Goal:</strong> Convert from monologue to dialogue. Ask ONE question — exactly one. The question must be directly tied to the pain you referenced in the value statement.</p>
+        <div class="script-block">
+          <div class="script-label">Primary Question</div>
+          "Does managing [specific pain] sound familiar to your team?"
+        </div>
+        <div class="script-block">
+          <div class="script-label">Alternative</div>
+          "Are you currently using anything to solve this, or is it a manual process?"
+        </div>
+        <div class="dont-block">
+          <div class="dont-label">What NOT to Do</div>
+          Ask multiple questions at once. "Does this resonate? Are you dealing with this problem? Who on your team handles this? And what does your process look like?" — This kills momentum and overwhelms the prospect.
+        </div>
+        <p><strong>If they say "no, we don't have that problem":</strong> "That's great — is there a specific area where you're seeing the most manual work or friction right now?" This either re-engages them on a different pain, or qualifies them as Red (no pain = no urgency = no deal).</p>
+        <p><strong>Silence is your friend.</strong> After asking the question, stop talking. The first person to speak after a question is asked loses negotiating position. Let the prospect fill the silence.</p>
+      </div>
+    </div>
+
+    <div class="step-card">
+      <div class="step-num">4</div>
+      <div class="step-card-subtitle">Step Four</div>
+      <div class="step-card-title">Qualify</div>
+      <div class="step-card-body">
+        <p><strong>Goal:</strong> Confirm Green/Yellow/Red before proposing any next steps. You must confirm three things: (1) company meets ICP firmographic criteria, (2) pain is real and felt, (3) there is some form of urgency or reason to act now rather than later.</p>
+        <div class="do-block">
+          <div class="do-label">If Green</div>
+          "Based on what you've shared, I think it's worth a 30-minute call. Are you open to next Tuesday or Thursday?"
+        </div>
+        <div class="do-block">
+          <div class="do-label">If Yellow</div>
+          "I want to make sure we'd be a fit for you — can I ask a couple of quick questions first?" Then probe on ICP criteria gaps before proposing a meeting.
+        </div>
+        <div class="do-block">
+          <div class="do-label">If Red</div>
+          "Based on what you've told me, I'm not sure we'd be the best fit for where you are today — I don't want to waste your time." Then disqualify cleanly.
+        </div>
+        <div class="callout">
+          <strong>Key Principle:</strong> Disqualifying a Red saves more time than closing them. A disqualified prospect today is a potential referral tomorrow. A closed Red customer is a churn event in 6 months and a drag on your entire CS team.
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- SECTION 3: CHANNELS -->
+  <div class="section-title">3. Prospecting Channels</div>
+  <div class="section-intro">Different channels reach different buyers in different contexts. A well-designed prospecting motion uses all three channels in coordinated sequence — not in isolation. Sequence design is covered in Section 4.</div>
+
+  <div class="subsection">
+    <div class="channel-grid">
+
+      <div class="channel-card">
+        <div class="channel-icon">✉️</div>
+        <div class="channel-name">Cold Email</div>
+        <div class="channel-bench">35–50% open rate (personalized) · 5–10% reply rate</div>
+        <div class="channel-divider">Best Use Case</div>
+        <ul>
+          <li>Initial outreach to mid-market ICP prospects</li>
+          <li>Follow-up sequences after LinkedIn connection</li>
+          <li>Breakup and re-engagement campaigns</li>
+        </ul>
+        <div class="channel-divider">Key Tactics</div>
+        <ul>
+          <li>Subject: [Specific reference] + [question or intrigue] — e.g., "Your Q3 hiring plan → quick thought"</li>
+          <li>Body: 5 sentences max. Line 1: specific personalization. Line 2: value statement. Line 3: single question. Line 4: CTA.</li>
+          <li>Personalization: recent funding, new hire announcement, job posting, tech stack change, company news event</li>
+          <li>Sequence: 6 emails over 14 days (email 1: cold pitch, email 3: different angle, email 5: breakup)</li>
+        </ul>
+        <div class="channel-divider">Don'ts</div>
+        <ul>
+          <li>Never open with "I hope this email finds you well"</li>
+          <li>Never attach a PDF or deck to a cold email</li>
+          <li>Never use "synergy," "best-in-class," or "revolutionary"</li>
+        </ul>
+      </div>
+
+      <div class="channel-card">
+        <div class="channel-icon">💼</div>
+        <div class="channel-name">LinkedIn</div>
+        <div class="channel-bench">InMail: 15–25% response rate · Connection note: key to warm sequence</div>
+        <div class="channel-divider">Best Use Case</div>
+        <ul>
+          <li>Senior buyers who are active on LinkedIn</li>
+          <li>Warming a prospect before cold email</li>
+          <li>Building a relationship over time via content engagement</li>
+        </ul>
+        <div class="channel-divider">Key Tactics</div>
+        <ul>
+          <li>Connection request: personalized note (never blank), 300-character limit</li>
+          <li>Note formula: [Why connecting] + [one-sentence value] + [no CTA yet]</li>
+          <li>After connection: wait 24–48 hours, then send first message</li>
+          <li>InMail (non-connection): higher open rate but limited — use for senior buyers only</li>
+          <li>Comment on prospect's posts before reaching out to warm the relationship</li>
+        </ul>
+        <div class="channel-divider">Don'ts</div>
+        <ul>
+          <li>Never send a blank connection request to a cold prospect</li>
+          <li>Never pitch in the connection request note</li>
+          <li>Never send "LION" or mass connect messages</li>
+        </ul>
+      </div>
+
+      <div class="channel-card">
+        <div class="channel-icon">📞</div>
+        <div class="channel-name">Phone</div>
+        <div class="channel-bench">8–15% connect rate · Best: Tuesday–Thursday, 8–10am & 3–5pm local</div>
+        <div class="channel-divider">Best Use Case</div>
+        <ul>
+          <li>Follow-up after email touch when not getting responses</li>
+          <li>Enterprise buyers who prefer direct communication</li>
+          <li>Time-sensitive sequences and closing sequences</li>
+        </ul>
+        <div class="channel-divider">Key Tactics</div>
+        <ul>
+          <li>Open with value statement immediately — no "how are you doing?"</li>
+          <li>Voicemail: 20–30 seconds max, one question, email follow-up immediately after</li>
+          <li>Phone + email same day = highest connect rate of any channel combination</li>
+          <li>Reference prior touchpoints: "I sent you an email last Tuesday about..."</li>
+        </ul>
+        <div class="channel-divider">Don'ts</div>
+        <ul>
+          <li>Never leave a voicemail longer than 30 seconds</li>
+          <li>Never ask "did you get my email?" — it sounds desperate</li>
+          <li>Never call without a voicemail-to-email follow-up plan</li>
+        </ul>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- SECTION 4: SEQUENCE DESIGN -->
+  <div class="section-title">4. Sequence Design (Multi-Touch)</div>
+  <div class="section-intro">A single touch rarely converts. Research shows that it takes 6–10 touches for a qualified prospect to engage. The sequence below is designed for a 14-day window — long enough to demonstrate persistence, short enough to respect the prospect's time.</div>
+
+  <div class="subsection">
+    <table class="seq-table">
+      <thead>
+        <tr>
+          <th>Day</th>
+          <th>Touch</th>
+          <th>Channel</th>
+          <th>Action</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><span class="seq-day">Day 1</span></td>
+          <td><span class="seq-touch">Touch 1</span></td>
+          <td><span class="seq-channel-badge badge-email">Email</span></td>
+          <td>Initial outreach email with personalized value statement and single-question CTA</td>
+        </tr>
+        <tr>
+          <td><span class="seq-day">Day 2</span></td>
+          <td><span class="seq-touch">Touch 2</span></td>
+          <td><span class="seq-channel-badge badge-linkedin">LinkedIn</span></td>
+          <td>Connection request with personalized note referencing the context from the email</td>
+        </tr>
+        <tr>
+          <td><span class="seq-day">Day 4</span></td>
+          <td><span class="seq-touch">Touch 3</span></td>
+          <td><span class="seq-channel-badge badge-email">Email</span></td>
+          <td>Follow-up email referencing LinkedIn connection request — different opening, same core value</td>
+        </tr>
+        <tr>
+          <td><span class="seq-day">Day 5</span></td>
+          <td><span class="seq-touch">Touch 4</span></td>
+          <td><span class="seq-channel-badge badge-phone">Phone</span></td>
+          <td>Call + voicemail referencing email; immediate email follow-up after voicemail</td>
+        </tr>
+        <tr>
+          <td><span class="seq-day">Day 7</span></td>
+          <td><span class="seq-touch">Touch 5</span></td>
+          <td><span class="seq-channel-badge badge-linkedin">LinkedIn</span></td>
+          <td>Message after connection accepted — pivot to value statement, light CTA</td>
+        </tr>
+        <tr>
+          <td><span class="seq-day">Day 9</span></td>
+          <td><span class="seq-touch">Touch 6</span></td>
+          <td><span class="seq-channel-badge badge-email">Email</span></td>
+          <td>New angle email — different pain point or social proof from a similar company</td>
+        </tr>
+        <tr>
+          <td><span class="seq-day">Day 12</span></td>
+          <td><span class="seq-touch">Touch 7</span></td>
+          <td><span class="seq-channel-badge badge-phone">Phone</span></td>
+          <td>Second call + voicemail; reference previous touchpoints briefly</td>
+        </tr>
+        <tr>
+          <td><span class="seq-day">Day 14</span></td>
+          <td><span class="seq-touch">Touch 8</span></td>
+          <td><span class="seq-channel-badge badge-email">Email</span></td>
+          <td>Breakup email: "I'll stop reaching out after this — but wanted to share one last thing that might be relevant."</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <div class="callout">
+      <strong>After Day 14:</strong> Archive the prospect and move them to a nurture cadence. Do not abandon them — circumstances change. A prospect who was Red six months ago may be Green after a company event, funding round, or leadership change. Schedule a 90-day re-engagement check.
+    </div>
+  </div>
+
+  <!-- SECTION 5: PERSONALIZATION AT SCALE -->
+  <div class="section-title">5. Personalization at Scale</div>
+  <div class="section-intro">Personalization drives reply rates, but time is finite. The tiered approach below allows you to concentrate deep personalization on your highest-value targets while maintaining a systematic cadence across the broader prospect universe.</div>
+
+  <div class="subsection">
+    <div class="tier-grid">
+      <div class="tier-card">
+        <div class="tier-label">Tier 1</div>
+        <div class="tier-name">Top 50 Accounts</div>
+        <div class="tier-time">15–20 min / prospect</div>
+        <div class="tier-desc">Full research: company news, LinkedIn activity, tech stack, hiring signals, executive quotes. Fully custom messaging per touch. No templates — every email and call script is written from scratch.</div>
+      </div>
+      <div class="tier-card">
+        <div class="tier-label">Tier 2</div>
+        <div class="tier-name">Next 200 Accounts</div>
+        <div class="tier-time">5–8 min / prospect</div>
+        <div class="tier-desc">Semi-custom: use persona-level templates with 2–3 personalization variables inserted per email. Variables drawn from LinkedIn, funding data, and job postings. First line is always custom.</div>
+      </div>
+      <div class="tier-card">
+        <div class="tier-label">Tier 3</div>
+        <div class="tier-name">Broad Outreach</div>
+        <div class="tier-time">1–2 min / prospect</div>
+        <div class="tier-desc">Template-driven with company name and industry customization only. Acceptable for high-volume demand gen. Lower expected reply rate but high-volume compensates. Validate ICP fit before sequence.</div>
+      </div>
+    </div>
+
+    <p style="font-size:14px; font-weight:600; color:var(--text); margin-bottom:8px;">Personalization Variables</p>
+    <div class="var-list">
+      <span class="var-tag">{{company_name}}</span>
+      <span class="var-tag">{{recent_funding}}</span>
+      <span class="var-tag">{{tech_stack}}</span>
+      <span class="var-tag">{{job_posting}}</span>
+      <span class="var-tag">{{news_event}}</span>
+      <span class="var-tag">{{mutual_connection}}</span>
+      <span class="var-tag">{{executive_quote}}</span>
+      <span class="var-tag">{{competitor_used}}</span>
+    </div>
+
+    <ul class="bullet-list" style="margin-top:16px;">
+      <li><strong>LinkedIn Sales Navigator</strong> — live firmographic data, job change alerts, intent signals</li>
+      <li><strong>Apollo.io</strong> — contact discovery, email sequencing, basic enrichment</li>
+      <li><strong>ZoomInfo</strong> — enterprise-grade intent data and technographics</li>
+      <li><strong>Clay</strong> — waterfall enrichment: tries 10+ data providers in sequence to find valid contact data</li>
+    </ul>
+  </div>
+
+  <!-- SECTION 6: PROSPECTING METRICS -->
+  <div class="section-title">6. Prospecting Metrics &amp; Benchmarks</div>
+  <div class="section-intro">Track these six metrics weekly per rep. Deviations from benchmark indicate specific process failures — the metric tells you where, not just that something is wrong.</div>
+
+  <div class="subsection">
+    <table class="metrics-table">
+      <thead>
+        <tr>
+          <th>Metric</th>
+          <th>Definition</th>
+          <th>Benchmark</th>
+          <th>How to Track</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><span class="metric-name">Open Rate</span></td>
+          <td>Emails opened / emails sent</td>
+          <td><span class="metric-bench">35–50%</span></td>
+          <td>Email sequencing tool (Outreach, Salesloft, Apollo)</td>
+        </tr>
+        <tr>
+          <td><span class="metric-name">Reply Rate</span></td>
+          <td>Replies received / emails sent</td>
+          <td><span class="metric-bench">5–10%</span></td>
+          <td>Email sequencing tool</td>
+        </tr>
+        <tr>
+          <td><span class="metric-name">Connect Rate</span></td>
+          <td>Phone conversations / total dials</td>
+          <td><span class="metric-bench">8–15%</span></td>
+          <td>CRM call log / dialer</td>
+        </tr>
+        <tr>
+          <td><span class="metric-name">Meeting Booked Rate</span></td>
+          <td>Meetings booked / total touches delivered</td>
+          <td><span class="metric-bench">2–5%</span></td>
+          <td>CRM opportunity stage</td>
+        </tr>
+        <tr>
+          <td><span class="metric-name">SQLs per Rep per Month</span></td>
+          <td>Meetings that pass SQL qualification review</td>
+          <td><span class="metric-bench">4–10 (segment dependent)</span></td>
+          <td>CRM SQL stage tracking</td>
+        </tr>
+        <tr>
+          <td><span class="metric-name">ICP Hit Rate</span></td>
+          <td>% of booked meetings that are Green or Yellow ICP</td>
+          <td><span class="metric-bench">&gt;80%</span></td>
+          <td>CRM ICP qualification field (set at meeting disposition)</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <div class="callout">
+      <strong>Diagnostic Guide:</strong> Low open rate → fix subject lines and sender reputation. Low reply rate but high open rate → fix body copy and value statement. Low meeting booked rate but high reply rate → fix the qualification/CTA step. Low ICP hit rate → fix targeting lists and ICP criteria used in list building.
+    </div>
+  </div>
+
+  <!-- RELATED LINKS -->
+  <div class="related-section">
+    <div class="related-title">Related Tools &amp; Templates</div>
+    <div class="related-links">
+      <a href="template-icp.html" class="related-link">ICP Worksheet</a>
+      <a href="template-persona.html" class="related-link">Persona Guide</a>
+      <a href="template-discovery.html" class="related-link">Discovery Guide</a>
+      <a href="sos-gtm-playbook.html" class="related-link">GTM Playbook SOS</a>
+    </div>
+  </div>
+
+</div><!-- /content-wrap -->
+<script data-pplx-inline-edit>
+(function () {
+  if (window === window.top) return;
+
+  const allowedParentOrigins = ["https://www.perplexity.ai","https://perplexity.ai","https://testing.perplexity.ai","https://staging.perplexity.ai","https://*.preview.i.perplexity.ai","http://localhost:3000","http://127.0.0.1:3000","http://localhost:5173","http://127.0.0.1:5173"];
+  const MAX_FONT_BYTES = 500 * 1024;
+  const MAX_TOTAL_FONT_BYTES = 2 * 1024 * 1024;
+  let scrollForwarding = false;
+  let scrollRaf = 0;
+  let trustedTopOrigin = null;
+
+  // Allow entries like "https://*.preview.i.perplexity.ai" — the wildcard
+  // matches a single DNS label (no dots), so "https://*.foo" cannot stretch
+  // across multiple labels.
+  function matchesAllowedOrigin(origin) {
+    if (!origin) return false;
+    for (const entry of allowedParentOrigins) {
+      if (!entry.includes("*")) {
+        if (entry === origin) return true;
+        continue;
+      }
+      const pattern = new RegExp(
+        "^" +
+          entry.replace(/[.+?^${}()|[\]\\]/g, "\\$&").replace(/\*/g, "[^.]+") +
+          "$",
+      );
+      if (pattern.test(origin)) return true;
+    }
+    return false;
+  }
+
+  // Trust decision: when the sender is same-origin-visible (event.origin is a
+  // real origin like https://www.perplexity.ai) we trust event.origin directly.
+  // When event.origin is "null" (opaque broker srcdoc), we fall back to the
+  // broker's stamped `parentOrigin` to identify the top window. The fallback
+  // is claim-only — we rely on the browser's native `targetOrigin` enforcement
+  // on the response path (see postToTrustedTop) to ensure replies can't be
+  // delivered to anyone but the actual top window of that claimed origin.
+  function getTrustedParentOrigin(event) {
+    const forwardedParentOrigin =
+      typeof event.data.parentOrigin === "string" ? event.data.parentOrigin : null;
+    const parentOrigin = event.origin === "null" ? forwardedParentOrigin : event.origin;
+    return matchesAllowedOrigin(parentOrigin) ? parentOrigin : null;
+  }
+
+  // All responses go to window.top with targetOrigin = the allowlisted origin.
+  // An attacker that iframes us inside their own null-origin broker can claim
+  // any parentOrigin they like, but the browser will drop the reply whenever
+  // the real top's origin doesn't match — so the screenshot never leaves.
+  function postToTrustedTop(message) {
+    if (!trustedTopOrigin) return;
+    try {
+      window.top.postMessage(message, trustedTopOrigin);
+    } catch (_error) {}
+  }
+
+  function inlineAll(original, clone) {
+    if (original.nodeType !== 1 || clone.nodeType !== 1) return;
+
+    try {
+      const computedStyle = getComputedStyle(original);
+      // cssText on a computed style is the serialized declaration in modern
+      // Chromium/Safari — a single read beats enumerating ~400 longhand
+      // properties. Firefox returns "" here, so we fall back on empty.
+      const serialized = computedStyle.cssText;
+      if (serialized) {
+        clone.style.cssText = serialized;
+      } else {
+        const parts = new Array(computedStyle.length);
+        for (let index = 0; index < computedStyle.length; index += 1) {
+          const property = computedStyle[index];
+          parts[index] = `${property}:${computedStyle.getPropertyValue(property)};`;
+        }
+        clone.style.cssText = parts.join("");
+      }
+    } catch (_error) {}
+
+    const originalChildren = original.children;
+    const clonedChildren = clone.children;
+    for (
+      let index = 0;
+      index < originalChildren.length && index < clonedChildren.length;
+      index += 1
+    ) {
+      inlineAll(originalChildren[index], clonedChildren[index]);
+    }
+  }
+
+  function extractFontUrl(srcValue) {
+    const matches = [
+      ...srcValue.matchAll(
+        /url\(["']?([^"')]+)["']?\)(?:\s*format\(["']?([^"')]+)["']?\))?/gi,
+      ),
+    ];
+    if (matches.length === 0) return null;
+    const woff2 = matches.find((m) => m[2] && m[2].toLowerCase().includes("woff2"));
+    if (woff2) return woff2[1];
+    const woff = matches.find((m) => m[2] && m[2].toLowerCase().includes("woff"));
+    if (woff) return woff[1];
+    return matches[0][1];
+  }
+
+  // Cache resolved font URL -> data URI across captures. Fonts on a page
+  // essentially never change, and a batch run emits multiple captures back to
+  // back — without this we'd refetch + re-base64 every time.
+  const fontDataUriCache = new Map();
+  const SRC_DECLARATION_RE = /src\s*:\s*[^;}]+/i;
+
+  async function fetchAsDataUri(url) {
+    if (fontDataUriCache.has(url)) return fontDataUriCache.get(url);
+    let dataUri = null;
+    try {
+      const response = await fetch(url, { mode: "cors", credentials: "omit" });
+      if (response.ok) {
+        const blob = await response.blob();
+        if (blob.size <= MAX_FONT_BYTES) {
+          dataUri = await new Promise((resolve) => {
+            const reader = new FileReader();
+            reader.onloadend = () =>
+              resolve(typeof reader.result === "string" ? reader.result : null);
+            reader.onerror = () => resolve(null);
+            reader.readAsDataURL(blob);
+          });
+        }
+      }
+    } catch (_error) {
+      dataUri = null;
+    }
+    fontDataUriCache.set(url, dataUri);
+    return dataUri;
+  }
+
+  function collectFontFaceRuleTexts() {
+    const rules = [];
+    for (const sheet of document.styleSheets) {
+      let cssRules;
+      try {
+        cssRules = sheet.cssRules;
+      } catch (_error) {
+        continue;
+      }
+      if (!cssRules) continue;
+      for (const rule of cssRules) {
+        const cssText = rule.cssText || "";
+        if (cssText.startsWith("@font-face")) rules.push(cssText);
+      }
+    }
+    return rules;
+  }
+
+  async function buildInlinedFontCss() {
+    const ruleTexts = collectFontFaceRuleTexts();
+    if (ruleTexts.length === 0) return null;
+
+    const resolved = ruleTexts.map((cssText) => {
+      if (!SRC_DECLARATION_RE.test(cssText)) return null;
+      const srcMatch = cssText.match(/src\s*:\s*([^;}]+)[;}]/i);
+      if (!srcMatch) return null;
+      const url = extractFontUrl(srcMatch[1]);
+      if (!url) return null;
+      try {
+        return { cssText, url: new URL(url, document.baseURI).href };
+      } catch (_error) {
+        return null;
+      }
+    });
+
+    const dataUris = await Promise.all(
+      resolved.map((entry) => (entry ? fetchAsDataUri(entry.url) : Promise.resolve(null))),
+    );
+
+    const inlined = [];
+    let totalBytes = 0;
+    for (let index = 0; index < resolved.length; index += 1) {
+      const entry = resolved[index];
+      const dataUri = dataUris[index];
+      if (!entry || !dataUri) continue;
+      const approxBytes = dataUri.length * 0.75;
+      if (totalBytes + approxBytes > MAX_TOTAL_FONT_BYTES) break;
+      totalBytes += approxBytes;
+      inlined.push(entry.cssText.replace(SRC_DECLARATION_RE, `src: url("${dataUri}")`));
+    }
+    return inlined.length > 0 ? inlined.join("\n") : null;
+  }
+
+  function stripExternal(clone) {
+    const images = clone.querySelectorAll("img");
+    for (let index = 0; index < images.length; index += 1) {
+      const src = images[index].getAttribute("src");
+      if (src && !src.startsWith("data:")) images[index].removeAttribute("src");
+    }
+
+    const elements = clone.querySelectorAll("*");
+    for (let index = 0; index < elements.length; index += 1) {
+      const style = elements[index].style.cssText;
+      if (style && style.includes("url(")) {
+        elements[index].style.cssText = style.replace(
+          /url\(["']?(?!data:)[^)"']*["']?\)/gi,
+          "none",
+        );
+      }
+    }
+  }
+
+  function emitScroll() {
+    scrollRaf = 0;
+    if (!scrollForwarding) return;
+    postToTrustedTop({
+      type: "INLINE_EDIT_SCROLL",
+      scrollX: window.scrollX,
+      scrollY: window.scrollY,
+    });
+  }
+
+  window.addEventListener(
+    "scroll",
+    function () {
+      if (!scrollForwarding || scrollRaf) return;
+      scrollRaf = requestAnimationFrame(emitScroll);
+    },
+    { passive: true, capture: true },
+  );
+
+  async function handleCaptureRequest(event) {
+    const requestId = event.data.requestId;
+    const scrollX = window.scrollX;
+    const scrollY = window.scrollY;
+    const width = window.innerWidth;
+    const height = window.innerHeight;
+
+    function postResult(dataUrl) {
+      postToTrustedTop({
+        type: "INLINE_EDIT_SCREENSHOT_RESULT",
+        requestId,
+        dataUrl,
+        scrollX,
+        scrollY,
+      });
+    }
+
+    try {
+      // Wait for any pending web fonts to resolve so both inline metrics and
+      // the @font-face inlining below see the same loaded faces.
+      if (document.fonts && document.fonts.ready) {
+        try {
+          await document.fonts.ready;
+        } catch (_error) {}
+      }
+
+      const clone = document.documentElement.cloneNode(true);
+      inlineAll(document.documentElement, clone);
+
+      const removedNodes = clone.querySelectorAll("script,link[rel=\"stylesheet\"],style");
+      for (let index = 0; index < removedNodes.length; index += 1) {
+        removedNodes[index].remove();
+      }
+
+      stripExternal(clone);
+
+      // Re-embed web fonts as data-URI @font-face rules so the SVG rasterizer
+      // can resolve them — external font URLs aren't fetched during
+      // foreignObject rendering, which would otherwise force a fallback face
+      // and change text metrics.
+      const inlinedFontCss = await buildInlinedFontCss();
+      if (inlinedFontCss) {
+        const styleEl = document.createElement("style");
+        styleEl.textContent = inlinedFontCss;
+        const head = clone.querySelector("head");
+        if (head) head.appendChild(styleEl);
+        else clone.insertBefore(styleEl, clone.firstChild);
+      }
+
+      const html = new XMLSerializer().serializeToString(clone);
+      const svg =
+        `<svg xmlns="http://www.w3.org/2000/svg" width="${width}" height="${height}">` +
+        '<foreignObject width="100%" height="100%">' +
+        `<div xmlns="http://www.w3.org/1999/xhtml" style="width:${width}px;height:${height}px;overflow:hidden">` +
+        `<div style="transform:translate(-${scrollX}px,-${scrollY}px);transform-origin:top left">` +
+        html +
+        "</div></div></foreignObject></svg>";
+      const svgUrl = `data:image/svg+xml;charset=utf-8,${encodeURIComponent(svg)}`;
+      const image = new Image();
+      image.onload = function () {
+        const canvas = document.createElement("canvas");
+        canvas.width = width;
+        canvas.height = height;
+        canvas.getContext("2d").drawImage(image, 0, 0);
+        postResult(canvas.toDataURL("image/png"));
+      };
+      image.onerror = function () {
+        postResult(null);
+      };
+      image.src = svgUrl;
+    } catch (_error) {
+      postResult(null);
+    }
+  }
+
+  window.addEventListener("message", function (event) {
+    if (!event.data) return;
+    // Only accept messages from the direct parent frame. Blocks sibling /
+    // unrelated-window postMessage senders that could otherwise reach us.
+    if (event.source !== window.parent) return;
+
+    const trustedParentOrigin = getTrustedParentOrigin(event);
+    if (!trustedParentOrigin) return;
+    trustedTopOrigin = trustedParentOrigin;
+
+    if (event.data.type === "INLINE_EDIT_SCROLL_START") {
+      scrollForwarding = true;
+      emitScroll();
+      return;
+    }
+
+    if (event.data.type === "INLINE_EDIT_SCROLL_STOP") {
+      scrollForwarding = false;
+      if (scrollRaf) cancelAnimationFrame(scrollRaf);
+      scrollRaf = 0;
+      return;
+    }
+
+    if (event.data.type !== "INLINE_EDIT_CAPTURE_REQUEST") return;
+
+    handleCaptureRequest(event);
+  });
+})();
+
+
+</script></body>
+</html>

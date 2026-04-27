@@ -1,0 +1,879 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Marketing Hire Scorecard — CRO Manual</title>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="../assets/shared.css"/>
+  <style>
+    :root { --mkt: #006494; }
+    .page-hero { background: var(--mkt); }
+
+    /* Rubric card system */
+    .rubric-card {
+      background: var(--surface);
+      border: 1.5px solid var(--border);
+      border-radius: 10px;
+      margin: 20px 0;
+      overflow: hidden;
+    }
+    .rubric-header {
+      background: var(--mkt);
+      color: #fff;
+      padding: 14px 20px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+    .rubric-skill-name { font-size: 16px; font-weight: 700; }
+    .rubric-badge {
+      font-size: 12px; font-weight: 700;
+      background: rgba(255,255,255,0.2);
+      padding: 3px 14px; border-radius: 20px;
+    }
+    .rubric-meta {
+      padding: 14px 20px 10px;
+      background: #e8f4fa;
+      border-bottom: 1px solid var(--border);
+    }
+    .rubric-meta-row {
+      display: grid; grid-template-columns: 1fr 1fr; gap: 12px;
+    }
+    .rubric-meta-label {
+      font-size: 11px; font-weight: 700;
+      text-transform: uppercase; letter-spacing: 0.8px;
+      color: var(--mkt); margin-bottom: 3px;
+    }
+    .rubric-meta-text { font-size: 13px; line-height: 1.6; color: var(--text); }
+    .rubric-question {
+      padding: 12px 20px;
+      background: #fffdf0;
+      border-bottom: 1px solid var(--border);
+      font-size: 13px; font-style: italic; line-height: 1.6;
+    }
+    .rubric-question strong {
+      font-style: normal; font-size: 11px; font-weight: 700;
+      text-transform: uppercase; letter-spacing: 0.8px;
+      color: #b8860b; display: block; margin-bottom: 6px;
+    }
+    .rubric-tiers { display: grid; grid-template-columns: 1fr 1fr 1fr; }
+    @media (max-width: 680px) { .rubric-tiers { grid-template-columns: 1fr; } }
+    .rubric-tier { padding: 16px 18px; border-right: 1px solid var(--border); }
+    .rubric-tier:last-child { border-right: none; }
+    .tier-score { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 8px; }
+    .tier-high { background: #f6fff8; }
+    .tier-high .tier-score { color: #437A22; }
+    .tier-mid { background: #fffdf0; }
+    .tier-mid .tier-score { color: #b8860b; }
+    .tier-low { background: #fff8f8; }
+    .tier-low .tier-score { color: #A13544; }
+    .tier-desc { font-size: 13px; line-height: 1.65; color: var(--text); }
+
+    /* Score table */
+    .sc-table-wrap { overflow-x: auto; margin: 20px 0; }
+    .sc-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 13px;
+      min-width: 580px;
+    }
+    .sc-table th {
+      background: var(--mkt); color: #fff;
+      padding: 10px 14px; text-align: left;
+      font-size: 11px; font-weight: 700;
+      letter-spacing: 0.5px; text-transform: uppercase;
+    }
+    .sc-table th.center { text-align: center; }
+    .sc-table td { padding: 10px 14px; border-bottom: 1px solid var(--border); vertical-align: middle; }
+    .sc-table td.center { text-align: center; }
+    .sc-table tr:nth-child(even) td { background: #fafaf8; }
+    .sc-table .total-row td { background: #1C1B19 !important; color: #fff; font-weight: 700; }
+    .w-high {
+      display: inline-block; font-size: 12px; font-weight: 700;
+      padding: 2px 10px; border-radius: 20px;
+      background: #d0eaf7; color: var(--mkt);
+    }
+    .w-med {
+      display: inline-block; font-size: 12px; font-weight: 700;
+      padding: 2px 10px; border-radius: 20px;
+      background: #f0f5f0; color: #437A22;
+    }
+
+    /* Anti-pattern grid */
+    .anti-grid {
+      display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin: 20px 0;
+    }
+    @media (max-width: 680px) { .anti-grid { grid-template-columns: 1fr; } }
+    .anti-card {
+      border-radius: 10px; padding: 18px;
+    }
+    .anti-card.wrong { background: #fff0f0; border: 1.5px solid #A13544; }
+    .anti-card.right { background: #f0fff4; border: 1.5px solid #437A22; }
+    .anti-card-label {
+      font-size: 11px; font-weight: 700; text-transform: uppercase;
+      letter-spacing: 1px; margin-bottom: 8px;
+    }
+    .anti-card.wrong .anti-card-label { color: #A13544; }
+    .anti-card.right .anti-card-label { color: #437A22; }
+    .anti-card p { font-size: 13px; line-height: 1.65; }
+
+    /* Threshold cards */
+    .threshold-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; margin: 20px 0; }
+    @media (max-width: 700px) { .threshold-grid { grid-template-columns: 1fr 1fr; } }
+    .ht-card { border-radius: 10px; padding: 16px; text-align: center; }
+    .ht-card.no { background: #fff0f0; border: 1.5px solid #A13544; }
+    .ht-card.cond { background: #fff8f0; border: 1.5px solid #964219; }
+    .ht-card.strong { background: #f0fff4; border: 1.5px solid #437A22; }
+    .ht-card.excep { background: #d0eaf7; border: 1.5px solid var(--mkt); }
+    .ht-score { font-size: 20px; font-weight: 700; margin-bottom: 3px; }
+    .ht-label { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.8px; }
+    .ht-pct { font-size: 12px; color: var(--text-muted); margin-top: 5px; }
+    .ht-card.no .ht-score, .ht-card.no .ht-label { color: #A13544; }
+    .ht-card.cond .ht-score, .ht-card.cond .ht-label { color: #964219; }
+    .ht-card.strong .ht-score, .ht-card.strong .ht-label { color: #437A22; }
+    .ht-card.excep .ht-score, .ht-card.excep .ht-label { color: var(--mkt); }
+
+    /* Channels grid */
+    .channels-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin: 16px 0; }
+    @media (max-width: 680px) { .channels-grid { grid-template-columns: 1fr 1fr; } }
+    .channel-tag {
+      background: var(--surface);
+      border: 1.5px solid var(--border);
+      border-radius: 8px;
+      padding: 10px 12px;
+      font-size: 13px; font-weight: 600;
+      color: var(--text); text-align: center;
+    }
+    .channel-tag.active {
+      background: #d0eaf7; border-color: var(--mkt); color: var(--mkt);
+    }
+  </style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav class="nav">
+  <span class="nav-logo">CRO <span>Manual</span></span>
+  <span class="nav-sep">/</span>
+  <a href="../pages/resources.html" class="nav-back">← Resources &amp; Templates</a>
+  <span class="nav-sep">/</span>
+  <span class="nav-current">Marketing Hire Scorecard</span>
+  <span class="nav-spacer"></span>
+  <a href="../index.html" class="nav-home">Home</a>
+</nav>
+
+<!-- HERO -->
+<div class="page-hero">
+  <div class="hero-phase-label">Hiring · Marketing</div>
+  <h1 class="hero-title">Marketing Hire Scorecard</h1>
+  <p class="hero-subtitle">A great early marketing hire is utility-player, data-driven, and GTM-obsessed. They must understand your ICP as well as any salesperson and be able to build pipeline-generating programs from scratch.</p>
+  <div class="hero-tags">
+    <span class="hero-tag">Marketing Hiring</span>
+    <span class="hero-tag">Growth</span>
+    <span class="hero-tag">Demand Gen</span>
+    <span class="hero-tag">Content</span>
+    <span class="hero-tag">Analytics</span>
+    <span class="hero-tag">GTM-Aligned</span>
+  </div>
+</div>
+
+<!-- CONTENT -->
+<div class="content-wrap">
+
+  <nav class="breadcrumb">
+    <a href="../index.html">Home</a>
+    <span class="sep">›</span>
+    <a href="../pages/resources.html">Resources &amp; Templates</a>
+    <span class="sep">›</span>
+    <span class="current">Marketing Hire Scorecard</span>
+  </nav>
+
+  <!-- Section 1: The Early Marketing Hire -->
+  <h2 class="section-title">The Early Marketing Hire: Context and Profile</h2>
+  <p class="section-intro">Hiring marketing too early or with the wrong profile is one of the most common ways companies waste 12+ months of GTM momentum. The right hire at the wrong stage is still the wrong hire.</p>
+
+  <div class="subsection">
+    <p>Most early-stage companies make one of two marketing hiring mistakes. The first is hiring a brand-focused, agency-oriented marketer who builds beautiful assets and generates awareness but doesn't have the instinct to tie everything back to pipeline and revenue. The second is hiring a demand gen specialist who can optimize campaigns efficiently but has no ability to generate original content, build positioning from scratch, or run cross-channel programs without a large stack and significant budget.</p>
+    <p>The right early marketing hire is a utility player: someone who can run multiple marketing functions before the company is large enough to specialize them. They should be able to write a blog post, set up a paid campaign, manage an email nurture sequence, run a webinar, and analyze the attribution of all of it — in the same quarter.</p>
+    <p>Most importantly, the early marketing hire must understand your ICP as well as your best salesperson. Marketing programs that generate the wrong leads are worse than no programs — they consume sales capacity on deals that will never close or customers who will churn.</p>
+  </div>
+
+  <div class="anti-grid">
+    <div class="anti-card wrong">
+      <div class="anti-card-label">❌ Wrong Profile: The Brand Builder</div>
+      <p>Cares about brand aesthetics, website design, and "awareness." Measures success in impressions and social engagement. Does not proactively connect marketing activity to pipeline. Sees themselves as a creative partner, not a revenue driver. Will generate activity without accountability.</p>
+    </div>
+    <div class="anti-card right">
+      <div class="anti-card-label">✓ Right Profile: The GTM-Obsessed Builder</div>
+      <p>Understands the ICP deeply. Measures success in SQLs, pipeline contribution, and cost per SQL. Can write compelling content AND track its performance. Treats marketing as a growth function, not a communications function. Asks about the sales process before designing the first campaign.</p>
+    </div>
+    <div class="anti-card wrong">
+      <div class="anti-card-label">❌ Wrong Profile: The Channel Specialist</div>
+      <p>Excellent at one channel (SEO, paid, events) but lacks the breadth to run multiple channels simultaneously. Will optimize their specialty but leave other demand gen channels unattended. Not useful as a first hire when you need coverage, not depth.</p>
+    </div>
+    <div class="anti-card right">
+      <div class="anti-card-label">✓ Right Profile: The Systematic Experimenter</div>
+      <p>Tests multiple channels with small budgets, analyzes what works, and doubles down systematically. Not a spray-and-pray marketer — runs structured experiments with hypotheses and measurable outcomes. Knows which channels to prioritize for your specific ICP and can explain why.</p>
+    </div>
+  </div>
+
+  <!-- Utility player channels -->
+  <h3 class="subsection-title">The Utility Player Skill Set</h3>
+  <p class="section-intro" style="margin-bottom:12px;">A strong first marketing hire can at minimum cover the following channels at a functional level before the company is large enough to specialize:</p>
+  <div class="channels-grid">
+    <div class="channel-tag active">Content / SEO</div>
+    <div class="channel-tag active">Email Nurture</div>
+    <div class="channel-tag active">Paid Search / Social</div>
+    <div class="channel-tag active">Webinars / Events</div>
+    <div class="channel-tag active">Sales Enablement</div>
+    <div class="channel-tag active">Analytics / Attribution</div>
+    <div class="channel-tag">PR / Analyst Relations</div>
+    <div class="channel-tag">Brand / Design</div>
+    <div class="channel-tag">Community</div>
+  </div>
+  <p style="font-size:12px;color:var(--text-muted);margin-top:-8px;">Highlighted channels are expected of a first marketing hire. Unhighlighted channels are nice-to-have or role #2/3.</p>
+
+  <!-- Section 2: The 5-Criteria Scorecard -->
+  <h2 class="section-title">The 5-Criteria Scorecard</h2>
+  <p class="section-intro">Score each criterion 1–10. Apply weight multiplier. Total possible: 130 points.</p>
+
+  <div class="sc-table-wrap">
+    <table class="sc-table">
+      <thead>
+        <tr>
+          <th>#</th>
+          <th>Criterion</th>
+          <th class="center">Weight</th>
+          <th class="center">Multiplier</th>
+          <th class="center">Max</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>1</td>
+          <td><strong>Utility / Versatility</strong></td>
+          <td class="center"><span class="w-high">High</span></td>
+          <td class="center">3×</td>
+          <td class="center">30</td>
+        </tr>
+        <tr>
+          <td>2</td>
+          <td><strong>Continuous Learning</strong></td>
+          <td class="center"><span class="w-high">High</span></td>
+          <td class="center">3×</td>
+          <td class="center">30</td>
+        </tr>
+        <tr>
+          <td>3</td>
+          <td><strong>Data-Driven Approach</strong></td>
+          <td class="center"><span class="w-high">High</span></td>
+          <td class="center">3×</td>
+          <td class="center">30</td>
+        </tr>
+        <tr>
+          <td>4</td>
+          <td><strong>GTM Motivation</strong></td>
+          <td class="center"><span class="w-med">Medium</span></td>
+          <td class="center">2×</td>
+          <td class="center">20</td>
+        </tr>
+        <tr>
+          <td>5</td>
+          <td><strong>Cross-Functional Collaboration</strong></td>
+          <td class="center"><span class="w-med">Medium</span></td>
+          <td class="center">2×</td>
+          <td class="center">20</td>
+        </tr>
+        <tr class="total-row">
+          <td colspan="4"><strong>TOTAL POSSIBLE</strong></td>
+          <td class="center"><strong>130</strong></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="formula-block">
+    <div class="formula-label">Weighted Score Formula</div>
+    <div class="formula-main">Weighted Total = (Utility + Learning + Data) × 3 + (GTM + Collaboration) × 2</div>
+    <div class="formula-note">Maximum: (10+10+10)×3 + (10+10)×2 = 90 + 40 = 130 points</div>
+  </div>
+
+  <!-- Criterion 1: Utility / Versatility -->
+  <div class="rubric-card">
+    <div class="rubric-header">
+      <div class="rubric-skill-name">1. Utility / Versatility</div>
+      <div class="rubric-badge">High Weight · 3× · Max 30 pts</div>
+    </div>
+    <div class="rubric-meta">
+      <div class="rubric-meta-row">
+        <div>
+          <div class="rubric-meta-label">Definition</div>
+          <div class="rubric-meta-text">Can run multiple marketing functions before the company is large enough to specialize them. Has direct, hands-on experience across at least 4–5 marketing channels. Not just a strategist — can execute campaigns independently without agency or specialist support.</div>
+        </div>
+        <div>
+          <div class="rubric-meta-label">The Test: Breadth Evidence</div>
+          <div class="rubric-meta-text">Ask for specific examples across different channels — not just that they "managed" a program, but that they built it from scratch and can describe the execution step by step. "I oversaw" is not sufficient evidence; "I set up the campaign, wrote the copy, monitored performance, and changed the targeting after week 2" is.</div>
+        </div>
+      </div>
+    </div>
+    <div class="rubric-question">
+      <strong>Interview Question</strong>
+      "Walk me through the marketing programs you've run in the last 12 months. For each one, describe your specific role — strategy only, or did you execute hands-on? Which channel would you be most confident launching independently in week 1, and which would require the most ramp-up time?"
+    </div>
+    <div class="rubric-question" style="border-top:1px solid var(--border);">
+      <strong>Work Sample Request</strong>
+      Ask them to bring: one piece of content they wrote, one paid campaign they set up and optimized, and one report they built showing marketing performance. Review the quality and specificity of each before the interview.
+    </div>
+    <div class="rubric-tiers">
+      <div class="rubric-tier tier-low">
+        <div class="tier-score">Score 1–3: Too Narrow</div>
+        <div class="tier-desc">Deep specialist in one channel with little experience in others. Strategy-oriented without strong execution experience. Cannot point to multiple programs they ran independently. Would require hiring additional headcount to cover basic demand gen functions at this stage.</div>
+      </div>
+      <div class="rubric-tier tier-mid">
+        <div class="tier-score">Score 4–7: Solid Generalist</div>
+        <div class="tier-desc">Hands-on experience in 3–4 channels. Can execute most programs independently. Has some gaps in breadth but is willing and able to learn quickly. Has owned a marketing function in a small team. Work samples show solid quality with room for improvement.</div>
+      </div>
+      <div class="rubric-tier tier-high">
+        <div class="tier-score">Score 8–10: True Utility Player</div>
+        <div class="tier-desc">Has run content, paid, email, and events programs independently in a previous startup. Can set up CRM integration, write copy, launch a Google Ads campaign, and analyze attribution — all in the same week. Work samples are polished and demonstrate range. Does not wait to be resourced; finds ways to execute with what's available.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Criterion 2: Continuous Learning -->
+  <div class="rubric-card">
+    <div class="rubric-header">
+      <div class="rubric-skill-name">2. Continuous Learning</div>
+      <div class="rubric-badge">High Weight · 3× · Max 30 pts</div>
+    </div>
+    <div class="rubric-meta">
+      <div class="rubric-meta-row">
+        <div>
+          <div class="rubric-meta-label">Definition</div>
+          <div class="rubric-meta-text">Stays current on marketing channels, platforms, and tools. Learns new technology quickly without hand-holding. Experiments systematically — tests hypotheses, measures results, iterates. Does not wait for industry trends to arrive; discovers them proactively and applies them to the business.</div>
+        </div>
+        <div>
+          <div class="rubric-meta-label">Why It Matters</div>
+          <div class="rubric-meta-text">Marketing channels evolve faster than any other discipline. The channels that drove growth 3 years ago are saturated; the channels that will drive growth next year are just emerging. A first marketing hire who doesn't continuously learn will fall behind within 18 months. A systematic experimenter compounds their effectiveness every quarter.</div>
+        </div>
+      </div>
+    </div>
+    <div class="rubric-question">
+      <strong>Interview Question</strong>
+      "What marketing channel or tactic have you learned and deployed in the last 6 months that you weren't using before? Walk me through the experiment: what was the hypothesis, how did you set it up, what did you measure, and what was the outcome? What did you do with the results?"
+    </div>
+    <div class="rubric-question" style="border-top:1px solid var(--border);">
+      <strong>Learning Signal Questions</strong>
+      "What newsletters, podcasts, or communities do you follow to stay current in marketing?" / "What's the most interesting thing you've seen in demand gen in the last quarter?"
+    </div>
+    <div class="rubric-tiers">
+      <div class="rubric-tier tier-low">
+        <div class="tier-score">Score 1–3: Static</div>
+        <div class="tier-desc">Relies on the playbook they learned 3 years ago. Does not experiment systematically. Cannot describe a recent marketing experiment with measurable outcomes. Stays in their comfort channels. Does not follow industry developments or bring new ideas proactively.</div>
+      </div>
+      <div class="rubric-tier tier-mid">
+        <div class="tier-score">Score 4–7: Adaptive</div>
+        <div class="tier-desc">Learns new tools when required. Runs some experiments but not systematically. Follows industry trends but not proactively. Implements new tactics when presented with them. Solid but not a self-generating learner. Would benefit from a structured experimentation framework.</div>
+      </div>
+      <div class="rubric-tier tier-high">
+        <div class="tier-score">Score 8–10: Systematic Experimenter</div>
+        <div class="tier-desc">Runs structured experiments with documented hypotheses, success metrics, and post-mortem analysis. Has tested multiple new channels or tactics in the last quarter. Can describe what they're monitoring and why. Brings new ideas from external sources to the team proactively. Their learning rate compounds — they improve faster than the average marketer every year.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Criterion 3: Data-Driven -->
+  <div class="rubric-card">
+    <div class="rubric-header">
+      <div class="rubric-skill-name">3. Data-Driven Approach</div>
+      <div class="rubric-badge">High Weight · 3× · Max 30 pts</div>
+    </div>
+    <div class="rubric-meta">
+      <div class="rubric-meta-row">
+        <div>
+          <div class="rubric-meta-label">Definition</div>
+          <div class="rubric-meta-text">Tracks marketing metrics rigorously. Makes decisions based on data rather than intuition. Comfortable in spreadsheets and BI tools. Builds attribution models. Can trace a customer from the first marketing touch to closed-won. Does not report vanity metrics when pipeline metrics are available.</div>
+        </div>
+        <div>
+          <div class="rubric-meta-label">The Key Test</div>
+          <div class="rubric-meta-text">Ask them what metrics they tracked in their last role. The answer tells you everything. Metrics like "sessions," "impressions," and "followers" signal a brand-oriented thinker. Metrics like "cost per SQL," "MQL-to-SQL conversion rate," "pipeline contribution by channel," and "time-to-lead-qualification" signal a revenue-oriented marketer. You want the second type.</div>
+        </div>
+      </div>
+    </div>
+    <div class="rubric-question">
+      <strong>Interview Question</strong>
+      "Walk me through the marketing dashboard you used in your last role. What were the top 5 metrics you tracked weekly? How did those metrics drive your decisions? Give me an example of a time you saw a metric trend and changed your strategy based on it."
+    </div>
+    <div class="rubric-question" style="border-top:1px solid var(--border);">
+      <strong>Attribution Skills Test</strong>
+      "If we gave you access to our CRM and analytics stack tomorrow, what would you build first? Walk me through the attribution model you'd create and what questions it would answer."
+    </div>
+    <div class="rubric-tiers">
+      <div class="rubric-tier tier-low">
+        <div class="tier-score">Score 1–3: Vanity Metric Thinker</div>
+        <div class="tier-desc">Tracks impressions, followers, sessions, and email open rates. Cannot trace marketing activity to pipeline or revenue. Relies on "gut feel" for decisions. Has not built an attribution model. Believes it's "hard to measure marketing ROI." This is a red flag at any early stage company.</div>
+      </div>
+      <div class="rubric-tier tier-mid">
+        <div class="tier-score">Score 4–7: Revenue-Aware</div>
+        <div class="tier-desc">Tracks MQLs and some pipeline metrics. Understands that marketing's job is to generate qualified pipeline. Has done basic attribution. May not have built a full attribution model independently but understands the concept and has worked within one. Improving in this area; not fully mature yet.</div>
+      </div>
+      <div class="rubric-tier tier-high">
+        <div class="tier-score">Score 8–10: Revenue Operator</div>
+        <div class="tier-desc">Tracks cost per SQL, pipeline contribution by channel, SQL-to-close rate, and LTV by acquisition channel. Has built attribution models and multi-touch attribution views. Can connect a blog post to a closed deal through the full funnel. Makes budget allocation decisions based on data. Would build a marketing dashboard that Sales and Finance find credible and useful.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Criterion 4: GTM Motivation -->
+  <div class="rubric-card">
+    <div class="rubric-header">
+      <div class="rubric-skill-name">4. GTM Motivation</div>
+      <div class="rubric-badge">Medium Weight · 2× · Max 20 pts</div>
+    </div>
+    <div class="rubric-meta">
+      <div class="rubric-meta-row">
+        <div>
+          <div class="rubric-meta-label">Definition</div>
+          <div class="rubric-meta-text">Genuinely cares about pipeline and revenue — not just brand metrics. Sees marketing as a GTM function, not a communications function. Gets energy from generating demand and watching deals close, not from winning creative awards or building brand equity in isolation. Has a clear mental model for how marketing connects to revenue.</div>
+        </div>
+        <div>
+          <div class="rubric-meta-label">How It Shows Up</div>
+          <div class="rubric-meta-text">A GTM-motivated marketer asks about the sales process before designing a campaign. They want to join sales calls to hear objections firsthand. They know the ICP by heart. They're frustrated when they generate leads that don't convert, and they diagnose why rather than blaming Sales. They celebrate SQL targets, not open rates.</div>
+        </div>
+      </div>
+    </div>
+    <div class="rubric-question">
+      <strong>Interview Question</strong>
+      "What does marketing success look like to you? If we gave you a $100K quarterly budget, how would you allocate it and how would you know whether you spent it well? What metric would you be most disappointed to miss — MQLs or SQLs, and why?"
+    </div>
+    <div class="rubric-tiers">
+      <div class="rubric-tier tier-low">
+        <div class="tier-score">Score 1–3: Brand Focused</div>
+        <div class="tier-desc">Success is brand awareness, social engagement, and thought leadership. Would allocate budget to brand campaigns, PR, and events. SQL targets are "too narrow" a view of marketing's value. Sales and Marketing are separate organizations in their mental model. Would create a beautiful brand with poor pipeline contribution.</div>
+      </div>
+      <div class="rubric-tier tier-mid">
+        <div class="tier-score">Score 4–7: Revenue-Aware</div>
+        <div class="tier-desc">Understands that marketing should drive pipeline. Would allocate budget with revenue in mind. Tracks both brand and demand metrics. Sees both as important. May still weight brand more than a pure demand gen context requires, but directionally aligned with GTM priorities.</div>
+      </div>
+      <div class="rubric-tier tier-high">
+        <div class="tier-score">Score 8–10: GTM-Obsessed</div>
+        <div class="tier-desc">Revenue is the north star. Would allocate budget almost entirely to demand gen channels with measurable pipeline attribution. Would join sales calls proactively before launching any campaign. Knows the ICP as well as any AE. Celebrates SQL targets. Can describe exactly how they'd connect marketing activities to the CAC numerator in LIUE. Would be as comfortable presenting to the CFO as to the CMO.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Criterion 5: Cross-Functional Collaboration -->
+  <div class="rubric-card">
+    <div class="rubric-header">
+      <div class="rubric-skill-name">5. Cross-Functional Collaboration</div>
+      <div class="rubric-badge">Medium Weight · 2× · Max 20 pts</div>
+    </div>
+    <div class="rubric-meta">
+      <div class="rubric-meta-row">
+        <div>
+          <div class="rubric-meta-label">Definition</div>
+          <div class="rubric-meta-text">Collaborates effectively with Sales and CS. Joins sales calls to understand the buyer journey firsthand. Builds programs informed by real buyer conversations, not just persona documents. Supports CS with customer marketing. Sees themselves as an embedded member of the GTM team — not a separate function.</div>
+        </div>
+        <div>
+          <div class="rubric-meta-label">The Sales Call Test</div>
+          <div class="rubric-meta-text">The most reliable signal of a cross-functional marketer is whether they've sat in on sales calls proactively. Ask them: "How many sales calls did you sit in on at your last company?" and "What did you learn from those calls that changed your marketing?" The answers are highly predictive of collaboration quality.</div>
+        </div>
+      </div>
+    </div>
+    <div class="rubric-question">
+      <strong>Interview Question</strong>
+      "How many sales calls did you sit in on at your last company? Tell me about a specific thing you heard on a sales call that changed how you ran a marketing program. Describe your relationship with your sales team — how often did you interact, and what were the main friction points?"
+    </div>
+    <div class="rubric-tiers">
+      <div class="rubric-tier tier-low">
+        <div class="tier-score">Score 1–3: Siloed</div>
+        <div class="tier-desc">Has not sat in on sales calls. Builds buyer personas from secondary research, not from direct conversations. Relationship with Sales is transactional — delivers leads and waits for feedback. Does not join customer calls with CS. Creates content without validation from the sales team. Programs are built in isolation from the sales motion.</div>
+      </div>
+      <div class="rubric-tier tier-mid">
+        <div class="tier-score">Score 4–7: Collaborative</div>
+        <div class="tier-desc">Has joined some sales calls. Gets occasional feedback from Sales on lead quality. Has working relationships with Sales counterparts. Not yet proactively embedded in the sales motion but directionally collaborative. Would benefit from a structured program to join calls more regularly.</div>
+      </div>
+      <div class="rubric-tier tier-high">
+        <div class="tier-score">Score 8–10: Embedded GTM Partner</div>
+        <div class="tier-desc">Joined sales calls proactively — minimum 2–4 per quarter without being asked. Built marketing programs based on what they heard on those calls. Can describe specific objections they heard that changed their content strategy. Sales team trusts them and involves them in deal strategy for key accounts. CS leverages them for customer marketing programs. Seen by both functions as a valuable partner.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Section 3: Scoring Thresholds -->
+  <h2 class="section-title">Scoring Thresholds</h2>
+  <p class="section-intro">Total possible: 130 points. The three High-weight criteria (Utility, Learning, Data-Driven) are weighted most heavily because they represent the core execution and measurement skills that a first marketing hire must have.</p>
+
+  <div class="threshold-grid">
+    <div class="ht-card no">
+      <div class="ht-score">&lt; 78</div>
+      <div class="ht-label">Do Not Hire</div>
+      <div class="ht-pct">Below 60%</div>
+    </div>
+    <div class="ht-card cond">
+      <div class="ht-score">78–97</div>
+      <div class="ht-label">Conditional</div>
+      <div class="ht-pct">60–75% — written plan required</div>
+    </div>
+    <div class="ht-card strong">
+      <div class="ht-score">97–117</div>
+      <div class="ht-label">Strong Hire</div>
+      <div class="ht-pct">75–90%</div>
+    </div>
+    <div class="ht-card excep">
+      <div class="ht-score">117+</div>
+      <div class="ht-label">Exceptional</div>
+      <div class="ht-pct">90%+ — act quickly</div>
+    </div>
+  </div>
+
+  <div class="callout callout-warning">
+    <div class="callout-title">Non-Negotiable: Data-Driven is the Auto-Fail Criterion</div>
+    <p>A candidate who scores below 5 on Data-Driven should not be hired as a first marketing hire, regardless of total score. An early-stage company cannot afford a marketing function that optimizes for the wrong metrics. Vanity metrics generate activity without accountability, and the result is a marketing budget that produces no measurable pipeline contribution.</p>
+  </div>
+
+  <!-- Related links -->
+  <div class="related-section">
+    <div class="related-title">Related Pages</div>
+    <div class="related-links">
+      <a href="template-demand-gen-channels.html" class="related-link">Demand Gen Channels</a>
+      <a href="sos-gtm-fit.html" class="related-link">GTM Fit</a>
+      <a href="template-scorecard-sales-leader.html" class="related-link">Sales Leader Scorecard</a>
+      <a href="../pages/resources.html" class="related-link">← All Templates</a>
+    </div>
+  </div>
+
+</div>
+<script data-pplx-inline-edit>
+(function () {
+  if (window === window.top) return;
+
+  const allowedParentOrigins = ["https://www.perplexity.ai","https://perplexity.ai","https://testing.perplexity.ai","https://staging.perplexity.ai","https://*.preview.i.perplexity.ai","http://localhost:3000","http://127.0.0.1:3000","http://localhost:5173","http://127.0.0.1:5173"];
+  const MAX_FONT_BYTES = 500 * 1024;
+  const MAX_TOTAL_FONT_BYTES = 2 * 1024 * 1024;
+  let scrollForwarding = false;
+  let scrollRaf = 0;
+  let trustedTopOrigin = null;
+
+  // Allow entries like "https://*.preview.i.perplexity.ai" — the wildcard
+  // matches a single DNS label (no dots), so "https://*.foo" cannot stretch
+  // across multiple labels.
+  function matchesAllowedOrigin(origin) {
+    if (!origin) return false;
+    for (const entry of allowedParentOrigins) {
+      if (!entry.includes("*")) {
+        if (entry === origin) return true;
+        continue;
+      }
+      const pattern = new RegExp(
+        "^" +
+          entry.replace(/[.+?^${}()|[\]\\]/g, "\\$&").replace(/\*/g, "[^.]+") +
+          "$",
+      );
+      if (pattern.test(origin)) return true;
+    }
+    return false;
+  }
+
+  // Trust decision: when the sender is same-origin-visible (event.origin is a
+  // real origin like https://www.perplexity.ai) we trust event.origin directly.
+  // When event.origin is "null" (opaque broker srcdoc), we fall back to the
+  // broker's stamped `parentOrigin` to identify the top window. The fallback
+  // is claim-only — we rely on the browser's native `targetOrigin` enforcement
+  // on the response path (see postToTrustedTop) to ensure replies can't be
+  // delivered to anyone but the actual top window of that claimed origin.
+  function getTrustedParentOrigin(event) {
+    const forwardedParentOrigin =
+      typeof event.data.parentOrigin === "string" ? event.data.parentOrigin : null;
+    const parentOrigin = event.origin === "null" ? forwardedParentOrigin : event.origin;
+    return matchesAllowedOrigin(parentOrigin) ? parentOrigin : null;
+  }
+
+  // All responses go to window.top with targetOrigin = the allowlisted origin.
+  // An attacker that iframes us inside their own null-origin broker can claim
+  // any parentOrigin they like, but the browser will drop the reply whenever
+  // the real top's origin doesn't match — so the screenshot never leaves.
+  function postToTrustedTop(message) {
+    if (!trustedTopOrigin) return;
+    try {
+      window.top.postMessage(message, trustedTopOrigin);
+    } catch (_error) {}
+  }
+
+  function inlineAll(original, clone) {
+    if (original.nodeType !== 1 || clone.nodeType !== 1) return;
+
+    try {
+      const computedStyle = getComputedStyle(original);
+      // cssText on a computed style is the serialized declaration in modern
+      // Chromium/Safari — a single read beats enumerating ~400 longhand
+      // properties. Firefox returns "" here, so we fall back on empty.
+      const serialized = computedStyle.cssText;
+      if (serialized) {
+        clone.style.cssText = serialized;
+      } else {
+        const parts = new Array(computedStyle.length);
+        for (let index = 0; index < computedStyle.length; index += 1) {
+          const property = computedStyle[index];
+          parts[index] = `${property}:${computedStyle.getPropertyValue(property)};`;
+        }
+        clone.style.cssText = parts.join("");
+      }
+    } catch (_error) {}
+
+    const originalChildren = original.children;
+    const clonedChildren = clone.children;
+    for (
+      let index = 0;
+      index < originalChildren.length && index < clonedChildren.length;
+      index += 1
+    ) {
+      inlineAll(originalChildren[index], clonedChildren[index]);
+    }
+  }
+
+  function extractFontUrl(srcValue) {
+    const matches = [
+      ...srcValue.matchAll(
+        /url\(["']?([^"')]+)["']?\)(?:\s*format\(["']?([^"')]+)["']?\))?/gi,
+      ),
+    ];
+    if (matches.length === 0) return null;
+    const woff2 = matches.find((m) => m[2] && m[2].toLowerCase().includes("woff2"));
+    if (woff2) return woff2[1];
+    const woff = matches.find((m) => m[2] && m[2].toLowerCase().includes("woff"));
+    if (woff) return woff[1];
+    return matches[0][1];
+  }
+
+  // Cache resolved font URL -> data URI across captures. Fonts on a page
+  // essentially never change, and a batch run emits multiple captures back to
+  // back — without this we'd refetch + re-base64 every time.
+  const fontDataUriCache = new Map();
+  const SRC_DECLARATION_RE = /src\s*:\s*[^;}]+/i;
+
+  async function fetchAsDataUri(url) {
+    if (fontDataUriCache.has(url)) return fontDataUriCache.get(url);
+    let dataUri = null;
+    try {
+      const response = await fetch(url, { mode: "cors", credentials: "omit" });
+      if (response.ok) {
+        const blob = await response.blob();
+        if (blob.size <= MAX_FONT_BYTES) {
+          dataUri = await new Promise((resolve) => {
+            const reader = new FileReader();
+            reader.onloadend = () =>
+              resolve(typeof reader.result === "string" ? reader.result : null);
+            reader.onerror = () => resolve(null);
+            reader.readAsDataURL(blob);
+          });
+        }
+      }
+    } catch (_error) {
+      dataUri = null;
+    }
+    fontDataUriCache.set(url, dataUri);
+    return dataUri;
+  }
+
+  function collectFontFaceRuleTexts() {
+    const rules = [];
+    for (const sheet of document.styleSheets) {
+      let cssRules;
+      try {
+        cssRules = sheet.cssRules;
+      } catch (_error) {
+        continue;
+      }
+      if (!cssRules) continue;
+      for (const rule of cssRules) {
+        const cssText = rule.cssText || "";
+        if (cssText.startsWith("@font-face")) rules.push(cssText);
+      }
+    }
+    return rules;
+  }
+
+  async function buildInlinedFontCss() {
+    const ruleTexts = collectFontFaceRuleTexts();
+    if (ruleTexts.length === 0) return null;
+
+    const resolved = ruleTexts.map((cssText) => {
+      if (!SRC_DECLARATION_RE.test(cssText)) return null;
+      const srcMatch = cssText.match(/src\s*:\s*([^;}]+)[;}]/i);
+      if (!srcMatch) return null;
+      const url = extractFontUrl(srcMatch[1]);
+      if (!url) return null;
+      try {
+        return { cssText, url: new URL(url, document.baseURI).href };
+      } catch (_error) {
+        return null;
+      }
+    });
+
+    const dataUris = await Promise.all(
+      resolved.map((entry) => (entry ? fetchAsDataUri(entry.url) : Promise.resolve(null))),
+    );
+
+    const inlined = [];
+    let totalBytes = 0;
+    for (let index = 0; index < resolved.length; index += 1) {
+      const entry = resolved[index];
+      const dataUri = dataUris[index];
+      if (!entry || !dataUri) continue;
+      const approxBytes = dataUri.length * 0.75;
+      if (totalBytes + approxBytes > MAX_TOTAL_FONT_BYTES) break;
+      totalBytes += approxBytes;
+      inlined.push(entry.cssText.replace(SRC_DECLARATION_RE, `src: url("${dataUri}")`));
+    }
+    return inlined.length > 0 ? inlined.join("\n") : null;
+  }
+
+  function stripExternal(clone) {
+    const images = clone.querySelectorAll("img");
+    for (let index = 0; index < images.length; index += 1) {
+      const src = images[index].getAttribute("src");
+      if (src && !src.startsWith("data:")) images[index].removeAttribute("src");
+    }
+
+    const elements = clone.querySelectorAll("*");
+    for (let index = 0; index < elements.length; index += 1) {
+      const style = elements[index].style.cssText;
+      if (style && style.includes("url(")) {
+        elements[index].style.cssText = style.replace(
+          /url\(["']?(?!data:)[^)"']*["']?\)/gi,
+          "none",
+        );
+      }
+    }
+  }
+
+  function emitScroll() {
+    scrollRaf = 0;
+    if (!scrollForwarding) return;
+    postToTrustedTop({
+      type: "INLINE_EDIT_SCROLL",
+      scrollX: window.scrollX,
+      scrollY: window.scrollY,
+    });
+  }
+
+  window.addEventListener(
+    "scroll",
+    function () {
+      if (!scrollForwarding || scrollRaf) return;
+      scrollRaf = requestAnimationFrame(emitScroll);
+    },
+    { passive: true, capture: true },
+  );
+
+  async function handleCaptureRequest(event) {
+    const requestId = event.data.requestId;
+    const scrollX = window.scrollX;
+    const scrollY = window.scrollY;
+    const width = window.innerWidth;
+    const height = window.innerHeight;
+
+    function postResult(dataUrl) {
+      postToTrustedTop({
+        type: "INLINE_EDIT_SCREENSHOT_RESULT",
+        requestId,
+        dataUrl,
+        scrollX,
+        scrollY,
+      });
+    }
+
+    try {
+      // Wait for any pending web fonts to resolve so both inline metrics and
+      // the @font-face inlining below see the same loaded faces.
+      if (document.fonts && document.fonts.ready) {
+        try {
+          await document.fonts.ready;
+        } catch (_error) {}
+      }
+
+      const clone = document.documentElement.cloneNode(true);
+      inlineAll(document.documentElement, clone);
+
+      const removedNodes = clone.querySelectorAll("script,link[rel=\"stylesheet\"],style");
+      for (let index = 0; index < removedNodes.length; index += 1) {
+        removedNodes[index].remove();
+      }
+
+      stripExternal(clone);
+
+      // Re-embed web fonts as data-URI @font-face rules so the SVG rasterizer
+      // can resolve them — external font URLs aren't fetched during
+      // foreignObject rendering, which would otherwise force a fallback face
+      // and change text metrics.
+      const inlinedFontCss = await buildInlinedFontCss();
+      if (inlinedFontCss) {
+        const styleEl = document.createElement("style");
+        styleEl.textContent = inlinedFontCss;
+        const head = clone.querySelector("head");
+        if (head) head.appendChild(styleEl);
+        else clone.insertBefore(styleEl, clone.firstChild);
+      }
+
+      const html = new XMLSerializer().serializeToString(clone);
+      const svg =
+        `<svg xmlns="http://www.w3.org/2000/svg" width="${width}" height="${height}">` +
+        '<foreignObject width="100%" height="100%">' +
+        `<div xmlns="http://www.w3.org/1999/xhtml" style="width:${width}px;height:${height}px;overflow:hidden">` +
+        `<div style="transform:translate(-${scrollX}px,-${scrollY}px);transform-origin:top left">` +
+        html +
+        "</div></div></foreignObject></svg>";
+      const svgUrl = `data:image/svg+xml;charset=utf-8,${encodeURIComponent(svg)}`;
+      const image = new Image();
+      image.onload = function () {
+        const canvas = document.createElement("canvas");
+        canvas.width = width;
+        canvas.height = height;
+        canvas.getContext("2d").drawImage(image, 0, 0);
+        postResult(canvas.toDataURL("image/png"));
+      };
+      image.onerror = function () {
+        postResult(null);
+      };
+      image.src = svgUrl;
+    } catch (_error) {
+      postResult(null);
+    }
+  }
+
+  window.addEventListener("message", function (event) {
+    if (!event.data) return;
+    // Only accept messages from the direct parent frame. Blocks sibling /
+    // unrelated-window postMessage senders that could otherwise reach us.
+    if (event.source !== window.parent) return;
+
+    const trustedParentOrigin = getTrustedParentOrigin(event);
+    if (!trustedParentOrigin) return;
+    trustedTopOrigin = trustedParentOrigin;
+
+    if (event.data.type === "INLINE_EDIT_SCROLL_START") {
+      scrollForwarding = true;
+      emitScroll();
+      return;
+    }
+
+    if (event.data.type === "INLINE_EDIT_SCROLL_STOP") {
+      scrollForwarding = false;
+      if (scrollRaf) cancelAnimationFrame(scrollRaf);
+      scrollRaf = 0;
+      return;
+    }
+
+    if (event.data.type !== "INLINE_EDIT_CAPTURE_REQUEST") return;
+
+    handleCaptureRequest(event);
+  });
+})();
+
+
+</script></body>
+</html>

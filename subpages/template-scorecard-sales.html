@@ -1,0 +1,1276 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Sales Rep Interview Scorecard — CRO Manual</title>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="../assets/shared.css"/>
+  <style>
+    :root { --res: #2C5F8A; }
+    .page-hero { background: var(--res); }
+
+    /* Attribute card */
+    .attr-card {
+      background: var(--surface);
+      border: 1.5px solid var(--border);
+      border-radius: 10px;
+      margin: 16px 0;
+      overflow: hidden;
+    }
+    .attr-header {
+      background: var(--res);
+      color: #fff;
+      padding: 14px 20px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+    .attr-name { font-size: 16px; font-weight: 700; }
+    .attr-weight-info {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .attr-weight-badge {
+      font-size: 12px;
+      font-weight: 700;
+      background: rgba(255,255,255,0.2);
+      padding: 3px 12px;
+      border-radius: 20px;
+    }
+    .attr-max-badge {
+      font-size: 12px;
+      font-weight: 700;
+      background: rgba(255,255,255,0.12);
+      padding: 3px 12px;
+      border-radius: 20px;
+    }
+    .attr-top1-badge {
+      font-size: 11px;
+      font-weight: 700;
+      background: #FFD700;
+      color: #28251D;
+      padding: 3px 12px;
+      border-radius: 20px;
+    }
+    .attr-def {
+      padding: 12px 20px;
+      background: #f0f5fa;
+      border-bottom: 1px solid var(--border);
+      font-size: 13px;
+      color: var(--text);
+      line-height: 1.6;
+    }
+    .attr-def strong {
+      font-size: 11px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.8px;
+      color: var(--text-muted);
+      display: block;
+      margin-bottom: 4px;
+    }
+    .attr-questions {
+      padding: 12px 20px;
+      background: #fffdf0;
+      border-bottom: 1px solid var(--border);
+    }
+    .attr-questions strong {
+      font-size: 11px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.8px;
+      color: #b8860b;
+      display: block;
+      margin-bottom: 8px;
+    }
+    .attr-q-list { list-style: none; }
+    .attr-q-list li {
+      font-size: 13px;
+      font-style: italic;
+      line-height: 1.6;
+      padding: 4px 0;
+      color: var(--text);
+    }
+    .attr-q-list li::before { content: '› '; color: #b8860b; font-style: normal; font-weight: 700; }
+    .attr-rubric {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr 1fr;
+    }
+    @media (max-width: 700px) {
+      .attr-rubric { grid-template-columns: 1fr 1fr; }
+    }
+    .rubric-band {
+      padding: 14px 16px;
+      border-right: 1px solid var(--border);
+      font-size: 12px;
+      line-height: 1.6;
+    }
+    .rubric-band:last-child { border-right: none; }
+    .band-score {
+      font-size: 11px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      margin-bottom: 6px;
+    }
+    .band-10 { background: #f6fff8; }
+    .band-10 .band-score { color: #437A22; }
+    .band-7 { background: #f0fff4; }
+    .band-7 .band-score { color: #437A22; }
+    .band-4 { background: #fffdf0; }
+    .band-4 .band-score { color: #b8860b; }
+    .band-1 { background: #fff8f8; }
+    .band-1 .band-score { color: #A13544; }
+
+    /* Scorecard summary table */
+    .sc-table-wrap { overflow-x: auto; margin: 20px 0; }
+    .sc-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 13px;
+      min-width: 620px;
+    }
+    .sc-table th {
+      background: var(--res);
+      color: #fff;
+      padding: 10px 14px;
+      text-align: left;
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.5px;
+      text-transform: uppercase;
+    }
+    .sc-table th.right { text-align: right; }
+    .sc-table td {
+      padding: 10px 14px;
+      border-bottom: 1px solid var(--border);
+      vertical-align: top;
+    }
+    .sc-table td.right { text-align: right; font-weight: 700; }
+    .sc-table tr:nth-child(even) td { background: #fafaf8; }
+    .sc-table .total-row td {
+      background: #1C1B19 !important;
+      color: #fff;
+      font-weight: 700;
+    }
+    .sc-table .top-row td { background: #e8f5e9 !important; }
+    .w-badge {
+      display: inline-block;
+      font-size: 12px;
+      font-weight: 700;
+      padding: 2px 10px;
+      border-radius: 20px;
+      background: #e8f0f8;
+      color: var(--res);
+    }
+
+    /* Hire threshold */
+    .hire-threshold-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 12px;
+      margin: 20px 0;
+    }
+    @media (max-width: 700px) {
+      .hire-threshold-grid { grid-template-columns: 1fr 1fr; }
+    }
+    .ht-card {
+      border-radius: 10px;
+      padding: 16px;
+      text-align: center;
+    }
+    .ht-card.no { background: #fff0f0; border: 1.5px solid #A13544; }
+    .ht-card.cond { background: #fff8f0; border: 1.5px solid #964219; }
+    .ht-card.strong { background: #f0fff4; border: 1.5px solid #437A22; }
+    .ht-card.excep { background: #e8f0f8; border: 1.5px solid var(--res); }
+    .ht-score { font-size: 20px; font-weight: 700; margin-bottom: 3px; }
+    .ht-label { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.8px; }
+    .ht-pct { font-size: 12px; color: var(--text-muted); margin-top: 5px; }
+    .ht-card.no .ht-score, .ht-card.no .ht-label { color: #A13544; }
+    .ht-card.cond .ht-score, .ht-card.cond .ht-label { color: #964219; }
+    .ht-card.strong .ht-score, .ht-card.strong .ht-label { color: #437A22; }
+    .ht-card.excep .ht-score, .ht-card.excep .ht-label { color: var(--res); }
+
+    /* Interview process steps */
+    .interview-steps {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 14px;
+      margin: 20px 0;
+    }
+    @media (max-width: 680px) { .interview-steps { grid-template-columns: 1fr; } }
+    .is-card {
+      background: var(--surface);
+      border: 1.5px solid var(--border);
+      border-radius: 10px;
+      padding: 18px;
+    }
+    .is-num {
+      width: 32px; height: 32px;
+      background: var(--res);
+      color: #fff;
+      border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 14px; font-weight: 700;
+      margin-bottom: 10px;
+    }
+    .is-title { font-size: 14px; font-weight: 700; margin-bottom: 6px; }
+    .is-desc { font-size: 13px; color: var(--text-muted); line-height: 1.55; }
+
+    /* Roleplat scenario */
+    .roleplay-box {
+      background: var(--surface);
+      border: 2px solid var(--res);
+      border-radius: 10px;
+      padding: 24px;
+      margin: 20px 0;
+    }
+    .roleplay-title {
+      font-size: 13px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      color: var(--res);
+      margin-bottom: 14px;
+    }
+    .roleplay-scenario {
+      background: #f0f5fa;
+      border-radius: 8px;
+      padding: 16px;
+      font-size: 14px;
+      line-height: 1.7;
+      margin-bottom: 16px;
+      font-style: italic;
+    }
+    .roleplay-eval-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      gap: 12px;
+    }
+    @media (max-width: 680px) { .roleplay-eval-grid { grid-template-columns: 1fr; } }
+    .re-card {
+      background: #fafaf8;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 14px;
+    }
+    .re-label {
+      font-size: 11px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.8px;
+      color: var(--text-muted);
+      margin-bottom: 6px;
+    }
+    .re-desc { font-size: 13px; line-height: 1.55; }
+
+    /* Coachability spotlight */
+    .spotlight-box {
+      background: #fff8e1;
+      border: 2px solid #FFD700;
+      border-radius: 10px;
+      padding: 20px 24px;
+      margin: 20px 0;
+    }
+    .spotlight-label {
+      font-size: 11px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      color: #b8860b;
+      margin-bottom: 10px;
+    }
+
+    .phase-context-bar {
+      background: #f0f8f9;
+      border-bottom: 2px solid #c2dde0;
+      padding: 0;
+    }
+    .pcb-inner {
+      max-width: 960px;
+      margin: 0 auto;
+      padding: 10px 32px;
+      display: flex;
+      align-items: center;
+      gap: 20px;
+      flex-wrap: wrap;
+    }
+    .pcb-item { display: flex; flex-direction: column; gap: 1px; }
+    .pcb-label { font-size: 9px; font-weight: 700; letter-spacing: 1px; text-transform: uppercase; color: #7A7974; }
+    .pcb-value { font-size: 12px; font-weight: 700; color: #0D5C63; }
+    .pcb-divider { width: 1px; height: 28px; background: #c2dde0; }
+    .pcb-link { font-size: 11px; font-weight: 700; color: #0D5C63; background: rgba(13,92,99,0.08); padding: 4px 10px; border-radius: 4px; text-decoration: none; transition: background 0.15s; }
+    .pcb-link:hover { background: rgba(13,92,99,0.16); color: #0D5C63; text-decoration: none; }
+  </style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav class="nav">
+  <span class="nav-logo">CRO <span>Manual</span></span>
+  <span class="nav-sep">/</span>
+  <a href="../pages/resources.html" class="nav-back">← Resources &amp; Templates</a>
+  <span class="nav-sep">/</span>
+  <span class="nav-current">Sales Rep Scorecard</span>
+  <span class="nav-spacer"></span>
+  <a href="../index.html" class="nav-home">Home</a>
+</nav>
+
+<!-- HERO -->
+<div class="page-hero">
+  <div class="hero-phase-label">Hiring · Resources &amp; Templates</div>
+  <h1 class="hero-title">Sales Rep Interview Scorecard</h1>
+  <p class="hero-subtitle">A data-driven, attribute-weighted scorecard for hiring sales reps. Based on Mark Roberge's research — the attributes that predict sales success are not the ones most commonly evaluated in interviews.</p>
+  <div class="hero-tags">
+    <span class="hero-tag">AE Hiring</span>
+    <span class="hero-tag">Scorecard</span>
+    <span class="hero-tag">Coachability</span>
+    <span class="hero-tag">Work Ethic</span>
+    <span class="hero-tag">Curiosity</span>
+    <span class="hero-tag">Process Executor</span>
+  </div>
+</div>
+
+<div class="phase-context-bar">
+  <div class="pcb-inner">
+    <div class="pcb-item">
+      <span class="pcb-label">Primary Phase</span>
+      <span class="pcb-value">Phase 2 — Hiring, Ramp &amp; Compensation</span>
+    </div>
+    <div class="pcb-divider"></div>
+    <div class="pcb-item">
+      <span class="pcb-label">Science of Scaling Stage</span>
+      <span class="pcb-value">All Stages — profile changes by stage</span>
+    </div>
+    <div class="pcb-divider"></div>
+    <div class="pcb-item">
+      <span class="pcb-label">Governing Metric</span>
+      <span class="pcb-value">Rep Ramp Time · Quota Attainment Distribution</span>
+    </div>
+    <a href="../pages/phase2.html" class="pcb-link">View Phase →</a>
+    <a href="../pages/science-of-scaling.html" class="pcb-link">View Stage →</a>
+  </div>
+</div>
+
+<!-- CONTENT -->
+<div class="content-wrap">
+
+  <nav class="breadcrumb">
+    <a href="../index.html">Home</a>
+    <span class="sep">›</span>
+    <a href="../pages/resources.html">Resources &amp; Templates</a>
+    <span class="sep">›</span>
+    <span class="current">Sales Rep Interview Scorecard</span>
+  </nav>
+
+  <!-- Section 1: Anti-Pattern -->
+  <h2 class="section-title">The Anti-Pattern: Hiring on Gut Feel</h2>
+  <p class="section-intro">Most sales hiring is broken at the evaluation layer — not the sourcing layer. Fixing how you evaluate candidates is the highest-leverage intervention in the hiring process.</p>
+
+  <div class="subsection">
+    <p>Most sales interviews evaluate the wrong things. Interviewers walk out of an interview saying "I really liked them" or "they had great presence" — and those judgments are heavily influenced by factors with no predictive value: confidence, charisma, whether the interviewer saw themselves in the candidate, or whether the candidate could articulate a good answer to "where do you see yourself in five years?"</p>
+    <p>Mark Roberge's research at HubSpot across hundreds of sales hires produced a counterintuitive finding: the attributes that most commonly lead interviewers to make a hire — confidence, charm, prior sales experience, and "presence" — have weak to no correlation with quota attainment. The attributes that actually predict success are different, and most of them are not naturally surfaced in a conventional interview.</p>
+    <p>The fix is systematic: define 10 specific attributes, weight them by predictive importance, and score every candidate consistently against those attributes. This creates two benefits: (1) your hire quality improves because you're evaluating the right things, and (2) you accumulate data that lets you refine the model over time by comparing scorecard results to rep performance.</p>
+  </div>
+
+  <div class="callout callout-warning">
+    <div class="callout-title">The Most Dangerous Bias: The "Likability Trap"</div>
+    <p>The most common reason good candidates get rejected and bad candidates get hired is the likability trap — confusing a pleasant interview experience with predicted job performance. Likability predicts nothing. Coachability, curiosity, and work ethic predict almost everything. Build your process to surface those, and explicitly subtract likability from your evaluation criteria.</p>
+  </div>
+
+  <!-- Section 2: The 10-Attribute Scorecard -->
+  <h2 class="section-title">The 10-Attribute Scorecard</h2>
+  <p class="section-intro">Score each attribute 1–10 immediately after the interview. Multiply by the weight. Sum all weighted scores. Total possible: 580 points.</p>
+
+  <div class="sc-table-wrap">
+    <table class="sc-table">
+      <thead>
+        <tr>
+          <th>#</th>
+          <th>Attribute</th>
+          <th>Weight</th>
+          <th class="right">Max Score</th>
+          <th>Definition</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr class="top-row">
+          <td>1</td>
+          <td><strong>Coachability</strong> ★</td>
+          <td><span class="w-badge">9</span></td>
+          <td class="right">90</td>
+          <td>Actively seeks feedback; implements it immediately; doesn't defend past behavior. Shows up differently after every coaching session.</td>
+        </tr>
+        <tr class="top-row">
+          <td>2</td>
+          <td><strong>Curiosity</strong> ★</td>
+          <td><span class="w-badge">9</span></td>
+          <td class="right">90</td>
+          <td>Asks great questions; researches before every call; genuinely interested in the buyer's business, not just their pain point.</td>
+        </tr>
+        <tr>
+          <td>3</td>
+          <td><strong>Work Ethic</strong></td>
+          <td><span class="w-badge">8</span></td>
+          <td class="right">80</td>
+          <td>Volume and consistency of activity; self-directed; does not require external motivation. Shows up consistently regardless of recent results.</td>
+        </tr>
+        <tr>
+          <td>4</td>
+          <td><strong>Intelligence</strong></td>
+          <td><span class="w-badge">8</span></td>
+          <td class="right">80</td>
+          <td>Synthesizes information quickly; adapts message to context; handles complexity well. Not book smarts — pattern recognition and synthesis speed.</td>
+        </tr>
+        <tr>
+          <td>5</td>
+          <td><strong>Prior Success</strong></td>
+          <td><span class="w-badge">7</span></td>
+          <td class="right">70</td>
+          <td>Demonstrated achievement in any previous role — academic, athletic, career, or creative. Pattern of effort-driven results matters more than sales-specific success.</td>
+        </tr>
+        <tr>
+          <td>6</td>
+          <td><strong>Passion</strong></td>
+          <td><span class="w-badge">5</span></td>
+          <td class="right">50</td>
+          <td>Genuine enthusiasm for the problem being solved. Knows the product space deeply. Wouldn't be satisfied just selling anything — cares about this domain.</td>
+        </tr>
+        <tr>
+          <td>7</td>
+          <td><strong>Preparation</strong></td>
+          <td><span class="w-badge">3</span></td>
+          <td class="right">30</td>
+          <td>Researched your company before the interview. Has smart, specific questions ready. Demonstrates the same preparation they would bring to a customer call.</td>
+        </tr>
+        <tr>
+          <td>8</td>
+          <td><strong>Adaptability</strong></td>
+          <td><span class="w-badge">3</span></td>
+          <td class="right">30</td>
+          <td>Handles change well. Doesn't freeze when the playbook changes, the territory shifts, or the product pivots. Finds new approaches quickly.</td>
+        </tr>
+        <tr>
+          <td>9</td>
+          <td><strong>Competitiveness</strong></td>
+          <td><span class="w-badge">3</span></td>
+          <td class="right">30</td>
+          <td>Drives to win; dislikes losing; has a scorecard for themselves. Competitive without becoming toxic — channels it into work, not politics.</td>
+        </tr>
+        <tr>
+          <td>10</td>
+          <td><strong>Brevity</strong></td>
+          <td><span class="w-badge">3</span></td>
+          <td class="right">30</td>
+          <td>Communicates clearly and concisely. Doesn't ramble. High signal-to-noise ratio. In a discovery call, this is what separates great reps from average ones.</td>
+        </tr>
+        <tr class="total-row">
+          <td colspan="3"><strong>TOTAL POSSIBLE</strong></td>
+          <td class="right"><strong>580</strong></td>
+          <td></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  <p style="font-size:12px;color:var(--text-muted);margin-top:-12px;">★ Starred attributes are top predictors of quota attainment based on Roberge's HubSpot research.</p>
+
+  <!-- Coachability Spotlight -->
+  <div class="spotlight-box">
+    <div class="spotlight-label">★ Coachability — The #1 Predictor of Sales Success</div>
+    <p style="font-size:14px;line-height:1.7;margin-bottom:12px;">Coachability is the single highest-weighted attribute and the most counterintuitive one to evaluate. The interview question that surfaces it most reliably is deceptively simple — but the response tells you almost everything.</p>
+    <p style="font-size:14px;line-height:1.7;margin-bottom:12px;font-style:italic;">"Tell me about a time when you received critical feedback. What was the feedback? What did you do with it?"</p>
+    <p style="font-size:13px;line-height:1.65;margin-bottom:8px;"><strong>Red flag response:</strong> Explains why the feedback was wrong, or pivots immediately to what they changed and how it was the right call. The response is about them, not about what they learned.</p>
+    <p style="font-size:13px;line-height:1.65;"><strong>Green flag response:</strong> Describes the specific feedback clearly, acknowledges it directly without defensiveness, describes the specific action they took, and states the measurable outcome that resulted. The response is concrete, specific, and shows ownership without defensiveness.</p>
+  </div>
+
+  <!-- Attribute rubrics -->
+  <h3 class="subsection-title">Detailed Scoring Rubrics by Attribute</h3>
+
+  <!-- Coachability -->
+  <div class="attr-card">
+    <div class="attr-header">
+      <div class="attr-name">1. Coachability</div>
+      <div class="attr-weight-info">
+        <span class="attr-top1-badge">★ Top Predictor</span>
+        <span class="attr-weight-badge">Weight: 9</span>
+        <span class="attr-max-badge">Max: 90 pts</span>
+      </div>
+    </div>
+    <div class="attr-def">
+      <strong>Definition</strong>
+      Actively seeks feedback rather than waiting for it. When they receive feedback, they implement it immediately and demonstrate the change in their next interaction — not the next quarter. They do not defend past behavior or explain why the feedback was wrong. They have a growth mindset at the operational level: every call, every conversation is a data point for improvement.
+    </div>
+    <div class="attr-questions">
+      <strong>Interview Questions</strong>
+      <ul class="attr-q-list">
+        <li>"Tell me about a time when you received critical feedback. What was it? What exactly did you do with it?"</li>
+        <li>"Who has given you the most useful coaching in your career, and what made their feedback useful to you?"</li>
+        <li>"Describe a specific situation where you changed a behavior based on feedback. How long did it take you to make the change?"</li>
+      </ul>
+    </div>
+    <div class="attr-rubric">
+      <div class="rubric-band band-10">
+        <div class="band-score">Score 10: Elite</div>
+        Proactively solicits feedback with specific questions. Implements changes within days, not weeks. Can describe multiple coaching relationships and exactly what they learned from each. Their self-assessment of weaknesses matches what their managers would say.
+      </div>
+      <div class="rubric-band band-7">
+        <div class="band-score">Score 7–9: Strong</div>
+        Accepts feedback without defensiveness and implements it. Has good self-awareness. Can describe specific changes they made. May not proactively seek feedback as consistently, but responds well when given it.
+      </div>
+      <div class="rubric-band band-4">
+        <div class="band-score">Score 4–6: Adequate</div>
+        Generally accepts feedback but occasionally explains context or defends the original behavior. Implements changes, but it takes multiple sessions. Has awareness of their weaknesses but is still working on responding non-defensively.
+      </div>
+      <div class="rubric-band band-1">
+        <div class="band-score">Score 1–3: Risk</div>
+        Responds to feedback by explaining why the feedback was wrong, or why the situation was unique. Doesn't change behavior after coaching. Will stagnate under any manager after a quarter of non-improvement. Do not hire.
+      </div>
+    </div>
+  </div>
+
+  <!-- Curiosity -->
+  <div class="attr-card">
+    <div class="attr-header">
+      <div class="attr-name">2. Curiosity</div>
+      <div class="attr-weight-info">
+        <span class="attr-top1-badge">★ Top Predictor</span>
+        <span class="attr-weight-badge">Weight: 9</span>
+        <span class="attr-max-badge">Max: 90 pts</span>
+      </div>
+    </div>
+    <div class="attr-def">
+      <strong>Definition</strong>
+      Genuinely curious about the buyer's business, not just their pain point. Researches before every call. Asks questions that demonstrate preparation and interest. In a discovery call, curiosity is what generates the insights that lead to a differentiated pitch. Curious reps retain information and become domain experts faster.
+    </div>
+    <div class="attr-questions">
+      <strong>Interview Questions</strong>
+      <ul class="attr-q-list">
+        <li>"What did you learn about our company before coming in today? What was most interesting to you?"</li>
+        <li>"Tell me about the most interesting thing you learned about a prospect's business in the last 90 days."</li>
+        <li>"Walk me through how you prepare for a first discovery call with a new prospect."</li>
+      </ul>
+    </div>
+    <div class="attr-rubric">
+      <div class="rubric-band band-10">
+        <div class="band-score">Score 10: Elite</div>
+        Has researched your company in depth — knows your recent news, products, competitive positioning, and customer base. Asks intelligent questions about the business that demonstrate genuine interest. References specific things they learned during preparation.
+      </div>
+      <div class="rubric-band band-7">
+        <div class="band-score">Score 7–9: Strong</div>
+        Has done solid preparation. Asks good questions during the interview. Shows genuine interest in the problem space. May not have gone as deep as elite candidates, but demonstrates the behavior pattern consistently.
+      </div>
+      <div class="rubric-band band-4">
+        <div class="band-score">Score 4–6: Adequate</div>
+        Basic preparation. Asks generic questions. Knows the company exists and what you sell. Lacks depth in preparation. Discovery approach is formulaic rather than genuinely interested.
+      </div>
+      <div class="rubric-band band-1">
+        <div class="band-score">Score 1–3: Risk</div>
+        Has not researched the company. Asks no questions or asks questions easily answered on the website. In a discovery scenario, would talk more than they listen. Unlikely to develop into a consultative seller.
+      </div>
+    </div>
+  </div>
+
+  <!-- Work Ethic -->
+  <div class="attr-card">
+    <div class="attr-header">
+      <div class="attr-name">3. Work Ethic</div>
+      <div class="attr-weight-info">
+        <span class="attr-weight-badge">Weight: 8</span>
+        <span class="attr-max-badge">Max: 80 pts</span>
+      </div>
+    </div>
+    <div class="attr-def">
+      <strong>Definition</strong>
+      Volume and consistency of activity over time. Self-directed — doesn't need external motivation to hit activity targets. Shows up consistently regardless of recent results. Work ethic in sales is not about hours at the desk; it's about sustained activity volume and the discipline to execute the playbook even when results are slow.
+    </div>
+    <div class="attr-questions">
+      <strong>Interview Questions</strong>
+      <ul class="attr-q-list">
+        <li>"Tell me about a stretch of time when your results were not where you wanted them. How did your activity change during that period?"</li>
+        <li>"Describe your daily routine in your last role. What time did you start? What did the first two hours look like?"</li>
+        <li>"What motivates you when you're in a cold streak with no deals closing?"</li>
+      </ul>
+    </div>
+    <div class="attr-rubric">
+      <div class="rubric-band band-10">
+        <div class="band-score">Score 10: Elite</div>
+        Has a documented history of sustained high activity. Can describe their daily routine with specificity. During cold stretches, activity volume held or increased — they doubled down rather than pulled back. Has a clear internal motivation framework.
+      </div>
+      <div class="rubric-band band-7">
+        <div class="band-score">Score 7–9: Strong</div>
+        Consistent performer. Activity held steady during difficult periods. Describes self as self-motivated and provides evidence. No external whip required. May have had periods of dip but recovered independently.
+      </div>
+      <div class="rubric-band band-4">
+        <div class="band-score">Score 4–6: Adequate</div>
+        Generally hardworking but activity dipped during difficult periods. Required some external push to re-engage. Can describe the behavior but cannot cite sustained patterns across time.
+      </div>
+      <div class="rubric-band band-1">
+        <div class="band-score">Score 1–3: Risk</div>
+        Activity is results-dependent — when things are going well, they work hard. When in a slump, activity drops further. Requires constant external motivation. Will underperform in a ramp period where results are naturally slow.
+      </div>
+    </div>
+  </div>
+
+  <!-- Intelligence -->
+  <div class="attr-card">
+    <div class="attr-header">
+      <div class="attr-name">4. Intelligence</div>
+      <div class="attr-weight-info">
+        <span class="attr-weight-badge">Weight: 8</span>
+        <span class="attr-max-badge">Max: 80 pts</span>
+      </div>
+    </div>
+    <div class="attr-def">
+      <strong>Definition</strong>
+      Pattern recognition and synthesis speed — not academic credentials. Synthesizes new information quickly, adapts message to context, handles complexity without getting flustered. In sales, intelligence shows up as the ability to listen to a prospect, quickly map their situation to the relevant product value, and articulate that connection clearly.
+    </div>
+    <div class="attr-questions">
+      <strong>Interview Questions</strong>
+      <ul class="attr-q-list">
+        <li>"Tell me something complex you've had to learn quickly in a previous role. How did you approach it?"</li>
+        <li>"Give me your honest take on our competitive positioning versus [competitor]. What do you see as our main vulnerability?"</li>
+        <li>"If you had to explain what we do to a CFO vs. a VP of Engineering, how would those conversations differ?"</li>
+      </ul>
+    </div>
+    <div class="attr-rubric">
+      <div class="rubric-band band-10">
+        <div class="band-score">Score 10: Elite</div>
+        Makes insightful observations during the interview. Handles multi-layered questions without simplifying. Quickly grasps the nuances of complex situations. Can give a credible competitive assessment having researched the company for a few hours.
+      </div>
+      <div class="rubric-band band-7">
+        <div class="band-score">Score 7–9: Strong</div>
+        Clear thinker. Processes questions quickly. Handles complexity with moderate nuance. Adapts their communication style based on context. Occasionally oversimplifies but recovers well when pushed.
+      </div>
+      <div class="rubric-band band-4">
+        <div class="band-score">Score 4–6: Adequate</div>
+        Solid on simple questions; struggles with complex or layered ones. Not fast enough to handle complex discovery in real-time without a script. May be fine in a very structured, playbook-driven role.
+      </div>
+      <div class="rubric-band band-1">
+        <div class="band-score">Score 1–3: Risk</div>
+        Slow to process novel information. Sticks closely to prepared answers. Cannot adapt to off-script scenarios. Will struggle in technical or consultative selling contexts.
+      </div>
+    </div>
+  </div>
+
+  <!-- Prior Success -->
+  <div class="attr-card">
+    <div class="attr-header">
+      <div class="attr-name">5. Prior Success</div>
+      <div class="attr-weight-info">
+        <span class="attr-weight-badge">Weight: 7</span>
+        <span class="attr-max-badge">Max: 70 pts</span>
+      </div>
+    </div>
+    <div class="attr-def">
+      <strong>Definition</strong>
+      Demonstrated achievement in any domain — not necessarily sales. Academic, athletic, creative, or career achievement all count. Look for the pattern of effort-driven results: set a goal, put in the work, achieved the outcome, and can articulate clearly what made the difference.
+    </div>
+    <div class="attr-questions">
+      <strong>Interview Questions</strong>
+      <ul class="attr-q-list">
+        <li>"Tell me about the achievement you're most proud of in your career so far. What made it hard, and what role did you specifically play?"</li>
+        <li>"What does your track record look like across the roles you've held? Where were you in the top 25% of your peer group?"</li>
+        <li>"Describe a time you set a goal for yourself that required sustained effort over 6+ months. What was the goal and what was the outcome?"</li>
+      </ul>
+    </div>
+    <div class="attr-rubric">
+      <div class="rubric-band band-10">
+        <div class="band-score">Score 10: Elite</div>
+        Multiple domains of demonstrated achievement. In sales roles, was top quartile consistently. Has a personal narrative of setting ambitious goals and achieving them. Can describe the mechanisms of their success — not just the outcome.
+      </div>
+      <div class="rubric-band band-7">
+        <div class="band-score">Score 7–9: Strong</div>
+        Clear track record of achievement in at least one domain. Demonstrates pride in their work. Can articulate what made them successful. In sales roles, performed above average.
+      </div>
+      <div class="rubric-band band-4">
+        <div class="band-score">Score 4–6: Adequate</div>
+        Some achievement but inconsistent. Performs well in some contexts and not others. Struggles to identify a defining success. Average performer in previous roles.
+      </div>
+      <div class="rubric-band band-1">
+        <div class="band-score">Score 1–3: Risk</div>
+        No clear track record of achievement in any domain. Describes themselves as hardworking without evidence. In previous roles, was below average or has no comparable performance data.
+      </div>
+    </div>
+  </div>
+
+  <!-- Passion, Preparation, Adaptability, Competitiveness, Brevity — condensed cards -->
+  <div class="attr-card">
+    <div class="attr-header">
+      <div class="attr-name">6. Passion</div>
+      <div class="attr-weight-info">
+        <span class="attr-weight-badge">Weight: 5</span>
+        <span class="attr-max-badge">Max: 50 pts</span>
+      </div>
+    </div>
+    <div class="attr-def">
+      <strong>Definition</strong>
+      Genuine enthusiasm for the specific problem being solved — not generic sales enthusiasm. Knows the product domain. Has sought out information about the space without being asked. Would be less satisfied selling anything else. Passion correlates with longevity and discretionary effort.
+    </div>
+    <div class="attr-questions">
+      <strong>Interview Questions</strong>
+      <ul class="attr-q-list">
+        <li>"What drew you specifically to this space? What do you find most interesting about the problem we're solving?"</li>
+        <li>"How do you stay current in this industry? What do you read or follow?"</li>
+      </ul>
+    </div>
+    <div class="attr-rubric">
+      <div class="rubric-band band-10">
+        <div class="band-score">Score 8–10</div>
+        Can speak at length about the space. Has formed opinions about the industry. Wouldn't be equally enthusiastic about another role in a different domain.
+      </div>
+      <div class="rubric-band band-7">
+        <div class="band-score">Score 5–7</div>
+        Genuine interest in the space. Knows the basics. May not be deeply studied but shows real enthusiasm for the problem.
+      </div>
+      <div class="rubric-band band-4">
+        <div class="band-score">Score 3–4</div>
+        General sales enthusiasm without domain-specific interest. Would likely be equally excited about any sales role with a good quota.
+      </div>
+      <div class="rubric-band band-1">
+        <div class="band-score">Score 1–2</div>
+        No domain interest evident. This is a stepping stone opportunity for them. Will leave when a better offer arrives.
+      </div>
+    </div>
+  </div>
+
+  <div class="attr-card">
+    <div class="attr-header">
+      <div class="attr-name">7. Preparation</div>
+      <div class="attr-weight-info">
+        <span class="attr-weight-badge">Weight: 3</span>
+        <span class="attr-max-badge">Max: 30 pts</span>
+      </div>
+    </div>
+    <div class="attr-def">
+      <strong>Definition</strong>
+      Researched your company before the interview. Has specific, smart questions ready. This attribute evaluates whether the candidate brings the same preparation to a sales call as they bring to an interview — which is a direct behavioral signal.
+    </div>
+    <div class="attr-questions">
+      <strong>Interview Questions</strong>
+      <ul class="attr-q-list">
+        <li>"What did you learn about us before today that surprised you?"</li>
+        <li>"What questions have you prepared about the role or the business?"</li>
+      </ul>
+    </div>
+    <div class="attr-rubric">
+      <div class="rubric-band band-10">
+        <div class="band-score">Score 8–10</div>
+        Deep research: knows your customers, recent announcements, competitive position. Questions are specific and demonstrate preparation. Treats the interview like a discovery call.
+      </div>
+      <div class="rubric-band band-7">
+        <div class="band-score">Score 5–7</div>
+        Solid preparation. Knows the company well. Has reasonable questions. Clearly spent meaningful time before the interview.
+      </div>
+      <div class="rubric-band band-4">
+        <div class="band-score">Score 3–4</div>
+        Basic preparation. Knows the homepage content. Generic questions. Did the minimum required.
+      </div>
+      <div class="rubric-band band-1">
+        <div class="band-score">Score 1–2</div>
+        Little to no preparation. Cannot describe what the company does in detail. No questions ready. This behavior predicts how they'll approach discovery calls.
+      </div>
+    </div>
+  </div>
+
+  <div class="attr-card">
+    <div class="attr-header">
+      <div class="attr-name">8 &amp; 9. Adaptability &amp; Competitiveness</div>
+      <div class="attr-weight-info">
+        <span class="attr-weight-badge">Weight: 3 each</span>
+        <span class="attr-max-badge">Max: 30 pts each</span>
+      </div>
+    </div>
+    <div class="attr-def">
+      <strong>Adaptability — Definition</strong>
+      Handles change without freezing. When the playbook changes, the territory shifts, or the product pivots, they find new approaches quickly rather than waiting for instructions. Comfort with ambiguity is a survival trait in early-stage sales.
+    </div>
+    <div class="attr-questions">
+      <strong>Adaptability Questions</strong>
+      <ul class="attr-q-list">
+        <li>"Tell me about the most significant change to your sales process in the last 2 years. How did you respond to it?"</li>
+        <li>"Describe a time when the playbook you were following stopped working. What did you do?"</li>
+      </ul>
+    </div>
+    <div class="attr-def" style="margin-top:8px;">
+      <strong>Competitiveness — Definition</strong>
+      Drives to win; dislikes losing; has internal scoreboards. Channels competitive energy into work — not politics, not undermining peers, not toxic behavior. Great competitors set goals, track them obsessively, and feel genuine discomfort when behind.
+    </div>
+    <div class="attr-questions">
+      <strong>Competitiveness Questions</strong>
+      <ul class="attr-q-list">
+        <li>"Where do you rank yourself on your current team? How do you know?"</li>
+        <li>"Tell me about the last time you lost a deal you thought you had. How did you feel? What did you do next?"</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="attr-card">
+    <div class="attr-header">
+      <div class="attr-name">10. Brevity</div>
+      <div class="attr-weight-info">
+        <span class="attr-weight-badge">Weight: 3</span>
+        <span class="attr-max-badge">Max: 30 pts</span>
+      </div>
+    </div>
+    <div class="attr-def">
+      <strong>Definition</strong>
+      Communicates clearly and concisely. High signal-to-noise ratio. In a discovery call, the ability to ask a precise question and then listen — without filling silence with unnecessary words — is what separates top reps from average ones. This attribute is assessed by listening to how the candidate speaks, not what they say.
+    </div>
+    <div class="attr-questions">
+      <strong>How to Assess in the Interview</strong>
+      <ul class="attr-q-list">
+        <li>Watch for rambling answers that take 2+ minutes to make a point that could be made in 30 seconds.</li>
+        <li>Notice how they handle open-ended questions — do they structure their response or meander?</li>
+        <li>Ask: "Explain what we do to me in one sentence." Listen for precision.</li>
+      </ul>
+    </div>
+    <div class="attr-rubric">
+      <div class="rubric-band band-10">
+        <div class="band-score">Score 8–10</div>
+        Every answer is precise, structured, and exactly the right length. No filler phrases. Gets to the point and stops. Uses examples economically.
+      </div>
+      <div class="rubric-band band-7">
+        <div class="band-score">Score 5–7</div>
+        Generally concise. Occasionally over-explains but recovers. Signal-to-noise is good. Would be effective on a discovery call.
+      </div>
+      <div class="rubric-band band-4">
+        <div class="band-score">Score 3–4</div>
+        Tends to ramble. Takes too long to get to the point. In a discovery call, this translates to talking through the silence that buyers need to think.
+      </div>
+      <div class="rubric-band band-1">
+        <div class="band-score">Score 1–2</div>
+        Structural communication issues. Answers are consistently much longer than necessary. Will struggle in any sales motion that requires precise, controlled conversations.
+      </div>
+    </div>
+  </div>
+
+  <!-- Section 3: How to Run the Interview -->
+  <h2 class="section-title">How to Run the Interview</h2>
+  <p class="section-intro">The interview structure matters as much as the questions. A structured process produces consistent, comparable data. An unstructured conversation produces vibes.</p>
+
+  <div class="interview-steps">
+    <div class="is-card">
+      <div class="is-num">1</div>
+      <div class="is-title">Pre-Interview Setup</div>
+      <div class="is-desc">Two interviewers per candidate. Both review the scorecard before the interview. Divide attributes between interviewers — each is responsible for surfacing evidence for 4–5 attributes. Do not share observations until both have scored independently.</div>
+    </div>
+    <div class="is-card">
+      <div class="is-num">2</div>
+      <div class="is-title">60-Minute Interview Structure</div>
+      <div class="is-desc">10 minutes: background and prior success. 20 minutes: curiosity, coachability, and intelligence probes. 15 minutes: role-play scenario. 10 minutes: work ethic and passion probes. 5 minutes: candidate questions (score preparation and brevity here).</div>
+    </div>
+    <div class="is-card">
+      <div class="is-num">3</div>
+      <div class="is-title">Post-Interview Debrief</div>
+      <div class="is-desc">Each interviewer submits scores independently before discussing. Debrief rule: justify every score with a specific behavioral example from the interview — no "I liked/didn't like them." Any attribute scored below 5 by either interviewer requires explicit written discussion before a hire decision is made.</div>
+    </div>
+  </div>
+
+  <div class="callout callout-best-practice">
+    <div class="callout-title">Panel Consensus Rule</div>
+    <p>If any interviewer scores any attribute below 5, that attribute must be explicitly addressed in the debrief. The hire decision requires either (a) evidence that the low score was an evaluation error, or (b) a written plan for how the gap will be addressed in the first 90 days. You cannot average away a 2 with someone else's 9.</p>
+  </div>
+
+  <!-- Section 4: Role-Play -->
+  <h2 class="section-title">The Role-Play Component</h2>
+  <p class="section-intro">Every AE candidate should complete a standardized role-play. This provides behavioral evidence for curiosity, brevity, and coachability that interview questions alone cannot surface.</p>
+
+  <div class="roleplay-box">
+    <div class="roleplay-title">Standard Role-Play Scenario</div>
+    <div class="roleplay-scenario">
+      "You've just finished a 30-minute discovery call with Jordan Lee, VP of Operations at a 200-person manufacturing company. During the call, Jordan mentioned that their team spends 2–3 hours per week on manual reporting across spreadsheets, that their current system hasn't been updated in 4 years, and that they're evaluating solutions because a board member raised it in Q3 planning. You have 3 minutes to do a discovery recap and present your most relevant product feature."
+    </div>
+    <div class="roleplay-eval-grid">
+      <div class="re-card">
+        <div class="re-label">Evaluate: Discovery Recap</div>
+        <div class="re-desc">Did they recap the buyer's specific pain (manual reporting, 2–3 hrs/week, outdated system) before pitching? Or did they skip straight to the feature? Recapping demonstrates listening and earns the right to present.</div>
+      </div>
+      <div class="re-card">
+        <div class="re-label">Evaluate: Pain-to-Feature Link</div>
+        <div class="re-desc">Did they tie the feature directly to the stated pain? Great: "Because you're losing 2+ hours/week to manual reports, [feature] eliminates that specific step..." Average: Generic product description without connecting to what Jordan said.</div>
+      </div>
+      <div class="re-card">
+        <div class="re-label">Evaluate: Coachability Under Pressure</div>
+        <div class="re-desc">After the role-play, redirect them: "That was good — try that again, but lead with the pain before naming the feature." If they implement the feedback immediately and precisely, that's a 10 on coachability. If they explain why their approach was right, score 3 or below.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Section 5: Hire Threshold -->
+  <h2 class="section-title">Hire Threshold</h2>
+  <p class="section-intro">Total possible score is 580 points. Use these thresholds to guide the hire decision.</p>
+
+  <div class="hire-threshold-grid">
+    <div class="ht-card no">
+      <div class="ht-score">&lt; 350</div>
+      <div class="ht-label">Do Not Hire</div>
+      <div class="ht-pct">Below 60%</div>
+    </div>
+    <div class="ht-card cond">
+      <div class="ht-score">350–435</div>
+      <div class="ht-label">Conditional</div>
+      <div class="ht-pct">60–75% — written gap plan required</div>
+    </div>
+    <div class="ht-card strong">
+      <div class="ht-score">435–500</div>
+      <div class="ht-label">Strong Hire</div>
+      <div class="ht-pct">75–86%</div>
+    </div>
+    <div class="ht-card excep">
+      <div class="ht-score">500+</div>
+      <div class="ht-label">Exceptional</div>
+      <div class="ht-pct">86%+ — move with urgency</div>
+    </div>
+  </div>
+
+  <div class="callout callout-definition">
+    <div class="callout-title">Conditional Hire Protocol</div>
+    <p>If a candidate scores below the threshold but is strong on the top 3 weighted attributes (Coachability, Curiosity, Work Ethic — combined weight 26), they may be a conditional hire. Requirement: a written plan signed by the hiring manager that specifies which gaps will be addressed, how, and by what milestone in the first 90 days.</p>
+  </div>
+
+  <!-- Related links -->
+  <div class="related-section">
+    <div class="related-title">Related Pages</div>
+    <div class="related-links">
+      <a href="template-scorecard-sales-leader.html" class="related-link">Sales Leader Scorecard</a>
+      <a href="template-scorecard-gtm.html" class="related-link">First GTM Hire Scorecard</a>
+      <a href="sos-growth-moat.html" class="related-link">Growth Moat</a>
+      <a href="../pages/resources.html" class="related-link">← All Templates</a>
+    </div>
+  </div>
+
+</div>
+<script data-pplx-inline-edit>
+(function () {
+  if (window === window.top) return;
+
+  const allowedParentOrigins = ["https://www.perplexity.ai","https://perplexity.ai","https://testing.perplexity.ai","https://staging.perplexity.ai","https://*.preview.i.perplexity.ai","http://localhost:3000","http://127.0.0.1:3000","http://localhost:5173","http://127.0.0.1:5173"];
+  const MAX_FONT_BYTES = 500 * 1024;
+  const MAX_TOTAL_FONT_BYTES = 2 * 1024 * 1024;
+  let scrollForwarding = false;
+  let scrollRaf = 0;
+  let trustedTopOrigin = null;
+
+  // Allow entries like "https://*.preview.i.perplexity.ai" — the wildcard
+  // matches a single DNS label (no dots), so "https://*.foo" cannot stretch
+  // across multiple labels.
+  function matchesAllowedOrigin(origin) {
+    if (!origin) return false;
+    for (const entry of allowedParentOrigins) {
+      if (!entry.includes("*")) {
+        if (entry === origin) return true;
+        continue;
+      }
+      const pattern = new RegExp(
+        "^" +
+          entry.replace(/[.+?^${}()|[\]\\]/g, "\\$&").replace(/\*/g, "[^.]+") +
+          "$",
+      );
+      if (pattern.test(origin)) return true;
+    }
+    return false;
+  }
+
+  // Trust decision: when the sender is same-origin-visible (event.origin is a
+  // real origin like https://www.perplexity.ai) we trust event.origin directly.
+  // When event.origin is "null" (opaque broker srcdoc), we fall back to the
+  // broker's stamped `parentOrigin` to identify the top window. The fallback
+  // is claim-only — we rely on the browser's native `targetOrigin` enforcement
+  // on the response path (see postToTrustedTop) to ensure replies can't be
+  // delivered to anyone but the actual top window of that claimed origin.
+  function getTrustedParentOrigin(event) {
+    const forwardedParentOrigin =
+      typeof event.data.parentOrigin === "string" ? event.data.parentOrigin : null;
+    const parentOrigin = event.origin === "null" ? forwardedParentOrigin : event.origin;
+    return matchesAllowedOrigin(parentOrigin) ? parentOrigin : null;
+  }
+
+  // All responses go to window.top with targetOrigin = the allowlisted origin.
+  // An attacker that iframes us inside their own null-origin broker can claim
+  // any parentOrigin they like, but the browser will drop the reply whenever
+  // the real top's origin doesn't match — so the screenshot never leaves.
+  function postToTrustedTop(message) {
+    if (!trustedTopOrigin) return;
+    try {
+      window.top.postMessage(message, trustedTopOrigin);
+    } catch (_error) {}
+  }
+
+  function inlineAll(original, clone) {
+    if (original.nodeType !== 1 || clone.nodeType !== 1) return;
+
+    try {
+      const computedStyle = getComputedStyle(original);
+      // cssText on a computed style is the serialized declaration in modern
+      // Chromium/Safari — a single read beats enumerating ~400 longhand
+      // properties. Firefox returns "" here, so we fall back on empty.
+      const serialized = computedStyle.cssText;
+      if (serialized) {
+        clone.style.cssText = serialized;
+      } else {
+        const parts = new Array(computedStyle.length);
+        for (let index = 0; index < computedStyle.length; index += 1) {
+          const property = computedStyle[index];
+          parts[index] = `${property}:${computedStyle.getPropertyValue(property)};`;
+        }
+        clone.style.cssText = parts.join("");
+      }
+    } catch (_error) {}
+
+    const originalChildren = original.children;
+    const clonedChildren = clone.children;
+    for (
+      let index = 0;
+      index < originalChildren.length && index < clonedChildren.length;
+      index += 1
+    ) {
+      inlineAll(originalChildren[index], clonedChildren[index]);
+    }
+  }
+
+  function extractFontUrl(srcValue) {
+    const matches = [
+      ...srcValue.matchAll(
+        /url\(["']?([^"')]+)["']?\)(?:\s*format\(["']?([^"')]+)["']?\))?/gi,
+      ),
+    ];
+    if (matches.length === 0) return null;
+    const woff2 = matches.find((m) => m[2] && m[2].toLowerCase().includes("woff2"));
+    if (woff2) return woff2[1];
+    const woff = matches.find((m) => m[2] && m[2].toLowerCase().includes("woff"));
+    if (woff) return woff[1];
+    return matches[0][1];
+  }
+
+  // Cache resolved font URL -> data URI across captures. Fonts on a page
+  // essentially never change, and a batch run emits multiple captures back to
+  // back — without this we'd refetch + re-base64 every time.
+  const fontDataUriCache = new Map();
+  const SRC_DECLARATION_RE = /src\s*:\s*[^;}]+/i;
+
+  async function fetchAsDataUri(url) {
+    if (fontDataUriCache.has(url)) return fontDataUriCache.get(url);
+    let dataUri = null;
+    try {
+      const response = await fetch(url, { mode: "cors", credentials: "omit" });
+      if (response.ok) {
+        const blob = await response.blob();
+        if (blob.size <= MAX_FONT_BYTES) {
+          dataUri = await new Promise((resolve) => {
+            const reader = new FileReader();
+            reader.onloadend = () =>
+              resolve(typeof reader.result === "string" ? reader.result : null);
+            reader.onerror = () => resolve(null);
+            reader.readAsDataURL(blob);
+          });
+        }
+      }
+    } catch (_error) {
+      dataUri = null;
+    }
+    fontDataUriCache.set(url, dataUri);
+    return dataUri;
+  }
+
+  function collectFontFaceRuleTexts() {
+    const rules = [];
+    for (const sheet of document.styleSheets) {
+      let cssRules;
+      try {
+        cssRules = sheet.cssRules;
+      } catch (_error) {
+        continue;
+      }
+      if (!cssRules) continue;
+      for (const rule of cssRules) {
+        const cssText = rule.cssText || "";
+        if (cssText.startsWith("@font-face")) rules.push(cssText);
+      }
+    }
+    return rules;
+  }
+
+  async function buildInlinedFontCss() {
+    const ruleTexts = collectFontFaceRuleTexts();
+    if (ruleTexts.length === 0) return null;
+
+    const resolved = ruleTexts.map((cssText) => {
+      if (!SRC_DECLARATION_RE.test(cssText)) return null;
+      const srcMatch = cssText.match(/src\s*:\s*([^;}]+)[;}]/i);
+      if (!srcMatch) return null;
+      const url = extractFontUrl(srcMatch[1]);
+      if (!url) return null;
+      try {
+        return { cssText, url: new URL(url, document.baseURI).href };
+      } catch (_error) {
+        return null;
+      }
+    });
+
+    const dataUris = await Promise.all(
+      resolved.map((entry) => (entry ? fetchAsDataUri(entry.url) : Promise.resolve(null))),
+    );
+
+    const inlined = [];
+    let totalBytes = 0;
+    for (let index = 0; index < resolved.length; index += 1) {
+      const entry = resolved[index];
+      const dataUri = dataUris[index];
+      if (!entry || !dataUri) continue;
+      const approxBytes = dataUri.length * 0.75;
+      if (totalBytes + approxBytes > MAX_TOTAL_FONT_BYTES) break;
+      totalBytes += approxBytes;
+      inlined.push(entry.cssText.replace(SRC_DECLARATION_RE, `src: url("${dataUri}")`));
+    }
+    return inlined.length > 0 ? inlined.join("\n") : null;
+  }
+
+  function stripExternal(clone) {
+    const images = clone.querySelectorAll("img");
+    for (let index = 0; index < images.length; index += 1) {
+      const src = images[index].getAttribute("src");
+      if (src && !src.startsWith("data:")) images[index].removeAttribute("src");
+    }
+
+    const elements = clone.querySelectorAll("*");
+    for (let index = 0; index < elements.length; index += 1) {
+      const style = elements[index].style.cssText;
+      if (style && style.includes("url(")) {
+        elements[index].style.cssText = style.replace(
+          /url\(["']?(?!data:)[^)"']*["']?\)/gi,
+          "none",
+        );
+      }
+    }
+  }
+
+  function emitScroll() {
+    scrollRaf = 0;
+    if (!scrollForwarding) return;
+    postToTrustedTop({
+      type: "INLINE_EDIT_SCROLL",
+      scrollX: window.scrollX,
+      scrollY: window.scrollY,
+    });
+  }
+
+  window.addEventListener(
+    "scroll",
+    function () {
+      if (!scrollForwarding || scrollRaf) return;
+      scrollRaf = requestAnimationFrame(emitScroll);
+    },
+    { passive: true, capture: true },
+  );
+
+  async function handleCaptureRequest(event) {
+    const requestId = event.data.requestId;
+    const scrollX = window.scrollX;
+    const scrollY = window.scrollY;
+    const width = window.innerWidth;
+    const height = window.innerHeight;
+
+    function postResult(dataUrl) {
+      postToTrustedTop({
+        type: "INLINE_EDIT_SCREENSHOT_RESULT",
+        requestId,
+        dataUrl,
+        scrollX,
+        scrollY,
+      });
+    }
+
+    try {
+      // Wait for any pending web fonts to resolve so both inline metrics and
+      // the @font-face inlining below see the same loaded faces.
+      if (document.fonts && document.fonts.ready) {
+        try {
+          await document.fonts.ready;
+        } catch (_error) {}
+      }
+
+      const clone = document.documentElement.cloneNode(true);
+      inlineAll(document.documentElement, clone);
+
+      const removedNodes = clone.querySelectorAll("script,link[rel=\"stylesheet\"],style");
+      for (let index = 0; index < removedNodes.length; index += 1) {
+        removedNodes[index].remove();
+      }
+
+      stripExternal(clone);
+
+      // Re-embed web fonts as data-URI @font-face rules so the SVG rasterizer
+      // can resolve them — external font URLs aren't fetched during
+      // foreignObject rendering, which would otherwise force a fallback face
+      // and change text metrics.
+      const inlinedFontCss = await buildInlinedFontCss();
+      if (inlinedFontCss) {
+        const styleEl = document.createElement("style");
+        styleEl.textContent = inlinedFontCss;
+        const head = clone.querySelector("head");
+        if (head) head.appendChild(styleEl);
+        else clone.insertBefore(styleEl, clone.firstChild);
+      }
+
+      const html = new XMLSerializer().serializeToString(clone);
+      const svg =
+        `<svg xmlns="http://www.w3.org/2000/svg" width="${width}" height="${height}">` +
+        '<foreignObject width="100%" height="100%">' +
+        `<div xmlns="http://www.w3.org/1999/xhtml" style="width:${width}px;height:${height}px;overflow:hidden">` +
+        `<div style="transform:translate(-${scrollX}px,-${scrollY}px);transform-origin:top left">` +
+        html +
+        "</div></div></foreignObject></svg>";
+      const svgUrl = `data:image/svg+xml;charset=utf-8,${encodeURIComponent(svg)}`;
+      const image = new Image();
+      image.onload = function () {
+        const canvas = document.createElement("canvas");
+        canvas.width = width;
+        canvas.height = height;
+        canvas.getContext("2d").drawImage(image, 0, 0);
+        postResult(canvas.toDataURL("image/png"));
+      };
+      image.onerror = function () {
+        postResult(null);
+      };
+      image.src = svgUrl;
+    } catch (_error) {
+      postResult(null);
+    }
+  }
+
+  window.addEventListener("message", function (event) {
+    if (!event.data) return;
+    // Only accept messages from the direct parent frame. Blocks sibling /
+    // unrelated-window postMessage senders that could otherwise reach us.
+    if (event.source !== window.parent) return;
+
+    const trustedParentOrigin = getTrustedParentOrigin(event);
+    if (!trustedParentOrigin) return;
+    trustedTopOrigin = trustedParentOrigin;
+
+    if (event.data.type === "INLINE_EDIT_SCROLL_START") {
+      scrollForwarding = true;
+      emitScroll();
+      return;
+    }
+
+    if (event.data.type === "INLINE_EDIT_SCROLL_STOP") {
+      scrollForwarding = false;
+      if (scrollRaf) cancelAnimationFrame(scrollRaf);
+      scrollRaf = 0;
+      return;
+    }
+
+    if (event.data.type !== "INLINE_EDIT_CAPTURE_REQUEST") return;
+
+    handleCaptureRequest(event);
+  });
+})();
+
+
+</script></body>
+</html>

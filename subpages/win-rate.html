@@ -1,0 +1,669 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Win Rate — SaaS Revenue System</title>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="../assets/shared.css"/>
+  <style>
+    .page-hero { background: #28251D; }
+    .formula-comparison {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+      margin: 16px 0;
+    }
+    .fc-item {
+      background: var(--surface);
+      border: 1.5px solid var(--border);
+      border-radius: 10px;
+      overflow: hidden;
+    }
+    .fc-header {
+      background: #28251D;
+      color: #fff;
+      padding: 10px 16px;
+      font-size: 13px;
+      font-weight: 700;
+    }
+    .fc-body { padding: 16px; }
+    .fc-formula {
+      font-family: 'Courier New', monospace;
+      background: #f5f5f5;
+      padding: 8px 12px;
+      border-radius: 6px;
+      font-size: 13px;
+      font-weight: 700;
+      margin-bottom: 10px;
+    }
+    .fc-desc { font-size: 13px; line-height: 1.65; }
+    .segment-benchmarks {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+      gap: 12px;
+      margin: 16px 0;
+    }
+    .sb-card {
+      background: var(--surface);
+      border: 1.5px solid var(--border);
+      border-radius: 8px;
+      padding: 14px;
+      text-align: center;
+    }
+    .sb-segment { font-size: 11px; font-weight: 700; letter-spacing: 1px; text-transform: uppercase; color: var(--text-muted); margin-bottom: 6px; }
+    .sb-range { font-size: 22px; font-weight: 700; color: var(--primary); margin-bottom: 4px; }
+    .sb-note { font-size: 11px; color: var(--text-muted); line-height: 1.4; }
+    .driver-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+      margin: 16px 0;
+    }
+    .driver-up {
+      background: #f0fff4;
+      border: 1.5px solid #437A22;
+      border-radius: 8px;
+      padding: 16px;
+    }
+    .driver-down {
+      background: #fff0f0;
+      border: 1.5px solid #A13544;
+      border-radius: 8px;
+      padding: 16px;
+    }
+    .driver-title { font-size: 13px; font-weight: 700; margin-bottom: 10px; }
+    .driver-up .driver-title { color: #437A22; }
+    .driver-down .driver-title { color: #A13544; }
+    .driver-list { list-style: none; padding: 0; margin: 0; }
+    .driver-list li { font-size: 13px; padding: 4px 0 4px 16px; position: relative; line-height: 1.6; }
+    .driver-up .driver-list li::before { content: '↑'; position: absolute; left: 0; color: #437A22; font-weight: 700; font-size: 12px; }
+    .driver-down .driver-list li::before { content: '↓'; position: absolute; left: 0; color: #A13544; font-weight: 700; font-size: 12px; }
+    .decline-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 16px 0;
+    }
+    .decline-table th { background: #28251D; color: #fff; padding: 10px 14px; font-size: 12px; text-align: left; }
+    .decline-table td { padding: 12px 14px; font-size: 13px; border-bottom: 1px solid var(--border); line-height: 1.6; vertical-align: top; }
+    .decline-table tr:nth-child(even) td { background: #fafaf8; }
+    .tradeoff-box {
+      display: grid;
+      grid-template-columns: 1fr 40px 1fr;
+      gap: 0;
+      margin: 20px 0;
+      align-items: center;
+    }
+    .tradeoff-side {
+      background: var(--surface);
+      border: 1.5px solid var(--border);
+      border-radius: 8px 0 0 8px;
+      padding: 20px;
+    }
+    .tradeoff-side.right {
+      border-radius: 0 8px 8px 0;
+      border-left: none;
+    }
+    .tradeoff-arrow {
+      background: #28251D;
+      color: #fff;
+      height: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 18px;
+      font-weight: 700;
+    }
+    .tt-title { font-size: 13px; font-weight: 700; margin-bottom: 8px; }
+    .tt-desc { font-size: 12px; line-height: 1.6; color: var(--text); }
+    .segmentation-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 16px 0;
+    }
+    .segmentation-table th { background: #28251D; color: #fff; padding: 10px 14px; font-size: 12px; text-align: left; }
+    .segmentation-table td { padding: 12px 14px; font-size: 13px; border-bottom: 1px solid var(--border); line-height: 1.6; vertical-align: top; }
+    .segmentation-table tr:nth-child(even) td { background: #fafaf8; }
+  </style>
+</head>
+<body>
+<nav class="nav">
+  <span class="nav-logo">SaaS <span>Revenue System</span></span>
+  <span class="nav-sep">|</span>
+  <a href="../index.html" class="nav-back">← Home</a>
+  <span class="nav-sep">|</span>
+  <a href="../pages/north-star-metrics.html" class="nav-back">North Star Metrics</a>
+  <span class="nav-sep">|</span>
+  <span class="nav-current">Win Rate</span>
+</nav>
+<div class="page-hero" style="background:#28251D">
+  <div class="hero-phase-label">North Star Metrics</div>
+  <div class="hero-title">Win Rate</div>
+  <div class="hero-subtitle">The Signal of Your Message, Motion, and Market Fit — Two Formulas, How to Segment, and How to Diagnose a Decline</div>
+</div>
+<div class="content-wrap">
+  <div class="breadcrumb">
+    <a href="../index.html">Home</a><span class="sep">›</span>
+    <a href="../pages/north-star-metrics.html">North Star Metrics</a><span class="sep">›</span>
+    <span class="current">Win Rate</span>
+  </div>
+
+  <h2 class="section-title">The Two Win Rate Formulas</h2>
+  <p class="section-intro">Win rate is calculated two ways, and both are necessary. Using only one creates blind spots.</p>
+
+  <div class="formula-comparison">
+    <div class="fc-item">
+      <div class="fc-header">Formula 1: Win Rate vs. Active Competition</div>
+      <div class="fc-body">
+        <div class="fc-formula">Won / (Won + Competitive Losses)</div>
+        <div class="fc-desc">Measures your ability to defeat competing vendors when they are present in the deal. Excludes "no decision" outcomes. This is the purest measure of your competitive positioning and sales execution quality. A 40% rate means you win 40% of the time when a competitor is actively working the account.</div>
+      </div>
+    </div>
+    <div class="fc-item">
+      <div class="fc-header">Formula 2: Win Rate vs. All Opportunities</div>
+      <div class="fc-body">
+        <div class="fc-formula">Won / (Won + All Losses incl. No Decision)</div>
+        <div class="fc-desc">Measures your ability to convert all pipeline — including deals lost to "no decision" (status quo) and deals that stalled. This is the metric that drives pipeline coverage requirements. A lower overall win rate than competitive win rate indicates a do-nothing problem, not a competitive problem.</div>
+      </div>
+    </div>
+  </div>
+  <div class="callout callout-definition">
+    <div class="callout-title">When to Use Each</div>
+    <p>Use Formula 1 (vs. competition only) to assess your messaging effectiveness, competitive positioning quality, and battle card relevance. Use Formula 2 (all opportunities) for pipeline coverage planning and capacity modeling. A company that wins 55% of competitive deals but only 20% of all deals has a do-nothing problem — most opportunities never progress to a real competitive decision.</p>
+  </div>
+
+  <h2 class="section-title">Benchmarks by Segment</h2>
+  <div class="segment-benchmarks">
+    <div class="sb-card">
+      <div class="sb-segment">SMB</div>
+      <div class="sb-range">25–35%</div>
+      <div class="sb-note">All-opp win rate. Higher volume, shorter cycles, more do-nothing losses.</div>
+    </div>
+    <div class="sb-card">
+      <div class="sb-segment">Mid-Market</div>
+      <div class="sb-range">20–30%</div>
+      <div class="sb-note">More competitive deals; longer evaluation processes increase no-decision risk.</div>
+    </div>
+    <div class="sb-card">
+      <div class="sb-segment">Enterprise</div>
+      <div class="sb-range">15–25%</div>
+      <div class="sb-note">Highest competition; most complex evaluation; RFP processes favor incumbents.</div>
+    </div>
+    <div class="sb-card">
+      <div class="sb-segment">PLG → PLS</div>
+      <div class="sb-range">40–60%</div>
+      <div class="sb-note">Product usage is pre-qualification — conversion from PQA to paid is much higher than cold pipeline.</div>
+    </div>
+    <div class="sb-card">
+      <div class="sb-segment">Expansion</div>
+      <div class="sb-range">50–70%</div>
+      <div class="sb-note">Existing customer relationship dramatically improves win rate on expansion conversations.</div>
+    </div>
+    <div class="sb-card">
+      <div class="sb-segment">Competitive Only</div>
+      <div class="sb-range">+10–15pp</div>
+      <div class="sb-note">Formula 1 win rate is typically 10-15 points higher than all-opp win rate across all segments.</div>
+    </div>
+  </div>
+
+  <h2 class="section-title">How to Segment Win Rate for Diagnostics</h2>
+  <table class="segmentation-table">
+    <thead>
+      <tr><th>Segmentation Dimension</th><th>What It Reveals</th><th>Diagnostic Question</th></tr>
+    </thead>
+    <tbody>
+      <tr><td>By Rep</td><td>Performance variance across the team. Identify top performers to replicate and bottom performers to coach. 2x+ variance between best and worst is an ICP, training, or management problem.</td><td>Are top reps winning differently? What specific behaviors predict high win rate?</td></tr>
+      <tr><td>By Market Segment (SMB/MM/Ent)</td><td>Where your motion works best. If Enterprise win rate is &lt;10%, you may be mis-investing in that segment relative to your competitive position.</td><td>Are we investing headcount and resources in the segment where our win rate justifies the investment?</td></tr>
+      <tr><td>By Lead Source</td><td>Marketing-sourced vs. outbound-sourced vs. partner-sourced vs. expansion. Win rates often differ 15-30 points between sources.</td><td>Which source produces the highest-quality pipeline? Is our investment aligned to source win rates?</td></tr>
+      <tr><td>By Competitor</td><td>Where you win and lose in competitive situations. A declining win rate against a specific competitor is a signal they've improved their product, messaging, or pricing.</td><td>What changed in our competitive position against [X] in the last two quarters?</td></tr>
+      <tr><td>By Deal Size Band</td><td>Win rate usually declines as deal size increases (more scrutiny, more competition, more stakeholders). Knowing the break point helps sales focus on the right deals.</td><td>At what ACV threshold does our win rate fall below acceptable? Are we over-investing above that threshold?</td></tr>
+      <tr><td>By Industry Vertical</td><td>Win rates in your core ICP verticals vs. adjacent verticals. Reveals where your messaging resonates and where it doesn't.</td><td>Are we winning in the industries we claim are our ICP? If not, is the ICP wrong or the messaging wrong?</td></tr>
+      <tr><td>By Sales Cycle Length</td><td>Win rate for deals that close quickly vs. deals with extended cycles. Long cycles often indicate misaligned deals — and often predict losses.</td><td>What is the correlation between sales cycle length and win rate? Is there a threshold beyond which most deals are lost?</td></tr>
+    </tbody>
+  </table>
+
+  <h2 class="section-title">What Drives Win Rate Up and Down</h2>
+  <div class="driver-grid">
+    <div class="driver-up">
+      <div class="driver-title">Forces That Increase Win Rate</div>
+      <ul class="driver-list">
+        <li>Tighter ICP enforcement — pursuing fewer but better-fit deals</li>
+        <li>Champion building — 2+ internal advocates in the deal</li>
+        <li>Executive alignment early in the deal (AE accesses EB by Stage 2)</li>
+        <li>Strong competitive positioning — updated battle cards, effective reframes</li>
+        <li>Reference-led selling — prospect speaks to a reference in their exact vertical</li>
+        <li>Proactive mutual close plan — creates decision momentum</li>
+        <li>Product-led motion — prospect has used the product (PQA pipeline)</li>
+        <li>Improved discovery — reps link pain to quantified business outcomes</li>
+        <li>Rep tenure and experience — win rate typically improves through Year 2-3</li>
+        <li>Enablement investment — updated objection handlers, ROI calculators</li>
+      </ul>
+    </div>
+    <div class="driver-down">
+      <div class="driver-title">Forces That Decrease Win Rate</div>
+      <ul class="driver-list">
+        <li>Loose ICP — pursuing accounts that can't buy or won't use the product well</li>
+        <li>Single-threaded deals — one contact, no champions, no EB access</li>
+        <li>Late EB engagement — discovering budget/authority issues at Stage 3-4</li>
+        <li>Competitor improves product or pricing without your team knowing</li>
+        <li>New reps ramping — natural win rate trough in months 1-4</li>
+        <li>Market commoditization — more competitors entering your category</li>
+        <li>Outdated enablement — reps using stale positioning from 2 years ago</li>
+        <li>Proof deficit — not enough relevant case studies or references in new verticals</li>
+        <li>Pricing misalignment — ACV expectations out of step with market</li>
+        <li>Rep attrition — losing high-win-rate reps, replacing with new reps</li>
+      </ul>
+    </div>
+  </div>
+
+  <h2 class="section-title">The Win Rate / Sales Cycle Trade-Off</h2>
+  <div class="tradeoff-box">
+    <div class="tradeoff-side">
+      <div class="tt-title">Prioritize Win Rate</div>
+      <div class="tt-desc">Aggressive qualification — only pursue deals with high ICP fit and active champion. Refuse deals without EB access. Win more of fewer deals. Result: higher win rate, lower pipeline volume needed, longer average deal time (you pick harder deals).</div>
+    </div>
+    <div class="tradeoff-arrow">⇄</div>
+    <div class="tradeoff-side right">
+      <div class="tt-title">Prioritize Sales Cycle Speed</div>
+      <div class="tt-desc">Pursue a wider ICP, prioritize fast-moving deals, push for quick decisions. Risk: more competitive deals where the buyer is evaluating 5 vendors; more "no decisions" from buyers not fully convinced. Result: lower win rate, shorter average cycle, needs more pipeline.</div>
+    </div>
+  </div>
+  <p>Most CROs try to optimize both simultaneously, which is usually a mistake. Pick the primary lever based on where you are in the growth cycle. Early stage (finding PMF): prioritize win rate — learn what makes buyers say yes. Growth stage (scaling): optimize for both by tightening ICP rather than loosening qualification standards.</p>
+
+  <h2 class="section-title">Win Rate as an ICP Signal</h2>
+  <div class="subsection">
+    <p>Win rate is one of the most powerful validators of ICP accuracy. A systematic win rate analysis answers: "Are the accounts we think are our ICP actually the ones we win?" The results frequently surprise leadership teams.</p>
+    <p>Run this analysis annually: compare win rate across the ICP dimensions you believe are most important (industry, company size, tech stack, buyer persona). Often you'll find that win rate is 40%+ in your claimed top vertical but only 12% in the second-priority vertical — yet headcount and marketing spend are equally distributed between them. This is a misallocation of resources, and win rate data surfaces it.</p>
+    <div class="callout callout-best-practice">
+      <div class="callout-title">The Win Rate ICP Test</div>
+      <p>If win rate is consistently below 15% in a segment for 3+ quarters, either your ICP definition is wrong (these companies aren't actually good fits) or your product-market fit in that segment is insufficient to support a competitive sales motion. In either case, reallocation of resources to higher-win-rate segments produces better revenue outcomes than continuing to invest in the low-win-rate segment.</p>
+    </div>
+  </div>
+
+  <h2 class="section-title">Diagnosing a Win Rate Decline</h2>
+  <table class="decline-table">
+    <thead>
+      <tr><th>Observed Pattern</th><th>Likely Root Cause</th><th>Diagnostic Test</th><th>Fix</th></tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>Win rate drops uniformly across all reps and segments</td>
+        <td>Market or competitive change — competitor improved product/pricing, or category is commoditizing</td>
+        <td>Win/loss interview with recent losses. What did the competitor show that changed the evaluation?</td>
+        <td>Update battle cards, competitive positioning, and proof points. May need pricing adjustment.</td>
+      </tr>
+      <tr>
+        <td>Win rate drops for newer reps, stable for veterans</td>
+        <td>Ramp problem — new reps not reaching proficiency before being given full territory</td>
+        <td>Compare win rate by rep tenure. If win rate at months 1-4 is &lt;10% but recovers to 25%+ by month 8, the issue is ramp quality, not market.</td>
+        <td>Extend ramp period; increase manager support in first 6 months; improve enablement.</td>
+      </tr>
+      <tr>
+        <td>Win rate drops in specific verticals or deal sizes</td>
+        <td>ICP drift — pursuing accounts outside your sweet spot, possibly driven by SDR sourcing too broadly</td>
+        <td>Analyze win rate by ICP dimension. Which company profile characteristics correlate with wins vs. losses?</td>
+        <td>Tighten ICP criteria, update SDR outreach targeting, remove low-win-rate accounts from rep focus.</td>
+      </tr>
+      <tr>
+        <td>Win rate drops in competitive deals only</td>
+        <td>Competitor has improved significantly; your battle cards and positioning are outdated</td>
+        <td>Win/loss analysis: what reasons are cited in competitive losses? What did the competitor say about you?</td>
+        <td>Update battle cards based on Gong CI and win/loss interviews. Retrain reps on new competitive positioning within 30 days.</td>
+      </tr>
+      <tr>
+        <td>Win rate drops gradually over 4-6 quarters</td>
+        <td>Market saturation in ICP; most obvious buyers already converted; remaining pool is harder</td>
+        <td>Analyze whether average deal time-in-funnel is increasing. If yes, you are pursuing harder deals with longer cycles.</td>
+        <td>Expand ICP adjacently (new vertical, new segment, new geography). May need new product or feature expansion to address new segments.</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div class="indicator-row">
+    <span class="indicator-tag ind-leading">Leading: Competitive mentions per deal (Gong), single-thread % of pipeline, EB engagement rate by Stage 2</span>
+    <span class="indicator-tag ind-lagging">Lagging: Win rate (all opp), win rate (competitive), win rate by segment/rep/source</span>
+    <span class="indicator-tag ind-formula">Formula 1: Won/(Won+Competitive Losses) | Formula 2: Won/(All Closed)</span>
+  </div>
+
+  <div class="related-section">
+    <div class="related-title">Related Sections</div>
+    <div class="related-links">
+      <a href="pipeline-coverage.html" class="related-link">Pipeline Coverage</a>
+      <a href="competitive-positioning.html" class="related-link">Competitive Positioning</a>
+      <a href="win-loss-analysis.html" class="related-link">Win/Loss Analysis</a>
+      <a href="icp.html" class="related-link">ICP Definition</a>
+      <a href="meddicc.html" class="related-link">MEDDICC</a>
+      <a href="quota-attainment.html" class="related-link">Quota Attainment</a>
+    </div>
+  </div>
+</div>
+<script data-pplx-inline-edit>
+(function () {
+  if (window === window.top) return;
+
+  const allowedParentOrigins = ["https://www.perplexity.ai","https://perplexity.ai","https://testing.perplexity.ai","https://staging.perplexity.ai","https://*.preview.i.perplexity.ai","http://localhost:3000","http://127.0.0.1:3000","http://localhost:5173","http://127.0.0.1:5173"];
+  const MAX_FONT_BYTES = 500 * 1024;
+  const MAX_TOTAL_FONT_BYTES = 2 * 1024 * 1024;
+  let scrollForwarding = false;
+  let scrollRaf = 0;
+  let trustedTopOrigin = null;
+
+  // Allow entries like "https://*.preview.i.perplexity.ai" — the wildcard
+  // matches a single DNS label (no dots), so "https://*.foo" cannot stretch
+  // across multiple labels.
+  function matchesAllowedOrigin(origin) {
+    if (!origin) return false;
+    for (const entry of allowedParentOrigins) {
+      if (!entry.includes("*")) {
+        if (entry === origin) return true;
+        continue;
+      }
+      const pattern = new RegExp(
+        "^" +
+          entry.replace(/[.+?^${}()|[\]\\]/g, "\\$&").replace(/\*/g, "[^.]+") +
+          "$",
+      );
+      if (pattern.test(origin)) return true;
+    }
+    return false;
+  }
+
+  // Trust decision: when the sender is same-origin-visible (event.origin is a
+  // real origin like https://www.perplexity.ai) we trust event.origin directly.
+  // When event.origin is "null" (opaque broker srcdoc), we fall back to the
+  // broker's stamped `parentOrigin` to identify the top window. The fallback
+  // is claim-only — we rely on the browser's native `targetOrigin` enforcement
+  // on the response path (see postToTrustedTop) to ensure replies can't be
+  // delivered to anyone but the actual top window of that claimed origin.
+  function getTrustedParentOrigin(event) {
+    const forwardedParentOrigin =
+      typeof event.data.parentOrigin === "string" ? event.data.parentOrigin : null;
+    const parentOrigin = event.origin === "null" ? forwardedParentOrigin : event.origin;
+    return matchesAllowedOrigin(parentOrigin) ? parentOrigin : null;
+  }
+
+  // All responses go to window.top with targetOrigin = the allowlisted origin.
+  // An attacker that iframes us inside their own null-origin broker can claim
+  // any parentOrigin they like, but the browser will drop the reply whenever
+  // the real top's origin doesn't match — so the screenshot never leaves.
+  function postToTrustedTop(message) {
+    if (!trustedTopOrigin) return;
+    try {
+      window.top.postMessage(message, trustedTopOrigin);
+    } catch (_error) {}
+  }
+
+  function inlineAll(original, clone) {
+    if (original.nodeType !== 1 || clone.nodeType !== 1) return;
+
+    try {
+      const computedStyle = getComputedStyle(original);
+      // cssText on a computed style is the serialized declaration in modern
+      // Chromium/Safari — a single read beats enumerating ~400 longhand
+      // properties. Firefox returns "" here, so we fall back on empty.
+      const serialized = computedStyle.cssText;
+      if (serialized) {
+        clone.style.cssText = serialized;
+      } else {
+        const parts = new Array(computedStyle.length);
+        for (let index = 0; index < computedStyle.length; index += 1) {
+          const property = computedStyle[index];
+          parts[index] = `${property}:${computedStyle.getPropertyValue(property)};`;
+        }
+        clone.style.cssText = parts.join("");
+      }
+    } catch (_error) {}
+
+    const originalChildren = original.children;
+    const clonedChildren = clone.children;
+    for (
+      let index = 0;
+      index < originalChildren.length && index < clonedChildren.length;
+      index += 1
+    ) {
+      inlineAll(originalChildren[index], clonedChildren[index]);
+    }
+  }
+
+  function extractFontUrl(srcValue) {
+    const matches = [
+      ...srcValue.matchAll(
+        /url\(["']?([^"')]+)["']?\)(?:\s*format\(["']?([^"')]+)["']?\))?/gi,
+      ),
+    ];
+    if (matches.length === 0) return null;
+    const woff2 = matches.find((m) => m[2] && m[2].toLowerCase().includes("woff2"));
+    if (woff2) return woff2[1];
+    const woff = matches.find((m) => m[2] && m[2].toLowerCase().includes("woff"));
+    if (woff) return woff[1];
+    return matches[0][1];
+  }
+
+  // Cache resolved font URL -> data URI across captures. Fonts on a page
+  // essentially never change, and a batch run emits multiple captures back to
+  // back — without this we'd refetch + re-base64 every time.
+  const fontDataUriCache = new Map();
+  const SRC_DECLARATION_RE = /src\s*:\s*[^;}]+/i;
+
+  async function fetchAsDataUri(url) {
+    if (fontDataUriCache.has(url)) return fontDataUriCache.get(url);
+    let dataUri = null;
+    try {
+      const response = await fetch(url, { mode: "cors", credentials: "omit" });
+      if (response.ok) {
+        const blob = await response.blob();
+        if (blob.size <= MAX_FONT_BYTES) {
+          dataUri = await new Promise((resolve) => {
+            const reader = new FileReader();
+            reader.onloadend = () =>
+              resolve(typeof reader.result === "string" ? reader.result : null);
+            reader.onerror = () => resolve(null);
+            reader.readAsDataURL(blob);
+          });
+        }
+      }
+    } catch (_error) {
+      dataUri = null;
+    }
+    fontDataUriCache.set(url, dataUri);
+    return dataUri;
+  }
+
+  function collectFontFaceRuleTexts() {
+    const rules = [];
+    for (const sheet of document.styleSheets) {
+      let cssRules;
+      try {
+        cssRules = sheet.cssRules;
+      } catch (_error) {
+        continue;
+      }
+      if (!cssRules) continue;
+      for (const rule of cssRules) {
+        const cssText = rule.cssText || "";
+        if (cssText.startsWith("@font-face")) rules.push(cssText);
+      }
+    }
+    return rules;
+  }
+
+  async function buildInlinedFontCss() {
+    const ruleTexts = collectFontFaceRuleTexts();
+    if (ruleTexts.length === 0) return null;
+
+    const resolved = ruleTexts.map((cssText) => {
+      if (!SRC_DECLARATION_RE.test(cssText)) return null;
+      const srcMatch = cssText.match(/src\s*:\s*([^;}]+)[;}]/i);
+      if (!srcMatch) return null;
+      const url = extractFontUrl(srcMatch[1]);
+      if (!url) return null;
+      try {
+        return { cssText, url: new URL(url, document.baseURI).href };
+      } catch (_error) {
+        return null;
+      }
+    });
+
+    const dataUris = await Promise.all(
+      resolved.map((entry) => (entry ? fetchAsDataUri(entry.url) : Promise.resolve(null))),
+    );
+
+    const inlined = [];
+    let totalBytes = 0;
+    for (let index = 0; index < resolved.length; index += 1) {
+      const entry = resolved[index];
+      const dataUri = dataUris[index];
+      if (!entry || !dataUri) continue;
+      const approxBytes = dataUri.length * 0.75;
+      if (totalBytes + approxBytes > MAX_TOTAL_FONT_BYTES) break;
+      totalBytes += approxBytes;
+      inlined.push(entry.cssText.replace(SRC_DECLARATION_RE, `src: url("${dataUri}")`));
+    }
+    return inlined.length > 0 ? inlined.join("\n") : null;
+  }
+
+  function stripExternal(clone) {
+    const images = clone.querySelectorAll("img");
+    for (let index = 0; index < images.length; index += 1) {
+      const src = images[index].getAttribute("src");
+      if (src && !src.startsWith("data:")) images[index].removeAttribute("src");
+    }
+
+    const elements = clone.querySelectorAll("*");
+    for (let index = 0; index < elements.length; index += 1) {
+      const style = elements[index].style.cssText;
+      if (style && style.includes("url(")) {
+        elements[index].style.cssText = style.replace(
+          /url\(["']?(?!data:)[^)"']*["']?\)/gi,
+          "none",
+        );
+      }
+    }
+  }
+
+  function emitScroll() {
+    scrollRaf = 0;
+    if (!scrollForwarding) return;
+    postToTrustedTop({
+      type: "INLINE_EDIT_SCROLL",
+      scrollX: window.scrollX,
+      scrollY: window.scrollY,
+    });
+  }
+
+  window.addEventListener(
+    "scroll",
+    function () {
+      if (!scrollForwarding || scrollRaf) return;
+      scrollRaf = requestAnimationFrame(emitScroll);
+    },
+    { passive: true, capture: true },
+  );
+
+  async function handleCaptureRequest(event) {
+    const requestId = event.data.requestId;
+    const scrollX = window.scrollX;
+    const scrollY = window.scrollY;
+    const width = window.innerWidth;
+    const height = window.innerHeight;
+
+    function postResult(dataUrl) {
+      postToTrustedTop({
+        type: "INLINE_EDIT_SCREENSHOT_RESULT",
+        requestId,
+        dataUrl,
+        scrollX,
+        scrollY,
+      });
+    }
+
+    try {
+      // Wait for any pending web fonts to resolve so both inline metrics and
+      // the @font-face inlining below see the same loaded faces.
+      if (document.fonts && document.fonts.ready) {
+        try {
+          await document.fonts.ready;
+        } catch (_error) {}
+      }
+
+      const clone = document.documentElement.cloneNode(true);
+      inlineAll(document.documentElement, clone);
+
+      const removedNodes = clone.querySelectorAll("script,link[rel=\"stylesheet\"],style");
+      for (let index = 0; index < removedNodes.length; index += 1) {
+        removedNodes[index].remove();
+      }
+
+      stripExternal(clone);
+
+      // Re-embed web fonts as data-URI @font-face rules so the SVG rasterizer
+      // can resolve them — external font URLs aren't fetched during
+      // foreignObject rendering, which would otherwise force a fallback face
+      // and change text metrics.
+      const inlinedFontCss = await buildInlinedFontCss();
+      if (inlinedFontCss) {
+        const styleEl = document.createElement("style");
+        styleEl.textContent = inlinedFontCss;
+        const head = clone.querySelector("head");
+        if (head) head.appendChild(styleEl);
+        else clone.insertBefore(styleEl, clone.firstChild);
+      }
+
+      const html = new XMLSerializer().serializeToString(clone);
+      const svg =
+        `<svg xmlns="http://www.w3.org/2000/svg" width="${width}" height="${height}">` +
+        '<foreignObject width="100%" height="100%">' +
+        `<div xmlns="http://www.w3.org/1999/xhtml" style="width:${width}px;height:${height}px;overflow:hidden">` +
+        `<div style="transform:translate(-${scrollX}px,-${scrollY}px);transform-origin:top left">` +
+        html +
+        "</div></div></foreignObject></svg>";
+      const svgUrl = `data:image/svg+xml;charset=utf-8,${encodeURIComponent(svg)}`;
+      const image = new Image();
+      image.onload = function () {
+        const canvas = document.createElement("canvas");
+        canvas.width = width;
+        canvas.height = height;
+        canvas.getContext("2d").drawImage(image, 0, 0);
+        postResult(canvas.toDataURL("image/png"));
+      };
+      image.onerror = function () {
+        postResult(null);
+      };
+      image.src = svgUrl;
+    } catch (_error) {
+      postResult(null);
+    }
+  }
+
+  window.addEventListener("message", function (event) {
+    if (!event.data) return;
+    // Only accept messages from the direct parent frame. Blocks sibling /
+    // unrelated-window postMessage senders that could otherwise reach us.
+    if (event.source !== window.parent) return;
+
+    const trustedParentOrigin = getTrustedParentOrigin(event);
+    if (!trustedParentOrigin) return;
+    trustedTopOrigin = trustedParentOrigin;
+
+    if (event.data.type === "INLINE_EDIT_SCROLL_START") {
+      scrollForwarding = true;
+      emitScroll();
+      return;
+    }
+
+    if (event.data.type === "INLINE_EDIT_SCROLL_STOP") {
+      scrollForwarding = false;
+      if (scrollRaf) cancelAnimationFrame(scrollRaf);
+      scrollRaf = 0;
+      return;
+    }
+
+    if (event.data.type !== "INLINE_EDIT_CAPTURE_REQUEST") return;
+
+    handleCaptureRequest(event);
+  });
+})();
+
+
+</script></body>
+</html>

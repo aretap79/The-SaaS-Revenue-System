@@ -1,0 +1,682 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Territory Design — SaaS Revenue System</title>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="../assets/shared.css"/>
+  <style>.page-hero { background: #437A22; }</style>
+</head>
+<body>
+<nav class="nav">
+  <span class="nav-logo">SaaS <span>Revenue System</span></span>
+  <span class="nav-sep">|</span>
+  <a href="../index.html" class="nav-back">← Home</a>
+  <span class="nav-sep">|</span>
+  <a href="../pages/phase3.html" class="nav-back">Phase 3</a>
+  <span class="nav-sep">|</span>
+  <span class="nav-current">Territory Design</span>
+</nav>
+
+<div class="page-hero">
+  <div class="hero-phase-label">Phase 3 — Market &amp; Territory</div>
+  <div class="hero-title">Territory Design — The Foundation of Equitable, Scalable GTM</div>
+  <div class="hero-subtitle">Territory design is one of the most impactful and most overlooked drivers of quota attainment variance. Unfair territories destroy morale. Overlapping territories destroy deals.</div>
+</div>
+
+<div class="content-wrap">
+  <div class="breadcrumb">
+    <a href="../index.html">Home</a><span class="sep">›</span>
+    <a href="../pages/phase3.html">Phase 3</a><span class="sep">›</span>
+    <span class="current">Territory Design</span>
+  </div>
+
+  <!-- TYPES OF TERRITORY DESIGN -->
+  <h2 class="section-title">Types of Territory Design</h2>
+  <p class="section-intro">There is no single correct territory design model. The right choice depends on your sales motion, segment, product, and how your buyers cluster. Most mature GTM organizations use a hybrid approach.</p>
+
+  <table class="data-table">
+    <thead>
+      <tr>
+        <th>Territory Model</th>
+        <th>Definition</th>
+        <th>Best For</th>
+        <th>Pros</th>
+        <th>Cons</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><strong>Geographic</strong></td>
+        <td>Assign accounts by physical location (state, region, country, metro)</td>
+        <td>Field sales; accounts where physical presence matters; early-stage simplicity</td>
+        <td>Simple to explain; clear ownership; no overlap conflicts</td>
+        <td>Uneven account density; rep in rural territory may have 1/10th the opportunity of a NYC rep</td>
+      </tr>
+      <tr>
+        <td><strong>Named Account</strong></td>
+        <td>Assign a specific list of named companies to each rep, regardless of geography</td>
+        <td>Enterprise segment; strategic accounts; high-ACV hunting</td>
+        <td>Maximum focus; high-value accounts get dedicated rep attention</td>
+        <td>Complex territory carve; harder to add new hires mid-year; no whitespace coverage</td>
+      </tr>
+      <tr>
+        <td><strong>Vertical / Industry</strong></td>
+        <td>Assign accounts by industry vertical (e.g., all Healthcare, all Financial Services)</td>
+        <td>Vertical GTM strategy; product has compliance/regulatory specificity</td>
+        <td>Rep becomes a vertical expert; buyer credibility; faster sales cycles</td>
+        <td>Vertical health dependency; product gaps if vertical needs differ widely</td>
+      </tr>
+      <tr>
+        <td><strong>Hybrid</strong></td>
+        <td>Combination of above (e.g., named accounts by vertical within a geographic pod)</td>
+        <td>Scale-stage SaaS; multi-segment go-to-market</td>
+        <td>Optimized for your specific market structure</td>
+        <td>Organizational complexity; requires strong governance to prevent overlap</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <!-- PRINCIPLES -->
+  <h2 class="section-title">The Principles of Good Territory Design</h2>
+  <p class="section-intro">Before running the mechanics of territory carving, anchor on these four non-negotiable principles. Any territory design that violates them will produce attrition, conflict, and forecast instability.</p>
+
+  <div class="subsection">
+    <div class="subsection-title">Principle 1: Equitable Potential</div>
+    <p>Every rep carrying the same quota title should have roughly equivalent total addressable opportunity in their territory. This does not mean identical accounts — it means similar potential revenue if the rep executes at the median. The most common territory design failure is assigning quota-parity to reps with dramatically different territory potential, then wondering why attainment variance is so high.</p>
+    <div class="callout callout-warning">
+      <div class="callout-title">Equity vs. Equality</div>
+      <p>Equitable territory does not mean equal number of accounts. A territory with 20 Fortune 500 accounts is not equitable with a territory containing 200 mid-market accounts just because the count is different. Measure potential revenue opportunity, not account count.</p>
+    </div>
+  </div>
+
+  <div class="subsection">
+    <div class="subsection-title">Principle 2: Logical Ownership</div>
+    <p>Account ownership must follow a clear, defensible logic that reps and managers can explain without argument. "All companies in the Southeast with 500–2000 employees" is logical. "Some companies in the Southeast unless there's an existing relationship" is not — it creates ambiguity and conflict.</p>
+  </div>
+
+  <div class="subsection">
+    <div class="subsection-title">Principle 3: Minimal Overlap</div>
+    <p>Overlapping territories destroy deals and relationships. When two reps both believe they own an account, the customer receives duplicate outreach, gets confused, and loses confidence in the vendor. Revenue Operations must establish clear first-touch and primary ownership rules before any territory conflict arises, not after.</p>
+  </div>
+
+  <div class="subsection">
+    <div class="subsection-title">Principle 4: Manageable Scope</div>
+    <p>A rep can only deeply engage with a finite number of accounts. Enterprise AEs should own 15–30 named accounts maximum. Mid-market AEs should carry 50–100 accounts at most (with active focus on the top 25). A rep with 500 accounts in their CRM and no priority framework is not a rep with a territory — they have a lead list and no strategy.</p>
+  </div>
+
+  <!-- TERRITORY POTENTIAL CALCULATION -->
+  <h2 class="section-title">How to Calculate Territory Potential</h2>
+  <p class="section-intro">Territory potential is the estimated total revenue you could capture from a territory if you achieved your target penetration rate at your expected win rate. It is the foundation of equitable territory design and rational quota setting.</p>
+
+  <div class="formula-block">
+    <div class="formula-label">Territory Potential</div>
+    <div class="formula-main">Territory Potential = # ICP Accounts × Estimated ACV × Win Rate</div>
+    <div class="formula-note">Estimated ACV = weighted average of ACV for that account size tier and vertical. Win Rate = historical win rate for that segment.</div>
+  </div>
+
+  <div class="subsection">
+    <div class="subsection-title">Worked Example: Mid-Market Territory</div>
+    <ul class="bullet-list">
+      <li>Territory has 80 ICP-qualified accounts (250–1,000 employees, target vertical, no existing customer relationship)</li>
+      <li>Average ACV for this profile: $55,000</li>
+      <li>Historical win rate in this segment: 22%</li>
+      <li><strong>Territory Potential = 80 × $55,000 × 22% = $968,000</strong></li>
+      <li>Quota set at $1.2M — implies needing 2.9× ACV win rate, or a pipeline of $5.5M to support</li>
+    </ul>
+    <p>If territory potential math doesn't support the quota, you have one of three choices: lower the quota, expand the territory, or accept that you're setting the rep up to fail.</p>
+  </div>
+
+  <div class="formula-block">
+    <div class="formula-label">Territory Coverage Ratio (Safety Check)</div>
+    <div class="formula-main">Coverage Ratio = Territory Potential / Quota</div>
+    <div class="formula-note">Minimum safe ratio: 3:1. Below 2:1 means the territory cannot support the quota even at perfect execution. Above 5:1 means quota is too conservative.</div>
+  </div>
+
+  <!-- CARVE PROCESS -->
+  <h2 class="section-title">The Territory Carve Process — Step by Step</h2>
+  <p class="section-intro">Territory carving is an annual (or semi-annual) RevOps-led exercise that must happen before quota setting and before annual planning is locked. The sequence matters — territories inform quotas, not the reverse.</p>
+
+  <ol class="step-list">
+    <li>
+      <div class="step-content">
+        <span class="step-title">Build the Account Universe</span>
+        Pull all ICP accounts from your CRM, Salesforce/HubSpot, enriched with firmographic data from ZoomInfo, Apollo, or Clearbit. Tag each account with: employee count, industry, geography, current relationship status (prospect, customer, former customer), and estimated ACV potential. This is your universe.
+      </div>
+    </li>
+    <li>
+      <div class="step-content">
+        <span class="step-title">Score and Rank Accounts by Potential</span>
+        Build an account scoring model that weights: (a) firmographic ICP fit, (b) intent signals (G2, Bombora, Demandbase), (c) technology signals (tech stack fit from BuiltWith/Clearbit), and (d) existing relationship warmth. Rank every account in the universe by expected potential and likelihood to convert.
+      </div>
+    </li>
+    <li>
+      <div class="step-content">
+        <span class="step-title">Cluster Accounts by Territory Principle</span>
+        Group accounts by your primary territory dimension (geographic, named, vertical). For geographic: by state/metro/region. For named account: by target account list priority tier. For vertical: by industry cluster. Ensure each cluster has roughly equitable potential before proceeding.
+      </div>
+    </li>
+    <li>
+      <div class="step-content">
+        <span class="step-title">Assign Existing Customers and Active Pipeline First</span>
+        Before assigning new territories, lock in existing customer and active pipeline ownership. Existing customers must stay with the rep who owns the relationship (usually the CSM/AE hybrid or expansion AE). Active pipeline follows the original rep. These accounts are excluded from the rebalancing pool.
+      </div>
+    </li>
+    <li>
+      <div class="step-content">
+        <span class="step-title">Balance Territories Across Reps</span>
+        Assign clustered accounts to reps, targeting ±15% potential variance across equivalent rep roles. Use a territory balancing tool (Salesforce Territory Management, Varicent, Xactly, or a RevOps-built spreadsheet). Negotiate with sales leadership where to make trade-offs.
+      </div>
+    </li>
+    <li>
+      <div class="step-content">
+        <span class="step-title">Establish White Space Rules</span>
+        Not every account will be assigned to a named rep. Define a clear process for whitespace accounts: who can work them (SDR, inbound-only, or first-to-engage AE), when they get assigned to a rep, and how to resolve conflicts when two reps both touch a whitespace account simultaneously.
+      </div>
+    </li>
+    <li>
+      <div class="step-content">
+        <span class="step-title">Document and Publish</span>
+        Every rep must receive a written territory definition with account lists, rules of engagement, and the governance process for disputes. Territories published verbally are territories that will be disputed.
+      </div>
+    </li>
+  </ol>
+
+  <!-- TERRITORY REBALANCING -->
+  <h2 class="section-title">Territory Rebalancing — When and How</h2>
+  <p class="section-intro">Territories must be rebalanced when the underlying assumption that made them equitable changes. The two most common triggers are headcount changes and market shifts.</p>
+
+  <table class="data-table">
+    <thead>
+      <tr>
+        <th>Trigger</th>
+        <th>What to Do</th>
+        <th>Timing</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><strong>New AE hired mid-year</strong></td>
+        <td>Carve a new territory from whitespace and from under-penetrated accounts in high-coverage existing territories. Do not take active pipeline from an existing rep.</td>
+        <td>Complete within 30 days of hire; new rep starts with clean territory</td>
+      </tr>
+      <tr>
+        <td><strong>Rep departs mid-year</strong></td>
+        <td>Reassign their accounts to manager temporarily; split across team for deals in late-stage. Do not leave accounts unowned for more than 2 weeks.</td>
+        <td>Immediate; manager owns account until replacement hired</td>
+      </tr>
+      <tr>
+        <td><strong>Annual planning</strong></td>
+        <td>Full territory rebalance based on prior year win data, new headcount plan, and updated ICP scoring. Most disruptive — do this in Q4 for next fiscal year.</td>
+        <td>Q4 process; published by December for January start</td>
+      </tr>
+      <tr>
+        <td><strong>Market shift (vertical boom/bust)</strong></td>
+        <td>Rebalance verticals based on new TAM data; adjust quota proportionally; never hold a rep to a quota built on a market that no longer exists.</td>
+        <td>Quarterly review; mid-year adjustment if shift is significant (&gt;20% potential change)</td>
+      </tr>
+      <tr>
+        <td><strong>Company enters new geography</strong></td>
+        <td>Build new territory from scratch using account universe process. Hire locally if field presence required.</td>
+        <td>90-day planning lead time before first rep in territory</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <!-- TERRITORY CHANGES POLITICS -->
+  <h2 class="section-title">The Politics of Territory Changes</h2>
+  <p class="section-intro">Territory changes are one of the highest-friction management events in sales. Reps who lose accounts feel robbed. Reps who gain accounts feel watched. You must manage the human element as carefully as the analytical one.</p>
+
+  <ul class="bullet-list">
+    <li><strong>Explain the methodology, not just the outcome:</strong> A rep who loses 10 accounts but understands that the territory potential was 40% above their peers will accept it. A rep who loses 10 accounts without explanation will start looking for a new job.</li>
+    <li><strong>Grandfather mid-stage deals:</strong> Never rip an active deal from a rep during a territory rebalance. If an account moves territory, the deal stays with the original rep through close. The new rep takes over for expansion and renewal.</li>
+    <li><strong>Communicate before finalizing:</strong> Allow reps to flag accounts with active relationship context before territories are locked. A rep who has been nurturing an account for 3 months has legitimate grounds to keep it even if the rebalance logic would move it.</li>
+    <li><strong>Separate comp from territory:</strong> If a rep took accounts in good faith and worked them, any revenue from those accounts before the territory change is theirs. Do not retroactively reallocate commission for work already done.</li>
+    <li><strong>Use RevOps as the neutral arbiter:</strong> Territory disputes between reps should be resolved by RevOps using the documented governance rules, not by the two reps negotiating, and not by the manager making a judgment call that creates favoritism perception.</li>
+  </ul>
+
+  <!-- NAMED ACCOUNT MODEL -->
+  <h2 class="section-title">Named Account Model: Enterprise Design Details</h2>
+  <p class="section-intro">The named account model is the dominant territory design for enterprise segments ($150K+ ACV). It concentrates effort, enables deep account strategy, and prevents the diffuse hunting that destroys enterprise win rates.</p>
+
+  <div class="metric-grid">
+    <div class="metric-card">
+      <div class="m-label">Accounts Per Enterprise AE</div>
+      <div class="m-value">15–30</div>
+      <div class="m-desc">Pure enterprise AE with no inbound; focused hunting and developing. 20 is the sweet spot.</div>
+    </div>
+    <div class="metric-card">
+      <div class="m-label">Accounts Per Mid-Market AE</div>
+      <div class="m-value">50–100</div>
+      <div class="m-desc">Top 25 get active attention. Rest are sequenced/SDR-nurtured for pipeline generation.</div>
+    </div>
+    <div class="metric-card">
+      <div class="m-label">Active Pursuits Per Enterprise AE</div>
+      <div class="m-value">5–8</div>
+      <div class="m-desc">Realistic number of enterprise deals an AE can actively manage simultaneously.</div>
+    </div>
+    <div class="metric-card">
+      <div class="m-label">Global Account Designation Threshold</div>
+      <div class="m-value">$500K+ ARR</div>
+      <div class="m-desc">Accounts above this potential should be designated Global Accounts with centralized ownership.</div>
+    </div>
+  </div>
+
+  <!-- CREDIT GOVERNANCE -->
+  <h2 class="section-title">Territory Governance Rules: Credit and Co-Selling</h2>
+  <p class="section-intro">One of the most contentious territory management issues is credit allocation when multiple reps touch a deal — especially in complex enterprise deals involving an inside rep, a field rep, and an overlay specialist.</p>
+
+  <table class="data-table">
+    <thead>
+      <tr>
+        <th>Scenario</th>
+        <th>Recommended Credit Split</th>
+        <th>Governance Rule</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>SDR sources deal → AE closes it</td>
+        <td>AE: 100% quota credit. SDR: pipeline sourcing credit for bonus/comp.</td>
+        <td>SDR never gets quota credit; AE always owns the deal</td>
+      </tr>
+      <tr>
+        <td>AE and overlay specialist co-sell</td>
+        <td>AE: 100% quota credit. Overlay: separate overlay quota</td>
+        <td>Overlay specialists have their own quota; no split reduces AE incentive</td>
+      </tr>
+      <tr>
+        <td>Two AEs both claim account ownership</td>
+        <td>First documented touchpoint in CRM with qualified opportunity</td>
+        <td>RevOps rules based on timestamped CRM activity; no retroactive credit</td>
+      </tr>
+      <tr>
+        <td>Named account rep + partner-sourced deal</td>
+        <td>AE: 100% quota credit. Partner: partner program commission paid separately.</td>
+        <td>Partner never reduces AE quota credit</td>
+      </tr>
+      <tr>
+        <td>AE transfers mid-deal due to territory change</td>
+        <td>Original AE: credit through close. New AE: credit from next deal/renewal.</td>
+        <td>Deal follows the rep who built it; territory follows the map</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <!-- REVOPS ROLE -->
+  <h2 class="section-title">RevOps' Role in Territory Management</h2>
+  <p class="section-intro">Territory management is a core RevOps function, not a sales leadership decision made informally. Without RevOps ownership, territory design becomes political instead of analytical.</p>
+
+  <ul class="bullet-list">
+    <li><strong>Build and maintain the account universe:</strong> RevOps owns the master account database, kept current via data enrichment integrations (ZoomInfo, Clearbit, Apollo).</li>
+    <li><strong>Run the territory carve model:</strong> RevOps builds and maintains the territory potential scoring model, balancing algorithm, and carve logic.</li>
+    <li><strong>Govern territory changes:</strong> All in-year territory changes (new hires, departures, account disputes) are processed through a documented RevOps workflow, not ad-hoc email chains.</li>
+    <li><strong>Track territory performance:</strong> RevOps produces quarterly territory coverage and penetration reports: what % of territory potential has been engaged, what % converted, which accounts are untouched.</li>
+    <li><strong>Audit territory equity:</strong> Quarterly audit of attainment variance across territories. If attainment variance exceeds 30% among reps on equivalent quotas, territory imbalance is a likely cause.</li>
+  </ul>
+
+  <!-- INDICATORS -->
+  <h2 class="section-title">Leading and Lagging Indicators</h2>
+
+  <div class="subsection">
+    <div class="subsection-title">Leading Indicators</div>
+    <div class="indicator-row">
+      <span class="indicator-tag ind-leading">Territory potential score (calculated)</span>
+      <span class="indicator-tag ind-leading">% ICP accounts touched in territory</span>
+      <span class="indicator-tag ind-leading">Territory coverage ratio vs. quota</span>
+      <span class="indicator-tag ind-leading">Account penetration rate</span>
+      <span class="indicator-tag ind-leading">Whitespace account engagement rate</span>
+    </div>
+  </div>
+
+  <div class="subsection">
+    <div class="subsection-title">Lagging Indicators</div>
+    <div class="indicator-row">
+      <span class="indicator-tag ind-lagging">Attainment variance across reps (unfair territory signal)</span>
+      <span class="indicator-tag ind-lagging">% of territory potential captured</span>
+      <span class="indicator-tag ind-lagging">Territory dispute frequency</span>
+      <span class="indicator-tag ind-lagging">Rep attrition correlated with territory assignments</span>
+    </div>
+  </div>
+
+  <div class="related-section">
+    <div class="related-title">Related Sections</div>
+    <div class="related-links">
+      <a class="related-link" href="segmentation.html">Market Segmentation</a>
+      <a class="related-link" href="sales-motion.html">Sales Motion Design</a>
+      <a class="related-link" href="../pages/phase3.html">Phase 3 Overview</a>
+      <a class="related-link" href="../pages/phase2.html">Phase 2 — Sales Execution</a>
+    </div>
+  </div>
+</div>
+<script data-pplx-inline-edit>
+(function () {
+  if (window === window.top) return;
+
+  const allowedParentOrigins = ["https://www.perplexity.ai","https://perplexity.ai","https://testing.perplexity.ai","https://staging.perplexity.ai","https://*.preview.i.perplexity.ai","http://localhost:3000","http://127.0.0.1:3000","http://localhost:5173","http://127.0.0.1:5173"];
+  const MAX_FONT_BYTES = 500 * 1024;
+  const MAX_TOTAL_FONT_BYTES = 2 * 1024 * 1024;
+  let scrollForwarding = false;
+  let scrollRaf = 0;
+  let trustedTopOrigin = null;
+
+  // Allow entries like "https://*.preview.i.perplexity.ai" — the wildcard
+  // matches a single DNS label (no dots), so "https://*.foo" cannot stretch
+  // across multiple labels.
+  function matchesAllowedOrigin(origin) {
+    if (!origin) return false;
+    for (const entry of allowedParentOrigins) {
+      if (!entry.includes("*")) {
+        if (entry === origin) return true;
+        continue;
+      }
+      const pattern = new RegExp(
+        "^" +
+          entry.replace(/[.+?^${}()|[\]\\]/g, "\\$&").replace(/\*/g, "[^.]+") +
+          "$",
+      );
+      if (pattern.test(origin)) return true;
+    }
+    return false;
+  }
+
+  // Trust decision: when the sender is same-origin-visible (event.origin is a
+  // real origin like https://www.perplexity.ai) we trust event.origin directly.
+  // When event.origin is "null" (opaque broker srcdoc), we fall back to the
+  // broker's stamped `parentOrigin` to identify the top window. The fallback
+  // is claim-only — we rely on the browser's native `targetOrigin` enforcement
+  // on the response path (see postToTrustedTop) to ensure replies can't be
+  // delivered to anyone but the actual top window of that claimed origin.
+  function getTrustedParentOrigin(event) {
+    const forwardedParentOrigin =
+      typeof event.data.parentOrigin === "string" ? event.data.parentOrigin : null;
+    const parentOrigin = event.origin === "null" ? forwardedParentOrigin : event.origin;
+    return matchesAllowedOrigin(parentOrigin) ? parentOrigin : null;
+  }
+
+  // All responses go to window.top with targetOrigin = the allowlisted origin.
+  // An attacker that iframes us inside their own null-origin broker can claim
+  // any parentOrigin they like, but the browser will drop the reply whenever
+  // the real top's origin doesn't match — so the screenshot never leaves.
+  function postToTrustedTop(message) {
+    if (!trustedTopOrigin) return;
+    try {
+      window.top.postMessage(message, trustedTopOrigin);
+    } catch (_error) {}
+  }
+
+  function inlineAll(original, clone) {
+    if (original.nodeType !== 1 || clone.nodeType !== 1) return;
+
+    try {
+      const computedStyle = getComputedStyle(original);
+      // cssText on a computed style is the serialized declaration in modern
+      // Chromium/Safari — a single read beats enumerating ~400 longhand
+      // properties. Firefox returns "" here, so we fall back on empty.
+      const serialized = computedStyle.cssText;
+      if (serialized) {
+        clone.style.cssText = serialized;
+      } else {
+        const parts = new Array(computedStyle.length);
+        for (let index = 0; index < computedStyle.length; index += 1) {
+          const property = computedStyle[index];
+          parts[index] = `${property}:${computedStyle.getPropertyValue(property)};`;
+        }
+        clone.style.cssText = parts.join("");
+      }
+    } catch (_error) {}
+
+    const originalChildren = original.children;
+    const clonedChildren = clone.children;
+    for (
+      let index = 0;
+      index < originalChildren.length && index < clonedChildren.length;
+      index += 1
+    ) {
+      inlineAll(originalChildren[index], clonedChildren[index]);
+    }
+  }
+
+  function extractFontUrl(srcValue) {
+    const matches = [
+      ...srcValue.matchAll(
+        /url\(["']?([^"')]+)["']?\)(?:\s*format\(["']?([^"')]+)["']?\))?/gi,
+      ),
+    ];
+    if (matches.length === 0) return null;
+    const woff2 = matches.find((m) => m[2] && m[2].toLowerCase().includes("woff2"));
+    if (woff2) return woff2[1];
+    const woff = matches.find((m) => m[2] && m[2].toLowerCase().includes("woff"));
+    if (woff) return woff[1];
+    return matches[0][1];
+  }
+
+  // Cache resolved font URL -> data URI across captures. Fonts on a page
+  // essentially never change, and a batch run emits multiple captures back to
+  // back — without this we'd refetch + re-base64 every time.
+  const fontDataUriCache = new Map();
+  const SRC_DECLARATION_RE = /src\s*:\s*[^;}]+/i;
+
+  async function fetchAsDataUri(url) {
+    if (fontDataUriCache.has(url)) return fontDataUriCache.get(url);
+    let dataUri = null;
+    try {
+      const response = await fetch(url, { mode: "cors", credentials: "omit" });
+      if (response.ok) {
+        const blob = await response.blob();
+        if (blob.size <= MAX_FONT_BYTES) {
+          dataUri = await new Promise((resolve) => {
+            const reader = new FileReader();
+            reader.onloadend = () =>
+              resolve(typeof reader.result === "string" ? reader.result : null);
+            reader.onerror = () => resolve(null);
+            reader.readAsDataURL(blob);
+          });
+        }
+      }
+    } catch (_error) {
+      dataUri = null;
+    }
+    fontDataUriCache.set(url, dataUri);
+    return dataUri;
+  }
+
+  function collectFontFaceRuleTexts() {
+    const rules = [];
+    for (const sheet of document.styleSheets) {
+      let cssRules;
+      try {
+        cssRules = sheet.cssRules;
+      } catch (_error) {
+        continue;
+      }
+      if (!cssRules) continue;
+      for (const rule of cssRules) {
+        const cssText = rule.cssText || "";
+        if (cssText.startsWith("@font-face")) rules.push(cssText);
+      }
+    }
+    return rules;
+  }
+
+  async function buildInlinedFontCss() {
+    const ruleTexts = collectFontFaceRuleTexts();
+    if (ruleTexts.length === 0) return null;
+
+    const resolved = ruleTexts.map((cssText) => {
+      if (!SRC_DECLARATION_RE.test(cssText)) return null;
+      const srcMatch = cssText.match(/src\s*:\s*([^;}]+)[;}]/i);
+      if (!srcMatch) return null;
+      const url = extractFontUrl(srcMatch[1]);
+      if (!url) return null;
+      try {
+        return { cssText, url: new URL(url, document.baseURI).href };
+      } catch (_error) {
+        return null;
+      }
+    });
+
+    const dataUris = await Promise.all(
+      resolved.map((entry) => (entry ? fetchAsDataUri(entry.url) : Promise.resolve(null))),
+    );
+
+    const inlined = [];
+    let totalBytes = 0;
+    for (let index = 0; index < resolved.length; index += 1) {
+      const entry = resolved[index];
+      const dataUri = dataUris[index];
+      if (!entry || !dataUri) continue;
+      const approxBytes = dataUri.length * 0.75;
+      if (totalBytes + approxBytes > MAX_TOTAL_FONT_BYTES) break;
+      totalBytes += approxBytes;
+      inlined.push(entry.cssText.replace(SRC_DECLARATION_RE, `src: url("${dataUri}")`));
+    }
+    return inlined.length > 0 ? inlined.join("\n") : null;
+  }
+
+  function stripExternal(clone) {
+    const images = clone.querySelectorAll("img");
+    for (let index = 0; index < images.length; index += 1) {
+      const src = images[index].getAttribute("src");
+      if (src && !src.startsWith("data:")) images[index].removeAttribute("src");
+    }
+
+    const elements = clone.querySelectorAll("*");
+    for (let index = 0; index < elements.length; index += 1) {
+      const style = elements[index].style.cssText;
+      if (style && style.includes("url(")) {
+        elements[index].style.cssText = style.replace(
+          /url\(["']?(?!data:)[^)"']*["']?\)/gi,
+          "none",
+        );
+      }
+    }
+  }
+
+  function emitScroll() {
+    scrollRaf = 0;
+    if (!scrollForwarding) return;
+    postToTrustedTop({
+      type: "INLINE_EDIT_SCROLL",
+      scrollX: window.scrollX,
+      scrollY: window.scrollY,
+    });
+  }
+
+  window.addEventListener(
+    "scroll",
+    function () {
+      if (!scrollForwarding || scrollRaf) return;
+      scrollRaf = requestAnimationFrame(emitScroll);
+    },
+    { passive: true, capture: true },
+  );
+
+  async function handleCaptureRequest(event) {
+    const requestId = event.data.requestId;
+    const scrollX = window.scrollX;
+    const scrollY = window.scrollY;
+    const width = window.innerWidth;
+    const height = window.innerHeight;
+
+    function postResult(dataUrl) {
+      postToTrustedTop({
+        type: "INLINE_EDIT_SCREENSHOT_RESULT",
+        requestId,
+        dataUrl,
+        scrollX,
+        scrollY,
+      });
+    }
+
+    try {
+      // Wait for any pending web fonts to resolve so both inline metrics and
+      // the @font-face inlining below see the same loaded faces.
+      if (document.fonts && document.fonts.ready) {
+        try {
+          await document.fonts.ready;
+        } catch (_error) {}
+      }
+
+      const clone = document.documentElement.cloneNode(true);
+      inlineAll(document.documentElement, clone);
+
+      const removedNodes = clone.querySelectorAll("script,link[rel=\"stylesheet\"],style");
+      for (let index = 0; index < removedNodes.length; index += 1) {
+        removedNodes[index].remove();
+      }
+
+      stripExternal(clone);
+
+      // Re-embed web fonts as data-URI @font-face rules so the SVG rasterizer
+      // can resolve them — external font URLs aren't fetched during
+      // foreignObject rendering, which would otherwise force a fallback face
+      // and change text metrics.
+      const inlinedFontCss = await buildInlinedFontCss();
+      if (inlinedFontCss) {
+        const styleEl = document.createElement("style");
+        styleEl.textContent = inlinedFontCss;
+        const head = clone.querySelector("head");
+        if (head) head.appendChild(styleEl);
+        else clone.insertBefore(styleEl, clone.firstChild);
+      }
+
+      const html = new XMLSerializer().serializeToString(clone);
+      const svg =
+        `<svg xmlns="http://www.w3.org/2000/svg" width="${width}" height="${height}">` +
+        '<foreignObject width="100%" height="100%">' +
+        `<div xmlns="http://www.w3.org/1999/xhtml" style="width:${width}px;height:${height}px;overflow:hidden">` +
+        `<div style="transform:translate(-${scrollX}px,-${scrollY}px);transform-origin:top left">` +
+        html +
+        "</div></div></foreignObject></svg>";
+      const svgUrl = `data:image/svg+xml;charset=utf-8,${encodeURIComponent(svg)}`;
+      const image = new Image();
+      image.onload = function () {
+        const canvas = document.createElement("canvas");
+        canvas.width = width;
+        canvas.height = height;
+        canvas.getContext("2d").drawImage(image, 0, 0);
+        postResult(canvas.toDataURL("image/png"));
+      };
+      image.onerror = function () {
+        postResult(null);
+      };
+      image.src = svgUrl;
+    } catch (_error) {
+      postResult(null);
+    }
+  }
+
+  window.addEventListener("message", function (event) {
+    if (!event.data) return;
+    // Only accept messages from the direct parent frame. Blocks sibling /
+    // unrelated-window postMessage senders that could otherwise reach us.
+    if (event.source !== window.parent) return;
+
+    const trustedParentOrigin = getTrustedParentOrigin(event);
+    if (!trustedParentOrigin) return;
+    trustedTopOrigin = trustedParentOrigin;
+
+    if (event.data.type === "INLINE_EDIT_SCROLL_START") {
+      scrollForwarding = true;
+      emitScroll();
+      return;
+    }
+
+    if (event.data.type === "INLINE_EDIT_SCROLL_STOP") {
+      scrollForwarding = false;
+      if (scrollRaf) cancelAnimationFrame(scrollRaf);
+      scrollRaf = 0;
+      return;
+    }
+
+    if (event.data.type !== "INLINE_EDIT_CAPTURE_REQUEST") return;
+
+    handleCaptureRequest(event);
+  });
+})();
+
+
+</script></body>
+</html>

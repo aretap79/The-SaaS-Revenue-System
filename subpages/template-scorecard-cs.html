@@ -1,0 +1,879 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>CS Hire Interview Scorecard — CRO Manual</title>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="../assets/shared.css"/>
+  <style>
+    :root { --cs-accent: #7A39BB; }
+    .page-hero { background: var(--cs-accent); }
+
+    /* Rubric card system */
+    .rubric-card {
+      background: var(--surface);
+      border: 1.5px solid var(--border);
+      border-radius: 10px;
+      margin: 20px 0;
+      overflow: hidden;
+    }
+    .rubric-header {
+      background: var(--cs-accent);
+      color: #fff;
+      padding: 14px 20px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+    .rubric-skill-name { font-size: 16px; font-weight: 700; }
+    .rubric-badge {
+      font-size: 12px;
+      font-weight: 700;
+      background: rgba(255,255,255,0.2);
+      padding: 3px 14px;
+      border-radius: 20px;
+    }
+    .rubric-meta {
+      padding: 14px 20px 10px;
+      background: #f5f0ff;
+      border-bottom: 1px solid var(--border);
+    }
+    .rubric-meta-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+    }
+    .rubric-meta-label {
+      font-size: 11px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.8px;
+      color: var(--cs-accent);
+      margin-bottom: 3px;
+    }
+    .rubric-meta-text { font-size: 13px; line-height: 1.6; color: var(--text); }
+    .rubric-question {
+      padding: 12px 20px;
+      background: #fffdf0;
+      border-bottom: 1px solid var(--border);
+      font-size: 13px;
+      font-style: italic;
+      line-height: 1.6;
+    }
+    .rubric-question strong {
+      font-style: normal;
+      font-size: 11px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.8px;
+      color: #b8860b;
+      display: block;
+      margin-bottom: 6px;
+    }
+    .rubric-tiers {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+    }
+    @media (max-width: 680px) { .rubric-tiers { grid-template-columns: 1fr; } }
+    .rubric-tier {
+      padding: 16px 18px;
+      border-right: 1px solid var(--border);
+    }
+    .rubric-tier:last-child { border-right: none; }
+    .tier-score {
+      font-size: 11px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      margin-bottom: 8px;
+    }
+    .tier-high { background: #f6fff8; }
+    .tier-high .tier-score { color: #437A22; }
+    .tier-mid { background: #fffdf0; }
+    .tier-mid .tier-score { color: #b8860b; }
+    .tier-low { background: #fff8f8; }
+    .tier-low .tier-score { color: #A13544; }
+    .tier-desc { font-size: 13px; line-height: 1.65; color: var(--text); }
+
+    /* Scorecard table */
+    .sc-table-wrap { overflow-x: auto; margin: 20px 0; }
+    .sc-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 13px;
+      min-width: 580px;
+    }
+    .sc-table th {
+      background: var(--cs-accent);
+      color: #fff;
+      padding: 10px 14px;
+      text-align: left;
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.5px;
+      text-transform: uppercase;
+    }
+    .sc-table th.center { text-align: center; }
+    .sc-table td {
+      padding: 10px 14px;
+      border-bottom: 1px solid var(--border);
+      vertical-align: middle;
+    }
+    .sc-table td.center { text-align: center; }
+    .sc-table tr:nth-child(even) td { background: #fafaf8; }
+    .sc-table .total-row td {
+      background: #1C1B19 !important;
+      color: #fff;
+      font-weight: 700;
+    }
+    .w-high {
+      display: inline-block; font-size: 12px; font-weight: 700;
+      padding: 2px 10px; border-radius: 20px;
+      background: #f0e8ff; color: var(--cs-accent);
+    }
+    .w-med {
+      display: inline-block; font-size: 12px; font-weight: 700;
+      padding: 2px 10px; border-radius: 20px;
+      background: #f0f5f0; color: #437A22;
+    }
+
+    /* Philosophy pillars */
+    .philosophy-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 14px;
+      margin: 20px 0;
+    }
+    @media (max-width: 680px) { .philosophy-grid { grid-template-columns: 1fr; } }
+    .phil-card {
+      background: var(--surface);
+      border: 1.5px solid var(--border);
+      border-radius: 10px;
+      padding: 18px;
+    }
+    .phil-icon {
+      width: 36px; height: 36px;
+      background: var(--cs-accent);
+      color: #fff;
+      border-radius: 8px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 16px; font-weight: 700;
+      margin-bottom: 10px;
+    }
+    .phil-title { font-size: 14px; font-weight: 700; margin-bottom: 6px; }
+    .phil-desc { font-size: 13px; color: var(--text-muted); line-height: 1.55; }
+
+    /* Threshold bar */
+    .threshold-bar {
+      display: flex;
+      border-radius: 10px;
+      overflow: hidden;
+      margin: 20px 0;
+      height: 56px;
+    }
+    .tb-seg {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-direction: column;
+      padding: 0 12px;
+      text-align: center;
+    }
+    .tb-seg-label { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.8px; color: #fff; }
+    .tb-seg-range { font-size: 13px; font-weight: 700; color: rgba(255,255,255,0.85); }
+    .tb-no { background: #A13544; flex: 3; }
+    .tb-cond { background: #964219; flex: 2; }
+    .tb-strong { background: #437A22; flex: 2; }
+    .tb-excep { background: var(--cs-accent); flex: 2; }
+  </style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav class="nav">
+  <span class="nav-logo">CRO <span>Manual</span></span>
+  <span class="nav-sep">/</span>
+  <a href="../pages/resources.html" class="nav-back">← Resources &amp; Templates</a>
+  <span class="nav-sep">/</span>
+  <span class="nav-current">CS Hire Scorecard</span>
+  <span class="nav-spacer"></span>
+  <a href="../index.html" class="nav-home">Home</a>
+</nav>
+
+<!-- HERO -->
+<div class="page-hero">
+  <div class="hero-phase-label">Hiring · Customer Success</div>
+  <h1 class="hero-title">CS Hire Interview Scorecard</h1>
+  <p class="hero-subtitle">Great CSMs are relationship builders AND strategic thinkers. They must understand customer business goals deeply enough to proactively identify risk and expansion opportunities — not just respond to support tickets.</p>
+  <div class="hero-tags">
+    <span class="hero-tag">CSM Hiring</span>
+    <span class="hero-tag">Scorecard</span>
+    <span class="hero-tag">Relationship Management</span>
+    <span class="hero-tag">Strategic</span>
+    <span class="hero-tag">Cross-Functional</span>
+  </div>
+</div>
+
+<!-- CONTENT -->
+<div class="content-wrap">
+
+  <nav class="breadcrumb">
+    <a href="../index.html">Home</a>
+    <span class="sep">›</span>
+    <a href="../pages/resources.html">Resources &amp; Templates</a>
+    <span class="sep">›</span>
+    <span class="current">CS Hire Interview Scorecard</span>
+  </nav>
+
+  <!-- Section 1: CS Hiring Philosophy -->
+  <h2 class="section-title">The CS Hiring Philosophy</h2>
+  <p class="section-intro">Most companies hire CS wrong — they hire support-oriented people for strategic roles, and the result is a team that reacts instead of proactively drives value. Fix the profile first.</p>
+
+  <div class="philosophy-grid">
+    <div class="phil-card">
+      <div class="phil-icon">R</div>
+      <div class="phil-title">CSMs Are Revenue Protectors, Not Support Reps</div>
+      <div class="phil-desc">The primary job of a great CSM is proactive risk management and expansion identification — not answering inbound questions. Every reactive ticket is a failure state that a great CSM should have prevented by understanding the customer's goals deeply.</div>
+    </div>
+    <div class="phil-card">
+      <div class="phil-icon">E</div>
+      <div class="phil-title">Equal Parts Empathy + Analytical Rigor</div>
+      <div class="phil-desc">The CSM profile requires two skills that don't naturally co-occur: deep empathy for the customer's experience AND the analytical rigor to track their adoption, identify risk early, and drive structured business reviews that connect product to outcomes.</div>
+    </div>
+    <div class="phil-card">
+      <div class="phil-icon">S</div>
+      <div class="phil-title">Strategic Thinking is the #1 Predictor of CS Success</div>
+      <div class="phil-desc">Understanding the customer's business well enough to predict what they'll need next, identify risk before it surfaces, and proactively align the product roadmap to their goals — this is what separates great CSMs from good ones. It's the hardest skill to teach.</div>
+    </div>
+    <div class="phil-card">
+      <div class="phil-icon">U</div>
+      <div class="phil-title">Under-Investment in CS Hiring is a Churn Driver</div>
+      <div class="phil-desc">Companies that under-invest in CS hiring accuracy end up with a team that reacts to churn rather than prevents it. The cost of a wrong CS hire isn't just the salary — it's 6–12 months of a customer deteriorating without proactive intervention, followed by a loss.</div>
+    </div>
+  </div>
+
+  <div class="callout callout-warning">
+    <div class="callout-title">The Most Common CS Hiring Mistake</div>
+    <p>Hiring someone who is "great with customers" based on warmth and social ease — without evaluating whether they can think strategically about the customer's business. Warmth is table stakes. Strategic business thinking is what drives retention and expansion. Always test both.</p>
+  </div>
+
+  <!-- Section 2: The 4-Criteria Scorecard -->
+  <h2 class="section-title">The 4-Criteria Scorecard</h2>
+  <p class="section-intro">Score each criterion 1–10 immediately after the interview. Apply the weight multiplier. Total possible: 100 points.</p>
+
+  <div class="sc-table-wrap">
+    <table class="sc-table">
+      <thead>
+        <tr>
+          <th>#</th>
+          <th>Criterion</th>
+          <th class="center">Weight</th>
+          <th class="center">Multiplier</th>
+          <th class="center">Max Points</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>1</td>
+          <td><strong>Relationship Management</strong></td>
+          <td class="center"><span class="w-high">High</span></td>
+          <td class="center">3×</td>
+          <td class="center">30</td>
+        </tr>
+        <tr>
+          <td>2</td>
+          <td><strong>Strategic Thinking</strong></td>
+          <td class="center"><span class="w-high">High</span></td>
+          <td class="center">3×</td>
+          <td class="center">30</td>
+        </tr>
+        <tr>
+          <td>3</td>
+          <td><strong>Cross-Functional Collaboration</strong></td>
+          <td class="center"><span class="w-med">Medium</span></td>
+          <td class="center">2×</td>
+          <td class="center">20</td>
+        </tr>
+        <tr>
+          <td>4</td>
+          <td><strong>Growth Mindset</strong></td>
+          <td class="center"><span class="w-med">Medium</span></td>
+          <td class="center">2×</td>
+          <td class="center">20</td>
+        </tr>
+        <tr class="total-row">
+          <td colspan="4"><strong>TOTAL POSSIBLE</strong></td>
+          <td class="center"><strong>100</strong></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="formula-block">
+    <div class="formula-label">Weighted Score Formula</div>
+    <div class="formula-main">Weighted Total = (Relationship + Strategic) × 3 + (Collaboration + Growth Mindset) × 2</div>
+    <div class="formula-note">Maximum: (10+10)×3 + (10+10)×2 = 60 + 40 = 100 points</div>
+  </div>
+
+  <!-- Detailed rubrics -->
+  <!-- Criterion 1: Relationship Management -->
+  <div class="rubric-card">
+    <div class="rubric-header">
+      <div class="rubric-skill-name">1. Relationship Management</div>
+      <div class="rubric-badge">High Weight · 3× · Max 30 pts</div>
+    </div>
+    <div class="rubric-meta">
+      <div class="rubric-meta-row">
+        <div>
+          <div class="rubric-meta-label">Definition</div>
+          <div class="rubric-meta-text">Builds genuine, trust-based relationships with customers at multiple organizational levels — not just the day-to-day contact. Customers would take their call unprompted. Has examples of repairing difficult or damaged relationships. Multi-threaded in key accounts.</div>
+        </div>
+        <div>
+          <div class="rubric-meta-label">What Great Looks Like</div>
+          <div class="rubric-meta-text">Customers from their previous company would take their call the day they left. Can describe a specific difficult relationship they turned around — who was involved, what the tension was, and the specific steps they took to rebuild trust. Has relationships at the executive level, not just the champion level.</div>
+        </div>
+      </div>
+    </div>
+    <div class="rubric-question">
+      <strong>Primary Interview Question</strong>
+      "Tell me about your most difficult customer relationship. What created the difficulty? How did you diagnose what the customer needed versus what they were saying? What specific steps did you take to build or rebuild trust, and what was the outcome?"
+    </div>
+    <div class="rubric-question" style="border-top: 1px solid var(--border);">
+      <strong>Follow-Up Questions</strong>
+      "Have you ever had a customer who hated you at month 3 and was a reference at month 12? Walk me through that story." / "Describe the most senior executive relationship you've maintained in a current account — how did you build access and maintain it?"
+    </div>
+    <div class="rubric-tiers">
+      <div class="rubric-tier tier-low">
+        <div class="tier-score">Score 1–3: Developing</div>
+        <div class="tier-desc">Reactive relationship manager. Maintains existing relationships but has no examples of proactively building or repairing difficult ones. Relationships are transactional rather than strategic. No executive-level access in accounts. Customers are satisfied but not advocates.</div>
+      </div>
+      <div class="rubric-tier tier-mid">
+        <div class="tier-score">Score 4–7: Capable</div>
+        <div class="tier-desc">Strong existing relationships with examples of trust-building under pressure. Has at least one example of a difficult relationship navigated successfully. Generally liked by customers. Some relationships at the executive level but not systematically. Would be a reliable CSM in a lower-complexity customer base.</div>
+      </div>
+      <div class="rubric-tier tier-high">
+        <div class="tier-score">Score 8–10: Exceptional</div>
+        <div class="tier-desc">Consistently deepens relationships over time. Has specific examples of turning detractors into advocates. Multi-threaded in key accounts — knows the champion, the economic buyer, and the executive sponsor. Customers would proactively seek their advice on problems unrelated to the product. References describe them as indispensable to the customer's success.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Criterion 2: Strategic Thinking -->
+  <div class="rubric-card">
+    <div class="rubric-header">
+      <div class="rubric-skill-name">2. Strategic Thinking</div>
+      <div class="rubric-badge">High Weight · 3× · Max 30 pts</div>
+    </div>
+    <div class="rubric-meta">
+      <div class="rubric-meta-row">
+        <div>
+          <div class="rubric-meta-label">Definition</div>
+          <div class="rubric-meta-text">Understands the customer's business goals and proactively aligns the product to those goals — without waiting to be asked. Can speak to the customer's P&amp;L impact of using or not using the product. Identifies risk before it surfaces as a complaint or a renewal conversation.</div>
+        </div>
+        <div>
+          <div class="rubric-meta-label">What Great Looks Like</div>
+          <div class="rubric-meta-text">Can describe a customer's business model, revenue drivers, and cost structure in enough detail to say: "If they don't achieve X with our product by Q2, they will reduce spend because their board goal is Y." Proactively identified a risk before the customer raised it and has a story about the intervention that prevented churn.</div>
+        </div>
+      </div>
+    </div>
+    <div class="rubric-question">
+      <strong>Primary Interview Question</strong>
+      "Tell me about a time you identified an at-risk customer before they told you they were at risk. What signals did you see? What data or observations made you suspicious? What actions did you take, and what was the outcome?"
+    </div>
+    <div class="rubric-question" style="border-top: 1px solid var(--border);">
+      <strong>Follow-Up Questions</strong>
+      "Walk me through how you prepare for a Quarterly Business Review. What's the narrative structure? How do you connect product usage data to the customer's stated business objectives?" / "Describe a time when you influenced a customer's roadmap planning by anticipating a need they hadn't yet articulated."
+    </div>
+    <div class="rubric-tiers">
+      <div class="rubric-tier tier-low">
+        <div class="tier-score">Score 1–3: Developing</div>
+        <div class="tier-desc">Reactive to customer requests. Responds to stated needs but does not anticipate unstated ones. QBRs are product usage reviews, not business impact conversations. Cannot describe the customer's business model or how the product connects to their financial outcomes. Churn comes as a surprise.</div>
+      </div>
+      <div class="rubric-tier tier-mid">
+        <div class="tier-score">Score 4–7: Capable</div>
+        <div class="tier-desc">Understands customer business context and connects product to customer goals in conversations. Runs QBRs that are meaningful to the customer. Has some examples of proactive risk identification but not consistently. Does not yet proactively map the customer roadmap to the product roadmap.</div>
+      </div>
+      <div class="rubric-tier tier-high">
+        <div class="tier-score">Score 8–10: Exceptional</div>
+        <div class="tier-desc">Proactively maps customer business priorities to product capabilities and gaps. Conducts value-based QBRs that connect product metrics directly to customer business outcomes. Identifies risk signals in product usage data weeks before they surface. Has influenced the product roadmap by surfacing customer needs with structured evidence. Known for making customers more successful than they planned to be.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Criterion 3: Cross-Functional Collaboration -->
+  <div class="rubric-card">
+    <div class="rubric-header">
+      <div class="rubric-skill-name">3. Cross-Functional Collaboration</div>
+      <div class="rubric-badge">Medium Weight · 2× · Max 20 pts</div>
+    </div>
+    <div class="rubric-meta">
+      <div class="rubric-meta-row">
+        <div>
+          <div class="rubric-meta-label">Definition</div>
+          <div class="rubric-meta-text">Works effectively with Sales, Product, and Marketing to serve customer outcomes. Does not work in a silo. Joins sales calls proactively. Submits structured product feedback with customer context. Is known across the organization for handoff quality and shared intelligence.</div>
+        </div>
+        <div>
+          <div class="rubric-meta-label">What Great Looks Like</div>
+          <div class="rubric-meta-text">Sales reps want them on expansion calls. Product managers seek their customer feedback before roadmap planning. Marketing references their customer insights in case studies and messaging. They build programs that span functions — not just respond to requests from other teams.</div>
+        </div>
+      </div>
+    </div>
+    <div class="rubric-question">
+      <strong>Interview Question</strong>
+      "Describe a time when you needed Sales or Product to act on a customer issue. How did you make the case internally? What was the outcome? Tell me about a program you built or contributed to that required coordination across CS, Sales, and Product."
+    </div>
+    <div class="rubric-tiers">
+      <div class="rubric-tier tier-low">
+        <div class="tier-score">Score 1–3: Developing</div>
+        <div class="tier-desc">Works in a silo. Escalates problems without context or business framing. Does not proactively join cross-functional conversations. Product feedback is informal and un-structured. Sales and CS have an adversarial or indifferent relationship in their previous company.</div>
+      </div>
+      <div class="rubric-tier tier-mid">
+        <div class="tier-score">Score 4–7: Capable</div>
+        <div class="tier-desc">Regular collaboration with adjacent teams. Joins customer calls with Sales. Submits product feedback with some structure. Is generally seen as a collaborative person by peers. Has not built cross-functional programs but contributes to them reliably.</div>
+      </div>
+      <div class="rubric-tier tier-high">
+        <div class="tier-score">Score 8–10: Exceptional</div>
+        <div class="tier-desc">Builds programs that span CS, Sales, and Product. The CS voice in product roadmap decisions. Known for handoff quality — Sales teams want this CSM on their accounts. Has structured the information flow between functions so that customer insights reach the right people at the right time. Cross-functional peers cite them positively in references.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Criterion 4: Growth Mindset -->
+  <div class="rubric-card">
+    <div class="rubric-header">
+      <div class="rubric-skill-name">4. Growth Mindset</div>
+      <div class="rubric-badge">Medium Weight · 2× · Max 20 pts</div>
+    </div>
+    <div class="rubric-meta">
+      <div class="rubric-meta-row">
+        <div>
+          <div class="rubric-meta-label">Definition</div>
+          <div class="rubric-meta-text">Learns from failures without defensiveness. Seeks coaching proactively rather than waiting for annual reviews. Shows measurable improvement over time in response to feedback. Does not attribute failures to external factors without acknowledging their own contribution.</div>
+        </div>
+        <div>
+          <div class="rubric-meta-label">What Great Looks Like</div>
+          <div class="rubric-meta-text">After losing a customer, they conduct a self-directed post-mortem, document what they would do differently, and share the learning with their team. Over 12 months, their managers can point to measurable behavioral changes driven by their own initiative. They ask for 360 feedback before being asked to provide it.</div>
+        </div>
+      </div>
+    </div>
+    <div class="rubric-question">
+      <strong>Interview Question</strong>
+      "Tell me about a customer you lost. Not a technical failure — a relationship failure where you were a factor. What happened? What did you do wrong, specifically? What did you learn? What did you change after that experience, and how has it shown up in subsequent accounts?"
+    </div>
+    <div class="rubric-tiers">
+      <div class="rubric-tier tier-low">
+        <div class="tier-score">Score 1–3: Developing</div>
+        <div class="tier-desc">Blames external factors when customers churn: product gaps, pricing, or competitor features. Defensive when asked about their own role in an outcome. Does not seek coaching proactively. Makes the same mistake multiple times. Post-mortems don't happen or are superficial.</div>
+      </div>
+      <div class="rubric-tier tier-mid">
+        <div class="tier-score">Score 4–7: Capable</div>
+        <div class="tier-desc">Acknowledges mistakes when pressed. Makes changes after explicit feedback. Generally open to coaching. Has some evidence of behavioral change over time. May not be proactive about seeking feedback but responds well when it's given.</div>
+      </div>
+      <div class="rubric-tier tier-high">
+        <div class="tier-score">Score 8–10: Exceptional</div>
+        <div class="tier-desc">Seeks post-mortems proactively — doesn't wait to be asked. Shares learnings with the team. Demonstrates measurable behavioral change based on self-initiated reflection. Can describe specific things they did differently in their next account after losing a customer. Their manager describes them as one of the fastest learners they've managed.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Section 3: Scoring Thresholds -->
+  <h2 class="section-title">Scoring Thresholds</h2>
+  <p class="section-intro">Total possible: 100 points. Use these thresholds to structure the hire decision. Do not average a critical gap away — a score below 5 on any High-weight criterion requires explicit written discussion.</p>
+
+  <div class="threshold-bar">
+    <div class="tb-seg tb-no" style="flex:3;">
+      <div class="tb-seg-label">Do Not Hire</div>
+      <div class="tb-seg-range">&lt; 60</div>
+    </div>
+    <div class="tb-seg tb-cond" style="flex:2;">
+      <div class="tb-seg-label">Conditional</div>
+      <div class="tb-seg-range">60–75</div>
+    </div>
+    <div class="tb-seg tb-strong" style="flex:2;">
+      <div class="tb-seg-label">Strong Hire</div>
+      <div class="tb-seg-range">75–90</div>
+    </div>
+    <div class="tb-seg tb-excep" style="flex:2;">
+      <div class="tb-seg-label">Exceptional</div>
+      <div class="tb-seg-range">90+</div>
+    </div>
+  </div>
+
+  <div class="metric-grid" style="margin-top:20px;">
+    <div class="metric-card">
+      <div class="m-label">Minimum Hire</div>
+      <div class="m-value" style="color:#437A22;">≥ 60</div>
+      <div class="m-desc">60% threshold. Below this, gaps will show up in the first 90 days and be expensive to recover from.</div>
+    </div>
+    <div class="metric-card">
+      <div class="m-label">Strong Hire</div>
+      <div class="m-value" style="color:#437A22;">≥ 75</div>
+      <div class="m-desc">75%+ indicates a well-rounded candidate. Proceed with urgency — strong CS candidates have multiple options.</div>
+    </div>
+    <div class="metric-card">
+      <div class="m-label">Critical Threshold</div>
+      <div class="m-value" style="color:#A13544;">5</div>
+      <div class="m-desc">Any High-weight criterion scored below 5 requires explicit written justification before proceeding. Do not advance without this.</div>
+    </div>
+    <div class="metric-card">
+      <div class="m-label">Reference Checks</div>
+      <div class="m-value" style="color:var(--cs-accent);">3</div>
+      <div class="m-desc">Minimum 3 reference calls. At least one must be a customer reference — not just a manager.</div>
+    </div>
+  </div>
+
+  <div class="callout callout-definition">
+    <div class="callout-title">Conditional Hire Requirement</div>
+    <p>A candidate who scores 60–75 but has strong Relationship Management and Strategic Thinking (both ≥ 7) may be a conditional hire. Requirement: a written 90-day onboarding plan specifying how the lower-scoring criteria will be developed, with milestone check-ins at day 30, 60, and 90.</p>
+  </div>
+
+  <div class="callout callout-warning">
+    <div class="callout-title">The Reference Call You Must Make</div>
+    <p>Before hiring any CSM, call a customer reference — not just a manager reference. Ask the customer: "If this person left your account tomorrow and you had a new CSM, what would you lose?" The answer tells you more about their strategic value than any manager reference will.</p>
+  </div>
+
+  <!-- Related links -->
+  <div class="related-section">
+    <div class="related-title">Related Pages</div>
+    <div class="related-links">
+      <a href="template-cs-playbook.html" class="related-link">CS Playbook Template</a>
+      <a href="sos-lir.html" class="related-link">LIR Framework</a>
+      <a href="template-scorecard-sales-leader.html" class="related-link">Sales Leader Scorecard</a>
+      <a href="../pages/resources.html" class="related-link">← All Templates</a>
+    </div>
+  </div>
+
+</div>
+<script data-pplx-inline-edit>
+(function () {
+  if (window === window.top) return;
+
+  const allowedParentOrigins = ["https://www.perplexity.ai","https://perplexity.ai","https://testing.perplexity.ai","https://staging.perplexity.ai","https://*.preview.i.perplexity.ai","http://localhost:3000","http://127.0.0.1:3000","http://localhost:5173","http://127.0.0.1:5173"];
+  const MAX_FONT_BYTES = 500 * 1024;
+  const MAX_TOTAL_FONT_BYTES = 2 * 1024 * 1024;
+  let scrollForwarding = false;
+  let scrollRaf = 0;
+  let trustedTopOrigin = null;
+
+  // Allow entries like "https://*.preview.i.perplexity.ai" — the wildcard
+  // matches a single DNS label (no dots), so "https://*.foo" cannot stretch
+  // across multiple labels.
+  function matchesAllowedOrigin(origin) {
+    if (!origin) return false;
+    for (const entry of allowedParentOrigins) {
+      if (!entry.includes("*")) {
+        if (entry === origin) return true;
+        continue;
+      }
+      const pattern = new RegExp(
+        "^" +
+          entry.replace(/[.+?^${}()|[\]\\]/g, "\\$&").replace(/\*/g, "[^.]+") +
+          "$",
+      );
+      if (pattern.test(origin)) return true;
+    }
+    return false;
+  }
+
+  // Trust decision: when the sender is same-origin-visible (event.origin is a
+  // real origin like https://www.perplexity.ai) we trust event.origin directly.
+  // When event.origin is "null" (opaque broker srcdoc), we fall back to the
+  // broker's stamped `parentOrigin` to identify the top window. The fallback
+  // is claim-only — we rely on the browser's native `targetOrigin` enforcement
+  // on the response path (see postToTrustedTop) to ensure replies can't be
+  // delivered to anyone but the actual top window of that claimed origin.
+  function getTrustedParentOrigin(event) {
+    const forwardedParentOrigin =
+      typeof event.data.parentOrigin === "string" ? event.data.parentOrigin : null;
+    const parentOrigin = event.origin === "null" ? forwardedParentOrigin : event.origin;
+    return matchesAllowedOrigin(parentOrigin) ? parentOrigin : null;
+  }
+
+  // All responses go to window.top with targetOrigin = the allowlisted origin.
+  // An attacker that iframes us inside their own null-origin broker can claim
+  // any parentOrigin they like, but the browser will drop the reply whenever
+  // the real top's origin doesn't match — so the screenshot never leaves.
+  function postToTrustedTop(message) {
+    if (!trustedTopOrigin) return;
+    try {
+      window.top.postMessage(message, trustedTopOrigin);
+    } catch (_error) {}
+  }
+
+  function inlineAll(original, clone) {
+    if (original.nodeType !== 1 || clone.nodeType !== 1) return;
+
+    try {
+      const computedStyle = getComputedStyle(original);
+      // cssText on a computed style is the serialized declaration in modern
+      // Chromium/Safari — a single read beats enumerating ~400 longhand
+      // properties. Firefox returns "" here, so we fall back on empty.
+      const serialized = computedStyle.cssText;
+      if (serialized) {
+        clone.style.cssText = serialized;
+      } else {
+        const parts = new Array(computedStyle.length);
+        for (let index = 0; index < computedStyle.length; index += 1) {
+          const property = computedStyle[index];
+          parts[index] = `${property}:${computedStyle.getPropertyValue(property)};`;
+        }
+        clone.style.cssText = parts.join("");
+      }
+    } catch (_error) {}
+
+    const originalChildren = original.children;
+    const clonedChildren = clone.children;
+    for (
+      let index = 0;
+      index < originalChildren.length && index < clonedChildren.length;
+      index += 1
+    ) {
+      inlineAll(originalChildren[index], clonedChildren[index]);
+    }
+  }
+
+  function extractFontUrl(srcValue) {
+    const matches = [
+      ...srcValue.matchAll(
+        /url\(["']?([^"')]+)["']?\)(?:\s*format\(["']?([^"')]+)["']?\))?/gi,
+      ),
+    ];
+    if (matches.length === 0) return null;
+    const woff2 = matches.find((m) => m[2] && m[2].toLowerCase().includes("woff2"));
+    if (woff2) return woff2[1];
+    const woff = matches.find((m) => m[2] && m[2].toLowerCase().includes("woff"));
+    if (woff) return woff[1];
+    return matches[0][1];
+  }
+
+  // Cache resolved font URL -> data URI across captures. Fonts on a page
+  // essentially never change, and a batch run emits multiple captures back to
+  // back — without this we'd refetch + re-base64 every time.
+  const fontDataUriCache = new Map();
+  const SRC_DECLARATION_RE = /src\s*:\s*[^;}]+/i;
+
+  async function fetchAsDataUri(url) {
+    if (fontDataUriCache.has(url)) return fontDataUriCache.get(url);
+    let dataUri = null;
+    try {
+      const response = await fetch(url, { mode: "cors", credentials: "omit" });
+      if (response.ok) {
+        const blob = await response.blob();
+        if (blob.size <= MAX_FONT_BYTES) {
+          dataUri = await new Promise((resolve) => {
+            const reader = new FileReader();
+            reader.onloadend = () =>
+              resolve(typeof reader.result === "string" ? reader.result : null);
+            reader.onerror = () => resolve(null);
+            reader.readAsDataURL(blob);
+          });
+        }
+      }
+    } catch (_error) {
+      dataUri = null;
+    }
+    fontDataUriCache.set(url, dataUri);
+    return dataUri;
+  }
+
+  function collectFontFaceRuleTexts() {
+    const rules = [];
+    for (const sheet of document.styleSheets) {
+      let cssRules;
+      try {
+        cssRules = sheet.cssRules;
+      } catch (_error) {
+        continue;
+      }
+      if (!cssRules) continue;
+      for (const rule of cssRules) {
+        const cssText = rule.cssText || "";
+        if (cssText.startsWith("@font-face")) rules.push(cssText);
+      }
+    }
+    return rules;
+  }
+
+  async function buildInlinedFontCss() {
+    const ruleTexts = collectFontFaceRuleTexts();
+    if (ruleTexts.length === 0) return null;
+
+    const resolved = ruleTexts.map((cssText) => {
+      if (!SRC_DECLARATION_RE.test(cssText)) return null;
+      const srcMatch = cssText.match(/src\s*:\s*([^;}]+)[;}]/i);
+      if (!srcMatch) return null;
+      const url = extractFontUrl(srcMatch[1]);
+      if (!url) return null;
+      try {
+        return { cssText, url: new URL(url, document.baseURI).href };
+      } catch (_error) {
+        return null;
+      }
+    });
+
+    const dataUris = await Promise.all(
+      resolved.map((entry) => (entry ? fetchAsDataUri(entry.url) : Promise.resolve(null))),
+    );
+
+    const inlined = [];
+    let totalBytes = 0;
+    for (let index = 0; index < resolved.length; index += 1) {
+      const entry = resolved[index];
+      const dataUri = dataUris[index];
+      if (!entry || !dataUri) continue;
+      const approxBytes = dataUri.length * 0.75;
+      if (totalBytes + approxBytes > MAX_TOTAL_FONT_BYTES) break;
+      totalBytes += approxBytes;
+      inlined.push(entry.cssText.replace(SRC_DECLARATION_RE, `src: url("${dataUri}")`));
+    }
+    return inlined.length > 0 ? inlined.join("\n") : null;
+  }
+
+  function stripExternal(clone) {
+    const images = clone.querySelectorAll("img");
+    for (let index = 0; index < images.length; index += 1) {
+      const src = images[index].getAttribute("src");
+      if (src && !src.startsWith("data:")) images[index].removeAttribute("src");
+    }
+
+    const elements = clone.querySelectorAll("*");
+    for (let index = 0; index < elements.length; index += 1) {
+      const style = elements[index].style.cssText;
+      if (style && style.includes("url(")) {
+        elements[index].style.cssText = style.replace(
+          /url\(["']?(?!data:)[^)"']*["']?\)/gi,
+          "none",
+        );
+      }
+    }
+  }
+
+  function emitScroll() {
+    scrollRaf = 0;
+    if (!scrollForwarding) return;
+    postToTrustedTop({
+      type: "INLINE_EDIT_SCROLL",
+      scrollX: window.scrollX,
+      scrollY: window.scrollY,
+    });
+  }
+
+  window.addEventListener(
+    "scroll",
+    function () {
+      if (!scrollForwarding || scrollRaf) return;
+      scrollRaf = requestAnimationFrame(emitScroll);
+    },
+    { passive: true, capture: true },
+  );
+
+  async function handleCaptureRequest(event) {
+    const requestId = event.data.requestId;
+    const scrollX = window.scrollX;
+    const scrollY = window.scrollY;
+    const width = window.innerWidth;
+    const height = window.innerHeight;
+
+    function postResult(dataUrl) {
+      postToTrustedTop({
+        type: "INLINE_EDIT_SCREENSHOT_RESULT",
+        requestId,
+        dataUrl,
+        scrollX,
+        scrollY,
+      });
+    }
+
+    try {
+      // Wait for any pending web fonts to resolve so both inline metrics and
+      // the @font-face inlining below see the same loaded faces.
+      if (document.fonts && document.fonts.ready) {
+        try {
+          await document.fonts.ready;
+        } catch (_error) {}
+      }
+
+      const clone = document.documentElement.cloneNode(true);
+      inlineAll(document.documentElement, clone);
+
+      const removedNodes = clone.querySelectorAll("script,link[rel=\"stylesheet\"],style");
+      for (let index = 0; index < removedNodes.length; index += 1) {
+        removedNodes[index].remove();
+      }
+
+      stripExternal(clone);
+
+      // Re-embed web fonts as data-URI @font-face rules so the SVG rasterizer
+      // can resolve them — external font URLs aren't fetched during
+      // foreignObject rendering, which would otherwise force a fallback face
+      // and change text metrics.
+      const inlinedFontCss = await buildInlinedFontCss();
+      if (inlinedFontCss) {
+        const styleEl = document.createElement("style");
+        styleEl.textContent = inlinedFontCss;
+        const head = clone.querySelector("head");
+        if (head) head.appendChild(styleEl);
+        else clone.insertBefore(styleEl, clone.firstChild);
+      }
+
+      const html = new XMLSerializer().serializeToString(clone);
+      const svg =
+        `<svg xmlns="http://www.w3.org/2000/svg" width="${width}" height="${height}">` +
+        '<foreignObject width="100%" height="100%">' +
+        `<div xmlns="http://www.w3.org/1999/xhtml" style="width:${width}px;height:${height}px;overflow:hidden">` +
+        `<div style="transform:translate(-${scrollX}px,-${scrollY}px);transform-origin:top left">` +
+        html +
+        "</div></div></foreignObject></svg>";
+      const svgUrl = `data:image/svg+xml;charset=utf-8,${encodeURIComponent(svg)}`;
+      const image = new Image();
+      image.onload = function () {
+        const canvas = document.createElement("canvas");
+        canvas.width = width;
+        canvas.height = height;
+        canvas.getContext("2d").drawImage(image, 0, 0);
+        postResult(canvas.toDataURL("image/png"));
+      };
+      image.onerror = function () {
+        postResult(null);
+      };
+      image.src = svgUrl;
+    } catch (_error) {
+      postResult(null);
+    }
+  }
+
+  window.addEventListener("message", function (event) {
+    if (!event.data) return;
+    // Only accept messages from the direct parent frame. Blocks sibling /
+    // unrelated-window postMessage senders that could otherwise reach us.
+    if (event.source !== window.parent) return;
+
+    const trustedParentOrigin = getTrustedParentOrigin(event);
+    if (!trustedParentOrigin) return;
+    trustedTopOrigin = trustedParentOrigin;
+
+    if (event.data.type === "INLINE_EDIT_SCROLL_START") {
+      scrollForwarding = true;
+      emitScroll();
+      return;
+    }
+
+    if (event.data.type === "INLINE_EDIT_SCROLL_STOP") {
+      scrollForwarding = false;
+      if (scrollRaf) cancelAnimationFrame(scrollRaf);
+      scrollRaf = 0;
+      return;
+    }
+
+    if (event.data.type !== "INLINE_EDIT_CAPTURE_REQUEST") return;
+
+    handleCaptureRequest(event);
+  });
+})();
+
+
+</script></body>
+</html>

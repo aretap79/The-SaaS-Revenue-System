@@ -1,0 +1,964 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Hiring the First Sales Leader — Science of Scaling</title>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="../assets/shared.css"/>
+  <style>
+    :root { --sos: #0D5C63; --sos-hover: #094a50; --sos-light: #e6f4f5; }
+    .page-hero { background: var(--sos); }
+    .step-list li::before { background: var(--sos); }
+    .bullet-list li::before { color: var(--sos); }
+
+    /* Failure mode cards */
+    .failure-mode-card {
+      background: #fff8f8;
+      border: 1.5px solid #f5c0c0;
+      border-radius: 10px;
+      padding: 20px 24px;
+      margin-bottom: 14px;
+    }
+    .failure-mode-header {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 10px;
+    }
+    .failure-mode-num {
+      width: 30px; height: 30px; border-radius: 50%;
+      background: #A13544; color: #fff;
+      font-size: 13px; font-weight: 700;
+      display: flex; align-items: center; justify-content: center;
+      flex-shrink: 0;
+    }
+    .failure-mode-title { font-size: 15px; font-weight: 700; color: #A13544; }
+    .failure-mode-body { font-size: 14px; line-height: 1.7; color: var(--text); }
+
+    /* Stage evolution table */
+    .stage-table-wrap { overflow-x: auto; margin: 20px 0; }
+
+    /* Scorecard table */
+    .scorecard-table-wrap { overflow-x: auto; margin: 20px 0; }
+    .scorecard-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 13px;
+    }
+    .scorecard-table th {
+      padding: 10px 14px;
+      text-align: left;
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.5px;
+      text-transform: uppercase;
+    }
+    .scorecard-table th:first-child { background: var(--text); color: #fff; }
+    .scorecard-table th.col-weight { background: #4a8c92; color: #fff; width: 80px; }
+    .scorecard-table th.col-l1 { background: #A13544; color: #fff; }
+    .scorecard-table th.col-l2 { background: #964219; color: #fff; }
+    .scorecard-table th.col-l3 { background: #437A22; color: #fff; }
+    .scorecard-table th.col-l4 { background: #0D5C63; color: #fff; }
+    .scorecard-table td {
+      padding: 10px 14px;
+      border-bottom: 1px solid var(--border);
+      vertical-align: top;
+      line-height: 1.5;
+    }
+    .scorecard-table tr:nth-child(even) td { background: #fafaf8; }
+    .scorecard-table tr:last-child td { border-bottom: none; }
+    .scorecard-table td:first-child { font-weight: 700; }
+    .weight-badge {
+      display: inline-block;
+      padding: 3px 10px;
+      border-radius: 12px;
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.5px;
+    }
+    .weight-high { background: #e6f4f5; color: var(--sos); }
+    .weight-med { background: #fff3e0; color: #964219; }
+
+    /* Evaluation steps */
+    .eval-steps { margin: 20px 0; }
+    .eval-step {
+      display: flex;
+      gap: 18px;
+      margin-bottom: 16px;
+      align-items: flex-start;
+    }
+    .eval-num {
+      min-width: 36px; height: 36px; border-radius: 50%;
+      background: var(--sos); color: #fff;
+      font-size: 14px; font-weight: 700;
+      display: flex; align-items: center; justify-content: center;
+      flex-shrink: 0;
+    }
+    .eval-content { padding-top: 4px; flex: 1; }
+    .eval-title { font-size: 15px; font-weight: 700; margin-bottom: 4px; color: var(--text); }
+    .eval-meta {
+      font-size: 12px; font-weight: 700;
+      color: var(--sos);
+      margin-bottom: 6px;
+    }
+    .eval-desc { font-size: 14px; color: var(--text-muted); line-height: 1.6; }
+    .eval-flags { margin-top: 8px; font-size: 13px; color: var(--text-muted); }
+    .eval-flags strong { color: #A13544; }
+
+    /* Stage fit cards */
+    .stage-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 10px;
+      margin: 20px 0;
+    }
+    .stage-card {
+      border: 1.5px solid var(--border);
+      border-radius: 8px;
+      padding: 16px;
+    }
+    .stage-card.active {
+      border-color: var(--sos);
+      background: var(--sos-light);
+    }
+    .stage-name {
+      font-size: 11px; font-weight: 700;
+      letter-spacing: 1.5px; text-transform: uppercase;
+      margin-bottom: 6px; color: var(--text-muted);
+    }
+    .stage-card.active .stage-name { color: var(--sos); }
+    .stage-title { font-size: 14px; font-weight: 700; color: var(--text); margin-bottom: 4px; }
+    .stage-desc { font-size: 12px; line-height: 1.5; color: var(--text-muted); }
+
+    /* First GTM criteria */
+    .gtm-criteria-list { list-style: none; margin: 16px 0; padding: 0; }
+    .gtm-criteria-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 14px;
+      padding: 12px 0;
+      border-bottom: 1px solid var(--border);
+    }
+    .gtm-criteria-item:last-child { border-bottom: none; }
+    .criteria-num {
+      min-width: 28px; height: 28px; border-radius: 50%;
+      background: var(--sos); color: #fff;
+      font-size: 12px; font-weight: 700;
+      display: flex; align-items: center; justify-content: center;
+      flex-shrink: 0; margin-top: 1px;
+    }
+    .criteria-title { font-size: 14px; font-weight: 700; color: var(--text); margin-bottom: 3px; }
+    .criteria-desc { font-size: 13px; color: var(--text-muted); line-height: 1.55; }
+
+    /* Red flag cards */
+    .redflag-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+      margin: 16px 0;
+    }
+    .redflag-card {
+      background: var(--surface);
+      border: 1.5px solid var(--border);
+      border-left: 4px solid #A13544;
+      border-radius: 8px;
+      padding: 16px 18px;
+    }
+    .redflag-name {
+      font-size: 13px; font-weight: 700;
+      color: #A13544;
+      margin-bottom: 6px;
+    }
+    .redflag-desc { font-size: 13px; color: var(--text-muted); line-height: 1.55; }
+    .redflag-signal {
+      margin-top: 8px;
+      font-size: 12px; font-weight: 700;
+      color: var(--text-muted);
+    }
+    .redflag-signal span { color: var(--text); }
+
+    /* Comp table */
+    .comp-table-wrap { overflow-x: auto; margin: 16px 0; }
+
+    /* Process overview chips */
+    .process-chips {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      flex-wrap: wrap;
+      margin: 16px 0;
+      font-size: 13px;
+    }
+    .process-chip {
+      background: var(--sos); color: #fff;
+      padding: 6px 14px; border-radius: 20px;
+      font-weight: 600;
+    }
+    .process-chip.alt { background: #4a8c92; }
+    .process-chip.final { background: #437A22; }
+    .process-sep { color: var(--text-muted); font-size: 16px; }
+
+    @media (max-width: 768px) {
+      .redflag-grid { grid-template-columns: 1fr; }
+      .stage-grid { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+<nav class="nav">
+  <span class="nav-logo">CRO <span>Manual</span></span>
+  <span class="nav-sep">|</span>
+  <a href="../index.html" class="nav-back">← Home</a>
+  <span class="nav-sep">|</span>
+  <a href="../pages/science-of-scaling.html" class="nav-back">Science of Scaling</a>
+  <span class="nav-sep">|</span>
+  <span class="nav-current">Hiring the First Sales Leader</span>
+</nav>
+
+<div class="page-hero">
+  <div class="hero-phase-label">Hiring · Science of Scaling</div>
+  <div class="hero-title">Hiring the First Sales Leader</div>
+  <div class="hero-subtitle">The most consequential GTM hire you will make. Hire too early and they'll build a team on a broken playbook. Hire the wrong profile and they'll 10x your burn with no results. This is how to get it right.</div>
+  <div class="hero-tags">
+    <span class="hero-tag">Sales Leader</span>
+    <span class="hero-tag">Hiring Scorecard</span>
+    <span class="hero-tag">Role Definition</span>
+    <span class="hero-tag">Interview Process</span>
+    <span class="hero-tag">First GTM Hire</span>
+  </div>
+</div>
+
+<div class="content-wrap">
+  <div class="breadcrumb">
+    <a href="../index.html">Home</a><span class="sep">›</span>
+    <a href="../pages/science-of-scaling.html">Science of Scaling</a><span class="sep">›</span>
+    <span class="current">Hiring the First Sales Leader</span>
+  </div>
+
+  <!-- SECTION 1: Most Common Mistake -->
+  <div class="section-title">The Most Common Mistake: Hiring Too Early</div>
+  <div class="section-intro">Most founders hire a Head of Sales when they have 1–3 salespeople and revenue is growing. The instinct is understandable: growth means you need sales leadership. The problem is timing and context.</div>
+
+  <p style="font-size: 15px; line-height: 1.75; margin-bottom: 16px;">If the playbook isn't codified, you're hiring someone to <strong>find the playbook</strong> — not <strong>scale it</strong>. The right time to hire a first Sales Leader is when you have <a href="sos-gtm-fit.html">GTM Fit</a> (LIUE &gt; 3, validated playbook, at least 3 reps executing it) — not before. Until then, the founder IS the head of sales. Every dollar invested in a sales leader before this point has a high probability of being lost.</p>
+
+  <div class="callout callout-warning">
+    <div class="callout-title">The 80% Failure Rate</div>
+    <p>First Sales Leader hires fail roughly 80% of the time when made before GTM Fit is achieved. The failure mode is predictable: they install a playbook from their prior company. It doesn't fit your ICP, your product, or your buyer. Churn spikes. The team is demoralized. You spend 6–12 months unwinding the damage. This is not a hypothetical risk — it is the base case for premature hires.</p>
+  </div>
+
+  <div class="subsection-title">3 Failure Modes of the Premature First Sales Leader Hire</div>
+  <div class="failure-mode-card">
+    <div class="failure-mode-header">
+      <div class="failure-mode-num">1</div>
+      <div class="failure-mode-title">The Playbook Importer</div>
+    </div>
+    <div class="failure-mode-body">Leader replaces the founder's playbook with the one from their last company. This playbook may have worked at a different ICP, different ACV, different sales cycle, different competitive environment — none of which applies here. The ICP nuance is lost. Churn spikes because sales is now closing the wrong customers. Recovery requires rebuilding the playbook from scratch, often without the leader, who has already been let go.</div>
+  </div>
+
+  <div class="failure-mode-card">
+    <div class="failure-mode-header">
+      <div class="failure-mode-num">2</div>
+      <div class="failure-mode-title">The Team Transplanter</div>
+    </div>
+    <div class="failure-mode-body">Leader hires their team from their prior company. These reps are skilled for the prior company's context — different ICP, different sales motion, different comp structure. They were effective in their old environment. They underperform in yours. Productivity collapses across the cohort. You've spent 6 months and $1–2M to discover the wrong team in the wrong context.</div>
+  </div>
+
+  <div class="failure-mode-card">
+    <div class="failure-mode-header">
+      <div class="failure-mode-num">3</div>
+      <div class="failure-mode-title">The VC Whisperer</div>
+    </div>
+    <div class="failure-mode-body">Leader manages up rather than down. Invests time in board relationships, executive visibility, and narrative management. The field team receives insufficient coaching, the playbook isn't updated, and film reviews never happen. When results disappoint, the leader has a strong external narrative but a deteriorating internal reality. By the time the pattern is identified, an entire cohort has underperformed.</div>
+  </div>
+
+  <!-- SECTION 2: 3-Step Hiring Process -->
+  <div class="section-title">The 3-Step Hiring Framework</div>
+  <div class="section-intro">Most first sales leader searches fail because they start with a job posting instead of role definition. This framework reverses the sequence: define what the person needs to do before defining who they need to be.</div>
+
+  <div class="process-chips">
+    <div class="process-chip">1. Role Definition</div>
+    <div class="process-sep">→</div>
+    <div class="process-chip alt">2. Scorecard Development</div>
+    <div class="process-sep">→</div>
+    <div class="process-chip final">3. Structured Evaluation</div>
+  </div>
+
+  <!-- STEP 1: Role Definition -->
+  <div class="subsection-title" style="margin-top: 32px;">Step 1: Role Definition by Stage</div>
+  <p style="font-size: 15px; line-height: 1.75; margin-bottom: 16px;">The Sales Leader role evolves completely across the three Science of Scaling stages. Hiring the right person for the wrong stage is as costly as hiring the wrong person entirely.</p>
+
+  <div class="stage-table-wrap">
+    <table class="data-table">
+      <thead>
+        <tr>
+          <th>SoS Stage</th>
+          <th>Role Focus</th>
+          <th>Right Profile</th>
+          <th>Wrong Profile</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>PMF</strong><br/><span style="font-size:12px; color:var(--text-muted);">Stage 1</span></td>
+          <td>Don't hire a sales leader yet. Founders sell directly to learn the buyer.</td>
+          <td>Founder as head of sales — not negotiable</td>
+          <td>Any VP Sales hire before PMF validation</td>
+        </tr>
+        <tr>
+          <td><strong>GTM Fit</strong><br/><span style="font-size:12px; color:var(--sos); font-weight:700;">Stage 2 — Hire Now</span></td>
+          <td>"Process Builder" — codify what was learned, build a hiring system, develop the playbook</td>
+          <td>Operator who has built a playbook before, data-driven, coach-first mindset</td>
+          <td>Solo closer, player-coach without systems thinking, VP from a large structured org</td>
+        </tr>
+        <tr>
+          <td><strong>Growth &amp; Moat</strong><br/><span style="font-size:12px; color:var(--text-muted);">Stage 3</span></td>
+          <td>"Process Executor Manager" — scale what was built, optimize unit economics, manage larger team</td>
+          <td>Experienced leader who thrives in structure and scale, analytical, deeply coaching-oriented</td>
+          <td>Builder who hates process; founder-type who resists standardization</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="callout callout-definition">
+    <div class="callout-title">GTM Fit Sales Leader — Specific Requirements</div>
+    <ul class="bullet-list" style="margin-top: 8px;">
+      <li>Must be able to <strong>document the playbook</strong>, not just run it — the deliverable is a written, trainable system</li>
+      <li>Must be able to <strong>recruit and develop reps</strong>, not just close deals personally</li>
+      <li>Must be <strong>data-driven</strong>: manages by LIUE, LIR, pipeline velocity, and quota attainment — not by "feel"</li>
+      <li>Must be willing to <strong>subordinate their own style</strong> to the data-driven playbook — their instincts inform it, but the data governs it</li>
+      <li>Must be a <strong>coach first</strong>: spends 70%+ of time developing reps; 30% on deals</li>
+    </ul>
+  </div>
+
+  <!-- STEP 2: The Scorecard -->
+  <div class="subsection-title" style="margin-top: 36px;">Step 2: The 7-Skill Hiring Scorecard</div>
+  <p style="font-size: 15px; line-height: 1.75; margin-bottom: 16px;">Every interview question, roleplay, and reference check maps back to one of these seven skills. Score each candidate on a 1–10 scale for each skill. Do not rely on overall impression — great sales leaders are often charismatic, and charisma without the skills behind it is expensive.</p>
+
+  <div class="scorecard-table-wrap">
+    <table class="scorecard-table">
+      <thead>
+        <tr>
+          <th>Skill</th>
+          <th class="col-weight">Weight</th>
+          <th class="col-l1">Level 1 (1–3)<br/>Weak</th>
+          <th class="col-l2">Level 2 (4–6)<br/>Developing</th>
+          <th class="col-l3">Level 3 (7–9)<br/>Strong</th>
+          <th class="col-l4">Level 4 (10)<br/>Exceptional</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Hiring</td>
+          <td><span class="weight-badge weight-high">High</span></td>
+          <td>Has hired 1–2 people with no defined process; relies on rolodex</td>
+          <td>Has hired 5–10 reps with inconsistent results; follows a process but can't adapt it</td>
+          <td>Has built a hiring process with consistent track record; proactively sources; sells candidates on the role</td>
+          <td>Built and documented a hiring framework that others use; proven track record of A-players; can describe exactly why each hire succeeded or failed</td>
+        </tr>
+        <tr>
+          <td>Coaching</td>
+          <td><span class="weight-badge weight-high">High</span></td>
+          <td>Sees no value in coaching; joins rep calls to do the rep's job for them; no coaching cadence</td>
+          <td>Gives reactive, qualitative feedback; coaches only underperformers; coaches by telling, not asking</td>
+          <td>Has structured weekly coaching cadence; coaches all reps, not just underperformers; empowers reps to own development</td>
+          <td>Built a formal coaching system with documented methodology; can show before/after data on rep performance; trains other managers on coaching</td>
+        </tr>
+        <tr>
+          <td>Sales Methodology</td>
+          <td><span class="weight-badge weight-high">High</span></td>
+          <td>Quota + pitch deck = methodology; no structured approach; "I just trust my reps to figure it out"</td>
+          <td>Knows one methodology anecdotally; leans on prior employer's playbook; struggles to adapt to new context</td>
+          <td>Implemented a buyer-journey-aligned methodology company-wide; uses buyer actions as stage gates; tracks and optimizes adoption</td>
+          <td>Created or meaningfully adapted a methodology; trains other managers; can describe exactly how each component of the playbook was tested and validated</td>
+        </tr>
+        <tr>
+          <td>Leadership</td>
+          <td><span class="weight-badge weight-high">High</span></td>
+          <td>Low energy; indecisive; self-serving; creates a cut-throat culture</td>
+          <td>Command-and-control; siloed; solves for team rather than company interests</td>
+          <td>Charismatic; builds team culture and vision; gets buy-in; resolves conflict in company's interests</td>
+          <td>Transforms organizations; recognized as an exceptional leader inside and outside the company; others have been recruited specifically to work for them</td>
+        </tr>
+        <tr>
+          <td>Analytical</td>
+          <td><span class="weight-badge weight-med">Medium</span></td>
+          <td>Resistant to data; relies entirely on gut; forecasts &gt;30% off consistently</td>
+          <td>Reviews monthly reports; wants to be data-driven but struggles to interpret; forecasts within 10–30%</td>
+          <td>Proactively builds dashboards; identifies trends; connects metrics to specific process changes; forecasts within 10%</td>
+          <td>Predictive analytical thinking; designs metric architecture from scratch; can describe how each metric connects to a specific intervention</td>
+        </tr>
+        <tr>
+          <td>Teamwork</td>
+          <td><span class="weight-badge weight-med">Medium</span></td>
+          <td>"Sales is the only thing that matters"; dismisses colleagues from other functions</td>
+          <td>Applies a sales-first lens to most decisions; argues with peers rather than collaborating</td>
+          <td>Cross-functional; fair-minded; creates camaraderie across teams; represents sales without being sales-first</td>
+          <td>Builds cross-functional programs that benefit the entire GTM motion; known as an integrator; Marketing, CS, and Product teams actively seek their input</td>
+        </tr>
+        <tr>
+          <td>Culture Fit</td>
+          <td><span class="weight-badge weight-med">Medium</span></td>
+          <td>Focuses on comp, title, and perks in first meeting; can't describe why this company at this stage is compelling</td>
+          <td>Checks the culture boxes but doesn't convey genuine alignment; generic answers about "excited to grow"</td>
+          <td>Asks great questions; references specific things about the company's mission; can describe what they'd do differently if they got the job wrong</td>
+          <td>Built culture around specific values; recognized as a culture carrier; would turn down a higher-comp role at a company whose culture doesn't align</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- STEP 3: Evaluation Process -->
+  <div class="subsection-title" style="margin-top: 36px;">Step 3: The 6-Stage Evaluation Process</div>
+  <p style="font-size: 15px; line-height: 1.75; margin-bottom: 20px;">Each stage has a specific purpose and a specific deliverable. Do not collapse stages — each one surfaces different information that the others can't.</p>
+
+  <div class="eval-steps">
+    <div class="eval-step">
+      <div class="eval-num">1</div>
+      <div class="eval-content">
+        <div class="eval-title">Resume Screen</div>
+        <div class="eval-meta">Time: 30 minutes | Owner: Recruiter</div>
+        <div class="eval-desc">Check for prior experience building (not just scaling) a sales team. Verify quota attainment data — ask for specific numbers, not ranges. Look for evidence of process-building, playbook development, and coaching outcomes — not just personal quota attainment.</div>
+        <div class="eval-flags"><strong>Red flags:</strong> Never managed people; always at large, structured orgs with existing playbooks; vague or unverifiable metrics; no mention of playbook, process, or coaching.</div>
+      </div>
+    </div>
+    <div class="eval-step">
+      <div class="eval-num">2</div>
+      <div class="eval-content">
+        <div class="eval-title">Recruiter / Sourcing Screen</div>
+        <div class="eval-meta">Time: 45 minutes | Owner: Recruiter</div>
+        <div class="eval-desc">MSPOT questions: Mission, Strategy, Product, Operations, Team. Assess communication quality, energy, and alignment with the role stage. Describe the evaluation process in full — explain what the roleplay and case study will involve so candidates can prepare honestly. Surface comp expectations early.</div>
+        <div class="eval-flags"><strong>Red flags:</strong> First questions are about comp, title, and reporting structure before asking about the team or mission; generic answers that could apply to any company; inability to articulate what about this stage is exciting vs. a more mature org.</div>
+      </div>
+    </div>
+    <div class="eval-step">
+      <div class="eval-num">3</div>
+      <div class="eval-content">
+        <div class="eval-title">Hiring Manager Interview</div>
+        <div class="eval-meta">Time: 90 minutes | Owner: Hiring Manager</div>
+        <div class="eval-desc">Deep-dive on 3–4 scorecard competencies with the most uncertainty. Use the STAR framework (Situation, Task, Action, Result) for every behavioral question. Provide specific, realistic scenarios from your company's current GTM situation and ask for real-time coaching and analytical thinking responses.</div>
+        <div class="eval-flags"><strong>Red flags:</strong> All answers reference prior company's playbook with no ability to adapt to your context; coaching examples are anecdotal ("I just knew they needed to work on discovery"); analytical questions get vague deflection ("I'd look at all the numbers").</div>
+      </div>
+    </div>
+    <div class="eval-step">
+      <div class="eval-num">4</div>
+      <div class="eval-content">
+        <div class="eval-title">Roleplay: Coaching Scenario</div>
+        <div class="eval-meta">Time: 60 minutes | Owner: Hiring Manager + 1 observer</div>
+        <div class="eval-desc">Provide this scenario: "Your top rep is underperforming. Their pipeline is full, but their close rate has dropped 30% over the last 90 days. Walk me through how you'd diagnose and coach them." Evaluate: Does the candidate ask diagnostic questions before prescribing a solution? Do they use data to identify the specific stage where deals are falling apart? Do they coach by asking or by telling?</div>
+        <div class="eval-flags"><strong>Red flags:</strong> Jumps immediately to solution before gathering data; prescribes a single coaching action without diagnosing which stage is breaking down; describes joining the rep's calls to "show them how it's done" rather than developing the rep's own capabilities.</div>
+      </div>
+    </div>
+    <div class="eval-step">
+      <div class="eval-num">5</div>
+      <div class="eval-content">
+        <div class="eval-title">Case Study / Presentation</div>
+        <div class="eval-meta">Time: 90 minutes | Owner: Hiring Manager + CEO/CRO</div>
+        <div class="eval-desc">Provide anonymized company GTM data including LIR achievement rates by cohort, LIUE components by segment, and current rep productivity metrics. Ask the candidate to: (a) diagnose where the GTM motion sits in the Science of Scaling framework, (b) build a 6-month hiring plan using the LIUE data to determine the appropriate pace, (c) describe how they would approach building or refining the GTM playbook. Evaluate analytical rigor, stage-appropriateness of recommendations, and clarity of prioritization.</div>
+        <div class="eval-flags"><strong>Red flags:</strong> Immediately recommends hiring more reps without examining LIUE; diagnoses the company in the wrong stage; uses generic frameworks that don't engage with the specific data provided; recommends processes appropriate for a 100-rep org, not a 5-rep org.</div>
+      </div>
+    </div>
+    <div class="eval-step">
+      <div class="eval-num">6</div>
+      <div class="eval-content">
+        <div class="eval-title">Reference Checks</div>
+        <div class="eval-meta">Time: 2 hours | Owner: Hiring Manager</div>
+        <div class="eval-desc">Speak to 2 direct reports and 1 peer — not the references the candidate provided (those are polished). Ask for backdoor references from people who worked alongside them but weren't on their reference list. Key questions: "How did they handle a rep who was consistently underperforming but not clearly terminable?" "How did they build team culture — what specifically did they do, not just what they said?" "What is their biggest weakness, and what evidence have you seen of them working on it?"</div>
+        <div class="eval-flags"><strong>Red flags:</strong> References describe the candidate primarily as a "great closer" rather than as a developer of people; references are all from the same 3-year period at one company; "backdoor" references paint a materially different picture from listed references.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SECTION 3: First GTM Hire Alternative -->
+  <div class="section-title">The First GTM Hire Alternative</div>
+  <div class="section-intro">For companies still in the PMF stage who need to transition to GTM Fit, the right hire is often not a Sales Leader at all — it's a "First GTM Hire." A single individual who operates as both a founding AE and a playbook builder simultaneously.</div>
+
+  <p style="font-size: 15px; line-height: 1.75; margin-bottom: 16px;">The First GTM Hire is a rare profile: someone who can both close deals at the ICP level AND document what's working into a repeatable system. They are simultaneously operator and analyst — not as skilled a closer as a top AE, and not as skilled a systems-builder as a Sales Leader, but functional enough at both to serve as a bridge during PMF to GTM Fit transition.</p>
+
+  <div class="callout callout-definition">
+    <div class="callout-title">When to Hire a First GTM Hire vs. First Sales Leader</div>
+    <p>Hire a <strong>First GTM Hire</strong> if: you haven't achieved GTM Fit yet, the founder is still deeply involved in every deal, and you need someone to run deals alongside the founder while building playbook documentation in parallel. Hire a <strong>First Sales Leader</strong> if: GTM Fit has been achieved (LIUE &gt; 3 for 2 consecutive quarters), at least 3 reps are successfully executing the playbook, and you need to scale the system rather than discover it.</p>
+  </div>
+
+  <div class="subsection-title">5 Criteria for the First GTM Hire</div>
+  <ul class="gtm-criteria-list">
+    <li class="gtm-criteria-item">
+      <div class="criteria-num">1</div>
+      <div>
+        <div class="criteria-title">Technical Competency</div>
+        <div class="criteria-desc">Can they understand and credibly articulate the product? Not as an engineer — as someone who can translate product capability into buyer language during a live discovery or presentation. Test this with a product demo roleplay.</div>
+      </div>
+    </li>
+    <li class="gtm-criteria-item">
+      <div class="criteria-num">2</div>
+      <div>
+        <div class="criteria-title">Communication Competency</div>
+        <div class="criteria-desc">Can they write and speak persuasively? Both channels matter — written for email sequences and playbook documentation; spoken for discovery and presentation. Evaluate both explicitly. Ask for a writing sample (a prospecting email to a target persona) and conduct a live verbal roleplay.</div>
+      </div>
+    </li>
+    <li class="gtm-criteria-item">
+      <div class="criteria-num">3</div>
+      <div>
+        <div class="criteria-title">Consultative Selling Orientation</div>
+        <div class="criteria-desc">Do they ask questions before pitching? In the interview itself, observe: are they asking about your buyers, your ICP, your current playbook challenges before describing their experience? A consultative orientation in the interview is the best predictor of consultative orientation with buyers.</div>
+      </div>
+    </li>
+    <li class="gtm-criteria-item">
+      <div class="criteria-num">4</div>
+      <div>
+        <div class="criteria-title">Objection Handling</div>
+        <div class="criteria-desc">How do they respond to pushback? In a roleplay, give them a hard objection: "We already have a solution in this space" or "Your price is twice what we expected." Evaluate: do they validate and explore the objection, or do they immediately defend? Validation-first is the correct outside-in response.</div>
+      </div>
+    </li>
+    <li class="gtm-criteria-item">
+      <div class="criteria-num">5</div>
+      <div>
+        <div class="criteria-title">Cross-Functional Collaboration</div>
+        <div class="criteria-desc">Do they work well across CS, Product, and Marketing? The First GTM Hire will be a flywheel connector — surfacing buyer feedback to Product, working with CS on onboarding playbooks, collaborating with Marketing on content and messaging. Ask specifically about prior cross-functional projects and how they navigated disagreements with non-sales colleagues.</div>
+      </div>
+    </li>
+  </ul>
+
+  <p style="font-size: 14px; color: var(--text-muted); margin-top: 8px;">For the full First GTM Hire interview scorecard, see <a href="template-scorecard-gtm.html">template-scorecard-gtm.html</a>.</p>
+
+  <!-- SECTION 4: Compensation -->
+  <div class="section-title">Compensation for the First Sales Leader</div>
+  <div class="section-intro">Compensation should reflect the work required at the current stage — not the aspirational title. Overpaying for a title before the deliverables are proven is one of the most common early-stage talent mistakes.</div>
+
+  <div class="comp-table-wrap">
+    <table class="data-table">
+      <thead>
+        <tr><th>Component</th><th>Guidance</th><th>Rationale</th></tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>Base Salary</strong></td>
+          <td>50th–75th percentile of market for the role at this stage (not the title)</td>
+          <td>Don't overpay for the VP title if the work is a Process Builder in a 5-rep team. Paying above 75th percentile before value is demonstrated creates a retention problem when the comp doesn't match results.</td>
+        </tr>
+        <tr>
+          <td><strong>Variable Comp</strong></td>
+          <td>30–50% of OTE tied to team quota attainment (not personal quota)</td>
+          <td>Variable tied to team performance aligns the sales leader's incentive with developing others — not closing deals personally. Personal quota variable is the fastest way to create a player-coach who doesn't coach.</td>
+        </tr>
+        <tr>
+          <td><strong>Equity</strong></td>
+          <td>0.5–2.0% depending on stage and company valuation</td>
+          <td>Meaningful equity is required to attract a genuine operator who has other options. Below 0.5% signals low conviction from the company; above 2.0% at most stages is excessively dilutive relative to role scope.</td>
+        </tr>
+        <tr>
+          <td><strong>Vesting</strong></td>
+          <td>4-year vesting with 1-year cliff</td>
+          <td>Standard. No modifications — the 1-year cliff protects the company from a mismatch hire walking away with equity before value has been demonstrated.</td>
+        </tr>
+        <tr>
+          <td><strong>LIR Achievement Component</strong></td>
+          <td>10% of variable comp tied to the team's customer LIR achievement rate</td>
+          <td>This is the differentiating design element. It aligns the sales leader's incentive with long-term retention, not just bookings. A leader who sells to wrong-fit customers to hit quota will be penalized when those customers don't achieve LIR.</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- SECTION 5: Stage Fit -->
+  <div class="section-title">How This Hire Fits the Science of Scaling Framework</div>
+  <div class="section-intro">The right hire depends entirely on which stage you are in. Each stage has a fundamentally different definition of "first sales leader success" — and a profile that works in one stage will actively hurt you in another.</div>
+
+  <div class="stage-grid">
+    <div class="stage-card">
+      <div class="stage-name">Stage 1</div>
+      <div class="stage-title">Product-Market Fit</div>
+      <div class="stage-desc">Do not hire a sales leader yet. Founders sell directly to learn the buyer deeply enough to build a repeatable process. Any sales leader hired before PMF will either not have enough to do, or will fill the vacuum by installing a playbook from their prior company.</div>
+    </div>
+    <div class="stage-card active">
+      <div class="stage-name">Stage 2 — Hire Now</div>
+      <div class="stage-title">GTM Fit (This Page)</div>
+      <div class="stage-desc">The first Sales Leader is hired when GTM Fit is achieved. They are the "Process Builder" — someone who takes what the founders learned through Stage 1 sales and converts it into a codified, trainable, scalable GTM system. This is the most important hire in the company's scaling history.</div>
+    </div>
+    <div class="stage-card">
+      <div class="stage-name">Stage 3</div>
+      <div class="stage-title">Growth &amp; Moat</div>
+      <div class="stage-desc">The first sales leader becomes the architect of scale — hiring pipeline, coaching machine, and management layer for a rapidly growing team. Some first sales leaders grow into Stage 3; others are complemented or replaced with a different profile. Plan for this transition explicitly.</div>
+    </div>
+  </div>
+
+  <!-- SECTION 6: Red Flags -->
+  <div class="section-title">Red Flags in the Interview Process</div>
+  <div class="section-intro">These failure modes are observable during the evaluation process. Each one has a specific behavioral signal. They are not disqualifiers by themselves — but each warrants a deep probing follow-up, and more than two red flags in the same candidate is a signal to move on.</div>
+
+  <div class="redflag-grid">
+    <div class="redflag-card">
+      <div class="redflag-name">Failure Mode 1: The Playbook Importer</div>
+      <div class="redflag-desc">Talks entirely about what they did at their last company. No curiosity about this company's buyers, customers, or current GTM challenges. Every answer is "at Company X, we did it this way."</div>
+      <div class="redflag-signal">Watch for: <span>Inability to describe how they'd adapt their approach if this ICP is different from their prior company</span></div>
+    </div>
+    <div class="redflag-card">
+      <div class="redflag-name">Failure Mode 2: The Closer-Hero</div>
+      <div class="redflag-desc">Entire track record is personal quota attainment. No evidence of developing others, building process, or coaching a team to quota. Describes success in terms of "I closed" rather than "my team closed."</div>
+      <div class="redflag-signal">Watch for: <span>Can't name a rep they developed who went on to outperform expectations independently</span></div>
+    </div>
+    <div class="redflag-card">
+      <div class="redflag-name">Failure Mode 3: The VC Whisperer</div>
+      <div class="redflag-desc">Spends more time asking about board relationships, reporting structure, and investor visibility than about the team they'd be managing or the customers they'd be serving. Manages up as the primary strategy.</div>
+      <div class="redflag-signal">Watch for: <span>In a 90-minute interview, asks zero substantive questions about the current rep team's performance or playbook</span></div>
+    </div>
+    <div class="redflag-card">
+      <div class="redflag-name">Failure Mode 4: The Headcount Maximizer</div>
+      <div class="redflag-desc">First question (or first recommendation in the case study) is "how many reps can I hire?" before understanding LIUE, the current playbook quality, or the demand gen situation. Sees headcount as the lever, not as the output of proven unit economics.</div>
+      <div class="redflag-signal">Watch for: <span>In the case study, recommends a hiring plan that doesn't reference LIUE thresholds as the trigger for acceleration</span></div>
+    </div>
+  </div>
+
+  <div class="callout callout-best-practice">
+    <div class="callout-title">The Process Builder, Not the Process Executor</div>
+    <p>The most important distinction in this hire: you are not looking for someone to execute a playbook that already exists. There is no fully formed playbook yet — that's the job. You need someone who has <em>built one before</em>: who can take your founders' hard-won buyer insights, organize them into a prospecting → discovery → presentation → close → onboarding framework, and make it trainable by any new hire. This is a rare and specific skill. It is genuinely not common in people who have only ever joined large, established sales organizations where the playbook was handed to them on day one.</p>
+  </div>
+
+  <div class="related-section">
+    <div class="related-title">Related Pages</div>
+    <div class="related-links">
+      <a href="sos-checklist.html" class="related-link">GTM Scaling Checklist</a>
+      <a href="sos-gtm-fit.html" class="related-link">Stage 2: GTM Fit</a>
+      <a href="sos-gtm-playbook.html" class="related-link">GTM Playbook Framework</a>
+      <a href="template-scorecard-sales-leader.html" class="related-link">Sales Leader Scorecard Template</a>
+      <a href="template-scorecard-sales.html" class="related-link">Sales Rep Scorecard Template</a>
+      <a href="template-scorecard-gtm.html" class="related-link">First GTM Hire Scorecard</a>
+      <a href="hiring-formula.html" class="related-link">Hiring Formula</a>
+      <a href="../pages/science-of-scaling.html" class="related-link">← Science of Scaling</a>
+      <a href="../index.html" class="related-link">← Home</a>
+    </div>
+  </div>
+</div>
+
+<script data-pplx-inline-edit>
+(function () {
+  if (window === window.top) return;
+
+  const allowedParentOrigins = ["https://www.perplexity.ai","https://perplexity.ai","https://testing.perplexity.ai","https://staging.perplexity.ai","https://*.preview.i.perplexity.ai","http://localhost:3000","http://127.0.0.1:3000","http://localhost:5173","http://127.0.0.1:5173"];
+  const MAX_FONT_BYTES = 500 * 1024;
+  const MAX_TOTAL_FONT_BYTES = 2 * 1024 * 1024;
+  let scrollForwarding = false;
+  let scrollRaf = 0;
+  let trustedTopOrigin = null;
+
+  // Allow entries like "https://*.preview.i.perplexity.ai" — the wildcard
+  // matches a single DNS label (no dots), so "https://*.foo" cannot stretch
+  // across multiple labels.
+  function matchesAllowedOrigin(origin) {
+    if (!origin) return false;
+    for (const entry of allowedParentOrigins) {
+      if (!entry.includes("*")) {
+        if (entry === origin) return true;
+        continue;
+      }
+      const pattern = new RegExp(
+        "^" +
+          entry.replace(/[.+?^${}()|[\]\\]/g, "\\$&").replace(/\*/g, "[^.]+") +
+          "$",
+      );
+      if (pattern.test(origin)) return true;
+    }
+    return false;
+  }
+
+  // Trust decision: when the sender is same-origin-visible (event.origin is a
+  // real origin like https://www.perplexity.ai) we trust event.origin directly.
+  // When event.origin is "null" (opaque broker srcdoc), we fall back to the
+  // broker's stamped `parentOrigin` to identify the top window. The fallback
+  // is claim-only — we rely on the browser's native `targetOrigin` enforcement
+  // on the response path (see postToTrustedTop) to ensure replies can't be
+  // delivered to anyone but the actual top window of that claimed origin.
+  function getTrustedParentOrigin(event) {
+    const forwardedParentOrigin =
+      typeof event.data.parentOrigin === "string" ? event.data.parentOrigin : null;
+    const parentOrigin = event.origin === "null" ? forwardedParentOrigin : event.origin;
+    return matchesAllowedOrigin(parentOrigin) ? parentOrigin : null;
+  }
+
+  // All responses go to window.top with targetOrigin = the allowlisted origin.
+  // An attacker that iframes us inside their own null-origin broker can claim
+  // any parentOrigin they like, but the browser will drop the reply whenever
+  // the real top's origin doesn't match — so the screenshot never leaves.
+  function postToTrustedTop(message) {
+    if (!trustedTopOrigin) return;
+    try {
+      window.top.postMessage(message, trustedTopOrigin);
+    } catch (_error) {}
+  }
+
+  function inlineAll(original, clone) {
+    if (original.nodeType !== 1 || clone.nodeType !== 1) return;
+
+    try {
+      const computedStyle = getComputedStyle(original);
+      // cssText on a computed style is the serialized declaration in modern
+      // Chromium/Safari — a single read beats enumerating ~400 longhand
+      // properties. Firefox returns "" here, so we fall back on empty.
+      const serialized = computedStyle.cssText;
+      if (serialized) {
+        clone.style.cssText = serialized;
+      } else {
+        const parts = new Array(computedStyle.length);
+        for (let index = 0; index < computedStyle.length; index += 1) {
+          const property = computedStyle[index];
+          parts[index] = `${property}:${computedStyle.getPropertyValue(property)};`;
+        }
+        clone.style.cssText = parts.join("");
+      }
+    } catch (_error) {}
+
+    const originalChildren = original.children;
+    const clonedChildren = clone.children;
+    for (
+      let index = 0;
+      index < originalChildren.length && index < clonedChildren.length;
+      index += 1
+    ) {
+      inlineAll(originalChildren[index], clonedChildren[index]);
+    }
+  }
+
+  function extractFontUrl(srcValue) {
+    const matches = [
+      ...srcValue.matchAll(
+        /url\(["']?([^"')]+)["']?\)(?:\s*format\(["']?([^"')]+)["']?\))?/gi,
+      ),
+    ];
+    if (matches.length === 0) return null;
+    const woff2 = matches.find((m) => m[2] && m[2].toLowerCase().includes("woff2"));
+    if (woff2) return woff2[1];
+    const woff = matches.find((m) => m[2] && m[2].toLowerCase().includes("woff"));
+    if (woff) return woff[1];
+    return matches[0][1];
+  }
+
+  // Cache resolved font URL -> data URI across captures. Fonts on a page
+  // essentially never change, and a batch run emits multiple captures back to
+  // back — without this we'd refetch + re-base64 every time.
+  const fontDataUriCache = new Map();
+  const SRC_DECLARATION_RE = /src\s*:\s*[^;}]+/i;
+
+  async function fetchAsDataUri(url) {
+    if (fontDataUriCache.has(url)) return fontDataUriCache.get(url);
+    let dataUri = null;
+    try {
+      const response = await fetch(url, { mode: "cors", credentials: "omit" });
+      if (response.ok) {
+        const blob = await response.blob();
+        if (blob.size <= MAX_FONT_BYTES) {
+          dataUri = await new Promise((resolve) => {
+            const reader = new FileReader();
+            reader.onloadend = () =>
+              resolve(typeof reader.result === "string" ? reader.result : null);
+            reader.onerror = () => resolve(null);
+            reader.readAsDataURL(blob);
+          });
+        }
+      }
+    } catch (_error) {
+      dataUri = null;
+    }
+    fontDataUriCache.set(url, dataUri);
+    return dataUri;
+  }
+
+  function collectFontFaceRuleTexts() {
+    const rules = [];
+    for (const sheet of document.styleSheets) {
+      let cssRules;
+      try {
+        cssRules = sheet.cssRules;
+      } catch (_error) {
+        continue;
+      }
+      if (!cssRules) continue;
+      for (const rule of cssRules) {
+        const cssText = rule.cssText || "";
+        if (cssText.startsWith("@font-face")) rules.push(cssText);
+      }
+    }
+    return rules;
+  }
+
+  async function buildInlinedFontCss() {
+    const ruleTexts = collectFontFaceRuleTexts();
+    if (ruleTexts.length === 0) return null;
+
+    const resolved = ruleTexts.map((cssText) => {
+      if (!SRC_DECLARATION_RE.test(cssText)) return null;
+      const srcMatch = cssText.match(/src\s*:\s*([^;}]+)[;}]/i);
+      if (!srcMatch) return null;
+      const url = extractFontUrl(srcMatch[1]);
+      if (!url) return null;
+      try {
+        return { cssText, url: new URL(url, document.baseURI).href };
+      } catch (_error) {
+        return null;
+      }
+    });
+
+    const dataUris = await Promise.all(
+      resolved.map((entry) => (entry ? fetchAsDataUri(entry.url) : Promise.resolve(null))),
+    );
+
+    const inlined = [];
+    let totalBytes = 0;
+    for (let index = 0; index < resolved.length; index += 1) {
+      const entry = resolved[index];
+      const dataUri = dataUris[index];
+      if (!entry || !dataUri) continue;
+      const approxBytes = dataUri.length * 0.75;
+      if (totalBytes + approxBytes > MAX_TOTAL_FONT_BYTES) break;
+      totalBytes += approxBytes;
+      inlined.push(entry.cssText.replace(SRC_DECLARATION_RE, `src: url("${dataUri}")`));
+    }
+    return inlined.length > 0 ? inlined.join("\n") : null;
+  }
+
+  function stripExternal(clone) {
+    const images = clone.querySelectorAll("img");
+    for (let index = 0; index < images.length; index += 1) {
+      const src = images[index].getAttribute("src");
+      if (src && !src.startsWith("data:")) images[index].removeAttribute("src");
+    }
+
+    const elements = clone.querySelectorAll("*");
+    for (let index = 0; index < elements.length; index += 1) {
+      const style = elements[index].style.cssText;
+      if (style && style.includes("url(")) {
+        elements[index].style.cssText = style.replace(
+          /url\(["']?(?!data:)[^)"']*["']?\)/gi,
+          "none",
+        );
+      }
+    }
+  }
+
+  function emitScroll() {
+    scrollRaf = 0;
+    if (!scrollForwarding) return;
+    postToTrustedTop({
+      type: "INLINE_EDIT_SCROLL",
+      scrollX: window.scrollX,
+      scrollY: window.scrollY,
+    });
+  }
+
+  window.addEventListener(
+    "scroll",
+    function () {
+      if (!scrollForwarding || scrollRaf) return;
+      scrollRaf = requestAnimationFrame(emitScroll);
+    },
+    { passive: true, capture: true },
+  );
+
+  async function handleCaptureRequest(event) {
+    const requestId = event.data.requestId;
+    const scrollX = window.scrollX;
+    const scrollY = window.scrollY;
+    const width = window.innerWidth;
+    const height = window.innerHeight;
+
+    function postResult(dataUrl) {
+      postToTrustedTop({
+        type: "INLINE_EDIT_SCREENSHOT_RESULT",
+        requestId,
+        dataUrl,
+        scrollX,
+        scrollY,
+      });
+    }
+
+    try {
+      // Wait for any pending web fonts to resolve so both inline metrics and
+      // the @font-face inlining below see the same loaded faces.
+      if (document.fonts && document.fonts.ready) {
+        try {
+          await document.fonts.ready;
+        } catch (_error) {}
+      }
+
+      const clone = document.documentElement.cloneNode(true);
+      inlineAll(document.documentElement, clone);
+
+      const removedNodes = clone.querySelectorAll("script,link[rel=\"stylesheet\"],style");
+      for (let index = 0; index < removedNodes.length; index += 1) {
+        removedNodes[index].remove();
+      }
+
+      stripExternal(clone);
+
+      // Re-embed web fonts as data-URI @font-face rules so the SVG rasterizer
+      // can resolve them — external font URLs aren't fetched during
+      // foreignObject rendering, which would otherwise force a fallback face
+      // and change text metrics.
+      const inlinedFontCss = await buildInlinedFontCss();
+      if (inlinedFontCss) {
+        const styleEl = document.createElement("style");
+        styleEl.textContent = inlinedFontCss;
+        const head = clone.querySelector("head");
+        if (head) head.appendChild(styleEl);
+        else clone.insertBefore(styleEl, clone.firstChild);
+      }
+
+      const html = new XMLSerializer().serializeToString(clone);
+      const svg =
+        `<svg xmlns="http://www.w3.org/2000/svg" width="${width}" height="${height}">` +
+        '<foreignObject width="100%" height="100%">' +
+        `<div xmlns="http://www.w3.org/1999/xhtml" style="width:${width}px;height:${height}px;overflow:hidden">` +
+        `<div style="transform:translate(-${scrollX}px,-${scrollY}px);transform-origin:top left">` +
+        html +
+        "</div></div></foreignObject></svg>";
+      const svgUrl = `data:image/svg+xml;charset=utf-8,${encodeURIComponent(svg)}`;
+      const image = new Image();
+      image.onload = function () {
+        const canvas = document.createElement("canvas");
+        canvas.width = width;
+        canvas.height = height;
+        canvas.getContext("2d").drawImage(image, 0, 0);
+        postResult(canvas.toDataURL("image/png"));
+      };
+      image.onerror = function () {
+        postResult(null);
+      };
+      image.src = svgUrl;
+    } catch (_error) {
+      postResult(null);
+    }
+  }
+
+  window.addEventListener("message", function (event) {
+    if (!event.data) return;
+    // Only accept messages from the direct parent frame. Blocks sibling /
+    // unrelated-window postMessage senders that could otherwise reach us.
+    if (event.source !== window.parent) return;
+
+    const trustedParentOrigin = getTrustedParentOrigin(event);
+    if (!trustedParentOrigin) return;
+    trustedTopOrigin = trustedParentOrigin;
+
+    if (event.data.type === "INLINE_EDIT_SCROLL_START") {
+      scrollForwarding = true;
+      emitScroll();
+      return;
+    }
+
+    if (event.data.type === "INLINE_EDIT_SCROLL_STOP") {
+      scrollForwarding = false;
+      if (scrollRaf) cancelAnimationFrame(scrollRaf);
+      scrollRaf = 0;
+      return;
+    }
+
+    if (event.data.type !== "INLINE_EDIT_CAPTURE_REQUEST") return;
+
+    handleCaptureRequest(event);
+  });
+})();
+
+
+</script></body>
+</html>

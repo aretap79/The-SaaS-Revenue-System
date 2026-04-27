@@ -1,0 +1,1355 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Stage 1: Product-Market Fit — Science of Scaling</title>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="../assets/shared.css"/>
+  <style>
+    :root { --sos: #0D5C63; --sos-light: #e6f2f3; --sos-mid: #c2dde0; }
+    .page-hero { background: var(--sos); }
+
+    /* Override step/bullet list colors for SoS */
+    .step-list li::before { background: var(--sos); }
+    .bullet-list li::before { color: var(--sos); }
+
+    /* PMF Formula box */
+    .pmf-formula {
+      background: #0a3d42;
+      color: #CDCCCA;
+      border-radius: 10px;
+      padding: 24px 28px;
+      margin: 20px 0;
+      font-family: 'Courier New', monospace;
+      font-size: 14px;
+      line-height: 1.9;
+      overflow-x: auto;
+    }
+    .pmf-formula .fl {
+      font-family: 'DM Sans', sans-serif;
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 1.2px;
+      text-transform: uppercase;
+      color: #4FC3CE;
+      margin-bottom: 10px;
+    }
+    .pmf-formula .fm { color: #fff; font-weight: 600; font-size: 15px; }
+    .pmf-formula .fi { color: #8ec8cd; padding-left: 24px; display: block; }
+    .pmf-formula .and-op { color: #4FC3CE; padding-left: 24px; font-weight: 700; display: block; }
+    .pmf-formula .fn {
+      font-family: 'DM Sans', sans-serif;
+      font-size: 12px;
+      color: #5d9aa0;
+      margin-top: 10px;
+    }
+
+    /* LIR formula highlight box */
+    .lir-formula-box {
+      background: var(--sos-light);
+      border: 2px solid var(--sos);
+      border-radius: 10px;
+      padding: 22px 26px;
+      margin: 20px 0;
+    }
+    .lir-formula-box .lfb-label {
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      color: var(--sos);
+      margin-bottom: 10px;
+    }
+    .lir-formula-box .lfb-formula {
+      font-family: 'Courier New', monospace;
+      font-size: 16px;
+      font-weight: 600;
+      color: var(--sos);
+      margin-bottom: 12px;
+      line-height: 1.6;
+    }
+    .lir-formula-box .lfb-pills {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      margin-top: 14px;
+    }
+    .lir-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 6px 14px;
+      border-radius: 20px;
+      font-size: 13px;
+      font-weight: 700;
+    }
+    .lir-pill.pill-p { background: #0a3d42; color: #4FC3CE; }
+    .lir-pill.pill-e { background: #1B6B72; color: #fff; }
+    .lir-pill.pill-t { background: var(--sos); color: #fff; }
+    .lir-pill .pill-letter { font-size: 16px; font-weight: 700; }
+
+    /* P/E/T parameter cards */
+    .param-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 14px;
+      margin: 20px 0;
+    }
+    .param-card {
+      background: var(--surface);
+      border: 2px solid var(--border);
+      border-radius: 8px;
+      padding: 18px 18px;
+    }
+    .param-letter {
+      font-size: 32px;
+      font-weight: 700;
+      color: var(--sos);
+      margin-bottom: 4px;
+      line-height: 1;
+    }
+    .param-name {
+      font-size: 12px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      color: var(--text-muted);
+      margin-bottom: 10px;
+    }
+    .param-body {
+      font-size: 13px;
+      line-height: 1.65;
+      color: var(--text);
+    }
+
+    /* LIR examples in section 2 */
+    .lir-example-list {
+      list-style: none;
+      margin: 16px 0;
+    }
+    .lir-example-list li {
+      display: flex;
+      gap: 12px;
+      align-items: flex-start;
+      padding: 10px 0;
+      border-bottom: 1px solid var(--border);
+      font-size: 14px;
+      line-height: 1.6;
+    }
+    .lir-example-list li:last-child { border-bottom: none; }
+    .lir-ex-icon {
+      min-width: 22px;
+      height: 22px;
+      border-radius: 50%;
+      background: var(--sos-light);
+      color: var(--sos);
+      font-size: 11px;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      margin-top: 2px;
+    }
+
+    /* Early Adopter vs Early Majority comparison table */
+    .icp-compare-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 14px;
+      margin: 20px 0;
+    }
+    .icp-compare-table th {
+      padding: 10px 14px;
+      text-align: left;
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.5px;
+      text-transform: uppercase;
+    }
+    .icp-compare-table th:first-child { background: #1a1a18; color: rgba(255,255,255,0.7); }
+    .icp-compare-table th.col-early { background: #0D5C63; color: #fff; }
+    .icp-compare-table th.col-majority { background: #964219; color: #fff; }
+    .icp-compare-table td {
+      padding: 10px 14px;
+      border-bottom: 1px solid var(--border);
+      vertical-align: top;
+      line-height: 1.5;
+    }
+    .icp-compare-table tr:last-child td { border-bottom: none; }
+    .icp-compare-table tr:nth-child(even) td { background: #fafaf8; }
+    .icp-compare-table td:first-child { font-weight: 700; color: var(--text-muted); font-size: 13px; }
+    .val-early { color: #0D5C63; font-weight: 600; }
+    .val-maj { color: #964219; font-weight: 600; }
+
+    /* GTM Strategy summary grid */
+    .gtm-summary-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 10px;
+      margin: 20px 0;
+    }
+    .gtm-box {
+      background: var(--surface);
+      border: 1.5px solid var(--border);
+      border-radius: 8px;
+      padding: 14px 16px;
+    }
+    .gtm-dim {
+      font-size: 11px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.8px;
+      color: var(--sos);
+      margin-bottom: 4px;
+    }
+    .gtm-val {
+      font-size: 14px;
+      font-weight: 600;
+      color: var(--text);
+    }
+
+    /* Mistake list — numbered red circles */
+    .mistake-list {
+      list-style: none;
+      margin: 16px 0;
+      counter-reset: mistakes;
+    }
+    .mistake-list li {
+      counter-increment: mistakes;
+      display: flex;
+      gap: 14px;
+      align-items: flex-start;
+      padding: 14px 0;
+      border-bottom: 1px solid var(--border);
+    }
+    .mistake-list li:last-child { border-bottom: none; }
+    .mistake-list li::before {
+      content: counter(mistakes);
+      min-width: 28px;
+      height: 28px;
+      border-radius: 50%;
+      background: #fce8e6;
+      color: #A13544;
+      font-size: 13px;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      margin-top: 2px;
+    }
+    .mistake-list li .mc { font-size: 15px; line-height: 1.65; }
+    .mistake-list li .mc strong { color: #A13544; }
+
+    /* Cohort table */
+    .cohort-wrap { overflow-x: auto; margin: 20px 0; }
+    .cohort-table {
+      border-collapse: collapse;
+      font-size: 13px;
+      min-width: 600px;
+      width: 100%;
+    }
+    .cohort-table th {
+      background: #1a1a18;
+      color: rgba(255,255,255,0.7);
+      padding: 8px 12px;
+      text-align: center;
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.5px;
+      white-space: nowrap;
+    }
+    .cohort-table th:first-child { text-align: left; }
+    .cohort-table td {
+      padding: 8px 12px;
+      border: 1px solid var(--border);
+      text-align: center;
+      font-size: 12px;
+      font-weight: 600;
+      white-space: nowrap;
+    }
+    .cohort-table td:first-child { text-align: left; font-weight: 700; }
+    .cell-green { background: #e6f4ea; color: #437A22; }
+    .cell-yellow { background: #fff8e1; color: #7a6000; }
+    .cell-red { background: #fce8e6; color: #A13544; }
+    .cell-gray { background: #f5f5f3; color: var(--text-muted); }
+
+    /* Metrics table */
+    .metrics-table-wrap { overflow-x: auto; margin: 20px 0; }
+
+    /* Compensation box */
+    .comp-split {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 14px;
+      margin: 20px 0;
+    }
+    .comp-half {
+      border-radius: 10px;
+      padding: 20px;
+      text-align: center;
+    }
+    .comp-half.at-signing { background: #f3f8f8; border: 2px solid var(--sos); }
+    .comp-half.at-lir { background: #0D5C63; color: #fff; }
+    .comp-half .ch-pct {
+      font-size: 36px;
+      font-weight: 700;
+      line-height: 1;
+      margin-bottom: 8px;
+    }
+    .comp-half.at-signing .ch-pct { color: var(--sos); }
+    .comp-half.at-lir .ch-pct { color: #7ecdd2; }
+    .comp-half .ch-label { font-size: 14px; font-weight: 600; }
+    .comp-half.at-signing .ch-label { color: var(--text); }
+    .comp-half.at-lir .ch-label { color: rgba(255,255,255,0.85); }
+    .comp-half .ch-note { font-size: 12px; margin-top: 6px; }
+    .comp-half.at-signing .ch-note { color: var(--text-muted); }
+    .comp-half.at-lir .ch-note { color: rgba(255,255,255,0.6); }
+
+    /* Green callout override */
+    .callout-green {
+      background: #e8f5e9;
+      border-color: #a5d6a7;
+    }
+    .callout-green .callout-title { color: #437a22; }
+
+    /* Checklist for GTM Fit declaration */
+    .pmf-checklist {
+      list-style: none;
+      margin: 16px 0;
+    }
+    .pmf-checklist li {
+      display: flex;
+      gap: 12px;
+      align-items: flex-start;
+      padding: 10px 0;
+      border-bottom: 1px solid var(--border);
+      font-size: 15px;
+      line-height: 1.65;
+    }
+    .pmf-checklist li:last-child { border-bottom: none; }
+    .check-icon {
+      min-width: 22px;
+      height: 22px;
+      border-radius: 50%;
+      background: #e6f4ea;
+      color: #437A22;
+      font-size: 12px;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      margin-top: 2px;
+    }
+
+    @media (max-width: 768px) {
+      .param-grid { grid-template-columns: 1fr; }
+      .gtm-summary-grid { grid-template-columns: 1fr 1fr; }
+      .comp-split { grid-template-columns: 1fr; }
+      .icp-compare-table { font-size: 12px; }
+    }
+
+    .phase-map-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+      gap: 12px;
+      margin: 16px 0 32px;
+    }
+    .phase-map-card {
+      background: var(--surface);
+      border: 1.5px solid var(--border);
+      border-radius: 8px;
+      padding: 14px 16px;
+      text-decoration: none;
+      display: block;
+      transition: all 0.15s;
+    }
+    .phase-map-card:hover { text-decoration: none; transform: translateY(-1px); box-shadow: 0 3px 10px rgba(0,0,0,0.08); border-color: var(--sos); }
+    .pm-phase-label { font-size: 10px; font-weight: 700; letter-spacing: 0.8px; text-transform: uppercase; color: var(--sos); margin-bottom: 4px; }
+    .pm-title { font-size: 13px; font-weight: 700; color: var(--text); margin-bottom: 4px; line-height: 1.3; }
+    .pm-desc { font-size: 11px; color: var(--text-muted); line-height: 1.5; }
+
+    .tools-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 12px; margin: 16px 0 32px; }
+    .tool-card { background: var(--surface); border: 1.5px solid var(--border); border-radius: 8px; padding: 14px 16px; text-decoration: none; display: block; transition: all 0.15s; }
+    .tool-card:hover { text-decoration: none; transform: translateY(-1px); box-shadow: 0 3px 10px rgba(0,0,0,0.08); }
+    .tc-sos { border-left: 3px solid #0D5C63; }
+    .tc-res { border-left: 3px solid #2C5F8A; }
+    .tc-phase { font-size: 10px; font-weight: 700; letter-spacing: 0.8px; text-transform: uppercase; color: #0D5C63; margin-bottom: 4px; }
+    .tc-res .tc-phase { color: #2C5F8A; }
+    .tc-title { font-size: 13px; font-weight: 700; color: var(--text); margin-bottom: 4px; line-height: 1.3; }
+    .tc-desc { font-size: 11px; color: var(--text-muted); line-height: 1.5; }
+  </style>
+</head>
+<body>
+
+<!-- Nav -->
+<nav class="nav">
+  <span class="nav-logo">CRO <span>Manual</span></span>
+  <span class="nav-sep">/</span>
+  <a href="../index.html" class="nav-back">← Home</a>
+  <span class="nav-sep">/</span>
+  <a href="../pages/science-of-scaling.html" class="nav-back">Science of Scaling</a>
+  <span class="nav-sep">/</span>
+  <span class="nav-current">Stage 1: PMF</span>
+</nav>
+
+<!-- Hero -->
+<div class="page-hero">
+  <div class="hero-phase-label">Stage 1 · Science of Scaling</div>
+  <div class="hero-title">Product-Market Fit</div>
+  <div class="hero-subtitle">The single most important thing a startup can do is prove that customers succeed before they scale. PMF is not a feeling — it is a measurable, data-driven condition with a specific, objective definition.</div>
+  <div class="hero-tags">
+    <span class="hero-tag">LIR</span>
+    <span class="hero-tag">Customer Retention</span>
+    <span class="hero-tag">Early Adopter</span>
+    <span class="hero-tag">ICP Definition</span>
+    <span class="hero-tag">Cohort Analysis</span>
+  </div>
+</div>
+
+<!-- Content -->
+<div class="content-wrap">
+
+  <!-- Breadcrumb -->
+  <div class="breadcrumb">
+    <a href="../index.html">Home</a>
+    <span class="sep">›</span>
+    <a href="../pages/science-of-scaling.html">Science of Scaling</a>
+    <span class="sep">›</span>
+    <span class="current">Stage 1: PMF</span>
+  </div>
+
+  <!-- ─────────────────────────────────────────────────
+       SECTION 1: The Definition of PMF
+  ───────────────────────────────────────────────── -->
+  <div class="section-title">The Definition of PMF</div>
+  <p class="section-intro">Most teams declare PMF prematurely. The framework below replaces intuition with a precise, falsifiable definition — one that every team member and investor can point to with shared understanding.</p>
+
+  <div class="subsection-title">PMF Is NOT</div>
+  <ul class="bullet-list">
+    <li>"We have happy customers" — happiness is subjective and does not predict renewal</li>
+    <li>"We closed our first deals" — first deals are experiments, not patterns</li>
+    <li>"NPS is high" — NPS is supplementary signal, not a definition of fit</li>
+    <li>"We're growing month over month" — new bookings can mask high churn indefinitely</li>
+    <li>"Investors are excited" — investor enthusiasm is not a customer success proxy</li>
+  </ul>
+
+  <div class="subsection-title" style="margin-top: 24px;">PMF IS</div>
+  <ul class="bullet-list">
+    <li>A specific, measurable <strong>Leading Indicator of Retention (LIR)</strong> that correlates with long-term customer retention</li>
+    <li>A LIR that is proven to be <strong>True</strong> across multiple consecutive customer cohorts</li>
+    <li>A pattern you can replicate — not a one-time event or a single flagship customer</li>
+  </ul>
+
+  <div class="subsection-title" style="margin-top: 24px;">The PMF Formula</div>
+  <div class="pmf-formula">
+    <div class="fl">PMF Definition Formula</div>
+    <div class="fm">[PMF] = "Yes" if:</div>
+    <span class="fi">([LIR] correlates with long-term customer retention)</span>
+    <span class="and-op">AND</span>
+    <span class="fi">([LIR] is "True" — i.e., P% of customers achieve E event(s) within T days)</span>
+    <div class="fn">Both conditions must be simultaneously true. The first validates that the LIR is predictive. The second confirms the LIR threshold is being met consistently across cohorts.</div>
+  </div>
+
+  <div class="callout callout-green">
+    <div class="callout-title">Definition</div>
+    <p>PMF is achieved when your LIR threshold is met consistently across a cohort of customers. One cohort is not enough — you need 2–3 consecutive monthly cohorts all clearing the threshold before you can declare PMF achieved.</p>
+  </div>
+
+  <!-- ─────────────────────────────────────────────────
+       SECTION 2: The Leading Indicator of Retention (LIR)
+  ───────────────────────────────────────────────── -->
+  <div class="section-title">The Leading Indicator of Retention (LIR)</div>
+  <p class="section-intro">LIR is the most critical metric in Stage 1. It replaces the lagging, slow-moving retention number with an early, measurable signal — giving you months of lead time to course-correct before churn materializes.</p>
+
+  <div class="lir-formula-box">
+    <div class="lfb-label">Full LIR Formula</div>
+    <div class="lfb-formula">LIR = P% of customers achieve E event(s) within T days</div>
+    <div class="lfb-pills">
+      <span class="lir-pill pill-p"><span class="pill-letter">P</span> = 60–80% threshold</span>
+      <span class="lir-pill pill-e"><span class="pill-letter">E</span> = Objective, instrumentable event</span>
+      <span class="lir-pill pill-t"><span class="pill-letter">T</span> = As short as possible</span>
+    </div>
+  </div>
+
+  <div class="param-grid">
+    <div class="param-card">
+      <div class="param-letter">P</div>
+      <div class="param-name">Percentage Threshold</div>
+      <div class="param-body">
+        The minimum % of customers who must hit the event. Setting P too high makes it impossible; too low makes it non-predictive.<br/><br/>
+        <strong>60–70%</strong> — SMB / transactional<br/>
+        <strong>70–80%</strong> — Mid-Market<br/>
+        <strong>75–85%</strong> — Enterprise
+      </div>
+    </div>
+    <div class="param-card">
+      <div class="param-letter">E</div>
+      <div class="param-name">The Event</div>
+      <div class="param-body">
+        A specific customer action that predicts long-term success. Must be all of:<br/><br/>
+        • <strong>Objective</strong> — not "they seem happy"<br/>
+        • <strong>Instrumentable</strong> — trackable in product/CRM<br/>
+        • <strong>Value-aligned</strong> — reflects actual product use<br/>
+        • <strong>Correlated</strong> — validated against retention data
+      </div>
+    </div>
+    <div class="param-card">
+      <div class="param-letter">T</div>
+      <div class="param-name">Time Window</div>
+      <div class="param-body">
+        The time window in which E must occur. As short as possible — the tighter the window, the faster you know.<br/><br/>
+        <strong>7 days</strong> — PLG / self-serve<br/>
+        <strong>30 days</strong> — SMB SaaS<br/>
+        <strong>60–90 days</strong> — Enterprise SaaS
+      </div>
+    </div>
+  </div>
+
+  <div class="subsection-title" style="margin-top: 24px;">Examples of Good LIR Events</div>
+  <ul class="lir-example-list">
+    <li>
+      <span class="lir-ex-icon">→</span>
+      <span>"60% of customers complete 3 discovery calls within 30 days of signing" — specific count, specific action, short window</span>
+    </li>
+    <li>
+      <span class="lir-ex-icon">→</span>
+      <span>"70% of customers invite 3 team members within 14 days" — measurable in CRM, tied to activation signal</span>
+    </li>
+    <li>
+      <span class="lir-ex-icon">→</span>
+      <span>"65% of customers run their first report within 7 days" — objective, product-trackable, tied to core value delivery</span>
+    </li>
+    <li>
+      <span class="lir-ex-icon">→</span>
+      <span>"75% of customers process 100+ transactions within 60 days" — quantifiable, tied to product utility and economic value</span>
+    </li>
+    <li>
+      <span class="lir-ex-icon">→</span>
+      <span>"70% of customers integrate their primary data source within 30 days" — reflects real implementation, predicts long-term stickiness</span>
+    </li>
+  </ul>
+
+  <div class="callout callout-definition">
+    <div class="callout-title">Deep Dive</div>
+    <p>For the complete LIR methodology — including how to validate correlation, build cohort tables, and use LIR for comp and hiring decisions — see the <a href="../subpages/sos-lir.html"><strong>LIR Deep Dive page</strong></a>.</p>
+  </div>
+
+  <!-- ─────────────────────────────────────────────────
+       SECTION 3: How to Define Your LIR
+  ───────────────────────────────────────────────── -->
+  <div class="section-title">How to Define Your LIR</div>
+  <p class="section-intro">LIR definition is not a workshop exercise — it is an empirical process. You derive it from customer data, validate it statistically, and iterate as your product evolves.</p>
+
+  <ol class="step-list">
+    <li>
+      <div class="step-content">
+        <span class="step-title">Interview your best-retained customers</span>
+        Ask what they did in their first 30/60/90 days that made the product essential. Look for patterns in behavior, not just sentiment.
+      </div>
+    </li>
+    <li>
+      <div class="step-content">
+        <span class="step-title">Identify the "aha moment"</span>
+        The specific action or milestone where the customer first realized the true value of your product. This is the candidate for E.
+      </div>
+    </li>
+    <li>
+      <div class="step-content">
+        <span class="step-title">Make it objective and instrumentable</span>
+        The event must be measurable in your product data, CRM, or CS systems. If you can't instrument it, you can't track it. Redefine E until it is measurable.
+      </div>
+    </li>
+    <li>
+      <div class="step-content">
+        <span class="step-title">Set P threshold at 60–80%</span>
+        Start with 70% as a default. Set it high enough to be statistically meaningful, low enough to be achievable by a healthy customer base. Adjust based on cohort analysis.
+      </div>
+    </li>
+    <li>
+      <div class="step-content">
+        <span class="step-title">Set T as short as possible</span>
+        The earlier you can confirm success, the more valuable the LIR becomes as a management tool. Test shorter time windows — if 70% can hit E in 14 days, don't use 30 days.
+      </div>
+    </li>
+    <li>
+      <div class="step-content">
+        <span class="step-title">Validate correlation against 12-month renewal data</span>
+        Using customers from 12–18 months ago: compare the 12-month retention rate of customers who hit LIR vs. those who did not. A valid LIR requires a gap of 20+ percentage points.
+      </div>
+    </li>
+    <li>
+      <div class="step-content">
+        <span class="step-title">Iterate as the product evolves</span>
+        The LIR that is valid at $1M ARR may not be valid at $10M ARR. Revalidate correlation data annually or whenever major product changes are made. Do not change LIR arbitrarily — changes break cohort comparability.
+      </div>
+    </li>
+  </ol>
+
+  <div class="callout callout-warning">
+    <div class="callout-title">Warning</div>
+    <p>Do not change your LIR definition more than once per year unless a major product change makes the existing E event invalid. Frequent LIR changes prevent cohort-to-cohort comparison and make your PMF data meaningless.</p>
+  </div>
+
+  <!-- ─────────────────────────────────────────────────
+       SECTION 4: Target Market in Stage 1: Early Adopters
+  ───────────────────────────────────────────────── -->
+  <div class="section-title">Target Market in Stage 1: Early Adopters</div>
+  <p class="section-intro">Every element of your Stage 1 GTM strategy must be optimized for learning — not efficiency, not scale. That starts with targeting the right customers: early adopters who will succeed despite an imperfect product.</p>
+
+  <div class="subsection-title">Who to Target (and Who NOT to Target)</div>
+  <ul class="bullet-list">
+    <li><strong>DO target:</strong> Innovators and early adopters who have an acute, urgent pain point and will tolerate product imperfection in exchange for a potential breakthrough solution</li>
+    <li><strong>DO NOT target:</strong> Early majority or late majority — they need a polished, reference-backed, proven solution before they will buy</li>
+    <li><strong>ICP in Stage 1 is about psychographics as much as firmographics</strong> — you need the right buyer mindset, not just the right company profile</li>
+  </ul>
+
+  <div class="subsection-title" style="margin-top: 24px;">Early Adopter vs. Early Majority: Contrast</div>
+  <table class="icp-compare-table">
+    <thead>
+      <tr>
+        <th>Attribute</th>
+        <th class="col-early">Early Adopter (Stage 1 Target)</th>
+        <th class="col-majority">Early Majority (Stage 2+ Target)</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>Tolerance for bugs</td>
+        <td class="val-early">High — willing to work around issues</td>
+        <td class="val-maj">Low — expects polished, stable product</td>
+      </tr>
+      <tr>
+        <td>Need for references</td>
+        <td class="val-early">Low — visionary, self-convinced</td>
+        <td class="val-maj">High — wants 3+ case studies before buying</td>
+      </tr>
+      <tr>
+        <td>Decision speed</td>
+        <td class="val-early">Fast — moves on conviction</td>
+        <td class="val-maj">Slow — requires committee consensus</td>
+      </tr>
+      <tr>
+        <td>ROI requirements</td>
+        <td class="val-early">Flexible — willing to bet on potential</td>
+        <td class="val-maj">Rigid — needs documented ROI proof</td>
+      </tr>
+      <tr>
+        <td>Implementation tolerance</td>
+        <td class="val-early">High — will invest time in setup</td>
+        <td class="val-maj">Low — expects turnkey implementation</td>
+      </tr>
+      <tr>
+        <td>Feedback quality</td>
+        <td class="val-early">Rich — deep engagement, honest critique</td>
+        <td class="val-maj">Shallow — less exploratory, lower signal</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div class="callout callout-definition">
+    <div class="callout-title">ICP Worksheet</div>
+    <p>Use the ICP Worksheet to document your firmographic and psychographic ideal customer profile as you learn from early cohorts. Update it as LIR data reveals which segments succeed and which do not. <a href="template-icp.html"><strong>Access the ICP Worksheet →</strong></a></p>
+  </div>
+
+  <!-- ─────────────────────────────────────────────────
+       SECTION 5: GTM Playbook in Stage 1: Win at All Costs
+  ───────────────────────────────────────────────── -->
+  <div class="section-title">GTM Playbook in Stage 1: Win at All Costs</div>
+  <p class="section-intro">In Stage 1, the playbook is not codified — it is exploratory. You are not executing a defined process; you are discovering what works. Selling in Stage 1 is a product discovery activity.</p>
+
+  <div class="subsection-title">What the Stage 1 GTM Motion Looks Like</div>
+  <ul class="bullet-list">
+    <li><strong>Founder / PM + AE hybrid leads GTM:</strong> the person selling should be deeply embedded in the product — they are learning and selling simultaneously</li>
+    <li><strong>Deep discovery:</strong> every sales conversation is a research interview — document every objection, every use case, every competitive mention</li>
+    <li><strong>Customized demos:</strong> presentations are tailored to the specific buyer context discovered in the prior conversation — not templated</li>
+    <li><strong>Heavy post-sale involvement:</strong> founders and senior team are personally involved in onboarding to accelerate LIR achievement and extract product insights</li>
+    <li><strong>Obsessive success tracking:</strong> every new customer is tracked individually against LIR milestones from day one</li>
+  </ul>
+
+  <div class="subsection-title" style="margin-top: 24px;">What NOT to Do in Stage 1</div>
+  <ul class="bullet-list">
+    <li>Do NOT hire a large sales team — you don't have a repeatable playbook to give them</li>
+    <li>Do NOT spend on demand generation — you don't know your ICP well enough to target it efficiently</li>
+    <li>Do NOT build rigid sales processes — process optimization requires data you don't have yet</li>
+    <li>Do NOT optimize for call volume or pipeline quantity — optimize for learning and LIR achievement</li>
+  </ul>
+
+  <div class="subsection-title" style="margin-top: 24px;">The Right Stage 1 Sales Hire Profile</div>
+  <div class="callout callout-definition">
+    <div class="callout-title">PM + AE Hybrid</div>
+    <p>The Stage 1 sales hire is someone who can <strong>LEARN the playbook</strong>, not execute a pre-defined one. They have enough product intuition to participate in discovery, enough sales skill to close, and enough intellectual curiosity to ask the right questions. Prior domain expertise matters more than a polished sales pedigree.</p>
+  </div>
+
+  <!-- ─────────────────────────────────────────────────
+       SECTION 6: Pricing in Stage 1: Solve for Customer Commitment
+  ───────────────────────────────────────────────── -->
+  <div class="section-title">Pricing in Stage 1: Solve for Customer Commitment</div>
+  <p class="section-intro">Pricing in Stage 1 is not about maximizing revenue — it is about creating the conditions for customer success. Underpriced customers do not implement. The right price creates motivation to engage.</p>
+
+  <ul class="bullet-list">
+    <li><strong>Price to create skin in the game:</strong> customers who pay almost nothing do not prioritize implementation — charge enough that success matters to them</li>
+    <li><strong>Annual contracts preferred:</strong> multi-month commitments reduce churn noise and create mutual accountability for onboarding success</li>
+    <li><strong>Avoid freemium and PLG until PMF is proven:</strong> free users don't implement, don't give you quality feedback, and distort your LIR data</li>
+    <li><strong>Simple pricing structures:</strong> per-seat or flat-rate pricing reduces cognitive load and eliminates pricing friction that slows decisions</li>
+    <li><strong>Pricing is not permanent:</strong> you will raise prices in Stage 2 as you quantify the ROI you deliver — Stage 1 pricing is provisional</li>
+  </ul>
+
+  <div class="callout callout-warning">
+    <div class="callout-title">The Free Customer Trap</div>
+    <p>Free or heavily discounted customers are the most expensive customers in Stage 1. They consume CS resources, pollute your LIR cohort data with low-motivation implementers, and provide misleading signals about market demand. If they won't pay, they won't succeed.</p>
+  </div>
+
+  <!-- ─────────────────────────────────────────────────
+       SECTION 7: Compensation in Stage 1: Based on Customer Retention
+  ───────────────────────────────────────────────── -->
+  <div class="section-title">Compensation in Stage 1: Based on Customer Retention</div>
+  <p class="section-intro">The most common Stage 1 compensation mistake is paying salespeople 100% at contract close. This incentivizes closing bad-fit customers who will never succeed — exactly the wrong behavior when you are trying to prove PMF.</p>
+
+  <div class="comp-split">
+    <div class="comp-half at-signing">
+      <div class="ch-pct">50%</div>
+      <div class="ch-label">At Contract Signing</div>
+      <div class="ch-note">Rewards closing the deal</div>
+    </div>
+    <div class="comp-half at-lir">
+      <div class="ch-pct">50%</div>
+      <div class="ch-label">At LIR Achievement</div>
+      <div class="ch-note">~90 days post-close, when customer achieves E within T</div>
+    </div>
+  </div>
+
+  <div class="subsection-title">Why This Comp Structure Works</div>
+  <ul class="bullet-list">
+    <li><strong>Prevents the "closing hero" problem:</strong> reps who close bad-fit customers lose 50% of their commission when the customer fails to achieve LIR</li>
+    <li><strong>Aligns rep behavior with PMF discovery:</strong> reps become obsessive about selling to the right customers — they only get full commission when the customer succeeds</li>
+    <li><strong>Makes ICP self-enforcing:</strong> reps who consistently close non-ICP deals will have below-target commissions — creating natural ICP discipline without micromanagement</li>
+    <li><strong>Generates better discovery data:</strong> reps who care about LIR achievement ask better qualification questions and conduct deeper discovery</li>
+  </ul>
+
+  <!-- ─────────────────────────────────────────────────
+       SECTION 8: The PMF Cohort Dashboard
+  ───────────────────────────────────────────────── -->
+  <div class="section-title">The PMF Cohort Dashboard</div>
+  <p class="section-intro">The cohort dashboard is how PMF progress is tracked, managed, and communicated. It should be the first slide in every board deck — before the P&amp;L, before ARR, before any other metric.</p>
+
+  <div class="subsection-title">How to Build the Dashboard</div>
+  <ol class="step-list">
+    <li>
+      <div class="step-content">
+        <span class="step-title">Create monthly acquisition cohorts</span>
+        Group all customers by the calendar month they were signed. Each row = one cohort.
+      </div>
+    </li>
+    <li>
+      <div class="step-content">
+        <span class="step-title">Track LIR achievement by time elapsed</span>
+        For each cohort, record the % achieving LIR by month 1, 2, 3 … 12 after signing. Each column = months since acquisition.
+      </div>
+    </li>
+    <li>
+      <div class="step-content">
+        <span class="step-title">Color-code each cell</span>
+        Green = above threshold (≥P%), Yellow = within 10 points of threshold, Red = below threshold. Gray = insufficient time has elapsed.
+      </div>
+    </li>
+    <li>
+      <div class="step-content">
+        <span class="step-title">Track the PMF declaration threshold</span>
+        Target: 60–80% LIR achievement sustained across 3+ consecutive cohorts. Once sustained for 2–3 quarters, declare PMF achieved and move to Stage 2.
+      </div>
+    </li>
+  </ol>
+
+  <div class="subsection-title" style="margin-top: 24px;">Example Cohort Table (LIR Threshold = 70%)</div>
+  <div class="cohort-wrap">
+    <table class="cohort-table">
+      <thead>
+        <tr>
+          <th>Cohort</th>
+          <th>Mo. 1</th>
+          <th>Mo. 2</th>
+          <th>Mo. 3 (T)</th>
+          <th>Mo. 6</th>
+          <th>12-Mo. Renewal</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Jan</td>
+          <td class="cell-red">38%</td>
+          <td class="cell-yellow">62%</td>
+          <td class="cell-green">79%</td>
+          <td class="cell-green">83%</td>
+          <td class="cell-green">92%</td>
+        </tr>
+        <tr>
+          <td>Feb</td>
+          <td class="cell-red">41%</td>
+          <td class="cell-yellow">64%</td>
+          <td class="cell-green">76%</td>
+          <td class="cell-green">81%</td>
+          <td class="cell-green">91%</td>
+        </tr>
+        <tr>
+          <td>Mar</td>
+          <td class="cell-red">44%</td>
+          <td class="cell-yellow">65%</td>
+          <td class="cell-green">74%</td>
+          <td class="cell-gray">—</td>
+          <td class="cell-gray">—</td>
+        </tr>
+        <tr>
+          <td>Apr</td>
+          <td class="cell-red">36%</td>
+          <td class="cell-red">58%</td>
+          <td class="cell-gray">—</td>
+          <td class="cell-gray">—</td>
+          <td class="cell-gray">—</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  <p style="font-size:13px; color: var(--text-muted); margin-top: -8px;">LIR threshold = 70%. Jan, Feb, Mar cohorts cleared threshold at Mo. 3 (T). Apr cohort still developing — flagged for review at Mo. 2 (58%). High LIR cohorts show 91–92% 12-month renewal — validates LIR as predictive.</p>
+
+  <div class="callout callout-green">
+    <div class="callout-title">PMF Declaration Rule</div>
+    <p>Cohorts with LIR achievement ≥ threshold should have 90%+ 12-month renewal. If your high-LIR cohorts are not renewing at 90%+, your LIR event (E) is not predictive enough. Redefine E before declaring PMF.</p>
+  </div>
+
+  <!-- ─────────────────────────────────────────────────
+       SECTION 9: Common PMF Mistakes
+  ───────────────────────────────────────────────── -->
+  <div class="section-title">Common PMF Mistakes</div>
+  <p class="section-intro">These are the six failure modes that prevent teams from reaching genuine PMF — or cause them to falsely believe they have it when they do not.</p>
+
+  <ol class="mistake-list">
+    <li>
+      <div class="mc">
+        <strong>Declaring PMF on gut feel.</strong> "Customers seem excited" is not PMF. Without LIR data and a validated correlation to 12-month renewal, you do not have PMF — you have optimism. Build the cohort table first.
+      </div>
+    </li>
+    <li>
+      <div class="mc">
+        <strong>Selling to non-ICP customers.</strong> Non-ICP customers inflate booking numbers but produce low LIR achievement rates that destroy cohort data quality. Every non-ICP deal makes it harder to identify the signal within the noise.
+      </div>
+    </li>
+    <li>
+      <div class="mc">
+        <strong>Hiring salespeople before LIR is defined.</strong> Salespeople without a defined LIR will sell to anyone. They optimize for signed contracts, not customer success. The result: high bookings, low LIR achievement, high churn.
+      </div>
+    </li>
+    <li>
+      <div class="mc">
+        <strong>Optimizing for top-line ARR.</strong> Growing ARR by closing deals faster than customers churn creates a treadmill. Once growth slows, the underlying churn problem becomes visible — and it is much more expensive to fix at scale.
+      </div>
+    </li>
+    <li>
+      <div class="mc">
+        <strong>Changing LIR too frequently.</strong> Every LIR change resets your cohort clock. If you change the definition quarterly, you will never have enough historical data to validate it. Commit to a definition and measure it for at least 2 full cohort cycles before revisiting.
+      </div>
+    </li>
+    <li>
+      <div class="mc">
+        <strong>Setting T too long.</strong> If T is 6 months, you won't know whether customers are on track until half a year has passed. By then it's too late to intervene. Compress T aggressively — a 30-day LIR is 6x more actionable than a 180-day LIR.
+      </div>
+    </li>
+  </ol>
+
+  <!-- ─────────────────────────────────────────────────
+       SECTION 10: Key Metrics to Track in Stage 1
+  ───────────────────────────────────────────────── -->
+  <div class="section-title">Key Metrics to Track in Stage 1</div>
+  <p class="section-intro">These five metrics define the Stage 1 measurement framework. LIR Achievement Rate and Time to LIR are the primary operating metrics — everything else is secondary validation.</p>
+
+  <div class="metrics-table-wrap">
+    <table class="data-table">
+      <thead>
+        <tr>
+          <th>Metric</th>
+          <th>Definition</th>
+          <th>Target</th>
+          <th>Why It Matters</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>LIR Achievement Rate</strong></td>
+          <td>% of each monthly cohort achieving E within T days</td>
+          <td>60–80%</td>
+          <td>Primary PMF indicator — the core metric of Stage 1</td>
+        </tr>
+        <tr>
+          <td><strong>Time to LIR</strong></td>
+          <td>Average days from contract signing to E event completion</td>
+          <td>Minimize — below T</td>
+          <td>Speed predicts retention; faster time-to-LIR = higher renewal probability</td>
+        </tr>
+        <tr>
+          <td><strong>12-Month Retention Rate</strong></td>
+          <td>% of cohort (signed 12 months ago) that renewed at month 12</td>
+          <td>&gt;85%</td>
+          <td>Lagging validation of LIR — confirms the LIR formula is working</td>
+        </tr>
+        <tr>
+          <td><strong>LIR Correlation Gap</strong></td>
+          <td>12-month retention rate of LIR-achieved customers minus retention rate of LIR-not-achieved customers</td>
+          <td>&gt;20 percentage points</td>
+          <td>Validates that E is genuinely predictive — a gap below 20pp means the event doesn't predict retention</td>
+        </tr>
+        <tr>
+          <td><strong>NPS</strong></td>
+          <td>Net Promoter Score collected at 60–90 days post-onboarding</td>
+          <td>&gt;40</td>
+          <td>Supplementary signal — useful for qualitative triangulation, not a PMF definition</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="gtm-summary-grid">
+    <div class="gtm-box">
+      <div class="gtm-dim">Target Market</div>
+      <div class="gtm-val">Early Adopters</div>
+    </div>
+    <div class="gtm-box">
+      <div class="gtm-dim">GTM Playbook</div>
+      <div class="gtm-val">Win At All Costs</div>
+    </div>
+    <div class="gtm-box">
+      <div class="gtm-dim">Sales Hire</div>
+      <div class="gtm-val">PM + AE Hybrid</div>
+    </div>
+    <div class="gtm-box">
+      <div class="gtm-dim">Demand Gen</div>
+      <div class="gtm-val">Personal Network + Referrals</div>
+    </div>
+    <div class="gtm-box">
+      <div class="gtm-dim">Pricing</div>
+      <div class="gtm-val">Solve for Commitment</div>
+    </div>
+    <div class="gtm-box">
+      <div class="gtm-dim">Compensation</div>
+      <div class="gtm-val">50% Signing / 50% LIR</div>
+    </div>
+  </div>
+
+  <div class="subsection-title" style="margin-top: 8px;">PMF Achievement Checklist</div>
+  <ul class="pmf-checklist">
+    <li>
+      <span class="check-icon">✓</span>
+      <span>LIR is defined with P, E, and T — and the E event is instrumented in your product or CRM</span>
+    </li>
+    <li>
+      <span class="check-icon">✓</span>
+      <span>LIR correlation is validated: customers who achieved LIR renew at &gt;20pp higher rate than those who did not</span>
+    </li>
+    <li>
+      <span class="check-icon">✓</span>
+      <span>LIR threshold (P%) is met across 2–3 consecutive monthly cohorts</span>
+    </li>
+    <li>
+      <span class="check-icon">✓</span>
+      <span>12-month retention rate for LIR-achieved cohorts is &gt;85%</span>
+    </li>
+    <li>
+      <span class="check-icon">✓</span>
+      <span>ICP is documented: you can describe the firmographic and psychographic profile that predicts LIR achievement</span>
+    </li>
+    <li>
+      <span class="check-icon">✓</span>
+      <span>Sales comp is structured 50/50 at signing / LIR achievement — not 100% at close</span>
+    </li>
+  </ul>
+
+  <!-- In the Phase System -->
+  <div class="section-title">In the 6-Phase Revenue System</div>
+  <p class="section-intro">Stage 1 (PMF) is the scientific validation layer that must precede Phase 3 (GTM). It operates primarily within Phase 1 (ICP, Messaging, Playbook) and shapes every hiring decision in Phase 2.</p>
+
+  <div class="phase-map-grid">
+    <a href="../pages/phase1.html" class="phase-map-card">
+      <div class="pm-phase-label">Phase 1 — Primary Home</div>
+      <div class="pm-title">ICP, Messaging &amp; Playbook</div>
+      <div class="pm-desc">Stage 1 work happens here. Define LIR event, identify Early Adopter ICP, build exploratory “Win at All Costs” playbook, set comp to LIR-based structure.</div>
+    </a>
+    <a href="../pages/phase2.html" class="phase-map-card">
+      <div class="pm-phase-label">Phase 2 — Hiring Mode</div>
+      <div class="pm-title">PM+AE Hybrid Hire</div>
+      <div class="pm-desc">In Stage 1, hire only 1–2 reps who can discover the playbook. Do NOT scale headcount until LIR ≥ threshold for 2 cohorts. Comp: 50% at close, 50% at LIR.</div>
+    </a>
+    <a href="../pages/phase6.html" class="phase-map-card">
+      <div class="pm-phase-label">Phase 6 — If PMF Fails</div>
+      <div class="pm-title">LIR Diagnostic</div>
+      <div class="pm-desc">LIR rate below 60%? Check: Is ICP targeting Early Adopters? Is E event objective and instrumentable? Is T short enough? Is CS driving LIR achievement?</div>
+    </a>
+  </div>
+
+  <div class="section-title">Key Tools for This Stage</div>
+  <div class="tools-grid">
+    <a href="template-icp.html" class="tool-card tc-res">
+      <div class="tc-phase">Template</div>
+      <div class="tc-title">ICP Worksheet</div>
+      <div class="tc-desc">Build ICP from retention cohort data — who achieves LIR? The Green/Yellow/Red framework for Stage 1 targeting.</div>
+    </a>
+    <a href="template-lir.html" class="tool-card tc-res">
+      <div class="tc-phase">Template</div>
+      <div class="tc-title">LIR Journey Template</div>
+      <div class="tc-desc">Pre-PMF: test 3 LIR hypotheses. Post-PMF: track one LIR metric monthly by cohort and validate against 12-month renewal data.</div>
+    </a>
+    <a href="sos-lir.html" class="tool-card tc-sos">
+      <div class="tc-phase">Deep Dive</div>
+      <div class="tc-title">LIR Full Reference</div>
+      <div class="tc-desc">How to discover, set, validate, and iterate your LIR event. Includes industry examples, CS application, and sales comp structure.</div>
+    </a>
+    <a href="template-message-house.html" class="tool-card tc-res">
+      <div class="tc-phase">Template</div>
+      <div class="tc-title">Message House</div>
+      <div class="tc-desc">Build messaging around LIR-validated customer outcomes. In Stage 1, messaging is built from discovery call patterns with Early Adopters.</div>
+    </a>
+  </div>
+
+  <!-- Related -->
+  <div class="related-section">
+    <div class="related-title">Related Pages</div>
+    <div class="related-links">
+      <a href="../subpages/sos-lir.html" class="related-link">LIR Deep Dive</a>
+      <a href="../subpages/sos-gtm-fit.html" class="related-link">Stage 2: GTM Fit →</a>
+      <a href="../pages/science-of-scaling.html" class="related-link">← Science of Scaling</a>
+      <a href="../index.html" class="related-link">← Home</a>
+    </div>
+  </div>
+
+</div>
+<script data-pplx-inline-edit>
+(function () {
+  if (window === window.top) return;
+
+  const allowedParentOrigins = ["https://www.perplexity.ai","https://perplexity.ai","https://testing.perplexity.ai","https://staging.perplexity.ai","https://*.preview.i.perplexity.ai","http://localhost:3000","http://127.0.0.1:3000","http://localhost:5173","http://127.0.0.1:5173"];
+  const MAX_FONT_BYTES = 500 * 1024;
+  const MAX_TOTAL_FONT_BYTES = 2 * 1024 * 1024;
+  let scrollForwarding = false;
+  let scrollRaf = 0;
+  let trustedTopOrigin = null;
+
+  // Allow entries like "https://*.preview.i.perplexity.ai" — the wildcard
+  // matches a single DNS label (no dots), so "https://*.foo" cannot stretch
+  // across multiple labels.
+  function matchesAllowedOrigin(origin) {
+    if (!origin) return false;
+    for (const entry of allowedParentOrigins) {
+      if (!entry.includes("*")) {
+        if (entry === origin) return true;
+        continue;
+      }
+      const pattern = new RegExp(
+        "^" +
+          entry.replace(/[.+?^${}()|[\]\\]/g, "\\$&").replace(/\*/g, "[^.]+") +
+          "$",
+      );
+      if (pattern.test(origin)) return true;
+    }
+    return false;
+  }
+
+  // Trust decision: when the sender is same-origin-visible (event.origin is a
+  // real origin like https://www.perplexity.ai) we trust event.origin directly.
+  // When event.origin is "null" (opaque broker srcdoc), we fall back to the
+  // broker's stamped `parentOrigin` to identify the top window. The fallback
+  // is claim-only — we rely on the browser's native `targetOrigin` enforcement
+  // on the response path (see postToTrustedTop) to ensure replies can't be
+  // delivered to anyone but the actual top window of that claimed origin.
+  function getTrustedParentOrigin(event) {
+    const forwardedParentOrigin =
+      typeof event.data.parentOrigin === "string" ? event.data.parentOrigin : null;
+    const parentOrigin = event.origin === "null" ? forwardedParentOrigin : event.origin;
+    return matchesAllowedOrigin(parentOrigin) ? parentOrigin : null;
+  }
+
+  // All responses go to window.top with targetOrigin = the allowlisted origin.
+  // An attacker that iframes us inside their own null-origin broker can claim
+  // any parentOrigin they like, but the browser will drop the reply whenever
+  // the real top's origin doesn't match — so the screenshot never leaves.
+  function postToTrustedTop(message) {
+    if (!trustedTopOrigin) return;
+    try {
+      window.top.postMessage(message, trustedTopOrigin);
+    } catch (_error) {}
+  }
+
+  function inlineAll(original, clone) {
+    if (original.nodeType !== 1 || clone.nodeType !== 1) return;
+
+    try {
+      const computedStyle = getComputedStyle(original);
+      // cssText on a computed style is the serialized declaration in modern
+      // Chromium/Safari — a single read beats enumerating ~400 longhand
+      // properties. Firefox returns "" here, so we fall back on empty.
+      const serialized = computedStyle.cssText;
+      if (serialized) {
+        clone.style.cssText = serialized;
+      } else {
+        const parts = new Array(computedStyle.length);
+        for (let index = 0; index < computedStyle.length; index += 1) {
+          const property = computedStyle[index];
+          parts[index] = `${property}:${computedStyle.getPropertyValue(property)};`;
+        }
+        clone.style.cssText = parts.join("");
+      }
+    } catch (_error) {}
+
+    const originalChildren = original.children;
+    const clonedChildren = clone.children;
+    for (
+      let index = 0;
+      index < originalChildren.length && index < clonedChildren.length;
+      index += 1
+    ) {
+      inlineAll(originalChildren[index], clonedChildren[index]);
+    }
+  }
+
+  function extractFontUrl(srcValue) {
+    const matches = [
+      ...srcValue.matchAll(
+        /url\(["']?([^"')]+)["']?\)(?:\s*format\(["']?([^"')]+)["']?\))?/gi,
+      ),
+    ];
+    if (matches.length === 0) return null;
+    const woff2 = matches.find((m) => m[2] && m[2].toLowerCase().includes("woff2"));
+    if (woff2) return woff2[1];
+    const woff = matches.find((m) => m[2] && m[2].toLowerCase().includes("woff"));
+    if (woff) return woff[1];
+    return matches[0][1];
+  }
+
+  // Cache resolved font URL -> data URI across captures. Fonts on a page
+  // essentially never change, and a batch run emits multiple captures back to
+  // back — without this we'd refetch + re-base64 every time.
+  const fontDataUriCache = new Map();
+  const SRC_DECLARATION_RE = /src\s*:\s*[^;}]+/i;
+
+  async function fetchAsDataUri(url) {
+    if (fontDataUriCache.has(url)) return fontDataUriCache.get(url);
+    let dataUri = null;
+    try {
+      const response = await fetch(url, { mode: "cors", credentials: "omit" });
+      if (response.ok) {
+        const blob = await response.blob();
+        if (blob.size <= MAX_FONT_BYTES) {
+          dataUri = await new Promise((resolve) => {
+            const reader = new FileReader();
+            reader.onloadend = () =>
+              resolve(typeof reader.result === "string" ? reader.result : null);
+            reader.onerror = () => resolve(null);
+            reader.readAsDataURL(blob);
+          });
+        }
+      }
+    } catch (_error) {
+      dataUri = null;
+    }
+    fontDataUriCache.set(url, dataUri);
+    return dataUri;
+  }
+
+  function collectFontFaceRuleTexts() {
+    const rules = [];
+    for (const sheet of document.styleSheets) {
+      let cssRules;
+      try {
+        cssRules = sheet.cssRules;
+      } catch (_error) {
+        continue;
+      }
+      if (!cssRules) continue;
+      for (const rule of cssRules) {
+        const cssText = rule.cssText || "";
+        if (cssText.startsWith("@font-face")) rules.push(cssText);
+      }
+    }
+    return rules;
+  }
+
+  async function buildInlinedFontCss() {
+    const ruleTexts = collectFontFaceRuleTexts();
+    if (ruleTexts.length === 0) return null;
+
+    const resolved = ruleTexts.map((cssText) => {
+      if (!SRC_DECLARATION_RE.test(cssText)) return null;
+      const srcMatch = cssText.match(/src\s*:\s*([^;}]+)[;}]/i);
+      if (!srcMatch) return null;
+      const url = extractFontUrl(srcMatch[1]);
+      if (!url) return null;
+      try {
+        return { cssText, url: new URL(url, document.baseURI).href };
+      } catch (_error) {
+        return null;
+      }
+    });
+
+    const dataUris = await Promise.all(
+      resolved.map((entry) => (entry ? fetchAsDataUri(entry.url) : Promise.resolve(null))),
+    );
+
+    const inlined = [];
+    let totalBytes = 0;
+    for (let index = 0; index < resolved.length; index += 1) {
+      const entry = resolved[index];
+      const dataUri = dataUris[index];
+      if (!entry || !dataUri) continue;
+      const approxBytes = dataUri.length * 0.75;
+      if (totalBytes + approxBytes > MAX_TOTAL_FONT_BYTES) break;
+      totalBytes += approxBytes;
+      inlined.push(entry.cssText.replace(SRC_DECLARATION_RE, `src: url("${dataUri}")`));
+    }
+    return inlined.length > 0 ? inlined.join("\n") : null;
+  }
+
+  function stripExternal(clone) {
+    const images = clone.querySelectorAll("img");
+    for (let index = 0; index < images.length; index += 1) {
+      const src = images[index].getAttribute("src");
+      if (src && !src.startsWith("data:")) images[index].removeAttribute("src");
+    }
+
+    const elements = clone.querySelectorAll("*");
+    for (let index = 0; index < elements.length; index += 1) {
+      const style = elements[index].style.cssText;
+      if (style && style.includes("url(")) {
+        elements[index].style.cssText = style.replace(
+          /url\(["']?(?!data:)[^)"']*["']?\)/gi,
+          "none",
+        );
+      }
+    }
+  }
+
+  function emitScroll() {
+    scrollRaf = 0;
+    if (!scrollForwarding) return;
+    postToTrustedTop({
+      type: "INLINE_EDIT_SCROLL",
+      scrollX: window.scrollX,
+      scrollY: window.scrollY,
+    });
+  }
+
+  window.addEventListener(
+    "scroll",
+    function () {
+      if (!scrollForwarding || scrollRaf) return;
+      scrollRaf = requestAnimationFrame(emitScroll);
+    },
+    { passive: true, capture: true },
+  );
+
+  async function handleCaptureRequest(event) {
+    const requestId = event.data.requestId;
+    const scrollX = window.scrollX;
+    const scrollY = window.scrollY;
+    const width = window.innerWidth;
+    const height = window.innerHeight;
+
+    function postResult(dataUrl) {
+      postToTrustedTop({
+        type: "INLINE_EDIT_SCREENSHOT_RESULT",
+        requestId,
+        dataUrl,
+        scrollX,
+        scrollY,
+      });
+    }
+
+    try {
+      // Wait for any pending web fonts to resolve so both inline metrics and
+      // the @font-face inlining below see the same loaded faces.
+      if (document.fonts && document.fonts.ready) {
+        try {
+          await document.fonts.ready;
+        } catch (_error) {}
+      }
+
+      const clone = document.documentElement.cloneNode(true);
+      inlineAll(document.documentElement, clone);
+
+      const removedNodes = clone.querySelectorAll("script,link[rel=\"stylesheet\"],style");
+      for (let index = 0; index < removedNodes.length; index += 1) {
+        removedNodes[index].remove();
+      }
+
+      stripExternal(clone);
+
+      // Re-embed web fonts as data-URI @font-face rules so the SVG rasterizer
+      // can resolve them — external font URLs aren't fetched during
+      // foreignObject rendering, which would otherwise force a fallback face
+      // and change text metrics.
+      const inlinedFontCss = await buildInlinedFontCss();
+      if (inlinedFontCss) {
+        const styleEl = document.createElement("style");
+        styleEl.textContent = inlinedFontCss;
+        const head = clone.querySelector("head");
+        if (head) head.appendChild(styleEl);
+        else clone.insertBefore(styleEl, clone.firstChild);
+      }
+
+      const html = new XMLSerializer().serializeToString(clone);
+      const svg =
+        `<svg xmlns="http://www.w3.org/2000/svg" width="${width}" height="${height}">` +
+        '<foreignObject width="100%" height="100%">' +
+        `<div xmlns="http://www.w3.org/1999/xhtml" style="width:${width}px;height:${height}px;overflow:hidden">` +
+        `<div style="transform:translate(-${scrollX}px,-${scrollY}px);transform-origin:top left">` +
+        html +
+        "</div></div></foreignObject></svg>";
+      const svgUrl = `data:image/svg+xml;charset=utf-8,${encodeURIComponent(svg)}`;
+      const image = new Image();
+      image.onload = function () {
+        const canvas = document.createElement("canvas");
+        canvas.width = width;
+        canvas.height = height;
+        canvas.getContext("2d").drawImage(image, 0, 0);
+        postResult(canvas.toDataURL("image/png"));
+      };
+      image.onerror = function () {
+        postResult(null);
+      };
+      image.src = svgUrl;
+    } catch (_error) {
+      postResult(null);
+    }
+  }
+
+  window.addEventListener("message", function (event) {
+    if (!event.data) return;
+    // Only accept messages from the direct parent frame. Blocks sibling /
+    // unrelated-window postMessage senders that could otherwise reach us.
+    if (event.source !== window.parent) return;
+
+    const trustedParentOrigin = getTrustedParentOrigin(event);
+    if (!trustedParentOrigin) return;
+    trustedTopOrigin = trustedParentOrigin;
+
+    if (event.data.type === "INLINE_EDIT_SCROLL_START") {
+      scrollForwarding = true;
+      emitScroll();
+      return;
+    }
+
+    if (event.data.type === "INLINE_EDIT_SCROLL_STOP") {
+      scrollForwarding = false;
+      if (scrollRaf) cancelAnimationFrame(scrollRaf);
+      scrollRaf = 0;
+      return;
+    }
+
+    if (event.data.type !== "INLINE_EDIT_CAPTURE_REQUEST") return;
+
+    handleCaptureRequest(event);
+  });
+})();
+
+
+</script></body>
+</html>

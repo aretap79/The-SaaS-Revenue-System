@@ -1,0 +1,1052 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Demand Generation Channel Guide — CRO Manual</title>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="../assets/shared.css"/>
+  <style>
+    .page-hero { background: #006494; }
+
+    .criteria-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 14px;
+      margin: 20px 0;
+    }
+    .criteria-card {
+      background: var(--surface);
+      border: 1.5px solid var(--border);
+      border-radius: 10px;
+      padding: 18px;
+    }
+    .criteria-num {
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      color: #006494;
+      margin-bottom: 6px;
+    }
+    .criteria-title {
+      font-size: 16px;
+      font-weight: 700;
+      color: var(--text);
+      margin-bottom: 6px;
+    }
+    .criteria-desc {
+      font-size: 13px;
+      color: var(--text-muted);
+      line-height: 1.6;
+    }
+
+    .channel-table-wrap { overflow-x: auto; margin: 20px 0; }
+    .channel-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 13px;
+      min-width: 720px;
+    }
+    .channel-table th {
+      background: #006494;
+      color: #fff;
+      padding: 10px 14px;
+      text-align: left;
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.5px;
+      text-transform: uppercase;
+    }
+    .channel-table td {
+      padding: 10px 14px;
+      border-bottom: 1px solid var(--border);
+      vertical-align: top;
+      line-height: 1.5;
+    }
+    .channel-table tr:nth-child(even) td { background: #fafaf8; }
+    .channel-table tr:last-child td { border-bottom: none; }
+
+    .deep-dive-block {
+      background: var(--surface);
+      border: 1.5px solid var(--border);
+      border-radius: 10px;
+      overflow: hidden;
+      margin: 20px 0;
+    }
+    .deep-dive-header {
+      background: #006494;
+      color: #fff;
+      padding: 14px 20px;
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
+    .deep-dive-icon {
+      width: 36px;
+      height: 36px;
+      background: rgba(255,255,255,0.18);
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 16px;
+      flex-shrink: 0;
+    }
+    .deep-dive-header-text .ddt { font-size: 15px; font-weight: 700; }
+    .deep-dive-header-text .dds { font-size: 12px; opacity: 0.75; margin-top: 2px; }
+    .deep-dive-body { padding: 20px; }
+    .deep-dive-body p { font-size: 14px; line-height: 1.7; color: var(--text); margin-bottom: 10px; }
+
+    .tool-chips {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      margin: 8px 0;
+    }
+    .tool-chip {
+      font-size: 12px;
+      font-weight: 600;
+      padding: 3px 10px;
+      border-radius: 20px;
+      background: #e8f4f8;
+      color: #006494;
+      border: 1px solid #b8d8e8;
+    }
+
+    .metrics-inline {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 10px;
+      margin: 14px 0;
+    }
+    .mi-card {
+      background: #f5fafc;
+      border: 1px solid #cfe3ec;
+      border-radius: 8px;
+      padding: 12px 14px;
+    }
+    .mi-label { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.8px; color: #006494; margin-bottom: 4px; }
+    .mi-value { font-size: 15px; font-weight: 700; color: var(--text); }
+
+    .stage-sequence {
+      display: flex;
+      gap: 0;
+      margin: 20px 0;
+      align-items: stretch;
+    }
+    .seq-step {
+      flex: 1;
+      background: var(--surface);
+      border: 1.5px solid var(--border);
+      padding: 16px;
+      position: relative;
+    }
+    .seq-step:first-child { border-radius: 10px 0 0 10px; }
+    .seq-step:last-child { border-radius: 0 10px 10px 0; }
+    .seq-step + .seq-step { border-left: none; }
+    .seq-step-num {
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      color: #006494;
+      margin-bottom: 6px;
+    }
+    .seq-step-title { font-size: 14px; font-weight: 700; color: var(--text); margin-bottom: 4px; }
+    .seq-step-desc { font-size: 12px; color: var(--text-muted); line-height: 1.5; }
+
+    .metrics-dashboard-table-wrap { overflow-x: auto; margin: 20px 0; }
+    .metrics-dashboard-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 13px;
+      min-width: 640px;
+    }
+    .metrics-dashboard-table th {
+      background: #28251D;
+      color: #fff;
+      padding: 10px 14px;
+      text-align: left;
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.5px;
+      text-transform: uppercase;
+    }
+    .metrics-dashboard-table td {
+      padding: 10px 14px;
+      border-bottom: 1px solid var(--border);
+      vertical-align: top;
+      line-height: 1.5;
+      font-size: 13px;
+    }
+    .metrics-dashboard-table tr:nth-child(even) td { background: #fafaf8; }
+    .metrics-dashboard-table tr:last-child td { border-bottom: none; }
+
+    @media (max-width: 640px) {
+      .criteria-grid { grid-template-columns: 1fr; }
+      .metrics-inline { grid-template-columns: 1fr 1fr; }
+      .stage-sequence { flex-direction: column; }
+      .seq-step:first-child { border-radius: 10px 10px 0 0; }
+      .seq-step:last-child { border-radius: 0 0 10px 10px; }
+      .seq-step + .seq-step { border-left: 1.5px solid var(--border); border-top: none; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav class="nav">
+  <span class="nav-logo">CRO <span>Manual</span></span>
+  <span class="nav-sep">/</span>
+  <a href="../pages/resources.html" class="nav-back">Resources &amp; Templates</a>
+  <span class="nav-sep">/</span>
+  <span class="nav-current">Demand Generation Channel Guide</span>
+  <span class="nav-spacer"></span>
+  <a href="../index.html" class="nav-home">Home</a>
+</nav>
+
+<!-- HERO -->
+<div class="page-hero">
+  <div class="hero-phase-label">Marketing · Resources &amp; Templates</div>
+  <h1 class="hero-title">Demand Generation Channel Guide</h1>
+  <p class="hero-subtitle">Demand gen is the engine that feeds your sales pipeline. In Stage 2, you need one scalable, measurable channel. In Stage 3, you diversify across multiple aligned channels. Every channel must pass the same four criteria.</p>
+  <div class="hero-tags">
+    <span class="hero-tag">Content SEO</span>
+    <span class="hero-tag">Outbound</span>
+    <span class="hero-tag">Paid</span>
+    <span class="hero-tag">Events</span>
+    <span class="hero-tag">PLG</span>
+    <span class="hero-tag">Partner</span>
+    <span class="hero-tag">Channel Selection</span>
+  </div>
+</div>
+
+<!-- CONTENT -->
+<div class="content-wrap">
+
+  <!-- Breadcrumb -->
+  <nav class="breadcrumb">
+    <a href="../index.html">Home</a>
+    <span class="sep">›</span>
+    <a href="../pages/resources.html">Resources &amp; Templates</a>
+    <span class="sep">›</span>
+    <span class="current">Demand Generation Channel Guide</span>
+  </nav>
+
+  <!-- Section 1 -->
+  <h2 class="section-title">The 4 Channel Selection Criteria</h2>
+  <p class="section-intro">Every demand gen channel must meet ALL four criteria before investing meaningful budget or headcount. A channel that fails even one criterion will waste resources and generate misleading pipeline signals.</p>
+
+  <div class="criteria-grid">
+    <div class="criteria-card">
+      <div class="criteria-num">Criterion 1</div>
+      <div class="criteria-title">Alignment</div>
+      <div class="criteria-desc">Are your ICP buyers active and reachable on this channel? A channel with perfect targeting tools is worthless if your buyers aren't present. Validate that your ICP spends time and attention in this channel before investing.</div>
+    </div>
+    <div class="criteria-card">
+      <div class="criteria-num">Criterion 2</div>
+      <div class="criteria-title">Measurability</div>
+      <div class="criteria-desc">Can you track exact cost per SQL from this channel — not just cost per lead or cost per click? Pipeline attribution must be traceable back to the channel that generated each SQL.</div>
+    </div>
+    <div class="criteria-card">
+      <div class="criteria-num">Criterion 3</div>
+      <div class="criteria-title">Rapid Testability</div>
+      <div class="criteria-desc">Can you run a 30–60 day test to validate both cost per SQL and pipeline volume? Channels with 12-month feedback loops (pure SEO, brand campaigns) are Stage 3 plays, not Stage 2 test candidates.</div>
+    </div>
+    <div class="criteria-card">
+      <div class="criteria-num">Criterion 4</div>
+      <div class="criteria-title">Customer Success Alignment</div>
+      <div class="criteria-desc">Do leads from this channel achieve LIR at above-threshold rates? A channel that generates cheap SQLs with low LIR achievement is destroying LIUE (LTV/CAC), not building it. Quality > quantity — always.</div>
+    </div>
+  </div>
+
+  <div class="callout callout-warning">
+    <div class="callout-title">Key Insight — Quality Over Volume</div>
+    <p>A channel that generates cheap SQLs but with low LIR achievement is destroying LIUE, not building it. Before scaling any channel, verify that its customers achieve LIR at or above the company-wide threshold. Drop channels that consistently underperform on LIR regardless of their cost per SQL.</p>
+  </div>
+
+  <!-- Section 2 -->
+  <h2 class="section-title">Channel Comparison Matrix</h2>
+  <p class="section-intro">Every major demand gen channel mapped across cost, speed, scalability, ICP alignment, and LIR risk. Use this matrix to shortlist 1–2 channels for Stage 2 testing.</p>
+
+  <div class="channel-table-wrap">
+    <table class="channel-table">
+      <thead>
+        <tr>
+          <th>Channel</th>
+          <th>Typical Cost/SQL</th>
+          <th>Time to First SQL</th>
+          <th>Scalability</th>
+          <th>ICP Alignment</th>
+          <th>LIR Risk</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>Outbound Cold Email / LinkedIn</strong></td>
+          <td>$150–500</td>
+          <td>2–4 weeks</td>
+          <td>High</td>
+          <td>High (if list is ICP)</td>
+          <td>Low</td>
+        </tr>
+        <tr>
+          <td><strong>Content SEO</strong></td>
+          <td>$500–2,000</td>
+          <td>6–18 months</td>
+          <td>Very High</td>
+          <td>Medium (depends on intent)</td>
+          <td>Medium</td>
+        </tr>
+        <tr>
+          <td><strong>Paid Search (SEM)</strong></td>
+          <td>$300–1,500</td>
+          <td>2–4 weeks</td>
+          <td>High</td>
+          <td>Medium–High</td>
+          <td>Medium</td>
+        </tr>
+        <tr>
+          <td><strong>LinkedIn Ads</strong></td>
+          <td>$500–2,500</td>
+          <td>4–8 weeks</td>
+          <td>Medium</td>
+          <td>High (job title targeting)</td>
+          <td>Low–Medium</td>
+        </tr>
+        <tr>
+          <td><strong>Webinars / Virtual Events</strong></td>
+          <td>$200–800</td>
+          <td>4–8 weeks</td>
+          <td>Medium</td>
+          <td>High</td>
+          <td>Low</td>
+        </tr>
+        <tr>
+          <td><strong>Field Events / Conferences</strong></td>
+          <td>$1,000–5,000</td>
+          <td>6–12 weeks</td>
+          <td>Low</td>
+          <td>Very High</td>
+          <td>Very Low</td>
+        </tr>
+        <tr>
+          <td><strong>Partner / Channel Referrals</strong></td>
+          <td>$100–400</td>
+          <td>Varies</td>
+          <td>Varies</td>
+          <td>Very High</td>
+          <td>Very Low</td>
+        </tr>
+        <tr>
+          <td><strong>PLG / Freemium</strong></td>
+          <td>$50–200</td>
+          <td>Immediate</td>
+          <td>Very High</td>
+          <td>Medium</td>
+          <td>Medium–High</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="callout callout-definition">
+    <div class="callout-title">Reading the Matrix</div>
+    <p>LIR Risk reflects how often leads from this channel fail to achieve the LIR event post-close. "Very Low" means channel leads reliably become retained customers. "High" means significant post-sale attrition risk and CAC recovery issues. Always validate LIR Risk with real cohort data from your own customer base — industry benchmarks are directional only.</p>
+  </div>
+
+  <!-- Section 3 — Outbound -->
+  <h2 class="section-title">Deep-Dive: Outbound (Cold Email + LinkedIn)</h2>
+  <p class="section-intro">Outbound is the go-to Stage 2 channel for B2B SaaS companies with a defined ICP and a compelling value proposition. Fast feedback loop, directly measurable, and controllable at any volume.</p>
+
+  <div class="deep-dive-block">
+    <div class="deep-dive-header">
+      <div class="deep-dive-icon">📤</div>
+      <div class="deep-dive-header-text">
+        <div class="ddt">Cold Email + LinkedIn Outbound</div>
+        <div class="dds">Best for: defined ICP, compelling value proposition, reps with strong discovery skills</div>
+      </div>
+    </div>
+    <div class="deep-dive-body">
+
+      <h3 class="subsection-title">Setup Guide</h3>
+      <ol class="step-list">
+        <li><div class="step-content"><span class="step-title">Build your ICP list</span>Use LinkedIn Sales Navigator or ZoomInfo to pull companies that match your ICP firmographic and technographic criteria. Target 500–2,000 accounts per rep cycle.</div></li>
+        <li><div class="step-content"><span class="step-title">Enrich with contact data</span>Layer in decision-maker contact data using Apollo.io or ZoomInfo. Prioritize verified emails over inferred emails. Target 2–3 contacts per account (economic buyer + champion).</div></li>
+        <li><div class="step-content"><span class="step-title">Build a 6–8 touch sequence</span>Mix email and LinkedIn touches over 3–4 weeks. Lead with value — share a relevant insight, case study, or stat before pitching. Never open with a product pitch.</div></li>
+        <li><div class="step-content"><span class="step-title">Launch and measure</span>Track open rate, reply rate, and meeting booked rate by sequence. A/B test subject lines and opening lines. Optimize the top-performing variant.</div></li>
+      </ol>
+
+      <h3 class="subsection-title">Key Success Factors</h3>
+      <ul class="bullet-list">
+        <li><strong>Hyper-personalization — not mail merge.</strong> Reference the prospect's company, role, recent news, or specific pain point. Generic sequences get deleted.</li>
+        <li><strong>Clear value statement.</strong> In the first sentence, the prospect should understand exactly what problem you solve and for whom. Ambiguity kills outbound.</li>
+        <li><strong>Fast response time.</strong> Respond to inbound replies within 4 hours. Speed-to-reply rate is the #1 predictor of outbound meeting show rates.</li>
+        <li><strong>Volume discipline.</strong> 50–100 new prospects per rep per week — quality-limited, not volume-limited. More personalization beats more volume every time.</li>
+      </ul>
+
+      <h3 class="subsection-title">Tools Stack</h3>
+      <div class="tool-chips">
+        <span class="tool-chip">Apollo.io</span>
+        <span class="tool-chip">Outreach</span>
+        <span class="tool-chip">Salesloft</span>
+        <span class="tool-chip">HubSpot Sequences</span>
+        <span class="tool-chip">ZoomInfo</span>
+        <span class="tool-chip">LinkedIn Sales Navigator</span>
+        <span class="tool-chip">Clay</span>
+      </div>
+
+      <h3 class="subsection-title">Benchmark Metrics</h3>
+      <div class="metrics-inline">
+        <div class="mi-card">
+          <div class="mi-label">Open Rate</div>
+          <div class="mi-value">40%+</div>
+        </div>
+        <div class="mi-card">
+          <div class="mi-label">Reply Rate</div>
+          <div class="mi-value">5–10%</div>
+        </div>
+        <div class="mi-card">
+          <div class="mi-label">Meeting Booked</div>
+          <div class="mi-value">2–5%</div>
+        </div>
+      </div>
+
+      <div class="callout callout-best-practice">
+        <div class="callout-title">Stage 2 Recommendation</div>
+        <p>Outbound is the highest-control Stage 2 channel. You control who you reach, when, and at what volume. Start with outbound to validate your ICP and value proposition before investing in channels with longer feedback loops.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Section 4 — Content SEO -->
+  <h2 class="section-title">Deep-Dive: Content &amp; SEO</h2>
+  <p class="section-intro">Content marketing builds compounding pipeline over time. Unlike paid channels, organic search traffic compounds — a post that drives 10 SQLs per month in Year 1 will drive 30 in Year 3 with proper authority building.</p>
+
+  <div class="deep-dive-block">
+    <div class="deep-dive-header">
+      <div class="deep-dive-icon">✍️</div>
+      <div class="deep-dive-header-text">
+        <div class="ddt">Content Marketing &amp; SEO</div>
+        <div class="dds">Best for: companies with 12+ month horizons, strong thought leadership, and organic search demand in their category</div>
+      </div>
+    </div>
+    <div class="deep-dive-body">
+
+      <h3 class="subsection-title">Content Strategy by Stage</h3>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;margin:14px 0;">
+        <div style="background:#f0f8ff;border:1.5px solid #2a7fa8;border-radius:8px;padding:16px;">
+          <div style="font-size:11px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:#2a7fa8;margin-bottom:8px;">Stage 2 Focus</div>
+          <ul class="bullet-list" style="margin:0;">
+            <li>1 primary content format — build authority in one category before diversifying</li>
+            <li>Long-form SEO articles (1,500–3,000 words) targeting problem-aware keywords</li>
+            <li>Customer case studies — proof that your product delivers LIR for the ICP</li>
+            <li>Minimum 2× per week publishing cadence to build SEO authority</li>
+          </ul>
+        </div>
+        <div style="background:#f0fff4;border:1.5px solid #437A22;border-radius:8px;padding:16px;">
+          <div style="font-size:11px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:#437A22;margin-bottom:8px;">Stage 3 Expansion</div>
+          <ul class="bullet-list" style="margin:0;">
+            <li>Thought leadership and original research reports</li>
+            <li>Video content and webinar series</li>
+            <li>Content clusters around 5–8 core ICP topics</li>
+            <li>Partner-authored and guest content for audience growth</li>
+          </ul>
+        </div>
+      </div>
+
+      <h3 class="subsection-title">ICP Content Alignment</h3>
+      <p>Every piece of content should answer a question your ICP buyers are actively searching for. Map your content calendar to buyer journey stages — awareness (problem recognition), consideration (solution evaluation), and decision (vendor comparison).</p>
+
+      <h3 class="subsection-title">Distribution Workflow</h3>
+      <ol class="step-list">
+        <li><div class="step-content"><span class="step-title">Publish</span>Post to your blog/website with proper SEO structure (H1, meta description, schema markup, internal links).</div></li>
+        <li><div class="step-content"><span class="step-title">Share</span>LinkedIn company page + employee advocacy program. Top-performing content gets a personal post from the CEO or VP Sales.</div></li>
+        <li><div class="step-content"><span class="step-title">Email</span>Include in newsletter segment or relevant nurture sequence. High-value content becomes a lead magnet with gating.</div></li>
+        <li><div class="step-content"><span class="step-title">Repurpose</span>Split into 3–5 LinkedIn posts, 1–2 short videos, an infographic. One long-form piece should generate 10+ derivative pieces.</div></li>
+        <li><div class="step-content"><span class="step-title">Syndicate</span>Guest post excerpts on industry publications, relevant Reddit communities, and Slack communities where your ICP is active.</div></li>
+      </ol>
+
+      <h3 class="subsection-title">Key Metric — Pipeline Influence</h3>
+      <div class="callout callout-formula">
+        <div class="callout-title">The Right Content Metric</div>
+        <p>Track % of SQLs that cite content as an influence — not just organic traffic volume. Organic traffic without pipeline influence is brand awareness, not demand gen. The metric that matters: Content-Influenced Pipeline as % of total pipeline.</p>
+      </div>
+
+      <p>Related templates: <a href="template-content-marketing.html">Content Marketing Worksheet</a>, <a href="template-editorial-calendar.html">Editorial Calendar Template</a></p>
+    </div>
+  </div>
+
+  <!-- Section 5 — Paid -->
+  <h2 class="section-title">Deep-Dive: Paid Marketing (SEM + Social)</h2>
+  <p class="section-intro">Paid channels offer fast feedback and precise targeting, but require disciplined budget allocation and strict LIUE tracking. Never scale paid before proving cost per SQL and LIR achievement are both validated.</p>
+
+  <div class="deep-dive-block">
+    <div class="deep-dive-header">
+      <div class="deep-dive-icon">💰</div>
+      <div class="deep-dive-header-text">
+        <div class="ddt">Paid Search &amp; Paid Social</div>
+        <div class="dds">Best for: companies with validated ICP, proven landing pages, and budget to test at meaningful scale ($5K+/month)</div>
+      </div>
+    </div>
+    <div class="deep-dive-body">
+
+      <h3 class="subsection-title">Budget Allocation Model</h3>
+      <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin:14px 0;">
+        <div style="background:#f5fafc;border:1px solid #cfe3ec;border-radius:8px;padding:14px;text-align:center;">
+          <div style="font-size:28px;font-weight:700;color:#006494;">60–70%</div>
+          <div style="font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:0.8px;color:#006494;margin-top:4px;">Proven Channels</div>
+          <div style="font-size:12px;color:var(--text-muted);margin-top:6px;">1–2 channels with validated cost per SQL. Scale these.</div>
+        </div>
+        <div style="background:#fff8f0;border:1px solid #f0c090;border-radius:8px;padding:14px;text-align:center;">
+          <div style="font-size:28px;font-weight:700;color:#964219;">20–30%</div>
+          <div style="font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:0.8px;color:#964219;margin-top:4px;">Experiments</div>
+          <div style="font-size:12px;color:var(--text-muted);margin-top:6px;">Fixed budget, clear success metrics, 60-day test window.</div>
+        </div>
+        <div style="background:#f0fff4;border:1px solid #b2d8b2;border-radius:8px;padding:14px;text-align:center;">
+          <div style="font-size:28px;font-weight:700;color:#437A22;">10%</div>
+          <div style="font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:0.8px;color:#437A22;margin-top:4px;">Brand</div>
+          <div style="font-size:12px;color:var(--text-muted);margin-top:6px;">Not directly tracked. Builds long-term pipeline awareness.</div>
+        </div>
+      </div>
+
+      <h3 class="subsection-title">SEM Best Practices</h3>
+      <ul class="bullet-list">
+        <li>Target non-branded keywords tied to ICP pain — "how to manage [problem]" beats branded terms for pipeline quality</li>
+        <li>Use high-intent search terms: competitor names, category + "software," "[pain point] + solution"</li>
+        <li>Landing page A/B testing is mandatory — test headline, CTA, and social proof combinations</li>
+        <li>Negative keyword lists: exclude irrelevant industries, job seeker terms, and non-ICP queries</li>
+      </ul>
+
+      <h3 class="subsection-title">LinkedIn Ads Best Practices</h3>
+      <ul class="bullet-list">
+        <li>Audience: job title + seniority + company size — mirror your ICP definition exactly</li>
+        <li>Offer content downloads (guides, reports) for cold audiences — not product demos</li>
+        <li>Frequency cap: 3–4 impressions per person per week to avoid ad fatigue</li>
+        <li>Retargeting: pixel all website visitors and build retargeting audiences after 200+ page views</li>
+      </ul>
+
+      <p>Full paid marketing worksheet: <a href="template-paid-marketing.html">Paid Marketing Worksheet →</a></p>
+    </div>
+  </div>
+
+  <!-- Section 6 — Events -->
+  <h2 class="section-title">Deep-Dive: Events &amp; Webinars</h2>
+  <p class="section-intro">Events generate high-quality, high-intent pipeline but with longer lead times and higher cost per SQL. Best for Stage 3 when you have a defined channel strategy and can invest in execution quality.</p>
+
+  <div class="deep-dive-block">
+    <div class="deep-dive-header">
+      <div class="deep-dive-icon">🎤</div>
+      <div class="deep-dive-header-text">
+        <div class="ddt">Webinars, Field Events &amp; Conferences</div>
+        <div class="dds">Best for: companies with strong brand, SME thought leaders, and highly concentrated ICP at specific events</div>
+      </div>
+    </div>
+    <div class="deep-dive-body">
+      <h3 class="subsection-title">Webinars</h3>
+      <ul class="bullet-list">
+        <li>Host 1–2 per month on ICP-relevant topics — address the problem, not your product</li>
+        <li>Structure: 80% education, 20% product. Never pitch in the first 40 minutes.</li>
+        <li>Promote 3 weeks in advance via email, LinkedIn, and partner channels</li>
+        <li>Follow up with attendees within 24 hours — segment hot leads (attended 45+ min) for direct outreach</li>
+        <li>Repurpose recordings into blog posts, clips, and gated assets</li>
+      </ul>
+
+      <h3 class="subsection-title">Field Events &amp; Conferences</h3>
+      <ul class="bullet-list">
+        <li>Focus on 2–3 high-quality conferences per year where your ICP is concentrated — not every industry event</li>
+        <li>Pre-schedule meetings before the event — walk-by traffic rarely converts</li>
+        <li>Measure success by meetings booked at event, not booth traffic or badge scans</li>
+        <li>Sponsored events: only worth the investment if you can track meeting-booked rate from the event</li>
+        <li>Follow-up within 24 hours: personalized email referencing the specific conversation, not a generic nurture sequence</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- Section 7 — Partner -->
+  <h2 class="section-title">Deep-Dive: Partner / Channel</h2>
+  <p class="section-intro">Partner channels produce the highest-quality leads because referred customers arrive pre-qualified by someone who understands both your product and the buyer's needs. The challenge is building and activating a partner ecosystem.</p>
+
+  <div class="deep-dive-block">
+    <div class="deep-dive-header">
+      <div class="deep-dive-icon">🤝</div>
+      <div class="deep-dive-header-text">
+        <div class="ddt">Partner &amp; Channel Referrals</div>
+        <div class="dds">Best for: companies with natural ecosystem — SI partners, platform partners, or complementary products with the same ICP</div>
+      </div>
+    </div>
+    <div class="deep-dive-body">
+      <h3 class="subsection-title">Partner Types</h3>
+      <div class="channel-table-wrap" style="margin:10px 0;">
+        <table class="channel-table">
+          <thead>
+            <tr><th>Type</th><th>How It Works</th><th>Revenue Model</th><th>LIR Implication</th></tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>Referral Partners</strong></td>
+              <td>Partner sends qualified leads, you close and retain</td>
+              <td>10–20% referral fee per closed deal</td>
+              <td>Very Low — partner pre-qualifies ICP fit</td>
+            </tr>
+            <tr>
+              <td><strong>Resellers</strong></td>
+              <td>Partner sells and manages the customer relationship</td>
+              <td>20–40% revenue share</td>
+              <td>Medium — depends on partner's CS quality</td>
+            </tr>
+            <tr>
+              <td><strong>Technology Partners</strong></td>
+              <td>Integration creates mutual referral flow from shared user base</td>
+              <td>Co-marketing, co-sell</td>
+              <td>Low — integration users have higher adoption</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h3 class="subsection-title">Key Success Factors</h3>
+      <ul class="bullet-list">
+        <li><strong>Partners must understand your ICP and LIR framework</strong> — they are selling on your behalf. Invest in partner enablement as heavily as rep enablement.</li>
+        <li><strong>Partner qualification matters.</strong> A poorly qualified referral from a partner is worse than no referral — it poisons the relationship and wastes CS resources.</li>
+        <li><strong>Partner incentives:</strong> tiered commission (higher tiers unlock higher rates), co-marketing budget for joint campaigns, technical certification programs that increase partner confidence</li>
+        <li><strong>Track LIR by partner.</strong> If a specific partner's referrals consistently underperform on LIR, address it with the partner — their qualification criteria may be misaligned.</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- Section 8 — Multi-Channel -->
+  <h2 class="section-title">Building a Multi-Channel Demand Gen Machine (Stage 3)</h2>
+  <p class="section-intro">Stage 3 is about controlled diversification — adding channels sequentially, each with its own validated LIUE before scaling. Never add a new channel before the current channel is stable.</p>
+
+  <div class="stage-sequence">
+    <div class="seq-step">
+      <div class="seq-step-num">Stage 2</div>
+      <div class="seq-step-title">Prove 1 Channel</div>
+      <div class="seq-step-desc">Validate cost per SQL, LIR rate, and LIUE for your primary channel. Hit 3× LIUE before moving on.</div>
+    </div>
+    <div class="seq-step">
+      <div class="seq-step-num">Transition</div>
+      <div class="seq-step-title">Add 2nd Channel</div>
+      <div class="seq-step-desc">Maintain primary channel at scale. Run 60-day test on new channel with fixed budget and clear success thresholds.</div>
+    </div>
+    <div class="seq-step">
+      <div class="seq-step-num">Stage 3 Early</div>
+      <div class="seq-step-title">Validate + Add 3rd</div>
+      <div class="seq-step-desc">Validate 2nd channel hits LIUE threshold. Add 3rd channel. Begin multi-touch attribution modeling.</div>
+    </div>
+    <div class="seq-step">
+      <div class="seq-step-num">Stage 3 Mature</div>
+      <div class="seq-step-title">Portfolio Management</div>
+      <div class="seq-step-desc">Quarterly LIUE review by channel. Reallocate budget from low-LIUE channels to high-LIUE channels every quarter.</div>
+    </div>
+  </div>
+
+  <h3 class="subsection-title">Attribution Model</h3>
+  <p>Use multi-touch attribution: first touch (channel that generated initial awareness), last touch (channel that generated the SQL), and linear mid-touch (channels that influenced the buyer during evaluation). Track all three to understand the full funnel contribution of each channel.</p>
+
+  <div class="callout callout-best-practice">
+    <div class="callout-title">Channel Health Check</div>
+    <p>Track LIUE by channel quarterly. Ask: is the LTV/CAC ratio maintaining above 3 for each channel? Channels that drop below 3 need investigation before budget increases. Channels that drop below 1 must be paused immediately.</p>
+  </div>
+
+  <!-- Section 9 — Metrics Dashboard -->
+  <h2 class="section-title">Demand Gen Metrics Dashboard</h2>
+  <p class="section-intro">Track these six metrics monthly by channel. A healthy demand gen operation shows improving or stable metrics across all six dimensions — not just SQL volume.</p>
+
+  <div class="metrics-dashboard-table-wrap">
+    <table class="metrics-dashboard-table">
+      <thead>
+        <tr>
+          <th>Metric</th>
+          <th>Definition</th>
+          <th>Stage 2 Target</th>
+          <th>Stage 3 Target</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>Total SQLs per Month</strong></td>
+          <td>Number of qualified leads entering the sales funnel from this channel</td>
+          <td>2× ramp capacity (enough to keep reps full)</td>
+          <td>Cover full hiring plan + 20% buffer</td>
+        </tr>
+        <tr>
+          <td><strong>Cost per SQL</strong></td>
+          <td>Total demand gen spend on this channel ÷ SQLs generated</td>
+          <td>&lt;$1,000 (segment dependent)</td>
+          <td>Decreasing QoQ as efficiency improves</td>
+        </tr>
+        <tr>
+          <td><strong>SQL-to-Customer %</strong></td>
+          <td>SQLs converting to closed-won customers</td>
+          <td>&gt;20%</td>
+          <td>&gt;25% (more refined ICP targeting)</td>
+        </tr>
+        <tr>
+          <td><strong>LIR Achievement by Channel</strong></td>
+          <td>% of customers from this channel hitting LIR threshold within T days</td>
+          <td>≥ company-wide LIR threshold</td>
+          <td>≥ threshold (or drop channel)</td>
+        </tr>
+        <tr>
+          <td><strong>Channel LIUE</strong></td>
+          <td>LTV/CAC ratio for customers sourced from this channel</td>
+          <td>&gt;3</td>
+          <td>&gt;3 per channel, improving QoQ</td>
+        </tr>
+        <tr>
+          <td><strong>Pipeline Coverage</strong></td>
+          <td>Total pipeline value ÷ quarterly revenue target</td>
+          <td>3–4× (lower close rates early)</td>
+          <td>3× (higher close rates, cleaner pipeline)</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- Related -->
+  <div class="related-section">
+    <div class="related-title">Related Pages</div>
+    <div class="related-links">
+      <a href="../pages/resources.html" class="related-link">← Resources &amp; Templates</a>
+      <a href="template-content-marketing.html" class="related-link">Content Marketing Worksheet</a>
+      <a href="template-editorial-calendar.html" class="related-link">Editorial Calendar</a>
+      <a href="template-paid-marketing.html" class="related-link">Paid Marketing Worksheet</a>
+      <a href="template-plg.html" class="related-link">PLG Funnel Worksheet</a>
+      <a href="sos-gtm-fit.html" class="related-link">GTM Fit SOS</a>
+    </div>
+  </div>
+
+</div>
+<script data-pplx-inline-edit>
+(function () {
+  if (window === window.top) return;
+
+  const allowedParentOrigins = ["https://www.perplexity.ai","https://perplexity.ai","https://testing.perplexity.ai","https://staging.perplexity.ai","https://*.preview.i.perplexity.ai","http://localhost:3000","http://127.0.0.1:3000","http://localhost:5173","http://127.0.0.1:5173"];
+  const MAX_FONT_BYTES = 500 * 1024;
+  const MAX_TOTAL_FONT_BYTES = 2 * 1024 * 1024;
+  let scrollForwarding = false;
+  let scrollRaf = 0;
+  let trustedTopOrigin = null;
+
+  // Allow entries like "https://*.preview.i.perplexity.ai" — the wildcard
+  // matches a single DNS label (no dots), so "https://*.foo" cannot stretch
+  // across multiple labels.
+  function matchesAllowedOrigin(origin) {
+    if (!origin) return false;
+    for (const entry of allowedParentOrigins) {
+      if (!entry.includes("*")) {
+        if (entry === origin) return true;
+        continue;
+      }
+      const pattern = new RegExp(
+        "^" +
+          entry.replace(/[.+?^${}()|[\]\\]/g, "\\$&").replace(/\*/g, "[^.]+") +
+          "$",
+      );
+      if (pattern.test(origin)) return true;
+    }
+    return false;
+  }
+
+  // Trust decision: when the sender is same-origin-visible (event.origin is a
+  // real origin like https://www.perplexity.ai) we trust event.origin directly.
+  // When event.origin is "null" (opaque broker srcdoc), we fall back to the
+  // broker's stamped `parentOrigin` to identify the top window. The fallback
+  // is claim-only — we rely on the browser's native `targetOrigin` enforcement
+  // on the response path (see postToTrustedTop) to ensure replies can't be
+  // delivered to anyone but the actual top window of that claimed origin.
+  function getTrustedParentOrigin(event) {
+    const forwardedParentOrigin =
+      typeof event.data.parentOrigin === "string" ? event.data.parentOrigin : null;
+    const parentOrigin = event.origin === "null" ? forwardedParentOrigin : event.origin;
+    return matchesAllowedOrigin(parentOrigin) ? parentOrigin : null;
+  }
+
+  // All responses go to window.top with targetOrigin = the allowlisted origin.
+  // An attacker that iframes us inside their own null-origin broker can claim
+  // any parentOrigin they like, but the browser will drop the reply whenever
+  // the real top's origin doesn't match — so the screenshot never leaves.
+  function postToTrustedTop(message) {
+    if (!trustedTopOrigin) return;
+    try {
+      window.top.postMessage(message, trustedTopOrigin);
+    } catch (_error) {}
+  }
+
+  function inlineAll(original, clone) {
+    if (original.nodeType !== 1 || clone.nodeType !== 1) return;
+
+    try {
+      const computedStyle = getComputedStyle(original);
+      // cssText on a computed style is the serialized declaration in modern
+      // Chromium/Safari — a single read beats enumerating ~400 longhand
+      // properties. Firefox returns "" here, so we fall back on empty.
+      const serialized = computedStyle.cssText;
+      if (serialized) {
+        clone.style.cssText = serialized;
+      } else {
+        const parts = new Array(computedStyle.length);
+        for (let index = 0; index < computedStyle.length; index += 1) {
+          const property = computedStyle[index];
+          parts[index] = `${property}:${computedStyle.getPropertyValue(property)};`;
+        }
+        clone.style.cssText = parts.join("");
+      }
+    } catch (_error) {}
+
+    const originalChildren = original.children;
+    const clonedChildren = clone.children;
+    for (
+      let index = 0;
+      index < originalChildren.length && index < clonedChildren.length;
+      index += 1
+    ) {
+      inlineAll(originalChildren[index], clonedChildren[index]);
+    }
+  }
+
+  function extractFontUrl(srcValue) {
+    const matches = [
+      ...srcValue.matchAll(
+        /url\(["']?([^"')]+)["']?\)(?:\s*format\(["']?([^"')]+)["']?\))?/gi,
+      ),
+    ];
+    if (matches.length === 0) return null;
+    const woff2 = matches.find((m) => m[2] && m[2].toLowerCase().includes("woff2"));
+    if (woff2) return woff2[1];
+    const woff = matches.find((m) => m[2] && m[2].toLowerCase().includes("woff"));
+    if (woff) return woff[1];
+    return matches[0][1];
+  }
+
+  // Cache resolved font URL -> data URI across captures. Fonts on a page
+  // essentially never change, and a batch run emits multiple captures back to
+  // back — without this we'd refetch + re-base64 every time.
+  const fontDataUriCache = new Map();
+  const SRC_DECLARATION_RE = /src\s*:\s*[^;}]+/i;
+
+  async function fetchAsDataUri(url) {
+    if (fontDataUriCache.has(url)) return fontDataUriCache.get(url);
+    let dataUri = null;
+    try {
+      const response = await fetch(url, { mode: "cors", credentials: "omit" });
+      if (response.ok) {
+        const blob = await response.blob();
+        if (blob.size <= MAX_FONT_BYTES) {
+          dataUri = await new Promise((resolve) => {
+            const reader = new FileReader();
+            reader.onloadend = () =>
+              resolve(typeof reader.result === "string" ? reader.result : null);
+            reader.onerror = () => resolve(null);
+            reader.readAsDataURL(blob);
+          });
+        }
+      }
+    } catch (_error) {
+      dataUri = null;
+    }
+    fontDataUriCache.set(url, dataUri);
+    return dataUri;
+  }
+
+  function collectFontFaceRuleTexts() {
+    const rules = [];
+    for (const sheet of document.styleSheets) {
+      let cssRules;
+      try {
+        cssRules = sheet.cssRules;
+      } catch (_error) {
+        continue;
+      }
+      if (!cssRules) continue;
+      for (const rule of cssRules) {
+        const cssText = rule.cssText || "";
+        if (cssText.startsWith("@font-face")) rules.push(cssText);
+      }
+    }
+    return rules;
+  }
+
+  async function buildInlinedFontCss() {
+    const ruleTexts = collectFontFaceRuleTexts();
+    if (ruleTexts.length === 0) return null;
+
+    const resolved = ruleTexts.map((cssText) => {
+      if (!SRC_DECLARATION_RE.test(cssText)) return null;
+      const srcMatch = cssText.match(/src\s*:\s*([^;}]+)[;}]/i);
+      if (!srcMatch) return null;
+      const url = extractFontUrl(srcMatch[1]);
+      if (!url) return null;
+      try {
+        return { cssText, url: new URL(url, document.baseURI).href };
+      } catch (_error) {
+        return null;
+      }
+    });
+
+    const dataUris = await Promise.all(
+      resolved.map((entry) => (entry ? fetchAsDataUri(entry.url) : Promise.resolve(null))),
+    );
+
+    const inlined = [];
+    let totalBytes = 0;
+    for (let index = 0; index < resolved.length; index += 1) {
+      const entry = resolved[index];
+      const dataUri = dataUris[index];
+      if (!entry || !dataUri) continue;
+      const approxBytes = dataUri.length * 0.75;
+      if (totalBytes + approxBytes > MAX_TOTAL_FONT_BYTES) break;
+      totalBytes += approxBytes;
+      inlined.push(entry.cssText.replace(SRC_DECLARATION_RE, `src: url("${dataUri}")`));
+    }
+    return inlined.length > 0 ? inlined.join("\n") : null;
+  }
+
+  function stripExternal(clone) {
+    const images = clone.querySelectorAll("img");
+    for (let index = 0; index < images.length; index += 1) {
+      const src = images[index].getAttribute("src");
+      if (src && !src.startsWith("data:")) images[index].removeAttribute("src");
+    }
+
+    const elements = clone.querySelectorAll("*");
+    for (let index = 0; index < elements.length; index += 1) {
+      const style = elements[index].style.cssText;
+      if (style && style.includes("url(")) {
+        elements[index].style.cssText = style.replace(
+          /url\(["']?(?!data:)[^)"']*["']?\)/gi,
+          "none",
+        );
+      }
+    }
+  }
+
+  function emitScroll() {
+    scrollRaf = 0;
+    if (!scrollForwarding) return;
+    postToTrustedTop({
+      type: "INLINE_EDIT_SCROLL",
+      scrollX: window.scrollX,
+      scrollY: window.scrollY,
+    });
+  }
+
+  window.addEventListener(
+    "scroll",
+    function () {
+      if (!scrollForwarding || scrollRaf) return;
+      scrollRaf = requestAnimationFrame(emitScroll);
+    },
+    { passive: true, capture: true },
+  );
+
+  async function handleCaptureRequest(event) {
+    const requestId = event.data.requestId;
+    const scrollX = window.scrollX;
+    const scrollY = window.scrollY;
+    const width = window.innerWidth;
+    const height = window.innerHeight;
+
+    function postResult(dataUrl) {
+      postToTrustedTop({
+        type: "INLINE_EDIT_SCREENSHOT_RESULT",
+        requestId,
+        dataUrl,
+        scrollX,
+        scrollY,
+      });
+    }
+
+    try {
+      // Wait for any pending web fonts to resolve so both inline metrics and
+      // the @font-face inlining below see the same loaded faces.
+      if (document.fonts && document.fonts.ready) {
+        try {
+          await document.fonts.ready;
+        } catch (_error) {}
+      }
+
+      const clone = document.documentElement.cloneNode(true);
+      inlineAll(document.documentElement, clone);
+
+      const removedNodes = clone.querySelectorAll("script,link[rel=\"stylesheet\"],style");
+      for (let index = 0; index < removedNodes.length; index += 1) {
+        removedNodes[index].remove();
+      }
+
+      stripExternal(clone);
+
+      // Re-embed web fonts as data-URI @font-face rules so the SVG rasterizer
+      // can resolve them — external font URLs aren't fetched during
+      // foreignObject rendering, which would otherwise force a fallback face
+      // and change text metrics.
+      const inlinedFontCss = await buildInlinedFontCss();
+      if (inlinedFontCss) {
+        const styleEl = document.createElement("style");
+        styleEl.textContent = inlinedFontCss;
+        const head = clone.querySelector("head");
+        if (head) head.appendChild(styleEl);
+        else clone.insertBefore(styleEl, clone.firstChild);
+      }
+
+      const html = new XMLSerializer().serializeToString(clone);
+      const svg =
+        `<svg xmlns="http://www.w3.org/2000/svg" width="${width}" height="${height}">` +
+        '<foreignObject width="100%" height="100%">' +
+        `<div xmlns="http://www.w3.org/1999/xhtml" style="width:${width}px;height:${height}px;overflow:hidden">` +
+        `<div style="transform:translate(-${scrollX}px,-${scrollY}px);transform-origin:top left">` +
+        html +
+        "</div></div></foreignObject></svg>";
+      const svgUrl = `data:image/svg+xml;charset=utf-8,${encodeURIComponent(svg)}`;
+      const image = new Image();
+      image.onload = function () {
+        const canvas = document.createElement("canvas");
+        canvas.width = width;
+        canvas.height = height;
+        canvas.getContext("2d").drawImage(image, 0, 0);
+        postResult(canvas.toDataURL("image/png"));
+      };
+      image.onerror = function () {
+        postResult(null);
+      };
+      image.src = svgUrl;
+    } catch (_error) {
+      postResult(null);
+    }
+  }
+
+  window.addEventListener("message", function (event) {
+    if (!event.data) return;
+    // Only accept messages from the direct parent frame. Blocks sibling /
+    // unrelated-window postMessage senders that could otherwise reach us.
+    if (event.source !== window.parent) return;
+
+    const trustedParentOrigin = getTrustedParentOrigin(event);
+    if (!trustedParentOrigin) return;
+    trustedTopOrigin = trustedParentOrigin;
+
+    if (event.data.type === "INLINE_EDIT_SCROLL_START") {
+      scrollForwarding = true;
+      emitScroll();
+      return;
+    }
+
+    if (event.data.type === "INLINE_EDIT_SCROLL_STOP") {
+      scrollForwarding = false;
+      if (scrollRaf) cancelAnimationFrame(scrollRaf);
+      scrollRaf = 0;
+      return;
+    }
+
+    if (event.data.type !== "INLINE_EDIT_CAPTURE_REQUEST") return;
+
+    handleCaptureRequest(event);
+  });
+})();
+
+
+</script></body>
+</html>

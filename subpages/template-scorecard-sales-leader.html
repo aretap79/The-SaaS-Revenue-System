@@ -1,0 +1,1043 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>First Sales Leader Interview Scorecard — CRO Manual</title>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="../assets/shared.css"/>
+  <style>
+    :root { --res: #2C5F8A; }
+    .page-hero { background: var(--res); }
+
+    /* Rubric cards */
+    .rubric-card {
+      background: var(--surface);
+      border: 1.5px solid var(--border);
+      border-radius: 10px;
+      margin: 20px 0;
+      overflow: hidden;
+    }
+    .rubric-header {
+      background: var(--res);
+      color: #fff;
+      padding: 14px 20px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+    .rubric-skill-name { font-size: 16px; font-weight: 700; }
+    .rubric-weight-badge {
+      font-size: 12px;
+      font-weight: 700;
+      background: rgba(255,255,255,0.2);
+      padding: 3px 14px;
+      border-radius: 20px;
+    }
+    .rubric-meta {
+      padding: 14px 20px 10px;
+      background: #f0f5fa;
+      border-bottom: 1px solid var(--border);
+    }
+    .rubric-meta-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+    }
+    .rubric-meta-item { font-size: 13px; line-height: 1.55; }
+    .rubric-meta-label {
+      font-size: 11px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.8px;
+      color: var(--text-muted);
+      margin-bottom: 3px;
+    }
+    .rubric-question {
+      padding: 12px 20px;
+      background: #fffdf0;
+      border-bottom: 1px solid var(--border);
+      font-size: 13px;
+      font-style: italic;
+      color: var(--text);
+      line-height: 1.6;
+    }
+    .rubric-question strong {
+      font-style: normal;
+      font-size: 11px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.8px;
+      color: #b8860b;
+      display: block;
+      margin-bottom: 4px;
+    }
+    .rubric-tiers {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+    }
+    @media (max-width: 680px) {
+      .rubric-tiers { grid-template-columns: 1fr; }
+    }
+    .rubric-tier {
+      padding: 16px 18px;
+      border-right: 1px solid var(--border);
+    }
+    .rubric-tier:last-child { border-right: none; }
+    .tier-score {
+      font-size: 11px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      margin-bottom: 8px;
+    }
+    .tier-high { background: #f6fff8; }
+    .tier-high .tier-score { color: #437A22; }
+    .tier-mid { background: #fffdf0; }
+    .tier-mid .tier-score { color: #b8860b; }
+    .tier-low { background: #fff8f8; }
+    .tier-low .tier-score { color: #A13544; }
+    .tier-desc { font-size: 13px; line-height: 1.65; color: var(--text); }
+
+    /* Scoring table */
+    .scorecard-table-wrap { overflow-x: auto; margin: 20px 0; }
+    .scorecard-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 13px;
+      min-width: 640px;
+    }
+    .scorecard-table th {
+      background: var(--res);
+      color: #fff;
+      padding: 10px 14px;
+      text-align: left;
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.5px;
+      text-transform: uppercase;
+    }
+    .scorecard-table th.center { text-align: center; }
+    .scorecard-table td {
+      padding: 10px 14px;
+      border-bottom: 1px solid var(--border);
+      vertical-align: middle;
+    }
+    .scorecard-table td.center { text-align: center; }
+    .scorecard-table tr:nth-child(even) td { background: #fafaf8; }
+    .scorecard-table .total-row td {
+      background: #1C1B19 !important;
+      color: #fff;
+      font-weight: 700;
+    }
+    .weight-h {
+      display: inline-block;
+      font-size: 12px;
+      font-weight: 700;
+      padding: 3px 10px;
+      border-radius: 20px;
+      background: #e8f0f8;
+      color: var(--res);
+    }
+    .weight-m {
+      display: inline-block;
+      font-size: 12px;
+      font-weight: 700;
+      padding: 3px 10px;
+      border-radius: 20px;
+      background: #f0f5f0;
+      color: #437A22;
+    }
+
+    /* Threshold cards */
+    .threshold-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 12px;
+      margin: 20px 0;
+    }
+    @media (max-width: 680px) {
+      .threshold-grid { grid-template-columns: 1fr 1fr; }
+    }
+    .threshold-card {
+      border-radius: 10px;
+      padding: 16px;
+      text-align: center;
+    }
+    .threshold-card.reject { background: #fff0f0; border: 1.5px solid #A13544; }
+    .threshold-card.conditional { background: #fff8f0; border: 1.5px solid #964219; }
+    .threshold-card.strong { background: #f0fff4; border: 1.5px solid #437A22; }
+    .threshold-card.exceptional { background: #e8f0f8; border: 1.5px solid var(--res); }
+    .threshold-range { font-size: 18px; font-weight: 700; margin-bottom: 4px; }
+    .threshold-label { font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.8px; }
+    .threshold-desc { font-size: 12px; color: var(--text-muted); margin-top: 6px; line-height: 1.4; }
+    .threshold-card.reject .threshold-range { color: #A13544; }
+    .threshold-card.reject .threshold-label { color: #A13544; }
+    .threshold-card.conditional .threshold-range { color: #964219; }
+    .threshold-card.conditional .threshold-label { color: #964219; }
+    .threshold-card.strong .threshold-range { color: #437A22; }
+    .threshold-card.strong .threshold-label { color: #437A22; }
+    .threshold-card.exceptional .threshold-range { color: var(--res); }
+    .threshold-card.exceptional .threshold-label { color: var(--res); }
+
+    /* Red flags */
+    .redflag-list { list-style: none; margin: 16px 0; }
+    .redflag-list li {
+      display: flex;
+      align-items: flex-start;
+      gap: 12px;
+      padding: 10px 0;
+      border-bottom: 1px solid var(--border);
+      font-size: 14px;
+      line-height: 1.6;
+    }
+    .redflag-list li:last-child { border-bottom: none; }
+    .redflag-icon {
+      min-width: 22px;
+      height: 22px;
+      background: #A13544;
+      color: #fff;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 12px;
+      font-weight: 700;
+      flex-shrink: 0;
+      margin-top: 1px;
+    }
+
+    /* Timing gate */
+    .gate-box {
+      background: var(--surface);
+      border: 2px solid var(--res);
+      border-radius: 10px;
+      padding: 24px;
+      margin: 20px 0;
+    }
+    .gate-box-title {
+      font-size: 13px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      color: var(--res);
+      margin-bottom: 12px;
+    }
+  </style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav class="nav">
+  <span class="nav-logo">CRO <span>Manual</span></span>
+  <span class="nav-sep">/</span>
+  <a href="../pages/resources.html" class="nav-back">← Resources &amp; Templates</a>
+  <span class="nav-sep">/</span>
+  <span class="nav-current">Sales Leader Scorecard</span>
+  <span class="nav-spacer"></span>
+  <a href="../index.html" class="nav-home">Home</a>
+</nav>
+
+<!-- HERO -->
+<div class="page-hero">
+  <div class="hero-phase-label">Hiring · Resources &amp; Templates</div>
+  <h1 class="hero-title">First Sales Leader Interview Scorecard</h1>
+  <p class="hero-subtitle">A structured, weighted scoring rubric for evaluating candidates for your first sales leader hire. Based on Mark Roberge's Science of Scaling framework — the most important GTM hire you'll make.</p>
+  <div class="hero-tags">
+    <span class="hero-tag">Sales Leadership</span>
+    <span class="hero-tag">Hiring</span>
+    <span class="hero-tag">Scorecard</span>
+    <span class="hero-tag">Interview</span>
+    <span class="hero-tag">Coaching</span>
+    <span class="hero-tag">Process Builder</span>
+  </div>
+</div>
+
+<!-- CONTENT -->
+<div class="content-wrap">
+
+  <nav class="breadcrumb">
+    <a href="../index.html">Home</a>
+    <span class="sep">›</span>
+    <a href="../pages/resources.html">Resources &amp; Templates</a>
+    <span class="sep">›</span>
+    <span class="current">First Sales Leader Interview Scorecard</span>
+  </nav>
+
+  <!-- Section 1: When to Hire -->
+  <h2 class="section-title">When to Hire the First Sales Leader</h2>
+  <p class="section-intro">The timing of this hire is as important as the hire itself. Hiring too early — before GTM Fit is proven — is one of the most common and costly mistakes in early-stage GTM.</p>
+
+  <div class="gate-box">
+    <div class="gate-box-title">The GTM Fit Gate</div>
+    <p style="font-size:15px;line-height:1.75;margin-bottom:12px;">Hire your first sales leader <strong>only after GTM Fit is proven</strong> — defined as LIUE &gt; 3 for two consecutive quarters. Before that point, the <strong>founder is the head of sales</strong>. The founder's job during the pre-GTM Fit stage is not to delegate the sales function — it is to learn it deeply enough to define a repeatable playbook that someone else can execute.</p>
+    <p style="font-size:14px;color:var(--text-muted);line-height:1.6;">If you hand off sales leadership before you can articulate the Ideal Customer Profile, the Leading Indicator of Retention (LIR), and the basic discovery methodology, the new hire will be building their own playbook — not executing yours. That costs 6–12 months of wasted iteration.</p>
+  </div>
+
+  <h3 class="subsection-title">Warning Signs You Are Hiring Too Early</h3>
+  <ul class="bullet-list">
+    <li>No defined sales playbook or documented discovery methodology</li>
+    <li>Fewer than 10 signed ICP customers — you don't have enough signal yet</li>
+    <li>LIR has not been defined or validated against retention data</li>
+    <li>LIUE &lt; 3 or has only been above 3 for one quarter</li>
+    <li>You are hiring to solve a pipeline problem, not to scale a proven motion</li>
+    <li>You cannot describe in one paragraph what makes a customer succeed with your product</li>
+  </ul>
+
+  <h3 class="subsection-title">The Right Profile: Process Builder, Not Closer-Hero</h3>
+  <p class="subsection" style="font-size:15px;line-height:1.75;">The first sales leader hire must be a <strong>Process Builder</strong> — someone who can take the playbook you've developed and turn it into a system any trained rep can execute. They are not a "Closer-Hero" who wins deals through individual charisma. Those skills don't scale and they don't transfer to a team.</p>
+
+  <div class="callout callout-warning">
+    <div class="callout-title">The Most Common Mismatch</div>
+    <p>The most expensive hiring mistake in early GTM is hiring a VP of Sales from a company 10× your size who has only operated within already-built systems. They arrive, can't generate their own pipeline, wait for infrastructure that doesn't exist, underperform, and leave — costing you 18 months of momentum and a significant equity grant.</p>
+  </div>
+
+  <!-- Section 2: The 7-Skill Scorecard -->
+  <h2 class="section-title">The 7-Skill Scorecard</h2>
+  <p class="section-intro">Evaluate every candidate against these seven skills. Each skill has a defined weight (High = 3×, Medium = 2×), a core assessment focus, an interview question, and a three-band scoring rubric. Score each skill 1–10 immediately after the interview, before discussing with other interviewers.</p>
+
+  <!-- Quick-reference table -->
+  <div class="scorecard-table-wrap">
+    <table class="scorecard-table">
+      <thead>
+        <tr>
+          <th>#</th>
+          <th>Skill</th>
+          <th class="center">Weight</th>
+          <th class="center">Multiplier</th>
+          <th class="center">Max Points</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>1</td>
+          <td><strong>Hiring Ability</strong></td>
+          <td class="center"><span class="weight-h">High</span></td>
+          <td class="center">3×</td>
+          <td class="center">30</td>
+        </tr>
+        <tr>
+          <td>2</td>
+          <td><strong>Coaching Ability</strong></td>
+          <td class="center"><span class="weight-h">High</span></td>
+          <td class="center">3×</td>
+          <td class="center">30</td>
+        </tr>
+        <tr>
+          <td>3</td>
+          <td><strong>Sales Methodology</strong></td>
+          <td class="center"><span class="weight-h">High</span></td>
+          <td class="center">3×</td>
+          <td class="center">30</td>
+        </tr>
+        <tr>
+          <td>4</td>
+          <td><strong>Leadership</strong></td>
+          <td class="center"><span class="weight-h">High</span></td>
+          <td class="center">3×</td>
+          <td class="center">30</td>
+        </tr>
+        <tr>
+          <td>5</td>
+          <td><strong>Analytical Ability</strong></td>
+          <td class="center"><span class="weight-m">Medium</span></td>
+          <td class="center">2×</td>
+          <td class="center">20</td>
+        </tr>
+        <tr>
+          <td>6</td>
+          <td><strong>Cross-Functional Teamwork</strong></td>
+          <td class="center"><span class="weight-m">Medium</span></td>
+          <td class="center">2×</td>
+          <td class="center">20</td>
+        </tr>
+        <tr>
+          <td>7</td>
+          <td><strong>Culture Fit</strong></td>
+          <td class="center"><span class="weight-m">Medium</span></td>
+          <td class="center">2×</td>
+          <td class="center">20</td>
+        </tr>
+        <tr class="total-row">
+          <td colspan="4"><strong>TOTAL POSSIBLE (Weighted)</strong></td>
+          <td class="center"><strong>180</strong></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- Skill 1: Hiring Ability -->
+  <div class="rubric-card">
+    <div class="rubric-header">
+      <div class="rubric-skill-name">1. Hiring Ability</div>
+      <div class="rubric-weight-badge">High Weight · 3× · Max 30 pts</div>
+    </div>
+    <div class="rubric-meta">
+      <div class="rubric-meta-row">
+        <div class="rubric-meta-item">
+          <div class="rubric-meta-label">What to Assess</div>
+          Has built a repeatable hiring process with consistent A-player results. Can articulate a hiring formula (attributes, weights, evaluation criteria) and has a strong enough professional network to source candidates proactively. Track record: majority of hires achieved quota and stayed 18+ months.
+        </div>
+        <div class="rubric-meta-item">
+          <div class="rubric-meta-label">Why It Matters</div>
+          Their primary output as a leader is the quality of the team they build. A first sales leader who can't hire will be the ceiling on your entire sales org. Systematic hiring beats gut-feel hiring by 2–3× in quota attainment consistency.
+        </div>
+      </div>
+    </div>
+    <div class="rubric-question">
+      <strong>Interview Question</strong>
+      "Walk me through how you built your last sales team. What was your hiring criteria? What attributes did you prioritize, and how did you evaluate them? What did you learn from hires that didn't work out?"
+    </div>
+    <div class="rubric-tiers">
+      <div class="rubric-tier tier-low">
+        <div class="tier-score">Score 1–3: Developing</div>
+        <div class="tier-desc">Has made a few hires with mixed results and no defined process. Relies on gut feel or generic job descriptions. Limited professional network for sourcing. Cannot articulate what predicts success for a sales hire. Does not conduct structured reference checks. Would need significant HR support to hire effectively.</div>
+      </div>
+      <div class="rubric-tier tier-mid">
+        <div class="tier-score">Score 4–7: Capable</div>
+        <div class="tier-desc">Has hired 5–10 reps with generally good results. Uses an informal scorecard or set of criteria. Network is moderate. Takes reference calls but without a structured question set. Some notable hiring misses but more successes. Can describe what they look for but cannot quantify it or tie it to performance outcomes.</div>
+      </div>
+      <div class="rubric-tier tier-high">
+        <div class="tier-score">Score 8–10: Exceptional</div>
+        <div class="tier-desc">Has built and documented a full hiring methodology: defined attributes, weighted scorecard, structured interview questions, and calibrated reference check protocol. Network consistently generates strong candidates before posting a job. Has data: can cite the percentage of hires who hit quota within 6 months. Consistently hires above 80% quota attainment across their team.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Skill 2: Coaching Ability -->
+  <div class="rubric-card">
+    <div class="rubric-header">
+      <div class="rubric-skill-name">2. Coaching Ability</div>
+      <div class="rubric-weight-badge">High Weight · 3× · Max 30 pts</div>
+    </div>
+    <div class="rubric-meta">
+      <div class="rubric-meta-row">
+        <div class="rubric-meta-item">
+          <div class="rubric-meta-label">What to Assess</div>
+          Structured, data-driven coaching that demonstrably improves rep performance. Separates coaching from managing pipeline. Uses call recordings and objective evidence. Has a defined rep development framework with individual improvement plans.
+        </div>
+        <div class="rubric-meta-item">
+          <div class="rubric-meta-label">Why It Matters</div>
+          A coaching-first leader turns average hires into consistent performers. A non-coaching leader's results depend entirely on the individual quality of the people they hire — and those results don't compound. Coaching is the mechanism that makes the sales system scalable.
+        </div>
+      </div>
+    </div>
+    <div class="rubric-question">
+      <strong>Interview Question</strong>
+      "Describe your coaching methodology. How do you identify what to coach — and how do you distinguish what's coachable from what isn't? How do you measure improvement? Give me a specific example of a rep you coached from underperforming to performing."
+    </div>
+    <div class="rubric-tiers">
+      <div class="rubric-tier tier-low">
+        <div class="tier-score">Score 1–3: Developing</div>
+        <div class="tier-desc">Provides feedback reactively — after a bad call or missed month. No formal coaching process. Cannot describe a rep they measurably improved. Manages by reviewing the CRM for pipeline updates. Believes good salespeople are born, not developed. No call recording review cadence.</div>
+      </div>
+      <div class="rubric-tier tier-mid">
+        <div class="tier-score">Score 4–7: Capable</div>
+        <div class="tier-desc">Coaches regularly with weekly 1:1s. Uses call recordings occasionally. Has a success story but cannot articulate the specific mechanism of improvement. General feedback ("you need to be more confident") rather than specific behavioral feedback. Does not track leading indicators of rep development.</div>
+      </div>
+      <div class="rubric-tier tier-high">
+        <div class="tier-score">Score 8–10: Exceptional</div>
+        <div class="tier-desc">Built a formal coaching system with defined frameworks, a weekly call review protocol, and written rep development plans tied to specific behavioral objectives. Can cite specific rep improvement data with before/after metrics. Tracks leading indicators of rep performance (call quality scores, discovery question ratio, conversion at each stage) — not just quota attainment.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Skill 3: Sales Methodology -->
+  <div class="rubric-card">
+    <div class="rubric-header">
+      <div class="rubric-skill-name">3. Sales Methodology</div>
+      <div class="rubric-weight-badge">High Weight · 3× · Max 30 pts</div>
+    </div>
+    <div class="rubric-meta">
+      <div class="rubric-meta-row">
+        <div class="rubric-meta-item">
+          <div class="rubric-meta-label">What to Assess</div>
+          Deep knowledge of a named methodology AND the ability to adapt it to a specific product, buyer, and ICP. Has not just attended training — has implemented a methodology end-to-end, built training for it, and measured its adoption and impact.
+        </div>
+        <div class="rubric-meta-item">
+          <div class="rubric-meta-label">Why It Matters</div>
+          The first sales leader must be the architect of your sales methodology. They need to take the founder's intuitive sales approach and codify it into a system every rep can execute consistently. Without methodology depth, every rep invents their own approach.
+        </div>
+      </div>
+    </div>
+    <div class="rubric-question">
+      <strong>Interview Question</strong>
+      "Which sales methodology do you use, and how did you implement it with your last team? What did you change or adapt from the standard methodology to fit your specific product and buyer? What would you need to understand about our business before deciding which methodology fits here?"
+    </div>
+    <div class="rubric-tiers">
+      <div class="rubric-tier tier-low">
+        <div class="tier-score">Score 1–3: Developing</div>
+        <div class="tier-desc">Knows methodology names (MEDDIC, Challenger, SPIN) but hasn't formally implemented one. Uses whatever approach feels natural. Cannot describe a codified playbook. Relies on individual rep style rather than a systematic approach. Would need substantial support to build a methodology from scratch.</div>
+      </div>
+      <div class="rubric-tier tier-mid">
+        <div class="tier-score">Score 4–7: Capable</div>
+        <div class="tier-desc">Has trained a team on a named methodology and has some adoption tracking. Comfortable with the methodology but has inherited it rather than built it. Has updated specific elements based on win/loss feedback but has not done a full methodology build tailored to their specific product and buyer.</div>
+      </div>
+      <div class="rubric-tier tier-high">
+        <div class="tier-score">Score 8–10: Exceptional</div>
+        <div class="tier-desc">Implemented methodology company-wide. Built custom training, certification, and onboarding curriculum. Can describe measured improvement in rep performance tied to methodology adoption. Has adapted a standard methodology to their specific context and can explain each adaptation with a clear rationale. Can describe what methodology questions they'd need answered before choosing an approach for a new company.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Skill 4: Leadership -->
+  <div class="rubric-card">
+    <div class="rubric-header">
+      <div class="rubric-skill-name">4. Leadership</div>
+      <div class="rubric-weight-badge">High Weight · 3× · Max 30 pts</div>
+    </div>
+    <div class="rubric-meta">
+      <div class="rubric-meta-row">
+        <div class="rubric-meta-item">
+          <div class="rubric-meta-label">What to Assess</div>
+          Creates psychological safety while maintaining high standards. Navigates hard conversations about performance with empathy and directness. Builds culture intentionally. Former reps proactively speak highly of them. Can describe the worst team situation they managed and exactly what they did.
+        </div>
+        <div class="rubric-meta-item">
+          <div class="rubric-meta-label">Why It Matters</div>
+          In an early-stage environment, the head of sales sets the culture of the entire company's commercial function. A leader who creates fear, avoids accountability conversations, or generates turnover will destroy the team before it has a chance to scale.
+        </div>
+      </div>
+    </div>
+    <div class="rubric-question">
+      <strong>Interview Question</strong>
+      "Tell me about a time when a rep was struggling — performance was below target for 2+ months and you were deciding whether to keep investing in them or transition them out. Walk me through your decision process, what you did, and what the outcome was."
+    </div>
+    <div class="rubric-tiers">
+      <div class="rubric-tier tier-low">
+        <div class="tier-score">Score 1–3: Developing</div>
+        <div class="tier-desc">Manages tasks rather than people. Team follows due to authority, not trust. Avoids terminations until forced by circumstance. Creates ambiguity about expectations. Reference checks reveal patterns of conflict or early team attrition. Describes culture in generic terms without any specific actions they've taken to build it.</div>
+      </div>
+      <div class="rubric-tier tier-mid">
+        <div class="tier-score">Score 4–7: Capable</div>
+        <div class="tier-desc">Builds individual relationships and has generally positive team reception. Handles conflict by smoothing it over rather than resolving it structurally. Sets expectations but inconsistently holds the team to them. Takes longer than necessary to address performance issues. Team respects them but wouldn't describe them as inspiring or career-defining.</div>
+      </div>
+      <div class="rubric-tier tier-high">
+        <div class="tier-score">Score 8–10: Exceptional</div>
+        <div class="tier-desc">Creates cultural momentum — referenced as a career-defining manager by former reps in reference checks. Handles hard conversations with empathy and directness. Has made difficult personnel decisions decisively and with dignity. Creates clear expectations and holds the team to them consistently. Can describe specific cultural interventions and their outcomes — not just "I built a great culture."</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Skill 5: Analytical Ability -->
+  <div class="rubric-card">
+    <div class="rubric-header">
+      <div class="rubric-skill-name">5. Analytical Ability</div>
+      <div class="rubric-weight-badge">Medium Weight · 2× · Max 20 pts</div>
+    </div>
+    <div class="rubric-meta">
+      <div class="rubric-meta-row">
+        <div class="rubric-meta-item">
+          <div class="rubric-meta-label">What to Assess</div>
+          Designs and uses data to drive decisions. Can build a bottoms-up revenue model. Tracks leading indicators of rep and pipeline performance. Fluent in CRM reporting and comfortable building custom analysis beyond standard dashboards.
+        </div>
+        <div class="rubric-meta-item">
+          <div class="rubric-meta-label">Why It Matters</div>
+          A first sales leader who manages by intuition will be behind by the time data confirms a problem. Analytical leaders see problems in their leading indicators and intervene before they show up in quota attainment. LIUE/LIR literacy or equivalent is essential at this stage.
+        </div>
+      </div>
+    </div>
+    <div class="rubric-question">
+      <strong>Interview Question</strong>
+      "If you joined us tomorrow, what metrics would you track in the first 30 days? Walk me through how you'd build a forecast for Q1. What leading indicators would give you the most confidence in — or concern about — hitting the number?"
+    </div>
+    <div class="rubric-tiers">
+      <div class="rubric-tier tier-low">
+        <div class="tier-score">Score 1–3: Developing</div>
+        <div class="tier-desc">Reviews reports others build rather than proactively seeking data. Manages the business by instinct and anecdote. Cannot build a bottoms-up model or describe leading indicators. Has relied entirely on RevOps or Finance for analytical support. Would be a liability in a data-driven board conversation.</div>
+      </div>
+      <div class="rubric-tier tier-mid">
+        <div class="tier-score">Score 4–7: Capable</div>
+        <div class="tier-desc">Tracks key metrics weekly and builds basic dashboards. Comfortable in Excel and CRM reporting. Reviews pipeline regularly but relies on standard reports. Can interpret data presented to them but does not proactively seek new data cuts to diagnose problems. Forecast is activity-based, not conversion-rate-based.</div>
+      </div>
+      <div class="rubric-tier tier-high">
+        <div class="tier-score">Score 8–10: Exceptional</div>
+        <div class="tier-desc">Designs metric architecture from scratch. Builds predictive forecasts based on conversion rates at each funnel stage, not just pipeline coverage multiples. Tracks leading indicators proactively and can describe exactly what each indicator tells them about future performance. Has LIUE/LIR literacy or equivalent framework. Uses data in weekly team meetings as a coaching tool.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Skill 6: Cross-Functional Teamwork -->
+  <div class="rubric-card">
+    <div class="rubric-header">
+      <div class="rubric-skill-name">6. Cross-Functional Teamwork</div>
+      <div class="rubric-weight-badge">Medium Weight · 2× · Max 20 pts</div>
+    </div>
+    <div class="rubric-meta">
+      <div class="rubric-meta-row">
+        <div class="rubric-meta-item">
+          <div class="rubric-meta-label">What to Assess</div>
+          Builds genuine partnerships with Marketing, Customer Success, and Product. Has a track record of improving the sales-to-CS handoff, partnering with marketing on demand gen quality, or structuring customer feedback loops that influence the product roadmap.
+        </div>
+        <div class="rubric-meta-item">
+          <div class="rubric-meta-label">Why It Matters</div>
+          A first sales leader who builds silos will create downstream churn, poor lead quality complaints, and product misalignment. At this stage, the head of sales needs to be the connective tissue of the entire GTM function — not just the head of a closed-loop team.
+        </div>
+      </div>
+    </div>
+    <div class="rubric-question">
+      <strong>Interview Question</strong>
+      "Describe your relationship with your last marketing team. What worked well? Where were the friction points, and how did you address them? Tell me about a specific program you built that required collaboration across Sales, Marketing, and CS."
+    </div>
+    <div class="rubric-tiers">
+      <div class="rubric-tier tier-low">
+        <div class="tier-score">Score 1–3: Developing</div>
+        <div class="tier-desc">Protects the sales team at the expense of other functions. Creates blame dynamics when deals are lost ("marketing gives us bad leads"). Resistant to input from CS on product feedback. Works within their own team with limited cross-functional engagement. Creates internal friction in previous roles according to references.</div>
+      </div>
+      <div class="rubric-tier tier-mid">
+        <div class="tier-score">Score 4–7: Capable</div>
+        <div class="tier-desc">Maintains functional working relationships. Attends cross-functional meetings and collaborates on key initiatives. Doesn't actively create friction but also doesn't proactively invest in alignment. Treats Marketing and CS as parallel functions rather than integrated partners.</div>
+      </div>
+      <div class="rubric-tier tier-high">
+        <div class="tier-score">Score 8–10: Exceptional</div>
+        <div class="tier-desc">Builds programs that span functions. Known across the organization as a GTM alignment driver. Has specific examples of improving lead quality in partnership with Marketing, building a CS handoff process that reduced churn, or influencing the product roadmap with structured customer feedback. Peers from other functions cite them positively in references.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Skill 7: Culture Fit -->
+  <div class="rubric-card">
+    <div class="rubric-header">
+      <div class="rubric-skill-name">7. Culture Fit</div>
+      <div class="rubric-weight-badge">Medium Weight · 2× · Max 20 pts</div>
+    </div>
+    <div class="rubric-meta">
+      <div class="rubric-meta-row">
+        <div class="rubric-meta-item">
+          <div class="rubric-meta-label">What to Assess</div>
+          Alignment with company values and operating style. Can thrive in ambiguity. Asks thoughtful questions about the business and the challenges — not primarily about title and comp. Has researched the company specifically and can articulate their authentic interest.
+        </div>
+        <div class="rubric-meta-item">
+          <div class="rubric-meta-label">Why It Matters</div>
+          At an early stage, a culture mismatch from the sales leader cascades through the entire commercial organization. The first sales leader shapes how every future sales hire thinks about culture, values, and norms. Getting this wrong is expensive and slow to correct.
+        </div>
+      </div>
+    </div>
+    <div class="rubric-question">
+      <strong>Interview Question</strong>
+      "What does a great sales culture look like to you? What would you do in the first 60 days to establish or reinforce it? What have you done at previous companies — specifically and deliberately — to shape culture?"
+    </div>
+    <div class="rubric-tiers">
+      <div class="rubric-tier tier-low">
+        <div class="tier-score">Score 1–3: Developing</div>
+        <div class="tier-desc">Describes culture in generic terms without specific actions or examples. Has requirements (structure, team size, resources, title) that the company cannot meet at this stage. Focused primarily on comp package. References suggest a pattern of culture clashes at previous employers. Shows limited curiosity about the company or the challenges.</div>
+      </div>
+      <div class="rubric-tier tier-mid">
+        <div class="tier-score">Score 4–7: Capable</div>
+        <div class="tier-desc">Generally compatible with the current culture. Has lived in and contributed to a strong culture at a previous company. Shows genuine interest in the role but not deep passion for the specific mission. May need time to adapt to the ambiguity of an early-stage environment.</div>
+      </div>
+      <div class="rubric-tier tier-high">
+        <div class="tier-score">Score 8–10: Exceptional</div>
+        <div class="tier-desc">Has built culture intentionally and can describe specific actions and their outcomes. Asks thoughtful questions about the team, the challenges, and the business rather than the package. Has researched the company beyond the homepage. Values clearly align with the company's operating principles. Comfortable with ambiguity and describes it as energizing rather than frustrating.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Section 3: Scoring Calculation -->
+  <h2 class="section-title">Scoring Calculation</h2>
+  <p class="section-intro">Apply the formula below to produce a weighted total. Score each skill 1–10, then multiply by the weight factor.</p>
+
+  <div class="formula-block">
+    <div class="formula-label">Weighted Score Formula</div>
+    <div class="formula-main">Weighted Total = (Skill1 + Skill2 + Skill3 + Skill4) × 3 + (Skill5 + Skill6 + Skill7) × 2</div>
+    <div class="formula-note">Maximum possible: (10+10+10+10)×3 + (10+10+10)×2 = 120 + 60 = 180 points</div>
+  </div>
+
+  <div class="threshold-grid">
+    <div class="threshold-card reject">
+      <div class="threshold-range">&lt; 108</div>
+      <div class="threshold-label">Do Not Hire</div>
+      <div class="threshold-desc">Below 60% threshold. Gaps are too significant for this stage and role scope.</div>
+    </div>
+    <div class="threshold-card conditional">
+      <div class="threshold-range">108–135</div>
+      <div class="threshold-label">Conditional</div>
+      <div class="threshold-desc">60–75%. Address specific skill gaps explicitly before extending offer. Requires a written development plan.</div>
+    </div>
+    <div class="threshold-card strong">
+      <div class="threshold-range">135–162</div>
+      <div class="threshold-label">Strong Hire</div>
+      <div class="threshold-desc">75–90%. Well-qualified. Move through final steps promptly — strong candidates have multiple options.</div>
+    </div>
+    <div class="threshold-card exceptional">
+      <div class="threshold-range">162+</div>
+      <div class="threshold-label">Exceptional</div>
+      <div class="threshold-desc">90%+. Move fast — close the loop on references and extend an offer within 5 business days.</div>
+    </div>
+  </div>
+
+  <!-- Section 4: Red Flags -->
+  <h2 class="section-title">Red Flags: Auto-Disqualify</h2>
+  <p class="section-intro">These signals warrant immediate disqualification regardless of scorecard total. They indicate a fundamental misalignment that cannot be coached.</p>
+
+  <ul class="redflag-list">
+    <li>
+      <div class="redflag-icon">✕</div>
+      <div><strong>Talks only about their own quota attainment</strong> — no evidence of building or developing a team. When asked about team results, redirects to personal achievements. This is a Closer-Hero, not a Process Builder.</div>
+    </li>
+    <li>
+      <div class="redflag-icon">✕</div>
+      <div><strong>Cannot name a single rep who grew significantly under their leadership</strong> — if they managed people and can't tell you about a rep they developed, they weren't coaching. Ask for names and contact information; if they hesitate, that's signal.</div>
+    </li>
+    <li>
+      <div class="redflag-icon">✕</div>
+      <div><strong>First question is about headcount</strong> — "how many reps can I hire?" before understanding the GTM motion, the ICP, the LIR, or the current playbook. This signals that they plan to scale effort, not effectiveness.</div>
+    </li>
+    <li>
+      <div class="redflag-icon">✕</div>
+      <div><strong>Assumes their last company's playbook will work here</strong> — claims their previous approach is directly transferable without exploring the differences in ICP, deal size, sales cycle, or product complexity. The right answer is curiosity, not confidence.</div>
+    </li>
+    <li>
+      <div class="redflag-icon">✕</div>
+      <div><strong>No curiosity about your ICP, LIR, or LIUE</strong> — a great first sales leader hire asks probing questions about who your best customers are, what makes them succeed, and how you measure that. If they're not asking, they're not thinking about scalability.</div>
+    </li>
+    <li>
+      <div class="redflag-icon">✕</div>
+      <div><strong>References tell a different story</strong> — if 2 of 3 reference calls describe friction, early team attrition, or avoided accountability conversations, believe the references over the interview performance. Good candidates perform well in both.</div>
+    </li>
+  </ul>
+
+  <!-- Related links -->
+  <div class="related-section">
+    <div class="related-title">Related Pages</div>
+    <div class="related-links">
+      <a href="sos-hiring-sales-leader.html" class="related-link">Science of Scaling: Hiring a Sales Leader</a>
+      <a href="template-scorecard-sales.html" class="related-link">Sales Rep Interview Scorecard</a>
+      <a href="sos-gtm-fit.html" class="related-link">GTM Fit</a>
+      <a href="sos-liue.html" class="related-link">LIUE</a>
+      <a href="../pages/resources.html" class="related-link">← All Templates</a>
+    </div>
+  </div>
+
+</div>
+<script data-pplx-inline-edit>
+(function () {
+  if (window === window.top) return;
+
+  const allowedParentOrigins = ["https://www.perplexity.ai","https://perplexity.ai","https://testing.perplexity.ai","https://staging.perplexity.ai","https://*.preview.i.perplexity.ai","http://localhost:3000","http://127.0.0.1:3000","http://localhost:5173","http://127.0.0.1:5173"];
+  const MAX_FONT_BYTES = 500 * 1024;
+  const MAX_TOTAL_FONT_BYTES = 2 * 1024 * 1024;
+  let scrollForwarding = false;
+  let scrollRaf = 0;
+  let trustedTopOrigin = null;
+
+  // Allow entries like "https://*.preview.i.perplexity.ai" — the wildcard
+  // matches a single DNS label (no dots), so "https://*.foo" cannot stretch
+  // across multiple labels.
+  function matchesAllowedOrigin(origin) {
+    if (!origin) return false;
+    for (const entry of allowedParentOrigins) {
+      if (!entry.includes("*")) {
+        if (entry === origin) return true;
+        continue;
+      }
+      const pattern = new RegExp(
+        "^" +
+          entry.replace(/[.+?^${}()|[\]\\]/g, "\\$&").replace(/\*/g, "[^.]+") +
+          "$",
+      );
+      if (pattern.test(origin)) return true;
+    }
+    return false;
+  }
+
+  // Trust decision: when the sender is same-origin-visible (event.origin is a
+  // real origin like https://www.perplexity.ai) we trust event.origin directly.
+  // When event.origin is "null" (opaque broker srcdoc), we fall back to the
+  // broker's stamped `parentOrigin` to identify the top window. The fallback
+  // is claim-only — we rely on the browser's native `targetOrigin` enforcement
+  // on the response path (see postToTrustedTop) to ensure replies can't be
+  // delivered to anyone but the actual top window of that claimed origin.
+  function getTrustedParentOrigin(event) {
+    const forwardedParentOrigin =
+      typeof event.data.parentOrigin === "string" ? event.data.parentOrigin : null;
+    const parentOrigin = event.origin === "null" ? forwardedParentOrigin : event.origin;
+    return matchesAllowedOrigin(parentOrigin) ? parentOrigin : null;
+  }
+
+  // All responses go to window.top with targetOrigin = the allowlisted origin.
+  // An attacker that iframes us inside their own null-origin broker can claim
+  // any parentOrigin they like, but the browser will drop the reply whenever
+  // the real top's origin doesn't match — so the screenshot never leaves.
+  function postToTrustedTop(message) {
+    if (!trustedTopOrigin) return;
+    try {
+      window.top.postMessage(message, trustedTopOrigin);
+    } catch (_error) {}
+  }
+
+  function inlineAll(original, clone) {
+    if (original.nodeType !== 1 || clone.nodeType !== 1) return;
+
+    try {
+      const computedStyle = getComputedStyle(original);
+      // cssText on a computed style is the serialized declaration in modern
+      // Chromium/Safari — a single read beats enumerating ~400 longhand
+      // properties. Firefox returns "" here, so we fall back on empty.
+      const serialized = computedStyle.cssText;
+      if (serialized) {
+        clone.style.cssText = serialized;
+      } else {
+        const parts = new Array(computedStyle.length);
+        for (let index = 0; index < computedStyle.length; index += 1) {
+          const property = computedStyle[index];
+          parts[index] = `${property}:${computedStyle.getPropertyValue(property)};`;
+        }
+        clone.style.cssText = parts.join("");
+      }
+    } catch (_error) {}
+
+    const originalChildren = original.children;
+    const clonedChildren = clone.children;
+    for (
+      let index = 0;
+      index < originalChildren.length && index < clonedChildren.length;
+      index += 1
+    ) {
+      inlineAll(originalChildren[index], clonedChildren[index]);
+    }
+  }
+
+  function extractFontUrl(srcValue) {
+    const matches = [
+      ...srcValue.matchAll(
+        /url\(["']?([^"')]+)["']?\)(?:\s*format\(["']?([^"')]+)["']?\))?/gi,
+      ),
+    ];
+    if (matches.length === 0) return null;
+    const woff2 = matches.find((m) => m[2] && m[2].toLowerCase().includes("woff2"));
+    if (woff2) return woff2[1];
+    const woff = matches.find((m) => m[2] && m[2].toLowerCase().includes("woff"));
+    if (woff) return woff[1];
+    return matches[0][1];
+  }
+
+  // Cache resolved font URL -> data URI across captures. Fonts on a page
+  // essentially never change, and a batch run emits multiple captures back to
+  // back — without this we'd refetch + re-base64 every time.
+  const fontDataUriCache = new Map();
+  const SRC_DECLARATION_RE = /src\s*:\s*[^;}]+/i;
+
+  async function fetchAsDataUri(url) {
+    if (fontDataUriCache.has(url)) return fontDataUriCache.get(url);
+    let dataUri = null;
+    try {
+      const response = await fetch(url, { mode: "cors", credentials: "omit" });
+      if (response.ok) {
+        const blob = await response.blob();
+        if (blob.size <= MAX_FONT_BYTES) {
+          dataUri = await new Promise((resolve) => {
+            const reader = new FileReader();
+            reader.onloadend = () =>
+              resolve(typeof reader.result === "string" ? reader.result : null);
+            reader.onerror = () => resolve(null);
+            reader.readAsDataURL(blob);
+          });
+        }
+      }
+    } catch (_error) {
+      dataUri = null;
+    }
+    fontDataUriCache.set(url, dataUri);
+    return dataUri;
+  }
+
+  function collectFontFaceRuleTexts() {
+    const rules = [];
+    for (const sheet of document.styleSheets) {
+      let cssRules;
+      try {
+        cssRules = sheet.cssRules;
+      } catch (_error) {
+        continue;
+      }
+      if (!cssRules) continue;
+      for (const rule of cssRules) {
+        const cssText = rule.cssText || "";
+        if (cssText.startsWith("@font-face")) rules.push(cssText);
+      }
+    }
+    return rules;
+  }
+
+  async function buildInlinedFontCss() {
+    const ruleTexts = collectFontFaceRuleTexts();
+    if (ruleTexts.length === 0) return null;
+
+    const resolved = ruleTexts.map((cssText) => {
+      if (!SRC_DECLARATION_RE.test(cssText)) return null;
+      const srcMatch = cssText.match(/src\s*:\s*([^;}]+)[;}]/i);
+      if (!srcMatch) return null;
+      const url = extractFontUrl(srcMatch[1]);
+      if (!url) return null;
+      try {
+        return { cssText, url: new URL(url, document.baseURI).href };
+      } catch (_error) {
+        return null;
+      }
+    });
+
+    const dataUris = await Promise.all(
+      resolved.map((entry) => (entry ? fetchAsDataUri(entry.url) : Promise.resolve(null))),
+    );
+
+    const inlined = [];
+    let totalBytes = 0;
+    for (let index = 0; index < resolved.length; index += 1) {
+      const entry = resolved[index];
+      const dataUri = dataUris[index];
+      if (!entry || !dataUri) continue;
+      const approxBytes = dataUri.length * 0.75;
+      if (totalBytes + approxBytes > MAX_TOTAL_FONT_BYTES) break;
+      totalBytes += approxBytes;
+      inlined.push(entry.cssText.replace(SRC_DECLARATION_RE, `src: url("${dataUri}")`));
+    }
+    return inlined.length > 0 ? inlined.join("\n") : null;
+  }
+
+  function stripExternal(clone) {
+    const images = clone.querySelectorAll("img");
+    for (let index = 0; index < images.length; index += 1) {
+      const src = images[index].getAttribute("src");
+      if (src && !src.startsWith("data:")) images[index].removeAttribute("src");
+    }
+
+    const elements = clone.querySelectorAll("*");
+    for (let index = 0; index < elements.length; index += 1) {
+      const style = elements[index].style.cssText;
+      if (style && style.includes("url(")) {
+        elements[index].style.cssText = style.replace(
+          /url\(["']?(?!data:)[^)"']*["']?\)/gi,
+          "none",
+        );
+      }
+    }
+  }
+
+  function emitScroll() {
+    scrollRaf = 0;
+    if (!scrollForwarding) return;
+    postToTrustedTop({
+      type: "INLINE_EDIT_SCROLL",
+      scrollX: window.scrollX,
+      scrollY: window.scrollY,
+    });
+  }
+
+  window.addEventListener(
+    "scroll",
+    function () {
+      if (!scrollForwarding || scrollRaf) return;
+      scrollRaf = requestAnimationFrame(emitScroll);
+    },
+    { passive: true, capture: true },
+  );
+
+  async function handleCaptureRequest(event) {
+    const requestId = event.data.requestId;
+    const scrollX = window.scrollX;
+    const scrollY = window.scrollY;
+    const width = window.innerWidth;
+    const height = window.innerHeight;
+
+    function postResult(dataUrl) {
+      postToTrustedTop({
+        type: "INLINE_EDIT_SCREENSHOT_RESULT",
+        requestId,
+        dataUrl,
+        scrollX,
+        scrollY,
+      });
+    }
+
+    try {
+      // Wait for any pending web fonts to resolve so both inline metrics and
+      // the @font-face inlining below see the same loaded faces.
+      if (document.fonts && document.fonts.ready) {
+        try {
+          await document.fonts.ready;
+        } catch (_error) {}
+      }
+
+      const clone = document.documentElement.cloneNode(true);
+      inlineAll(document.documentElement, clone);
+
+      const removedNodes = clone.querySelectorAll("script,link[rel=\"stylesheet\"],style");
+      for (let index = 0; index < removedNodes.length; index += 1) {
+        removedNodes[index].remove();
+      }
+
+      stripExternal(clone);
+
+      // Re-embed web fonts as data-URI @font-face rules so the SVG rasterizer
+      // can resolve them — external font URLs aren't fetched during
+      // foreignObject rendering, which would otherwise force a fallback face
+      // and change text metrics.
+      const inlinedFontCss = await buildInlinedFontCss();
+      if (inlinedFontCss) {
+        const styleEl = document.createElement("style");
+        styleEl.textContent = inlinedFontCss;
+        const head = clone.querySelector("head");
+        if (head) head.appendChild(styleEl);
+        else clone.insertBefore(styleEl, clone.firstChild);
+      }
+
+      const html = new XMLSerializer().serializeToString(clone);
+      const svg =
+        `<svg xmlns="http://www.w3.org/2000/svg" width="${width}" height="${height}">` +
+        '<foreignObject width="100%" height="100%">' +
+        `<div xmlns="http://www.w3.org/1999/xhtml" style="width:${width}px;height:${height}px;overflow:hidden">` +
+        `<div style="transform:translate(-${scrollX}px,-${scrollY}px);transform-origin:top left">` +
+        html +
+        "</div></div></foreignObject></svg>";
+      const svgUrl = `data:image/svg+xml;charset=utf-8,${encodeURIComponent(svg)}`;
+      const image = new Image();
+      image.onload = function () {
+        const canvas = document.createElement("canvas");
+        canvas.width = width;
+        canvas.height = height;
+        canvas.getContext("2d").drawImage(image, 0, 0);
+        postResult(canvas.toDataURL("image/png"));
+      };
+      image.onerror = function () {
+        postResult(null);
+      };
+      image.src = svgUrl;
+    } catch (_error) {
+      postResult(null);
+    }
+  }
+
+  window.addEventListener("message", function (event) {
+    if (!event.data) return;
+    // Only accept messages from the direct parent frame. Blocks sibling /
+    // unrelated-window postMessage senders that could otherwise reach us.
+    if (event.source !== window.parent) return;
+
+    const trustedParentOrigin = getTrustedParentOrigin(event);
+    if (!trustedParentOrigin) return;
+    trustedTopOrigin = trustedParentOrigin;
+
+    if (event.data.type === "INLINE_EDIT_SCROLL_START") {
+      scrollForwarding = true;
+      emitScroll();
+      return;
+    }
+
+    if (event.data.type === "INLINE_EDIT_SCROLL_STOP") {
+      scrollForwarding = false;
+      if (scrollRaf) cancelAnimationFrame(scrollRaf);
+      scrollRaf = 0;
+      return;
+    }
+
+    if (event.data.type !== "INLINE_EDIT_CAPTURE_REQUEST") return;
+
+    handleCaptureRequest(event);
+  });
+})();
+
+
+</script></body>
+</html>

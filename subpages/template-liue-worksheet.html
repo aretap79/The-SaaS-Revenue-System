@@ -1,0 +1,1025 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Leading Indicators Worksheet (LIR &amp; LIUE) — CRO Manual</title>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="../assets/shared.css"/>
+  <style>
+    :root { --sos: #0D5C63; --mkt: #006494; }
+    .page-hero { background: var(--sos); }
+
+    /* Phase indicator */
+    .phase-toggle {
+      display: flex;
+      gap: 10px;
+      margin: 20px 0;
+    }
+    .phase-tab {
+      flex: 1; padding: 14px 18px;
+      border-radius: 10px; border: 2px solid var(--border);
+      background: var(--surface); cursor: pointer;
+      transition: all 0.15s;
+    }
+    .phase-tab.active {
+      border-color: var(--sos); background: #eaf4f5;
+    }
+    .phase-tab-label {
+      font-size: 11px; font-weight: 700;
+      text-transform: uppercase; letter-spacing: 1px;
+      color: var(--text-muted); margin-bottom: 4px;
+    }
+    .phase-tab.active .phase-tab-label { color: var(--sos); }
+    .phase-tab-title { font-size: 15px; font-weight: 700; color: var(--text); }
+    .phase-tab-desc { font-size: 12px; color: var(--text-muted); margin-top: 4px; line-height: 1.4; }
+
+    /* Worksheet tables */
+    .ws-table-wrap { overflow-x: auto; margin: 20px 0; }
+    .ws-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 13px;
+      min-width: 700px;
+    }
+    .ws-table th {
+      background: var(--sos); color: #fff;
+      padding: 10px 14px; text-align: left;
+      font-size: 11px; font-weight: 700;
+      letter-spacing: 0.5px; text-transform: uppercase;
+    }
+    .ws-table th.center { text-align: center; }
+    .ws-table td {
+      padding: 10px 14px;
+      border-bottom: 1px solid var(--border);
+      vertical-align: top;
+      line-height: 1.5;
+    }
+    .ws-table td.center { text-align: center; }
+    .ws-table tr:nth-child(even) td { background: #fafaf8; }
+    .ws-table .total-row td { background: #1C1B19 !important; color: #fff; font-weight: 700; }
+    .ws-table .formula-row td { background: #f0f5fa !important; color: var(--sos); font-weight: 600; font-family: 'Courier New', monospace; font-size: 12px; }
+    .ws-table .label-row td { background: #eaf4f5 !important; font-weight: 700; color: var(--sos); }
+
+    /* Correlation indicator */
+    .corr-high { color: #437A22; font-weight: 700; }
+    .corr-med { color: #b8860b; font-weight: 700; }
+    .corr-low { color: #A13544; font-weight: 700; }
+    .corr-badge {
+      display: inline-block;
+      font-size: 11px; font-weight: 700;
+      padding: 2px 8px; border-radius: 20px;
+    }
+    .corr-badge.high { background: #e6f4ea; color: #437A22; }
+    .corr-badge.mid { background: #fff8e1; color: #b8860b; }
+    .corr-badge.low { background: #fce8e6; color: #A13544; }
+    .corr-badge.winner { background: #0D5C63; color: #fff; }
+
+    /* Decision tree */
+    .decision-tree {
+      margin: 20px 0;
+    }
+    .dt-node {
+      background: var(--surface);
+      border: 1.5px solid var(--border);
+      border-radius: 10px;
+      padding: 16px 20px;
+      margin-bottom: 12px;
+      position: relative;
+    }
+    .dt-node::before {
+      content: '';
+      position: absolute;
+      left: 30px; top: -12px;
+      width: 2px; height: 12px;
+      background: var(--border);
+    }
+    .dt-node:first-child::before { display: none; }
+    .dt-condition {
+      font-size: 12px; font-weight: 700;
+      text-transform: uppercase; letter-spacing: 0.8px;
+      color: var(--text-muted); margin-bottom: 6px;
+    }
+    .dt-if { color: #964219; }
+    .dt-then {
+      font-size: 14px; font-weight: 700; color: var(--text); margin-bottom: 6px;
+    }
+    .dt-action { font-size: 13px; color: var(--text-muted); line-height: 1.6; }
+    .dt-node.danger { border-color: #A13544; background: #fff8f8; }
+    .dt-node.danger .dt-condition { color: #A13544; }
+    .dt-node.warning { border-color: #964219; background: #fff8f0; }
+    .dt-node.warning .dt-condition { color: #964219; }
+    .dt-node.success { border-color: #437A22; background: #f6fff8; }
+    .dt-node.success .dt-condition { color: #437A22; }
+    .dt-node.info { border-color: var(--sos); background: #eaf4f5; }
+    .dt-node.info .dt-condition { color: var(--sos); }
+
+    /* LIUE formula component boxes */
+    .liue-components {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 12px;
+      margin: 20px 0;
+    }
+    @media (max-width: 700px) { .liue-components { grid-template-columns: 1fr 1fr; } }
+    .liue-comp {
+      background: var(--surface);
+      border: 1.5px solid var(--border);
+      border-radius: 10px;
+      padding: 14px;
+    }
+    .liue-comp-label {
+      font-size: 11px; font-weight: 700; text-transform: uppercase;
+      letter-spacing: 0.8px; color: var(--text-muted); margin-bottom: 4px;
+    }
+    .liue-comp-var {
+      font-size: 20px; font-weight: 700; color: var(--sos);
+      font-family: 'Courier New', monospace; margin-bottom: 4px;
+    }
+    .liue-comp-def { font-size: 12px; color: var(--text); line-height: 1.4; }
+
+    /* Step bar */
+    .step-bar {
+      display: flex; gap: 0; margin: 20px 0;
+      border-radius: 10px; overflow: hidden;
+    }
+    .step-seg {
+      flex: 1; padding: 12px 14px;
+      background: var(--surface); border: 1px solid var(--border);
+      border-right: none;
+      font-size: 12px;
+    }
+    .step-seg:last-child { border-right: 1px solid var(--border); }
+    .step-seg.active { background: #eaf4f5; border-color: var(--sos); }
+    .step-seg-num { font-size: 18px; font-weight: 700; color: var(--sos); }
+    .step-seg-label { font-size: 11px; font-weight: 700; color: var(--text); margin-top: 2px; }
+    .step-seg-desc { font-size: 11px; color: var(--text-muted); margin-top: 3px; line-height: 1.4; }
+  </style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav class="nav">
+  <span class="nav-logo">CRO <span>Manual</span></span>
+  <span class="nav-sep">/</span>
+  <a href="../pages/resources.html" class="nav-back">← Resources &amp; Templates</a>
+  <span class="nav-sep">/</span>
+  <span class="nav-current">LIR &amp; LIUE Worksheet</span>
+  <span class="nav-spacer"></span>
+  <a href="../index.html" class="nav-home">Home</a>
+</nav>
+
+<!-- HERO -->
+<div class="page-hero">
+  <div class="hero-phase-label">Science of Scaling · Resources &amp; Templates</div>
+  <h1 class="hero-title">Leading Indicators Worksheet</h1>
+  <p class="hero-subtitle">A structured worksheet for defining, tracking, and validating both your LIR (Stage 1) and LIUE (Stage 2) metrics. Based on the Stage 2 Capital Leading-Indicators-Worksheet and LIR-Journey templates.</p>
+  <div class="hero-tags">
+    <span class="hero-tag">LIR</span>
+    <span class="hero-tag">LIUE</span>
+    <span class="hero-tag">PMF</span>
+    <span class="hero-tag">GTM Fit</span>
+    <span class="hero-tag">Cohort Tracking</span>
+    <span class="hero-tag">Pre-PMF Options</span>
+  </div>
+</div>
+
+<!-- CONTENT -->
+<div class="content-wrap">
+
+  <nav class="breadcrumb">
+    <a href="../index.html">Home</a>
+    <span class="sep">›</span>
+    <a href="../pages/resources.html">Resources &amp; Templates</a>
+    <span class="sep">›</span>
+    <span class="current">Leading Indicators Worksheet</span>
+  </nav>
+
+  <!-- Section 1: How to Use -->
+  <h2 class="section-title">How to Use This Worksheet</h2>
+  <p class="section-intro">This worksheet has two phases. Where you are in your product journey determines which phase to use — and many companies will be working on both simultaneously.</p>
+
+  <div class="phase-toggle">
+    <div class="phase-tab active">
+      <div class="phase-tab-label">Phase 1 · Pre-PMF</div>
+      <div class="phase-tab-title">LIR Hypothesis Testing</div>
+      <div class="phase-tab-desc">Test 2–3 LIR hypotheses in parallel using monthly cohort data. Identify which event (E), time window (T), and rate (P) correlates most strongly with 12-month retention.</div>
+    </div>
+    <div class="phase-tab">
+      <div class="phase-tab-label">Phase 2 · Post-PMF</div>
+      <div class="phase-tab-title">LIR + LIUE Tracking</div>
+      <div class="phase-tab-desc">Lock in your confirmed LIR metric and track it monthly by cohort. Begin tracking LIUE quarterly. Use both metrics to determine GTM Fit and make hiring decisions.</div>
+    </div>
+  </div>
+
+  <div class="callout callout-definition">
+    <div class="callout-title">Key Definitions</div>
+    <p><strong>LIR (Leading Indicator of Retention):</strong> A customer behavior event (E) that, when completed within a defined time window (T) by a minimum percentage of new customers (P), predicts that those customers will renew at 12 months at a significantly higher rate than customers who don't complete it.<br/><br/>
+    <strong>LIUE (Leading Indicator of Unit Economics):</strong> A composite metric that measures the relationship between customer lifetime value (LTV) and customer acquisition cost (CAC). LIUE &gt; 3 for two consecutive quarters is the threshold for GTM Fit — the point at which it is safe to hire a first sales leader and begin scaling the sales motion.</p>
+  </div>
+
+  <div class="step-bar">
+    <div class="step-seg active">
+      <div class="step-seg-num">1</div>
+      <div class="step-seg-label">Define LIR Hypotheses</div>
+      <div class="step-seg-desc">2–3 options with E, T, P for each</div>
+    </div>
+    <div class="step-seg active">
+      <div class="step-seg-num">2</div>
+      <div class="step-seg-label">Track by Cohort</div>
+      <div class="step-seg-desc">Monthly for 3–6 months minimum</div>
+    </div>
+    <div class="step-seg active">
+      <div class="step-seg-num">3</div>
+      <div class="step-seg-label">Validate Correlation</div>
+      <div class="step-seg-desc">LIR-hit retention must exceed LIR-miss by ≥20pp</div>
+    </div>
+    <div class="step-seg">
+      <div class="step-seg-num">4</div>
+      <div class="step-seg-label">Confirm LIR</div>
+      <div class="step-seg-desc">Lock in the winning option; retire others</div>
+    </div>
+    <div class="step-seg">
+      <div class="step-seg-num">5</div>
+      <div class="step-seg-label">Begin LIUE Tracking</div>
+      <div class="step-seg-desc">Quarterly inputs; compute LIUE each quarter</div>
+    </div>
+    <div class="step-seg">
+      <div class="step-seg-num">6</div>
+      <div class="step-seg-label">GTM Fit Decision</div>
+      <div class="step-seg-desc">LIUE &gt; 3 for 2 consecutive quarters</div>
+    </div>
+  </div>
+
+  <!-- Section 2: Pre-PMF LIR Hypothesis Options -->
+  <h2 class="section-title">Pre-PMF: LIR Hypothesis Options</h2>
+  <p class="section-intro">Define 2–3 LIR hypotheses and test them in parallel. Each hypothesis specifies an Event (E), a Time Window (T), and a Target Rate (P). Track monthly cohorts for each option and compare each rate to 12-month retention outcomes.</p>
+
+  <div class="callout callout-best-practice">
+    <div class="callout-title">How to Define a LIR Event (E)</div>
+    <p>The LIR event should be a specific, measurable customer behavior that represents meaningful product adoption — not just logging in. Examples: "created 3 or more reports," "invited 2 or more team members," "completed first integration," "processed first live transaction." The event should require the customer to get genuine value from the product, not just touch it once.</p>
+  </div>
+
+  <div class="ws-table-wrap">
+    <table class="ws-table">
+      <thead>
+        <tr>
+          <th>LIR Component</th>
+          <th>Option 1</th>
+          <th>Option 2</th>
+          <th>Option 3</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>LIR Event (E)</strong><br/><span style="font-size:11px;color:var(--text-muted);">The specific behavior customers must complete</span></td>
+          <td><em>Example: Completed 3+ automated workflows</em></td>
+          <td><em>Example: Invited 2+ teammates AND ran first report</em></td>
+          <td><em>Example: Processed $10K+ in transactions within platform</em></td>
+        </tr>
+        <tr>
+          <td><strong>Time Window (T)</strong><br/><span style="font-size:11px;color:var(--text-muted);">Days from onboarding start</span></td>
+          <td>30 days</td>
+          <td>45 days</td>
+          <td>60 days</td>
+        </tr>
+        <tr>
+          <td><strong>Target Rate (P)</strong><br/><span style="font-size:11px;color:var(--text-muted);">% of new customers who must achieve it</span></td>
+          <td>70%</td>
+          <td>65%</td>
+          <td>60%</td>
+        </tr>
+        <tr>
+          <td><strong>How to Measure</strong><br/><span style="font-size:11px;color:var(--text-muted);">Data source + tracking method</span></td>
+          <td><em>Product analytics event: workflow.completed, count ≥ 3</em></td>
+          <td><em>CRM field: invite_sent=Y + analytics: report.run=Y</em></td>
+          <td><em>Transaction database: customer_txn_volume ≥ $10K within T</em></td>
+        </tr>
+        <tr>
+          <td><strong>Hypothesis Rationale</strong><br/><span style="font-size:11px;color:var(--text-muted);">Why you believe this event predicts retention</span></td>
+          <td><em>Workflow automation is the core value prop — customers who automate 3 jobs are sticky</em></td>
+          <td><em>Multi-user adoption indicates organizational buy-in; combined with first report = active value delivery</em></td>
+          <td><em>Volume threshold indicates customer is using us as primary system, not backup</em></td>
+        </tr>
+        <tr>
+          <td><strong>Current Rate</strong><br/><span style="font-size:11px;color:var(--text-muted);">Estimated from historical cohorts</span></td>
+          <td><em>~55% (below target)</em></td>
+          <td><em>~48% (below target)</em></td>
+          <td><em>~62% (at/above target)</em></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- Cohort tracking table -->
+  <h3 class="subsection-title">3-Month Cohort Tracking: LIR Correlation Analysis</h3>
+  <p class="section-intro" style="margin-bottom:12px;">Track each option's rate by monthly cohort and compare to 12-month renewal rates (measured when each cohort reaches 12 months). The option with the strongest correlation to retention at the lowest false-positive rate becomes the confirmed LIR.</p>
+
+  <div class="ws-table-wrap">
+    <table class="ws-table">
+      <thead>
+        <tr>
+          <th>Cohort Month</th>
+          <th class="center"># Customers</th>
+          <th class="center">Option 1 Rate</th>
+          <th class="center">Option 2 Rate</th>
+          <th class="center">Option 3 Rate</th>
+          <th class="center">12-Mo Retention</th>
+          <th>Best Predictor?</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>Jan</strong> (12 months ago)</td>
+          <td class="center">22</td>
+          <td class="center"><span class="corr-badge mid">52%</span></td>
+          <td class="center"><span class="corr-badge high">71%</span></td>
+          <td class="center"><span class="corr-badge mid">59%</span></td>
+          <td class="center">82%</td>
+          <td>Option 2 closest</td>
+        </tr>
+        <tr>
+          <td><strong>Feb</strong> (11 months ago)</td>
+          <td class="center">18</td>
+          <td class="center"><span class="corr-badge low">44%</span></td>
+          <td class="center"><span class="corr-badge high">67%</span></td>
+          <td class="center"><span class="corr-badge mid">55%</span></td>
+          <td class="center">78%</td>
+          <td>Option 2 closest</td>
+        </tr>
+        <tr>
+          <td><strong>Mar</strong> (10 months ago)</td>
+          <td class="center">31</td>
+          <td class="center"><span class="corr-badge mid">61%</span></td>
+          <td class="center"><span class="corr-badge high">74%</span></td>
+          <td class="center"><span class="corr-badge high">63%</span></td>
+          <td class="center">86%</td>
+          <td>Option 2 closest</td>
+        </tr>
+        <tr>
+          <td><strong>Apr</strong> (9 months ago)</td>
+          <td class="center">27</td>
+          <td class="center"><span class="corr-badge mid">58%</span></td>
+          <td class="center"><span class="corr-badge high">70%</span></td>
+          <td class="center"><span class="corr-badge mid">60%</span></td>
+          <td class="center">85%</td>
+          <td>Option 2 closest</td>
+        </tr>
+        <tr>
+          <td><strong>May</strong> (8 months ago)</td>
+          <td class="center">34</td>
+          <td class="center"><span class="corr-badge mid">55%</span></td>
+          <td class="center"><span class="corr-badge high">72%</span></td>
+          <td class="center"><span class="corr-badge mid">61%</span></td>
+          <td class="center">88%</td>
+          <td>Option 2 closest</td>
+        </tr>
+        <tr>
+          <td><strong>Jun</strong> (7 months ago)</td>
+          <td class="center">29</td>
+          <td class="center"><span class="corr-badge mid">57%</span></td>
+          <td class="center"><span class="corr-badge winner">76%</span></td>
+          <td class="center"><span class="corr-badge mid">64%</span></td>
+          <td class="center">89%</td>
+          <td><strong>✓ Option 2 confirmed</strong></td>
+        </tr>
+        <tr class="label-row">
+          <td colspan="7">→ Conclusion: Option 2 (E = invite 2+ teammates AND run first report; T = 45 days; P = 65%) shows the strongest correlation across all cohorts. Confirm as the LIR.</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="callout callout-definition">
+    <div class="callout-title">Correlation Validation Rule</div>
+    <p>For the winning LIR option to be confirmed, the gap between LIR-hit and LIR-miss 12-month retention must be <strong>at least 20 percentage points</strong> across at least 3 consecutive cohorts. Example: customers who achieve LIR retain at 88%; customers who don't retain at 52%. Gap = 36pp ✓ Confirmed. If the gap is less than 20pp, the event you've chosen is not a strong enough predictor — you need to refine the event definition.</p>
+  </div>
+
+  <!-- Section 3: Post-PMF LIR Tracking -->
+  <h2 class="section-title">Post-PMF: Monthly LIR Tracking</h2>
+  <p class="section-intro">Once the LIR is confirmed, track it monthly by cohort. This is your primary indicator of product-market fit health. Any sustained decline in LIR rate is an early warning signal of future churn.</p>
+
+  <div class="ws-table-wrap">
+    <table class="ws-table">
+      <thead>
+        <tr>
+          <th>Month</th>
+          <th class="center">New Customers</th>
+          <th class="center">LIR Achieved</th>
+          <th class="center">LIR Rate</th>
+          <th class="center">Target (≥ 65%)</th>
+          <th class="center">12-Mo Renewal</th>
+          <th class="center">LIR-Hit Retention</th>
+          <th class="center">LIR-Miss Retention</th>
+          <th class="center">Gap</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>Q3 M1</strong></td>
+          <td class="center">38</td>
+          <td class="center">25</td>
+          <td class="center"><span class="corr-badge high">66%</span></td>
+          <td class="center" style="color:#437A22;">✓</td>
+          <td class="center">87%</td>
+          <td class="center">94%</td>
+          <td class="center">67%</td>
+          <td class="center"><span class="corr-badge high">27pp</span></td>
+        </tr>
+        <tr>
+          <td><strong>Q3 M2</strong></td>
+          <td class="center">42</td>
+          <td class="center">29</td>
+          <td class="center"><span class="corr-badge high">69%</span></td>
+          <td class="center" style="color:#437A22;">✓</td>
+          <td class="center">89%</td>
+          <td class="center">96%</td>
+          <td class="center">69%</td>
+          <td class="center"><span class="corr-badge high">27pp</span></td>
+        </tr>
+        <tr>
+          <td><strong>Q3 M3</strong></td>
+          <td class="center">47</td>
+          <td class="center">32</td>
+          <td class="center"><span class="corr-badge high">68%</span></td>
+          <td class="center" style="color:#437A22;">✓</td>
+          <td class="center">88%</td>
+          <td class="center">95%</td>
+          <td class="center">68%</td>
+          <td class="center"><span class="corr-badge high">27pp</span></td>
+        </tr>
+        <tr>
+          <td><strong>Q4 M1</strong></td>
+          <td class="center">51</td>
+          <td class="center">32</td>
+          <td class="center"><span class="corr-badge mid">63%</span></td>
+          <td class="center" style="color:#b8860b;">↓ Watch</td>
+          <td class="center">—</td>
+          <td class="center">—</td>
+          <td class="center">—</td>
+          <td class="center">—</td>
+        </tr>
+        <tr>
+          <td><strong>Q4 M2</strong></td>
+          <td class="center">55</td>
+          <td class="center">33</td>
+          <td class="center"><span class="corr-badge mid">60%</span></td>
+          <td class="center" style="color:#A13544;">↓ Concern</td>
+          <td class="center">—</td>
+          <td class="center">—</td>
+          <td class="center">—</td>
+          <td class="center">—</td>
+        </tr>
+        <tr class="label-row">
+          <td colspan="9">→ Q4 shows LIR Rate decline (63% → 60%). Investigate: Is the ICP changing? Is onboarding quality declining? Is the LIR event being measured correctly as volume scales?</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="metric-grid">
+    <div class="metric-card">
+      <div class="m-label">LIR Rate Target</div>
+      <div class="m-value" style="color:var(--sos);">≥ 65%</div>
+      <div class="m-desc">Minimum acceptable rate for confirmed LIR option. Below this for 2 consecutive months requires investigation.</div>
+    </div>
+    <div class="metric-card">
+      <div class="m-label">12-Month Renewal Target</div>
+      <div class="m-value" style="color:var(--sos);">≥ 85%</div>
+      <div class="m-desc">Retention target for ICP customers who achieve LIR. Below this signals product or ICP fit issues.</div>
+    </div>
+    <div class="metric-card">
+      <div class="m-label">Minimum LIR-Hit/Miss Gap</div>
+      <div class="m-value" style="color:var(--sos);">≥ 20pp</div>
+      <div class="m-desc">The LIR-achieved vs LIR-not-achieved retention gap. If this shrinks, the LIR event may need to be redefined.</div>
+    </div>
+    <div class="metric-card">
+      <div class="m-label">ICP Drift Signal</div>
+      <div class="m-value" style="color:#964219;">-5pp</div>
+      <div class="m-desc">A 5-point drop in LIR Rate over 2 consecutive months is a trigger to audit ICP quality of recent cohorts.</div>
+    </div>
+  </div>
+
+  <!-- Section 4: LIUE Component Tracker -->
+  <h2 class="section-title">LIUE Component Tracker</h2>
+  <p class="section-intro">Track LIUE quarterly. The formula requires 7 input variables. Enter quarterly actuals and compute LIUE. Trend over time is as important as the absolute value — you want to see LIUE improving quarter-over-quarter on the path to GTM Fit.</p>
+
+  <h3 class="subsection-title">LIUE Formula Components</h3>
+
+  <div class="liue-components">
+    <div class="liue-comp">
+      <div class="liue-comp-label">Input 1</div>
+      <div class="liue-comp-var">ACV</div>
+      <div class="liue-comp-def">Annual Contract Value — average revenue per new customer in the quarter</div>
+    </div>
+    <div class="liue-comp">
+      <div class="liue-comp-label">Input 2</div>
+      <div class="liue-comp-var">GM%</div>
+      <div class="liue-comp-def">Gross Margin % — product margin after direct COGS (exclude S&amp;M)</div>
+    </div>
+    <div class="liue-comp">
+      <div class="liue-comp-label">Input 3</div>
+      <div class="liue-comp-var">Churn</div>
+      <div class="liue-comp-def">Annual Gross Revenue Churn Rate — % of ARR lost from existing customers per year</div>
+    </div>
+    <div class="liue-comp">
+      <div class="liue-comp-label">Input 4</div>
+      <div class="liue-comp-var">Cost/SQL</div>
+      <div class="liue-comp-def">All-in cost to generate one Sales Qualified Lead (marketing spend + SDR cost)</div>
+    </div>
+    <div class="liue-comp">
+      <div class="liue-comp-label">Input 5</div>
+      <div class="liue-comp-var">SQL→Cust%</div>
+      <div class="liue-comp-def">SQL-to-Customer conversion rate — % of SQLs that become paying customers</div>
+    </div>
+    <div class="liue-comp">
+      <div class="liue-comp-label">Input 6</div>
+      <div class="liue-comp-var">RepCost/Mo</div>
+      <div class="liue-comp-def">All-in monthly cost of one AE (salary + benefits + quota-based variable at 100% attainment)</div>
+    </div>
+    <div class="liue-comp">
+      <div class="liue-comp-label">Input 7</div>
+      <div class="liue-comp-var">SQLs/Rep/Mo</div>
+      <div class="liue-comp-def">Average SQLs generated per rep per month (inbound + outbound combined)</div>
+    </div>
+    <div class="liue-comp" style="background:#eaf4f5;border-color:var(--sos);">
+      <div class="liue-comp-label" style="color:var(--sos);">Output</div>
+      <div class="liue-comp-var">LIUE</div>
+      <div class="liue-comp-def">Computed from inputs above. Target: &gt; 3 for GTM Fit signal.</div>
+    </div>
+  </div>
+
+  <div class="formula-block">
+    <div class="formula-label">LIUE Formula</div>
+    <div class="formula-main">LTV = ACV × GM% ÷ Churn</div>
+    <div class="formula-main" style="margin-top:6px;">CAC = (Cost/SQL ÷ SQL-to-Cust%) + (RepCost/Mo ÷ SQLs/Rep/Mo)</div>
+    <div class="formula-main" style="margin-top:6px;">LIUE = LTV ÷ CAC</div>
+    <div class="formula-note">GTM Fit threshold: LIUE &gt; 3 for 2 consecutive quarters</div>
+  </div>
+
+  <h3 class="subsection-title">Quarterly Inputs Table</h3>
+  <div class="ws-table-wrap">
+    <table class="ws-table">
+      <thead>
+        <tr>
+          <th>Quarter</th>
+          <th class="center">ACV ($)</th>
+          <th class="center">GM%</th>
+          <th class="center">Annual Churn</th>
+          <th class="center">Cost/SQL ($)</th>
+          <th class="center">SQL→Cust%</th>
+          <th class="center">Rep Monthly Cost ($)</th>
+          <th class="center">SQLs/Rep/Mo</th>
+          <th class="center">LIUE</th>
+          <th>Signal</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>Q1</strong></td>
+          <td class="center">28,000</td>
+          <td class="center">72%</td>
+          <td class="center">18%</td>
+          <td class="center">850</td>
+          <td class="center">22%</td>
+          <td class="center">12,500</td>
+          <td class="center">8</td>
+          <td class="center"><span class="corr-badge low">1.9</span></td>
+          <td>Below threshold</td>
+        </tr>
+        <tr>
+          <td><strong>Q2</strong></td>
+          <td class="center">30,000</td>
+          <td class="center">74%</td>
+          <td class="center">16%</td>
+          <td class="center">780</td>
+          <td class="center">25%</td>
+          <td class="center">12,500</td>
+          <td class="center">9</td>
+          <td class="center"><span class="corr-badge mid">2.4</span></td>
+          <td>Improving</td>
+        </tr>
+        <tr>
+          <td><strong>Q3</strong></td>
+          <td class="center">34,000</td>
+          <td class="center">75%</td>
+          <td class="center">13%</td>
+          <td class="center">720</td>
+          <td class="center">28%</td>
+          <td class="center">13,000</td>
+          <td class="center">10</td>
+          <td class="center"><span class="corr-badge mid">2.9</span></td>
+          <td>Approaching threshold</td>
+        </tr>
+        <tr>
+          <td><strong>Q4</strong></td>
+          <td class="center">36,000</td>
+          <td class="center">76%</td>
+          <td class="center">11%</td>
+          <td class="center">680</td>
+          <td class="center">30%</td>
+          <td class="center">13,000</td>
+          <td class="center">11</td>
+          <td class="center"><span class="corr-badge high">3.5</span></td>
+          <td>✓ Above threshold</td>
+        </tr>
+        <tr>
+          <td><strong>Q5</strong></td>
+          <td class="center">38,000</td>
+          <td class="center">77%</td>
+          <td class="center">10%</td>
+          <td class="center">650</td>
+          <td class="center">32%</td>
+          <td class="center">13,500</td>
+          <td class="center">12</td>
+          <td class="center"><span class="corr-badge winner">4.1</span></td>
+          <td>✓ GTM Fit — 2nd consecutive Q</td>
+        </tr>
+        <tr class="formula-row">
+          <td colspan="9">Formula reminder: LTV = ACV × GM% ÷ Churn | CAC = (Cost/SQL ÷ SQL→Cust%) + (RepCost/Mo ÷ SQLs/Rep/Mo) | LIUE = LTV ÷ CAC</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="callout callout-best-practice">
+    <div class="callout-title">LIUE &gt; 3 for Two Consecutive Quarters = GTM Fit</div>
+    <p>GTM Fit is confirmed when LIUE exceeds 3 for two consecutive quarters. This is the signal that your unit economics are healthy enough to safely hire a first sales leader and begin scaling the GTM motion. Before this point, hiring additional sales headcount accelerates cash burn without proportional revenue return. After this point, it's a math problem: add headcount at the proven unit economics rate.</p>
+  </div>
+
+  <!-- Section 5: Interpretation Guide -->
+  <h2 class="section-title">Interpretation Guide</h2>
+  <p class="section-intro">Use this decision tree when your LIR or LIUE metrics are showing unexpected patterns. Each scenario points to a different root cause and a different intervention.</p>
+
+  <div class="decision-tree">
+    <div class="dt-node danger">
+      <div class="dt-condition dt-if">If Condition → LIR Rate &lt; 60% for 2+ Consecutive Cohorts</div>
+      <div class="dt-then">Onboarding or ICP Problem — Act Immediately</div>
+      <div class="dt-action">Three possible root causes: (1) Your ICP definition has drifted — you're selling to customers who don't get value from the product. Audit the last 2 cohorts' firmographics vs. your ICP definition. (2) The LIR event is too hard to achieve — your onboarding process isn't driving customers to the event fast enough. Audit the onboarding journey step by step. (3) The LIR event itself was the wrong hypothesis — it doesn't correlate with value delivery for your evolved product. Run LIR hypothesis tests again with new event candidates.</div>
+    </div>
+    <div class="dt-node danger">
+      <div class="dt-condition dt-if">If Condition → LIUE &lt; 3 Despite High LIR Rate</div>
+      <div class="dt-then">Unit Economics Problem — Diagnose LTV vs. CAC Independently</div>
+      <div class="dt-action">High LIR + low LIUE means you have strong retention but poor efficiency. Diagnose which side of the equation is broken: If LTV is low (ACV × GM% ÷ Churn is small), the problem is pricing, gross margin structure, or still-too-high churn. If CAC is high (cost per SQL or rep productivity is poor), the problem is demand gen cost or rep ramp time and quota attainment. Fix the right side before scaling anything.</div>
+    </div>
+    <div class="dt-node warning">
+      <div class="dt-condition dt-if">If Condition → LIR Rising but LIUE Falling</div>
+      <div class="dt-then">Selling Right Customers, But with Poor Efficiency</div>
+      <div class="dt-action">This pattern means your product is getting stickier (more customers achieving LIR), but your acquisition cost is increasing or rep productivity is declining. Check: (1) Is demand gen cost per SQL rising as you exhaust easy channels? (2) Is rep ramp time increasing as you hire less experienced reps? (3) Is SQL-to-close rate declining because ICP qualification is getting noisier? The efficiency side needs attention before headcount expansion.</div>
+    </div>
+    <div class="dt-node warning">
+      <div class="dt-condition dt-if">If Condition → LIR Falling but LIUE Rising</div>
+      <div class="dt-then">Efficiency Improving but ICP Drift Underway — Churn Spike Incoming</div>
+      <div class="dt-action">This is the most dangerous pattern. Improving LIUE makes things look good, but falling LIR means the customers you're acquiring are less and less likely to get value from the product. Churn hasn't shown up yet because the cohorts haven't reached renewal. It will. Act immediately: (1) Audit the ICP of recent cohorts vs. historical LIR-hit cohorts. (2) Tighten qualification criteria even if it reduces new logo volume. (3) Add LIR achievement as a leading indicator on the board dashboard so this pattern is visible before churn materializes.</div>
+    </div>
+    <div class="dt-node success">
+      <div class="dt-condition dt-if">If Condition → LIR ≥ 65% AND LIUE &gt; 3 for 2 Consecutive Quarters</div>
+      <div class="dt-then">GTM Fit Confirmed — Begin Scaling the GTM Motion</div>
+      <div class="dt-action">This is the signal you've been waiting for. You now have the evidence needed to: (1) Hire your first sales leader (use the First Sales Leader Interview Scorecard). (2) Begin structured rep hiring based on proven unit economics. (3) Set a formal revenue target for the next 12 months based on your LIUE model. (4) Build a formal LIR monitoring program into the CS onboarding process to protect the metrics that got you here.</div>
+    </div>
+  </div>
+
+  <!-- Related links -->
+  <div class="related-section">
+    <div class="related-title">Related Pages</div>
+    <div class="related-links">
+      <a href="sos-lir.html" class="related-link">LIR Framework</a>
+      <a href="sos-liue.html" class="related-link">LIUE Framework</a>
+      <a href="template-lir.html" class="related-link">LIR Journey Template</a>
+      <a href="sos-pmf.html" class="related-link">PMF Framework</a>
+      <a href="sos-gtm-fit.html" class="related-link">GTM Fit</a>
+      <a href="../pages/resources.html" class="related-link">← All Templates</a>
+    </div>
+  </div>
+
+</div>
+<script data-pplx-inline-edit>
+(function () {
+  if (window === window.top) return;
+
+  const allowedParentOrigins = ["https://www.perplexity.ai","https://perplexity.ai","https://testing.perplexity.ai","https://staging.perplexity.ai","https://*.preview.i.perplexity.ai","http://localhost:3000","http://127.0.0.1:3000","http://localhost:5173","http://127.0.0.1:5173"];
+  const MAX_FONT_BYTES = 500 * 1024;
+  const MAX_TOTAL_FONT_BYTES = 2 * 1024 * 1024;
+  let scrollForwarding = false;
+  let scrollRaf = 0;
+  let trustedTopOrigin = null;
+
+  // Allow entries like "https://*.preview.i.perplexity.ai" — the wildcard
+  // matches a single DNS label (no dots), so "https://*.foo" cannot stretch
+  // across multiple labels.
+  function matchesAllowedOrigin(origin) {
+    if (!origin) return false;
+    for (const entry of allowedParentOrigins) {
+      if (!entry.includes("*")) {
+        if (entry === origin) return true;
+        continue;
+      }
+      const pattern = new RegExp(
+        "^" +
+          entry.replace(/[.+?^${}()|[\]\\]/g, "\\$&").replace(/\*/g, "[^.]+") +
+          "$",
+      );
+      if (pattern.test(origin)) return true;
+    }
+    return false;
+  }
+
+  // Trust decision: when the sender is same-origin-visible (event.origin is a
+  // real origin like https://www.perplexity.ai) we trust event.origin directly.
+  // When event.origin is "null" (opaque broker srcdoc), we fall back to the
+  // broker's stamped `parentOrigin` to identify the top window. The fallback
+  // is claim-only — we rely on the browser's native `targetOrigin` enforcement
+  // on the response path (see postToTrustedTop) to ensure replies can't be
+  // delivered to anyone but the actual top window of that claimed origin.
+  function getTrustedParentOrigin(event) {
+    const forwardedParentOrigin =
+      typeof event.data.parentOrigin === "string" ? event.data.parentOrigin : null;
+    const parentOrigin = event.origin === "null" ? forwardedParentOrigin : event.origin;
+    return matchesAllowedOrigin(parentOrigin) ? parentOrigin : null;
+  }
+
+  // All responses go to window.top with targetOrigin = the allowlisted origin.
+  // An attacker that iframes us inside their own null-origin broker can claim
+  // any parentOrigin they like, but the browser will drop the reply whenever
+  // the real top's origin doesn't match — so the screenshot never leaves.
+  function postToTrustedTop(message) {
+    if (!trustedTopOrigin) return;
+    try {
+      window.top.postMessage(message, trustedTopOrigin);
+    } catch (_error) {}
+  }
+
+  function inlineAll(original, clone) {
+    if (original.nodeType !== 1 || clone.nodeType !== 1) return;
+
+    try {
+      const computedStyle = getComputedStyle(original);
+      // cssText on a computed style is the serialized declaration in modern
+      // Chromium/Safari — a single read beats enumerating ~400 longhand
+      // properties. Firefox returns "" here, so we fall back on empty.
+      const serialized = computedStyle.cssText;
+      if (serialized) {
+        clone.style.cssText = serialized;
+      } else {
+        const parts = new Array(computedStyle.length);
+        for (let index = 0; index < computedStyle.length; index += 1) {
+          const property = computedStyle[index];
+          parts[index] = `${property}:${computedStyle.getPropertyValue(property)};`;
+        }
+        clone.style.cssText = parts.join("");
+      }
+    } catch (_error) {}
+
+    const originalChildren = original.children;
+    const clonedChildren = clone.children;
+    for (
+      let index = 0;
+      index < originalChildren.length && index < clonedChildren.length;
+      index += 1
+    ) {
+      inlineAll(originalChildren[index], clonedChildren[index]);
+    }
+  }
+
+  function extractFontUrl(srcValue) {
+    const matches = [
+      ...srcValue.matchAll(
+        /url\(["']?([^"')]+)["']?\)(?:\s*format\(["']?([^"')]+)["']?\))?/gi,
+      ),
+    ];
+    if (matches.length === 0) return null;
+    const woff2 = matches.find((m) => m[2] && m[2].toLowerCase().includes("woff2"));
+    if (woff2) return woff2[1];
+    const woff = matches.find((m) => m[2] && m[2].toLowerCase().includes("woff"));
+    if (woff) return woff[1];
+    return matches[0][1];
+  }
+
+  // Cache resolved font URL -> data URI across captures. Fonts on a page
+  // essentially never change, and a batch run emits multiple captures back to
+  // back — without this we'd refetch + re-base64 every time.
+  const fontDataUriCache = new Map();
+  const SRC_DECLARATION_RE = /src\s*:\s*[^;}]+/i;
+
+  async function fetchAsDataUri(url) {
+    if (fontDataUriCache.has(url)) return fontDataUriCache.get(url);
+    let dataUri = null;
+    try {
+      const response = await fetch(url, { mode: "cors", credentials: "omit" });
+      if (response.ok) {
+        const blob = await response.blob();
+        if (blob.size <= MAX_FONT_BYTES) {
+          dataUri = await new Promise((resolve) => {
+            const reader = new FileReader();
+            reader.onloadend = () =>
+              resolve(typeof reader.result === "string" ? reader.result : null);
+            reader.onerror = () => resolve(null);
+            reader.readAsDataURL(blob);
+          });
+        }
+      }
+    } catch (_error) {
+      dataUri = null;
+    }
+    fontDataUriCache.set(url, dataUri);
+    return dataUri;
+  }
+
+  function collectFontFaceRuleTexts() {
+    const rules = [];
+    for (const sheet of document.styleSheets) {
+      let cssRules;
+      try {
+        cssRules = sheet.cssRules;
+      } catch (_error) {
+        continue;
+      }
+      if (!cssRules) continue;
+      for (const rule of cssRules) {
+        const cssText = rule.cssText || "";
+        if (cssText.startsWith("@font-face")) rules.push(cssText);
+      }
+    }
+    return rules;
+  }
+
+  async function buildInlinedFontCss() {
+    const ruleTexts = collectFontFaceRuleTexts();
+    if (ruleTexts.length === 0) return null;
+
+    const resolved = ruleTexts.map((cssText) => {
+      if (!SRC_DECLARATION_RE.test(cssText)) return null;
+      const srcMatch = cssText.match(/src\s*:\s*([^;}]+)[;}]/i);
+      if (!srcMatch) return null;
+      const url = extractFontUrl(srcMatch[1]);
+      if (!url) return null;
+      try {
+        return { cssText, url: new URL(url, document.baseURI).href };
+      } catch (_error) {
+        return null;
+      }
+    });
+
+    const dataUris = await Promise.all(
+      resolved.map((entry) => (entry ? fetchAsDataUri(entry.url) : Promise.resolve(null))),
+    );
+
+    const inlined = [];
+    let totalBytes = 0;
+    for (let index = 0; index < resolved.length; index += 1) {
+      const entry = resolved[index];
+      const dataUri = dataUris[index];
+      if (!entry || !dataUri) continue;
+      const approxBytes = dataUri.length * 0.75;
+      if (totalBytes + approxBytes > MAX_TOTAL_FONT_BYTES) break;
+      totalBytes += approxBytes;
+      inlined.push(entry.cssText.replace(SRC_DECLARATION_RE, `src: url("${dataUri}")`));
+    }
+    return inlined.length > 0 ? inlined.join("\n") : null;
+  }
+
+  function stripExternal(clone) {
+    const images = clone.querySelectorAll("img");
+    for (let index = 0; index < images.length; index += 1) {
+      const src = images[index].getAttribute("src");
+      if (src && !src.startsWith("data:")) images[index].removeAttribute("src");
+    }
+
+    const elements = clone.querySelectorAll("*");
+    for (let index = 0; index < elements.length; index += 1) {
+      const style = elements[index].style.cssText;
+      if (style && style.includes("url(")) {
+        elements[index].style.cssText = style.replace(
+          /url\(["']?(?!data:)[^)"']*["']?\)/gi,
+          "none",
+        );
+      }
+    }
+  }
+
+  function emitScroll() {
+    scrollRaf = 0;
+    if (!scrollForwarding) return;
+    postToTrustedTop({
+      type: "INLINE_EDIT_SCROLL",
+      scrollX: window.scrollX,
+      scrollY: window.scrollY,
+    });
+  }
+
+  window.addEventListener(
+    "scroll",
+    function () {
+      if (!scrollForwarding || scrollRaf) return;
+      scrollRaf = requestAnimationFrame(emitScroll);
+    },
+    { passive: true, capture: true },
+  );
+
+  async function handleCaptureRequest(event) {
+    const requestId = event.data.requestId;
+    const scrollX = window.scrollX;
+    const scrollY = window.scrollY;
+    const width = window.innerWidth;
+    const height = window.innerHeight;
+
+    function postResult(dataUrl) {
+      postToTrustedTop({
+        type: "INLINE_EDIT_SCREENSHOT_RESULT",
+        requestId,
+        dataUrl,
+        scrollX,
+        scrollY,
+      });
+    }
+
+    try {
+      // Wait for any pending web fonts to resolve so both inline metrics and
+      // the @font-face inlining below see the same loaded faces.
+      if (document.fonts && document.fonts.ready) {
+        try {
+          await document.fonts.ready;
+        } catch (_error) {}
+      }
+
+      const clone = document.documentElement.cloneNode(true);
+      inlineAll(document.documentElement, clone);
+
+      const removedNodes = clone.querySelectorAll("script,link[rel=\"stylesheet\"],style");
+      for (let index = 0; index < removedNodes.length; index += 1) {
+        removedNodes[index].remove();
+      }
+
+      stripExternal(clone);
+
+      // Re-embed web fonts as data-URI @font-face rules so the SVG rasterizer
+      // can resolve them — external font URLs aren't fetched during
+      // foreignObject rendering, which would otherwise force a fallback face
+      // and change text metrics.
+      const inlinedFontCss = await buildInlinedFontCss();
+      if (inlinedFontCss) {
+        const styleEl = document.createElement("style");
+        styleEl.textContent = inlinedFontCss;
+        const head = clone.querySelector("head");
+        if (head) head.appendChild(styleEl);
+        else clone.insertBefore(styleEl, clone.firstChild);
+      }
+
+      const html = new XMLSerializer().serializeToString(clone);
+      const svg =
+        `<svg xmlns="http://www.w3.org/2000/svg" width="${width}" height="${height}">` +
+        '<foreignObject width="100%" height="100%">' +
+        `<div xmlns="http://www.w3.org/1999/xhtml" style="width:${width}px;height:${height}px;overflow:hidden">` +
+        `<div style="transform:translate(-${scrollX}px,-${scrollY}px);transform-origin:top left">` +
+        html +
+        "</div></div></foreignObject></svg>";
+      const svgUrl = `data:image/svg+xml;charset=utf-8,${encodeURIComponent(svg)}`;
+      const image = new Image();
+      image.onload = function () {
+        const canvas = document.createElement("canvas");
+        canvas.width = width;
+        canvas.height = height;
+        canvas.getContext("2d").drawImage(image, 0, 0);
+        postResult(canvas.toDataURL("image/png"));
+      };
+      image.onerror = function () {
+        postResult(null);
+      };
+      image.src = svgUrl;
+    } catch (_error) {
+      postResult(null);
+    }
+  }
+
+  window.addEventListener("message", function (event) {
+    if (!event.data) return;
+    // Only accept messages from the direct parent frame. Blocks sibling /
+    // unrelated-window postMessage senders that could otherwise reach us.
+    if (event.source !== window.parent) return;
+
+    const trustedParentOrigin = getTrustedParentOrigin(event);
+    if (!trustedParentOrigin) return;
+    trustedTopOrigin = trustedParentOrigin;
+
+    if (event.data.type === "INLINE_EDIT_SCROLL_START") {
+      scrollForwarding = true;
+      emitScroll();
+      return;
+    }
+
+    if (event.data.type === "INLINE_EDIT_SCROLL_STOP") {
+      scrollForwarding = false;
+      if (scrollRaf) cancelAnimationFrame(scrollRaf);
+      scrollRaf = 0;
+      return;
+    }
+
+    if (event.data.type !== "INLINE_EDIT_CAPTURE_REQUEST") return;
+
+    handleCaptureRequest(event);
+  });
+})();
+
+
+</script></body>
+</html>

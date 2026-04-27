@@ -1,0 +1,1414 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Stage 2: GTM Fit — Science of Scaling</title>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="../assets/shared.css"/>
+  <style>
+    :root { --sos: #0D5C63; --sos-light: #e6f2f3; --sos-mid: #c2dde0; }
+    .page-hero { background: var(--sos); }
+
+    .step-list li::before { background: var(--sos); }
+    .bullet-list li::before { color: var(--sos); }
+
+    /* LIUE mega formula block */
+    .liue-formula-block {
+      background: #0D5C63;
+      color: #fff;
+      border-radius: 12px;
+      padding: 28px 32px;
+      margin: 24px 0;
+    }
+    .lfb-title {
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      opacity: 0.7;
+      margin-bottom: 16px;
+    }
+    .lfb-row {
+      font-size: 15px;
+      font-weight: 600;
+      line-height: 2.2;
+    }
+    .lfb-row .bracket { color: #7ecdd2; }
+    .lfb-divider {
+      border: none;
+      border-top: 2px solid rgba(255,255,255,0.35);
+      margin: 8px 0;
+    }
+    .lfb-threshold {
+      font-size: 20px;
+      font-weight: 700;
+      margin-top: 14px;
+      color: #7ecdd2;
+    }
+    .lfb-note {
+      font-size: 13px;
+      opacity: 0.65;
+      margin-top: 8px;
+      font-weight: 400;
+    }
+
+    /* Variable explanation grid */
+    .var-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 10px;
+      margin: 20px 0;
+    }
+    .var-card {
+      background: var(--surface);
+      border: 1.5px solid var(--border);
+      border-left: 4px solid var(--sos);
+      border-radius: 8px;
+      padding: 14px 16px;
+    }
+    .var-card .vc-term {
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: 0.5px;
+      text-transform: uppercase;
+      color: var(--sos);
+      margin-bottom: 4px;
+    }
+    .var-card .vc-name {
+      font-size: 14px;
+      font-weight: 700;
+      color: var(--text);
+      margin-bottom: 6px;
+    }
+    .var-card .vc-desc {
+      font-size: 13px;
+      color: var(--text-muted);
+      line-height: 1.55;
+    }
+
+    /* Three conditions boxes */
+    .condition-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 12px;
+      margin: 20px 0;
+    }
+    .condition-card {
+      background: var(--surface);
+      border: 1.5px solid var(--border);
+      border-top: 3px solid var(--sos);
+      border-radius: 8px;
+      padding: 18px 16px;
+    }
+    .condition-card .cc-num {
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      color: var(--sos);
+      margin-bottom: 6px;
+    }
+    .condition-card .cc-title {
+      font-size: 14px;
+      font-weight: 700;
+      color: var(--text);
+      margin-bottom: 6px;
+    }
+    .condition-card .cc-body {
+      font-size: 13px;
+      color: var(--text-muted);
+      line-height: 1.55;
+    }
+
+    /* GTM Playbook component boxes */
+    .gtm-component {
+      background: var(--surface);
+      border: 1.5px solid var(--border);
+      border-radius: 8px;
+      padding: 18px 20px;
+      margin: 10px 0;
+    }
+    .gtm-component.highlight {
+      border-color: var(--sos);
+      background: #f3f8f8;
+    }
+    .gtm-component .gc-header {
+      display: flex;
+      align-items: center;
+      margin-bottom: 8px;
+      gap: 10px;
+    }
+    .gtm-component .gc-num {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-width: 26px;
+      height: 26px;
+      background: var(--sos);
+      color: #fff;
+      border-radius: 50%;
+      font-size: 12px;
+      font-weight: 700;
+      flex-shrink: 0;
+    }
+    .gtm-component .gc-title {
+      font-size: 15px;
+      font-weight: 700;
+      color: var(--text);
+    }
+    .gtm-component .gc-arrow {
+      font-size: 13px;
+      color: var(--sos);
+      font-weight: 600;
+      margin-left: 4px;
+    }
+    .gtm-component .gc-body {
+      font-size: 14px;
+      color: var(--text-muted);
+      line-height: 1.65;
+      padding-left: 36px;
+    }
+
+    /* Talk ratio cards */
+    .talk-ratio-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 10px;
+      margin: 16px 0;
+    }
+    .tr-card {
+      border-radius: 8px;
+      padding: 16px 14px;
+      text-align: center;
+    }
+    .tr-card.top { background: #e8f5e9; border: 1.5px solid #a5d6a7; }
+    .tr-card.avg { background: #fff8e1; border: 1.5px solid #ffe082; }
+    .tr-card.bot { background: #fce8e6; border: 1.5px solid #ef9a9a; }
+    .tr-card .tr-label { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 8px; }
+    .tr-card.top .tr-label { color: #437a22; }
+    .tr-card.avg .tr-label { color: #a07800; }
+    .tr-card.bot .tr-label { color: #a13544; }
+    .tr-card .tr-split {
+      display: flex;
+      justify-content: center;
+      gap: 12px;
+      font-size: 14px;
+      font-weight: 700;
+    }
+    .tr-card .tr-talk { color: #a13544; }
+    .tr-card .tr-listen { color: #437a22; }
+
+    /* Demand gen channel criteria */
+    .criteria-list {
+      list-style: none;
+      margin: 16px 0;
+      counter-reset: criteria;
+    }
+    .criteria-list li {
+      counter-increment: criteria;
+      display: flex;
+      gap: 14px;
+      align-items: flex-start;
+      padding: 12px 0;
+      border-bottom: 1px solid var(--border);
+      font-size: 15px;
+      line-height: 1.65;
+    }
+    .criteria-list li:last-child { border-bottom: none; }
+    .criteria-list li::before {
+      content: counter(criteria);
+      min-width: 28px;
+      height: 28px;
+      border-radius: 50%;
+      background: var(--sos-light);
+      color: var(--sos);
+      font-size: 13px;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      margin-top: 2px;
+    }
+    .criteria-list li .cl-content { flex: 1; }
+    .criteria-list li .cl-content strong { color: var(--sos); }
+
+    /* Three pricing lens cards */
+    .lens-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 12px;
+      margin: 20px 0;
+    }
+    .lens-card {
+      background: var(--surface);
+      border: 1.5px solid var(--border);
+      border-top: 3px solid var(--sos);
+      border-radius: 8px;
+      padding: 16px;
+    }
+    .lens-card .lc-num {
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      color: var(--sos);
+      margin-bottom: 4px;
+    }
+    .lens-card .lc-title {
+      font-size: 14px;
+      font-weight: 700;
+      color: var(--text);
+      margin-bottom: 8px;
+    }
+    .lens-card .lc-body {
+      font-size: 13px;
+      color: var(--text-muted);
+      line-height: 1.55;
+    }
+
+    /* Mistake box */
+    .mistake-box {
+      background: #fce8e6;
+      border: 1.5px solid #ef9a9a;
+      border-left: 4px solid #a13544;
+      border-radius: 8px;
+      padding: 16px 18px;
+      margin: 12px 0;
+      font-size: 14px;
+      color: #3a1a1a;
+      line-height: 1.65;
+    }
+    .mistake-box .mb-title {
+      font-weight: 700;
+      color: #a13544;
+      font-size: 12px;
+      letter-spacing: 0.5px;
+      text-transform: uppercase;
+      margin-bottom: 6px;
+    }
+
+    /* Compensation split */
+    .comp-split {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 14px;
+      margin: 20px 0;
+    }
+    .comp-half {
+      border-radius: 10px;
+      padding: 22px;
+      text-align: center;
+    }
+    .comp-half.at-signing { background: #f3f8f8; border: 2px solid var(--sos); }
+    .comp-half.at-lir { background: var(--sos); color: #fff; }
+    .comp-half .ch-pct {
+      font-size: 36px;
+      font-weight: 700;
+      line-height: 1;
+      margin-bottom: 8px;
+    }
+    .comp-half.at-signing .ch-pct { color: var(--sos); }
+    .comp-half.at-lir .ch-pct { color: #7ecdd2; }
+    .comp-half .ch-label { font-size: 14px; font-weight: 600; }
+    .comp-half.at-signing .ch-label { color: var(--text); }
+    .comp-half.at-lir .ch-label { color: rgba(255,255,255,0.9); }
+    .comp-half .ch-note { font-size: 12px; margin-top: 6px; }
+    .comp-half.at-signing .ch-note { color: var(--text-muted); }
+    .comp-half.at-lir .ch-note { color: rgba(255,255,255,0.6); }
+
+    /* Speedometer / GTM Fit dashboard */
+    .speedometer-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 14px;
+      margin: 20px 0;
+    }
+    .speed-card {
+      border-radius: 10px;
+      padding: 20px;
+      text-align: center;
+    }
+    .speed-card.green-card { background: #e8f5e9; border: 2px solid #a5d6a7; }
+    .speed-card.red-card { background: #fce8e6; border: 2px solid #ef9a9a; }
+    .speed-card .sc-indicator {
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      margin-bottom: 8px;
+    }
+    .speed-card.green-card .sc-indicator { color: #437a22; }
+    .speed-card.red-card .sc-indicator { color: #a13544; }
+    .speed-card .sc-title {
+      font-size: 18px;
+      font-weight: 700;
+      margin-bottom: 6px;
+    }
+    .speed-card.green-card .sc-title { color: #437a22; }
+    .speed-card.red-card .sc-title { color: #a13544; }
+    .speed-card .sc-body { font-size: 13px; line-height: 1.55; }
+    .speed-card.green-card .sc-body { color: #3a6a2a; }
+    .speed-card.red-card .sc-body { color: #6a2a2a; }
+
+    /* Declaration checklist */
+    .decl-checklist {
+      list-style: none;
+      margin: 20px 0;
+    }
+    .decl-checklist li {
+      display: flex;
+      gap: 12px;
+      align-items: flex-start;
+      padding: 12px 0;
+      border-bottom: 1px solid var(--border);
+      font-size: 15px;
+      line-height: 1.65;
+    }
+    .decl-checklist li:last-child { border-bottom: none; }
+    .decl-icon {
+      min-width: 24px;
+      height: 24px;
+      border-radius: 50%;
+      background: #e8f5e9;
+      color: #437A22;
+      font-size: 13px;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      margin-top: 1px;
+    }
+
+    /* Scorecard profile */
+    .profile-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+      margin: 20px 0;
+    }
+    .profile-card {
+      border-radius: 8px;
+      padding: 16px 18px;
+    }
+    .profile-card.stage1 { background: #fce8e6; border: 1.5px solid #ef9a9a; }
+    .profile-card.stage2 { background: #e6f2f3; border: 1.5px solid #0D5C63; }
+    .profile-card .pc-stage {
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      margin-bottom: 8px;
+    }
+    .profile-card.stage1 .pc-stage { color: #a13544; }
+    .profile-card.stage2 .pc-stage { color: var(--sos); }
+    .profile-card .pc-title {
+      font-size: 16px;
+      font-weight: 700;
+      margin-bottom: 10px;
+    }
+    .profile-card.stage1 .pc-title { color: #a13544; }
+    .profile-card.stage2 .pc-title { color: var(--sos); }
+    .profile-card .pc-body { font-size: 13px; line-height: 1.65; }
+    .profile-card.stage1 .pc-body { color: #5a2020; }
+    .profile-card.stage2 .pc-body { color: #1a3a3c; }
+
+    /* Green callout */
+    .callout-green {
+      background: #e8f5e9;
+      border-color: #a5d6a7;
+    }
+    .callout-green .callout-title { color: #437a22; }
+
+    /* Metrics table wrapper */
+    .metrics-wrap { overflow-x: auto; margin: 20px 0; }
+
+    @media (max-width: 768px) {
+      .condition-grid { grid-template-columns: 1fr; }
+      .var-grid { grid-template-columns: 1fr; }
+      .lens-grid { grid-template-columns: 1fr; }
+      .comp-split { grid-template-columns: 1fr; }
+      .speedometer-grid { grid-template-columns: 1fr; }
+      .profile-grid { grid-template-columns: 1fr; }
+      .talk-ratio-grid { grid-template-columns: 1fr; }
+    }
+
+    .phase-map-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+      gap: 12px;
+      margin: 16px 0 32px;
+    }
+    .phase-map-card {
+      background: var(--surface);
+      border: 1.5px solid var(--border);
+      border-radius: 8px;
+      padding: 14px 16px;
+      text-decoration: none;
+      display: block;
+      transition: all 0.15s;
+    }
+    .phase-map-card:hover { text-decoration: none; transform: translateY(-1px); box-shadow: 0 3px 10px rgba(0,0,0,0.08); border-color: var(--sos); }
+    .pm-phase-label { font-size: 10px; font-weight: 700; letter-spacing: 0.8px; text-transform: uppercase; color: var(--sos); margin-bottom: 4px; }
+    .pm-title { font-size: 13px; font-weight: 700; color: var(--text); margin-bottom: 4px; line-height: 1.3; }
+    .pm-desc { font-size: 11px; color: var(--text-muted); line-height: 1.5; }
+
+    .tools-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 12px; margin: 16px 0 32px; }
+    .tool-card { background: var(--surface); border: 1.5px solid var(--border); border-radius: 8px; padding: 14px 16px; text-decoration: none; display: block; transition: all 0.15s; }
+    .tool-card:hover { text-decoration: none; transform: translateY(-1px); box-shadow: 0 3px 10px rgba(0,0,0,0.08); }
+    .tc-sos { border-left: 3px solid #0D5C63; }
+    .tc-res { border-left: 3px solid #2C5F8A; }
+    .tc-phase { font-size: 10px; font-weight: 700; letter-spacing: 0.8px; text-transform: uppercase; color: #0D5C63; margin-bottom: 4px; }
+    .tc-res .tc-phase { color: #2C5F8A; }
+    .tc-title { font-size: 13px; font-weight: 700; color: var(--text); margin-bottom: 4px; line-height: 1.3; }
+    .tc-desc { font-size: 11px; color: var(--text-muted); line-height: 1.5; }
+  </style>
+</head>
+<body>
+
+<!-- Nav -->
+<nav class="nav">
+  <span class="nav-logo">CRO <span>Manual</span></span>
+  <span class="nav-sep">/</span>
+  <a href="../index.html" class="nav-back">← Home</a>
+  <span class="nav-sep">/</span>
+  <a href="../pages/science-of-scaling.html" class="nav-back">Science of Scaling</a>
+  <span class="nav-sep">/</span>
+  <span class="nav-current">Stage 2: GTM Fit</span>
+</nav>
+
+<!-- Hero -->
+<div class="page-hero">
+  <div class="hero-phase-label">Stage 2 · Science of Scaling</div>
+  <div class="hero-title">Go-to-Market Fit</div>
+  <div class="hero-subtitle">Once customers succeed (PMF), the next question is: can you acquire them profitably and repeatably at scale? GTM Fit is the proof that your sales and marketing motion generates scalable unit economics.</div>
+  <div class="hero-tags">
+    <span class="hero-tag">LIUE</span>
+    <span class="hero-tag">Unit Economics</span>
+    <span class="hero-tag">GTM Playbook</span>
+    <span class="hero-tag">Demand Gen</span>
+    <span class="hero-tag">Pricing</span>
+    <span class="hero-tag">Compensation</span>
+  </div>
+</div>
+
+<!-- Content -->
+<div class="content-wrap">
+
+  <!-- Breadcrumb -->
+  <div class="breadcrumb">
+    <a href="../index.html">Home</a>
+    <span class="sep">›</span>
+    <a href="../pages/science-of-scaling.html">Science of Scaling</a>
+    <span class="sep">›</span>
+    <span class="current">Stage 2: GTM Fit</span>
+  </div>
+
+  <!-- ─────────────────────────────────────────────────
+       SECTION 1: What is GTM Fit?
+  ───────────────────────────────────────────────── -->
+  <div class="section-title">What is GTM Fit?</div>
+  <p class="section-intro">GTM Fit is the ability to acquire customers in your ICP profitably and repeatably — at a cost structure that supports sustainable growth. It requires three simultaneous conditions to all be true at once.</p>
+
+  <div class="condition-grid">
+    <div class="condition-card">
+      <div class="cc-num">Condition 1</div>
+      <div class="cc-title">Codified GTM Playbook</div>
+      <div class="cc-body">A documented, repeatable process that any trained rep can execute — not a set of heroic behaviors that only the best reps can replicate.</div>
+    </div>
+    <div class="condition-card">
+      <div class="cc-num">Condition 2</div>
+      <div class="cc-title">Scalable Demand Generation Channel</div>
+      <div class="cc-body">At least one measurable channel that produces consistent, qualified SQLs at a predictable Cost per SQL — with clear line-of-sight to your ICP buyers.</div>
+    </div>
+    <div class="condition-card">
+      <div class="cc-num">Condition 3</div>
+      <div class="cc-title">Positive Unit Economics (LIUE &gt; 3)</div>
+      <div class="cc-body">The leading indicator of LTV/CAC exceeds 3 — meaning the economics of customer acquisition are structurally sustainable at any growth rate you choose.</div>
+    </div>
+  </div>
+
+  <div class="callout callout-definition">
+    <div class="callout-title">The Shift from Stage 1 to Stage 2</div>
+    <p>Stage 1 answers: <strong>"Can customers succeed?"</strong> Stage 2 answers: <strong>"Can we build a machine that acquires customers who succeed?"</strong> The question is no longer about product-customer fit — it is about the economics and repeatability of the sales and marketing motion itself.</p>
+  </div>
+
+  <!-- ─────────────────────────────────────────────────
+       SECTION 2: The LIUE Formula
+  ───────────────────────────────────────────────── -->
+  <div class="section-title">The LIUE Formula (Leading Indicator of Unit Economics)</div>
+  <p class="section-intro">LIUE is the core formula of Stage 2. It decomposes the lagging LTV/CAC metric into variables that are trackable in real time — giving you a monthly pulse on GTM Fit 9–12 months before the lagging data would be available.</p>
+
+  <div class="liue-formula-block">
+    <div class="lfb-title">The Full LIUE Formula</div>
+    <div class="lfb-row">
+      LIUE = LTV / CAC
+    </div>
+    <hr class="lfb-divider"/>
+    <div class="lfb-row">
+      LTV = ACV × GM% ÷ Annual Churn Rate
+    </div>
+    <div class="lfb-row" style="margin-top: 10px;">
+      CAC = <span class="bracket">[</span>Cost per SQL ÷ SQL-to-Customer%<span class="bracket">]</span>
+      &nbsp;+&nbsp;
+      <span class="bracket">[</span>Salesperson Monthly Cost ÷ <span class="bracket">(</span>SQLs per Salesperson per Month × SQL-to-Customer%<span class="bracket">)]</span>
+    </div>
+    <div class="lfb-threshold">LIUE &gt; 3 = GTM Fit achieved. Target: 5+</div>
+    <div class="lfb-note">Below 3 means your GTM motion cannot sustain itself at scale. Between 3 and 5 is acceptable but fragile. 5+ gives you durable, scalable unit economics.</div>
+  </div>
+
+  <div class="subsection-title">Variable Definitions</div>
+  <div class="var-grid">
+    <div class="var-card">
+      <div class="vc-term">ACV</div>
+      <div class="vc-name">Annual Contract Value</div>
+      <div class="vc-desc">Average annual revenue per customer. Tracks whether deal sizes are consistent with your pricing model — drift in ACV signals discounting or ICP mix shift.</div>
+    </div>
+    <div class="var-card">
+      <div class="vc-term">GM%</div>
+      <div class="vc-name">Gross Margin Percentage</div>
+      <div class="vc-desc">Typically 70–85% for SaaS businesses. The most predictable component of the LIUE formula — rarely changes dramatically in the short term.</div>
+    </div>
+    <div class="var-card">
+      <div class="vc-term">Annual Churn Rate</div>
+      <div class="vc-name">Annual ARR Churn Percentage</div>
+      <div class="vc-desc">% of ARR churned annually. The most destructive variable in the formula — doubling churn cuts LTV in half. LIR achievement from Stage 1 is the primary control lever.</div>
+    </div>
+    <div class="var-card">
+      <div class="vc-term">Cost per SQL</div>
+      <div class="vc-name">Fully Loaded Marketing Cost per SQL</div>
+      <div class="vc-desc">Total demand generation spend (including headcount) divided by number of Sales Qualified Leads. Your primary measure of demand gen efficiency.</div>
+    </div>
+    <div class="var-card">
+      <div class="vc-term">SQL-to-Customer%</div>
+      <div class="vc-name">SQL to Closed-Won Conversion Rate</div>
+      <div class="vc-desc">% of SQLs that become paying customers. Appears in the denominator of both CAC components — small improvements compound dramatically across the entire formula.</div>
+    </div>
+    <div class="var-card">
+      <div class="vc-term">Salesperson Monthly Cost</div>
+      <div class="vc-name">Fully Loaded Rep Cost per Month</div>
+      <div class="vc-desc">Base salary + variable + benefits + tools + management overhead. Apply a 25% overhead multiplier to fully account for management, training, and ramp time.</div>
+    </div>
+    <div class="var-card">
+      <div class="vc-term">SQLs per Rep per Month</div>
+      <div class="vc-name">Rep Productivity Metric</div>
+      <div class="vc-desc">Number of Sales Qualified Leads a rep engages per month. Drives the Salesperson CAC denominator — more SQLs per rep reduces the per-customer cost of the sales team.</div>
+    </div>
+    <div class="var-card">
+      <div class="vc-term">LIUE Threshold</div>
+      <div class="vc-name">GTM Fit Threshold</div>
+      <div class="vc-desc">LIUE &gt; 3 is the minimum threshold. LIUE of 3 means LTV is exactly 3x the cost to acquire — below 3 is structurally unsustainable. Target is 5+ for durable GTM Fit.</div>
+    </div>
+  </div>
+
+  <div class="callout callout-definition">
+    <div class="callout-title">Deep Dive</div>
+    <p>For the complete LIUE methodology — including worked examples, sensitivity analysis, benchmark data, and the GTM Plan Framework — see the <a href="../subpages/sos-liue.html"><strong>LIUE Deep Dive page</strong></a>.</p>
+  </div>
+
+  <!-- ─────────────────────────────────────────────────
+       SECTION 3: Building the GTM Playbook
+  ───────────────────────────────────────────────── -->
+  <div class="section-title">Building the GTM Playbook</div>
+  <p class="section-intro">The GTM Playbook is the complete, documented system for acquiring and retaining ICP customers. In Stage 1 you discovered what works. In Stage 2 you codify it so any trained rep can execute it consistently.</p>
+
+  <div class="callout callout-warning">
+    <div class="callout-title">Critical Principle: Build Outside-In</div>
+    <p>The fatal mistake is designing the GTM playbook "inside-out" — starting with your product features and projecting them onto buyers. The correct approach is "outside-in": start with buyer behavior, buyer journey, and buyer language — then design your sales process to match what buyers actually do and say.</p>
+  </div>
+
+  <div class="subsection-title" style="margin-top: 24px;">Gong.io Research: Top Reps Listen More Than They Talk</div>
+  <div class="talk-ratio-grid">
+    <div class="tr-card top">
+      <div class="tr-label">Top Performers</div>
+      <div class="tr-split">
+        <span class="tr-talk">Talk 46%</span>
+        <span class="tr-listen">Listen 54%</span>
+      </div>
+    </div>
+    <div class="tr-card avg">
+      <div class="tr-label">Average Reps</div>
+      <div class="tr-split">
+        <span class="tr-talk">Talk 68%</span>
+        <span class="tr-listen">Listen 32%</span>
+      </div>
+    </div>
+    <div class="tr-card bot">
+      <div class="tr-label">Bottom Performers</div>
+      <div class="tr-split">
+        <span class="tr-talk">Talk 72%</span>
+        <span class="tr-listen">Listen 28%</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="subsection-title" style="margin-top: 28px;">The 5-Component GTM Playbook (+ CS Onboarding)</div>
+
+  <div class="gtm-component highlight">
+    <div class="gc-header">
+      <span class="gc-num">1</span>
+      <span class="gc-title">ICP Definition</span>
+      <span class="gc-arrow">→ Foundation for all components</span>
+    </div>
+    <div class="gc-body">A Green / Yellow / Red framework for qualifying incoming accounts. Green = must engage immediately, all ICP criteria met. Yellow = engage with qualification call. Red = do not engage, outside ICP. Every prospect touched by sales or marketing is assigned a color based on documented firmographic and psychographic criteria. Links to: <a href="template-icp.html">ICP Worksheet</a></div>
+  </div>
+
+  <div class="gtm-component">
+    <div class="gc-header">
+      <span class="gc-num">2</span>
+      <span class="gc-title">Buyer Journey Map</span>
+      <span class="gc-arrow">→ Awareness → Consideration → Decision → Success</span>
+    </div>
+    <div class="gc-body">The foundation document. Maps what the buyer experiences at each stage: what they are trying to learn, what triggers their search, what objections they have, and what moves them forward. Every other guide (prospecting, discovery, presentation, CS) is designed to match one stage of this journey. Never designed from the seller's perspective — always from the buyer's.</div>
+  </div>
+
+  <div class="gtm-component">
+    <div class="gc-header">
+      <span class="gc-num">3</span>
+      <span class="gc-title">Prospecting Guide</span>
+      <span class="gc-arrow">→ Awareness stage</span>
+    </div>
+    <div class="gc-body">How reps initiate conversations with ICP buyers who are not yet actively evaluating. Includes: multi-touch sequence design (6+ attempts required for 90% contact rate), message templates matched to awareness-stage buyer language, channel mix (email, phone, LinkedIn, video), and personalization framework. Key rule: vary both message and medium across attempts — never repeat the same message through the same channel. <a href="template-prospecting.html">Prospecting Guide Template →</a></div>
+  </div>
+
+  <div class="gtm-component">
+    <div class="gc-header">
+      <span class="gc-num">4</span>
+      <span class="gc-title">Discovery Guide</span>
+      <span class="gc-arrow">→ Consideration stage</span>
+    </div>
+    <div class="gc-body">The structured question framework reps use to uncover pain, urgency, and fit. Includes: opening questions (challenge or goal framing), situation questions (status quo), implication questions (cost of the problem), and vision questions (desired outcome). Goal: rep talks &lt;50% of the time. Great discovery is the foundation of every great demo and every successful onboarding. <a href="template-discovery.html">Discovery Guide Template →</a></div>
+  </div>
+
+  <div class="gtm-component">
+    <div class="gc-header">
+      <span class="gc-num">5</span>
+      <span class="gc-title">Presentation Guide</span>
+      <span class="gc-arrow">→ Decision stage (3–5 swim lanes)</span>
+    </div>
+    <div class="gc-body">3–5 swim lanes based on the buyer context discovered during discovery. The presentation lane is selected based on the primary pain, use case, or buyer persona — not randomly. Each lane follows a consistent sequence: recap buyer context → share company vision → illustrate capability → present case study → discuss price and integration → ask for questions → recap and ask for the business. Never give the same demo twice. <a href="template-presentation.html">Presentation Guide Template →</a></div>
+  </div>
+
+  <div class="gtm-component highlight">
+    <div class="gc-header">
+      <span class="gc-num">CS</span>
+      <span class="gc-title">CS Onboarding Guide</span>
+      <span class="gc-arrow">→ Success stage (3–5 swim lanes matching presentation)</span>
+    </div>
+    <div class="gc-body">Mirrors the 3–5 presentation swim lanes to ensure continuity from the sales experience to onboarding. Biggest mistake: starting onboarding from scratch, ignoring what the rep learned in discovery and presentation. The CS onboarding guide should begin with a recap of buyer context and buyer-verified success criteria — not a generic onboarding checklist. Oriented entirely around driving customers to LIR achievement as fast as possible. <a href="template-cs-playbook.html">CS Onboarding Guide Template →</a></div>
+  </div>
+
+  <div class="subsection-title" style="margin-top: 28px;">Film Reviews: The Stage 2 Cadence</div>
+  <div class="callout">
+    <div class="callout-title">Film Reviews — Daily During GTM Fit Phase</div>
+    <p>Listen to recorded discovery and presentation calls together as a team. Assign one person to identify what worked and one to identify what to improve. Rotate the "hot seat" — each rep presents a recent call weekly. Include marketing, product, and CS in the review — not just sales. Film Reviews are the primary mechanism for updating the GTM Playbook in real time based on actual customer conversations. The playbook is a living document — updated weekly, not quarterly.</p>
+  </div>
+
+  <!-- ─────────────────────────────────────────────────
+       SECTION 4: Demand Generation in Stage 2
+  ───────────────────────────────────────────────── -->
+  <div class="section-title">Demand Generation in Stage 2</div>
+  <p class="section-intro">In Stage 1, demand came from personal networks and referrals. In Stage 2, the goal is to prove that one scalable, measurable demand generation channel can produce ICP buyers at a predictable Cost per SQL.</p>
+
+  <div class="subsection-title">Stage 1 vs. Stage 2 Demand Gen</div>
+  <table class="data-table">
+    <thead>
+      <tr>
+        <th>Dimension</th>
+        <th>Stage 1: PMF</th>
+        <th>Stage 2: GTM Fit</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><strong>Source</strong></td>
+        <td>Personal network, warm referrals</td>
+        <td>One proven, scalable inbound or outbound channel</td>
+      </tr>
+      <tr>
+        <td><strong>Volume</strong></td>
+        <td>Small — enough to build cohort data</td>
+        <td>Consistent — enough to hit LIUE model targets monthly</td>
+      </tr>
+      <tr>
+        <td><strong>Measurability</strong></td>
+        <td>Informal — relationships, not metrics</td>
+        <td>Fully instrumented — Cost per SQL tracked from day one</td>
+      </tr>
+      <tr>
+        <td><strong>ICP precision</strong></td>
+        <td>Learning ICP from early cohorts</td>
+        <td>ICP is validated — channel targets it explicitly</td>
+      </tr>
+      <tr>
+        <td><strong>Number of channels</strong></td>
+        <td>Zero or one (whatever generates referrals)</td>
+        <td>One — prove it before diversifying</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div class="subsection-title" style="margin-top: 24px;">4 Criteria for Selecting Your Stage 2 Demand Gen Channel</div>
+  <ol class="criteria-list">
+    <li>
+      <div class="cl-content">
+        <strong>Alignment:</strong> Your ICP buyers must be active on this channel. If you're targeting VP-level buyers at mid-market companies, a LinkedIn outbound campaign is more aligned than an SEO blog. Match channel to buyer behavior, not to what's cheapest or easiest.
+      </div>
+    </li>
+    <li>
+      <div class="cl-content">
+        <strong>Measurability:</strong> You must be able to track the exact Cost per SQL from this channel from day one. Channels with long or opaque attribution paths (e.g., brand awareness) cannot be used to track LIUE denominator inputs in real time.
+      </div>
+    </li>
+    <li>
+      <div class="cl-content">
+        <strong>Rapid test:</strong> You should be able to run a 30–60 day test that provides enough signal to make a go/no-go decision. Channels with 6+ month feedback loops (content SEO, event marketing) are difficult to optimize during the GTM Fit phase.
+      </div>
+    </li>
+    <li>
+      <div class="cl-content">
+        <strong>Customer success alignment:</strong> Success for the demand gen channel is measured by LIR achievement rate of customers sourced from it — not just lead conversion. A channel that generates non-ICP buyers with low LIR achievement is a negative-LIUE channel even if conversion looks attractive.
+      </div>
+    </li>
+  </ol>
+
+  <div class="subsection-title" style="margin-top: 24px;">Common Stage 2 Demand Gen Channels</div>
+  <ul class="bullet-list">
+    <li><strong>Outbound cold email + LinkedIn:</strong> High ICP precision, fully measurable, rapid to test and iterate</li>
+    <li><strong>Content SEO:</strong> Long feedback loop but compounds over time — better for companies with 6+ month runway in Stage 2</li>
+    <li><strong>Webinars and virtual events:</strong> High engagement, measurable registrant-to-SQL pipeline, strong for mid-market buyers</li>
+    <li><strong>Partner referrals:</strong> High-quality ICP leads with warm introduction — often the most efficient CAC source available</li>
+    <li><strong>Field events:</strong> Strong for enterprise buyers — high cost but high signal quality; measure fully-loaded cost per SQL including event overhead</li>
+  </ul>
+
+  <div class="callout callout-warning">
+    <div class="callout-title">One Channel First</div>
+    <p>Diversify into a second demand gen channel only in Stage 3. In Stage 2, split demand gen attention across multiple channels before any single channel is proven produces inflated Cost per SQL across all of them. Prove one channel works — then add the second.</p>
+  </div>
+
+  <!-- ─────────────────────────────────────────────────
+       SECTION 5: Pricing in Stage 2: Solve for Unit Economics
+  ───────────────────────────────────────────────── -->
+  <div class="section-title">Pricing in Stage 2: Solve for Unit Economics</div>
+  <p class="section-intro">Pricing in Stage 2 shifts from "solve for customer commitment" (Stage 1) to "solve for unit economics." The question is no longer whether customers will implement — it is whether your price point supports LIUE &gt; 3.</p>
+
+  <div class="subsection-title">Three Pricing Lenses</div>
+  <div class="lens-grid">
+    <div class="lens-card">
+      <div class="lc-num">Lens 1</div>
+      <div class="lc-title">Buyer ROI</div>
+      <div class="lc-body">Quantify the economic value your product delivers to the buyer. Price at 30–40% of that value. This leaves ROI clearly on the table (buyer keeps 60–70%), makes the renewal decision easy, and creates a value-based price anchor rather than a cost-based one.</div>
+    </div>
+    <div class="lens-card">
+      <div class="lc-num">Lens 2</div>
+      <div class="lc-title">Unit Economics</div>
+      <div class="lc-body">Work backwards from the LIUE formula. What ACV is required to achieve LIUE &gt; 3 given your current CAC structure? If list-price ACV does not support LIUE &gt; 3 without discounting, your pricing model must change before you can scale.</div>
+    </div>
+    <div class="lens-card">
+      <div class="lc-num">Lens 3</div>
+      <div class="lc-title">Competition</div>
+      <div class="lc-body">Understand the competitive pricing landscape. Do not race to the bottom — competing on price invites commoditization and destroys the unit economics you are trying to prove. Win on value differentiation, not discounting.</div>
+    </div>
+  </div>
+
+  <div class="subsection-title" style="margin-top: 24px;">Packaging Shifts in Stage 2</div>
+  <ul class="bullet-list">
+    <li><strong>Move from custom/flexible to standardized tiers:</strong> custom packaging creates deal complexity, extends sales cycles, and makes it impossible to compare deal economics across cohorts</li>
+    <li><strong>Annual contracts only:</strong> strong discounts for multi-year commitments — quarterly or monthly billing options should carry a meaningful premium</li>
+    <li><strong>Introduce usage-based components where appropriate:</strong> usage-based pricing creates natural NRR expansion pathways and aligns price with customer value realization</li>
+    <li><strong>Eliminate deep discounting:</strong> if unit economics are only positive with heavy discounts, the list price needs to be raised — not the discount normalized</li>
+  </ul>
+
+  <!-- ─────────────────────────────────────────────────
+       SECTION 6: The Sales Hire in Stage 2: Process Builder
+  ───────────────────────────────────────────────── -->
+  <div class="section-title">The Sales Hire in Stage 2: Process Builder</div>
+  <p class="section-intro">The Stage 1 PM+AE hybrid who discovered the playbook must now be replaced — or supplemented — by someone who can take a proven playbook and codify, train, and scale it. This is a different skill set.</p>
+
+  <div class="profile-grid">
+    <div class="profile-card stage1">
+      <div class="pc-stage">Stage 1 — What You Had</div>
+      <div class="pc-title">PM + AE Hybrid</div>
+      <div class="pc-body">
+        Discovers the playbook. High product intuition, comfortable with ambiguity, exploratory mindset. Closes deals through deep customer knowledge and personal relationships. Cannot be replicated at scale — that's the point.
+      </div>
+    </div>
+    <div class="profile-card stage2">
+      <div class="pc-stage">Stage 2 — What You Need</div>
+      <div class="pc-title">Process Builder</div>
+      <div class="pc-body">
+        Codifies and scales the playbook. Prior experience leading playbook-driven teams. Data-oriented: measures everything. Strong coaching mindset: develops reps through Film Reviews, not heroics. Comfortable with process discipline. This is NOT the closer-hero who wins through personal charm.
+      </div>
+    </div>
+  </div>
+
+  <div class="subsection-title" style="margin-top: 24px;">Process Builder Hiring Process</div>
+  <ul class="bullet-list">
+    <li>Use a defined scorecard with 5–10 explicitly weighted attributes — link to: <a href="template-scorecard-sales-leader.html">Sales Leader Scorecard</a> and <a href="template-scorecard-sales.html">Sales Rep Scorecard</a></li>
+    <li>Reference checks with former direct reports are mandatory — not just former managers. Ask: "Did this person build process or rely on personal talent?"</li>
+    <li>Audition the hire: give them 30 days to present a Film Review analysis of 5 recorded calls before making the offer final</li>
+    <li>Scale pace: 2 salespeople per month maximum during the GTM Fit phase — never hire a large cohort at once</li>
+    <li>Hire only after the Process Builder has proven the playbook yields LIUE approaching threshold — not before</li>
+  </ul>
+
+  <div class="callout callout-warning">
+    <div class="callout-title">Critical Gate</div>
+    <p>Do NOT scale the sales team to more than 2–4 reps until the Process Builder has proven the GTM Playbook produces LIUE approaching threshold with at least 2–3 reps executing it. Scaling before this is the most common Series A-to-B failure mode.</p>
+  </div>
+
+  <!-- ─────────────────────────────────────────────────
+       SECTION 7: Compensation in Stage 2: Retention + Unit Economics
+  ───────────────────────────────────────────────── -->
+  <div class="section-title">Compensation in Stage 2: Retention + Unit Economics</div>
+  <p class="section-intro">Stage 2 compensation preserves the 50/50 structure from Stage 1 — and adds a unit economics health component to further align rep behavior with the LIUE target.</p>
+
+  <div class="comp-split">
+    <div class="comp-half at-signing">
+      <div class="ch-pct">50%</div>
+      <div class="ch-label">At Contract Signing</div>
+      <div class="ch-note">Paid at close — rewards closed revenue</div>
+    </div>
+    <div class="comp-half at-lir">
+      <div class="ch-pct">50%</div>
+      <div class="ch-label">At LIR Achievement</div>
+      <div class="ch-note">Paid when customer achieves E within T — rewards customer success</div>
+    </div>
+  </div>
+
+  <div class="subsection-title" style="margin-top: 8px;">Stage 2 Comp Additions</div>
+  <ul class="bullet-list">
+    <li><strong>LIUE health component:</strong> if a deal-level unit economic analysis shows poor economics (large discount, complex deal, outsized CS requirement), reduce commission proportionally — not a simple binary, but a gradient modifier</li>
+    <li><strong>Quota-setting formula:</strong> derive from the LIUE denominator — SQLs per rep per month × SQL-to-customer rate × ACV. Quota should be the output of the unit economics model, not a top-down revenue number</li>
+    <li><strong>Avoid SPIFs and exceptions:</strong> every SPIF and comp exception signals that the base plan is broken — fix the plan rather than papering over it with bonuses</li>
+    <li><strong>Full transparency:</strong> every rep should be able to calculate their own exact commission at any point in the month with no ambiguity — opaque comp plans create distrust and behavioral noise</li>
+  </ul>
+
+  <div class="mistake-box">
+    <div class="mb-title">Biggest Compensation Mistake</div>
+    Delegating comp design to the head of sales, who copies the comp plan from their last employer — which was designed for a different business model, different stage, and different retention economics. Sales comp must be derived from the LIUE formula and the LIR definition — not imported from a prior company.
+  </div>
+
+  <!-- ─────────────────────────────────────────────────
+       SECTION 8: The GTM Fit Speedometer
+  ───────────────────────────────────────────────── -->
+  <div class="section-title">The GTM Fit Speedometer</div>
+  <p class="section-intro">GTM Fit requires two simultaneous green lights — LIUE and LIR must both be on-target at the same time. A single green light does not mean GTM Fit. Both must be green, and both must stay green as you scale.</p>
+
+  <div class="speedometer-grid">
+    <div class="speed-card green-card">
+      <div class="sc-indicator">✓ Green Light</div>
+      <div class="sc-title">LIUE &gt; 3</div>
+      <div class="sc-body">Leading Indicator of Unit Economics is above threshold. Your GTM motion is generating customers at a cost that supports sustainable growth. Track weekly by cohort. Target LIUE &gt; 3 for 2 consecutive quarters.</div>
+    </div>
+    <div class="speed-card green-card">
+      <div class="sc-indicator">✓ Green Light</div>
+      <div class="sc-title">LIR Achievement ≥ P%</div>
+      <div class="sc-body">Leading Indicator of Retention is still meeting threshold. Customers acquired through the Stage 2 GTM motion are still achieving the LIR event at the same rate as Stage 1 cohorts. If LIR falls as you scale, you are closing bad-fit customers.</div>
+    </div>
+  </div>
+
+  <div class="callout callout-warning">
+    <div class="callout-title">Red Flag Pattern — Act Immediately</div>
+    <p><strong>LIUE rising but LIR falling</strong> means you are acquiring customers faster and more efficiently — but those customers are not succeeding. You are closing bad-fit deals quickly. Churn will compound and destroy unit economics 12 months from now. Stop scaling acquisition and diagnose the ICP drift before continuing.</p>
+  </div>
+
+  <div class="subsection-title" style="margin-top: 24px;">LIUE Dashboard Rules</div>
+  <ul class="bullet-list">
+    <li>Track LIUE weekly, broken down by cohort — not just as a company-wide average</li>
+    <li>The blue line (actual) must stay above the red line (target) on all four LIUE component metrics: SQLs per rep, Cost per SQL, SQL-to-customer%, and ACV</li>
+    <li>If any metric drops below target for 2+ consecutive months, diagnose and address the root cause before it compounds into unit economic deterioration</li>
+    <li>Look at SQL-to-customer% data that is 3–6 months old for accuracy — recent cohorts are still in the pipeline and will show artificially low conversion rates</li>
+  </ul>
+
+  <!-- ─────────────────────────────────────────────────
+       SECTION 9: When to Declare GTM Fit and Move to Stage 3
+  ───────────────────────────────────────────────── -->
+  <div class="section-title">When to Declare GTM Fit and Move to Stage 3</div>
+  <p class="section-intro">GTM Fit is a convergence of six conditions — not a single metric crossing a threshold. All six must be simultaneously true before moving to Stage 3 (Growth &amp; Moat).</p>
+
+  <ul class="decl-checklist">
+    <li>
+      <span class="decl-icon">✓</span>
+      <span><strong>LIUE &gt; 3 for 2 consecutive quarters</strong> — the leading indicator of LTV/CAC has been above threshold for 6+ months, not just a momentary spike</span>
+    </li>
+    <li>
+      <span class="decl-icon">✓</span>
+      <span><strong>LIR achievement rate ≥ threshold for 2 consecutive quarters</strong> — customer success is still being maintained at Stage 1 levels despite scaled acquisition, confirming ICP discipline is holding</span>
+    </li>
+    <li>
+      <span class="decl-icon">✓</span>
+      <span><strong>GTM Playbook is fully codified and being executed consistently by all reps</strong> — not just the best reps, and not just during Film Review week. Every rep, every week, following the same documented process.</span>
+    </li>
+    <li>
+      <span class="decl-icon">✓</span>
+      <span><strong>Demand gen channel is generating consistent, measurable SQLs</strong> — the channel has been running for 3+ months with a stable Cost per SQL and a predictable SQL volume that can be modeled in the LIUE formula</span>
+    </li>
+    <li>
+      <span class="decl-icon">✓</span>
+      <span><strong>Sales hiring and ramp model is validated</strong> — you can predict how long it takes a new rep to ramp to 100% quota attainment, and that ramp model is consistently accurate across 2+ rep hire cohorts</span>
+    </li>
+    <li>
+      <span class="decl-icon">✓</span>
+      <span><strong>Pricing is standardized and unit economics are positive at list price</strong> — not at a discounted price. If LIUE &gt; 3 requires discounting below list to close deals, the pricing model is broken and must be fixed before Stage 3</span>
+    </li>
+  </ul>
+
+  <!-- ─────────────────────────────────────────────────
+       SECTION 10: Key Metrics in Stage 2
+  ───────────────────────────────────────────────── -->
+  <div class="section-title">Key Metrics in Stage 2</div>
+  <p class="section-intro">Seven metrics define Stage 2 health. LIUE is the primary operating target. LIR Achievement Rate is the retained Stage 1 constraint — it must never be allowed to fall as you scale acquisition.</p>
+
+  <div class="metrics-wrap">
+    <table class="data-table">
+      <thead>
+        <tr>
+          <th>Metric</th>
+          <th>Definition</th>
+          <th>Target</th>
+          <th>Why It Matters</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>LIUE</strong></td>
+          <td>LTV divided by CAC, using fully decomposed formula</td>
+          <td>&gt;3 (target 5+)</td>
+          <td>Core GTM Fit measure — the unit economics goal the entire Stage 2 motion is optimized toward</td>
+        </tr>
+        <tr>
+          <td><strong>SQL-to-Customer%</strong></td>
+          <td>% of Sales Qualified Leads converting to closed-won customers</td>
+          <td>Varies by segment (typically 15–30%)</td>
+          <td>CAC denominator driver — appears in both demand gen and salesperson CAC components simultaneously</td>
+        </tr>
+        <tr>
+          <td><strong>Cost per SQL</strong></td>
+          <td>Fully loaded marketing and SDR cost per SQL generated</td>
+          <td>Minimize — derived from LIUE model</td>
+          <td>Primary demand gen efficiency metric — must be tracked from first day a new channel is activated</td>
+        </tr>
+        <tr>
+          <td><strong>Sales Cycle Length</strong></td>
+          <td>Average days from SQL to closed-won</td>
+          <td>&lt;90 days for mid-market</td>
+          <td>Velocity metric — longer cycles increase salesperson CAC and reduce SQLs-per-rep throughput</td>
+        </tr>
+        <tr>
+          <td><strong>Ramp Time to Quota</strong></td>
+          <td>Average months for a new AE to reach 100% quota attainment</td>
+          <td>&lt;6 months for mid-market</td>
+          <td>Hiring model input — must be predictable and consistent before scaling headcount</td>
+        </tr>
+        <tr>
+          <td><strong>LIR Achievement Rate</strong></td>
+          <td>% of new customers achieving LIR event (E) within T days</td>
+          <td>≥60–80% (same threshold as Stage 1)</td>
+          <td>Retention anchor — must not fall as acquisition scales. A falling LIR rate is the earliest warning of ICP drift or playbook degradation</td>
+        </tr>
+        <tr>
+          <td><strong>NRR</strong></td>
+          <td>Net Revenue Retention — ARR retained + expanded minus churned, from existing customers</td>
+          <td>&gt;100%</td>
+          <td>Proof of unit economics in action — NRR &gt; 100% means the customer base grows even without any new logos, which structurally improves LTV/CAC</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="section-title">In the 6-Phase Revenue System</div>
+  <p class="section-intro">Stage 2 (GTM Fit) is the operational mandate for Phase 3 and Phase 4. Every demand gen decision, funnel design, and rep productivity metric in those phases directly determines your LIUE.</p>
+
+  <div class="phase-map-grid">
+    <a href="../pages/phase3.html" class="phase-map-card">
+      <div class="pm-phase-label">Phase 3 — Primary Home</div>
+      <div class="pm-title">GTM, Demand Gen &amp; Segmentation</div>
+      <div class="pm-desc">Stage 2 demand gen work: one scalable channel, 4 selection criteria, LIUE-positive cost per SQL, LIR-aligned channel (channel SQLs must hit LIR threshold).</div>
+    </a>
+    <a href="../pages/phase4.html" class="phase-map-card">
+      <div class="pm-phase-label">Phase 4 — Execution Layer</div>
+      <div class="pm-title">Pipeline, MEDDICC &amp; Forecasting</div>
+      <div class="pm-desc">SQL-to-customer% and rep productivity from Phase 4 are direct LIUE CAC inputs. Improving win rate and prospecting discipline directly improves LIUE.</div>
+    </a>
+    <a href="../pages/phase2.html" class="phase-map-card">
+      <div class="pm-phase-label">Phase 2 — Hiring Mode</div>
+      <div class="pm-title">2 Reps/Month Pace</div>
+      <div class="pm-desc">Once LIUE &gt; 3, begin the 2-per-month hiring pace. Hire Process Builders. Comp adds LIUE health component. Iterate scorecard at month 6.</div>
+    </a>
+    <a href="../pages/phase6.html" class="phase-map-card">
+      <div class="pm-phase-label">Phase 6 — If GTM Fit Fails</div>
+      <div class="pm-title">LIUE Diagnostic</div>
+      <div class="pm-desc">LIUE below 3? Identify: LTV side (churn, ACV, GM%) vs. CAC side (cost/SQL, SQL-to-customer%, rep productivity). Fix the broken lever before adding headcount.</div>
+    </a>
+  </div>
+
+  <div class="section-title">Key Tools for This Stage</div>
+  <div class="tools-grid">
+    <a href="sos-liue.html" class="tool-card tc-sos">
+      <div class="tc-phase">Core Metric</div>
+      <div class="tc-title">LIUE Deep Dive</div>
+      <div class="tc-desc">Full formula, worked examples, threshold benchmarks, improvement levers by segment. The governing metric for Stage 2.</div>
+    </a>
+    <a href="template-gtm-plan.html" class="tool-card tc-res">
+      <div class="tc-phase">Template</div>
+      <div class="tc-title">Annual GTM Plan</div>
+      <div class="tc-desc">4 GTM drivers, LIUE table, demand gen by channel, headcount model, OKRs. The master planning document for Stage 2 execution.</div>
+    </a>
+    <a href="template-demand-gen-channels.html" class="tool-card tc-res">
+      <div class="tc-phase">Template</div>
+      <div class="tc-title">Demand Gen Channel Guide</div>
+      <div class="tc-desc">4-criteria channel selection. In Stage 2, pick ONE channel. Track cost per SQL, LIR achievement by channel, and LIUE by channel.</div>
+    </a>
+    <a href="sos-gtm-playbook.html" class="tool-card tc-sos">
+      <div class="tc-phase">Framework</div>
+      <div class="tc-title">GTM Playbook Framework</div>
+      <div class="tc-desc">Outside-in 5-component playbook that drives SQL-to-customer% improvement. Film Reviews are the continuous improvement engine in Stage 2.</div>
+    </a>
+  </div>
+
+  <!-- Related -->
+  <div class="related-section">
+    <div class="related-title">Related Pages</div>
+    <div class="related-links">
+      <a href="../subpages/sos-pmf.html" class="related-link">← Stage 1: PMF</a>
+      <a href="../subpages/sos-liue.html" class="related-link">LIUE Deep Dive</a>
+      <a href="../subpages/sos-growth-moat.html" class="related-link">Stage 3: Growth &amp; Moat →</a>
+      <a href="../subpages/sos-gtm-playbook.html" class="related-link">GTM Playbook Deep Dive</a>
+      <a href="../pages/science-of-scaling.html" class="related-link">← Science of Scaling</a>
+      <a href="../index.html" class="related-link">← Home</a>
+    </div>
+  </div>
+
+</div>
+<script data-pplx-inline-edit>
+(function () {
+  if (window === window.top) return;
+
+  const allowedParentOrigins = ["https://www.perplexity.ai","https://perplexity.ai","https://testing.perplexity.ai","https://staging.perplexity.ai","https://*.preview.i.perplexity.ai","http://localhost:3000","http://127.0.0.1:3000","http://localhost:5173","http://127.0.0.1:5173"];
+  const MAX_FONT_BYTES = 500 * 1024;
+  const MAX_TOTAL_FONT_BYTES = 2 * 1024 * 1024;
+  let scrollForwarding = false;
+  let scrollRaf = 0;
+  let trustedTopOrigin = null;
+
+  // Allow entries like "https://*.preview.i.perplexity.ai" — the wildcard
+  // matches a single DNS label (no dots), so "https://*.foo" cannot stretch
+  // across multiple labels.
+  function matchesAllowedOrigin(origin) {
+    if (!origin) return false;
+    for (const entry of allowedParentOrigins) {
+      if (!entry.includes("*")) {
+        if (entry === origin) return true;
+        continue;
+      }
+      const pattern = new RegExp(
+        "^" +
+          entry.replace(/[.+?^${}()|[\]\\]/g, "\\$&").replace(/\*/g, "[^.]+") +
+          "$",
+      );
+      if (pattern.test(origin)) return true;
+    }
+    return false;
+  }
+
+  // Trust decision: when the sender is same-origin-visible (event.origin is a
+  // real origin like https://www.perplexity.ai) we trust event.origin directly.
+  // When event.origin is "null" (opaque broker srcdoc), we fall back to the
+  // broker's stamped `parentOrigin` to identify the top window. The fallback
+  // is claim-only — we rely on the browser's native `targetOrigin` enforcement
+  // on the response path (see postToTrustedTop) to ensure replies can't be
+  // delivered to anyone but the actual top window of that claimed origin.
+  function getTrustedParentOrigin(event) {
+    const forwardedParentOrigin =
+      typeof event.data.parentOrigin === "string" ? event.data.parentOrigin : null;
+    const parentOrigin = event.origin === "null" ? forwardedParentOrigin : event.origin;
+    return matchesAllowedOrigin(parentOrigin) ? parentOrigin : null;
+  }
+
+  // All responses go to window.top with targetOrigin = the allowlisted origin.
+  // An attacker that iframes us inside their own null-origin broker can claim
+  // any parentOrigin they like, but the browser will drop the reply whenever
+  // the real top's origin doesn't match — so the screenshot never leaves.
+  function postToTrustedTop(message) {
+    if (!trustedTopOrigin) return;
+    try {
+      window.top.postMessage(message, trustedTopOrigin);
+    } catch (_error) {}
+  }
+
+  function inlineAll(original, clone) {
+    if (original.nodeType !== 1 || clone.nodeType !== 1) return;
+
+    try {
+      const computedStyle = getComputedStyle(original);
+      // cssText on a computed style is the serialized declaration in modern
+      // Chromium/Safari — a single read beats enumerating ~400 longhand
+      // properties. Firefox returns "" here, so we fall back on empty.
+      const serialized = computedStyle.cssText;
+      if (serialized) {
+        clone.style.cssText = serialized;
+      } else {
+        const parts = new Array(computedStyle.length);
+        for (let index = 0; index < computedStyle.length; index += 1) {
+          const property = computedStyle[index];
+          parts[index] = `${property}:${computedStyle.getPropertyValue(property)};`;
+        }
+        clone.style.cssText = parts.join("");
+      }
+    } catch (_error) {}
+
+    const originalChildren = original.children;
+    const clonedChildren = clone.children;
+    for (
+      let index = 0;
+      index < originalChildren.length && index < clonedChildren.length;
+      index += 1
+    ) {
+      inlineAll(originalChildren[index], clonedChildren[index]);
+    }
+  }
+
+  function extractFontUrl(srcValue) {
+    const matches = [
+      ...srcValue.matchAll(
+        /url\(["']?([^"')]+)["']?\)(?:\s*format\(["']?([^"')]+)["']?\))?/gi,
+      ),
+    ];
+    if (matches.length === 0) return null;
+    const woff2 = matches.find((m) => m[2] && m[2].toLowerCase().includes("woff2"));
+    if (woff2) return woff2[1];
+    const woff = matches.find((m) => m[2] && m[2].toLowerCase().includes("woff"));
+    if (woff) return woff[1];
+    return matches[0][1];
+  }
+
+  // Cache resolved font URL -> data URI across captures. Fonts on a page
+  // essentially never change, and a batch run emits multiple captures back to
+  // back — without this we'd refetch + re-base64 every time.
+  const fontDataUriCache = new Map();
+  const SRC_DECLARATION_RE = /src\s*:\s*[^;}]+/i;
+
+  async function fetchAsDataUri(url) {
+    if (fontDataUriCache.has(url)) return fontDataUriCache.get(url);
+    let dataUri = null;
+    try {
+      const response = await fetch(url, { mode: "cors", credentials: "omit" });
+      if (response.ok) {
+        const blob = await response.blob();
+        if (blob.size <= MAX_FONT_BYTES) {
+          dataUri = await new Promise((resolve) => {
+            const reader = new FileReader();
+            reader.onloadend = () =>
+              resolve(typeof reader.result === "string" ? reader.result : null);
+            reader.onerror = () => resolve(null);
+            reader.readAsDataURL(blob);
+          });
+        }
+      }
+    } catch (_error) {
+      dataUri = null;
+    }
+    fontDataUriCache.set(url, dataUri);
+    return dataUri;
+  }
+
+  function collectFontFaceRuleTexts() {
+    const rules = [];
+    for (const sheet of document.styleSheets) {
+      let cssRules;
+      try {
+        cssRules = sheet.cssRules;
+      } catch (_error) {
+        continue;
+      }
+      if (!cssRules) continue;
+      for (const rule of cssRules) {
+        const cssText = rule.cssText || "";
+        if (cssText.startsWith("@font-face")) rules.push(cssText);
+      }
+    }
+    return rules;
+  }
+
+  async function buildInlinedFontCss() {
+    const ruleTexts = collectFontFaceRuleTexts();
+    if (ruleTexts.length === 0) return null;
+
+    const resolved = ruleTexts.map((cssText) => {
+      if (!SRC_DECLARATION_RE.test(cssText)) return null;
+      const srcMatch = cssText.match(/src\s*:\s*([^;}]+)[;}]/i);
+      if (!srcMatch) return null;
+      const url = extractFontUrl(srcMatch[1]);
+      if (!url) return null;
+      try {
+        return { cssText, url: new URL(url, document.baseURI).href };
+      } catch (_error) {
+        return null;
+      }
+    });
+
+    const dataUris = await Promise.all(
+      resolved.map((entry) => (entry ? fetchAsDataUri(entry.url) : Promise.resolve(null))),
+    );
+
+    const inlined = [];
+    let totalBytes = 0;
+    for (let index = 0; index < resolved.length; index += 1) {
+      const entry = resolved[index];
+      const dataUri = dataUris[index];
+      if (!entry || !dataUri) continue;
+      const approxBytes = dataUri.length * 0.75;
+      if (totalBytes + approxBytes > MAX_TOTAL_FONT_BYTES) break;
+      totalBytes += approxBytes;
+      inlined.push(entry.cssText.replace(SRC_DECLARATION_RE, `src: url("${dataUri}")`));
+    }
+    return inlined.length > 0 ? inlined.join("\n") : null;
+  }
+
+  function stripExternal(clone) {
+    const images = clone.querySelectorAll("img");
+    for (let index = 0; index < images.length; index += 1) {
+      const src = images[index].getAttribute("src");
+      if (src && !src.startsWith("data:")) images[index].removeAttribute("src");
+    }
+
+    const elements = clone.querySelectorAll("*");
+    for (let index = 0; index < elements.length; index += 1) {
+      const style = elements[index].style.cssText;
+      if (style && style.includes("url(")) {
+        elements[index].style.cssText = style.replace(
+          /url\(["']?(?!data:)[^)"']*["']?\)/gi,
+          "none",
+        );
+      }
+    }
+  }
+
+  function emitScroll() {
+    scrollRaf = 0;
+    if (!scrollForwarding) return;
+    postToTrustedTop({
+      type: "INLINE_EDIT_SCROLL",
+      scrollX: window.scrollX,
+      scrollY: window.scrollY,
+    });
+  }
+
+  window.addEventListener(
+    "scroll",
+    function () {
+      if (!scrollForwarding || scrollRaf) return;
+      scrollRaf = requestAnimationFrame(emitScroll);
+    },
+    { passive: true, capture: true },
+  );
+
+  async function handleCaptureRequest(event) {
+    const requestId = event.data.requestId;
+    const scrollX = window.scrollX;
+    const scrollY = window.scrollY;
+    const width = window.innerWidth;
+    const height = window.innerHeight;
+
+    function postResult(dataUrl) {
+      postToTrustedTop({
+        type: "INLINE_EDIT_SCREENSHOT_RESULT",
+        requestId,
+        dataUrl,
+        scrollX,
+        scrollY,
+      });
+    }
+
+    try {
+      // Wait for any pending web fonts to resolve so both inline metrics and
+      // the @font-face inlining below see the same loaded faces.
+      if (document.fonts && document.fonts.ready) {
+        try {
+          await document.fonts.ready;
+        } catch (_error) {}
+      }
+
+      const clone = document.documentElement.cloneNode(true);
+      inlineAll(document.documentElement, clone);
+
+      const removedNodes = clone.querySelectorAll("script,link[rel=\"stylesheet\"],style");
+      for (let index = 0; index < removedNodes.length; index += 1) {
+        removedNodes[index].remove();
+      }
+
+      stripExternal(clone);
+
+      // Re-embed web fonts as data-URI @font-face rules so the SVG rasterizer
+      // can resolve them — external font URLs aren't fetched during
+      // foreignObject rendering, which would otherwise force a fallback face
+      // and change text metrics.
+      const inlinedFontCss = await buildInlinedFontCss();
+      if (inlinedFontCss) {
+        const styleEl = document.createElement("style");
+        styleEl.textContent = inlinedFontCss;
+        const head = clone.querySelector("head");
+        if (head) head.appendChild(styleEl);
+        else clone.insertBefore(styleEl, clone.firstChild);
+      }
+
+      const html = new XMLSerializer().serializeToString(clone);
+      const svg =
+        `<svg xmlns="http://www.w3.org/2000/svg" width="${width}" height="${height}">` +
+        '<foreignObject width="100%" height="100%">' +
+        `<div xmlns="http://www.w3.org/1999/xhtml" style="width:${width}px;height:${height}px;overflow:hidden">` +
+        `<div style="transform:translate(-${scrollX}px,-${scrollY}px);transform-origin:top left">` +
+        html +
+        "</div></div></foreignObject></svg>";
+      const svgUrl = `data:image/svg+xml;charset=utf-8,${encodeURIComponent(svg)}`;
+      const image = new Image();
+      image.onload = function () {
+        const canvas = document.createElement("canvas");
+        canvas.width = width;
+        canvas.height = height;
+        canvas.getContext("2d").drawImage(image, 0, 0);
+        postResult(canvas.toDataURL("image/png"));
+      };
+      image.onerror = function () {
+        postResult(null);
+      };
+      image.src = svgUrl;
+    } catch (_error) {
+      postResult(null);
+    }
+  }
+
+  window.addEventListener("message", function (event) {
+    if (!event.data) return;
+    // Only accept messages from the direct parent frame. Blocks sibling /
+    // unrelated-window postMessage senders that could otherwise reach us.
+    if (event.source !== window.parent) return;
+
+    const trustedParentOrigin = getTrustedParentOrigin(event);
+    if (!trustedParentOrigin) return;
+    trustedTopOrigin = trustedParentOrigin;
+
+    if (event.data.type === "INLINE_EDIT_SCROLL_START") {
+      scrollForwarding = true;
+      emitScroll();
+      return;
+    }
+
+    if (event.data.type === "INLINE_EDIT_SCROLL_STOP") {
+      scrollForwarding = false;
+      if (scrollRaf) cancelAnimationFrame(scrollRaf);
+      scrollRaf = 0;
+      return;
+    }
+
+    if (event.data.type !== "INLINE_EDIT_CAPTURE_REQUEST") return;
+
+    handleCaptureRequest(event);
+  });
+})();
+
+
+</script></body>
+</html>

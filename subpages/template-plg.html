@@ -1,0 +1,957 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>PLG Funnel Worksheet — CRO Manual</title>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="../assets/shared.css"/>
+  <style>
+    .page-hero { background: #006494; }
+
+    .plg-examples {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin: 14px 0;
+    }
+    .plg-example-chip {
+      background: #1C1B19;
+      color: #4F98A3;
+      font-size: 12px;
+      font-weight: 700;
+      padding: 5px 14px;
+      border-radius: 6px;
+    }
+    .plg-example-chip span { color: #CDCCCA; font-weight: 400; margin-left: 4px; }
+
+    .aarrr-funnel {
+      margin: 24px 0;
+      display: flex;
+      flex-direction: column;
+      gap: 0;
+    }
+    .funnel-stage-block {
+      border: 1.5px solid var(--border);
+      border-radius: 0;
+      overflow: hidden;
+    }
+    .funnel-stage-block:first-child { border-radius: 10px 10px 0 0; }
+    .funnel-stage-block:last-child { border-radius: 0 0 10px 10px; border-top: none; }
+    .funnel-stage-block + .funnel-stage-block { border-top: none; }
+
+    .fsb-header {
+      padding: 14px 20px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      color: #fff;
+      cursor: pointer;
+    }
+    .fsb-header-left { display: flex; align-items: center; gap: 14px; }
+    .fsb-letter {
+      width: 36px;
+      height: 36px;
+      background: rgba(255,255,255,0.2);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 18px;
+      font-weight: 700;
+      flex-shrink: 0;
+    }
+    .fsb-name { font-size: 15px; font-weight: 700; }
+    .fsb-subtitle { font-size: 12px; opacity: 0.75; margin-top: 2px; }
+    .fsb-benchmark {
+      font-size: 13px;
+      font-weight: 700;
+      background: rgba(255,255,255,0.18);
+      padding: 4px 12px;
+      border-radius: 20px;
+      white-space: nowrap;
+    }
+
+    .fsb-body {
+      background: var(--surface);
+      padding: 20px;
+    }
+    .fsb-body p { font-size: 14px; line-height: 1.7; color: var(--text); margin-bottom: 10px; }
+    .fsb-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      gap: 12px;
+      margin: 14px 0;
+    }
+    .fsb-cell {
+      background: #f8f8f6;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 12px;
+    }
+    .fsb-cell-label {
+      font-size: 10px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      color: var(--text-muted);
+      margin-bottom: 6px;
+    }
+    .fsb-cell-content { font-size: 13px; line-height: 1.55; color: var(--text); }
+
+    .aha-callout {
+      background: #FFF8E1;
+      border: 2px solid #FFC107;
+      border-radius: 10px;
+      padding: 18px 20px;
+      margin: 14px 0;
+    }
+    .aha-label {
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      color: #8B6914;
+      margin-bottom: 8px;
+    }
+    .aha-callout p { font-size: 14px; line-height: 1.65; color: var(--text); margin: 0; }
+
+    .plg-vs-slg-wrap { overflow-x: auto; margin: 20px 0; }
+    .plg-vs-slg {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 13px;
+      min-width: 600px;
+    }
+    .plg-vs-slg th {
+      padding: 10px 14px;
+      text-align: left;
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: 0.5px;
+      text-transform: uppercase;
+      color: #fff;
+    }
+    .th-dimension { background: #28251D; }
+    .th-plg { background: #006494; }
+    .th-slg { background: #437A22; }
+    .plg-vs-slg td {
+      padding: 10px 14px;
+      border-bottom: 1px solid var(--border);
+      vertical-align: top;
+      line-height: 1.5;
+    }
+    .plg-vs-slg tr:nth-child(even) td { background: #fafaf8; }
+    .plg-vs-slg tr:last-child td { border-bottom: none; }
+    .plg-vs-slg td:first-child { font-weight: 700; color: var(--text); }
+
+    .metrics-full-wrap { overflow-x: auto; margin: 20px 0; }
+    .metrics-full {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 13px;
+      min-width: 700px;
+    }
+    .metrics-full th {
+      background: #006494;
+      color: #fff;
+      padding: 10px 14px;
+      text-align: left;
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.5px;
+      text-transform: uppercase;
+    }
+    .metrics-full td {
+      padding: 10px 14px;
+      border-bottom: 1px solid var(--border);
+      vertical-align: top;
+      line-height: 1.5;
+    }
+    .metrics-full tr:nth-child(even) td { background: #fafaf8; }
+    .metrics-full tr:last-child td { border-bottom: none; }
+
+    @media (max-width: 640px) {
+      .fsb-grid { grid-template-columns: 1fr; }
+      .fsb-benchmark { display: none; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav class="nav">
+  <span class="nav-logo">CRO <span>Manual</span></span>
+  <span class="nav-sep">/</span>
+  <a href="../pages/resources.html" class="nav-back">Resources &amp; Templates</a>
+  <span class="nav-sep">/</span>
+  <span class="nav-current">PLG Funnel Worksheet</span>
+  <span class="nav-spacer"></span>
+  <a href="../index.html" class="nav-home">Home</a>
+</nav>
+
+<!-- HERO -->
+<div class="page-hero">
+  <div class="hero-phase-label">Marketing · Resources &amp; Templates</div>
+  <h1 class="hero-title">Product-Led Growth (PLG) Funnel</h1>
+  <p class="hero-subtitle">PLG uses the product itself as the primary acquisition and expansion engine. The AARRR framework — Awareness, Acquisition, Activation, Retention, Monetization — maps every stage of the PLG funnel to a North Star Metric and growth tactic.</p>
+  <div class="hero-tags">
+    <span class="hero-tag">PLG</span>
+    <span class="hero-tag">AARRR</span>
+    <span class="hero-tag">Freemium</span>
+    <span class="hero-tag">Viral</span>
+    <span class="hero-tag">Activation</span>
+    <span class="hero-tag">North Star Metric</span>
+    <span class="hero-tag">Self-Serve</span>
+  </div>
+</div>
+
+<!-- CONTENT -->
+<div class="content-wrap">
+
+  <!-- Breadcrumb -->
+  <nav class="breadcrumb">
+    <a href="../index.html">Home</a>
+    <span class="sep">›</span>
+    <a href="../pages/resources.html">Resources &amp; Templates</a>
+    <span class="sep">›</span>
+    <span class="current">PLG Funnel Worksheet</span>
+  </nav>
+
+  <!-- Section 1 -->
+  <h2 class="section-title">What is PLG?</h2>
+  <p class="section-intro">Product-Led Growth is a go-to-market strategy where the product itself drives user acquisition, retention, and expansion with minimal or no traditional sales motion. PLG compounds because each user brings in more users.</p>
+
+  <div class="callout callout-definition">
+    <div class="callout-title">PLG Definition</div>
+    <p>PLG = the product drives user acquisition, retention, and expansion with minimal or no traditional sales motion. The key distinction from SLG (Sales-Led Growth): the product creates value before money changes hands, and that value experience drives the purchase decision bottom-up.</p>
+  </div>
+
+  <h3 class="subsection-title">Classic PLG Companies</h3>
+  <div class="plg-examples">
+    <span class="plg-example-chip">Slack <span>viral team invitation loop</span></span>
+    <span class="plg-example-chip">Dropbox <span>referral + viral sharing</span></span>
+    <span class="plg-example-chip">Figma <span>real-time collaboration virality</span></span>
+    <span class="plg-example-chip">HubSpot <span>freemium → upsell model</span></span>
+    <span class="plg-example-chip">Calendly <span>scheduling link creates viral distribution</span></span>
+    <span class="plg-example-chip">Zoom <span>external meeting creates free user acquisition</span></span>
+    <span class="plg-example-chip">Notion <span>public pages + template sharing</span></span>
+  </div>
+
+  <h3 class="subsection-title">PLG Requirements</h3>
+  <ul class="bullet-list">
+    <li><strong>Value in the first session.</strong> Users must experience meaningful value before hitting a paywall or needing help. If onboarding requires a 2-hour implementation, PLG will not work.</li>
+    <li><strong>Natural sharing or viral mechanism.</strong> The product must have a built-in reason for users to invite others — collaboration features, public outputs, invitation flows, or network-effect value.</li>
+    <li><strong>Clear upgrade trigger.</strong> The moment when a free user encounters friction that is resolved by paying must be obvious, low-friction, and directly tied to a value they've already experienced.</li>
+    <li><strong>Bottom-up adoption path.</strong> PLG works best when individual users adopt before the organization buys. If the economic buyer must be involved before anyone can use the product, PLG is not the right motion.</li>
+  </ul>
+
+  <div class="callout callout-warning">
+    <div class="callout-title">PLG is Not for All Companies</div>
+    <p>PLG requires a product that individual users can adopt independently and immediately see value from. Complex enterprise software that requires IT integration, multi-stakeholder configuration, or custom onboarding is not a PLG product. Forcing PLG on a fundamentally SLG product destroys both motions.</p>
+  </div>
+
+  <h3 class="subsection-title">PLG Relationship to LIR</h3>
+  <p>PLG companies must define an <strong>activation metric</strong> — the moment when a free user first experiences core product value. This activation metric is the PLG equivalent of the LIR event in sales-led companies. The AHA moment is the activation event, and the percentage of free users achieving it within a defined time window is the PLG equivalent of LIR achievement rate.</p>
+
+  <!-- Section 2 -->
+  <h2 class="section-title">The AARRR Funnel Framework</h2>
+  <p class="section-intro">AARRR (Awareness, Acquisition, Activation, Retention, Referral, Revenue) maps every stage of the PLG funnel to a North Star Metric, growth tactics, conversion gate, and benchmark. Work from Activation backward — this stage determines whether your PLG motion is viable.</p>
+
+  <div class="aarrr-funnel">
+
+    <!-- A1: Awareness -->
+    <div class="funnel-stage-block">
+      <div class="fsb-header" style="background:#006494;">
+        <div class="fsb-header-left">
+          <div class="fsb-letter">A</div>
+          <div>
+            <div class="fsb-name">Awareness</div>
+            <div class="fsb-subtitle">Potential users discover your product exists</div>
+          </div>
+        </div>
+        <div class="fsb-benchmark">Benchmark: 20–40% of traffic → sign-up</div>
+      </div>
+      <div class="fsb-body">
+        <p>Potential users discover your product through organic search, word-of-mouth, viral sharing, content, or an integrations marketplace. For PLG products, awareness is often driven by seeing the product output in the wild — a Calendly link, a Figma file, a Notion page, a Loom video.</p>
+        <div class="fsb-grid">
+          <div class="fsb-cell">
+            <div class="fsb-cell-label">North Star Metric</div>
+            <div class="fsb-cell-content">Monthly organic + viral visits from ICP-relevant sources</div>
+          </div>
+          <div class="fsb-cell">
+            <div class="fsb-cell-label">Growth Tactics</div>
+            <div class="fsb-cell-content">SEO, viral output sharing, word-of-mouth, content marketing, integrations marketplace listings</div>
+          </div>
+          <div class="fsb-cell">
+            <div class="fsb-cell-label">Conversion Gate</div>
+            <div class="fsb-cell-content">Sign-up page — conversion rate to free account creation. Strong PLG products: 20–40%.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- A2: Acquisition -->
+    <div class="funnel-stage-block">
+      <div class="fsb-header" style="background:#0074aa;">
+        <div class="fsb-header-left">
+          <div class="fsb-letter">A</div>
+          <div>
+            <div class="fsb-name">Acquisition</div>
+            <div class="fsb-subtitle">Visitors sign up for free trial or freemium account</div>
+          </div>
+        </div>
+        <div class="fsb-benchmark">Benchmark: 30–60% sign-ups → initial activation</div>
+      </div>
+      <div class="fsb-body">
+        <p>Visitors convert to registered free users. The goal is to minimize friction at this gate — every field on the sign-up form, every required permission, and every step before the product is accessible reduces acquisition rate.</p>
+        <div class="fsb-grid">
+          <div class="fsb-cell">
+            <div class="fsb-cell-label">North Star Metric</div>
+            <div class="fsb-cell-content">Sign-up conversion rate: visitors → registered free users</div>
+          </div>
+          <div class="fsb-cell">
+            <div class="fsb-cell-label">Growth Tactics</div>
+            <div class="fsb-cell-content">Frictionless sign-up (email only or Google SSO), immediate product value demo, contextual in-app onboarding tour</div>
+          </div>
+          <div class="fsb-cell">
+            <div class="fsb-cell-label">Conversion Gate</div>
+            <div class="fsb-cell-content">Activation trigger: the first key action that brings the user toward the AHA moment</div>
+          </div>
+        </div>
+        <ul class="bullet-list" style="margin-top:10px;">
+          <li>Remove every unnecessary sign-up field — each additional field reduces conversion by 5–10%</li>
+          <li>Google/Microsoft SSO sign-up consistently outperforms email/password forms for B2B products</li>
+          <li>Show the product value immediately after sign-up — do not send users to an empty dashboard</li>
+          <li>If your product requires data import or integration to show value, consider a data sandbox or template to create immediate first-session value</li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- A3: Activation -->
+    <div class="funnel-stage-block">
+      <div class="fsb-header" style="background:#FFC107; color:#1a1a00;">
+        <div class="fsb-header-left">
+          <div class="fsb-letter" style="background:rgba(0,0,0,0.15);color:#1a1a00;">A</div>
+          <div>
+            <div class="fsb-name">Activation ⭐ Most Critical Stage</div>
+            <div class="fsb-subtitle" style="opacity:0.75;">User experiences core product value for the first time — the AHA moment</div>
+          </div>
+        </div>
+        <div class="fsb-benchmark" style="background:rgba(0,0,0,0.15);color:#1a1a00;">Benchmark: 40–60% activation rate</div>
+      </div>
+      <div class="fsb-body">
+        <div class="aha-callout">
+          <div class="aha-label">⚡ The AHA Moment — PLG's LIR Equivalent</div>
+          <p>Activation is the single most important stage in the PLG funnel. The AHA moment is the specific, instrumentable product event that correlates with long-term retention. Users who reach the AHA moment retain at 3–10× the rate of those who do not. Your entire PLG optimization effort should start here.</p>
+        </div>
+        <p>Activation is defined as the first time a user experiences the core value of the product — not just logging in, not completing a tutorial, but genuinely using the product in the way it was designed to create value.</p>
+        <div class="fsb-grid">
+          <div class="fsb-cell">
+            <div class="fsb-cell-label">North Star Metric</div>
+            <div class="fsb-cell-content">Activation rate: % of sign-ups reaching AHA moment within T days (typically 7–30)</div>
+          </div>
+          <div class="fsb-cell">
+            <div class="fsb-cell-label">Growth Tactics</div>
+            <div class="fsb-cell-content">Guided onboarding checklists, empty state best practices, progress indicators, quick-win templates, tooltip walkthroughs</div>
+          </div>
+          <div class="fsb-cell">
+            <div class="fsb-cell-label">Conversion Gate</div>
+            <div class="fsb-cell-content">Retention trigger: will the user return tomorrow? D1 retention is the first proof that activation created lasting value.</div>
+          </div>
+        </div>
+        <h3 class="subsection-title">How to Find Your AHA Moment</h3>
+        <ol class="step-list">
+          <li><div class="step-content"><span class="step-title">Analyze your best-retained customers</span>Identify which specific events your highest-LTV customers completed in their first 7–14 days. Look for events that are strongly correlated with 12-month retention.</div></li>
+          <li><div class="step-content"><span class="step-title">Run a cohort analysis</span>For each candidate AHA event, split users into "completed" and "did not complete" and compare 90-day retention. A valid AHA event shows a 30+ percentage point retention gap.</div></li>
+          <li><div class="step-content"><span class="step-title">Define it precisely</span>Write the AHA moment in the LIR format: "P% of sign-ups complete E event within T days." This is your PLG activation metric.</div></li>
+          <li><div class="step-content"><span class="step-title">Optimize the path</span>Map every step between sign-up and the AHA moment. Remove every unnecessary step. Add guidance and empty-state content to reduce friction at each step.</div></li>
+        </ol>
+      </div>
+    </div>
+
+    <!-- R: Retention -->
+    <div class="funnel-stage-block">
+      <div class="fsb-header" style="background:#437A22;">
+        <div class="fsb-header-left">
+          <div class="fsb-letter">R</div>
+          <div>
+            <div class="fsb-name">Retention</div>
+            <div class="fsb-subtitle">Users return and use the product repeatedly after activation</div>
+          </div>
+        </div>
+        <div class="fsb-benchmark">Benchmark: D30 retention &gt;30%</div>
+      </div>
+      <div class="fsb-body">
+        <p>Retention measures whether activated users continue using the product over time. D1/D7/D30 retention tracks the percentage of users active on day 1, 7, and 30 after their activation event. A retention curve that flattens (even at a low level) is a strong signal of genuine value delivery.</p>
+        <div class="fsb-grid">
+          <div class="fsb-cell">
+            <div class="fsb-cell-label">North Star Metric</div>
+            <div class="fsb-cell-content">D1 / D7 / D30 retention — % of activated users still active at each milestone</div>
+          </div>
+          <div class="fsb-cell">
+            <div class="fsb-cell-label">Growth Tactics</div>
+            <div class="fsb-cell-content">Habit-forming features, email re-engagement sequences, in-app notifications, usage-based reminders, collaborative features that bring users back</div>
+          </div>
+          <div class="fsb-cell">
+            <div class="fsb-cell-label">Conversion Gate</div>
+            <div class="fsb-cell-content">Monetization trigger: the moment when usage or team size crosses the upgrade threshold</div>
+          </div>
+        </div>
+        <div class="callout callout-best-practice" style="margin-top:14px;">
+          <div class="callout-title">Retention Curve Interpretation</div>
+          <p>A retention curve that drops to 0% at Day 30 means you have a discovery product, not a retention product — there is no PLG moat. A curve that flattens above 20% at Day 30 means a core user base is genuinely retained and the product has a chance to compound through viral and referral mechanics.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- R2: Referral -->
+    <div class="funnel-stage-block">
+      <div class="fsb-header" style="background:#6E522B;">
+        <div class="fsb-header-left">
+          <div class="fsb-letter">R</div>
+          <div>
+            <div class="fsb-name">Referral — The Viral Loop</div>
+            <div class="fsb-subtitle">Existing users invite others, creating organic growth</div>
+          </div>
+        </div>
+        <div class="fsb-benchmark">Benchmark: K-factor &gt;0.5</div>
+      </div>
+      <div class="fsb-body">
+        <p>The referral loop is what makes PLG compound over time. Each existing user brings in additional users, reducing CAC toward zero for the viral portion of acquisition. The viral coefficient (K-factor) measures this: K = (invites sent per user) × (invite accept rate).</p>
+        <div class="fsb-grid">
+          <div class="fsb-cell">
+            <div class="fsb-cell-label">North Star Metric</div>
+            <div class="fsb-cell-content">Viral coefficient (K-factor) = invites sent per active user × invite accept rate</div>
+          </div>
+          <div class="fsb-cell">
+            <div class="fsb-cell-label">Growth Tactics</div>
+            <div class="fsb-cell-content">Team invite flows ("invite your colleague"), public shareable outputs, integrations into shared workflows, referral incentive programs</div>
+          </div>
+          <div class="fsb-cell">
+            <div class="fsb-cell-label">Conversion Gate</div>
+            <div class="fsb-cell-content">Invitee activation: does the invited user also reach the AHA moment? Referrals that don't activate add no retention value.</div>
+          </div>
+        </div>
+
+        <div class="formula-block" style="margin-top:14px;">
+          <div class="formula-label">Viral Coefficient Formula</div>
+          <div class="formula-main">K = Invites Sent Per Active User × Accept Rate</div>
+          <div class="formula-note">K &lt; 0.5 = supplementary viral component. K = 0.5–1.0 = meaningful viral growth. K &gt; 1.0 = exponential (viral product). Most successful PLG companies operate at K = 0.3–0.7 at scale.</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- R3: Revenue -->
+    <div class="funnel-stage-block">
+      <div class="fsb-header" style="background:#28251D;">
+        <div class="fsb-header-left">
+          <div class="fsb-letter">R</div>
+          <div>
+            <div class="fsb-name">Revenue / Monetization</div>
+            <div class="fsb-subtitle">Free users convert to paid plans</div>
+          </div>
+        </div>
+        <div class="fsb-benchmark">Benchmark: 2–5% free-to-paid in 90 days</div>
+      </div>
+      <div class="fsb-body">
+        <p>Monetization converts retained free users to paying customers. The key principle: monetization gates should be encountered by users after they have experienced significant value — not before. Premature paywalls kill activation rates and viral loops.</p>
+        <div class="fsb-grid">
+          <div class="fsb-cell">
+            <div class="fsb-cell-label">North Star Metric</div>
+            <div class="fsb-cell-content">Free-to-paid conversion rate: % of free users converting to paid within 90 days</div>
+          </div>
+          <div class="fsb-cell">
+            <div class="fsb-cell-label">Growth Tactics</div>
+            <div class="fsb-cell-content">Usage-based limits (seat limits, export limits), feature gates on power features, upgrade prompts triggered at AHA moment, team/admin features behind paywall</div>
+          </div>
+          <div class="fsb-cell">
+            <div class="fsb-cell-label">Expansion Gate</div>
+            <div class="fsb-cell-content">Post-conversion expansion: additional seats, higher plans, add-ons. PLG monetization compounds through expansion, not just conversion.</div>
+          </div>
+        </div>
+        <ul class="bullet-list" style="margin-top:12px;">
+          <li>The best time to show an upgrade prompt is immediately after a user has experienced the AHA moment — they have maximum perceived value and minimum price resistance</li>
+          <li>Usage limits work better than feature gates for bottom-up PLG — users understand "you've reached your limit" more clearly than a hidden premium feature</li>
+          <li>Admin/team features behind the paywall work for collaborative products — the individual user who champions the upgrade needs a reason to make the business case to their manager</li>
+        </ul>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- Section 3 -->
+  <h2 class="section-title">PLG vs. SLG (Sales-Led Growth)</h2>
+  <p class="section-intro">PLG and SLG are not mutually exclusive — many mature companies run both motions simultaneously. However, mixing them prematurely in Stage 2 creates conflicting incentives and unclear unit economics. Pick one primary motion.</p>
+
+  <div class="plg-vs-slg-wrap">
+    <table class="plg-vs-slg">
+      <thead>
+        <tr>
+          <th class="th-dimension">Dimension</th>
+          <th class="th-plg">PLG</th>
+          <th class="th-slg">SLG (Sales-Led Growth)</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Primary Sales Motion</td>
+          <td>Product drives sign-up, activation, and conversion with minimal human involvement</td>
+          <td>Sales reps drive qualification, demo, evaluation, and close</td>
+        </tr>
+        <tr>
+          <td>ICP Entry Point</td>
+          <td>Individual end user discovers and adopts — organization follows</td>
+          <td>Economic buyer and champion engaged from first touch</td>
+        </tr>
+        <tr>
+          <td>Sales Cycle</td>
+          <td>Days to weeks from sign-up to first payment</td>
+          <td>Weeks to months from SQL to closed-won</td>
+        </tr>
+        <tr>
+          <td>Contract ACV</td>
+          <td>$0–10K (individual, small team, or departmental)</td>
+          <td>$10K+ (team-wide, departmental, or enterprise)</td>
+        </tr>
+        <tr>
+          <td>LIR Equivalent</td>
+          <td>Activation metric — the AHA moment is the PLG LIR event</td>
+          <td>Formal LIR: P% of customers achieve E event within T days</td>
+        </tr>
+        <tr>
+          <td>Moat Type</td>
+          <td>Viral distribution, data network effects, switching costs from embedded workflows</td>
+          <td>Relationship moat, brand authority, institutional knowledge</td>
+        </tr>
+        <tr>
+          <td>Best Company Stage</td>
+          <td>PMF validation and network effect building (product must prove value before asking for money)</td>
+          <td>GTM Fit through Growth &amp; Moat (proven product value, focus on scaling revenue capture)</td>
+        </tr>
+        <tr>
+          <td>CAC Structure</td>
+          <td>Near-zero for viral acquisition; higher for paid channels that feed the PLG funnel</td>
+          <td>High CAC (rep salaries, tools, marketing) — justified by high ACV and LIUE &gt;3</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- Section 4 -->
+  <h2 class="section-title">PLG Metrics Dashboard</h2>
+  <p class="section-intro">Track these metrics weekly at the funnel level and monthly by acquisition cohort. The AARRR funnel reveals exactly where your PLG motion is leaking — every drop in conversion rate points to a specific stage to optimize.</p>
+
+  <div class="metrics-full-wrap">
+    <table class="metrics-full">
+      <thead>
+        <tr>
+          <th>AARRR Stage</th>
+          <th>Metric</th>
+          <th>Definition</th>
+          <th>Benchmark</th>
+          <th>How to Track</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>Awareness</strong></td>
+          <td>Monthly Site Visits</td>
+          <td>Unique visitors from organic, viral, and paid sources</td>
+          <td>10–20% MoM growth (early stage)</td>
+          <td>Google Analytics 4, traffic attribution by source</td>
+        </tr>
+        <tr>
+          <td><strong>Acquisition</strong></td>
+          <td>Sign-up Conversion Rate</td>
+          <td>% of site visitors who create a free account</td>
+          <td>2–5% of total traffic; 15–40% of pricing page visitors</td>
+          <td>Analytics funnel: homepage → sign-up page → registered</td>
+        </tr>
+        <tr>
+          <td><strong>Activation</strong></td>
+          <td>Activation Rate</td>
+          <td>% of sign-ups who reach AHA moment within T days</td>
+          <td>40–60% for strong PLG products</td>
+          <td>Product analytics (Mixpanel, Amplitude) — event tracking</td>
+        </tr>
+        <tr>
+          <td><strong>Activation</strong></td>
+          <td>Time-to-Activation</td>
+          <td>Median time from sign-up to first AHA moment</td>
+          <td>&lt;10 minutes for consumer; &lt;1 session for B2B SaaS</td>
+          <td>Mixpanel / Amplitude funnel with time tracking</td>
+        </tr>
+        <tr>
+          <td><strong>Retention</strong></td>
+          <td>D1 / D7 / D30 Retention</td>
+          <td>% of activated users still active at Day 1, 7, 30</td>
+          <td>D7 &gt;40%, D30 &gt;30% for strong B2B PLG</td>
+          <td>Cohort retention charts in product analytics</td>
+        </tr>
+        <tr>
+          <td><strong>Referral</strong></td>
+          <td>Viral Coefficient (K)</td>
+          <td>Invites sent per active user × invite accept rate</td>
+          <td>K &gt; 0.5 = meaningful viral; K &gt; 1.0 = exponential</td>
+          <td>CRM: track invite events + new sign-up attribution</td>
+        </tr>
+        <tr>
+          <td><strong>Revenue</strong></td>
+          <td>Free-to-Paid Conversion</td>
+          <td>% of free users converting to paid within 90 days</td>
+          <td>2–5% in 90 days for strong PLG</td>
+          <td>Revenue analytics + cohort free-to-paid tracking</td>
+        </tr>
+        <tr>
+          <td><strong>Revenue</strong></td>
+          <td>Expansion Revenue %</td>
+          <td>% of monthly revenue from seat/plan expansion (not new logos)</td>
+          <td>&gt;20% of MRR from expansion in mature PLG</td>
+          <td>CRM: MRR expansion from existing accounts</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- Related -->
+  <div class="related-section">
+    <div class="related-title">Related Pages</div>
+    <div class="related-links">
+      <a href="../pages/resources.html" class="related-link">← Resources &amp; Templates</a>
+      <a href="template-demand-gen-channels.html" class="related-link">Demand Gen Channel Guide</a>
+      <a href="sos-pmf.html" class="related-link">PMF SOS</a>
+    </div>
+  </div>
+
+</div>
+<script data-pplx-inline-edit>
+(function () {
+  if (window === window.top) return;
+
+  const allowedParentOrigins = ["https://www.perplexity.ai","https://perplexity.ai","https://testing.perplexity.ai","https://staging.perplexity.ai","https://*.preview.i.perplexity.ai","http://localhost:3000","http://127.0.0.1:3000","http://localhost:5173","http://127.0.0.1:5173"];
+  const MAX_FONT_BYTES = 500 * 1024;
+  const MAX_TOTAL_FONT_BYTES = 2 * 1024 * 1024;
+  let scrollForwarding = false;
+  let scrollRaf = 0;
+  let trustedTopOrigin = null;
+
+  // Allow entries like "https://*.preview.i.perplexity.ai" — the wildcard
+  // matches a single DNS label (no dots), so "https://*.foo" cannot stretch
+  // across multiple labels.
+  function matchesAllowedOrigin(origin) {
+    if (!origin) return false;
+    for (const entry of allowedParentOrigins) {
+      if (!entry.includes("*")) {
+        if (entry === origin) return true;
+        continue;
+      }
+      const pattern = new RegExp(
+        "^" +
+          entry.replace(/[.+?^${}()|[\]\\]/g, "\\$&").replace(/\*/g, "[^.]+") +
+          "$",
+      );
+      if (pattern.test(origin)) return true;
+    }
+    return false;
+  }
+
+  // Trust decision: when the sender is same-origin-visible (event.origin is a
+  // real origin like https://www.perplexity.ai) we trust event.origin directly.
+  // When event.origin is "null" (opaque broker srcdoc), we fall back to the
+  // broker's stamped `parentOrigin` to identify the top window. The fallback
+  // is claim-only — we rely on the browser's native `targetOrigin` enforcement
+  // on the response path (see postToTrustedTop) to ensure replies can't be
+  // delivered to anyone but the actual top window of that claimed origin.
+  function getTrustedParentOrigin(event) {
+    const forwardedParentOrigin =
+      typeof event.data.parentOrigin === "string" ? event.data.parentOrigin : null;
+    const parentOrigin = event.origin === "null" ? forwardedParentOrigin : event.origin;
+    return matchesAllowedOrigin(parentOrigin) ? parentOrigin : null;
+  }
+
+  // All responses go to window.top with targetOrigin = the allowlisted origin.
+  // An attacker that iframes us inside their own null-origin broker can claim
+  // any parentOrigin they like, but the browser will drop the reply whenever
+  // the real top's origin doesn't match — so the screenshot never leaves.
+  function postToTrustedTop(message) {
+    if (!trustedTopOrigin) return;
+    try {
+      window.top.postMessage(message, trustedTopOrigin);
+    } catch (_error) {}
+  }
+
+  function inlineAll(original, clone) {
+    if (original.nodeType !== 1 || clone.nodeType !== 1) return;
+
+    try {
+      const computedStyle = getComputedStyle(original);
+      // cssText on a computed style is the serialized declaration in modern
+      // Chromium/Safari — a single read beats enumerating ~400 longhand
+      // properties. Firefox returns "" here, so we fall back on empty.
+      const serialized = computedStyle.cssText;
+      if (serialized) {
+        clone.style.cssText = serialized;
+      } else {
+        const parts = new Array(computedStyle.length);
+        for (let index = 0; index < computedStyle.length; index += 1) {
+          const property = computedStyle[index];
+          parts[index] = `${property}:${computedStyle.getPropertyValue(property)};`;
+        }
+        clone.style.cssText = parts.join("");
+      }
+    } catch (_error) {}
+
+    const originalChildren = original.children;
+    const clonedChildren = clone.children;
+    for (
+      let index = 0;
+      index < originalChildren.length && index < clonedChildren.length;
+      index += 1
+    ) {
+      inlineAll(originalChildren[index], clonedChildren[index]);
+    }
+  }
+
+  function extractFontUrl(srcValue) {
+    const matches = [
+      ...srcValue.matchAll(
+        /url\(["']?([^"')]+)["']?\)(?:\s*format\(["']?([^"')]+)["']?\))?/gi,
+      ),
+    ];
+    if (matches.length === 0) return null;
+    const woff2 = matches.find((m) => m[2] && m[2].toLowerCase().includes("woff2"));
+    if (woff2) return woff2[1];
+    const woff = matches.find((m) => m[2] && m[2].toLowerCase().includes("woff"));
+    if (woff) return woff[1];
+    return matches[0][1];
+  }
+
+  // Cache resolved font URL -> data URI across captures. Fonts on a page
+  // essentially never change, and a batch run emits multiple captures back to
+  // back — without this we'd refetch + re-base64 every time.
+  const fontDataUriCache = new Map();
+  const SRC_DECLARATION_RE = /src\s*:\s*[^;}]+/i;
+
+  async function fetchAsDataUri(url) {
+    if (fontDataUriCache.has(url)) return fontDataUriCache.get(url);
+    let dataUri = null;
+    try {
+      const response = await fetch(url, { mode: "cors", credentials: "omit" });
+      if (response.ok) {
+        const blob = await response.blob();
+        if (blob.size <= MAX_FONT_BYTES) {
+          dataUri = await new Promise((resolve) => {
+            const reader = new FileReader();
+            reader.onloadend = () =>
+              resolve(typeof reader.result === "string" ? reader.result : null);
+            reader.onerror = () => resolve(null);
+            reader.readAsDataURL(blob);
+          });
+        }
+      }
+    } catch (_error) {
+      dataUri = null;
+    }
+    fontDataUriCache.set(url, dataUri);
+    return dataUri;
+  }
+
+  function collectFontFaceRuleTexts() {
+    const rules = [];
+    for (const sheet of document.styleSheets) {
+      let cssRules;
+      try {
+        cssRules = sheet.cssRules;
+      } catch (_error) {
+        continue;
+      }
+      if (!cssRules) continue;
+      for (const rule of cssRules) {
+        const cssText = rule.cssText || "";
+        if (cssText.startsWith("@font-face")) rules.push(cssText);
+      }
+    }
+    return rules;
+  }
+
+  async function buildInlinedFontCss() {
+    const ruleTexts = collectFontFaceRuleTexts();
+    if (ruleTexts.length === 0) return null;
+
+    const resolved = ruleTexts.map((cssText) => {
+      if (!SRC_DECLARATION_RE.test(cssText)) return null;
+      const srcMatch = cssText.match(/src\s*:\s*([^;}]+)[;}]/i);
+      if (!srcMatch) return null;
+      const url = extractFontUrl(srcMatch[1]);
+      if (!url) return null;
+      try {
+        return { cssText, url: new URL(url, document.baseURI).href };
+      } catch (_error) {
+        return null;
+      }
+    });
+
+    const dataUris = await Promise.all(
+      resolved.map((entry) => (entry ? fetchAsDataUri(entry.url) : Promise.resolve(null))),
+    );
+
+    const inlined = [];
+    let totalBytes = 0;
+    for (let index = 0; index < resolved.length; index += 1) {
+      const entry = resolved[index];
+      const dataUri = dataUris[index];
+      if (!entry || !dataUri) continue;
+      const approxBytes = dataUri.length * 0.75;
+      if (totalBytes + approxBytes > MAX_TOTAL_FONT_BYTES) break;
+      totalBytes += approxBytes;
+      inlined.push(entry.cssText.replace(SRC_DECLARATION_RE, `src: url("${dataUri}")`));
+    }
+    return inlined.length > 0 ? inlined.join("\n") : null;
+  }
+
+  function stripExternal(clone) {
+    const images = clone.querySelectorAll("img");
+    for (let index = 0; index < images.length; index += 1) {
+      const src = images[index].getAttribute("src");
+      if (src && !src.startsWith("data:")) images[index].removeAttribute("src");
+    }
+
+    const elements = clone.querySelectorAll("*");
+    for (let index = 0; index < elements.length; index += 1) {
+      const style = elements[index].style.cssText;
+      if (style && style.includes("url(")) {
+        elements[index].style.cssText = style.replace(
+          /url\(["']?(?!data:)[^)"']*["']?\)/gi,
+          "none",
+        );
+      }
+    }
+  }
+
+  function emitScroll() {
+    scrollRaf = 0;
+    if (!scrollForwarding) return;
+    postToTrustedTop({
+      type: "INLINE_EDIT_SCROLL",
+      scrollX: window.scrollX,
+      scrollY: window.scrollY,
+    });
+  }
+
+  window.addEventListener(
+    "scroll",
+    function () {
+      if (!scrollForwarding || scrollRaf) return;
+      scrollRaf = requestAnimationFrame(emitScroll);
+    },
+    { passive: true, capture: true },
+  );
+
+  async function handleCaptureRequest(event) {
+    const requestId = event.data.requestId;
+    const scrollX = window.scrollX;
+    const scrollY = window.scrollY;
+    const width = window.innerWidth;
+    const height = window.innerHeight;
+
+    function postResult(dataUrl) {
+      postToTrustedTop({
+        type: "INLINE_EDIT_SCREENSHOT_RESULT",
+        requestId,
+        dataUrl,
+        scrollX,
+        scrollY,
+      });
+    }
+
+    try {
+      // Wait for any pending web fonts to resolve so both inline metrics and
+      // the @font-face inlining below see the same loaded faces.
+      if (document.fonts && document.fonts.ready) {
+        try {
+          await document.fonts.ready;
+        } catch (_error) {}
+      }
+
+      const clone = document.documentElement.cloneNode(true);
+      inlineAll(document.documentElement, clone);
+
+      const removedNodes = clone.querySelectorAll("script,link[rel=\"stylesheet\"],style");
+      for (let index = 0; index < removedNodes.length; index += 1) {
+        removedNodes[index].remove();
+      }
+
+      stripExternal(clone);
+
+      // Re-embed web fonts as data-URI @font-face rules so the SVG rasterizer
+      // can resolve them — external font URLs aren't fetched during
+      // foreignObject rendering, which would otherwise force a fallback face
+      // and change text metrics.
+      const inlinedFontCss = await buildInlinedFontCss();
+      if (inlinedFontCss) {
+        const styleEl = document.createElement("style");
+        styleEl.textContent = inlinedFontCss;
+        const head = clone.querySelector("head");
+        if (head) head.appendChild(styleEl);
+        else clone.insertBefore(styleEl, clone.firstChild);
+      }
+
+      const html = new XMLSerializer().serializeToString(clone);
+      const svg =
+        `<svg xmlns="http://www.w3.org/2000/svg" width="${width}" height="${height}">` +
+        '<foreignObject width="100%" height="100%">' +
+        `<div xmlns="http://www.w3.org/1999/xhtml" style="width:${width}px;height:${height}px;overflow:hidden">` +
+        `<div style="transform:translate(-${scrollX}px,-${scrollY}px);transform-origin:top left">` +
+        html +
+        "</div></div></foreignObject></svg>";
+      const svgUrl = `data:image/svg+xml;charset=utf-8,${encodeURIComponent(svg)}`;
+      const image = new Image();
+      image.onload = function () {
+        const canvas = document.createElement("canvas");
+        canvas.width = width;
+        canvas.height = height;
+        canvas.getContext("2d").drawImage(image, 0, 0);
+        postResult(canvas.toDataURL("image/png"));
+      };
+      image.onerror = function () {
+        postResult(null);
+      };
+      image.src = svgUrl;
+    } catch (_error) {
+      postResult(null);
+    }
+  }
+
+  window.addEventListener("message", function (event) {
+    if (!event.data) return;
+    // Only accept messages from the direct parent frame. Blocks sibling /
+    // unrelated-window postMessage senders that could otherwise reach us.
+    if (event.source !== window.parent) return;
+
+    const trustedParentOrigin = getTrustedParentOrigin(event);
+    if (!trustedParentOrigin) return;
+    trustedTopOrigin = trustedParentOrigin;
+
+    if (event.data.type === "INLINE_EDIT_SCROLL_START") {
+      scrollForwarding = true;
+      emitScroll();
+      return;
+    }
+
+    if (event.data.type === "INLINE_EDIT_SCROLL_STOP") {
+      scrollForwarding = false;
+      if (scrollRaf) cancelAnimationFrame(scrollRaf);
+      scrollRaf = 0;
+      return;
+    }
+
+    if (event.data.type !== "INLINE_EDIT_CAPTURE_REQUEST") return;
+
+    handleCaptureRequest(event);
+  });
+})();
+
+
+</script></body>
+</html>

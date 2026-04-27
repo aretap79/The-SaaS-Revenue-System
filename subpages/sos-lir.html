@@ -1,0 +1,1344 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Leading Indicator of Retention (LIR) — Science of Scaling</title>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="../assets/shared.css"/>
+  <style>
+    :root { --sos: #0D5C63; --sos-light: #e6f2f3; --sos-mid: #c2dde0; }
+    .page-hero { background: var(--sos); }
+
+    .step-list li::before { background: var(--sos); }
+    .bullet-list li::before { color: var(--sos); }
+
+    /* ── Big LIR Formula ── */
+    .lir-formula-block {
+      background: #0a3d42;
+      border-radius: 12px;
+      padding: 32px 36px;
+      margin: 20px 0;
+      text-align: center;
+    }
+    .lf-label {
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: #4FC3CE;
+      margin-bottom: 14px;
+    }
+    .lf-main {
+      font-family: 'DM Sans', sans-serif;
+      font-size: 22px;
+      font-weight: 700;
+      color: #fff;
+      line-height: 1.6;
+    }
+    .lf-highlight { color: #4FC3CE; }
+    .lf-sub {
+      margin-top: 14px;
+      font-size: 14px;
+      color: rgba(255,255,255,0.6);
+    }
+
+    /* ── P / E / T Variable Grid ── */
+    .variable-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 14px;
+      margin: 20px 0;
+    }
+    .var-card {
+      background: var(--surface);
+      border: 2px solid var(--border);
+      border-radius: 10px;
+      padding: 20px 24px;
+    }
+    .var-card.var-p { border-left: 6px solid #1B474D; }
+    .var-card.var-e { border-left: 6px solid var(--sos); }
+    .var-card.var-t { border-left: 6px solid #4a8c92; }
+    .var-header {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      margin-bottom: 14px;
+    }
+    .var-letter {
+      font-size: 40px;
+      font-weight: 700;
+      color: var(--sos);
+      line-height: 1;
+      min-width: 44px;
+    }
+    .var-name { font-size: 17px; font-weight: 700; color: var(--text); margin-bottom: 2px; }
+    .var-tagline { font-size: 13px; color: var(--text-muted); }
+    .var-body { font-size: 14px; line-height: 1.7; color: var(--text); }
+
+    /* ── Good / Bad Event Examples ── */
+    .event-criteria-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+      margin: 14px 0;
+    }
+    .ec-card {
+      border-radius: 8px;
+      padding: 14px 16px;
+      font-size: 13px;
+      line-height: 1.55;
+    }
+    .ec-card.good { background: #e6f4ea; border-left: 3px solid #437A22; }
+    .ec-card.bad { background: #fce8e6; border-left: 3px solid #A13544; }
+    .ec-label {
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      margin-bottom: 6px;
+      display: block;
+    }
+    .ec-card.good .ec-label { color: #437A22; }
+    .ec-card.bad .ec-label { color: #A13544; }
+    .ec-card ul { list-style: none; padding: 0; margin: 0; }
+    .ec-card ul li { padding: 4px 0; }
+    .ec-card ul li::before { display: none; }
+
+    /* ── Industry Examples Table ── */
+    .industry-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 14px;
+      margin: 16px 0;
+    }
+    .industry-table th {
+      background: var(--sos);
+      color: #fff;
+      padding: 10px 14px;
+      text-align: left;
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.5px;
+      text-transform: uppercase;
+    }
+    .industry-table td {
+      padding: 10px 14px;
+      border-bottom: 1px solid var(--border);
+      vertical-align: top;
+      line-height: 1.5;
+    }
+    .industry-table tr:nth-child(even) td { background: #fafaf8; }
+    .industry-table tr:last-child td { border-bottom: none; }
+    .co { font-weight: 700; }
+
+    /* ── Discovery Steps ── */
+    .discovery-steps {
+      margin: 20px 0;
+      counter-reset: disc-steps;
+    }
+    .disc-step {
+      display: flex;
+      gap: 16px;
+      align-items: flex-start;
+      padding: 14px 0;
+      border-bottom: 1px solid var(--border);
+    }
+    .disc-step:last-child { border-bottom: none; }
+    .disc-num {
+      min-width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      background: var(--sos);
+      color: #fff;
+      font-size: 13px;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      margin-top: 2px;
+    }
+    .disc-content { flex: 1; }
+    .disc-title { font-size: 15px; font-weight: 700; color: var(--text); margin-bottom: 4px; }
+    .disc-desc { font-size: 14px; color: var(--text-muted); line-height: 1.65; }
+    .disc-tip {
+      font-size: 12px;
+      background: var(--sos-light);
+      color: var(--sos);
+      border-radius: 6px;
+      padding: 6px 10px;
+      margin-top: 8px;
+      font-weight: 500;
+    }
+
+    /* ── P and T Guidance Cards ── */
+    .pt-guidance {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 14px;
+      margin: 16px 0;
+    }
+    .pt-card {
+      background: var(--surface);
+      border: 1.5px solid var(--border);
+      border-radius: 8px;
+      padding: 18px 20px;
+    }
+    .pt-card-label {
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      color: var(--sos);
+      margin-bottom: 6px;
+    }
+    .pt-card-title { font-size: 16px; font-weight: 700; color: var(--text); margin-bottom: 10px; }
+
+    /* ── Metric Comparison Table ── */
+    .metric-badge {
+      display: inline-block;
+      font-size: 11px;
+      font-weight: 700;
+      padding: 2px 8px;
+      border-radius: 10px;
+      letter-spacing: 0.5px;
+    }
+    .badge-leading { background: #e6f4ea; color: #437A22; }
+    .badge-lagging { background: #fce8e6; color: #A13544; }
+    .badge-mixed { background: #fff8e1; color: #7a6000; }
+
+    /* ── CS Playbook Timeline ── */
+    .cs-timeline { margin: 20px 0; }
+    .cs-step {
+      display: flex;
+      gap: 0;
+      align-items: flex-start;
+    }
+    .cs-step:last-child .cst-line { display: none; }
+    .cst-left {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      width: 44px;
+      flex-shrink: 0;
+    }
+    .cst-dot {
+      width: 14px;
+      height: 14px;
+      border-radius: 50%;
+      background: var(--sos);
+      flex-shrink: 0;
+      margin-top: 4px;
+    }
+    .cst-dot.alert { background: #A13544; }
+    .cst-dot.check { background: #437A22; }
+    .cst-line {
+      width: 2px;
+      flex: 1;
+      min-height: 32px;
+      background: var(--sos-mid);
+    }
+    .cst-body { padding-bottom: 20px; flex: 1; }
+    .cst-when {
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      color: var(--sos);
+      margin-bottom: 3px;
+    }
+    .cst-title { font-size: 14px; font-weight: 700; color: var(--text); margin-bottom: 4px; }
+    .cst-desc { font-size: 13px; color: var(--text-muted); line-height: 1.6; }
+    .cst-action {
+      font-size: 12px;
+      color: #437A22;
+      font-weight: 600;
+      margin-top: 6px;
+    }
+
+    /* ── Dashboard Color Legend ── */
+    .dashboard-legend {
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
+      margin: 12px 0;
+    }
+    .dl-item {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 13px;
+    }
+    .dl-dot {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      flex-shrink: 0;
+    }
+    .dl-green { background: #437A22; }
+    .dl-yellow { background: #d4a017; }
+    .dl-red { background: #A13544; }
+
+    /* ── Comp Formula ── */
+    .comp-formula {
+      background: #f3f8f8;
+      border: 2px solid var(--sos-mid);
+      border-radius: 10px;
+      padding: 20px 24px;
+      margin: 16px 0;
+    }
+    .cf-row {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin: 8px 0;
+      font-size: 15px;
+    }
+    .cf-pct {
+      font-size: 24px;
+      font-weight: 700;
+      color: var(--sos);
+      min-width: 60px;
+    }
+    .cf-label { font-size: 15px; font-weight: 600; color: var(--text); }
+    .cf-desc { font-size: 13px; color: var(--text-muted); }
+    .cf-divider {
+      border: none;
+      border-top: 1px solid var(--border);
+      margin: 10px 0;
+    }
+
+    /* ── Iteration Rules ── */
+    .iter-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+      margin: 16px 0;
+    }
+    .iter-card {
+      border-radius: 8px;
+      padding: 14px 16px;
+    }
+    .iter-card.do-change { background: #e6f4ea; border: 1.5px solid #a5d6a7; }
+    .iter-card.no-change { background: #fce8e6; border: 1.5px solid #ef9a9a; }
+    .iter-label {
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      margin-bottom: 8px;
+    }
+    .iter-card.do-change .iter-label { color: #437A22; }
+    .iter-card.no-change .iter-label { color: #A13544; }
+    .iter-card ul { list-style: none; padding: 0; margin: 0; }
+    .iter-card ul li { font-size: 13px; line-height: 1.6; padding: 3px 0; }
+
+    /* ── Cohort Table ── */
+    .cohort-wrap { overflow-x: auto; margin: 16px 0; }
+    .cohort-table {
+      border-collapse: collapse;
+      font-size: 13px;
+      min-width: 620px;
+      width: 100%;
+    }
+    .cohort-table th {
+      background: #1a1a18;
+      color: rgba(255,255,255,0.75);
+      padding: 9px 12px;
+      text-align: center;
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.5px;
+      white-space: nowrap;
+    }
+    .cohort-table th:first-child { text-align: left; }
+    .cohort-table td {
+      padding: 9px 12px;
+      border: 1px solid var(--border);
+      text-align: center;
+      font-size: 12px;
+      font-weight: 600;
+    }
+    .cohort-table td:first-child { text-align: left; font-weight: 700; font-size: 13px; }
+    .cell-green { background: #e6f4ea; color: #437A22; }
+    .cell-yellow { background: #fff8e1; color: #7a6000; }
+    .cell-red { background: #fce8e6; color: #A13544; }
+    .cell-gray { background: #f5f5f3; color: var(--text-muted); }
+
+    @media (max-width: 768px) {
+      .event-criteria-grid { grid-template-columns: 1fr; }
+      .pt-guidance { grid-template-columns: 1fr; }
+      .iter-grid { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+<nav class="nav">
+  <span class="nav-logo">CRO <span>Manual</span></span>
+  <span class="nav-sep">|</span>
+  <a href="../index.html" class="nav-back">← Home</a>
+  <span class="nav-sep">|</span>
+  <a href="../pages/science-of-scaling.html" class="nav-back">Science of Scaling</a>
+  <span class="nav-sep">|</span>
+  <span class="nav-current">LIR</span>
+</nav>
+
+<div class="page-hero">
+  <div class="hero-phase-label">Metric · Science of Scaling</div>
+  <div class="hero-title">Leading Indicator of Retention (LIR)</div>
+  <div class="hero-subtitle">The most important metric in Stage 1. LIR predicts long-term customer retention months in advance, giving you time to intervene — and proves whether you have true Product-Market Fit.</div>
+  <div class="hero-tags">
+    <span class="hero-tag">PMF</span>
+    <span class="hero-tag">Customer Success</span>
+    <span class="hero-tag">Cohort Analysis</span>
+    <span class="hero-tag">Retention</span>
+    <span class="hero-tag">Early Warning</span>
+  </div>
+</div>
+
+<div class="content-wrap">
+
+  <div class="breadcrumb">
+    <a href="../index.html">Home</a><span class="sep">›</span>
+    <a href="../pages/science-of-scaling.html">Science of Scaling</a><span class="sep">›</span>
+    <span class="current">Leading Indicator of Retention (LIR)</span>
+  </div>
+
+  <!-- ══════════════════════════════════════════════
+       SECTION 1: WHY LIR EXISTS
+  ══════════════════════════════════════════════ -->
+  <div class="section-title">Why LIR Exists</div>
+  <div class="section-intro">The fundamental problem with traditional retention metrics: they tell you about the past when you need to know about the future. LIR solves this.</div>
+
+  <div class="subsection">
+    <p>NPS, CSAT, revenue retention, and churn rate all share the same flaw: they are lagging indicators. By the time they show a problem, the customers have already decided to leave. The churn event precedes the churn measurement by weeks or months. You can't intervene on a customer who has already made their decision.</p>
+    <p>LIR operates on a different principle: it identifies a specific, early customer behavior that predicts renewal 12 months in advance. If a customer achieves LIR, they are highly likely to renew. If they don't, they are likely to churn — and you know this within the first 30-90 days of their contract.</p>
+  </div>
+
+  <div class="subsection">
+    <div class="subsection-title">Origin: Mark Roberge at HubSpot</div>
+    <p>Mark Roberge discovered this principle while scaling HubSpot from $0 to $100M ARR. His team found that customers who completed a specific set of actions within their first 60 days — publishing their first blog post and sending their first email campaign — retained at 85%+ through month 12. Customers who didn't achieve these actions retained at approximately 55%.</p>
+    <p>This 30-percentage-point gap was the signal they needed. It allowed HubSpot to:</p>
+    <ul class="bullet-list">
+      <li>Build CS programs explicitly designed to drive customers toward these actions within 60 days</li>
+      <li>Define their ICP around customers who were structurally capable of hitting these actions</li>
+      <li>Tie sales compensation to LIR achievement — paying reps for the right sale, not just any sale</li>
+      <li>Show investors a leading retention signal before 12-month cohorts matured</li>
+    </ul>
+  </div>
+
+  <div class="callout callout-definition">
+    <div class="callout-title">The Central Insight</div>
+    <p>Customer success is not about what you do for customers <em>after</em> they churn risk appears — it's about driving them to a specific product milestone in their first 30-90 days that locks in the retention outcome. LIR identifies that milestone and makes it the operational center of your CS motion.</p>
+  </div>
+
+  <!-- ══════════════════════════════════════════════
+       SECTION 2: THE LIR FORMULA
+  ══════════════════════════════════════════════ -->
+  <div class="section-title">The LIR Formula</div>
+  <div class="section-intro">LIR is defined by three variables that your team must discover, set, and iterate based on data.</div>
+
+  <div class="lir-formula-block">
+    <div class="lf-label">LIR Definition</div>
+    <div class="lf-main">
+      LIR is <span class="lf-highlight">"True"</span> if<br/>
+      <span class="lf-highlight">P%</span> of customers achieve <span class="lf-highlight">E</span> event(s) within <span class="lf-highlight">T</span> days
+    </div>
+    <div class="lf-sub">where P, E, and T are discovered through cohort analysis and customer interviews</div>
+  </div>
+
+  <p style="font-size: 15px; margin-bottom: 16px;">Each variable has a specific function and must be calibrated carefully:</p>
+
+  <table class="data-table">
+    <thead>
+      <tr><th>Variable</th><th>Name</th><th>Definition</th><th>Starting Target</th></tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><strong>P</strong></td>
+        <td>Percentage</td>
+        <td>The % of customers who must achieve the event for LIR to be declared "True" for a given cohort</td>
+        <td>60–80%; start at 70%</td>
+      </tr>
+      <tr>
+        <td><strong>E</strong></td>
+        <td>Event</td>
+        <td>A specific, objective, instrumentable action inside your product that is statistically correlated with long-term retention</td>
+        <td>Customer-specific; discovered via cohort analysis</td>
+      </tr>
+      <tr>
+        <td><strong>T</strong></td>
+        <td>Time</td>
+        <td>The number of days after contract start by which the customer must achieve E for it to count toward LIR</td>
+        <td>As short as possible; 30–90 days typical</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <!-- ══════════════════════════════════════════════
+       SECTION 3: WHAT MAKES A GOOD LIR EVENT (E)
+  ══════════════════════════════════════════════ -->
+  <div class="section-title">What Makes a Good LIR Event (E)</div>
+  <div class="section-intro">E is the hardest variable to get right. Most teams pick an event that seems correlated to value but isn't — or pick a vanity metric that looks strong but predicts nothing. The criteria are strict.</div>
+
+  <div class="variable-grid" style="gap: 0; margin-bottom: 0;">
+    <div class="var-card var-e" style="border-radius: 8px; margin-bottom: 14px;">
+      <div class="var-header">
+        <div></div>
+        <div>
+          <div class="var-name">The E Event Must Be:</div>
+        </div>
+      </div>
+      <div class="var-body">
+        <ul class="bullet-list">
+          <li><strong>Objective</strong> — measurable with a number, not a judgment. "Customer completed first project" is objective. "Customer feels successful" is not.</li>
+          <li><strong>Instrumentable</strong> — trackable automatically via your product or via a defined manual process in your CRM. If tracking requires someone to remember to log it, it won't be tracked reliably.</li>
+          <li><strong>Predictive</strong> — historically, customers who hit E at T renew at significantly higher rates (≥20 percentage point gap vs. non-achievers is a meaningful signal).</li>
+          <li><strong>Causal (ideally)</strong> — hitting E actually causes customer success, not just correlates with it. Causality is hard to prove but worth pursuing — it means that driving customers to E will improve their outcomes, not just select for customers already likely to succeed.</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <div class="event-criteria-grid">
+    <div class="ec-card bad">
+      <span class="ec-label">✗ Invalid — Do Not Use</span>
+      <ul>
+        <li>Logged in 3 times (vanity — no product value signal)</li>
+        <li>Customer feels satisfied (not measurable)</li>
+        <li>Renewed contract (that's the outcome, not the predictor)</li>
+        <li>Completed upsell (too late — reflects already-retained customers)</li>
+        <li>Invited 1 user (too easy — no correlation to deep product adoption)</li>
+        <li>Attended a training webinar (passive consumption ≠ product use)</li>
+      </ul>
+    </div>
+    <div class="ec-card good">
+      <span class="ec-label">✓ Valid — Strong LIR Events</span>
+      <ul>
+        <li>Completed first core workflow end-to-end</li>
+        <li>Processed X transactions through the platform</li>
+        <li>Integrated product with primary business system</li>
+        <li>Achieved measurable business outcome (e.g., X calls analyzed, X leads converted)</li>
+        <li>Invited Y team members who themselves became active</li>
+        <li>Exported first report or dashboard (evidence of ongoing use)</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="subsection-title" style="margin-top: 24px;">Industry LIR Examples</div>
+  <table class="industry-table">
+    <thead>
+      <tr><th>Industry &amp; Product</th><th>LIR Event (E)</th><th>T</th><th>Rationale</th></tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="co">Marketing SaaS (HubSpot)</span></td>
+        <td>Published first blog post + sent first email campaign</td>
+        <td>60 days</td>
+        <td>Customers who published AND emailed completed the "inbound marketing loop" — the core value proposition. Single-channel users churned at much higher rates.</td>
+      </tr>
+      <tr>
+        <td><span class="co">Project Management (Asana)</span></td>
+        <td>Invited 3+ team members + created 5+ tasks</td>
+        <td>14 days</td>
+        <td>Solo users churn. Team users stay. 3 invitees + 5 tasks signals organizational adoption, not individual experimentation.</td>
+      </tr>
+      <tr>
+        <td><span class="co">Revenue Intelligence (Gong)</span></td>
+        <td>Had 5+ sales calls analyzed by the platform</td>
+        <td>30 days</td>
+        <td>5 calls provides enough data for the AI to surface meaningful insights. Customers who hit this milestone began seeing coaching value and continued adopting.</td>
+      </tr>
+      <tr>
+        <td><span class="co">AEC Construction SaaS</span></td>
+        <td>Completed first model sync + 3 design reviews</td>
+        <td>45 days</td>
+        <td>Model sync = technical integration complete. 3 reviews = team workflow adoption, not just setup. Combined, they signal the product is embedded in the work process.</td>
+      </tr>
+      <tr>
+        <td><span class="co">CRM (Salesforce)</span></td>
+        <td>Created 10+ contacts + 5+ opportunities with activity</td>
+        <td>30 days</td>
+        <td>10 contacts + 5 active opportunities signals the rep is managing their real pipeline in the CRM, not just exploring. Customers at this threshold rarely churned in early cohorts.</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <!-- ══════════════════════════════════════════════
+       SECTION 4: HOW TO DISCOVER YOUR LIR
+  ══════════════════════════════════════════════ -->
+  <div class="section-title">How to Discover Your LIR</div>
+  <div class="section-intro">LIR is not invented — it is discovered through a structured analysis of your existing customer data. This is a 6-8 week process the first time. Plan for it before you need the result.</div>
+
+  <div class="discovery-steps">
+    <div class="disc-step">
+      <div class="disc-num">1</div>
+      <div class="disc-content">
+        <div class="disc-title">Cohort Your Customers</div>
+        <div class="disc-desc">Group customers by acquisition month or quarter. You need at least 6 cohorts with 12-month retention data to draw meaningful conclusions. Fewer than 6 cohorts means the signal may be noise.</div>
+        <div class="disc-tip">Minimum viable sample: 50+ customers with at least 12 months of history. Less than this and statistical significance is impossible.</div>
+      </div>
+    </div>
+    <div class="disc-step">
+      <div class="disc-num">2</div>
+      <div class="disc-content">
+        <div class="disc-title">Identify Your Best Cohorts</div>
+        <div class="disc-desc">Which cohorts have the highest 12-month retention rates? Sort by retention percentage. The top quartile cohorts are your signal — what made these customers different?</div>
+        <div class="disc-tip">Also look at best individual customers within each cohort, not just cohort averages.</div>
+      </div>
+    </div>
+    <div class="disc-step">
+      <div class="disc-num">3</div>
+      <div class="disc-content">
+        <div class="disc-title">Interview Customers in Best Cohorts</div>
+        <div class="disc-desc">Run 5-10 structured customer interviews with retained customers from your best cohorts. Focus question: "What did you do in your first 30/60/90 days? What was the moment you knew this product was working for you? What specific outcome did you achieve first?"</div>
+        <div class="disc-tip">Interview churned customers from the same period as a control group. The contrast between retained and churned reveals the pattern.</div>
+      </div>
+    </div>
+    <div class="disc-step">
+      <div class="disc-num">4</div>
+      <div class="disc-content">
+        <div class="disc-title">Identify the Pattern</div>
+        <div class="disc-desc">What specific action do retained customers consistently take that churned customers don't? Look for an action that is: mentioned frequently in retained customer interviews, absent or delayed in churned customer stories, and measurable in your product data.</div>
+        <div class="disc-tip">Often the pattern is a combination of two actions, not just one. A single login event rarely predicts; a combination of integration + output creation typically does.</div>
+      </div>
+    </div>
+    <div class="disc-step">
+      <div class="disc-num">5</div>
+      <div class="disc-content">
+        <div class="disc-title">Make It Objective</div>
+        <div class="disc-desc">Convert the qualitative pattern into a measurable, binary event. "Customer used product meaningfully" → "Customer processed at least X transactions within T days." The event must be something you can pull from a database, not estimate from feel.</div>
+      </div>
+    </div>
+    <div class="disc-step">
+      <div class="disc-num">6</div>
+      <div class="disc-content">
+        <div class="disc-title">Set P and T — Start at P=70%, T=60 Days</div>
+        <div class="disc-desc">P of 70% means: if 70% of a cohort achieves E within T days, declare LIR "True" for that cohort. T of 60 days is a reasonable default for most B2B SaaS products. Both will be iterated based on back-testing.</div>
+        <div class="disc-tip">If fewer than 60% of your best cohorts hit the event: either P is too high, T is too short, or E is wrong. Start with E — the event definition is the most common failure point.</div>
+      </div>
+    </div>
+    <div class="disc-step">
+      <div class="disc-num">7</div>
+      <div class="disc-content">
+        <div class="disc-title">Back-Test Against Historical Data</div>
+        <div class="disc-desc">Apply your LIR hypothesis to the customers you already have historical data for. For each customer: did they achieve E within T? Did they renew at month 12? Plot the correlation. A strong LIR event shows a ≥20 percentage point retention gap between achievers and non-achievers.</div>
+        <div class="disc-tip">Strong signal: achievers renew at 85%+, non-achievers at ≤55%. Weak signal: 84% vs. 77% — that's noise, not a LIR.</div>
+      </div>
+    </div>
+    <div class="disc-step">
+      <div class="disc-num">8</div>
+      <div class="disc-content">
+        <div class="disc-title">Validate Prospectively</div>
+        <div class="disc-desc">Track the next 3 cohorts of new customers using your LIR hypothesis. Do customers who achieve E within T renew at significantly higher rates 12 months later? Prospective validation is stronger than back-testing because it avoids look-ahead bias.</div>
+      </div>
+    </div>
+    <div class="disc-step">
+      <div class="disc-num">9</div>
+      <div class="disc-content">
+        <div class="disc-title">Institutionalize</div>
+        <div class="disc-desc">Build LIR tracking into your CRM and CS tool. Every new customer's LIR achievement status should be visible to their CSM, their AE (for comp purposes), and in the executive dashboard. LIR becomes the operational center of your customer success motion.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════════════
+       SECTION 5: SETTING P AND T
+  ══════════════════════════════════════════════ -->
+  <div class="section-title">Setting P and T</div>
+  <div class="section-intro">Getting P and T right requires data, not intuition. The following guidance applies to most B2B SaaS products but must be calibrated against your specific cohort data.</div>
+
+  <div class="pt-guidance">
+    <div class="pt-card">
+      <div class="pt-card-label">Variable P — Percentage Threshold</div>
+      <div class="pt-card-title">How to Set P</div>
+      <table class="data-table" style="margin: 0 0 12px;">
+        <thead><tr><th>P Value</th><th>Interpretation</th></tr></thead>
+        <tbody>
+          <tr><td>&lt;60%</td><td>Too many exceptions — LIR is unreliable as a PMF signal</td></tr>
+          <tr><td>60–70%</td><td>Starting range for SMB / transactional models</td></tr>
+          <tr><td>70–80%</td><td>Standard range for mid-market SaaS</td></tr>
+          <tr><td>80%+</td><td>High-touch enterprise — strong CS required to achieve</td></tr>
+        </tbody>
+      </table>
+      <p style="font-size: 13px; color: var(--text-muted); margin: 0;"><strong>Start at P = 70%</strong> and adjust based on back-test results. If only 40% of your best cohorts hit E within T, the problem is likely E (the wrong event), not P (too high a bar).</p>
+    </div>
+    <div class="pt-card">
+      <div class="pt-card-label">Variable T — Time Window</div>
+      <div class="pt-card-title">How to Set T</div>
+      <table class="data-table" style="margin: 0 0 12px;">
+        <thead><tr><th>Product Type</th><th>Typical T</th></tr></thead>
+        <tbody>
+          <tr><td>PLG / Self-Serve</td><td>7–14 days</td></tr>
+          <tr><td>SMB SaaS</td><td>30 days</td></tr>
+          <tr><td>Mid-Market SaaS</td><td>45–60 days</td></tr>
+          <tr><td>Enterprise / Implementation-Heavy</td><td>60–90 days</td></tr>
+        </tbody>
+      </table>
+      <p style="font-size: 13px; color: var(--text-muted); margin: 0;"><strong>Shorter T is always better</strong> — the faster you know a customer is at-risk, the sooner you can intervene. T too long: you find out a customer missed LIR 90 days after the window when there's far less you can do.</p>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════════════
+       SECTION 6: LIR VS. OTHER METRICS
+  ══════════════════════════════════════════════ -->
+  <div class="section-title">LIR vs. Other Retention Metrics</div>
+  <div class="section-intro">LIR occupies a unique position in the retention metric landscape: it combines early timing with high actionability — a combination no other standard metric achieves.</div>
+
+  <table class="data-table">
+    <thead>
+      <tr><th>Metric</th><th>Type</th><th>Timing</th><th>Actionability</th><th>Key Limitation</th></tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><strong>LIR</strong></td>
+        <td><span class="metric-badge badge-leading">Leading</span></td>
+        <td>Days 1 to T</td>
+        <td>Very High — intervene before churn decision is made</td>
+        <td>Requires discovery process; specific to your product</td>
+      </tr>
+      <tr>
+        <td><strong>NPS</strong></td>
+        <td><span class="metric-badge badge-lagging">Lagging</span></td>
+        <td>Quarterly / ad hoc</td>
+        <td>Medium — survey-based, infrequent, response bias</td>
+        <td>Survey timing doesn't correlate with churn risk moments</td>
+      </tr>
+      <tr>
+        <td><strong>CSAT</strong></td>
+        <td><span class="metric-badge badge-lagging">Lagging</span></td>
+        <td>Post-interaction</td>
+        <td>Low — reactive, doesn't predict renewal</td>
+        <td>Measures satisfaction with a transaction, not product value</td>
+      </tr>
+      <tr>
+        <td><strong>Churn Rate</strong></td>
+        <td><span class="metric-badge badge-lagging">Lagging</span></td>
+        <td>Monthly / Quarterly</td>
+        <td>Low — after the fact, no intervention possible</td>
+        <td>The customer left before you measured the signal</td>
+      </tr>
+      <tr>
+        <td><strong>Health Score</strong></td>
+        <td><span class="metric-badge badge-mixed">Mixed</span></td>
+        <td>Ongoing</td>
+        <td>High — but requires significant investment to build</td>
+        <td>Complex to build; weighting is often subjective</td>
+      </tr>
+      <tr>
+        <td><strong>Time to Value</strong></td>
+        <td><span class="metric-badge badge-mixed">Mixed</span></td>
+        <td>Variable</td>
+        <td>Medium — proxy for LIR; less specific</td>
+        <td>"Value" is hard to define objectively across customers</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div class="callout callout-best-practice" style="margin-top: 12px;">
+    <div class="callout-title">The LIR Advantage</div>
+    <p>LIR's power comes from the combination of early timing (you know within 30–90 days) and high specificity (you know exactly what the customer did or didn't do). NPS tells you a customer is unhappy at month 9. LIR tells you at day 45 that a customer hasn't yet done the thing that would make them happy at month 9 — and you have 15 days left to help them do it.</p>
+  </div>
+
+  <!-- ══════════════════════════════════════════════
+       SECTION 7: USING LIR IN CS PLAYBOOKS
+  ══════════════════════════════════════════════ -->
+  <div class="section-title">Using LIR in CS Playbooks</div>
+  <div class="section-intro">LIR transforms customer success from reactive relationship management into a proactive, measurable intervention playbook. Every CS activity is evaluated against one question: does this help the customer achieve E within T?</div>
+
+  <div class="subsection">
+    <div class="subsection-title">The LIR-Driven CS Journey</div>
+  </div>
+
+  <div class="cs-timeline">
+    <div class="cs-step">
+      <div class="cst-left"><div class="cst-dot"></div><div class="cst-line"></div></div>
+      <div class="cst-body">
+        <div class="cst-when">Contract Close / Kickoff Call</div>
+        <div class="cst-title">Introduce LIR to the Customer Explicitly</div>
+        <div class="cst-desc">The CSM tells the customer directly: "Our goal for the next [T] days is to help you achieve [E]. That's the milestone we know predicts long-term success with [product]. Let's build your onboarding plan around getting there." Setting the LIR goal explicitly creates shared accountability and makes the success metric transparent.</div>
+        <div class="cst-action">Deliverable: Onboarding plan with LIR milestone clearly defined</div>
+      </div>
+    </div>
+    <div class="cs-step">
+      <div class="cst-left"><div class="cst-dot"></div><div class="cst-line"></div></div>
+      <div class="cst-body">
+        <div class="cst-when">Week 1–2</div>
+        <div class="cst-title">Initial Check-In: Has the Customer Started Toward LIR?</div>
+        <div class="cst-desc">Review product usage data. Has the customer logged in? Begun setup? Started toward E? A customer who has not engaged in week 1 is a strong early warning signal. CSM touches base via email or call with specific, concrete next step.</div>
+        <div class="cst-action">Trigger: If no usage in 7 days → CSM proactive outreach</div>
+      </div>
+    </div>
+    <div class="cs-step">
+      <div class="cst-left"><div class="cst-dot"></div><div class="cst-line"></div></div>
+      <div class="cst-body">
+        <div class="cst-when">Week 3–4 (T/2 Mark)</div>
+        <div class="cst-title">Mid-Point Alert: Is the Customer On Track?</div>
+        <div class="cst-desc">At the halfway point of the T window, assess progress toward E. If the customer has completed &lt;50% of the activity pattern that leads to E, trigger an intervention. This may include: extra training session, executive sponsor call, implementation help, or direct troubleshooting of blockers.</div>
+        <div class="cst-action">Trigger: If &lt;50% progress at T/2 → escalation protocol initiated</div>
+      </div>
+    </div>
+    <div class="cs-step">
+      <div class="cst-left"><div class="cst-dot check"></div><div class="cst-line"></div></div>
+      <div class="cst-body">
+        <div class="cst-when">Day T: LIR Assessment</div>
+        <div class="cst-title">Did the Customer Achieve E?</div>
+        <div class="cst-desc">Binary assessment: did the customer achieve E by day T? If yes: celebrate, document the win, transition to expansion motion. If no: immediately initiate the remediation protocol — do not wait to see if they catch up organically. Non-achievers rarely self-correct without structured intervention.</div>
+        <div class="cst-action">If achieved: expand motion. If missed: immediate QBR + 30-day remediation plan.</div>
+      </div>
+    </div>
+    <div class="cs-step">
+      <div class="cst-left"><div class="cst-dot alert"></div><div class="cst-line"></div></div>
+      <div class="cst-body">
+        <div class="cst-when">Day T + 1–30: Remediation Window</div>
+        <div class="cst-title">Root Cause Analysis + 30-Day Rescue Plan</div>
+        <div class="cst-desc">For customers who missed LIR: conduct an immediate QBR to identify the specific blocker (technical, organizational, onboarding gap, wrong-fit customer). Develop a concrete 30-day remediation plan with specific milestones. Document root cause for ICP and playbook improvement.</div>
+        <div class="cst-action">Output: Written remediation plan, revised LIR target date, executive sponsor engaged</div>
+      </div>
+    </div>
+    <div class="cs-step">
+      <div class="cst-left"><div class="cst-dot"></div><div class="cst-line"></div></div>
+      <div class="cst-body">
+        <div class="cst-when">Ongoing: LIR Dashboard</div>
+        <div class="cst-title">Every CSM Sees Every Account's LIR Status in Real Time</div>
+        <div class="cst-desc">The LIR dashboard shows each account color-coded by LIR status. No account should be invisible to the CS team. Weekly team meeting reviews the red and yellow accounts collectively.</div>
+        <div class="dashboard-legend">
+          <div class="dl-item"><div class="dl-dot dl-green"></div> On track to achieve E within T</div>
+          <div class="dl-item"><div class="dl-dot dl-yellow"></div> Behind pace — intervention recommended</div>
+          <div class="dl-item"><div class="dl-dot dl-red"></div> Missed LIR or critically behind — escalate</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="subitem-grid">
+    <a href="template-cs-playbook.html" class="subitem-card">
+      <div class="sc-title">CS Playbook Template</div>
+      <div class="sc-desc">Full LIR-driven customer success playbook with kickoff framework, intervention triggers, and escalation protocols</div>
+      <span class="sc-arrow">→</span>
+    </a>
+  </div>
+
+  <!-- ══════════════════════════════════════════════
+       SECTION 8: LIR AND SALES COMPENSATION
+  ══════════════════════════════════════════════ -->
+  <div class="section-title">LIR and Sales Compensation</div>
+  <div class="section-intro">Tying sales compensation to LIR achievement is the single most powerful structural change you can make to sales culture. It shifts rep incentives from closing any deal to closing the right deal — and the quality of your customer cohorts reflects this over time.</div>
+
+  <div class="comp-formula">
+    <div style="font-size: 13px; font-weight: 700; letter-spacing: 1px; text-transform: uppercase; color: var(--sos); margin-bottom: 14px;">LIR-Linked Comp Structure</div>
+    <div class="cf-row">
+      <div class="cf-pct">50%</div>
+      <div>
+        <div class="cf-label">Paid at Contract Close</div>
+        <div class="cf-desc">Standard immediate commission — rewards the sale being made</div>
+      </div>
+    </div>
+    <hr class="cf-divider"/>
+    <div class="cf-row">
+      <div class="cf-pct">50%</div>
+      <div>
+        <div class="cf-label">Paid When Customer Achieves LIR</div>
+        <div class="cf-desc">Paid within T + 30 day grace period. If customer misses LIR, commission held until LIR is achieved or grace period expires — then adjusted or forfeited per comp plan terms.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="subsection">
+    <div class="subsection-title">Why This Works</div>
+    <ul class="bullet-list">
+      <li><strong>Reps self-select better-fit customers.</strong> When half the commission depends on customer success, a rep who is tempted to close a poor-fit deal thinks twice. The deal looks less attractive when the 50% at-risk commission is factored in.</li>
+      <li><strong>Reps participate in onboarding.</strong> A rep who has 50% of their commission at risk wants the customer to achieve LIR. They'll make intros, escalate blockers, and support the CS team in ways they wouldn't if all commission was paid at close.</li>
+      <li><strong>LIR achievement rate rises over time.</strong> As reps learn that certain customer types miss LIR (and they lose commission), they stop targeting those customers. The ICP self-reinforces. Cohort LIR rates improve without top-down mandates.</li>
+      <li><strong>Bad reps self-select out.</strong> Reps who consistently sell to wrong-fit customers earn less than reps who sell to right-fit customers — even at the same quota attainment level. The comp structure correctly rewards quality, not just volume.</li>
+    </ul>
+  </div>
+
+  <div class="callout callout-warning">
+    <div class="callout-title">Implementation Watch-Out</div>
+    <p>The grace period must be defined in the comp plan. If a customer misses LIR at day T but achieves it at day T+25, the rep should be paid. The purpose is to discourage wrong-fit selling — not to punish reps whose right-fit customers took slightly longer than expected. Typical grace period: T + 30 days. After that, the at-risk commission is forfeited for that deal.</p>
+  </div>
+
+  <!-- ══════════════════════════════════════════════
+       SECTION 9: ITERATING YOUR LIR
+  ══════════════════════════════════════════════ -->
+  <div class="section-title">Iterating Your LIR</div>
+  <div class="section-intro">LIR is not a permanent fixture — it must evolve with your product, your market, and your customer base. But it must also be stable enough to track meaningful cohort trends. The iteration discipline is: change when the data demands it, not when the achievement rate is uncomfortable.</div>
+
+  <div class="iter-grid">
+    <div class="iter-card do-change">
+      <div class="iter-label">✓ When to Change LIR</div>
+      <ul>
+        <li>Product changes significantly (core workflow redesigned)</li>
+        <li>Back-test correlation drops (old E no longer predicts renewal at 20+ pt gap)</li>
+        <li>Business model changes (new pricing, new segment, new ACV tier)</li>
+        <li>New customer type is systematically different from historical ICP</li>
+        <li>New competitive analysis reveals a more predictive early behavior</li>
+      </ul>
+    </div>
+    <div class="iter-card no-change">
+      <div class="iter-label">✗ When NOT to Change LIR</div>
+      <ul>
+        <li>Achievement rate is low (the LIR may be right — CS process may be wrong)</li>
+        <li>Reps are frustrated that the LIR-linked commission is hard to earn</li>
+        <li>A few customers complain the milestone is too hard</li>
+        <li>Less than 12 months since the last LIR definition change</li>
+        <li>You haven't back-tested the proposed new E against historical data</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="subsection">
+    <div class="subsection-title">The Transition Process — Run Old and New in Parallel</div>
+    <p style="font-size: 15px;">When a LIR change is warranted, run both definitions simultaneously for 2 quarters before fully switching. This ensures:</p>
+    <ul class="bullet-list">
+      <li>Cohort comparability is maintained — you can compare old-definition cohorts to new-definition cohorts without a gap</li>
+      <li>The new E is validated prospectively before it becomes the comp-linked metric</li>
+      <li>The CS team can adapt their playbook to the new milestone before it's the official target</li>
+      <li>Sales reps receive clear communication about the transition timeline with sufficient advance notice</li>
+    </ul>
+  </div>
+
+  <!-- ══════════════════════════════════════════════
+       SECTION 10: LIR TRACKING WORKSHEET
+  ══════════════════════════════════════════════ -->
+  <div class="section-title">LIR Tracking Worksheet</div>
+  <div class="section-intro">The LIR Journey Template provides a structured spreadsheet for tracking LIR from hypothesis to institutionalization. It supports both the pre-PMF discovery phase and the post-PMF cohort monitoring phase.</div>
+
+  <div class="subsection">
+    <div class="subsection-title">Pre-PMF Phase: Test Multiple Hypotheses in Parallel</div>
+    <p style="font-size: 15px; margin-bottom: 12px;">Before PMF is confirmed, you may not know the right LIR event. Track multiple hypotheses simultaneously and back-test each against retention data:</p>
+
+    <table class="data-table">
+      <thead>
+        <tr><th>Customer</th><th>LIR Option 1: Achieved?</th><th>LIR Option 2: Achieved?</th><th>LIR Option 3: Achieved?</th><th>12-Mo Renewal?</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>Customer A</td><td style="background: #e6f4ea; color: #437A22; font-weight: 600;">Yes</td><td style="background: #e6f4ea; color: #437A22; font-weight: 600;">Yes</td><td style="background: #fce8e6; color: #A13544; font-weight: 600;">No</td><td style="background: #e6f4ea; color: #437A22; font-weight: 600;">Renewed</td></tr>
+        <tr><td>Customer B</td><td style="background: #fce8e6; color: #A13544; font-weight: 600;">No</td><td style="background: #fce8e6; color: #A13544; font-weight: 600;">No</td><td style="background: #fce8e6; color: #A13544; font-weight: 600;">No</td><td style="background: #fce8e6; color: #A13544; font-weight: 600;">Churned</td></tr>
+        <tr><td>Customer C</td><td style="background: #e6f4ea; color: #437A22; font-weight: 600;">Yes</td><td style="background: #fce8e6; color: #A13544; font-weight: 600;">No</td><td style="background: #e6f4ea; color: #437A22; font-weight: 600;">Yes</td><td style="background: #e6f4ea; color: #437A22; font-weight: 600;">Renewed</td></tr>
+        <tr><td>Customer D</td><td style="background: #fce8e6; color: #A13544; font-weight: 600;">No</td><td style="background: #e6f4ea; color: #437A22; font-weight: 600;">Yes</td><td style="background: #fce8e6; color: #A13544; font-weight: 600;">No</td><td style="background: #fce8e6; color: #A13544; font-weight: 600;">Churned</td></tr>
+      </tbody>
+    </table>
+    <p style="font-size: 13px; color: var(--text-muted);">In this example, Option 1 shows the strongest correlation with renewal. Option 2 shows a false positive (Customer D achieved it but churned). Option 3 shows mixed signals. Option 1 should be carried forward for prospective validation.</p>
+  </div>
+
+  <div class="subsection">
+    <div class="subsection-title">Post-PMF Phase: Monthly Cohort Table</div>
+    <p style="font-size: 15px; margin-bottom: 12px;">Once PMF is confirmed, track LIR by monthly acquisition cohort. This is the board deck slide that comes before the P&amp;L:</p>
+
+    <div class="cohort-wrap">
+      <table class="cohort-table">
+        <thead>
+          <tr>
+            <th>Cohort Month</th>
+            <th># Customers</th>
+            <th>LIR Achieved</th>
+            <th>LIR %</th>
+            <th>12-Mo Renewal %</th>
+            <th>Signal</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Jan 2024</td>
+            <td>18</td>
+            <td>14</td>
+            <td class="cell-green">78%</td>
+            <td class="cell-green">89%</td>
+            <td class="cell-green">Strong</td>
+          </tr>
+          <tr>
+            <td>Feb 2024</td>
+            <td>22</td>
+            <td>17</td>
+            <td class="cell-green">77%</td>
+            <td class="cell-green">86%</td>
+            <td class="cell-green">Strong</td>
+          </tr>
+          <tr>
+            <td>Mar 2024</td>
+            <td>19</td>
+            <td>13</td>
+            <td class="cell-yellow">68%</td>
+            <td class="cell-yellow">74%</td>
+            <td class="cell-yellow">Investigate</td>
+          </tr>
+          <tr>
+            <td>Apr 2024</td>
+            <td>27</td>
+            <td>15</td>
+            <td class="cell-red">56%</td>
+            <td class="cell-gray">—</td>
+            <td class="cell-red">Alert</td>
+          </tr>
+          <tr>
+            <td>May 2024</td>
+            <td>31</td>
+            <td>18</td>
+            <td class="cell-red">58%</td>
+            <td class="cell-gray">—</td>
+            <td class="cell-red">Alert</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <p style="font-size: 13px; color: var(--text-muted); margin-top: 8px;">LIR threshold = 70%. Mar–May 2024 cohorts show a declining trend that warrants investigation before scaling hiring. The drop likely reflects a playbook or ICP issue introduced in Q1 that the CS motion hasn't compensated for.</p>
+  </div>
+
+  <div class="subitem-grid">
+    <a href="template-lir.html" class="subitem-card">
+      <div class="sc-title">LIR Journey Template</div>
+      <div class="sc-desc">Interactive tracking worksheet for both pre-PMF hypothesis testing and post-PMF cohort monitoring with correlation analysis columns</div>
+      <span class="sc-arrow">→</span>
+    </a>
+  </div>
+
+  <!-- ══════════════════════════════════════════════
+       RELATED LINKS
+  ══════════════════════════════════════════════ -->
+  <div class="related-section">
+    <div class="related-title">Related Pages</div>
+    <div class="related-links">
+      <a href="sos-pmf.html" class="related-link">Stage 1: PMF</a>
+      <a href="sos-gtm-fit.html" class="related-link">Stage 2: GTM Fit</a>
+      <a href="template-lir.html" class="related-link">LIR Template</a>
+      <a href="template-cs-playbook.html" class="related-link">CS Playbook Template</a>
+      <a href="../pages/science-of-scaling.html" class="related-link">← Science of Scaling</a>
+      <a href="../index.html" class="related-link">Home</a>
+    </div>
+  </div>
+
+</div>
+<script data-pplx-inline-edit>
+(function () {
+  if (window === window.top) return;
+
+  const allowedParentOrigins = ["https://www.perplexity.ai","https://perplexity.ai","https://testing.perplexity.ai","https://staging.perplexity.ai","https://*.preview.i.perplexity.ai","http://localhost:3000","http://127.0.0.1:3000","http://localhost:5173","http://127.0.0.1:5173"];
+  const MAX_FONT_BYTES = 500 * 1024;
+  const MAX_TOTAL_FONT_BYTES = 2 * 1024 * 1024;
+  let scrollForwarding = false;
+  let scrollRaf = 0;
+  let trustedTopOrigin = null;
+
+  // Allow entries like "https://*.preview.i.perplexity.ai" — the wildcard
+  // matches a single DNS label (no dots), so "https://*.foo" cannot stretch
+  // across multiple labels.
+  function matchesAllowedOrigin(origin) {
+    if (!origin) return false;
+    for (const entry of allowedParentOrigins) {
+      if (!entry.includes("*")) {
+        if (entry === origin) return true;
+        continue;
+      }
+      const pattern = new RegExp(
+        "^" +
+          entry.replace(/[.+?^${}()|[\]\\]/g, "\\$&").replace(/\*/g, "[^.]+") +
+          "$",
+      );
+      if (pattern.test(origin)) return true;
+    }
+    return false;
+  }
+
+  // Trust decision: when the sender is same-origin-visible (event.origin is a
+  // real origin like https://www.perplexity.ai) we trust event.origin directly.
+  // When event.origin is "null" (opaque broker srcdoc), we fall back to the
+  // broker's stamped `parentOrigin` to identify the top window. The fallback
+  // is claim-only — we rely on the browser's native `targetOrigin` enforcement
+  // on the response path (see postToTrustedTop) to ensure replies can't be
+  // delivered to anyone but the actual top window of that claimed origin.
+  function getTrustedParentOrigin(event) {
+    const forwardedParentOrigin =
+      typeof event.data.parentOrigin === "string" ? event.data.parentOrigin : null;
+    const parentOrigin = event.origin === "null" ? forwardedParentOrigin : event.origin;
+    return matchesAllowedOrigin(parentOrigin) ? parentOrigin : null;
+  }
+
+  // All responses go to window.top with targetOrigin = the allowlisted origin.
+  // An attacker that iframes us inside their own null-origin broker can claim
+  // any parentOrigin they like, but the browser will drop the reply whenever
+  // the real top's origin doesn't match — so the screenshot never leaves.
+  function postToTrustedTop(message) {
+    if (!trustedTopOrigin) return;
+    try {
+      window.top.postMessage(message, trustedTopOrigin);
+    } catch (_error) {}
+  }
+
+  function inlineAll(original, clone) {
+    if (original.nodeType !== 1 || clone.nodeType !== 1) return;
+
+    try {
+      const computedStyle = getComputedStyle(original);
+      // cssText on a computed style is the serialized declaration in modern
+      // Chromium/Safari — a single read beats enumerating ~400 longhand
+      // properties. Firefox returns "" here, so we fall back on empty.
+      const serialized = computedStyle.cssText;
+      if (serialized) {
+        clone.style.cssText = serialized;
+      } else {
+        const parts = new Array(computedStyle.length);
+        for (let index = 0; index < computedStyle.length; index += 1) {
+          const property = computedStyle[index];
+          parts[index] = `${property}:${computedStyle.getPropertyValue(property)};`;
+        }
+        clone.style.cssText = parts.join("");
+      }
+    } catch (_error) {}
+
+    const originalChildren = original.children;
+    const clonedChildren = clone.children;
+    for (
+      let index = 0;
+      index < originalChildren.length && index < clonedChildren.length;
+      index += 1
+    ) {
+      inlineAll(originalChildren[index], clonedChildren[index]);
+    }
+  }
+
+  function extractFontUrl(srcValue) {
+    const matches = [
+      ...srcValue.matchAll(
+        /url\(["']?([^"')]+)["']?\)(?:\s*format\(["']?([^"')]+)["']?\))?/gi,
+      ),
+    ];
+    if (matches.length === 0) return null;
+    const woff2 = matches.find((m) => m[2] && m[2].toLowerCase().includes("woff2"));
+    if (woff2) return woff2[1];
+    const woff = matches.find((m) => m[2] && m[2].toLowerCase().includes("woff"));
+    if (woff) return woff[1];
+    return matches[0][1];
+  }
+
+  // Cache resolved font URL -> data URI across captures. Fonts on a page
+  // essentially never change, and a batch run emits multiple captures back to
+  // back — without this we'd refetch + re-base64 every time.
+  const fontDataUriCache = new Map();
+  const SRC_DECLARATION_RE = /src\s*:\s*[^;}]+/i;
+
+  async function fetchAsDataUri(url) {
+    if (fontDataUriCache.has(url)) return fontDataUriCache.get(url);
+    let dataUri = null;
+    try {
+      const response = await fetch(url, { mode: "cors", credentials: "omit" });
+      if (response.ok) {
+        const blob = await response.blob();
+        if (blob.size <= MAX_FONT_BYTES) {
+          dataUri = await new Promise((resolve) => {
+            const reader = new FileReader();
+            reader.onloadend = () =>
+              resolve(typeof reader.result === "string" ? reader.result : null);
+            reader.onerror = () => resolve(null);
+            reader.readAsDataURL(blob);
+          });
+        }
+      }
+    } catch (_error) {
+      dataUri = null;
+    }
+    fontDataUriCache.set(url, dataUri);
+    return dataUri;
+  }
+
+  function collectFontFaceRuleTexts() {
+    const rules = [];
+    for (const sheet of document.styleSheets) {
+      let cssRules;
+      try {
+        cssRules = sheet.cssRules;
+      } catch (_error) {
+        continue;
+      }
+      if (!cssRules) continue;
+      for (const rule of cssRules) {
+        const cssText = rule.cssText || "";
+        if (cssText.startsWith("@font-face")) rules.push(cssText);
+      }
+    }
+    return rules;
+  }
+
+  async function buildInlinedFontCss() {
+    const ruleTexts = collectFontFaceRuleTexts();
+    if (ruleTexts.length === 0) return null;
+
+    const resolved = ruleTexts.map((cssText) => {
+      if (!SRC_DECLARATION_RE.test(cssText)) return null;
+      const srcMatch = cssText.match(/src\s*:\s*([^;}]+)[;}]/i);
+      if (!srcMatch) return null;
+      const url = extractFontUrl(srcMatch[1]);
+      if (!url) return null;
+      try {
+        return { cssText, url: new URL(url, document.baseURI).href };
+      } catch (_error) {
+        return null;
+      }
+    });
+
+    const dataUris = await Promise.all(
+      resolved.map((entry) => (entry ? fetchAsDataUri(entry.url) : Promise.resolve(null))),
+    );
+
+    const inlined = [];
+    let totalBytes = 0;
+    for (let index = 0; index < resolved.length; index += 1) {
+      const entry = resolved[index];
+      const dataUri = dataUris[index];
+      if (!entry || !dataUri) continue;
+      const approxBytes = dataUri.length * 0.75;
+      if (totalBytes + approxBytes > MAX_TOTAL_FONT_BYTES) break;
+      totalBytes += approxBytes;
+      inlined.push(entry.cssText.replace(SRC_DECLARATION_RE, `src: url("${dataUri}")`));
+    }
+    return inlined.length > 0 ? inlined.join("\n") : null;
+  }
+
+  function stripExternal(clone) {
+    const images = clone.querySelectorAll("img");
+    for (let index = 0; index < images.length; index += 1) {
+      const src = images[index].getAttribute("src");
+      if (src && !src.startsWith("data:")) images[index].removeAttribute("src");
+    }
+
+    const elements = clone.querySelectorAll("*");
+    for (let index = 0; index < elements.length; index += 1) {
+      const style = elements[index].style.cssText;
+      if (style && style.includes("url(")) {
+        elements[index].style.cssText = style.replace(
+          /url\(["']?(?!data:)[^)"']*["']?\)/gi,
+          "none",
+        );
+      }
+    }
+  }
+
+  function emitScroll() {
+    scrollRaf = 0;
+    if (!scrollForwarding) return;
+    postToTrustedTop({
+      type: "INLINE_EDIT_SCROLL",
+      scrollX: window.scrollX,
+      scrollY: window.scrollY,
+    });
+  }
+
+  window.addEventListener(
+    "scroll",
+    function () {
+      if (!scrollForwarding || scrollRaf) return;
+      scrollRaf = requestAnimationFrame(emitScroll);
+    },
+    { passive: true, capture: true },
+  );
+
+  async function handleCaptureRequest(event) {
+    const requestId = event.data.requestId;
+    const scrollX = window.scrollX;
+    const scrollY = window.scrollY;
+    const width = window.innerWidth;
+    const height = window.innerHeight;
+
+    function postResult(dataUrl) {
+      postToTrustedTop({
+        type: "INLINE_EDIT_SCREENSHOT_RESULT",
+        requestId,
+        dataUrl,
+        scrollX,
+        scrollY,
+      });
+    }
+
+    try {
+      // Wait for any pending web fonts to resolve so both inline metrics and
+      // the @font-face inlining below see the same loaded faces.
+      if (document.fonts && document.fonts.ready) {
+        try {
+          await document.fonts.ready;
+        } catch (_error) {}
+      }
+
+      const clone = document.documentElement.cloneNode(true);
+      inlineAll(document.documentElement, clone);
+
+      const removedNodes = clone.querySelectorAll("script,link[rel=\"stylesheet\"],style");
+      for (let index = 0; index < removedNodes.length; index += 1) {
+        removedNodes[index].remove();
+      }
+
+      stripExternal(clone);
+
+      // Re-embed web fonts as data-URI @font-face rules so the SVG rasterizer
+      // can resolve them — external font URLs aren't fetched during
+      // foreignObject rendering, which would otherwise force a fallback face
+      // and change text metrics.
+      const inlinedFontCss = await buildInlinedFontCss();
+      if (inlinedFontCss) {
+        const styleEl = document.createElement("style");
+        styleEl.textContent = inlinedFontCss;
+        const head = clone.querySelector("head");
+        if (head) head.appendChild(styleEl);
+        else clone.insertBefore(styleEl, clone.firstChild);
+      }
+
+      const html = new XMLSerializer().serializeToString(clone);
+      const svg =
+        `<svg xmlns="http://www.w3.org/2000/svg" width="${width}" height="${height}">` +
+        '<foreignObject width="100%" height="100%">' +
+        `<div xmlns="http://www.w3.org/1999/xhtml" style="width:${width}px;height:${height}px;overflow:hidden">` +
+        `<div style="transform:translate(-${scrollX}px,-${scrollY}px);transform-origin:top left">` +
+        html +
+        "</div></div></foreignObject></svg>";
+      const svgUrl = `data:image/svg+xml;charset=utf-8,${encodeURIComponent(svg)}`;
+      const image = new Image();
+      image.onload = function () {
+        const canvas = document.createElement("canvas");
+        canvas.width = width;
+        canvas.height = height;
+        canvas.getContext("2d").drawImage(image, 0, 0);
+        postResult(canvas.toDataURL("image/png"));
+      };
+      image.onerror = function () {
+        postResult(null);
+      };
+      image.src = svgUrl;
+    } catch (_error) {
+      postResult(null);
+    }
+  }
+
+  window.addEventListener("message", function (event) {
+    if (!event.data) return;
+    // Only accept messages from the direct parent frame. Blocks sibling /
+    // unrelated-window postMessage senders that could otherwise reach us.
+    if (event.source !== window.parent) return;
+
+    const trustedParentOrigin = getTrustedParentOrigin(event);
+    if (!trustedParentOrigin) return;
+    trustedTopOrigin = trustedParentOrigin;
+
+    if (event.data.type === "INLINE_EDIT_SCROLL_START") {
+      scrollForwarding = true;
+      emitScroll();
+      return;
+    }
+
+    if (event.data.type === "INLINE_EDIT_SCROLL_STOP") {
+      scrollForwarding = false;
+      if (scrollRaf) cancelAnimationFrame(scrollRaf);
+      scrollRaf = 0;
+      return;
+    }
+
+    if (event.data.type !== "INLINE_EDIT_CAPTURE_REQUEST") return;
+
+    handleCaptureRequest(event);
+  });
+})();
+
+
+</script></body>
+</html>

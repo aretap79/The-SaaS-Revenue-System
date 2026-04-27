@@ -1,0 +1,742 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Message House Template — CRO Manual</title>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="../assets/shared.css"/>
+  <style>
+    .page-hero { background: #2C5F8A; }
+
+    /* ── House visualization ── */
+    .house-wrap {
+      margin: 28px 0;
+    }
+
+    /* Roof */
+    .house-roof {
+      background: #2C5F8A;
+      color: #fff;
+      border-radius: 10px 10px 0 0;
+      padding: 20px 28px;
+      text-align: center;
+    }
+    .house-roof-label {
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      opacity: 0.75;
+      margin-bottom: 6px;
+    }
+    .house-roof-title {
+      font-size: 17px;
+      font-weight: 700;
+      line-height: 1.3;
+    }
+    .house-roof-desc {
+      font-size: 13px;
+      opacity: 0.85;
+      margin-top: 4px;
+    }
+
+    /* Pillars */
+    .house-pillars {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 0;
+      border-left: 1.5px solid #2C5F8A;
+      border-right: 1.5px solid #2C5F8A;
+    }
+    .house-pillar {
+      padding: 18px 20px;
+      border-right: 1px dashed #c5d9ea;
+      background: #eef4fa;
+      text-align: center;
+    }
+    .house-pillar:last-child {
+      border-right: none;
+    }
+    .house-pillar-label {
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      color: #2C5F8A;
+      margin-bottom: 6px;
+    }
+    .house-pillar-text {
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--text);
+      line-height: 1.4;
+    }
+    .house-pillar-hint {
+      font-size: 11px;
+      color: var(--text-muted);
+      margin-top: 4px;
+      line-height: 1.4;
+    }
+
+    /* Foundation */
+    .house-foundation {
+      background: #f3f0ec;
+      border: 1.5px solid #2C5F8A;
+      border-top: none;
+      border-radius: 0 0 10px 10px;
+      padding: 20px 28px;
+    }
+    .foundation-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 14px;
+      margin-top: 12px;
+    }
+    .foundation-item {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      padding: 12px 14px;
+    }
+    .foundation-item-label {
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 1.2px;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      margin-bottom: 4px;
+    }
+    .foundation-item-desc {
+      font-size: 12px;
+      color: var(--text-muted);
+      line-height: 1.5;
+    }
+    .foundation-label {
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: #2C5F8A;
+    }
+
+    /* ── Steps ── */
+    .step-number-accent .step-list li::before {
+      background: #2C5F8A;
+    }
+
+    /* ── Mistakes list ── */
+    .mistake-list {
+      list-style: none;
+      margin: 16px 0;
+      counter-reset: mistakes;
+    }
+    .mistake-list li {
+      counter-increment: mistakes;
+      display: flex;
+      gap: 14px;
+      align-items: flex-start;
+      margin-bottom: 14px;
+      padding: 14px 16px;
+      background: #fff8f0;
+      border-radius: 8px;
+      border-left: 3px solid var(--ph4);
+    }
+    .mistake-list li::before {
+      content: counter(mistakes);
+      min-width: 24px;
+      height: 24px;
+      border-radius: 50%;
+      background: var(--ph4);
+      color: #fff;
+      font-size: 12px;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      margin-top: 1px;
+    }
+    .mistake-text {
+      font-size: 14px;
+      line-height: 1.6;
+      color: var(--text);
+    }
+
+    /* ── Usage note ── */
+    .usage-note {
+      background: #fff5f5;
+      border-left: 4px solid #A13544;
+      border-radius: 8px;
+      padding: 14px 18px;
+      margin: 20px 0;
+      font-size: 14px;
+      line-height: 1.6;
+      color: var(--text);
+    }
+    .usage-note strong {
+      color: #A13544;
+    }
+
+    .phase-context-bar {
+      background: #f0f8f9;
+      border-bottom: 2px solid #c2dde0;
+      padding: 0;
+    }
+    .pcb-inner {
+      max-width: 960px;
+      margin: 0 auto;
+      padding: 10px 32px;
+      display: flex;
+      align-items: center;
+      gap: 20px;
+      flex-wrap: wrap;
+    }
+    .pcb-item { display: flex; flex-direction: column; gap: 1px; }
+    .pcb-label { font-size: 9px; font-weight: 700; letter-spacing: 1px; text-transform: uppercase; color: #7A7974; }
+    .pcb-value { font-size: 12px; font-weight: 700; color: #0D5C63; }
+    .pcb-divider { width: 1px; height: 28px; background: #c2dde0; }
+    .pcb-link { font-size: 11px; font-weight: 700; color: #0D5C63; background: rgba(13,92,99,0.08); padding: 4px 10px; border-radius: 4px; text-decoration: none; transition: background 0.15s; }
+    .pcb-link:hover { background: rgba(13,92,99,0.16); color: #0D5C63; text-decoration: none; }
+
+    @media (max-width: 768px) {
+      .house-pillars { grid-template-columns: 1fr; }
+      .house-pillar { border-right: none; border-bottom: 1px dashed #c5d9ea; }
+      .foundation-grid { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+<nav class="nav">
+  <span class="nav-logo">CRO <span>Manual</span></span>
+  <span class="nav-sep">|</span>
+  <a href="../index.html" class="nav-back">← Home</a>
+  <span class="nav-sep">|</span>
+  <a href="../pages/resources.html" class="nav-back">Resources &amp; Templates</a>
+  <span class="nav-sep">|</span>
+  <span class="nav-current">Message House Template</span>
+</nav>
+
+<div class="page-hero">
+  <div class="hero-phase-label">RESOURCES &amp; TEMPLATES — CUSTOMER &amp; MARKET</div>
+  <div class="hero-title">Message House Template</div>
+  <div class="hero-subtitle">A single source of truth for all corporate and product messaging — creating internal alignment and consistency across every GTM channel.</div>
+</div>
+
+<div class="phase-context-bar">
+  <div class="pcb-inner">
+    <div class="pcb-item">
+      <span class="pcb-label">Primary Phase</span>
+      <span class="pcb-value">Phase 1 — ICP, Messaging &amp; Playbook</span>
+    </div>
+    <div class="pcb-divider"></div>
+    <div class="pcb-item">
+      <span class="pcb-label">Science of Scaling Stage</span>
+      <span class="pcb-value">Stage 1: Product-Market Fit</span>
+    </div>
+    <div class="pcb-divider"></div>
+    <div class="pcb-item">
+      <span class="pcb-label">Governing Metric</span>
+      <span class="pcb-value">LIR Achievement Rate</span>
+    </div>
+    <a href="../pages/phase1.html" class="pcb-link">View Phase →</a>
+    <a href="../subpages/sos-pmf.html" class="pcb-link">View Stage →</a>
+  </div>
+</div>
+
+<div class="content-wrap">
+
+  <div class="breadcrumb">
+    <a href="../index.html">Home</a>
+    <span class="sep">›</span>
+    <a href="../pages/resources.html">Resources &amp; Templates</a>
+    <span class="sep">›</span>
+    <span class="current">Message House Template</span>
+  </div>
+
+  <!-- SECTION 1 -->
+  <div class="section-title">What is a Message House?</div>
+  <div class="section-intro">A message house is a structured framework that organizes all corporate and product messaging into a single coherent architecture. It creates internal alignment and ensures consistency across every channel and team member.</div>
+
+  <ul class="bullet-list">
+    <li>A single source of truth for all corporate or product messaging</li>
+    <li>Creates internal alignment and consistency across channels</li>
+    <li>Used for: sales pitches, marketing copy, website, PR, investor decks</li>
+  </ul>
+
+  <div class="usage-note">
+    <strong>Internal use only.</strong> The message house is not shared with prospects externally. It is an internal alignment tool that informs how the GTM team communicates — not a document you hand to a buyer.
+  </div>
+
+  <!-- SECTION 2 -->
+  <div class="section-title">The Message House Structure</div>
+  <div class="section-intro">The message house is a visual pyramid: a single overarching roof statement, supported by three proof-point pillars, all resting on a foundation of product details, positioning, and differentiators.</div>
+
+  <div class="house-wrap">
+
+    <!-- ROOF -->
+    <div class="house-roof">
+      <div class="house-roof-label">Roof — Messaging Roof</div>
+      <div class="house-roof-title">The Single Overarching Message</div>
+      <div class="house-roof-desc">Your category-defining statement — the big claim you can substantiate. Memorable, differentiated, and buyer-centric.</div>
+    </div>
+
+    <!-- PILLARS -->
+    <div class="house-pillars">
+      <div class="house-pillar">
+        <div class="house-pillar-label">Pillar 1</div>
+        <div class="house-pillar-text">Value Pillar One</div>
+        <div class="house-pillar-hint">First proof point that supports the roof statement</div>
+      </div>
+      <div class="house-pillar">
+        <div class="house-pillar-label">Pillar 2</div>
+        <div class="house-pillar-text">Value Pillar Two</div>
+        <div class="house-pillar-hint">Second proof point that supports the roof statement</div>
+      </div>
+      <div class="house-pillar">
+        <div class="house-pillar-label">Pillar 3</div>
+        <div class="house-pillar-text">Value Pillar Three</div>
+        <div class="house-pillar-hint">Third proof point that supports the roof statement</div>
+      </div>
+    </div>
+
+    <!-- FOUNDATION -->
+    <div class="house-foundation">
+      <div class="foundation-label">Foundation Elements</div>
+      <div class="foundation-grid">
+        <div class="foundation-item">
+          <div class="foundation-item-label">Product / Feature Name</div>
+          <div class="foundation-item-desc">The official name of the product or feature being positioned</div>
+        </div>
+        <div class="foundation-item">
+          <div class="foundation-item-label">Tagline</div>
+          <div class="foundation-item-desc">A short, memorable phrase that captures the brand promise (5–10 words)</div>
+        </div>
+        <div class="foundation-item">
+          <div class="foundation-item-label">Positioning Statement Short (~25 words)</div>
+          <div class="foundation-item-desc">For one-liners and intro conversations — crisp, outcome-oriented</div>
+        </div>
+        <div class="foundation-item">
+          <div class="foundation-item-label">Positioning Statement Long (~100 words)</div>
+          <div class="foundation-item-desc">For website, investor decks, and proposals — full context and proof</div>
+        </div>
+        <div class="foundation-item">
+          <div class="foundation-item-label">Customer / Prospect Pain Points</div>
+          <div class="foundation-item-desc">2–4 core pains your product solves — written in the buyer's language, not yours</div>
+        </div>
+        <div class="foundation-item">
+          <div class="foundation-item-label">Product Proof Points</div>
+          <div class="foundation-item-desc">Features and evidence that substantiate each of the three pillars</div>
+        </div>
+        <div class="foundation-item">
+          <div class="foundation-item-label">Competitor Differentiators / Why You Win</div>
+          <div class="foundation-item-desc">What makes you distinct from each key competitor — specific, defensible claims</div>
+        </div>
+      </div>
+    </div>
+
+  </div><!-- /.house-wrap -->
+
+  <!-- SECTION 3 -->
+  <div class="section-title">How to Build Your Message House</div>
+  <div class="section-intro">Building the message house is a structured process. Do not start with what your product does — start with what your buyer needs. Work from the outside in.</div>
+
+  <ol class="step-list step-number-accent">
+    <li>
+      <div class="step-content">
+        <span class="step-title">Start with your buyer</span>
+        What problem keeps them up at night? Use discovery call transcripts, win/loss interviews, and customer research — not internal assumptions. The message house fails when it's built on what the company thinks is important rather than what the buyer actually experiences.
+      </div>
+    </li>
+    <li>
+      <div class="step-content">
+        <span class="step-title">Articulate your unique value proposition (outside-in)</span>
+        Write your UVP as if you are the buyer describing the value they receive — not a feature list from your product team. The UVP should be outcome-focused, not feature-focused.
+      </div>
+    </li>
+    <li>
+      <div class="step-content">
+        <span class="step-title">Choose 3 proof points (pillars) that support your UVP</span>
+        Select the three most differentiated and defensible reasons your UVP is true. Each pillar must be supported by product proof (features, data, customer evidence). Three is the maximum for memorability.
+      </div>
+    </li>
+    <li>
+      <div class="step-content">
+        <span class="step-title">Write your roof statement</span>
+        The roof is the big claim that the three pillars support. It should be category-defining, buyer-relevant, and something you can substantiate. Avoid generic category descriptions — make a specific, differentiated claim.
+      </div>
+    </li>
+    <li>
+      <div class="step-content">
+        <span class="step-title">Test with buyers</span>
+        Run the messaging past 5–10 target buyers before codifying it. Ask: does this describe your problem? Does this language resonate? What would make you more or less confident in this claim? Revise before activating.
+      </div>
+    </li>
+    <li>
+      <div class="step-content">
+        <span class="step-title">Activate across all channels</span>
+        Distribute the message house to every GTM team member — sales, marketing, CS, and leadership. Run training sessions. Embed the language into: website copy, pitch deck, outbound sequences, CS scripts, PR briefs, and investor narratives.
+      </div>
+    </li>
+  </ol>
+
+  <!-- SECTION 4 -->
+  <div class="section-title">Common Mistakes</div>
+  <div class="section-intro">Most message houses fail in the same predictable ways. Avoid these before you publish and activate.</div>
+
+  <ul class="mistake-list">
+    <li>
+      <div class="mistake-text"><strong>Building the message house around features instead of buyer outcomes.</strong> Features describe what your product does. Outcomes describe what the buyer achieves. Buyers buy outcomes, not features.</div>
+    </li>
+    <li>
+      <div class="mistake-text"><strong>Having too many pillars.</strong> Three is the maximum for memorability. Every pillar beyond three dilutes the others and makes the message harder to internalize and repeat.</div>
+    </li>
+    <li>
+      <div class="mistake-text"><strong>Writing the roof as a generic category description.</strong> "The leading platform for X" is not a roof statement — it is a category description that every competitor can also claim. The roof should make a specific, differentiated claim that only you can substantiate.</div>
+    </li>
+    <li>
+      <div class="mistake-text"><strong>Not testing it with actual buyers before codifying it.</strong> Internal consensus on messaging is not validation. Buyers are the only test that counts. Activate after buyer testing, not before.</div>
+    </li>
+    <li>
+      <div class="mistake-text"><strong>Failing to train the entire GTM team on the message.</strong> A message house is only as good as its adoption. If the team can't articulate the roof statement and three pillars unprompted, the message house has not been activated.</div>
+    </li>
+  </ul>
+
+  <div class="callout callout-best-practice">
+    <div class="callout-title">Activation Test</div>
+    <p>Ask any rep, CSM, or marketer to state the company's three value pillars without looking at any materials. If they cannot, the message house has not been successfully activated — regardless of how good the document is. Activation requires training, reinforcement, and manager accountability.</p>
+  </div>
+
+</div><!-- /.content-wrap -->
+
+<script data-pplx-inline-edit>
+(function () {
+  if (window === window.top) return;
+
+  const allowedParentOrigins = ["https://www.perplexity.ai","https://perplexity.ai","https://testing.perplexity.ai","https://staging.perplexity.ai","https://*.preview.i.perplexity.ai","http://localhost:3000","http://127.0.0.1:3000","http://localhost:5173","http://127.0.0.1:5173"];
+  const MAX_FONT_BYTES = 500 * 1024;
+  const MAX_TOTAL_FONT_BYTES = 2 * 1024 * 1024;
+  let scrollForwarding = false;
+  let scrollRaf = 0;
+  let trustedTopOrigin = null;
+
+  // Allow entries like "https://*.preview.i.perplexity.ai" — the wildcard
+  // matches a single DNS label (no dots), so "https://*.foo" cannot stretch
+  // across multiple labels.
+  function matchesAllowedOrigin(origin) {
+    if (!origin) return false;
+    for (const entry of allowedParentOrigins) {
+      if (!entry.includes("*")) {
+        if (entry === origin) return true;
+        continue;
+      }
+      const pattern = new RegExp(
+        "^" +
+          entry.replace(/[.+?^${}()|[\]\\]/g, "\\$&").replace(/\*/g, "[^.]+") +
+          "$",
+      );
+      if (pattern.test(origin)) return true;
+    }
+    return false;
+  }
+
+  // Trust decision: when the sender is same-origin-visible (event.origin is a
+  // real origin like https://www.perplexity.ai) we trust event.origin directly.
+  // When event.origin is "null" (opaque broker srcdoc), we fall back to the
+  // broker's stamped `parentOrigin` to identify the top window. The fallback
+  // is claim-only — we rely on the browser's native `targetOrigin` enforcement
+  // on the response path (see postToTrustedTop) to ensure replies can't be
+  // delivered to anyone but the actual top window of that claimed origin.
+  function getTrustedParentOrigin(event) {
+    const forwardedParentOrigin =
+      typeof event.data.parentOrigin === "string" ? event.data.parentOrigin : null;
+    const parentOrigin = event.origin === "null" ? forwardedParentOrigin : event.origin;
+    return matchesAllowedOrigin(parentOrigin) ? parentOrigin : null;
+  }
+
+  // All responses go to window.top with targetOrigin = the allowlisted origin.
+  // An attacker that iframes us inside their own null-origin broker can claim
+  // any parentOrigin they like, but the browser will drop the reply whenever
+  // the real top's origin doesn't match — so the screenshot never leaves.
+  function postToTrustedTop(message) {
+    if (!trustedTopOrigin) return;
+    try {
+      window.top.postMessage(message, trustedTopOrigin);
+    } catch (_error) {}
+  }
+
+  function inlineAll(original, clone) {
+    if (original.nodeType !== 1 || clone.nodeType !== 1) return;
+
+    try {
+      const computedStyle = getComputedStyle(original);
+      // cssText on a computed style is the serialized declaration in modern
+      // Chromium/Safari — a single read beats enumerating ~400 longhand
+      // properties. Firefox returns "" here, so we fall back on empty.
+      const serialized = computedStyle.cssText;
+      if (serialized) {
+        clone.style.cssText = serialized;
+      } else {
+        const parts = new Array(computedStyle.length);
+        for (let index = 0; index < computedStyle.length; index += 1) {
+          const property = computedStyle[index];
+          parts[index] = `${property}:${computedStyle.getPropertyValue(property)};`;
+        }
+        clone.style.cssText = parts.join("");
+      }
+    } catch (_error) {}
+
+    const originalChildren = original.children;
+    const clonedChildren = clone.children;
+    for (
+      let index = 0;
+      index < originalChildren.length && index < clonedChildren.length;
+      index += 1
+    ) {
+      inlineAll(originalChildren[index], clonedChildren[index]);
+    }
+  }
+
+  function extractFontUrl(srcValue) {
+    const matches = [
+      ...srcValue.matchAll(
+        /url\(["']?([^"')]+)["']?\)(?:\s*format\(["']?([^"')]+)["']?\))?/gi,
+      ),
+    ];
+    if (matches.length === 0) return null;
+    const woff2 = matches.find((m) => m[2] && m[2].toLowerCase().includes("woff2"));
+    if (woff2) return woff2[1];
+    const woff = matches.find((m) => m[2] && m[2].toLowerCase().includes("woff"));
+    if (woff) return woff[1];
+    return matches[0][1];
+  }
+
+  // Cache resolved font URL -> data URI across captures. Fonts on a page
+  // essentially never change, and a batch run emits multiple captures back to
+  // back — without this we'd refetch + re-base64 every time.
+  const fontDataUriCache = new Map();
+  const SRC_DECLARATION_RE = /src\s*:\s*[^;}]+/i;
+
+  async function fetchAsDataUri(url) {
+    if (fontDataUriCache.has(url)) return fontDataUriCache.get(url);
+    let dataUri = null;
+    try {
+      const response = await fetch(url, { mode: "cors", credentials: "omit" });
+      if (response.ok) {
+        const blob = await response.blob();
+        if (blob.size <= MAX_FONT_BYTES) {
+          dataUri = await new Promise((resolve) => {
+            const reader = new FileReader();
+            reader.onloadend = () =>
+              resolve(typeof reader.result === "string" ? reader.result : null);
+            reader.onerror = () => resolve(null);
+            reader.readAsDataURL(blob);
+          });
+        }
+      }
+    } catch (_error) {
+      dataUri = null;
+    }
+    fontDataUriCache.set(url, dataUri);
+    return dataUri;
+  }
+
+  function collectFontFaceRuleTexts() {
+    const rules = [];
+    for (const sheet of document.styleSheets) {
+      let cssRules;
+      try {
+        cssRules = sheet.cssRules;
+      } catch (_error) {
+        continue;
+      }
+      if (!cssRules) continue;
+      for (const rule of cssRules) {
+        const cssText = rule.cssText || "";
+        if (cssText.startsWith("@font-face")) rules.push(cssText);
+      }
+    }
+    return rules;
+  }
+
+  async function buildInlinedFontCss() {
+    const ruleTexts = collectFontFaceRuleTexts();
+    if (ruleTexts.length === 0) return null;
+
+    const resolved = ruleTexts.map((cssText) => {
+      if (!SRC_DECLARATION_RE.test(cssText)) return null;
+      const srcMatch = cssText.match(/src\s*:\s*([^;}]+)[;}]/i);
+      if (!srcMatch) return null;
+      const url = extractFontUrl(srcMatch[1]);
+      if (!url) return null;
+      try {
+        return { cssText, url: new URL(url, document.baseURI).href };
+      } catch (_error) {
+        return null;
+      }
+    });
+
+    const dataUris = await Promise.all(
+      resolved.map((entry) => (entry ? fetchAsDataUri(entry.url) : Promise.resolve(null))),
+    );
+
+    const inlined = [];
+    let totalBytes = 0;
+    for (let index = 0; index < resolved.length; index += 1) {
+      const entry = resolved[index];
+      const dataUri = dataUris[index];
+      if (!entry || !dataUri) continue;
+      const approxBytes = dataUri.length * 0.75;
+      if (totalBytes + approxBytes > MAX_TOTAL_FONT_BYTES) break;
+      totalBytes += approxBytes;
+      inlined.push(entry.cssText.replace(SRC_DECLARATION_RE, `src: url("${dataUri}")`));
+    }
+    return inlined.length > 0 ? inlined.join("\n") : null;
+  }
+
+  function stripExternal(clone) {
+    const images = clone.querySelectorAll("img");
+    for (let index = 0; index < images.length; index += 1) {
+      const src = images[index].getAttribute("src");
+      if (src && !src.startsWith("data:")) images[index].removeAttribute("src");
+    }
+
+    const elements = clone.querySelectorAll("*");
+    for (let index = 0; index < elements.length; index += 1) {
+      const style = elements[index].style.cssText;
+      if (style && style.includes("url(")) {
+        elements[index].style.cssText = style.replace(
+          /url\(["']?(?!data:)[^)"']*["']?\)/gi,
+          "none",
+        );
+      }
+    }
+  }
+
+  function emitScroll() {
+    scrollRaf = 0;
+    if (!scrollForwarding) return;
+    postToTrustedTop({
+      type: "INLINE_EDIT_SCROLL",
+      scrollX: window.scrollX,
+      scrollY: window.scrollY,
+    });
+  }
+
+  window.addEventListener(
+    "scroll",
+    function () {
+      if (!scrollForwarding || scrollRaf) return;
+      scrollRaf = requestAnimationFrame(emitScroll);
+    },
+    { passive: true, capture: true },
+  );
+
+  async function handleCaptureRequest(event) {
+    const requestId = event.data.requestId;
+    const scrollX = window.scrollX;
+    const scrollY = window.scrollY;
+    const width = window.innerWidth;
+    const height = window.innerHeight;
+
+    function postResult(dataUrl) {
+      postToTrustedTop({
+        type: "INLINE_EDIT_SCREENSHOT_RESULT",
+        requestId,
+        dataUrl,
+        scrollX,
+        scrollY,
+      });
+    }
+
+    try {
+      // Wait for any pending web fonts to resolve so both inline metrics and
+      // the @font-face inlining below see the same loaded faces.
+      if (document.fonts && document.fonts.ready) {
+        try {
+          await document.fonts.ready;
+        } catch (_error) {}
+      }
+
+      const clone = document.documentElement.cloneNode(true);
+      inlineAll(document.documentElement, clone);
+
+      const removedNodes = clone.querySelectorAll("script,link[rel=\"stylesheet\"],style");
+      for (let index = 0; index < removedNodes.length; index += 1) {
+        removedNodes[index].remove();
+      }
+
+      stripExternal(clone);
+
+      // Re-embed web fonts as data-URI @font-face rules so the SVG rasterizer
+      // can resolve them — external font URLs aren't fetched during
+      // foreignObject rendering, which would otherwise force a fallback face
+      // and change text metrics.
+      const inlinedFontCss = await buildInlinedFontCss();
+      if (inlinedFontCss) {
+        const styleEl = document.createElement("style");
+        styleEl.textContent = inlinedFontCss;
+        const head = clone.querySelector("head");
+        if (head) head.appendChild(styleEl);
+        else clone.insertBefore(styleEl, clone.firstChild);
+      }
+
+      const html = new XMLSerializer().serializeToString(clone);
+      const svg =
+        `<svg xmlns="http://www.w3.org/2000/svg" width="${width}" height="${height}">` +
+        '<foreignObject width="100%" height="100%">' +
+        `<div xmlns="http://www.w3.org/1999/xhtml" style="width:${width}px;height:${height}px;overflow:hidden">` +
+        `<div style="transform:translate(-${scrollX}px,-${scrollY}px);transform-origin:top left">` +
+        html +
+        "</div></div></foreignObject></svg>";
+      const svgUrl = `data:image/svg+xml;charset=utf-8,${encodeURIComponent(svg)}`;
+      const image = new Image();
+      image.onload = function () {
+        const canvas = document.createElement("canvas");
+        canvas.width = width;
+        canvas.height = height;
+        canvas.getContext("2d").drawImage(image, 0, 0);
+        postResult(canvas.toDataURL("image/png"));
+      };
+      image.onerror = function () {
+        postResult(null);
+      };
+      image.src = svgUrl;
+    } catch (_error) {
+      postResult(null);
+    }
+  }
+
+  window.addEventListener("message", function (event) {
+    if (!event.data) return;
+    // Only accept messages from the direct parent frame. Blocks sibling /
+    // unrelated-window postMessage senders that could otherwise reach us.
+    if (event.source !== window.parent) return;
+
+    const trustedParentOrigin = getTrustedParentOrigin(event);
+    if (!trustedParentOrigin) return;
+    trustedTopOrigin = trustedParentOrigin;
+
+    if (event.data.type === "INLINE_EDIT_SCROLL_START") {
+      scrollForwarding = true;
+      emitScroll();
+      return;
+    }
+
+    if (event.data.type === "INLINE_EDIT_SCROLL_STOP") {
+      scrollForwarding = false;
+      if (scrollRaf) cancelAnimationFrame(scrollRaf);
+      scrollRaf = 0;
+      return;
+    }
+
+    if (event.data.type !== "INLINE_EDIT_CAPTURE_REQUEST") return;
+
+    handleCaptureRequest(event);
+  });
+})();
+
+
+</script></body>
+</html>
