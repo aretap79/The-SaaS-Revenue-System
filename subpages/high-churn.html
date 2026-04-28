@@ -40,7 +40,7 @@
 
   <div class="subsection">
     <div class="subsection-title">Logo Churn vs. Revenue Churn</div>
-    <p><strong>Logo Churn (Customer Churn Rate)</strong>: the percentage of customers who cancel in a period. Formula: customers churned ÷ customers at start of period. Benchmark: world-class &lt;5% annually for SMB, &lt;3% for mid-market, &lt;2% for enterprise. Logo churn is the headline number but not the most important one for SaaS economics.</p>
+    <p><strong>Logo Churn (Customer Churn Rate)</strong>: the percentage of customers who cancel in a period. Formula: customers churned ÷ customers at start of period. Benchmark: world-class &lt;5% annually for SMB, &lt;3% for mid-market, &lt;2% for enterprise. These thresholds are commonly cited but vary by product type and business model. NRR is generally a more meaningful retention metric for SaaS economics than logo churn alone.</p>
     <p><strong>Revenue Churn / NRR</strong>: Net Revenue Retention measures what happens to revenue from your existing customer base. NRR above 100% means your existing customers are growing with you through expansion — logo churn is offset by upsell. NRR below 100% means your business is shrinking even without considering new customer acquisition costs. This is the most important single number in SaaS retention economics.</p>
   </div>
 
@@ -52,7 +52,7 @@
 
   <div class="subsection">
     <div class="subsection-title">Voluntary vs. Involuntary Churn</div>
-    <p><strong>Voluntary churn</strong>: the customer actively decided to cancel. This requires diagnosing why they left. <strong>Involuntary churn</strong>: the customer wanted to stay but couldn't — failed payments, credit card expiration, procurement contract lapse. For SMB SaaS, involuntary churn can account for 20–40% of total logo churn and is fixed with dunning automation (Churnkey, Stunning, Chargebee), not CS programs.</p>
+    <p><strong>Voluntary churn</strong>: the customer actively decided to cancel. This requires diagnosing why they left. <strong>Involuntary churn</strong>: the customer wanted to stay but couldn't — failed payments, credit card expiration, procurement contract lapse. A meaningful portion of churn is involuntary (payment failures, credit card expiration). Implement dunning management and proactive payment recovery workflows (Churnkey, Stunning, Chargebee).</p>
   </div>
 
   <div class="callout callout-warning">
@@ -119,7 +119,7 @@
 
   <!-- ROOT CAUSE 2: BROKEN ONBOARDING -->
   <div class="section-title">Root Cause 2: Broken Onboarding and Low Adoption</div>
-  <div class="section-intro">Even the right customer will churn if they never achieve value. The period from contract signature to first value realization — Time to Value (TTV) — is the highest-risk window in the customer lifecycle. Customers who do not reach their "first aha moment" within the first 60–90 days are 3–5x more likely to churn than customers who do.</div>
+  <div class="section-intro">Even the right customer will churn if they never achieve value. The period from contract signature to first value realization — Time to Value (TTV) — is the highest-risk window in the customer lifecycle. Customers who don’t achieve early product value milestones are significantly more likely to churn. Define your product’s aha moment and track time-to-first-value as a leading indicator.</div>
 
   <div class="subsection">
     <div class="subsection-title">Key Metrics to Diagnose Onboarding Failure</div>
@@ -139,7 +139,7 @@
     <div class="metric-card">
       <div class="m-label">90-Day Feature Adoption</div>
       <div class="m-value">3+ features</div>
-      <div class="m-desc">Customers using 3+ core features at 90 days churn at 4x lower rates than single-feature users.</div>
+      <div class="m-desc">Breadth of feature adoption correlates negatively with churn. Define your own ‘sticky feature’ threshold based on cohort analysis.</div>
     </div>
     <div class="metric-card">
       <div class="m-label">DAU/MAU Ratio at 60 Days</div>
@@ -298,7 +298,7 @@
     <li>
       <div class="step-content">
         <span class="step-title">Multi-Year as Retention Tool (Week 4)</span>
-        For accounts where trust can be rebuilt, offer a multi-year renewal with a discounted rate and a committed roadmap item. Multi-year deals reduce annual churn risk by 60%+ because the switching decision is deferred while you have time to deliver additional value.
+        For accounts where trust can be rebuilt, offer a multi-year renewal with a discounted rate and a committed roadmap item. Multi-year contracts reduce involuntary churn from non-renewal and signal stronger product commitment, though they may mask underlying satisfaction issues.
       </div>
     </li>
   </ol>

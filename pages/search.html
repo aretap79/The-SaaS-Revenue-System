@@ -331,11 +331,24 @@ function tokenize(str) {
   return str.toLowerCase().match(/\b[a-z0-9'&/-]{2,}\b/g) || [];
 }
 
-function highlight(text, tokens) {
+// Normalize a string for phrase matching: lowercase, collapse whitespace
+function normalize(str) {
+  return str.toLowerCase().replace(/\s+/g, ' ').trim();
+}
+
+function highlight(text, query) {
+  if (!query) return escapeHtml(text);
+  // First try to highlight the exact phrase
+  const escaped = query.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+  const phraseRe = new RegExp(`(${escaped})`, 'gi');
+  const result = escapeHtml(text).replace(phraseRe, '<mark>$1</mark>');
+  // If we got a phrase hit, return it; otherwise highlight individual tokens
+  if (result !== escapeHtml(text)) return result;
+  const tokens = tokenize(query);
   if (!tokens.length) return escapeHtml(text);
-  const esc = tokens.map(t => t.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'));
-  const re = new RegExp(`(${esc.join('|')})`, 'gi');
-  return escapeHtml(text).replace(re, '<mark>$1</mark>');
+  const tokEsc = tokens.map(t => t.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'));
+  const tokRe = new RegExp(`(${tokEsc.join('|')})`, 'gi');
+  return escapeHtml(text).replace(tokRe, '<mark>$1</mark>');
 }
 
 function escapeHtml(s) {
@@ -346,29 +359,57 @@ function escapeHtml(s) {
     .replace(/"/g,'&quot;');
 }
 
-function score(item, tokens) {
+function score(item, phrase, tokens) {
+  const normPhrase = normalize(phrase);
+  const normText   = item.text;          // already lowercased in index
+  const normTitle  = normalize(item.title + ' ' + item.h1);
+  const isMultiWord = tokens.length > 1;
+
   let s = 0;
-  const titleTokens = tokenize(item.title + ' ' + item.h1);
-  for (const t of tokens) {
-    // Exact word in title
-    if (titleTokens.some(tt => tt === t)) s += 10;
-    // Partial in title
-    else if (titleTokens.some(tt => tt.includes(t))) s += 5;
-    // In body text
-    const occurrences = (item.text.split(t).length - 1);
-    s += Math.min(occurrences, 8);
+
+  // ── 1. EXACT PHRASE MATCH (highest weight) ───────────────────────────────
+  if (isMultiWord) {
+    if (normTitle.includes(normPhrase))  s += 100;  // exact phrase in title
+    else if (normText.includes(normPhrase)) s += 60; // exact phrase in body
+    else {
+      // Does NOT contain the phrase at all — heavily penalise multi-word queries
+      // We'll still add partial token scores but cap them low
+      let partials = 0;
+      for (const t of tokens) {
+        if (normTitle.includes(t)) partials += 3;
+        else if (normText.includes(t)) partials += 1;
+      }
+      // Only include if ALL tokens are present somewhere
+      const allPresent = tokens.every(t => normText.includes(t) || normTitle.includes(t));
+      return allPresent ? partials : 0;
+    }
   }
+
+  // ── 2. SINGLE-WORD or PHRASE-MATCHED: add token-level boosts ─────────────
+  for (const t of tokens) {
+    // Whole-word match in title
+    const titleWhole = new RegExp(`\\b${t.replace(/[.*+?^${}()|[\]\\]/g,'\\$&')}\\b`);
+    if (titleWhole.test(normTitle)) s += 15;
+    else if (normTitle.includes(t)) s += 8;
+
+    // Occurrences in body
+    let pos = 0, count = 0;
+    while ((pos = normText.indexOf(t, pos)) !== -1) { count++; pos += t.length; }
+    s += Math.min(count, 10);
+  }
+
   return s;
 }
 
 async function search(query) {
   const idx = await loadIndex();
+  const phrase = normalize(query);
   const tokens = tokenize(query);
   if (!tokens.length) return [];
 
   const results = [];
   for (const item of idx) {
-    const s = score(item, tokens);
+    const s = score(item, phrase, tokens);
     if (s > 0) results.push({ item, score: s });
   }
   results.sort((a, b) => b.score - a.score);
@@ -376,7 +417,8 @@ async function search(query) {
 }
 
 // ── RENDER ────────────────────────────────────────────────────────────────
-function renderResults(results, tokens) {
+function renderResults(results, query) {
+  const tokens = tokenize(query);
   const wrap = document.getElementById('resultsWrap');
   const quick = document.getElementById('quickLinks');
   const countEl = document.getElementById('searchCount');
@@ -422,8 +464,8 @@ function renderResults(results, tokens) {
     html += `<div class="result-group-header">${escapeHtml(section)} — ${items.length} result${items.length !== 1 ? 's' : ''}</div>`;
     for (const item of items) {
       const url = resolveUrl(item.url);
-      const titleHL = highlight(item.title, tokens);
-      const snippetHL = highlight(item.snippet.slice(0, 160), tokens);
+      const titleHL = highlight(item.title, query);
+      const snippetHL = highlight(item.snippet.slice(0, 160), query);
       html += `
         <a href="${url}" class="result-card">
           <div class="result-badge ${badgeClass(section)}">${badgeLabel(section)}</div>
@@ -457,8 +499,7 @@ input.addEventListener('input', () => {
   if (!q) { renderIdle(); return; }
   debounceTimer = setTimeout(async () => {
     const results = await search(q);
-    const tokens = tokenize(q);
-    renderResults(results, tokens);
+    renderResults(results, q);
   }, 160);
 });
 
@@ -471,7 +512,10 @@ setTimeout(() => loadIndex().catch(() => {}), 500);
   const q = params.get('q');
   if (q) {
     input.value = q;
-    input.dispatchEvent(new Event('input'));
+    // trigger search directly
+    loadIndex().then(idx => {
+      search(q).then(results => renderResults(results, q));
+    });
   }
 })();
 </script>
