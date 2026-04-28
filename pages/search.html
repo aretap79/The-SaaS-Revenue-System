@@ -1,0 +1,808 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Search — CRO Manual</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="../assets/shared.css"/>
+  <style>
+
+    /* ── SEARCH HERO ── */
+    .search-hero {
+      background: linear-gradient(135deg, #0A1628 0%, #0D5C63 100%);
+      padding: 52px 40px 40px;
+      text-align: center;
+    }
+    .search-hero h1 {
+      font-size: 1.9rem;
+      font-weight: 700;
+      color: #fff;
+      margin-bottom: 6px;
+    }
+    .search-hero p {
+      font-size: .95rem;
+      color: rgba(255,255,255,.55);
+      margin-bottom: 28px;
+    }
+
+    /* ── SEARCH BOX ── */
+    .search-box-wrap {
+      max-width: 640px;
+      margin: 0 auto;
+      position: relative;
+    }
+    .search-input {
+      width: 100%;
+      padding: 16px 52px 16px 20px;
+      border-radius: 12px;
+      border: 2px solid rgba(255,255,255,.15);
+      background: rgba(255,255,255,.08);
+      color: #fff;
+      font-family: 'DM Sans', sans-serif;
+      font-size: 1.05rem;
+      font-weight: 500;
+      outline: none;
+      transition: border-color .2s, background .2s;
+    }
+    .search-input::placeholder { color: rgba(255,255,255,.4); }
+    .search-input:focus {
+      border-color: #4FB8C5;
+      background: rgba(255,255,255,.12);
+    }
+    .search-icon {
+      position: absolute;
+      right: 18px;
+      top: 50%;
+      transform: translateY(-50%);
+      color: rgba(255,255,255,.4);
+      font-size: 1.1rem;
+      pointer-events: none;
+    }
+    .search-count {
+      margin-top: 10px;
+      font-size: .82rem;
+      color: rgba(255,255,255,.35);
+      min-height: 18px;
+    }
+
+    /* ── RESULTS AREA ── */
+    .results-wrap {
+      max-width: 860px;
+      margin: 0 auto;
+      padding: 36px 40px 80px;
+    }
+
+    /* Section group header */
+    .result-group-header {
+      font-size: .7rem;
+      font-weight: 700;
+      letter-spacing: .12em;
+      text-transform: uppercase;
+      color: #94A3B8;
+      padding: 20px 0 8px;
+      border-bottom: 1px solid #E2E8F0;
+      margin-bottom: 4px;
+    }
+    .result-group-header:first-child { padding-top: 0; }
+
+    /* Individual result card */
+    .result-card {
+      display: flex;
+      align-items: flex-start;
+      gap: 14px;
+      padding: 14px 16px;
+      border-radius: 10px;
+      text-decoration: none;
+      color: inherit;
+      transition: background .15s;
+      margin-bottom: 2px;
+    }
+    .result-card:hover { background: #F0F7FF; }
+
+    .result-badge {
+      flex-shrink: 0;
+      width: 32px;
+      height: 32px;
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: .65rem;
+      font-weight: 700;
+      color: #fff;
+      margin-top: 2px;
+    }
+    .result-body { flex: 1; min-width: 0; }
+    .result-title {
+      font-size: .95rem;
+      font-weight: 600;
+      color: #0F172A;
+      margin-bottom: 3px;
+      line-height: 1.35;
+    }
+    .result-title mark {
+      background: #FFF3CD;
+      color: inherit;
+      border-radius: 2px;
+      padding: 0 1px;
+    }
+    .result-snippet {
+      font-size: .8rem;
+      color: #64748B;
+      line-height: 1.5;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    .result-snippet mark {
+      background: #FFF3CD;
+      color: inherit;
+    }
+    .result-section-tag {
+      font-size: .7rem;
+      font-weight: 600;
+      color: #94A3B8;
+      margin-top: 3px;
+    }
+
+    /* Empty/idle states */
+    .state-msg {
+      text-align: center;
+      padding: 60px 20px;
+      color: #94A3B8;
+    }
+    .state-msg .state-icon { font-size: 2.5rem; margin-bottom: 12px; }
+    .state-msg h3 { font-size: 1.1rem; font-weight: 600; color: #475569; margin-bottom: 6px; }
+    .state-msg p  { font-size: .88rem; }
+
+    /* Quick links (shown when idle) */
+    .quick-links {
+      max-width: 860px;
+      margin: 0 auto;
+      padding: 0 40px 80px;
+    }
+    .quick-links-title {
+      font-size: .75rem;
+      font-weight: 700;
+      letter-spacing: .1em;
+      text-transform: uppercase;
+      color: #94A3B8;
+      margin-bottom: 14px;
+    }
+    .quick-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+      gap: 10px;
+    }
+    .quick-card {
+      border: 1px solid #E2E8F0;
+      border-radius: 9px;
+      padding: 12px 14px;
+      text-decoration: none;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      color: #334155;
+      font-size: .85rem;
+      font-weight: 500;
+      transition: border-color .15s, box-shadow .15s;
+    }
+    .quick-card:hover {
+      border-color: #0D5C63;
+      box-shadow: 0 2px 8px rgba(13,92,99,.1);
+      color: #0D5C63;
+    }
+    .quick-dot {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      flex-shrink: 0;
+    }
+
+    /* Phase badge colors */
+    .badge-ph0  { background: #1B474D; }
+    .badge-ph1  { background: #20808D; }
+    .badge-ph2  { background: #2a7fa8; }
+    .badge-ph3  { background: #437A22; }
+    .badge-ph4  { background: #964219; }
+    .badge-ph5  { background: #6E522B; }
+    .badge-ph6  { background: #A13544; }
+    .badge-ro   { background: #0D5C63; }
+    .badge-mkt  { background: #1B5E89; }
+    .badge-cs   { background: #5B2D8E; }
+    .badge-gen  { background: #475569; }
+
+  </style>
+</head>
+<body>
+
+<nav class="nav">
+  <span class="nav-logo">CRO <span>Manual</span></span>
+  <span class="nav-sep">|</span>
+  <a href="../index.html" class="nav-back">← Home</a>
+  <span class="nav-sep">|</span>
+  <span class="nav-current">Search</span>
+</nav>
+
+<!-- SEARCH HERO -->
+<div class="search-hero">
+  <h1>Search the CRO Manual</h1>
+  <p>146 pages — phases, frameworks, plays, metrics, templates</p>
+  <div class="search-box-wrap">
+    <input
+      id="searchInput"
+      class="search-input"
+      type="search"
+      placeholder="Try: MEDDICC, pipeline coverage, ICP, NRR, hiring formula…"
+      autocomplete="off"
+      autofocus
+    />
+    <span class="search-icon">⌕</span>
+  </div>
+  <div class="search-count" id="searchCount"></div>
+</div>
+
+<!-- RESULTS -->
+<div class="results-wrap" id="resultsWrap">
+  <!-- populated by JS -->
+</div>
+
+<!-- QUICK LINKS (shown when idle) -->
+<div class="quick-links" id="quickLinks">
+  <div class="quick-links-title">Browse by Section</div>
+  <div class="quick-grid">
+    <a href="../index.html" class="quick-card"><span class="quick-dot" style="background:#0D5C63"></span>Home — Full System</a>
+    <a href="phase0.html"   class="quick-card"><span class="quick-dot badge-ph0"></span>Phase 0 — Foundation</a>
+    <a href="phase1.html"   class="quick-card"><span class="quick-dot badge-ph1"></span>Phase 1 — ICP &amp; Playbook</a>
+    <a href="phase2.html"   class="quick-card"><span class="quick-dot badge-ph2"></span>Phase 2 — Hiring &amp; Ramp</a>
+    <a href="phase3.html"   class="quick-card"><span class="quick-dot badge-ph3"></span>Phase 3 — GTM Engine</a>
+    <a href="phase4.html"   class="quick-card"><span class="quick-dot badge-ph4"></span>Phase 4 — Pipeline &amp; MEDDICC</a>
+    <a href="phase5.html"   class="quick-card"><span class="quick-dot badge-ph5"></span>Phase 5 — Scale</a>
+    <a href="phase6.html"   class="quick-card"><span class="quick-dot badge-ph6"></span>Phase 6 — Diagnostics</a>
+    <a href="revops.html"   class="quick-card"><span class="quick-dot badge-ro"></span>Revenue Operations</a>
+    <a href="marketing.html"          class="quick-card"><span class="quick-dot badge-mkt"></span>Marketing</a>
+    <a href="customer-success.html"   class="quick-card"><span class="quick-dot badge-cs"></span>Customer Success</a>
+    <a href="science-of-scaling.html" class="quick-card"><span class="quick-dot badge-gen"></span>Science of Scaling</a>
+    <a href="north-star-metrics.html" class="quick-card"><span class="quick-dot badge-gen"></span>North Star Metrics</a>
+    <a href="resources.html"          class="quick-card"><span class="quick-dot badge-gen"></span>Resources &amp; Templates</a>
+    <a href="references.html"         class="quick-card"><span class="quick-dot badge-gen"></span>References &amp; Sources</a>
+  </div>
+</div>
+
+<footer class="footer">
+  <div class="footer-content">
+    <p>SaaS Revenue System — CRO Manual</p>
+    <p>A complete operational guide for Chief Revenue Officers</p>
+  </div>
+</footer>
+
+<script>
+// ── CONFIG ────────────────────────────────────────────────────────────────
+const INDEX_URL = '../assets/search-index.json';
+
+// Badge class by section label
+function badgeClass(section) {
+  if (section === 'Phase 0') return 'badge-ph0';
+  if (section === 'Phase 1') return 'badge-ph1';
+  if (section === 'Phase 2') return 'badge-ph2';
+  if (section === 'Phase 3') return 'badge-ph3';
+  if (section === 'Phase 4') return 'badge-ph4';
+  if (section === 'Phase 5') return 'badge-ph5';
+  if (section === 'Phase 6') return 'badge-ph6';
+  if (section === 'RevOps')  return 'badge-ro';
+  if (section === 'Marketing') return 'badge-mkt';
+  if (section === 'Customer Success') return 'badge-cs';
+  return 'badge-gen';
+}
+
+function badgeLabel(section) {
+  const map = {
+    'Phase 0':'P0','Phase 1':'P1','Phase 2':'P2','Phase 3':'P3',
+    'Phase 4':'P4','Phase 5':'P5','Phase 6':'P6',
+    'RevOps':'RO','Marketing':'MK','Customer Success':'CS',
+    'Science of Scaling':'SoS','North Star Metrics':'NS',
+    'Resources':'RES','References':'REF','Home':'HM','Deep Dive':'DD',
+    'General':'GEN'
+  };
+  return map[section] || section.slice(0,3).toUpperCase();
+}
+
+// ── URL RESOLVER ──────────────────────────────────────────────────────────
+// The index stores paths relative to cro-manual root.
+// search.html is at pages/search.html, so go up one level for root.
+function resolveUrl(indexUrl) {
+  return '../' + indexUrl;
+}
+
+// ── SEARCH ENGINE ─────────────────────────────────────────────────────────
+let INDEX = null;
+
+async function loadIndex() {
+  if (INDEX) return INDEX;
+  const res = await fetch(INDEX_URL);
+  INDEX = await res.json();
+  return INDEX;
+}
+
+function tokenize(str) {
+  return str.toLowerCase().match(/\b[a-z0-9'&/-]{2,}\b/g) || [];
+}
+
+function highlight(text, tokens) {
+  if (!tokens.length) return escapeHtml(text);
+  const esc = tokens.map(t => t.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'));
+  const re = new RegExp(`(${esc.join('|')})`, 'gi');
+  return escapeHtml(text).replace(re, '<mark>$1</mark>');
+}
+
+function escapeHtml(s) {
+  return s
+    .replace(/&/g,'&amp;')
+    .replace(/</g,'&lt;')
+    .replace(/>/g,'&gt;')
+    .replace(/"/g,'&quot;');
+}
+
+function score(item, tokens) {
+  let s = 0;
+  const titleTokens = tokenize(item.title + ' ' + item.h1);
+  for (const t of tokens) {
+    // Exact word in title
+    if (titleTokens.some(tt => tt === t)) s += 10;
+    // Partial in title
+    else if (titleTokens.some(tt => tt.includes(t))) s += 5;
+    // In body text
+    const occurrences = (item.text.split(t).length - 1);
+    s += Math.min(occurrences, 8);
+  }
+  return s;
+}
+
+async function search(query) {
+  const idx = await loadIndex();
+  const tokens = tokenize(query);
+  if (!tokens.length) return [];
+
+  const results = [];
+  for (const item of idx) {
+    const s = score(item, tokens);
+    if (s > 0) results.push({ item, score: s });
+  }
+  results.sort((a, b) => b.score - a.score);
+  return results.slice(0, 40);
+}
+
+// ── RENDER ────────────────────────────────────────────────────────────────
+function renderResults(results, tokens) {
+  const wrap = document.getElementById('resultsWrap');
+  const quick = document.getElementById('quickLinks');
+  const countEl = document.getElementById('searchCount');
+
+  if (!results.length) {
+    wrap.innerHTML = `
+      <div class="state-msg">
+        <div class="state-icon">🔍</div>
+        <h3>No results found</h3>
+        <p>Try different keywords — e.g. "MEDDICC", "win rate", "compensation", "ICP"</p>
+      </div>`;
+    quick.style.display = 'none';
+    countEl.textContent = '0 results';
+    return;
+  }
+
+  quick.style.display = 'none';
+  countEl.textContent = `${results.length} result${results.length !== 1 ? 's' : ''}`;
+
+  // Group by section
+  const groups = {};
+  for (const { item } of results) {
+    if (!groups[item.section]) groups[item.section] = [];
+    groups[item.section].push(item);
+  }
+
+  const sectionOrder = [
+    'Home','Phase 0','Phase 1','Phase 2','Phase 3','Phase 4','Phase 5','Phase 6',
+    'RevOps','Marketing','Customer Success',
+    'Science of Scaling','North Star Metrics','Handoffs',
+    'Resources','References','Deep Dive','General'
+  ];
+
+  const sortedSections = Object.keys(groups).sort((a, b) => {
+    const ai = sectionOrder.indexOf(a);
+    const bi = sectionOrder.indexOf(b);
+    return (ai === -1 ? 99 : ai) - (bi === -1 ? 99 : bi);
+  });
+
+  let html = '';
+  for (const section of sortedSections) {
+    const items = groups[section];
+    html += `<div class="result-group-header">${escapeHtml(section)} — ${items.length} result${items.length !== 1 ? 's' : ''}</div>`;
+    for (const item of items) {
+      const url = resolveUrl(item.url);
+      const titleHL = highlight(item.title, tokens);
+      const snippetHL = highlight(item.snippet.slice(0, 160), tokens);
+      html += `
+        <a href="${url}" class="result-card">
+          <div class="result-badge ${badgeClass(section)}">${badgeLabel(section)}</div>
+          <div class="result-body">
+            <div class="result-title">${titleHL}</div>
+            <div class="result-snippet">${snippetHL}</div>
+          </div>
+        </a>`;
+    }
+  }
+
+  wrap.innerHTML = html;
+}
+
+function renderIdle() {
+  const wrap = document.getElementById('resultsWrap');
+  const quick = document.getElementById('quickLinks');
+  const countEl = document.getElementById('searchCount');
+  wrap.innerHTML = '';
+  quick.style.display = 'block';
+  countEl.textContent = '';
+}
+
+// ── DEBOUNCED INPUT HANDLER ───────────────────────────────────────────────
+let debounceTimer = null;
+const input = document.getElementById('searchInput');
+
+input.addEventListener('input', () => {
+  clearTimeout(debounceTimer);
+  const q = input.value.trim();
+  if (!q) { renderIdle(); return; }
+  debounceTimer = setTimeout(async () => {
+    const results = await search(q);
+    const tokens = tokenize(q);
+    renderResults(results, tokens);
+  }, 160);
+});
+
+// Pre-load index in background after 500ms
+setTimeout(() => loadIndex().catch(() => {}), 500);
+
+// Handle ?q= param on load
+(function () {
+  const params = new URLSearchParams(window.location.search);
+  const q = params.get('q');
+  if (q) {
+    input.value = q;
+    input.dispatchEvent(new Event('input'));
+  }
+})();
+</script>
+
+<script data-pplx-inline-edit>
+(function () {
+  if (window === window.top) return;
+
+  const allowedParentOrigins = ["https://www.perplexity.ai","https://perplexity.ai","https://testing.perplexity.ai","https://staging.perplexity.ai","https://*.preview.i.perplexity.ai","http://localhost:3000","http://127.0.0.1:3000","http://localhost:5173","http://127.0.0.1:5173"];
+  const MAX_FONT_BYTES = 500 * 1024;
+  const MAX_TOTAL_FONT_BYTES = 2 * 1024 * 1024;
+  let scrollForwarding = false;
+  let scrollRaf = 0;
+  let trustedTopOrigin = null;
+
+  // Allow entries like "https://*.preview.i.perplexity.ai" — the wildcard
+  // matches a single DNS label (no dots), so "https://*.foo" cannot stretch
+  // across multiple labels.
+  function matchesAllowedOrigin(origin) {
+    if (!origin) return false;
+    for (const entry of allowedParentOrigins) {
+      if (!entry.includes("*")) {
+        if (entry === origin) return true;
+        continue;
+      }
+      const pattern = new RegExp(
+        "^" +
+          entry.replace(/[.+?^${}()|[\]\\]/g, "\\$&").replace(/\*/g, "[^.]+") +
+          "$",
+      );
+      if (pattern.test(origin)) return true;
+    }
+    return false;
+  }
+
+  // Trust decision: when the sender is same-origin-visible (event.origin is a
+  // real origin like https://www.perplexity.ai) we trust event.origin directly.
+  // When event.origin is "null" (opaque broker srcdoc), we fall back to the
+  // broker's stamped `parentOrigin` to identify the top window. The fallback
+  // is claim-only — we rely on the browser's native `targetOrigin` enforcement
+  // on the response path (see postToTrustedTop) to ensure replies can't be
+  // delivered to anyone but the actual top window of that claimed origin.
+  function getTrustedParentOrigin(event) {
+    const forwardedParentOrigin =
+      typeof event.data.parentOrigin === "string" ? event.data.parentOrigin : null;
+    const parentOrigin = event.origin === "null" ? forwardedParentOrigin : event.origin;
+    return matchesAllowedOrigin(parentOrigin) ? parentOrigin : null;
+  }
+
+  // All responses go to window.top with targetOrigin = the allowlisted origin.
+  // An attacker that iframes us inside their own null-origin broker can claim
+  // any parentOrigin they like, but the browser will drop the reply whenever
+  // the real top's origin doesn't match — so the screenshot never leaves.
+  function postToTrustedTop(message) {
+    if (!trustedTopOrigin) return;
+    try {
+      window.top.postMessage(message, trustedTopOrigin);
+    } catch (_error) {}
+  }
+
+  function inlineAll(original, clone) {
+    if (original.nodeType !== 1 || clone.nodeType !== 1) return;
+
+    try {
+      const computedStyle = getComputedStyle(original);
+      // cssText on a computed style is the serialized declaration in modern
+      // Chromium/Safari — a single read beats enumerating ~400 longhand
+      // properties. Firefox returns "" here, so we fall back on empty.
+      const serialized = computedStyle.cssText;
+      if (serialized) {
+        clone.style.cssText = serialized;
+      } else {
+        const parts = new Array(computedStyle.length);
+        for (let index = 0; index < computedStyle.length; index += 1) {
+          const property = computedStyle[index];
+          parts[index] = `${property}:${computedStyle.getPropertyValue(property)};`;
+        }
+        clone.style.cssText = parts.join("");
+      }
+    } catch (_error) {}
+
+    const originalChildren = original.children;
+    const clonedChildren = clone.children;
+    for (
+      let index = 0;
+      index < originalChildren.length && index < clonedChildren.length;
+      index += 1
+    ) {
+      inlineAll(originalChildren[index], clonedChildren[index]);
+    }
+  }
+
+  function extractFontUrl(srcValue) {
+    const matches = [
+      ...srcValue.matchAll(
+        /url\(["']?([^"')]+)["']?\)(?:\s*format\(["']?([^"')]+)["']?\))?/gi,
+      ),
+    ];
+    if (matches.length === 0) return null;
+    const woff2 = matches.find((m) => m[2] && m[2].toLowerCase().includes("woff2"));
+    if (woff2) return woff2[1];
+    const woff = matches.find((m) => m[2] && m[2].toLowerCase().includes("woff"));
+    if (woff) return woff[1];
+    return matches[0][1];
+  }
+
+  // Cache resolved font URL -> data URI across captures. Fonts on a page
+  // essentially never change, and a batch run emits multiple captures back to
+  // back — without this we'd refetch + re-base64 every time.
+  const fontDataUriCache = new Map();
+  const SRC_DECLARATION_RE = /src\s*:\s*[^;}]+/i;
+
+  async function fetchAsDataUri(url) {
+    if (fontDataUriCache.has(url)) return fontDataUriCache.get(url);
+    let dataUri = null;
+    try {
+      const response = await fetch(url, { mode: "cors", credentials: "omit" });
+      if (response.ok) {
+        const blob = await response.blob();
+        if (blob.size <= MAX_FONT_BYTES) {
+          dataUri = await new Promise((resolve) => {
+            const reader = new FileReader();
+            reader.onloadend = () =>
+              resolve(typeof reader.result === "string" ? reader.result : null);
+            reader.onerror = () => resolve(null);
+            reader.readAsDataURL(blob);
+          });
+        }
+      }
+    } catch (_error) {
+      dataUri = null;
+    }
+    fontDataUriCache.set(url, dataUri);
+    return dataUri;
+  }
+
+  function collectFontFaceRuleTexts() {
+    const rules = [];
+    for (const sheet of document.styleSheets) {
+      let cssRules;
+      try {
+        cssRules = sheet.cssRules;
+      } catch (_error) {
+        continue;
+      }
+      if (!cssRules) continue;
+      for (const rule of cssRules) {
+        const cssText = rule.cssText || "";
+        if (cssText.startsWith("@font-face")) rules.push(cssText);
+      }
+    }
+    return rules;
+  }
+
+  async function buildInlinedFontCss() {
+    const ruleTexts = collectFontFaceRuleTexts();
+    if (ruleTexts.length === 0) return null;
+
+    const resolved = ruleTexts.map((cssText) => {
+      if (!SRC_DECLARATION_RE.test(cssText)) return null;
+      const srcMatch = cssText.match(/src\s*:\s*([^;}]+)[;}]/i);
+      if (!srcMatch) return null;
+      const url = extractFontUrl(srcMatch[1]);
+      if (!url) return null;
+      try {
+        return { cssText, url: new URL(url, document.baseURI).href };
+      } catch (_error) {
+        return null;
+      }
+    });
+
+    const dataUris = await Promise.all(
+      resolved.map((entry) => (entry ? fetchAsDataUri(entry.url) : Promise.resolve(null))),
+    );
+
+    const inlined = [];
+    let totalBytes = 0;
+    for (let index = 0; index < resolved.length; index += 1) {
+      const entry = resolved[index];
+      const dataUri = dataUris[index];
+      if (!entry || !dataUri) continue;
+      const approxBytes = dataUri.length * 0.75;
+      if (totalBytes + approxBytes > MAX_TOTAL_FONT_BYTES) break;
+      totalBytes += approxBytes;
+      inlined.push(entry.cssText.replace(SRC_DECLARATION_RE, `src: url("${dataUri}")`));
+    }
+    return inlined.length > 0 ? inlined.join("\n") : null;
+  }
+
+  function stripExternal(clone) {
+    const images = clone.querySelectorAll("img");
+    for (let index = 0; index < images.length; index += 1) {
+      const src = images[index].getAttribute("src");
+      if (src && !src.startsWith("data:")) images[index].removeAttribute("src");
+    }
+
+    const elements = clone.querySelectorAll("*");
+    for (let index = 0; index < elements.length; index += 1) {
+      const style = elements[index].style.cssText;
+      if (style && style.includes("url(")) {
+        elements[index].style.cssText = style.replace(
+          /url\(["']?(?!data:)[^)"']*["']?\)/gi,
+          "none",
+        );
+      }
+    }
+  }
+
+  function emitScroll() {
+    scrollRaf = 0;
+    if (!scrollForwarding) return;
+    postToTrustedTop({
+      type: "INLINE_EDIT_SCROLL",
+      scrollX: window.scrollX,
+      scrollY: window.scrollY,
+    });
+  }
+
+  window.addEventListener(
+    "scroll",
+    function () {
+      if (!scrollForwarding || scrollRaf) return;
+      scrollRaf = requestAnimationFrame(emitScroll);
+    },
+    { passive: true, capture: true },
+  );
+
+  async function handleCaptureRequest(event) {
+    const requestId = event.data.requestId;
+    const scrollX = window.scrollX;
+    const scrollY = window.scrollY;
+    const width = window.innerWidth;
+    const height = window.innerHeight;
+
+    function postResult(dataUrl) {
+      postToTrustedTop({
+        type: "INLINE_EDIT_SCREENSHOT_RESULT",
+        requestId,
+        dataUrl,
+        scrollX,
+        scrollY,
+      });
+    }
+
+    try {
+      // Wait for any pending web fonts to resolve so both inline metrics and
+      // the @font-face inlining below see the same loaded faces.
+      if (document.fonts && document.fonts.ready) {
+        try {
+          await document.fonts.ready;
+        } catch (_error) {}
+      }
+
+      const clone = document.documentElement.cloneNode(true);
+      inlineAll(document.documentElement, clone);
+
+      const removedNodes = clone.querySelectorAll("script,link[rel=\"stylesheet\"],style");
+      for (let index = 0; index < removedNodes.length; index += 1) {
+        removedNodes[index].remove();
+      }
+
+      stripExternal(clone);
+
+      // Re-embed web fonts as data-URI @font-face rules so the SVG rasterizer
+      // can resolve them — external font URLs aren't fetched during
+      // foreignObject rendering, which would otherwise force a fallback face
+      // and change text metrics.
+      const inlinedFontCss = await buildInlinedFontCss();
+      if (inlinedFontCss) {
+        const styleEl = document.createElement("style");
+        styleEl.textContent = inlinedFontCss;
+        const head = clone.querySelector("head");
+        if (head) head.appendChild(styleEl);
+        else clone.insertBefore(styleEl, clone.firstChild);
+      }
+
+      const html = new XMLSerializer().serializeToString(clone);
+      const svg =
+        `<svg xmlns="http://www.w3.org/2000/svg" width="${width}" height="${height}">` +
+        '<foreignObject width="100%" height="100%">' +
+        `<div xmlns="http://www.w3.org/1999/xhtml" style="width:${width}px;height:${height}px;overflow:hidden">` +
+        `<div style="transform:translate(-${scrollX}px,-${scrollY}px);transform-origin:top left">` +
+        html +
+        "</div></div></foreignObject></svg>";
+      const svgUrl = `data:image/svg+xml;charset=utf-8,${encodeURIComponent(svg)}`;
+      const image = new Image();
+      image.onload = function () {
+        const canvas = document.createElement("canvas");
+        canvas.width = width;
+        canvas.height = height;
+        canvas.getContext("2d").drawImage(image, 0, 0);
+        postResult(canvas.toDataURL("image/png"));
+      };
+      image.onerror = function () {
+        postResult(null);
+      };
+      image.src = svgUrl;
+    } catch (_error) {
+      postResult(null);
+    }
+  }
+
+  window.addEventListener("message", function (event) {
+    if (!event.data) return;
+    // Only accept messages from the direct parent frame. Blocks sibling /
+    // unrelated-window postMessage senders that could otherwise reach us.
+    if (event.source !== window.parent) return;
+
+    const trustedParentOrigin = getTrustedParentOrigin(event);
+    if (!trustedParentOrigin) return;
+    trustedTopOrigin = trustedParentOrigin;
+
+    if (event.data.type === "INLINE_EDIT_SCROLL_START") {
+      scrollForwarding = true;
+      emitScroll();
+      return;
+    }
+
+    if (event.data.type === "INLINE_EDIT_SCROLL_STOP") {
+      scrollForwarding = false;
+      if (scrollRaf) cancelAnimationFrame(scrollRaf);
+      scrollRaf = 0;
+      return;
+    }
+
+    if (event.data.type !== "INLINE_EDIT_CAPTURE_REQUEST") return;
+
+    handleCaptureRequest(event);
+  });
+})();
+
+
+</script></body>
+</html>
