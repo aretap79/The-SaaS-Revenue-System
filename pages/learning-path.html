@@ -1,0 +1,1727 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Guided Learning Path — SaaS Revenue System</title>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="../assets/shared.css"/>
+  <style>
+
+    /* ── Progress Bar ── */
+    .progress-bar-wrap {
+      background: #E9E7E2;
+      height: 6px;
+      position: sticky;
+      top: 52px;
+      z-index: 99;
+    }
+    .progress-bar-fill {
+      height: 100%;
+      background: linear-gradient(90deg, #01696F, #4F98A3);
+      width: 0%;
+      transition: width 0.4s ease;
+    }
+
+    /* ── Page Hero ── */
+    .lp-hero {
+      background: #28251D;
+      padding: 52px 48px 44px;
+      text-align: center;
+      position: relative;
+    }
+    .lp-hero-label {
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 2.5px;
+      text-transform: uppercase;
+      color: #4F98A3;
+      margin-bottom: 12px;
+    }
+    .lp-hero h1 {
+      font-size: 40px;
+      font-weight: 700;
+      color: #fff;
+      letter-spacing: -0.8px;
+      line-height: 1.1;
+      margin-bottom: 14px;
+    }
+    .lp-hero h1 span { color: #4F98A3; }
+    .lp-hero p {
+      font-size: 16px;
+      color: rgba(255,255,255,0.65);
+      max-width: 640px;
+      margin: 0 auto 24px;
+      line-height: 1.65;
+    }
+    .lp-hero-stats {
+      display: flex;
+      justify-content: center;
+      gap: 40px;
+      margin-top: 8px;
+    }
+    .lp-stat {
+      text-align: center;
+    }
+    .lp-stat-num {
+      font-size: 28px;
+      font-weight: 700;
+      color: #4F98A3;
+      line-height: 1;
+      margin-bottom: 4px;
+    }
+    .lp-stat-label {
+      font-size: 12px;
+      color: rgba(255,255,255,0.45);
+      letter-spacing: 0.5px;
+    }
+
+    /* ── How to Use Banner ── */
+    .how-to-use {
+      background: #F0F8F8;
+      border: 1.5px solid #C0DDE0;
+      border-radius: 10px;
+      padding: 20px 28px;
+      margin-bottom: 36px;
+      display: grid;
+      grid-template-columns: auto 1fr;
+      gap: 18px;
+      align-items: start;
+    }
+    .how-icon {
+      font-size: 28px;
+      line-height: 1;
+      margin-top: 2px;
+    }
+    .how-body h3 {
+      font-size: 15px;
+      font-weight: 700;
+      color: var(--text);
+      margin-bottom: 6px;
+    }
+    .how-body p {
+      font-size: 14px;
+      color: var(--text-muted);
+      line-height: 1.65;
+      margin: 0;
+    }
+    .how-body p strong { color: var(--text); }
+
+    /* ── Module ── */
+    .module {
+      margin-bottom: 48px;
+    }
+    .module-header {
+      display: flex;
+      align-items: flex-start;
+      gap: 20px;
+      margin-bottom: 20px;
+      padding-bottom: 16px;
+      border-bottom: 2px solid var(--border);
+    }
+    .module-num {
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: var(--text-faint);
+      min-width: 72px;
+      margin-top: 4px;
+    }
+    .module-title-wrap h2 {
+      font-size: 24px;
+      font-weight: 700;
+      color: var(--text);
+      margin-bottom: 4px;
+      letter-spacing: -0.3px;
+    }
+    .module-subtitle {
+      font-size: 14px;
+      color: var(--text-muted);
+      line-height: 1.5;
+    }
+    .module-why {
+      background: #F7F6F2;
+      border-left: 4px solid #01696F;
+      border-radius: 0 6px 6px 0;
+      padding: 12px 16px;
+      font-size: 13px;
+      color: var(--text-muted);
+      line-height: 1.6;
+      margin-bottom: 20px;
+    }
+    .module-why strong { color: var(--text); }
+
+    /* ── Step Cards ── */
+    .steps-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      gap: 12px;
+    }
+    .step-card {
+      background: var(--surface);
+      border: 1.5px solid var(--border);
+      border-radius: 10px;
+      padding: 16px 18px;
+      cursor: pointer;
+      transition: all 0.15s;
+      text-decoration: none;
+      display: block;
+      position: relative;
+      overflow: hidden;
+    }
+    .step-card:hover {
+      border-color: #01696F;
+      box-shadow: 0 4px 16px rgba(1,105,111,0.12);
+      transform: translateY(-1px);
+      text-decoration: none;
+    }
+    .step-card::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 3px;
+    }
+    .step-num {
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      margin-bottom: 6px;
+    }
+    .step-title {
+      font-size: 14px;
+      font-weight: 700;
+      color: var(--text);
+      margin-bottom: 4px;
+      line-height: 1.3;
+    }
+    .step-desc {
+      font-size: 12px;
+      color: var(--text-muted);
+      line-height: 1.55;
+      margin-bottom: 10px;
+    }
+    .step-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 5px;
+    }
+    .step-tag {
+      font-size: 10px;
+      font-weight: 600;
+      padding: 2px 8px;
+      border-radius: 10px;
+      background: #F0F0EE;
+      color: var(--text-muted);
+    }
+    .step-arrow {
+      position: absolute;
+      bottom: 14px;
+      right: 16px;
+      font-size: 14px;
+      color: var(--text-faint);
+    }
+    .step-card:hover .step-arrow { color: #01696F; }
+
+    /* ── Color themes for step cards ── */
+    /* Module 1 — SoS: teal dark */
+    .m1 .step-card::before { background: #0D5C63; }
+    .m1 .step-num { color: #0D5C63; }
+
+    /* Module 2 — Foundation: Phase 0 dark + Phase 1 */
+    .m2 .step-card::before { background: #1B474D; }
+    .m2 .step-num { color: #1B474D; }
+
+    /* Module 3 — Marketing/Demand */
+    .m3 .step-card::before { background: #437A22; }
+    .m3 .step-num { color: #437A22; }
+
+    /* Module 4 — Sales Execution */
+    .m4 .step-card::before { background: #964219; }
+    .m4 .step-num { color: #964219; }
+
+    /* Module 5 — People */
+    .m5 .step-card::before { background: #2a7fa8; }
+    .m5 .step-num { color: #2a7fa8; }
+
+    /* Module 6 — Customer Success */
+    .m6 .step-card::before { background: #7A39BB; }
+    .m6 .step-num { color: #7A39BB; }
+
+    /* Module 7 — RevOps */
+    .m7 .step-card::before { background: #01696F; }
+    .m7 .step-num { color: #01696F; }
+
+    /* Module 8 — Connective Tissue */
+    .m8 .step-card::before { background: #28251D; }
+    .m8 .step-num { color: #28251D; }
+
+    /* Module 9 — Scale & Diagnostics */
+    .m9 .step-card::before { background: #A13544; }
+    .m9 .step-num { color: #A13544; }
+
+    /* Module 10 — Templates */
+    .m10 .step-card::before { background: #6E522B; }
+    .m10 .step-num { color: #6E522B; }
+
+    /* ── Connector (between modules) ── */
+    .module-connector {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin: -20px 0 36px 0;
+      padding-left: 92px;
+    }
+    .mc-line {
+      width: 2px;
+      height: 32px;
+      background: var(--border);
+    }
+    .mc-label {
+      font-size: 11px;
+      font-weight: 600;
+      color: var(--text-faint);
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      margin-left: 8px;
+    }
+
+    /* ── Map Overview (sticky sidebar skipped — simple TOC instead) ── */
+    .toc-strip {
+      background: var(--surface);
+      border: 1.5px solid var(--border);
+      border-radius: 10px;
+      padding: 20px 24px;
+      margin-bottom: 40px;
+    }
+    .toc-strip h3 {
+      font-size: 13px;
+      font-weight: 700;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      margin-bottom: 14px;
+    }
+    .toc-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+      gap: 6px 16px;
+    }
+    .toc-item {
+      font-size: 13px;
+      color: var(--text);
+      text-decoration: none;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 5px 0;
+      border-bottom: 1px solid #F0EFEb;
+      transition: color 0.15s;
+    }
+    .toc-item:hover { color: #01696F; text-decoration: none; }
+    .toc-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      flex-shrink: 0;
+    }
+    .toc-badge {
+      margin-left: auto;
+      font-size: 10px;
+      font-weight: 700;
+      color: var(--text-faint);
+    }
+
+    /* ── Full-width step (for single important pages) ── */
+    .steps-single {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+    .step-card-wide {
+      background: var(--surface);
+      border: 1.5px solid var(--border);
+      border-radius: 10px;
+      padding: 16px 20px;
+      cursor: pointer;
+      transition: all 0.15s;
+      text-decoration: none;
+      display: grid;
+      grid-template-columns: auto 1fr auto;
+      align-items: center;
+      gap: 16px;
+      position: relative;
+      overflow: hidden;
+    }
+    .step-card-wide::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; bottom: 0;
+      width: 3px;
+    }
+    .step-card-wide:hover {
+      border-color: #01696F;
+      box-shadow: 0 4px 16px rgba(1,105,111,0.10);
+      transform: translateY(-1px);
+      text-decoration: none;
+    }
+    .scw-num {
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      min-width: 60px;
+    }
+    .scw-body .step-title { font-size: 15px; }
+    .scw-body .step-desc { margin-bottom: 0; }
+    .scw-tags { display: flex; gap: 5px; flex-wrap: wrap; margin-top: 6px; }
+    .scw-arrow { font-size: 18px; color: var(--text-faint); }
+    .step-card-wide:hover .scw-arrow { color: #01696F; }
+
+    /* Wide card color themes */
+    .m1 .step-card-wide::before { background: #0D5C63; }
+    .m1 .scw-num { color: #0D5C63; }
+    .m2 .step-card-wide::before { background: #1B474D; }
+    .m2 .scw-num { color: #1B474D; }
+    .m3 .step-card-wide::before { background: #437A22; }
+    .m3 .scw-num { color: #437A22; }
+    .m4 .step-card-wide::before { background: #964219; }
+    .m4 .scw-num { color: #964219; }
+    .m5 .step-card-wide::before { background: #2a7fa8; }
+    .m5 .scw-num { color: #2a7fa8; }
+    .m6 .step-card-wide::before { background: #7A39BB; }
+    .m6 .scw-num { color: #7A39BB; }
+    .m7 .step-card-wide::before { background: #01696F; }
+    .m7 .scw-num { color: #01696F; }
+    .m8 .step-card-wide::before { background: #28251D; }
+    .m8 .scw-num { color: #28251D; }
+    .m9 .step-card-wide::before { background: #A13544; }
+    .m9 .scw-num { color: #A13544; }
+    .m10 .step-card-wide::before { background: #6E522B; }
+    .m10 .scw-num { color: #6E522B; }
+
+    /* ── Milestone Marker ── */
+    .milestone {
+      background: linear-gradient(135deg, #01696F 0%, #0D5C63 100%);
+      border-radius: 10px;
+      padding: 18px 24px;
+      color: #fff;
+      margin: 32px 0;
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+    .milestone-icon { font-size: 26px; }
+    .milestone-body h4 {
+      font-size: 15px;
+      font-weight: 700;
+      margin-bottom: 3px;
+    }
+    .milestone-body p {
+      font-size: 13px;
+      opacity: 0.8;
+      line-height: 1.5;
+      margin: 0;
+    }
+
+    /* ── Completion Banner ── */
+    .completion-banner {
+      background: #28251D;
+      border-radius: 10px;
+      padding: 32px 36px;
+      text-align: center;
+      margin-top: 48px;
+    }
+    .completion-banner h3 {
+      font-size: 24px;
+      font-weight: 700;
+      color: #fff;
+      margin-bottom: 10px;
+    }
+    .completion-banner p {
+      font-size: 15px;
+      color: rgba(255,255,255,0.6);
+      max-width: 520px;
+      margin: 0 auto 20px;
+      line-height: 1.65;
+    }
+    .completion-links {
+      display: flex;
+      justify-content: center;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+    .comp-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 11px 22px;
+      border-radius: 8px;
+      font-size: 14px;
+      font-weight: 700;
+      text-decoration: none;
+      transition: opacity 0.15s;
+    }
+    .comp-link:hover { opacity: 0.85; text-decoration: none; }
+    .comp-primary { background: #01696F; color: #fff; }
+    .comp-secondary { background: rgba(255,255,255,0.1); color: #fff; border: 1px solid rgba(255,255,255,0.2); }
+
+    /* ── Subpage drill-down indicator ── */
+    .drill-label {
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      color: var(--text-faint);
+      margin: 20px 0 10px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .drill-label::after {
+      content: '';
+      flex: 1;
+      height: 1px;
+      background: var(--border);
+    }
+
+    /* ── Responsive ── */
+    @media (max-width: 700px) {
+      .lp-hero { padding: 36px 24px 32px; }
+      .lp-hero h1 { font-size: 28px; }
+      .lp-hero-stats { gap: 20px; }
+      .content-wrap { padding: 28px 20px 60px; }
+      .module-header { flex-direction: column; gap: 8px; }
+      .module-connector { padding-left: 0; }
+      .toc-grid { grid-template-columns: 1fr; }
+      .step-card-wide { grid-template-columns: 1fr; }
+      .scw-arrow { display: none; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- Nav -->
+<nav class="nav">
+  <a href="../index.html" class="nav-back">← Home</a>
+  <span class="nav-sep">|</span>
+  <span class="nav-current">Guided Learning Path</span>
+  <span class="nav-spacer"></span>
+  <a href="../pages/search.html" class="nav-home">⌕ Search</a>
+</nav>
+
+<!-- Progress Bar -->
+<div class="progress-bar-wrap">
+  <div class="progress-bar-fill" id="progressBar"></div>
+</div>
+
+<!-- Hero -->
+<div class="lp-hero">
+  <div class="lp-hero-label">Start Here</div>
+  <h1>The <span>Guided Learning Path</span></h1>
+  <p>The complete, sequenced route through every part of the SaaS Revenue System — from first principles to templates you can use today. Follow in order. Nothing is skipped.</p>
+  <div class="lp-hero-stats">
+    <div class="lp-stat">
+      <div class="lp-stat-num">10</div>
+      <div class="lp-stat-label">Modules</div>
+    </div>
+    <div class="lp-stat">
+      <div class="lp-stat-num">9</div>
+      <div class="lp-stat-label">Functional Areas</div>
+    </div>
+    <div class="lp-stat">
+      <div class="lp-stat-num">150+</div>
+      <div class="lp-stat-label">Deep-Dive Pages</div>
+    </div>
+    <div class="lp-stat">
+      <div class="lp-stat-num">30+</div>
+      <div class="lp-stat-label">Templates & Tools</div>
+    </div>
+  </div>
+</div>
+
+<!-- Main Content -->
+<div class="content-wrap" style="max-width:980px;margin:0 auto;padding:48px 32px 80px;">
+
+  <!-- How to Use -->
+  <div class="how-to-use">
+    <div class="how-icon">🗺️</div>
+    <div class="how-body">
+      <h3>How to Use This Learning Path</h3>
+      <p>Each module builds on the last. <strong>Start at Module 1</strong> and work forward without skipping — the system is interdependent, and the order is intentional. Within each module, click the cards in sequence. After reading a page, hit the browser back button to return here and continue. <strong>Templates in Module 10</strong> are reference tools — revisit them when you're ready to apply what you've learned. The progress bar at the top tracks how far you've scrolled.</p>
+    </div>
+  </div>
+
+  <!-- TOC -->
+  <div class="toc-strip">
+    <h3>Jump to a Module</h3>
+    <div class="toc-grid">
+      <a href="#m1" class="toc-item"><span class="toc-dot" style="background:#0D5C63;"></span>Module 1 — The Framework<span class="toc-badge">Foundation</span></a>
+      <a href="#m2" class="toc-item"><span class="toc-dot" style="background:#1B474D;"></span>Module 2 — Leadership & Vision<span class="toc-badge">Culture</span></a>
+      <a href="#m3" class="toc-item"><span class="toc-dot" style="background:#20808D;"></span>Module 3 — ICP & Messaging<span class="toc-badge">Strategy</span></a>
+      <a href="#m4" class="toc-item"><span class="toc-dot" style="background:#437A22;"></span>Module 4 — Marketing Engine<span class="toc-badge">Demand</span></a>
+      <a href="#m5" class="toc-item"><span class="toc-dot" style="background:#964219;"></span>Module 5 — Sales Execution<span class="toc-badge">Pipeline</span></a>
+      <a href="#m6" class="toc-item"><span class="toc-dot" style="background:#2a7fa8;"></span>Module 6 — People & Management<span class="toc-badge">Team</span></a>
+      <a href="#m7" class="toc-item"><span class="toc-dot" style="background:#7A39BB;"></span>Module 7 — Customer Success<span class="toc-badge">Retention</span></a>
+      <a href="#m8" class="toc-item"><span class="toc-dot" style="background:#01696F;"></span>Module 8 — Revenue Operations<span class="toc-badge">RevOps</span></a>
+      <a href="#m9" class="toc-item"><span class="toc-dot" style="background:#28251D;"></span>Module 9 — Metrics & Handoffs<span class="toc-badge">Alignment</span></a>
+      <a href="#m10" class="toc-item"><span class="toc-dot" style="background:#6E522B;"></span>Module 10 — Scale & Templates<span class="toc-badge">Apply It</span></a>
+    </div>
+  </div>
+
+  <!-- ────────────────────────────────────────────────
+       MODULE 1 — The Framework
+  ──────────────────────────────────────────────── -->
+  <div class="module m1" id="m1">
+    <div class="module-header">
+      <div class="module-num">Module 1</div>
+      <div class="module-title-wrap">
+        <h2>The Framework — Why This All Exists</h2>
+        <div class="module-subtitle">The Science of Scaling mental model. Before you learn any tactic, understand the strategic architecture that determines which tactics matter — and when.</div>
+      </div>
+    </div>
+    <div class="module-why">
+      <strong>Why start here:</strong> 90% of CROs fail because they apply the right tactics at the wrong stage. The Science of Scaling framework tells you exactly where you are, what matters now, and what to ignore. Every other module connects back to this.
+    </div>
+
+    <div class="steps-single">
+      <a href="../pages/science-of-scaling.html" class="step-card-wide">
+        <div class="scw-num">Step 1.1</div>
+        <div class="scw-body">
+          <div class="step-title">The Science of Scaling — Master Page</div>
+          <div class="step-desc">Why startups fail, the 3-Stage Framework (PMF → GTM Fit → Growth & Moat), and the GTM Strategy Matrix. This is the single most important page in the manual.</div>
+          <div class="scw-tags">
+            <span class="step-tag">Roberge Framework</span>
+            <span class="step-tag">3 Stages</span>
+            <span class="step-tag">GTM Matrix</span>
+          </div>
+        </div>
+        <div class="scw-arrow">→</div>
+      </a>
+    </div>
+
+    <div class="drill-label">Deep Dives — Read these next, in order</div>
+
+    <div class="steps-grid">
+      <a href="../subpages/sos-pmf.html" class="step-card">
+        <div class="step-num">Step 1.2</div>
+        <div class="step-title">PMF Stage — Product-Market Fit</div>
+        <div class="step-desc">The LIR metric, Customer Retention Qualifying Matrix, 80/20 comp structure, and what "world-class retention" actually means.</div>
+        <div class="step-tags"><span class="step-tag">LIR</span><span class="step-tag">Retention</span><span class="step-tag">PMF</span></div>
+        <div class="step-arrow">→</div>
+      </a>
+      <a href="../subpages/sos-gtm-fit.html" class="step-card">
+        <div class="step-num">Step 1.3</div>
+        <div class="step-title">GTM Fit Stage</div>
+        <div class="step-desc">Repeatable playbook, 5-component GTM Playbook, pricing lens (30–40% of economic value), and the dashboard that tells you when you've achieved GTM Fit.</div>
+        <div class="step-tags"><span class="step-tag">GTM Fit</span><span class="step-tag">Playbook</span><span class="step-tag">Metrics</span></div>
+        <div class="step-arrow">→</div>
+      </a>
+      <a href="../subpages/sos-growth-moat.html" class="step-card">
+        <div class="step-num">Step 1.4</div>
+        <div class="step-title">Growth & Moat Stage</div>
+        <div class="step-desc">Scaling headcount, the 4-Phase Sales Manager Development Program, and the player-coach trap to avoid when promoting reps.</div>
+        <div class="step-tags"><span class="step-tag">Scaling</span><span class="step-tag">Management</span><span class="step-tag">Growth</span></div>
+        <div class="step-arrow">→</div>
+      </a>
+      <a href="../subpages/sos-lir.html" class="step-card">
+        <div class="step-num">Step 1.5</div>
+        <div class="step-title">The LIR Metric — Deep Dive</div>
+        <div class="step-desc">Lead-to-ICP Retention rate — the single most important metric in PMF Stage. How to calculate it, the 12–18 month cohort window, and what good looks like.</div>
+        <div class="step-tags"><span class="step-tag">LIR</span><span class="step-tag">Cohort Analysis</span></div>
+        <div class="step-arrow">→</div>
+      </a>
+      <a href="../subpages/sos-liue.html" class="step-card">
+        <div class="step-num">Step 1.6</div>
+        <div class="step-title">LIUE — The Expansion Metric</div>
+        <div class="step-desc">Lead-to-ICP Upsell/Expansion metric. The signal that customers are so successful they buy more — the green light to scale marketing spend.</div>
+        <div class="step-tags"><span class="step-tag">LIUE</span><span class="step-tag">Expansion</span></div>
+        <div class="step-arrow">→</div>
+      </a>
+      <a href="../subpages/sos-gtm-playbook.html" class="step-card">
+        <div class="step-num">Step 1.7</div>
+        <div class="step-title">The 5-Component GTM Playbook</div>
+        <div class="step-desc">The ICP Foundation plus the 5 ordered components: Buyer Journey, Prospecting, Discovery, Presentation, and Customer Success Guide.</div>
+        <div class="step-tags"><span class="step-tag">Playbook</span><span class="step-tag">GTM</span><span class="step-tag">5 Components</span></div>
+        <div class="step-arrow">→</div>
+      </a>
+      <a href="../subpages/sos-hiring-sales-leader.html" class="step-card">
+        <div class="step-num">Step 1.8</div>
+        <div class="step-title">Hiring the First Sales Leader</div>
+        <div class="step-desc">When to hire, what type to hire, and the scorecard for the first sales leader. One of the highest-leverage — and highest-risk — decisions a founder makes.</div>
+        <div class="step-tags"><span class="step-tag">First Hire</span><span class="step-tag">Sales Leader</span></div>
+        <div class="step-arrow">→</div>
+      </a>
+      <a href="../subpages/sos-bottoms-up.html" class="step-card">
+        <div class="step-num">Step 1.9</div>
+        <div class="step-title">Bottoms-Up Revenue Model</div>
+        <div class="step-desc">How to model revenue from first principles: quota capacity × attainment × ASP × pipeline coverage. The math behind every growth plan.</div>
+        <div class="step-tags"><span class="step-tag">Revenue Model</span><span class="step-tag">Capacity</span></div>
+        <div class="step-arrow">→</div>
+      </a>
+      <a href="../subpages/sos-checklist.html" class="step-card">
+        <div class="step-num">Step 1.10</div>
+        <div class="step-title">Stage Transition Checklist</div>
+        <div class="step-desc">The specific criteria that must be true before advancing from PMF → GTM Fit → Growth & Moat. Do not skip stages based on gut feel.</div>
+        <div class="step-tags"><span class="step-tag">Gates</span><span class="step-tag">Checklist</span></div>
+        <div class="step-arrow">→</div>
+      </a>
+    </div>
+  </div>
+
+  <div class="milestone">
+    <div class="milestone-icon">✓</div>
+    <div class="milestone-body">
+      <h4>Module 1 Complete — You Have the Map</h4>
+      <p>You now understand where you are in the journey and which metrics tell you when to shift gears. Every module ahead fills in one section of this map.</p>
+    </div>
+  </div>
+
+  <div class="module-connector"><div class="mc-line"></div><div class="mc-label">Builds on Module 1</div></div>
+
+  <!-- ────────────────────────────────────────────────
+       MODULE 2 — Leadership, Vision & Culture
+  ──────────────────────────────────────────────── -->
+  <div class="module m2" id="m2">
+    <div class="module-header">
+      <div class="module-num">Module 2</div>
+      <div class="module-title-wrap">
+        <h2>Leadership, Vision & Culture</h2>
+        <div class="module-subtitle">Phase 0 — the operating layer that runs beneath everything. Culture is not a perk; it is your first moat. Leaders who skip this discover it only when things break.</div>
+      </div>
+    </div>
+    <div class="module-why">
+      <strong>Why this comes before strategy:</strong> Without a shared compelling vision, your ICP work is ignored. Without accountability norms, your playbook dies in week two. This module gives you the leadership infrastructure that makes everything else stick.
+    </div>
+
+    <div class="steps-single">
+      <a href="../pages/phase0.html" class="step-card-wide">
+        <div class="scw-num">Step 2.1</div>
+        <div class="scw-body">
+          <div class="step-title">Phase 0 — Leadership, Vision, Culture & Communication</div>
+          <div class="step-desc">The master overview. Compelling Vision, Trust & Accountability, and Communication Cadence — the three operating disciplines of a high-performance revenue culture.</div>
+          <div class="scw-tags">
+            <span class="step-tag">Vision</span>
+            <span class="step-tag">Culture</span>
+            <span class="step-tag">Accountability</span>
+          </div>
+        </div>
+        <div class="scw-arrow">→</div>
+      </a>
+    </div>
+
+    <div class="drill-label">Deep Dives</div>
+    <div class="steps-grid">
+      <a href="../subpages/compelling-vision.html" class="step-card">
+        <div class="step-num">Step 2.2</div>
+        <div class="step-title">Compelling Vision</div>
+        <div class="step-desc">How to craft and communicate a vision that recruits, retains, and aligns a team around a single north star — even before the product is perfect.</div>
+        <div class="step-tags"><span class="step-tag">Vision</span><span class="step-tag">Narrative</span></div>
+        <div class="step-arrow">→</div>
+      </a>
+      <a href="../subpages/trust-accountability.html" class="step-card">
+        <div class="step-num">Step 2.3</div>
+        <div class="step-title">Trust & Accountability</div>
+        <div class="step-desc">Building the psychological safety and performance accountability that lets teams push hard without burning out or hiding problems.</div>
+        <div class="step-tags"><span class="step-tag">Accountability</span><span class="step-tag">Culture</span></div>
+        <div class="step-arrow">→</div>
+      </a>
+      <a href="../subpages/communication-cadence.html" class="step-card">
+        <div class="step-num">Step 2.4</div>
+        <div class="step-title">Communication Cadence</div>
+        <div class="step-desc">The rhythm of leadership — daily standups, weekly 1:1s, monthly team reviews, quarterly planning. The cadences that keep alignment from drifting.</div>
+        <div class="step-tags"><span class="step-tag">Cadence</span><span class="step-tag">Meetings</span></div>
+        <div class="step-arrow">→</div>
+      </a>
+    </div>
+  </div>
+
+  <div class="module-connector"><div class="mc-line"></div><div class="mc-label">Builds on Module 2</div></div>
+
+  <!-- ────────────────────────────────────────────────
+       MODULE 3 — ICP, Messaging & Sales Strategy
+  ──────────────────────────────────────────────── -->
+  <div class="module m2" id="m3" style="--m-color: #20808D;">
+    <div class="module-header">
+      <div class="module-num">Module 3</div>
+      <div class="module-title-wrap">
+        <h2>ICP, Messaging & Sales Strategy</h2>
+        <div class="module-subtitle">Phase 1 — the strategic foundation. Before you hire a single AE or run a single campaign, you need to know exactly who you're selling to, why they buy, and how you win.</div>
+      </div>
+    </div>
+    <div class="module-why">
+      <strong>Why before hiring:</strong> If you don't know your ICP, you can't write a good job description for an AE. If you don't know your sales motion, you can't build a compensation plan. This module defines the target before you load the gun.
+    </div>
+
+    <div class="steps-single" style="--m-color: #20808D;">
+      <a href="../pages/phase1.html" class="step-card-wide" style="border-color:#ddd;">
+        <div class="scw-num" style="color:#20808D;">Step 3.1</div>
+        <div class="scw-body">
+          <div class="step-title">Phase 1 — ICP, Messaging, Sales Motion & Playbook</div>
+          <div class="step-desc">The master overview of the entire Phase 1 system: ICP, Value Proposition, Competitive Positioning, Sales Motion, Playbook, Segmentation, and Channel Strategy.</div>
+          <div class="scw-tags">
+            <span class="step-tag">ICP</span><span class="step-tag">Messaging</span><span class="step-tag">Playbook</span>
+          </div>
+        </div>
+        <div class="scw-arrow">→</div>
+      </a>
+    </div>
+
+    <div class="drill-label">Deep Dives — Primary Strategy Pages</div>
+    <div class="steps-grid">
+      <a href="../subpages/icp.html" class="step-card" style="border-color:#ddd;">
+        <div class="step-num" style="color:#20808D;">Step 3.2</div>
+        <div class="step-title">Ideal Customer Profile (ICP)</div>
+        <div class="step-desc">Firmographic, technographic, behavioral, and situational dimensions. The LIR filter for identifying your true ICP from retention data — not gut feel.</div>
+        <div class="step-tags"><span class="step-tag">ICP</span><span class="step-tag">LIR</span><span class="step-tag">Segmentation</span></div>
+        <div class="step-arrow">→</div>
+      </a>
+      <a href="../subpages/value-proposition.html" class="step-card" style="border-color:#ddd;">
+        <div class="step-num" style="color:#20808D;">Step 3.3</div>
+        <div class="step-title">Value Proposition & Messaging</div>
+        <div class="step-desc">The Message House framework. Economic value narrative, proof points, objection handles — all the language your team needs to speak with one voice.</div>
+        <div class="step-tags"><span class="step-tag">Message House</span><span class="step-tag">Positioning</span></div>
+        <div class="step-arrow">→</div>
+      </a>
+      <a href="../subpages/competitive-positioning.html" class="step-card" style="border-color:#ddd;">
+        <div class="step-num" style="color:#20808D;">Step 3.4</div>
+        <div class="step-title">Competitive Positioning</div>
+        <div class="step-desc">Category definition, competitive matrix, win themes, and how to handle the "we're evaluating your competitor" conversation without losing your footing.</div>
+        <div class="step-tags"><span class="step-tag">Competitive</span><span class="step-tag">Differentiation</span></div>
+        <div class="step-arrow">→</div>
+      </a>
+      <a href="../subpages/sales-motion.html" class="step-card" style="border-color:#ddd;">
+        <div class="step-num" style="color:#20808D;">Step 3.5</div>
+        <div class="step-title">Sales Motion Design</div>
+        <div class="step-desc">Inbound vs. outbound, PLG vs. SLG, enterprise vs. mid-market — choosing and designing the motion that matches your product, market, and ACV.</div>
+        <div class="step-tags"><span class="step-tag">Motion</span><span class="step-tag">PLG</span><span class="step-tag">Outbound</span></div>
+        <div class="step-arrow">→</div>
+      </a>
+      <a href="../subpages/playbook.html" class="step-card" style="border-color:#ddd;">
+        <div class="step-num" style="color:#20808D;">Step 3.6</div>
+        <div class="step-title">The Sales Playbook</div>
+        <div class="step-desc">How to build the repeatable playbook: buyer journey map, talk tracks, email sequences, objection handling, and the stage-exit criteria that make it measurable.</div>
+        <div class="step-tags"><span class="step-tag">Playbook</span><span class="step-tag">Repeatability</span></div>
+        <div class="step-arrow">→</div>
+      </a>
+      <a href="../subpages/segmentation.html" class="step-card" style="border-color:#ddd;">
+        <div class="step-num" style="color:#20808D;">Step 3.7</div>
+        <div class="step-title">Market Segmentation</div>
+        <div class="step-desc">TAM/SAM/SOM, vertical vs. horizontal segmentation, and how to prioritize the segments where you can win fastest and at the highest margin.</div>
+        <div class="step-tags"><span class="step-tag">TAM</span><span class="step-tag">Segmentation</span></div>
+        <div class="step-arrow">→</div>
+      </a>
+      <a href="../subpages/channel-strategy.html" class="step-card" style="border-color:#ddd;">
+        <div class="step-num" style="color:#20808D;">Step 3.8</div>
+        <div class="step-title">Channel Strategy</div>
+        <div class="step-desc">Direct, partner, and product-led channels. How to pick the right mix for your stage and not over-invest in channels before your playbook is proven.</div>
+        <div class="step-tags"><span class="step-tag">Channels</span><span class="step-tag">Partners</span></div>
+        <div class="step-arrow">→</div>
+      </a>
+    </div>
+  </div>
+
+  <div class="module-connector"><div class="mc-line"></div><div class="mc-label">Builds on Module 3</div></div>
+
+  <!-- ────────────────────────────────────────────────
+       MODULE 4 — Marketing & Demand Generation Engine
+  ──────────────────────────────────────────────── -->
+  <div class="module m3" id="m4">
+    <div class="module-header">
+      <div class="module-num">Module 4</div>
+      <div class="module-title-wrap">
+        <h2>The Marketing & Demand Generation Engine</h2>
+        <div class="module-subtitle">Phase 3 — how qualified pipeline gets created at scale. Marketing's job is pipeline, not awareness. Learn the full system: demand gen, content, SDR function, ABM, and the handoff to sales.</div>
+      </div>
+    </div>
+    <div class="module-why">
+      <strong>Why Marketing before People & Management:</strong> Salespeople cannot succeed in a pipeline desert. Before you learn how to manage reps, understand where their pipeline comes from and what Marketing's role is in creating it. This module shows you the full demand waterfall.
+    </div>
+
+    <div class="steps-single">
+      <a href="../pages/marketing.html" class="step-card-wide">
+        <div class="scw-num">Step 4.1</div>
+        <div class="scw-body">
+          <div class="step-title">Marketing — Pipeline Creation Engine (Master Page)</div>
+          <div class="step-desc">The integrated marketing system: how demand gen, content marketing, ABM, and sales enablement work together to create predictable, qualified pipeline.</div>
+          <div class="scw-tags">
+            <span class="step-tag">Marketing</span><span class="step-tag">Pipeline</span><span class="step-tag">Demand Gen</span>
+          </div>
+        </div>
+        <div class="scw-arrow">→</div>
+      </a>
+    </div>
+
+    <div class="drill-label">Deep Dives — Marketing</div>
+    <div class="steps-grid">
+      <a href="../subpages/demand-generation.html" class="step-card">
+        <div class="step-num">Step 4.2</div>
+        <div class="step-title">Demand Generation</div>
+        <div class="step-desc">Inbound channels, outbound plays, paid acquisition, organic, community — building the engine that fills the top of the funnel with ICP-fit buyers.</div>
+        <div class="step-tags"><span class="step-tag">Demand Gen</span><span class="step-tag">Inbound</span></div>
+        <div class="step-arrow">→</div>
+      </a>
+      <a href="../subpages/content-marketing.html" class="step-card">
+        <div class="step-num">Step 4.3</div>
+        <div class="step-title">Content Marketing</div>
+        <div class="step-desc">How content creates buying intent, shortens sales cycles, and builds authority. The content calendar, formats, and measurement framework that tie content to pipeline.</div>
+        <div class="step-tags"><span class="step-tag">Content</span><span class="step-tag">SEO</span></div>
+        <div class="step-arrow">→</div>
+      </a>
+      <a href="../subpages/abm.html" class="step-card">
+        <div class="step-num">Step 4.4</div>
+        <div class="step-title">Account-Based Marketing (ABM)</div>
+        <div class="step-desc">The 1:1, 1:few, 1:many ABM tiers. How to run targeted account campaigns that align sales and marketing on the same named accounts.</div>
+        <div class="step-tags"><span class="step-tag">ABM</span><span class="step-tag">Named Accounts</span></div>
+        <div class="step-arrow">→</div>
+      </a>
+      <a href="../subpages/funnel-architecture.html" class="step-card">
+        <div class="step-num">Step 4.5</div>
+        <div class="step-title">Funnel Architecture</div>
+        <div class="step-desc">TOFU/MOFU/BOFU. How to design the funnel from awareness to closed-won so that every stage is measurable and every conversion rate has a lever.</div>
+        <div class="step-tags"><span class="step-tag">Funnel</span><span class="step-tag">Conversion</span></div>
+        <div class="step-arrow">→</div>
+      </a>
+      <a href="../subpages/funnel-definitions.html" class="step-card">
+        <div class="step-num">Step 4.6</div>
+        <div class="step-title">Funnel Definitions & Stage Criteria</div>
+        <div class="step-desc">The precise definitions of MQL, SAL, SQL, SQO, and Closed-Won — and why inconsistent definitions destroy forecasting accuracy across every team.</div>
+        <div class="step-tags"><span class="step-tag">MQL</span><span class="step-tag">SQL</span><span class="step-tag">Definitions</span></div>
+        <div class="step-arrow">→</div>
+      </a>
+      <a href="../subpages/lead-scoring.html" class="step-card">
+        <div class="step-num">Step 4.7</div>
+        <div class="step-title">Lead Scoring</div>
+        <div class="step-desc">Behavioral + firmographic scoring models. How to score leads so that Sales only touches the accounts most likely to convert — and Marketing focuses spend accordingly.</div>
+        <div class="step-tags"><span class="step-tag">Lead Scoring</span><span class="step-tag">MQL</span></div>
+        <div class="step-arrow">→</div>
+      </a>
+      <a href="../subpages/sdr-function.html" class="step-card">
+        <div class="step-num">Step 4.8</div>
+        <div class="step-title">The SDR Function</div>
+        <div class="step-desc">How to build, structure, and measure a Sales Development Representative team — the bridge between marketing demand and sales pipeline.</div>
+        <div class="step-tags"><span class="step-tag">SDR</span><span class="step-tag">BDR</span><span class="step-tag">Outbound</span></div>
+        <div class="step-arrow">→</div>
+      </a>
+      <a href="../subpages/sdr-playbook.html" class="step-card">
+        <div class="step-num">Step 4.9</div>
+        <div class="step-title">SDR Playbook</div>
+        <div class="step-desc">The sequencing playbook for SDRs: call frameworks, email cadences, LinkedIn touches, objection responses, and the daily activity model that drives results.</div>
+        <div class="step-tags"><span class="step-tag">SDR Playbook</span><span class="step-tag">Sequences</span></div>
+        <div class="step-arrow">→</div>
+      </a>
+      <a href="../subpages/mql-handoff.html" class="step-card">
+        <div class="step-num">Step 4.10</div>
+        <div class="step-title">MQL → SQL Handoff</div>
+        <div class="step-desc">The formal handoff protocol between Marketing and Sales. SLAs, acceptance criteria, rejection feedback loops, and how to prevent pipeline from dying at the handoff.</div>
+        <div class="step-tags"><span class="step-tag">Handoff</span><span class="step-tag">MQL</span><span class="step-tag">SLA</span></div>
+        <div class="step-arrow">→</div>
+      </a>
+      <a href="../subpages/pipeline-generation.html" class="step-card">
+        <div class="step-num">Step 4.11</div>
+        <div class="step-title">Pipeline Generation</div>
+        <div class="step-desc">How to plan and measure pipeline creation — pipeline targets, source attribution, and the coverage ratios needed to hit quota across all channels.</div>
+        <div class="step-tags"><span class="step-tag">Pipeline</span><span class="step-tag">Coverage</span></div>
+        <div class="step-arrow">→</div>
+      </a>
+      <a href="../subpages/pipeline-attribution.html" class="step-card">
+        <div class="step-num">Step 4.12</div>
+        <div class="step-title">Pipeline Attribution</div>
+        <div class="step-desc">First-touch, last-touch, multi-touch, and linear attribution models — how to credit the programs that actually created pipeline so you invest in the right channels.</div>
+        <div class="step-tags"><span class="step-tag">Attribution</span><span class="step-tag">Multi-touch</span></div>
+        <div class="step-arrow">→</div>
+      </a>
+      <a href="../subpages/sales-enablement-mktg.html" class="step-card">
+        <div class="step-num">Step 4.13</div>
+        <div class="step-title">Sales Enablement (Marketing Side)</div>
+        <div class="step-desc">How Marketing arms Sales with the content, tools, and training to win more deals faster — collateral, case studies, battle cards, and ROI calculators.</div>
+        <div class="step-tags"><span class="step-tag">Enablement</span><span class="step-tag">Collateral</span></div>
+        <div class="step-arrow">→</div>
+      </a>
+      <a href="../subpages/abm-strategy.html" class="step-card">
+        <div class="step-num">Step 4.14</div>
+        <div class="step-title">ABM Strategy (Deep Dive)</div>
+        <div class="step-desc">Advanced ABM: account selection frameworks, intent data, multi-threading strategy, and coordinating Sales + Marketing on enterprise target accounts.</div>
+        <div class="step-tags"><span class="step-tag">ABM</span><span class="step-tag">Intent Data</span><span class="step-tag">Enterprise</span></div>
+        <div class="step-arrow">→</div>
+      </a>
+      <a href="../subpages/demand-gen.html" class="step-card">
+        <div class="step-num">Step 4.15</div>
+        <div class="step-title">Demand Generation (Marketing Deep Dive)</div>
+        <div class="step-desc">The complete demand generation architecture from a marketing-operations perspective — budgeting, channel mix, MQL targets, and campaign measurement.</div>
+        <div class="step-tags"><span class="step-tag">Demand Gen</span><span class="step-tag">Budget</span></div>
+        <div class="step-arrow">→</div>
+      </a>
+    </div>
+  </div>
+
+  <div class="module-connector"><div class="mc-line"></div><div class="mc-label">Builds on Module 4</div></div>
+
+  <!-- ────────────────────────────────────────────────
+       MODULE 5 — Sales Execution & Pipeline Discipline
+  ──────────────────────────────────────────────── -->
+  <div class="module m4" id="m5">
+    <div class="module-header">
+      <div class="module-num">Module 5</div>
+      <div class="module-title-wrap">
+        <h2>Sales Execution & Pipeline Discipline</h2>
+        <div class="module-subtitle">Phase 4 — how deals get won. Prospecting, MEDDICC, discovery, champion building, forecasting, and the review cadences that separate elite sales organizations from average ones.</div>
+      </div>
+    </div>
+    <div class="module-why">
+      <strong>Why now:</strong> You have pipeline coming in from Module 4. This module is how you convert it. MEDDICC is the single most important qualification framework in enterprise SaaS — every word of it matters.
+    </div>
+
+    <div class="steps-single">
+      <a href="../pages/phase4.html" class="step-card-wide">
+        <div class="scw-num">Step 5.1</div>
+        <div class="scw-body">
+          <div class="step-title">Phase 4 — Pipeline Discipline, MEDDICC, Forecasting & Win/Loss</div>
+          <div class="step-desc">The full Phase 4 system overview — how pipeline moves, how deals qualify, how you forecast, and how you learn from every result.</div>
+          <div class="scw-tags">
+            <span class="step-tag">MEDDICC</span><span class="step-tag">Forecasting</span><span class="step-tag">Win/Loss</span>
+          </div>
+        </div>
+        <div class="scw-arrow">→</div>
+      </a>
+    </div>
+
+    <div class="drill-label">Deep Dives — Sales Execution</div>
+    <div class="steps-grid">
+      <a href="../subpages/meddicc.html" class="step-card">
+        <div class="step-num">Step 5.2</div>
+        <div class="step-title">MEDDICC — The Qualification Framework</div>
+        <div class="step-desc">Metrics, Economic Buyer, Decision Criteria, Decision Process, Identify Pain, Champion, Competition — the full framework with definitions, questions, and trap-setting language.</div>
+        <div class="step-tags"><span class="step-tag">MEDDICC</span><span class="step-tag">Qualification</span><span class="step-tag">Enterprise</span></div>
+        <div class="step-arrow">→</div>
+      </a>
+      <a href="../subpages/discovery.html" class="step-card">
+        <div class="step-num">Step 5.3</div>
+        <div class="step-title">Discovery</div>
+        <div class="step-desc">The art of asking questions that reveal pain, quantify impact, and expose the real decision-making process — before your demo, not during it.</div>
+        <div class="step-tags"><span class="step-tag">Discovery</span><span class="step-tag">Questions</span></div>
+        <div class="step-arrow">→</div>
+      </a>
+      <a href="../subpages/prospecting.html" class="step-card">
+        <div class="step-num">Step 5.4</div>
+        <div class="step-title">Prospecting</div>
+        <div class="step-desc">The outbound system for AEs: cold call frameworks, personalized email construction, social selling, and the multi-touch cadence that gets responses from busy executives.</div>
+        <div class="step-tags"><span class="step-tag">Prospecting</span><span class="step-tag">Outbound</span></div>
+        <div class="step-arrow">→</div>
+      </a>
+      <a href="../subpages/outbound-sequencing.html" class="step-card">
+        <div class="step-num">Step 5.5</div>
+        <div class="step-title">Outbound Sequencing</div>
+        <div class="step-desc">Sequence design, touch patterns, personalization at scale, and the analytics that tell you which sequences are working and which are burning your list.</div>
+        <div class="step-tags"><span class="step-tag">Sequences</span><span class="step-tag">Cadence</span></div>
+        <div class="step-arrow">→</div>
+      </a>
+      <a href="../subpages/champion-building.html" class="step-card">
+        <div class="step-num">Step 5.6</div>
+        <div class="step-title">Champion Building</div>
+        <div class="step-desc">How to identify, develop, and test champions inside accounts — the internal advocates who sell for you when you're not in the room. The most under-taught skill in B2B sales.</div>
+        <div class="step-tags"><span class="step-tag">Champion</span><span class="step-tag">Multi-threading</span></div>
+        <div class="step-arrow">→</div>
+      </a>
+      <a href="../subpages/presentation.html" class="step-card">
+        <div class="step-num">Step 5.7</div>
+        <div class="step-title">Presentation & Demo</div>
+        <div class="step-desc">How to structure a presentation that confirms pain, shows proof, and advances the deal — not a feature tour. The before/after narrative framework.</div>
+        <div class="step-tags"><span class="step-tag">Presentation</span><span class="step-tag">Demo</span></div>
+        <div class="step-arrow">→</div>
+      </a>
+      <a href="../subpages/closing.html" class="step-card">
+        <div class="step-num">Step 5.8</div>
+        <div class="step-title">Closing</div>
+        <div class="step-desc">The close is not an event — it is a process. Mutual Action Plans, paper process navigation, legal coordination, and how to get to DocuSign without losing momentum.</div>
+        <div class="step-tags"><span class="step-tag">Closing</span><span class="step-tag">MAP</span><span class="step-tag">Paper Process</span></div>
+        <div class="step-arrow">→</div>
+      </a>
+      <a href="../subpages/pipeline-coverage.html" class="step-card">
+        <div class="step-num">Step 5.9</div>
+        <div class="step-title">Pipeline Coverage & Health</div>
+        <div class="step-desc">The 3–4x coverage rule, pipeline aging, velocity analysis, and how to read pipeline health so you can intervene before the quarter breaks.</div>
+        <div class="step-tags"><span class="step-tag">Coverage</span><span class="step-tag">Velocity</span></div>
+        <div class="step-arrow">→</div>
+      </a>
+      <a href="../subpages/forecast-methodology.html" class="step-card">
+        <div class="step-num">Step 5.10</div>
+        <div class="step-title">Forecast Methodology</div>
+        <div class="step-desc">Bottom-up vs. top-down forecasting, commit/upside/best-case categories, probability weighting, and how to build a process that your CFO trusts.</div>
+        <div class="step-tags"><span class="step-tag">Forecasting</span><span class="step-tag">Commit</span></div>
+        <div class="step-arrow">→</div>
+      </a>
+      <a href="../subpages/forecast-integrity.html" class="step-card">
+        <div class="step-num">Step 5.11</div>
+        <div class="step-title">Forecast Integrity</div>
+        <div class="step-desc">Why forecasts lie, how to identify sandbagging vs. happy-ears, and the review process that makes sandbagging both unnecessary and obvious.</div>
+        <div class="step-tags"><span class="step-tag">Integrity</span><span class="step-tag">Accuracy</span></div>
+        <div class="step-arrow">→</div>
+      </a>
+      <a href="../subpages/deal-review.html" class="step-card">
+        <div class="step-num">Step 5.12</div>
+        <div class="step-title">Deal Review</div>
+        <div class="step-desc">The structured deal review process — how to run a 20-minute deal review that surfaces deal risk, coaching opportunities, and pipeline gaps before they become problems.</div>
+        <div class="step-tags"><span class="step-tag">Deal Review</span><span class="step-tag">Coaching</span></div>
+        <div class="step-arrow">→</div>
+      </a>
+      <a href="../subpages/film-reviews.html" class="step-card">
+        <div class="step-num">Step 5.13</div>
+        <div class="step-title">Film Reviews (Call Recording Analysis)</div>
+        <div class="step-desc">How to use call recordings and AI-assisted review to coach reps, identify winning patterns, and replicate top-performer behaviors across the team.</div>
+        <div class="step-tags"><span class="step-tag">Gong</span><span class="step-tag">Call Review</span><span class="step-tag">Coaching</span></div>
+        <div class="step-arrow">→</div>
+      </a>
+      <a href="../subpages/win-loss-analysis.html" class="step-card">
+        <div class="step-num">Step 5.14</div>
+        <div class="step-title">Win/Loss Analysis</div>
+        <div class="step-desc">The structured system for learning from every deal outcome — win/loss interviews, pattern analysis, playbook iteration, and feeding insights back to Marketing and Product.</div>
+        <div class="step-tags"><span class="step-tag">Win/Loss</span><span class="step-tag">Learning</span></div>
+        <div class="step-arrow">→</div>
+      </a>
+    </div>
+  </div>
+
+  <div class="milestone">
+    <div class="milestone-icon">✓</div>
+    <div class="milestone-body">
+      <h4>Modules 1–5 Complete — You Understand How Revenue is Created</h4>
+      <p>You now know the framework, the culture layer, the strategy, the demand engine, and how deals get won. The next three modules cover the people, processes, and infrastructure that make all of that repeatable.</p>
+    </div>
+  </div>
+
+  <div class="module-connector"><div class="mc-line"></div><div class="mc-label">Builds on Modules 3–5</div></div>
+
+  <!-- ────────────────────────────────────────────────
+       MODULE 6 — People: Hiring, Ramp & Management
+  ──────────────────────────────────────────────── -->
+  <div class="module m5" id="m6">
+    <div class="module-header">
+      <div class="module-num">Module 6</div>
+      <div class="module-title-wrap">
+        <h2>People — Hiring, Ramp & Management</h2>
+        <div class="module-subtitle">Phase 2 — the human operating system. Hiring the right people, getting them to full productivity fast, paying them in ways that align behavior, and managing them to sustained performance.</div>
+      </div>
+    </div>
+    <div class="module-why">
+      <strong>Why after strategy and execution:</strong> Now that you know what great looks like (Modules 3–5), you can hire for it, ramp toward it, and coach against it. Without the prior modules, hiring criteria are guesswork.
+    </div>
+
+    <div class="steps-single">
+      <a href="../pages/phase2.html" class="step-card-wide">
+        <div class="scw-num">Step 6.1</div>
+        <div class="scw-body">
+          <div class="step-title">Phase 2 — Hiring, Ramp, Management Cadence & Compensation</div>
+          <div class="step-desc">The full Phase 2 overview — the Hiring Formula, Ramp Design, Compensation Design, Coaching, Management Cadence, Performance Standards, and Territory Design.</div>
+          <div class="scw-tags">
+            <span class="step-tag">Hiring</span><span class="step-tag">Ramp</span><span class="step-tag">Comp</span><span class="step-tag">Coaching</span>
+          </div>
+        </div>
+        <div class="scw-arrow">→</div>
+      </a>
+    </div>
+
+    <div class="drill-label">Deep Dives — People Operations</div>
+    <div class="steps-grid">
+      <a href="../subpages/hiring-formula.html" class="step-card">
+        <div class="step-num">Step 6.2</div>
+        <div class="step-title">The Hiring Formula</div>
+        <div class="step-desc">Roberge's sales hiring formula — the competency model, structured interview scorecard, and predictive attribute weighting that identifies who will actually succeed, not just interview well.</div>
+        <div class="step-tags"><span class="step-tag">Hiring Formula</span><span class="step-tag">Scorecard</span></div>
+        <div class="step-arrow">→</div>
+      </a>
+      <a href="../subpages/ramp-design.html" class="step-card">
+        <div class="step-num">Step 6.3</div>
+        <div class="step-title">Ramp Design</div>
+        <div class="step-desc">How to structure a 30/60/90-day onboarding program that gets reps to first deal and full productivity faster — with milestones, checkpoints, and early-warning signals.</div>
+        <div class="step-tags"><span class="step-tag">Ramp</span><span class="step-tag">Onboarding</span><span class="step-tag">90-day</span></div>
+        <div class="step-arrow">→</div>
+      </a>
+      <a href="../subpages/compensation-design.html" class="step-card">
+        <div class="step-num">Step 6.4</div>
+        <div class="step-title">Compensation Design</div>
+        <div class="step-desc">OTE structure, base vs. variable split, accelerators, SPIFs, clawbacks, and how to build a comp plan that motivates the exact behaviors you want without rewarding the wrong things.</div>
+        <div class="step-tags"><span class="step-tag">OTE</span><span class="step-tag">Quota</span><span class="step-tag">Accelerators</span></div>
+        <div class="step-arrow">→</div>
+      </a>
+      <a href="../subpages/territory-design.html" class="step-card">
+        <div class="step-num">Step 6.5</div>
+        <div class="step-title">Territory Design</div>
+        <div class="step-desc">How to divide the market so that every rep has a fair and productive patch — territory sizing, carve-outs, and the annual territory planning process.</div>
+        <div class="step-tags"><span class="step-tag">Territory</span><span class="step-tag">Fairness</span></div>
+        <div class="step-arrow">→</div>
+      </a>
+      <a href="../subpages/coaching.html" class="step-card">
+        <div class="step-num">Step 6.6</div>
+        <div class="step-title">Coaching Framework</div>
+        <div class="step-desc">The structured approach to sales coaching — skill-gap diagnosis, individual development plans, competency-based coaching, and how to scale coaching across a team through managers.</div>
+        <div class="step-tags"><span class="step-tag">Coaching</span><span class="step-tag">Development</span></div>
+        <div class="step-arrow">→</div>
+      </a>
+      <a href="../subpages/management-cadence.html" class="step-card">
+        <div class="step-num">Step 6.7</div>
+        <div class="step-title">Management Cadence</div>
+        <div class="step-desc">The cadence of 1:1s, team calls, pipeline reviews, QBRs, and annual planning that keeps individuals accountable and the team aligned — week in, week out.</div>
+        <div class="step-tags"><span class="step-tag">1:1s</span><span class="step-tag">QBR</span><span class="step-tag">Cadence</span></div>
+        <div class="step-arrow">→</div>
+      </a>
+      <a href="../subpages/performance-standards.html" class="step-card">
+        <div class="step-num">Step 6.8</div>
+        <div class="step-title">Performance Standards</div>
+        <div class="step-desc">Defining what "on track" looks like at every ramp milestone and full productivity. PIPs, quota recovery plans, and the data-driven process for making retention/exit decisions.</div>
+        <div class="step-tags"><span class="step-tag">PIP</span><span class="step-tag">Standards</span><span class="step-tag">Attainment</span></div>
+        <div class="step-arrow">→</div>
+      </a>
+    </div>
+  </div>
+
+  <div class="module-connector"><div class="mc-line"></div><div class="mc-label">Builds on Module 3</div></div>
+
+  <!-- ────────────────────────────────────────────────
+       MODULE 7 — Customer Success
+  ──────────────────────────────────────────────── -->
+  <div class="module m6" id="m7">
+    <div class="module-header">
+      <div class="module-num">Module 7</div>
+      <div class="module-title-wrap">
+        <h2>Customer Success — Retention, Expansion & Advocacy</h2>
+        <div class="module-subtitle">The post-sale engine. In SaaS, customer success is not a support function — it is a revenue function. Retention is the foundation. Expansion is the multiplier. Advocacy is the acquisition channel.</div>
+      </div>
+    </div>
+    <div class="module-why">
+      <strong>Why CS is essential:</strong> NRR (Net Revenue Retention) is the single most important long-term indicator of a SaaS company's health. A company with 120% NRR can grow without adding a single new logo. Understanding CS means understanding the full revenue equation, not just the new-business side.
+    </div>
+
+    <div class="steps-single">
+      <a href="../pages/customer-success.html" class="step-card-wide">
+        <div class="scw-num">Step 7.1</div>
+        <div class="scw-body">
+          <div class="step-title">Customer Success — Master Page</div>
+          <div class="step-desc">The complete CS system: onboarding, health scoring, adoption, renewal, expansion, QBRs, and CS org design — from first value delivery to multi-year growth.</div>
+          <div class="scw-tags">
+            <span class="step-tag">CS</span><span class="step-tag">Retention</span><span class="step-tag">Expansion</span><span class="step-tag">NRR</span>
+          </div>
+        </div>
+        <div class="scw-arrow">→</div>
+      </a>
+    </div>
+
+    <div class="drill-label">Deep Dives — Customer Success</div>
+    <div class="steps-grid">
+      <a href="../subpages/onboarding-cs.html" class="step-card">
+        <div class="step-num">Step 7.2</div>
+        <div class="step-title">Customer Onboarding</div>
+        <div class="step-desc">Time-to-value design, success milestones, implementation planning, and the first 90 days that determine whether a customer renews or churns in year two.</div>
+        <div class="step-tags"><span class="step-tag">Onboarding</span><span class="step-tag">Time-to-Value</span></div>
+        <div class="step-arrow">→</div>
+      </a>
+      <a href="../subpages/health-scoring.html" class="step-card">
+        <div class="step-num">Step 7.3</div>
+        <div class="step-title">Health Scoring</div>
+        <div class="step-desc">Building a customer health score from product usage, engagement signals, support tickets, NPS, and financial metrics — and the playbooks triggered by each score level.</div>
+        <div class="step-tags"><span class="step-tag">Health Score</span><span class="step-tag">Churn Risk</span></div>
+        <div class="step-arrow">→</div>
+      </a>
+      <a href="../subpages/adoption-framework.html" class="step-card">
+        <div class="step-num">Step 7.4</div>
+        <div class="step-title">Adoption Framework</div>
+        <div class="step-desc">Feature adoption curves, user engagement ladders, and the CSM-led engagement model that turns activated users into power users and power users into champions.</div>
+        <div class="step-tags"><span class="step-tag">Adoption</span><span class="step-tag">Engagement</span></div>
+        <div class="step-arrow">→</div>
+      </a>
+      <a href="../subpages/renewal-management.html" class="step-card">
+        <div class="step-num">Step 7.5</div>
+        <div class="step-title">Renewal Management</div>
+        <div class="step-desc">The renewal process: 180-day renewal calendar, risk identification, executive sponsorship, pricing conversations, and how to close renewals without discounting.</div>
+        <div class="step-tags"><span class="step-tag">Renewal</span><span class="step-tag">GRR</span></div>
+        <div class="step-arrow">→</div>
+      </a>
+      <a href="../subpages/nrr.html" class="step-card">
+        <div class="step-num">Step 7.6</div>
+        <div class="step-title">NRR — Net Revenue Retention</div>
+        <div class="step-desc">The formula, the benchmark (>120% is elite), the levers (logo retention, upsell, cross-sell, price increases), and how to build a CS operation that reliably delivers &gt;110% NRR.</div>
+        <div class="step-tags"><span class="step-tag">NRR</span><span class="step-tag">GRR</span><span class="step-tag">Expansion ARR</span></div>
+        <div class="step-arrow">→</div>
+      </a>
+      <a href="../subpages/expansion-selling.html" class="step-card">
+        <div class="step-num">Step 7.7</div>
+        <div class="step-title">Expansion Selling</div>
+        <div class="step-desc">Upsell and cross-sell motion design — how to identify expansion signals, engage at the right moment, and grow accounts without damaging the relationship.</div>
+        <div class="step-tags"><span class="step-tag">Upsell</span><span class="step-tag">Cross-sell</span><span class="step-tag">Expansion</span></div>
+        <div class="step-arrow">→</div>
+      </a>
+      <a href="../subpages/qbr-framework.html" class="step-card">
+        <div class="step-num">Step 7.8</div>
+        <div class="step-title">QBR Framework</div>
+        <div class="step-desc">Quarterly Business Review design — the agenda, value scorecard, roadmap alignment, and how to run a QBR that locks in renewal intent and opens expansion conversations.</div>
+        <div class="step-tags"><span class="step-tag">QBR</span><span class="step-tag">Executive Review</span></div>
+        <div class="step-arrow">→</div>
+      </a>
+      <a href="../subpages/cs-org-design.html" class="step-card">
+        <div class="step-num">Step 7.9</div>
+        <div class="step-title">CS Org Design</div>
+        <div class="step-desc">CSM:customer ratios, segmentation (high-touch vs. tech-touch), CSM compensation design, and when to split CS from Account Management to separate retention from expansion motions.</div>
+        <div class="step-tags"><span class="step-tag">Org Design</span><span class="step-tag">Ratios</span><span class="step-tag">Tech-touch</span></div>
+        <div class="step-arrow">→</div>
+      </a>
+    </div>
+  </div>
+
+  <div class="module-connector"><div class="mc-line"></div><div class="mc-label">Ties all functions together</div></div>
+
+  <!-- ────────────────────────────────────────────────
+       MODULE 8 — Revenue Operations
+  ──────────────────────────────────────────────── -->
+  <div class="module m7" id="m8">
+    <div class="module-header">
+      <div class="module-num">Module 8</div>
+      <div class="module-title-wrap">
+        <h2>Revenue Operations — The Operating Layer</h2>
+        <div class="module-subtitle">RevOps is the connective tissue between Sales, Marketing, and Customer Success. It owns the process, technology, and data infrastructure that makes the entire revenue system measurable and repeatable.</div>
+      </div>
+    </div>
+    <div class="module-why">
+      <strong>Why RevOps comes after the functional teams:</strong> You need to understand what Sales, Marketing, and CS do before you can build the systems that support them. RevOps without context becomes IT. RevOps with context becomes a competitive moat.
+    </div>
+
+    <div class="steps-single">
+      <a href="../pages/revops.html" class="step-card-wide">
+        <div class="scw-num">Step 8.1</div>
+        <div class="scw-body">
+          <div class="step-title">Revenue Operations — Master Page</div>
+          <div class="step-desc">The full RevOps operating model: Process, Technology, and Data & Insights. How RevOps aligns Sales, Marketing, and CS around a single revenue architecture.</div>
+          <div class="scw-tags">
+            <span class="step-tag">RevOps</span><span class="step-tag">Process</span><span class="step-tag">Tech Stack</span><span class="step-tag">Data</span>
+          </div>
+        </div>
+        <div class="scw-arrow">→</div>
+      </a>
+    </div>
+
+    <div class="drill-label">Deep Dives — RevOps Infrastructure</div>
+    <div class="steps-grid">
+      <a href="../subpages/crm-architecture.html" class="step-card">
+        <div class="step-num">Step 8.2</div>
+        <div class="step-title">CRM Architecture</div>
+        <div class="step-desc">How to design your CRM object model — Leads, Contacts, Accounts, Opportunities, and the custom objects and fields that make your data actually useful for forecasting and reporting.</div>
+        <div class="step-tags"><span class="step-tag">CRM</span><span class="step-tag">Salesforce</span><span class="step-tag">Data Model</span></div>
+        <div class="step-arrow">→</div>
+      </a>
+      <a href="../subpages/crm-hygiene.html" class="step-card">
+        <div class="step-num">Step 8.3</div>
+        <div class="step-title">CRM Hygiene</div>
+        <div class="step-desc">The protocols, validation rules, and automated workflows that keep your CRM data clean — because dirty data produces dirty forecasts and destroys rep trust in the system.</div>
+        <div class="step-tags"><span class="step-tag">Data Quality</span><span class="step-tag">Hygiene</span></div>
+        <div class="step-arrow">→</div>
+      </a>
+      <a href="../subpages/tech-stack.html" class="step-card">
+        <div class="step-num">Step 8.4</div>
+        <div class="step-title">Revenue Tech Stack</div>
+        <div class="step-desc">The modern SaaS revenue tech stack — CRM, SEP, conversation intelligence, data enrichment, intent data, and the integration architecture that ties them together.</div>
+        <div class="step-tags"><span class="step-tag">Tech Stack</span><span class="step-tag">Tools</span><span class="step-tag">Integration</span></div>
+        <div class="step-arrow">→</div>
+      </a>
+      <a href="../subpages/lead-routing.html" class="step-card">
+        <div class="step-num">Step 8.5</div>
+        <div class="step-title">Lead Routing</div>
+        <div class="step-desc">How leads move from Marketing to Sales — routing rules, assignment logic, SLA enforcement, and the round-robin vs. territory-based routing decision.</div>
+        <div class="step-tags"><span class="step-tag">Lead Routing</span><span class="step-tag">SLA</span></div>
+        <div class="step-arrow">→</div>
+      </a>
+      <a href="../subpages/pipeline-management.html" class="step-card">
+        <div class="step-num">Step 8.6</div>
+        <div class="step-title">Pipeline Management (RevOps View)</div>
+        <div class="step-desc">Pipeline governance from the RevOps seat — stage progression rules, deal aging alerts, opportunity scoring, and the dashboards that make pipeline health visible to leadership.</div>
+        <div class="step-tags"><span class="step-tag">Pipeline Governance</span><span class="step-tag">Dashboards</span></div>
+        <div class="step-arrow">→</div>
+      </a>
+      <a href="../subpages/revenue-attribution.html" class="step-card">
+        <div class="step-num">Step 8.7</div>
+        <div class="step-title">Revenue Attribution</div>
+        <div class="step-desc">How to attribute closed revenue to the right programs, channels, and activities — the model that answers "what is actually working?" and guides where to invest next.</div>
+        <div class="step-tags"><span class="step-tag">Attribution</span><span class="step-tag">ROI</span></div>
+        <div class="step-arrow">→</div>
+      </a>
+      <a href="../subpages/arr-modeling.html" class="step-card">
+        <div class="step-num">Step 8.8</div>
+        <div class="step-title">ARR Modeling</div>
+        <div class="step-desc">The ARR waterfall model: New ARR, Expansion ARR, Contraction ARR, Churn, and Net New ARR. How to build and maintain the model that is the financial language of SaaS leadership.</div>
+        <div class="step-tags"><span class="step-tag">ARR</span><span class="step-tag">Waterfall</span><span class="step-tag">SaaS Finance</span></div>
+        <div class="step-arrow">→</div>
+      </a>
+      <a href="../subpages/revenue-reporting.html" class="step-card">
+        <div class="step-num">Step 8.9</div>
+        <div class="step-title">Revenue Reporting</div>
+        <div class="step-desc">Building the board-ready and operating-level reports that tell the full revenue story — from individual rep activity to company-level ARR and NRR trends.</div>
+        <div class="step-tags"><span class="step-tag">Reporting</span><span class="step-tag">Board Deck</span></div>
+        <div class="step-arrow">→</div>
+      </a>
+      <a href="../pages/phase5.html" class="step-card">
+        <div class="step-num">Step 8.10</div>
+        <div class="step-title">Phase 5 — Repeatability & Scale Infrastructure</div>
+        <div class="step-desc">The repeatability test, revenue capacity model, headcount planning, and partnership scale — the full Phase 5 overview connecting RevOps to GTM planning at scale.</div>
+        <div class="step-tags"><span class="step-tag">Phase 5</span><span class="step-tag">Repeatability</span><span class="step-tag">Scale</span></div>
+        <div class="step-arrow">→</div>
+      </a>
+    </div>
+  </div>
+
+  <div class="module-connector"><div class="mc-line"></div><div class="mc-label">Aligns all functions</div></div>
+
+  <!-- ────────────────────────────────────────────────
+       MODULE 9 — North Star Metrics & Handoffs
+  ──────────────────────────────────────────────── -->
+  <div class="module m8" id="m9">
+    <div class="module-header">
+      <div class="module-num">Module 9</div>
+      <div class="module-title-wrap">
+        <h2>North Star Metrics & Critical Handoffs</h2>
+        <div class="module-subtitle">The six metrics every CRO must own, and the three handoffs where revenue most often leaks. These are the pressure points of the entire system.</div>
+      </div>
+    </div>
+    <div class="module-why">
+      <strong>Why these come near the end:</strong> You need to have learned the full system before these metrics are meaningful. Now you'll understand exactly what each metric is measuring and which part of the system it reflects. These are not starter concepts — they are the mastery layer.
+    </div>
+
+    <div class="steps-grid">
+      <a href="../pages/north-star-metrics.html" class="step-card">
+        <div class="step-num">Step 9.1</div>
+        <div class="step-title">North Star Metrics — All Six</div>
+        <div class="step-desc">The six metrics that define a healthy SaaS revenue engine: NRR, Win Rate, Ramp Time, CAC Payback, Quota Attainment, and Pipeline Coverage. How they connect to each other.</div>
+        <div class="step-tags"><span class="step-tag">NRR</span><span class="step-tag">Win Rate</span><span class="step-tag">CAC</span></div>
+        <div class="step-arrow">→</div>
+      </a>
+      <a href="../subpages/nrr-metric.html" class="step-card">
+        <div class="step-num">Step 9.2</div>
+        <div class="step-title">NRR — Deep Dive</div>
+        <div class="step-desc">Formula, benchmarks (&gt;120% elite), levers, and how to read NRR trends as an early signal of product-market problems — before they show up in new business numbers.</div>
+        <div class="step-tags"><span class="step-tag">NRR</span><span class="step-tag">Retention</span></div>
+        <div class="step-arrow">→</div>
+      </a>
+      <a href="../subpages/win-rate.html" class="step-card">
+        <div class="step-num">Step 9.3</div>
+        <div class="step-title">Win Rate</div>
+        <div class="step-desc">How to measure, benchmark, and improve win rate — by stage, by segment, by rep, by competitor, and by channel. The metric that tells you if your playbook is actually working.</div>
+        <div class="step-tags"><span class="step-tag">Win Rate</span><span class="step-tag">Competitive</span></div>
+        <div class="step-arrow">→</div>
+      </a>
+      <a href="../subpages/ramp-time.html" class="step-card">
+        <div class="step-num">Step 9.4</div>
+        <div class="step-title">Ramp Time</div>
+        <div class="step-desc">How to measure time-to-productivity, the cost of a slow ramp, and the specific interventions — hiring formula, onboarding design, manager quality — that compress the ramp curve.</div>
+        <div class="step-tags"><span class="step-tag">Ramp</span><span class="step-tag">Productivity</span></div>
+        <div class="step-arrow">→</div>
+      </a>
+      <a href="../subpages/cac-payback.html" class="step-card">
+        <div class="step-num">Step 9.5</div>
+        <div class="step-title">CAC Payback Period</div>
+        <div class="step-desc">Customer Acquisition Cost, payback period benchmarks (&lt;12 months is elite for SMB, &lt;24 months for enterprise), and how CAC Payback connects to your hiring decisions and channel mix.</div>
+        <div class="step-tags"><span class="step-tag">CAC</span><span class="step-tag">LTV</span><span class="step-tag">Payback</span></div>
+        <div class="step-arrow">→</div>
+      </a>
+      <a href="../subpages/quota-attainment.html" class="step-card">
+        <div class="step-num">Step 9.6</div>
+        <div class="step-title">Quota Attainment</div>
+        <div class="step-desc">The quota attainment distribution model — what % of reps at each level tells you about quota-setting accuracy, team health, and whether your comp plan is working.</div>
+        <div class="step-tags"><span class="step-tag">Quota</span><span class="step-tag">Attainment</span></div>
+        <div class="step-arrow">→</div>
+      </a>
+    </div>
+
+    <div class="drill-label" style="margin-top:28px;">The Three Critical Handoffs</div>
+    <div class="steps-single">
+      <a href="../pages/handoffs.html" class="step-card-wide">
+        <div class="scw-num">Step 9.7</div>
+        <div class="scw-body">
+          <div class="step-title">The Three Critical Handoffs — Master Page</div>
+          <div class="step-desc">SDR → AE, AE → CS, and CS → Expansion AM. The three moments in the revenue cycle where deals and relationships most often break — and how to engineer them so they don't.</div>
+          <div class="scw-tags">
+            <span class="step-tag">SDR → AE</span><span class="step-tag">AE → CS</span><span class="step-tag">Expansion</span>
+          </div>
+        </div>
+        <div class="scw-arrow">→</div>
+      </a>
+    </div>
+    <div class="steps-grid" style="margin-top:10px;">
+      <a href="../subpages/sales-cs-handoff.html" class="step-card">
+        <div class="step-num">Step 9.8</div>
+        <div class="step-title">Sales → CS Handoff</div>
+        <div class="step-desc">The handoff protocol from closed-won to onboarding — the data transfer, kickoff call structure, promises audit, and success criteria alignment that prevents post-sale regret.</div>
+        <div class="step-tags"><span class="step-tag">Sales → CS</span><span class="step-tag">Kickoff</span></div>
+        <div class="step-arrow">→</div>
+      </a>
+      <a href="../subpages/expansion-handoff.html" class="step-card">
+        <div class="step-num">Step 9.9</div>
+        <div class="step-title">CS → Expansion Handoff</div>
+        <div class="step-desc">When and how to transfer a healthy customer from CS to an Account Manager for expansion — the signals, timing, and warm handoff process that protects the relationship.</div>
+        <div class="step-tags"><span class="step-tag">CS → AM</span><span class="step-tag">Expansion</span></div>
+        <div class="step-arrow">→</div>
+      </a>
+    </div>
+  </div>
+
+  <div class="module-connector"><div class="mc-line"></div><div class="mc-label">Diagnosis & Scale</div></div>
+
+  <!-- ────────────────────────────────────────────────
+       MODULE 10 — Scale, Diagnostics & Templates
+  ──────────────────────────────────────────────── -->
+  <div class="module m9" id="m10">
+    <div class="module-header">
+      <div class="module-num">Module 10</div>
+      <div class="module-title-wrap">
+        <h2>Scale, Diagnostics & Templates</h2>
+        <div class="module-subtitle">You now know how the system works when it's healthy. This final module covers what to do when it breaks — and gives you the templates to apply everything you've learned.</div>
+      </div>
+    </div>
+    <div class="module-why">
+      <strong>Why last:</strong> Diagnostics only work when you understand the full system. If you start here, you'll treat symptoms. Now that you know how every piece connects, you can trace problems to their root cause — and fix the right thing.
+    </div>
+
+    <div class="steps-single">
+      <a href="../pages/phase6.html" class="step-card-wide">
+        <div class="scw-num">Step 10.1</div>
+        <div class="scw-body">
+          <div class="step-title">Phase 6 — Revenue Problem Diagnostics</div>
+          <div class="step-desc">The six most common revenue system failures and how to diagnose and fix each one: Low Pipeline, Low Win Rate, Long Sales Cycles, High Churn, Missed Forecasts, and Rep Attrition.</div>
+          <div class="scw-tags">
+            <span class="step-tag">Diagnostics</span><span class="step-tag">Problem Solving</span><span class="step-tag">Root Cause</span>
+          </div>
+        </div>
+        <div class="scw-arrow">→</div>
+      </a>
+    </div>
+
+    <div class="drill-label">Diagnostic Deep Dives</div>
+    <div class="steps-grid">
+      <a href="../subpages/low-pipeline.html" class="step-card">
+        <div class="step-num">Step 10.2</div>
+        <div class="step-title">Diagnosing Low Pipeline</div>
+        <div class="step-desc">The decision tree for pipeline shortfall — is it a demand gen problem, an SDR problem, a conversion problem, or a territory design problem? How to know which lever to pull.</div>
+        <div class="step-tags"><span class="step-tag">Pipeline</span><span class="step-tag">Diagnosis</span></div>
+        <div class="step-arrow">→</div>
+      </a>
+      <a href="../subpages/low-win-rate.html" class="step-card">
+        <div class="step-num">Step 10.3</div>
+        <div class="step-title">Diagnosing Low Win Rate</div>
+        <div class="step-desc">Win rate by stage, by rep, by competitor, and by deal size — the analysis framework that identifies whether you have a qualification problem, a demo problem, or a pricing problem.</div>
+        <div class="step-tags"><span class="step-tag">Win Rate</span><span class="step-tag">Diagnosis</span></div>
+        <div class="step-arrow">→</div>
+      </a>
+      <a href="../subpages/long-sales-cycles.html" class="step-card">
+        <div class="step-num">Step 10.4</div>
+        <div class="step-title">Diagnosing Long Sales Cycles</div>
+        <div class="step-desc">Velocity analysis by stage — where deals stall, why they stall, and the interventions (champion building, economic buyer access, MAP enforcement) that unstick them.</div>
+        <div class="step-tags"><span class="step-tag">Velocity</span><span class="step-tag">Cycle Length</span></div>
+        <div class="step-arrow">→</div>
+      </a>
+      <a href="../subpages/high-churn.html" class="step-card">
+        <div class="step-num">Step 10.5</div>
+        <div class="step-title">Diagnosing High Churn</div>
+        <div class="step-desc">The churn root-cause framework — is it an ICP-fit problem, an onboarding problem, a product problem, or an adoption problem? How to read cohort data to find the answer.</div>
+        <div class="step-tags"><span class="step-tag">Churn</span><span class="step-tag">NRR</span><span class="step-tag">Cohort</span></div>
+        <div class="step-arrow">→</div>
+      </a>
+      <a href="../subpages/missed-forecasts.html" class="step-card">
+        <div class="step-num">Step 10.6</div>
+        <div class="step-title">Diagnosing Missed Forecasts</div>
+        <div class="step-desc">When forecasts consistently miss, it is a process problem. The audit framework for forecast accuracy: CRM data quality, manager sandbagging, stage definitions, and pipeline coverage.</div>
+        <div class="step-tags"><span class="step-tag">Forecast</span><span class="step-tag">Accuracy</span></div>
+        <div class="step-arrow">→</div>
+      </a>
+      <a href="../subpages/rep-attrition.html" class="step-card">
+        <div class="step-num">Step 10.7</div>
+        <div class="step-title">Diagnosing Rep Attrition</div>
+        <div class="step-desc">Why good reps leave — comp misalignment, quota unfairness, manager quality, territory design, and culture. The exit interview analysis that reveals what your pipeline data cannot.</div>
+        <div class="step-tags"><span class="step-tag">Attrition</span><span class="step-tag">Retention</span><span class="step-tag">Culture</span></div>
+        <div class="step-arrow">→</div>
+      </a>
+    </div>
+
+    <div class="drill-label" style="margin-top:28px;">Scale-Up Deep Dives (Phase 5)</div>
+    <div class="steps-grid">
+      <a href="../subpages/repeatability-test.html" class="step-card">
+        <div class="step-num">Step 10.8</div>
+        <div class="step-title">The Repeatability Test</div>
+        <div class="step-desc">The specific criteria — win rate, ramp time, AE cohort consistency — that tell you your playbook is ready to scale. Do not hire your 5th AE before passing this test.</div>
+        <div class="step-tags"><span class="step-tag">Repeatability</span><span class="step-tag">GTM Gate</span></div>
+        <div class="step-arrow">→</div>
+      </a>
+      <a href="../subpages/revenue-capacity-model.html" class="step-card">
+        <div class="step-num">Step 10.9</div>
+        <div class="step-title">Revenue Capacity Model</div>
+        <div class="step-desc">The full bottoms-up capacity model: how many reps, at what ramp, at what quota, with what coverage, to hit the plan. The financial model behind every headcount decision.</div>
+        <div class="step-tags"><span class="step-tag">Capacity</span><span class="step-tag">Quota Model</span></div>
+        <div class="step-arrow">→</div>
+      </a>
+      <a href="../subpages/headcount-planning.html" class="step-card">
+        <div class="step-num">Step 10.10</div>
+        <div class="step-title">Headcount Planning</div>
+        <div class="step-desc">How to plan annual and quarterly headcount — role sequencing, hiring lead time, ramp adjustment, and building the hiring plan that the board approves and Finance funds.</div>
+        <div class="step-tags"><span class="step-tag">Headcount</span><span class="step-tag">HC Planning</span></div>
+        <div class="step-arrow">→</div>
+      </a>
+      <a href="../subpages/partnership-scale.html" class="step-card">
+        <div class="step-num">Step 10.11</div>
+        <div class="step-title">Partnership & Channel Scale</div>
+        <div class="step-desc">When and how to add partner and channel revenue to your growth model — partner types, economics, enablement, and the governance model that keeps partners productive.</div>
+        <div class="step-tags"><span class="step-tag">Partnerships</span><span class="step-tag">Channel</span></div>
+        <div class="step-arrow">→</div>
+      </a>
+    </div>
+
+    <div class="drill-label" style="margin-top:28px;">Module 10 — Templates & Apply It</div>
+
+    <div class="module m10">
+      <div class="module-why" style="margin-bottom:16px;">
+        <strong>Templates are reference tools, not starting points.</strong> Return to these once you've read the corresponding deep-dive pages. Each template matches the framework you've already learned — don't try to fill one out without reading the source first.
+      </div>
+      <div class="steps-grid">
+        <a href="../subpages/template-icp.html" class="step-card">
+          <div class="step-num">Template A</div>
+          <div class="step-title">ICP Template</div>
+          <div class="step-desc">Structured worksheet for defining your Ideal Customer Profile across all dimensions with scoring grid.</div>
+          <div class="step-tags"><span class="step-tag">ICP</span></div>
+          <div class="step-arrow">→</div>
+        </a>
+        <a href="../subpages/template-message-house.html" class="step-card">
+          <div class="step-num">Template B</div>
+          <div class="step-title">Message House Template</div>
+          <div class="step-desc">The complete messaging framework: value pillars, proof points, objection handles, and executive narrative.</div>
+          <div class="step-tags"><span class="step-tag">Messaging</span></div>
+          <div class="step-arrow">→</div>
+        </a>
+        <a href="../subpages/template-gtm-plan.html" class="step-card">
+          <div class="step-num">Template C</div>
+          <div class="step-title">GTM Plan Template</div>
+          <div class="step-desc">The full GTM plan structure — ICP, motion, channels, pipeline targets, headcount, and stage-gate milestones.</div>
+          <div class="step-tags"><span class="step-tag">GTM</span></div>
+          <div class="step-arrow">→</div>
+        </a>
+        <a href="../subpages/template-lir.html" class="step-card">
+          <div class="step-num">Template D</div>
+          <div class="step-title">LIR Tracking Template</div>
+          <div class="step-desc">The cohort tracking worksheet for measuring Lead-to-ICP Retention across the 12–18 month verification window.</div>
+          <div class="step-tags"><span class="step-tag">LIR</span><span class="step-tag">Cohort</span></div>
+          <div class="step-arrow">→</div>
+        </a>
+        <a href="../subpages/template-liue-worksheet.html" class="step-card">
+          <div class="step-num">Template E</div>
+          <div class="step-title">LIUE Worksheet</div>
+          <div class="step-desc">Lead-to-ICP Upsell/Expansion tracking worksheet — the signal that customers are succeeding enough to buy more.</div>
+          <div class="step-tags"><span class="step-tag">LIUE</span><span class="step-tag">Expansion</span></div>
+          <div class="step-arrow">→</div>
+        </a>
+        <a href="../subpages/template-discovery.html" class="step-card">
+          <div class="step-num">Template F</div>
+          <div class="step-title">Discovery Call Template</div>
+          <div class="step-desc">The structured discovery framework with MEDDICC-aligned questions and qualification scoring for AEs.</div>
+          <div class="step-tags"><span class="step-tag">Discovery</span><span class="step-tag">MEDDICC</span></div>
+          <div class="step-arrow">→</div>
+        </a>
+        <a href="../subpages/template-prospecting.html" class="step-card">
+          <div class="step-num">Template G</div>
+          <div class="step-title">Prospecting Template</div>
+          <div class="step-desc">Cold outreach frameworks, email sequence templates, and call script structure for SDRs and AEs.</div>
+          <div class="step-tags"><span class="step-tag">Prospecting</span><span class="step-tag">Outbound</span></div>
+          <div class="step-arrow">→</div>
+        </a>
+        <a href="../subpages/template-presentation.html" class="step-card">
+          <div class="step-num">Template H</div>
+          <div class="step-title">Presentation Template</div>
+          <div class="step-desc">The value-narrative presentation structure that confirms pain, shows proof, and advances the deal to next steps.</div>
+          <div class="step-tags"><span class="step-tag">Presentation</span></div>
+          <div class="step-arrow">→</div>
+        </a>
+        <a href="../subpages/template-forecasting.html" class="step-card">
+          <div class="step-num">Template I</div>
+          <div class="step-title">Forecasting Template</div>
+          <div class="step-desc">Commit/Upside/Best Case forecast worksheet with probability weighting and variance tracking across quarters.</div>
+          <div class="step-tags"><span class="step-tag">Forecasting</span></div>
+          <div class="step-arrow">→</div>
+        </a>
+        <a href="../subpages/template-scorecard-sales.html" class="step-card">
+          <div class="step-num">Template J</div>
+          <div class="step-title">Sales Rep Scorecard</div>
+          <div class="step-desc">The performance scorecard for Sales Representatives — activity, pipeline, and outcome metrics with benchmark thresholds.</div>
+          <div class="step-tags"><span class="step-tag">Scorecard</span><span class="step-tag">Rep</span></div>
+          <div class="step-arrow">→</div>
+        </a>
+        <a href="../subpages/template-scorecard-sales-leader.html" class="step-card">
+          <div class="step-num">Template K</div>
+          <div class="step-title">Sales Leader Scorecard</div>
+          <div class="step-desc">The management scorecard — team attainment, pipeline health, hiring velocity, and coaching cadence metrics for first-line managers.</div>
+          <div class="step-tags"><span class="step-tag">Scorecard</span><span class="step-tag">Manager</span></div>
+          <div class="step-arrow">→</div>
+        </a>
+        <a href="../subpages/template-cs-playbook.html" class="step-card">
+          <div class="step-num">Template L</div>
+          <div class="step-title">CS Playbook Template</div>
+          <div class="step-desc">The Customer Success playbook structure — onboarding milestones, health score triggers, renewal timeline, and expansion criteria.</div>
+          <div class="step-tags"><span class="step-tag">CS</span><span class="step-tag">Playbook</span></div>
+          <div class="step-arrow">→</div>
+        </a>
+        <a href="../subpages/template-demand-gen-channels.html" class="step-card">
+          <div class="step-num">Template M</div>
+          <div class="step-title">Demand Gen Channel Template</div>
+          <div class="step-desc">Channel mix planning — budget allocation, target MQLs, cost-per-MQL benchmarks, and pipeline contribution by channel.</div>
+          <div class="step-tags"><span class="step-tag">Demand Gen</span><span class="step-tag">Channels</span></div>
+          <div class="step-arrow">→</div>
+        </a>
+        <a href="../subpages/template-content-marketing.html" class="step-card">
+          <div class="step-num">Template N</div>
+          <div class="step-title">Content Marketing Template</div>
+          <div class="step-desc">Content calendar framework with ICP alignment, funnel stage mapping, format selection, and performance tracking.</div>
+          <div class="step-tags"><span class="step-tag">Content</span><span class="step-tag">Calendar</span></div>
+          <div class="step-arrow">→</div>
+        </a>
+        <a href="../subpages/template-retention-narrative.html" class="step-card">
+          <div class="step-num">Template O</div>
+          <div class="step-title">Retention Narrative Template</div>
+          <div class="step-desc">The renewal and retention narrative framework — how to make the case for renewal in the language of the economic buyer, not the user.</div>
+          <div class="step-tags"><span class="step-tag">Renewal</span><span class="step-tag">Retention</span></div>
+          <div class="step-arrow">→</div>
+        </a>
+        <a href="../pages/resources.html" class="step-card">
+          <div class="step-num">All Resources</div>
+          <div class="step-title">Full Resources & Downloads Library</div>
+          <div class="step-desc">All 30 templates, Excel models, PowerPoints, PDFs, and guides from the full SaaS Revenue System — organized by functional area.</div>
+          <div class="step-tags"><span class="step-tag">Downloads</span><span class="step-tag">All Files</span></div>
+          <div class="step-arrow">→</div>
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <!-- Completion Banner -->
+  <div class="completion-banner">
+    <h3>You've Completed the Learning Path</h3>
+    <p>You now understand every part of the SaaS Revenue System — the framework, the strategy, the demand engine, sales execution, people operations, customer success, RevOps, diagnostics, and how to apply it all. Return to any module anytime for a refresher.</p>
+    <div class="completion-links">
+      <a href="../index.html" class="comp-link comp-primary">← Back to the Full System Map</a>
+      <a href="../pages/search.html" class="comp-link comp-secondary">⌕ Search the Manual</a>
+      <a href="../pages/resources.html" class="comp-link comp-secondary">↓ Download All Templates</a>
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <div style="margin-top:64px;padding-top:24px;border-top:1px solid var(--border);font-size:13px;color:var(--text-muted);text-align:center;line-height:1.7;">
+    The SaaS Revenue System — Conceived and Developed by <strong>David J. Patera</strong><br/>
+    <span style="opacity:0.7;">Frameworks referenced: Roberge (Science of Scaling, Sales Acceleration Formula) · Iannarino (Leading Growth) · Lane &amp; Adint (Revenue Operations Manual) · Whyte (MEDDICC)</span>
+  </div>
+
+</div>
+
+<script>
+  // Progress bar tied to scroll position
+  window.addEventListener('scroll', function() {
+    const doc = document.documentElement;
+    const winScroll = doc.scrollTop || document.body.scrollTop;
+    const height = doc.scrollHeight - doc.clientHeight;
+    const scrolled = (winScroll / height) * 100;
+    document.getElementById('progressBar').style.width = scrolled + '%';
+  });
+</script>
+
+</body>
+</html>
